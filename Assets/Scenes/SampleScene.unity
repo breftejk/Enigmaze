@@ -13483,15 +13483,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0014695077
-    y: 0.002610966
-    width: 0.8420279
-    height: 2.091384
+    x: 0.00061236985
+    y: 0.0010881393
+    width: 0.47274953
+    height: 1.749728
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 1.335
+  orthographic size: 1.005
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14317,6 +14317,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8332466728796330465
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.2469763
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.7079265
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 156395111182910643, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4104956301730024020, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
+      propertyPath: m_Name
+      value: Jam (speed boost)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 608b47386f7824589a7604dbb3e13834, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14328,3 +14385,4 @@ SceneRoots:
   - {fileID: 79958732}
   - {fileID: 1429128647}
   - {fileID: 1857162292}
+  - {fileID: 8332466728796330465}
