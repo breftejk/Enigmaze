@@ -1,0 +1,11 @@
+@startuml
+class Door {
+    + openDoorSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - boxCollider : BoxCollider2D
+    - Awake() : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    + OpenDoor() : void
+}
+MonoBehaviour <|-- Door
+@enduml

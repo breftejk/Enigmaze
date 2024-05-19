@@ -10,6 +10,47 @@ class GameManager {
     - LoadProgress() : void
 }
 MonoBehaviour <|-- GameManager
+class Key {
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- Key
+class Lever {
+    + doorToOpen : Door
+    + leverActiveSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - Awake() : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - ActivateLever() : void
+}
+MonoBehaviour <|-- Lever
+class HealingItem {
+    + healthAmount : int = 20
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- HealingItem
+class BoosterSpeed {
+    + speedMultiplier : float = 2.0f
+    + duration : float = 5.0f
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - ApplySpeedBoost(player:Collider2D) : IEnumerator
+}
+MonoBehaviour <|-- BoosterSpeed
+class Trap {
+    + damagePerSecond : float = 5f
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - OnTriggerExit2D(other:Collider2D) : void
+    - DamageOverTime(player:Collider2D) : IEnumerator
+}
+MonoBehaviour <|-- Trap
+class Door {
+    + openDoorSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - boxCollider : BoxCollider2D
+    - Awake() : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    + OpenDoor() : void
+}
+MonoBehaviour <|-- Door
 class Health {
     + maxHealth : float = 100f
     + currentHealth : float

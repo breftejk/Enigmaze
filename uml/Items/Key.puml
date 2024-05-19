@@ -1,0 +1,6 @@
+@startuml
+class Key {
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- Key
+@enduml

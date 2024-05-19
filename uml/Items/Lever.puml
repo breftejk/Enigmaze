@@ -1,0 +1,11 @@
+@startuml
+class Lever {
+    + doorToOpen : Door
+    + leverActiveSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - Awake() : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - ActivateLever() : void
+}
+MonoBehaviour <|-- Lever
+@enduml

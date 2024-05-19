@@ -1,0 +1,9 @@
+@startuml
+class Trap {
+    + damagePerSecond : float = 5f
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - OnTriggerExit2D(other:Collider2D) : void
+    - DamageOverTime(player:Collider2D) : IEnumerator
+}
+MonoBehaviour <|-- Trap
+@enduml
