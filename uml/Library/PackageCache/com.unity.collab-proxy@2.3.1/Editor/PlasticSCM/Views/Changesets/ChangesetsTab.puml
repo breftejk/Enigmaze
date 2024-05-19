@@ -1,0 +1,87 @@
+@startuml
+class ChangesetsTab <<partial>> {
+    <<internal>> Table : ChangesetsListView <<get>>
+    <<internal>> Operations : IChangesetMenuOperations <<get>>
+    <<internal>> ChangesetsTab(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow, viewSwitcher:IViewSwitcher, mergeViewLauncher:IMergeViewLauncher, historyViewLauncher:IHistoryViewLauncher, viewHost:ViewHost, updateReport:IUpdateReport, gluonUpdateReport:IGluonUpdateReport, newIncomingChangesUpdater:NewIncomingChangesUpdater, revertToChangesetListener:IRevertToChangesetListener, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, parentWindow:EditorWindow, isGluonMode:bool)
+    <<internal>> OnDisable() : void
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    <<internal>> DrawSearchFieldForChangesetsTab() : void
+    <<internal>> SetWorkingObjectInfo(homeInfo:WorkingObjectInfo) : void
+    <<internal>> SetRevertToChangesetOperationInterfacesForTesting(getStatusForWorkspace:RevertToChangesetOperation.IGetStatusForWorkspace, undoCheckoutOperation:RevertToChangesetOperation.IUndoCheckoutOperation, revertToChangesetMergeController:RevertToChangesetOperation.IRevertToChangesetMergeController) : void
+    <<internal>> SetLaunchToolForTesting(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor) : void
+    - Refresh() : void
+    - RefreshAndSelect(repObj:RepObjectInfo) : void
+    - GetSelectedChangesetsCount() : int
+    - DiffChangeset() : void
+    - DiffSelectedChangesets() : void
+    - SwitchToChangeset() : void
+    - DiffWithAnotherChangeset() : void
+    - CreateBranch() : void
+    - LabelChangeset() : void
+    - MergeChangeset() : void
+    - CherryPickChangeset() : void
+    - SubtractiveChangeset() : void
+    - SubtractiveChangesetInterval() : void
+    - CherryPickChangesetInterval() : void
+    - MergeToChangeset() : void
+    - MoveChangeset() : void
+    - DeleteChangeset() : void
+    - BrowseRepositoryOnChangeset() : void
+    - CreateCodeReview() : void
+    - RevertToChangeset() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    - FillChangesets(wkInfo:WorkspaceInfo, query:string, changesetsToSelect:List<RepObjectInfo>) : void
+    - DiffBranch() : void
+    - GetSelectedChangeset() : ChangesetExtendedInfo
+    - OnChangesetsListViewSizeChanged() : void
+    - OnSelectionChanged() : void
+    {static} - UpdateChangesetsList(changesetsListView:ChangesetsListView, queryResult:ViewQueryResult, loadedChangesetId:long) : void
+    {static} - GetLoadedChangesetId(wkInfo:WorkspaceInfo, isGluonMode:bool) : long
+    {static} - GetLoadedBranchId(wkInfo:WorkspaceInfo, loadedChangesetId:long, isGluonMode:bool) : long
+    {static} - GetChangesetsQuery(dateFilter:DateFilter) : string
+    {static} - GetChangesetsCount(queryResult:ViewQueryResult) : int
+    - VerifyIfSearchFieldIsRecentlyFocused(searchField:SearchField) : void
+    - DoActionsToolbar(refreshableView:IRefreshableView, progressControls:ProgressControlsForViews, searchField:SearchField, changesetsListView:ChangesetsListView, dateFilter:DateFilter) : void
+    {static} - DoChangesetsArea(changesetsListView:ChangesetsListView, isOperationRunning:bool) : void
+    {static} - DoChangesArea(diffPanel:DiffPanel) : void
+    <<internal>> DrawDateFilter() : void
+    - InitializeShowChangesButtonWidth() : void
+    - BuildComponents(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, refreshView:IRefreshView, viewSwitcher:IViewSwitcher, historyViewLauncher:IHistoryViewLauncher, parentWindow:EditorWindow) : void
+    - mIsRefreshing : bool
+    - mShouldScrollToSelection : bool
+    - mShowChangesButtonWidth : float
+    - mSplitterState : object
+    - mBorderColor : Color
+    - mDateFilter : DateFilter
+    - mSearchField : SearchField
+    - mIsSearchFieldFocused : bool = false
+    - mChangesetsListView : ChangesetsListView
+    - mChangesetOperations : ChangesetOperations
+    - mDiffPanel : DiffPanel
+    - mChangesetsViewMenu : ChangesetsViewMenu
+    - mGetStatusForWorkspace : RevertToChangesetOperation.IGetStatusForWorkspace
+    - mUndoCheckoutOperation : RevertToChangesetOperation.IUndoCheckoutOperation
+    - mRevertToChangesetMergeController : RevertToChangesetOperation.IRevertToChangesetMergeController
+    - mLoadedChangesetId : long
+    - mLock : object
+    - mProcessExecutor : LaunchTool.IProcessExecutor
+    - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mViewHost : ViewHost
+    <<readonly>> - mGluonUpdateReport : IGluonUpdateReport
+    <<readonly>> - mWorkspaceWindow : WorkspaceWindow
+    <<readonly>> - mViewSwitcher : IViewSwitcher
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mRevertToChangesetListener : IRevertToChangesetListener
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mWkInfo : WorkspaceInfo
+}
+interface IRevertToChangesetListener {
+    OnSuccessOperation() : void
+}
+IRefreshableView <|-- ChangesetsTab
+IQueryRefreshableView <|-- ChangesetsTab
+IChangesetMenuOperations <|-- ChangesetsTab
+ChangesetsTab +-- IRevertToChangesetListener
+@enduml

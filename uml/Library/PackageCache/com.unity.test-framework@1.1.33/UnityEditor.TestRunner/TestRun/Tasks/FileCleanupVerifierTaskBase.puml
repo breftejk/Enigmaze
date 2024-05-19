@@ -1,0 +1,7 @@
+@startuml
+abstract class FileCleanupVerifierTaskBase {
+    <<internal>> GetAllAssetPathsAction : Func<string[]>
+    # GetAllFilesInAssetsDirectory() : string[]
+}
+TestTaskBase <|-- FileCleanupVerifierTaskBase
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class FBXMaterialDescriptionPreprocessor {
+    {static} <<readonly>> - k_Version : uint = 2
+    {static} <<readonly>> - k_Order : int
+    + <<override>> GetVersion() : uint
+    + <<override>> GetPostprocessOrder() : int
+    + OnPreprocessMaterialDescription(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    {static} - RemapTransparencyCurves(description:MaterialDescription, clips:AnimationClip[]) : void
+    {static} - RemapColorCurves(description:MaterialDescription, clips:AnimationClip[], originalPropertyName:string, newPropertyName:string) : void
+    {static} - RemapAndTransformColorCurves(description:MaterialDescription, clips:AnimationClip[], originalPropertyName:string, newPropertyName:string, converter:System.Func<float, float>) : void
+    {static} - ConvertFloatLinearToGamma(value:float) : float
+    {static} - ConvertFloatOneMinus(value:float) : float
+    {static} - ConvertKeys(curve:AnimationCurve, convertionDelegate:System.Func<float, float>) : void
+    {static} - SetMaterialTextureProperty(propertyName:string, material:Material, textureProperty:TexturePropertyDescription) : void
+}
+AssetPostprocessor <|-- FBXMaterialDescriptionPreprocessor
+@enduml

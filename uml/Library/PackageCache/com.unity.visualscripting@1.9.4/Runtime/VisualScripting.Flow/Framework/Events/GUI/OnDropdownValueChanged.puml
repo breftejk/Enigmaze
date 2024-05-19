@@ -1,0 +1,11 @@
+@startuml
+class OnDropdownValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + index : ValueOutput <<get>>
+    + text : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, index:int) : void
+}
+"GameObjectEventUnit`1" "<int>" <|-- OnDropdownValueChanged
+@enduml

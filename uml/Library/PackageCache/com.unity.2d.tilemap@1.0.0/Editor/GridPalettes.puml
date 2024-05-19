@@ -1,0 +1,18 @@
+@startuml
+class GridPalettes {
+    - m_PalettesCache : List<GameObject>
+    <<internal>> {static} palettesChanged : Action
+    <<internal>> {static} palettes : List<GameObject> <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    - RefreshPalettesCache() : void
+    <<internal>> {static} CleanCache() : void
+}
+class AssetProcessor {
+    + <<override>> GetPostprocessOrder() : int
+    - {static} OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromPath:string[]) : void
+}
+"ScriptableSingleton`1" "<GridPalettes>" <|-- GridPalettes
+GridPalettes +-- AssetProcessor
+AssetPostprocessor <|-- AssetProcessor
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+class TilemapPrefabStageHelper {
+    - m_RegisteredEventHandlers : bool
+    - {static} m_Grid : Grid
+    - {static} Initialize() : void
+    - OnEnable() : void
+    - RegisterEventHandlers() : void
+    - CreateGridGameObject(prefabInstanceRoot:GameObject) : GameObject
+    - OnPrefabStageOpened(prefabStage:PrefabStage) : void
+    - OnPrefabStageClosing(prefabStage:PrefabStage) : void
+    - OnDisable() : void
+    <<internal>> {static} cellSize : Vector3 <<get>> <<set>>
+    <<internal>> {static} cellGap : Vector3 <<get>> <<set>>
+    <<internal>> {static} cellLayout : GridLayout.CellLayout <<get>> <<set>>
+    <<internal>> {static} cellSwizzle : GridLayout.CellSwizzle <<get>> <<set>>
+    <<internal>> {static} PreferencesGUI() : void
+}
+class OpenTilemapInPrefabModeProperties {
+    + {static} <<readonly>> cellSizeXEditorPref : string = "OpenTilemapInPrefabMode.CellSize.X"
+    + {static} <<readonly>> cellSizeYEditorPref : string = "OpenTilemapInPrefabMode.CellSize.Y"
+    + {static} <<readonly>> cellSizeZEditorPref : string = "OpenTilemapInPrefabMode.CellSize.Z"
+    + {static} <<readonly>> cellGapXEditorPref : string = "OpenTilemapInPrefabMode.CellGap.X"
+    + {static} <<readonly>> cellGapYEditorPref : string = "OpenTilemapInPrefabMode.CellGap.Y"
+    + {static} <<readonly>> cellGapZEditorPref : string = "OpenTilemapInPrefabMode.CellGap.Z"
+    + {static} <<readonly>> cellLayoutEditorPref : string = "OpenTilemapInPrefabMode.CellLayout"
+    + {static} <<readonly>> cellSwizzleEditorPref : string = "OpenTilemapInPrefabMode.CellSwizzle"
+    + {static} <<readonly>> cellSizeLookup : string = "Prefab Mode Grid Cell Size"
+    + {static} <<readonly>> cellGapLookup : string = "Prefab Mode Grid Cell Gap"
+    + {static} <<readonly>> cellLayoutLookup : string = "Prefab Mode Grid Cell Layout"
+    + {static} <<readonly>> cellSwizzleLookup : string = "Prefab Mode Grid Cell Swizzle"
+    + {static} <<readonly>> cellSizeLabel : GUIContent
+    + {static} <<readonly>> cellGapLabel : GUIContent
+    + {static} <<readonly>> cellLayoutLabel : GUIContent
+    + {static} <<readonly>> cellSwizzleLabel : GUIContent
+}
+"ScriptableSingleton`1" "<TilemapPrefabStageHelper>" <|-- TilemapPrefabStageHelper
+TilemapPrefabStageHelper +-- OpenTilemapInPrefabModeProperties
+@enduml

@@ -1,0 +1,83 @@
+@startuml
+class VariantCounter {
+    + inputVariants : uint
+    + outputVariants : uint
+    + <<override>> ToString() : string
+}
+class ShaderVariantInfo {
+    + variantName : string
+    + stripTimeMs : double
+    + <<override>> ToString() : string
+}
+class ShaderStrippingInfo {
+    + name : string
+    - m_VariantsByPipeline : Dictionary<string, (VariantCounter count, List<ShaderVariantInfo> variantInfos)>
+    + AddVariant(pipeline:string, variant:ShaderVariantInfo) : void
+    + <<override>> ToString() : string
+    + Log(logLevel:ShaderVariantLogLevel) : void
+    - pipelines : PipelineVariants[]
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+class ShaderStrippingReportScope {
+    <<internal>> {static} s_DefaultExport : bool = false
+    + callbackOrder : int <<get>>
+    + OnPreprocessBuild(report:BuildReport) : void
+    + OnPostprocessBuild(report:BuildReport) : void
+}
+class ShaderStrippingReportEmpty {
+    + OnShaderProcessed(shader:TShader, shaderVariant:TShaderVariant, pipeline:string, variantsIn:uint, variantsOut:uint, stripTimeMs:double) : void
+    + DumpReport() : void
+}
+class ShaderStrippingReportLogger {
+    - m_IsLogEnabled : bool = false
+    + ShaderStrippingReportLogger()
+    + OnShaderProcessed(shader:TShader, shaderVariant:TShaderVariant, pipeline:string, variantsIn:uint, variantsOut:uint, stripTimeMs:double) : void
+    + DumpReport() : void
+}
+class ShaderStrippingReport {
+    - <<readonly>> m_LogStrippedVariants : ShaderVariantLogLevel
+    - <<readonly>> m_ExportStrippedVariants : bool
+    - <<readonly>> m_ShaderInfos : List<ShaderStrippingInfo>
+    - <<readonly>> m_ShaderVariantCounter : VariantCounter
+    - <<readonly>> m_ComputeShaderInfos : List<ShaderStrippingInfo>
+    - <<readonly>> m_ComputeShaderVariantCounter : VariantCounter
+    + ShaderStrippingReport(logLevel:ShaderVariantLogLevel, export:bool)
+    + OnShaderProcessed(shader:TShader, shaderVariant:TShaderVariant, pipeline:string, variantsIn:uint, variantsOut:uint, stripTimeMs:double) : void
+    <<internal>> {static} k_ShaderOutputPath : string = "Temp/shader-stripping.json"
+    <<internal>> {static} k_ComputeShaderOutputPath : string = "Temp/compute-shader-stripping.json"
+    + DumpReport() : void
+    - m_LastShaderStrippingInfo : ShaderStrippingInfo = null
+    - FindLastShaderStrippingInfo(shader:TShader) : ShaderStrippingInfo
+    <<internal>> {static} TryGetVariantName(shader:TShader, shaderVariant:TShaderVariant, variantName:string) : bool
+    - ExportShaderStrippingInfo(path:string, variantCounter:VariantCounter, shaders:List<ShaderStrippingInfo>) : void
+}
+interface IShaderStrippingReport {
+    OnShaderProcessed(shader:TShader, shaderVariant:TShaderVariant, pipeline:string, variantsIn:uint, variantsOut:uint, stripTimeMs:double) : void
+    DumpReport() : void
+}
+class ShaderStripping <<static>> {
+    - {static} m_Reporter : IShaderStrippingReport
+    + {static} reporter : IShaderStrippingReport <<get>> <<internal set>>
+}
+class PipelineVariants {
+    + pipeline : string
+    + variants : ShaderVariantInfo[]
+}
+class Export {
+    + totalVariantsIn : uint
+    + totalVariantsOut : uint
+    + shaders : ShaderStrippingInfo[]
+}
+VariantCounter <|-- ShaderVariantInfo
+VariantCounter <|-- ShaderStrippingInfo
+ISerializationCallbackReceiver <|-- ShaderStrippingInfo
+IPostprocessBuildWithReport <|-- ShaderStrippingReportScope
+IPreprocessBuildWithReport <|-- ShaderStrippingReportScope
+IShaderStrippingReport <|-- ShaderStrippingReportEmpty
+IShaderStrippingReport <|-- ShaderStrippingReportLogger
+IShaderStrippingReport <|-- ShaderStrippingReport
+ShaderStrippingInfo +-- PipelineVariants
+VariantCounter <|-- PipelineVariants
+ShaderStrippingReport +-- Export
+@enduml

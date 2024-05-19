@@ -1,0 +1,6 @@
+@startuml
+class CommandLineParser {
+    + Options : Dictionary<string, string>
+    + CommandLineParser(args:string[])
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+interface IUnitDescriptor {
+    unit : IUnit <<get>>
+    <<new>> description : UnitDescription <<get>>
+    Title() : string
+    ShortTitle() : string
+    Surtitle() : string
+    Subtitle() : string
+    Summary() : string
+    Icon() : EditorTexture
+    DescribePort(port:IUnitPort, description:UnitPortDescription) : void
+}
+IDescriptor <|-- IUnitDescriptor
+@enduml

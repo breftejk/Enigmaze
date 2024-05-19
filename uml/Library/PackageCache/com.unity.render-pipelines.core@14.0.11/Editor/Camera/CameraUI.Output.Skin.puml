@@ -1,0 +1,14 @@
+@startuml
+class CameraUI <<static>> <<partial>> {
+}
+class Output <<static>> <<partial>> {
+}
+class Styles <<static>> {
+    + {static} <<readonly>> header : GUIContent
+    + {static} <<readonly>> viewport : GUIContent
+    + {static} <<readonly>> allowDynamicResolution : GUIContent
+    + {static} <<readonly>> depth : GUIContent
+}
+CameraUI +-- Output
+Output +-- Styles
+@enduml

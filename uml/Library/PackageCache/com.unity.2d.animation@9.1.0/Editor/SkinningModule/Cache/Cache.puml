@@ -1,0 +1,24 @@
+@startuml
+class Cache {
+    + {static} Create() : T
+    + {static} Destroy(cache:Cache) : void
+    - m_CacheObjects : List<CacheObject>
+    - m_RemovedCacheObjects : List<CacheObject>
+    - m_UndoOperationName : string = null
+    - m_DefaultUndo : IUndo
+    - m_UndoOverride : IUndo = null
+    # undo : IUndo <<get>>
+    + undoOverride : IUndo <<get>> <<set>>
+    + isUndoOperationSet : bool <<get>>
+    + IncrementCurrentGroup() : void
+    + <<virtual>> BeginUndoOperation(operationName:string) : void
+    + EndUndoOperation() : void
+    + IsRemoved(cacheObject:CacheObject) : bool
+    + CreateCache() : T
+    - FindRemovedCacheObject() : T
+    + Destroy(cacheObject:CacheObject) : void
+    + Destroy() : void
+}
+BaseObject <|-- Cache
+ICacheUndo <|-- Cache
+@enduml

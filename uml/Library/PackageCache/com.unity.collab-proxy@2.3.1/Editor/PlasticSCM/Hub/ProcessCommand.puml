@@ -1,0 +1,11 @@
+@startuml
+class ProcessCommand <<static>> {
+    <<internal>> <<const>> IS_PROCESS_COMMAND_ALREADY_EXECUTED_KEY : string = "PlasticSCM.ProcessCommand.IsAlreadyExecuted"
+    <<internal>> <<const>> IS_PLASTIC_COMMAND_KEY : string = "PlasticSCM.ProcessCommand.IsPlasticCommand"
+    <<internal>> {static} Initialize() : void
+    {static} - RunOnceWhenAccessTokenIsInitialized() : void
+    {static} - Execute(unityAccessToken:string) : void
+    <<internal>> {static} ProcessCommandFromArgs(commandLineArgs:string[], unityAccessToken:string) : void
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

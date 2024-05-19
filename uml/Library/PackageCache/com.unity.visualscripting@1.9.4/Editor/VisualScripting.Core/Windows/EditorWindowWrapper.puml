@@ -1,0 +1,22 @@
+@startuml
+abstract class EditorWindowWrapper {
+    # EditorWindowWrapper()
+    + window : WrappedEditorWindow <<get>>
+    + isOpen : bool <<get>>
+    - CreateWindow() : void
+    # <<virtual>> ConfigureWindow() : void
+    + Close() : void
+    + <<virtual>> OnShow() : void
+    + <<virtual>> Update() : void
+    + <<virtual>> OnGUI() : void
+    + <<virtual>> OnClose() : void
+    + <<virtual>> OnFocus() : void
+    + <<virtual>> OnLostFocus() : void
+    # Show() : void
+    # Show(immediateDisplay:bool) : void
+    # ShowAsDropDown(buttonRect:Rect, windowSize:Vector2) : void
+    # ShowAuxWindow() : void
+    # ShowPopup() : void
+    # ShowUtility() : void
+}
+@enduml

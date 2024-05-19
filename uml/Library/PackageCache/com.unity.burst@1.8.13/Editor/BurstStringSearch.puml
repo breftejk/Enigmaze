@@ -1,0 +1,27 @@
+@startuml
+struct SearchCriteria {
+    <<internal>> filter : string
+    <<internal>> isCaseSensitive : bool
+    <<internal>> isWholeWords : bool
+    <<internal>> isRegex : bool
+    <<internal>> SearchCriteria(keyword:string, caseSensitive:bool, wholeWord:bool, regex:bool)
+    <<internal>> Equals(obj:SearchCriteria) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+class BurstStringSearch <<static>> {
+    <<internal>> {static} GetEndIndexOfPlainLine(str:string, line:int) : (int total, int relative)
+    <<internal>> {static} GetEndIndexOfColoredLine(str:string, line:int) : (int total, int relative)
+    - {static} RemoveColorTagFromIdx(str:string, tidx:int, ridx:int) : (int total, int relative)
+    <<internal>> {static} FindLineNr(str:string, matchIdx:int) : int
+    <<internal>> {static} FindMatch(str:string, criteria:SearchCriteria, regx:Regex, startIdx:int) : (int idx, int length)
+    <<internal>> {static} FindAllMatches(str:string, criteria:SearchCriteria, regx:Regex, startIdx:int) : List<(int idx, int length)>
+    - {static} ToUpper(c:char) : char
+    - {static} <<unsafe>> ScanForFilterInsensitive(str:char*, filter:char*, flen:int, i:int) : int
+    - {static} <<unsafe>> ScanForFilter(str:char*, filter:char*, flen:int, i:int) : int
+    - {static} <<unsafe>> FindAllIndices(str:char*, len:int, filter:char*, flen:int, startIdx:int, caseSensitive:bool) : List<(int, int)>
+    - {static} <<unsafe>> IndexOfCustom(str:char*, len:int, filter:char*, flen:int, startIdx:int, caseSensitive:bool) : int
+    - {static} IndexOfWholeWord(str:string, startIdx:int, filter:string, opt:StringComparison) : int
+    - {static} IndexOfWholeWordAll(str:string, startIdx:int, filter:string, opt:StringComparison) : List<(int idx, int len)>
+}
+@enduml

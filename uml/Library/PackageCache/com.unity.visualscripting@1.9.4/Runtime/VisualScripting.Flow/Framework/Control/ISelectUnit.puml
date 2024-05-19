@@ -1,0 +1,6 @@
+@startuml
+interface ISelectUnit {
+    selection : ValueOutput <<get>>
+}
+IUnit <|-- ISelectUnit
+@enduml

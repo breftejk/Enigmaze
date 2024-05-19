@@ -1,0 +1,129 @@
+@startuml
+enum UEventType {
+    EVENT_POINT= 0,
+    EVENT_END= 1,
+    EVENT_START= 2,
+}
+struct UEvent {
+    + a : float2
+    + b : float2
+    + idx : int
+    + type : int
+}
+struct UHull {
+    + a : float2
+    + b : float2
+    + idx : int
+    + ilarray : ArraySlice<int>
+    + ilcount : int
+    + iuarray : ArraySlice<int>
+    + iucount : int
+}
+struct UStar {
+    + points : ArraySlice<int>
+    + pointCount : int
+}
+struct UBounds {
+    + min : double2
+    + max : double2
+}
+struct UCircle {
+    + center : float2
+    + radius : float
+}
+struct UTriangle {
+    + va : float2
+    + vb : float2
+    + vc : float2
+    + c : UCircle
+    + area : float
+    + indices : int3
+}
+struct UEncroachingSegment {
+    + a : float2
+    + b : float2
+    + index : int
+}
+interface "ICondition2`2"<in T,in U> {
+    Test(x:T, y:U, t:float) : bool
+}
+struct XCompare {
+    + Compare(a:double, b:double) : int
+}
+struct IntersectionCompare {
+    + points : Array<double2>
+    + edges : Array<int2>
+    + <<fixed>> xvasort : double
+    + <<fixed>> xvbsort : double
+    + Compare(a:int2, b:int2) : int
+}
+struct TessEventCompare {
+    + Compare(a:UEvent, b:UEvent) : int
+}
+struct TessEdgeCompare {
+    + Compare(a:int2, b:int2) : int
+}
+struct TessCellCompare {
+    + Compare(a:int3, b:int3) : int
+}
+struct TessJunctionCompare {
+    + Compare(a:int2, b:int2) : int
+}
+struct DelaEdgeCompare {
+    + Compare(a:int4, b:int4) : int
+}
+struct TessLink {
+    <<internal>> roots : NativeArray<int>
+    <<internal>> ranks : NativeArray<int>
+    <<internal>> {static} CreateLink(count:int, allocator:Allocator) : TessLink
+    <<internal>> {static} DestroyLink(link:TessLink) : void
+    <<internal>> Find(x:int) : int
+    <<internal>> Link(x:int, y:int) : void
+}
+struct ModuleHandle {
+    <<internal>> {static} <<readonly>> kMaxArea : int = 65536
+    <<internal>> {static} <<readonly>> kMaxEdgeCount : int = 65536
+    <<internal>> {static} <<readonly>> kMaxIndexCount : int = 65536
+    <<internal>> {static} <<readonly>> kMaxVertexCount : int = 65536
+    <<internal>> {static} <<readonly>> kMaxTriangleCount : int
+    <<internal>> {static} <<readonly>> kMaxRefineIterations : int = 48
+    <<internal>> {static} <<readonly>> kMaxSmoothenIterations : int = 256
+    <<internal>> {static} <<readonly>> kIncrementAreaFactor : float = 1.2f
+    <<internal>> {static} Copy(src:NativeArray<T>, srcIndex:int, dst:NativeArray<T>, dstIndex:int, length:int) : void
+    <<internal>> {static} Copy(src:NativeArray<T>, dst:NativeArray<T>, length:int) : void
+    <<internal>> {static} <<unsafe>> InsertionSort(array:void*, lo:int, hi:int, comp:U) : void
+    <<internal>> {static} GetLower(values:NativeArray<T>, count:int, check:U, condition:X) : int
+    <<internal>> {static} GetUpper(values:NativeArray<T>, count:int, check:U, condition:X) : int
+    <<internal>> {static} GetEqual(values:Array<T>, count:int, check:U, condition:X) : int
+    <<internal>> {static} GetEqual(values:NativeArray<T>, count:int, check:U, condition:X) : int
+    <<internal>> {static} OrientFast(a:float2, b:float2, c:float2) : float
+    <<internal>> {static} OrientFastDouble(a:double2, b:double2, c:double2) : double
+    <<internal>> {static} CircumCircle(tri:UTriangle) : UCircle
+    <<internal>> {static} IsInsideCircle(c:UCircle, v:float2) : bool
+    <<internal>> {static} TriangleArea(va:float2, vb:float2, vc:float2) : float
+    <<internal>> {static} Sign(p1:float2, p2:float2, p3:float2) : float
+    <<internal>> {static} IsInsideTriangle(pt:float2, v1:float2, v2:float2, v3:float2) : bool
+    <<internal>> {static} IsInsideTriangleApproximate(pt:float2, v1:float2, v2:float2, v3:float2) : bool
+    <<internal>> {static} IsInsideCircle(a:float2, b:float2, c:float2, p:float2) : bool
+    <<internal>> {static} BuildTriangles(vertices:NativeArray<float2>, vertexCount:int, indices:NativeArray<int>, indexCount:int, triangles:NativeArray<UTriangle>, triangleCount:int, maxArea:float, avgArea:float, minArea:float) : void
+    <<internal>> {static} BuildTriangles(vertices:NativeArray<float2>, vertexCount:int, indices:NativeArray<int>, indexCount:int, triangles:Array<UTriangle>, triangleCount:int, maxArea:float, avgArea:float, minArea:float) : void
+    <<internal>> {static} BuildTriangles(vertices:NativeArray<float2>, vertexCount:int, indices:NativeArray<int>, indexCount:int, triangles:NativeArray<UTriangle>, triangleCount:int, maxArea:float, avgArea:float, minArea:float, maxEdge:float, avgEdge:float, minEdge:float) : void
+    <<internal>> {static} BuildTrianglesAndEdges(vertices:NativeArray<float2>, vertexCount:int, indices:NativeArray<int>, indexCount:int, triangles:NativeArray<UTriangle>, triangleCount:int, delaEdges:NativeArray<int4>, delaEdgeCount:int, maxArea:float, avgArea:float, minArea:float) : void
+    {static} - CopyGraph(srcPoints:NativeArray<float2>, srcPointCount:int, dstPoints:NativeArray<float2>, dstPointCount:int, srcEdges:NativeArray<int2>, srcEdgeCount:int, dstEdges:NativeArray<int2>, dstEdgeCount:int) : void
+    {static} - CopyGeometry(srcIndices:NativeArray<int>, srcIndexCount:int, dstIndices:NativeArray<int>, dstIndexCount:int, srcVertices:NativeArray<float2>, srcVertexCount:int, dstVertices:NativeArray<float2>, dstVertexCount:int) : void
+    {static} - TransferOutput(srcEdges:NativeArray<int2>, srcEdgeCount:int, dstEdges:NativeArray<int2>, dstEdgeCount:int, srcIndices:NativeArray<int>, srcIndexCount:int, dstIndices:NativeArray<int>, dstIndexCount:int, srcVertices:NativeArray<float2>, srcVertexCount:int, dstVertices:NativeArray<float2>, dstVertexCount:int) : void
+    {static} - GraphConditioner(points:NativeArray<float2>, pgPoints:NativeArray<float2>, pgPointCount:int, pgEdges:NativeArray<int2>, pgEdgeCount:int, resetTopology:bool) : void
+    {static} - Reorder(startVertexCount:int, index:int, indices:NativeArray<int>, indexCount:int, vertices:NativeArray<float2>, vertexCount:int) : void
+    <<internal>> {static} VertexCleanupConditioner(startVertexCount:int, indices:NativeArray<int>, indexCount:int, vertices:NativeArray<float2>, vertexCount:int) : void
+    + {static} ConvexQuad(allocator:Allocator, points:NativeArray<float2>, edges:NativeArray<int2>, outVertices:NativeArray<float2>, outVertexCount:int, outIndices:NativeArray<int>, outIndexCount:int, outEdges:NativeArray<int2>, outEdgeCount:int) : float4
+    + {static} Tessellate(allocator:Allocator, points:NativeArray<float2>, edges:NativeArray<int2>, outVertices:NativeArray<float2>, outVertexCount:int, outIndices:NativeArray<int>, outIndexCount:int, outEdges:NativeArray<int2>, outEdgeCount:int) : float4
+    + {static} Subdivide(allocator:Allocator, points:NativeArray<float2>, edges:NativeArray<int2>, outVertices:NativeArray<float2>, outVertexCount:int, outIndices:NativeArray<int>, outIndexCount:int, outEdges:NativeArray<int2>, outEdgeCount:int, areaFactor:float, targetArea:float, refineIterations:int, smoothenIterations:int) : float4
+}
+"IComparer`1" "<double>" <|-- XCompare
+"IComparer`1" "<int2>" <|-- IntersectionCompare
+"IComparer`1" "<UEvent>" <|-- TessEventCompare
+"IComparer`1" "<int2>" <|-- TessEdgeCompare
+"IComparer`1" "<int3>" <|-- TessCellCompare
+"IComparer`1" "<int2>" <|-- TessJunctionCompare
+"IComparer`1" "<int4>" <|-- DelaEdgeCompare
+@enduml

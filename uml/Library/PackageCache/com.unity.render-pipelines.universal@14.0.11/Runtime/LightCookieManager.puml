@@ -1,0 +1,145 @@
+@startuml
+class LightCookieManager {
+    {static} <<readonly>> - s_DirLightProj : Matrix4x4
+    - m_AdditionalLightsCookieAtlas : Texture2DAtlas
+    - m_AdditionalLightsCookieShaderData : LightCookieShaderData
+    <<readonly>> - m_Settings : Settings
+    - m_WorkMem : WorkMemory
+    - m_VisibleLightIndexToShaderDataIndex : int[]
+    <<const>> - k_MaxCookieSizeDivisor : int = 16
+    - m_CookieSizeDivisor : int = 1
+    - m_PrevCookieRequestPixelCount : uint = 0xFFFFFFFF
+    - m_PrevWarnFrame : int
+    <<internal>> IsKeywordLightCookieEnabled : bool <<get>>
+    + LightCookieManager(settings:Settings)
+    - InitAdditionalLights(size:int) : void
+    + isInitialized() : bool
+    + Dispose() : void
+    + GetLightCookieShaderDataIndex(visibleLightIndex:int) : int
+    + Setup(ctx:ScriptableRenderContext, cmd:CommandBuffer, lightData:LightData) : void
+    - SetupMainLight(cmd:CommandBuffer, visibleMainLight:VisibleLight) : bool
+    - GetLightCookieShaderFormat(cookieFormat:GraphicsFormat) : LightCookieShaderFormat
+    - GetLightUVScaleOffset(additionalLightData:UniversalAdditionalLightData, uvTransform:Matrix4x4) : void
+    - SetupAdditionalLights(cmd:CommandBuffer, lightData:LightData) : bool
+    - FilterAndValidateAdditionalLights(lightData:LightData, validLightMappings:LightCookieMapping[]) : int
+    - UpdateAdditionalLightsAtlas(cmd:CommandBuffer, validLightMappings:WorkSlice<LightCookieMapping>, textureAtlasUVRects:Vector4[]) : int
+    - FetchUVRects(cmd:CommandBuffer, validLightMappings:WorkSlice<LightCookieMapping>, textureAtlasUVRects:Vector4[], cookieSizeDivisor:int) : int
+    - ComputeCookieRequestPixelCount(validLightMappings:WorkSlice<LightCookieMapping>) : uint
+    - ApproximateCookieSizeDivisor(requestAtlasRatio:float) : int
+    - Fetch2D(cmd:CommandBuffer, cookie:Texture, cookieSizeDivisor:int) : Vector4
+    - FetchCube(cmd:CommandBuffer, cookie:Texture, cookieSizeDivisor:int) : Vector4
+    - ComputeOctahedralCookieSize(cookie:Texture) : int
+    - AdjustUVRect(uvScaleOffset:Vector4, cookie:Texture, cookieSize:Vector2) : void
+    - ShrinkUVRect(uvScaleOffset:Vector4, amountPixels:float, cookieSize:Vector2) : void
+    - UploadAdditionalLights(cmd:CommandBuffer, lightData:LightData, validLightMappings:WorkSlice<LightCookieMapping>, validUvRects:WorkSlice<Vector4>) : void
+}
+class ShaderProperty <<static>> {
+    + {static} <<readonly>> mainLightTexture : int
+    + {static} <<readonly>> mainLightWorldToLight : int
+    + {static} <<readonly>> mainLightCookieTextureFormat : int
+    + {static} <<readonly>> additionalLightsCookieAtlasTexture : int
+    + {static} <<readonly>> additionalLightsCookieAtlasTextureFormat : int
+    + {static} <<readonly>> additionalLightsCookieEnableBits : int
+    + {static} <<readonly>> additionalLightsCookieAtlasUVRectBuffer : int
+    + {static} <<readonly>> additionalLightsCookieAtlasUVRects : int
+    + {static} <<readonly>> additionalLightsWorldToLightBuffer : int
+    + {static} <<readonly>> additionalLightsLightTypeBuffer : int
+    + {static} <<readonly>> additionalLightsWorldToLights : int
+    + {static} <<readonly>> additionalLightsLightTypes : int
+}
+enum LightCookieShaderFormat {
+    None= -1,
+    RGB= 0,
+    Alpha= 1,
+    Red= 2,
+}
+struct Settings {
+    + atlas : AtlasSettings
+    + maxAdditionalLights : int
+    + cubeOctahedralSizeScale : float
+    + useStructuredBuffer : bool
+    + {static} Create() : Settings
+}
+struct Sorting {
+    + {static} QuickSort(data:T[], compare:Func<T, T, int>) : void
+    + {static} QuickSort(data:T[], start:int, end:int, compare:Func<T, T, int>) : void
+    {static} - Median3Pivot(data:T[], start:int, pivot:int, end:int, compare:Func<T, T, int>) : T
+    {static} - Partition(data:T[], start:int, end:int, compare:Func<T, T, int>) : int
+    {static} + InsertionSort(data:T[], start:int, end:int, compare:Func<T, T, int>) : void
+}
+struct LightCookieMapping {
+    + visibleLightIndex : ushort
+    + lightBufferIndex : ushort
+    + light : Light
+    + {static} s_CompareByCookieSize : Func<LightCookieMapping, LightCookieMapping, int>
+    + {static} s_CompareByBufferIndex : Func<LightCookieMapping, LightCookieMapping, int>
+}
+struct "WorkSlice`1"<T> {
+    - <<readonly>> m_Data : T[]
+    - <<readonly>> m_Start : int
+    - <<readonly>> m_Length : int
+    + WorkSlice(src:T[], srcLen:int)
+    + WorkSlice(src:T[], srcStart:int, srcLen:int)
+    + length : int <<get>>
+    + capacity : int <<get>>
+    + Sort(compare:Func<T, T, int>) : void
+}
+class WorkMemory {
+    + lightMappings : LightCookieMapping[]
+    + uvRects : Vector4[]
+    + Resize(size:int) : void
+}
+struct ShaderBitArray {
+    <<const>> - k_BitsPerElement : int = 32
+    <<const>> - k_ElementShift : int = 5
+    <<const>> - k_ElementMask : int
+    - m_Data : float[]
+    + elemLength : int <<get>>
+    + bitCapacity : int <<get>>
+    + data : float[] <<get>>
+    + Resize(bitCount:int) : void
+    + Clear() : void
+    - GetElementIndexAndBitOffset(index:int, elemIndex:int, bitOffset:int) : void
+    + <<override>> ToString() : string
+}
+class LightCookieShaderData {
+    - m_Size : int = 0
+    - m_UseStructuredBuffer : bool
+    - m_WorldToLightCpuData : Matrix4x4[]
+    - m_AtlasUVRectCpuData : Vector4[]
+    - m_LightTypeCpuData : float[]
+    - m_CookieEnableBitsCpuData : ShaderBitArray
+    - m_WorldToLightBuffer : ComputeBuffer
+    - m_AtlasUVRectBuffer : ComputeBuffer
+    - m_LightTypeBuffer : ComputeBuffer
+    + worldToLights : Matrix4x4[] <<get>>
+    + cookieEnableBits : ShaderBitArray <<get>>
+    + atlasUVRects : Vector4[] <<get>>
+    + lightTypes : float[] <<get>>
+    + isUploaded : bool <<get>> <<set>>
+    + LightCookieShaderData(size:int, useStructuredBuffer:bool)
+    + Dispose() : void
+    + Resize(size:int) : void
+    + Upload(cmd:CommandBuffer) : void
+    + Clear(cmd:CommandBuffer) : void
+}
+struct AtlasSettings {
+    + resolution : Vector2Int
+    + format : GraphicsFormat
+    + useMips : bool
+    + isPow2 : bool <<get>>
+    + isSquare : bool <<get>>
+}
+IDisposable <|-- LightCookieManager
+LightCookieManager +-- ShaderProperty
+LightCookieManager +-- LightCookieShaderFormat
+LightCookieManager +-- Settings
+LightCookieManager +-- Sorting
+LightCookieManager +-- LightCookieMapping
+LightCookieManager +-- "WorkSlice`1"
+LightCookieManager +-- WorkMemory
+LightCookieManager +-- ShaderBitArray
+LightCookieManager +-- LightCookieShaderData
+IDisposable <|-- LightCookieShaderData
+Settings +-- AtlasSettings
+@enduml

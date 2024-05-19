@@ -1,0 +1,33 @@
+@startuml
+class TestCompilerAttribute {
+    + TestCompilerAttribute(arguments:object[])
+    # <<override>> IsCommandLine() : bool
+    # <<override>> IsMono() : bool
+    # <<override>> SupportException : bool <<get>>
+    # <<override>> GetTestCommand(attribute:TestCompilerAttributeBase, test:Test, originalMethod:TestMethod) : TestCompilerCommandBase
+}
+class TestCompilerCommand {
+    + TestCompilerCommand(attribute:TestCompilerAttributeBase, test:Test, originalMethod:TestMethod)
+    # <<override>> GetRunCount() : int
+    # <<override>> CompleteTest(context:ITestExecutionContext) : void
+    # <<override>> GetULP() : int
+    # <<override>> GetArgumentsArray(method:TestMethod) : object[]
+    # <<unsafe>> CompileDelegate(context:ITestExecutionContext, methodInfo:MethodInfo, delegateType:Type, returnBox:byte*, returnBoxType:Type) : Delegate
+    # <<unsafe>> <<override>> CompileDelegate(context:ITestExecutionContext, methodInfo:MethodInfo, delegateType:Type, returnBox:byte*, returnBoxType:Type, interpretDelegate:Delegate) : Delegate
+    # <<override>> GoldFileTestForOtherPlatforms(methodInfo:MethodInfo, testWasRun:bool) : void
+    # <<override>> TestOnCurrentHostEnvironment(methodInfo:MethodInfo) : bool
+    # <<override>> CompileFunctionPointer(methodInfo:MethodInfo, functionType:Type) : object
+    # <<override>> InterpretMethod(interpretDelegate:Delegate, methodInfo:MethodInfo, args:object[], returnType:Type, reason:string, result:object) : bool
+    # <<override>> Setup() : void
+    # <<override>> HandleCompilerException(context:ITestExecutionContext, methodInfo:MethodInfo) : TestResult
+    - cachedLog : string = null
+    - logPresent : bool = false
+    # <<override>> GetLinesFromDeterminismLog() : string
+    # <<override>> IsDeterministicTest(method:TestMethod) : bool
+    # <<override>> GetExtension() : TestCompilerBaseExtensions
+    # <<override>> TargetIs32Bit() : bool
+}
+TestCompilerAttributeBase <|-- TestCompilerAttribute
+TestCompilerAttribute +-- TestCompilerCommand
+TestCompilerCommandBase <|-- TestCompilerCommand
+@enduml

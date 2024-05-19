@@ -1,0 +1,38 @@
+@startuml
+class ShaderStripToolTests {
+    - {static} s_EnabledKeywords : List<string>
+    - {static} s_PassKeywords : List<string>
+    + TestContainsKeyword() : void
+    + TestStripMultiCompileKeepOffVariant1() : void
+    + TestStripMultiCompile1() : void
+    + TestStripMultiCompileKeepOffVariant2() : void
+    + TestStripMultiCompile2() : void
+    + TestStripMultiCompileKeepOffVariant3() : void
+    + TestStripMultiCompile3() : void
+}
+struct TestStrippingData {
+    + shaderFeatures : ShaderFeatures <<get>> <<set>>
+    + volumeFeatures : VolumeFeatures <<get>> <<set>>
+    + isGLDevice : bool <<get>> <<set>>
+    + stripSoftShadowQualityLevels : bool <<get>> <<set>>
+    + strip2DPasses : bool <<get>> <<set>>
+    + stripDebugDisplayShaders : bool <<get>> <<set>>
+    + stripScreenCoordOverrideVariants : bool <<get>> <<set>>
+    + stripUnusedVariants : bool <<get>> <<set>>
+    + stripUnusedPostProcessingVariants : bool <<get>> <<set>>
+    + shader : Shader <<get>> <<set>>
+    + shaderType : ShaderType <<get>> <<set>>
+    + shaderCompilerPlatform : ShaderCompilerPlatform <<get>> <<set>>
+    + passName : string <<get>> <<set>>
+    + passType : PassType <<get>> <<set>>
+    + passIdentifier : PassIdentifier <<get>> <<set>>
+    + IsHDRShaderVariantValid : bool <<get>> <<set>>
+    + IsKeywordEnabled(keyword:LocalKeyword) : bool
+    + IsShaderFeatureEnabled(feature:ShaderFeatures) : bool
+    + IsVolumeFeatureEnabled(feature:VolumeFeatures) : bool
+    + ClearEnablePasses() : void
+    + PassHasKeyword(keyword:LocalKeyword) : bool
+}
+ShaderStripToolTests +-- TestStrippingData
+IShaderScriptableStrippingData <|-- TestStrippingData
+@enduml

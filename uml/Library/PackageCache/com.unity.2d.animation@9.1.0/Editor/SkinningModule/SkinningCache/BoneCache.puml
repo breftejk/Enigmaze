@@ -1,0 +1,51 @@
+@startuml
+struct Pose {
+    + position : Vector3
+    + rotation : Quaternion
+    + matrix : Matrix4x4 <<get>>
+    + {static} Create(p:Vector3, r:Quaternion) : Pose
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+}
+struct BonePose {
+    + pose : Pose
+    + length : float
+    + {static} Create(p:Pose, l:float) : BonePose
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+}
+class BoneCache {
+    - m_BindPoseColor : Color32
+    - m_BindPose : Pose
+    - m_DefaultPose : BonePose
+    - m_ChainedChild : BoneCache
+    - m_Depth : float
+    - m_LocalLength : float = 1f
+    - m_IsVisible : bool = true
+    - m_Guid : string
+    + NotInDefaultPose() : bool
+    + isVisible : bool <<get>> <<set>>
+    + bindPoseColor : Color <<get>> <<set>>
+    + <<virtual>> parentBone : BoneCache <<get>>
+    + skeleton : SkeletonCache <<get>>
+    + <<virtual>> chainedChild : BoneCache <<get>> <<set>>
+    - localEndPosition : Vector3 <<get>>
+    + endPosition : Vector3 <<get>> <<set>>
+    + localPose : BonePose <<get>> <<set>>
+    + worldPose : BonePose <<get>> <<set>>
+    + bindPose : Pose <<get>>
+    + guid : string <<get>> <<set>>
+    + depth : float <<get>> <<set>>
+    + localLength : float <<get>> <<set>>
+    + length : float <<get>> <<set>>
+    <<internal>> GetChildrenWoldPose() : Pose[]
+    <<internal>> SetChildrenWorldPose(worldPoses:Pose[]) : void
+    <<internal>> <<override>> OnDestroy() : void
+    + <<new>> SetParent(newParent:TransformCache, worldPositionStays:bool) : void
+    + OrientToChainedChild(freezeChildren:bool) : void
+    + SetDefaultPose() : void
+    + RestoreDefaultPose() : void
+    - IsUnscaled() : bool
+}
+TransformCache <|-- BoneCache
+@enduml

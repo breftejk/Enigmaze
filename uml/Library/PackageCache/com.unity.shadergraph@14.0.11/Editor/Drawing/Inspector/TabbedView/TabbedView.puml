@@ -1,0 +1,25 @@
+@startuml
+class TabbedView {
+    - <<const>> k_styleName : string = "TabbedView"
+    - <<const>> s_UssClassName : string = "unity-tabbed-view"
+    - <<const>> s_ContentContainerClassName : string = "unity-tabbed-view__content-container"
+    - <<const>> s_TabsContainerClassName : string = "unity-tabbed-view__tabs-container"
+    - <<readonly>> m_TabContent : VisualElement
+    - <<readonly>> m_Content : VisualElement
+    - <<readonly>> m_Tabs : List<TabButton>
+    - m_ActiveTab : TabButton
+    + <<override>> contentContainer : VisualElement <<get>>
+    + TabbedView()
+    + AddTab(tabButton:TabButton, activate:bool) : void
+    + RemoveTab(tabButton:TabButton) : void
+    - ProcessEvent(e:AttachToPanelEvent) : void
+    - SelectTab(tabButton:TabButton) : void
+    - DeselectTab(tabButton:TabButton) : void
+    + Activate(button:TabButton) : void
+}
+class UxmlFactory <<new>> {
+}
+VisualElement <|-- TabbedView
+TabbedView +-- UxmlFactory
+"UxmlFactory`2" "<TabbedView,UxmlTraits>" <|-- UxmlFactory
+@enduml

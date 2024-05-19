@@ -1,0 +1,16 @@
+@startuml
+class TestRunnerApi {
+    <<internal>> callbacksHolder : ICallbacksHolder
+    - m_CallbacksHolder : ICallbacksHolder <<get>>
+    <<internal>> ScheduleJob : Func<ExecutionSettings,string>
+    + Execute(executionSettings:ExecutionSettings) : string
+    + RegisterCallbacks(testCallbacks:T, priority:int) : void
+    + UnregisterCallbacks(testCallbacks:T) : void
+    <<internal>> RetrieveTestList(executionSettings:ExecutionSettings, callback:Action<ITestAdaptor>) : void
+    + RetrieveTestList(testMode:TestMode, callback:Action<ITestAdaptor>) : void
+    <<internal>> {static} IsRunActive() : bool
+    - {static} ParseTestMode(testMode:TestMode) : TestPlatform
+}
+ScriptableObject <|-- TestRunnerApi
+ITestRunnerApi <|-- TestRunnerApi
+@enduml

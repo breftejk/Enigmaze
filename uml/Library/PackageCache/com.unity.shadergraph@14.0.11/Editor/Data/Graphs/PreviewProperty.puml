@@ -1,0 +1,38 @@
+@startuml
+struct PreviewProperty {
+    + name : string <<get>> <<set>>
+    + propType : PropertyType <<get>>
+    + PreviewProperty(type:PropertyType)
+    - m_ClassData : ClassData
+    - m_StructData : StructData
+    - m_texture2dDefaultType : Texture2DShaderProperty.DefaultType
+    + colorValue : Color <<get>> <<set>>
+    + textureValue : Texture <<get>> <<set>>
+    + texture2DDefaultType : Texture2DShaderProperty.DefaultType <<get>> <<set>>
+    + cubemapValue : Cubemap <<get>> <<set>>
+    + gradientValue : Gradient <<get>> <<set>>
+    + vtProperty : VirtualTextureShaderProperty <<get>> <<set>>
+    + vector4Value : Vector4 <<get>> <<set>>
+    + floatValue : float <<get>> <<set>>
+    + booleanValue : bool <<get>> <<set>>
+    + matrixValue : Matrix4x4 <<get>> <<set>>
+    <<const>> - k_SetErrorMessage : string = "Cannot set a {0&#125; property on a PreviewProperty with type {1&#125;."
+    <<const>> - k_GetErrorMessage : string = "Cannot get a {0&#125; property on a PreviewProperty with type {1&#125;."
+    + SetValueOnMaterialPropertyBlock(mat:MaterialPropertyBlock) : void
+}
+struct ClassData {
+    + textureValue : Texture
+    + cubemapValue : Cubemap
+    + gradientValue : Gradient
+    + vtProperty : VirtualTextureShaderProperty
+}
+struct StructData {
+    + colorValue : Color
+    + vector4Value : Vector4
+    + floatValue : float
+    + booleanValue : bool
+    + matrixValue : Matrix4x4
+}
+PreviewProperty +-- ClassData
+PreviewProperty +-- StructData
+@enduml

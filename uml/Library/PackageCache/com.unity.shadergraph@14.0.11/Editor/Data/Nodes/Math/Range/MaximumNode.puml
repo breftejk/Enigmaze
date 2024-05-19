@@ -1,0 +1,8 @@
+@startuml
+class MaximumNode {
+    + MaximumNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Maximum(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- MaximumNode
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class TilemapFocusModeUtility {
+    - {static} <<readonly>> k_TilemapFocusModeEditorPref : string = "TilemapFocusMode"
+    <<internal>> {static} focusMode : TilemapFocusMode <<get>> <<set>>
+    <<internal>> {static} OnSceneViewGUI(sceneView:SceneView) : void
+    <<internal>> {static} OnScenePaintTargetChanged(scenePaintTarget:GameObject) : void
+    <<internal>> {static} OnBrushChanged(brush:GridBrushBase) : void
+    <<internal>> {static} SetFocusMode(tilemapFocusMode:TilemapFocusMode) : void
+    - {static} EnableFocus() : void
+    - {static} DisableFocus() : void
+    - {static} FilterSingleSceneObjectInScene(instanceID:int) : void
+}
+enum TilemapFocusMode {
+    None= 0,
+    Tilemap= 1,
+    Grid= 2,
+}
+TilemapFocusModeUtility +-- TilemapFocusMode
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class ZipPredict32Image {
+    - zipImage : ZipImage
+    # <<override>> AltersWrittenData : bool <<get>>
+    + ZipPredict32Image(zipData:byte[], size:Size)
+    <<internal>> <<override>> Read(buffer:byte[]) : void
+    + <<override>> ReadCompressed() : byte[]
+    - Predict(ptrData:byte[], ptrOutput:byte[]) : void
+    - Unpredict(ptrData:byte[], ptrOutput:byte[]) : void
+}
+ImageData <|-- ZipPredict32Image
+@enduml

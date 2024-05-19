@@ -1,0 +1,9 @@
+@startuml
+class WaitForSecondsUnit {
+    + seconds : ValueInput <<get>>
+    + unscaledTime : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> Await(flow:Flow) : IEnumerator
+}
+WaitUnit <|-- WaitForSecondsUnit
+@enduml

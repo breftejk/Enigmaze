@@ -1,0 +1,22 @@
+@startuml
+class PlayModeTestListGUI {
+    - m_SelectedOption : int
+    + <<override>> TestMode : TestMode <<get>>
+    - GetBuildText() : string
+    - PickBuildLocation() : string
+    - ExecuteAction(item:PlayerMenuItem) : void
+    + <<override>> PrintHeadPanel() : void
+    + <<override>> RenderNoTestsInfo() : void
+    # <<override>> RunTests(filters:UITestRunnerFilter[]) : void
+    # RunTestsInPlayer(runSettings:PlayerLauncherTestRunSettings, filters:UITestRunnerFilter[]) : void
+    + <<override>> TestPlatform : TestPlatform <<get>>
+    # <<override>> IsBusy() : bool
+}
+struct PlayerMenuItem {
+    + name : GUIContent
+    + filterSelectedTestsOnly : bool
+    + buildOnly : bool
+}
+TestListGUI <|-- PlayModeTestListGUI
+PlayModeTestListGUI +-- PlayerMenuItem
+@enduml

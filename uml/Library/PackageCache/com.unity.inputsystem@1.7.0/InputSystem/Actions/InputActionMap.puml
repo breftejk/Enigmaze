@@ -1,0 +1,176 @@
+@startuml
+class InputActionMap <<sealed>> {
+    + name : string <<get>>
+    + asset : InputActionAsset <<get>>
+    + id : Guid <<get>>
+    <<internal>> idDontGenerate : Guid <<get>>
+    + enabled : bool <<get>>
+    + actions : ReadOnlyArray<InputAction> <<get>>
+    + bindings : ReadOnlyArray<InputBinding> <<get>>
+    - bindings : IEnumerable<InputBinding> <<get>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + InputActionMap()
+    + InputActionMap(name:string)
+    + Dispose() : void
+    <<internal>> FindActionIndex(nameOrId:string) : int
+    - SetUpActionLookupTable() : void
+    <<internal>> ClearActionLookupTable() : void
+    - FindActionIndex(id:Guid) : int
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindAction(id:Guid) : InputAction
+    + IsUsableWithDevice(device:InputDevice) : bool
+    + Enable() : void
+    + Disable() : void
+    + Clone() : InputActionMap
+    - Clone() : object
+    + Contains(action:InputAction) : bool
+    + <<override>> ToString() : string
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    <<internal>> m_Name : string
+    <<internal>> m_Id : string
+    <<internal>> m_Asset : InputActionAsset
+    <<internal>> m_Actions : InputAction[]
+    <<internal>> m_Bindings : InputBinding[]
+    - m_BindingsForEachAction : InputBinding[]
+    - m_ControlsForEachAction : InputControl[]
+    <<internal>> m_EnabledActionsCount : int
+    <<internal>> m_SingletonAction : InputAction
+    <<internal>> m_MapIndexInState : int
+    <<internal>> m_State : InputActionState
+    <<internal>> m_BindingMask : InputBinding?
+    - m_Flags : Flags
+    <<internal>> m_ParameterOverridesCount : int
+    <<internal>> m_ParameterOverrides : InputActionRebindingExtensions.ParameterOverride[]
+    <<internal>> m_Devices : DeviceArray
+    <<internal>> m_ActionCallbacks : CallbackArray<Action<InputAction.CallbackContext>>
+    <<internal>> m_ActionIndexByNameOrId : Dictionary<string, int>
+    - needToResolveBindings : bool <<get>> <<set>>
+    - bindingResolutionNeedsFullReResolve : bool <<get>> <<set>>
+    - controlsForEachActionInitialized : bool <<get>> <<set>>
+    - bindingsForEachActionInitialized : bool <<get>> <<set>>
+    <<internal>> {static} s_DeferBindingResolution : int
+    <<internal>> GetBindingsForSingleAction(action:InputAction) : ReadOnlyArray<InputBinding>
+    <<internal>> GetControlsForSingleAction(action:InputAction) : ReadOnlyArray<InputControl>
+    - <<unsafe>> SetUpPerActionControlAndBindingArrays() : void
+    <<internal>> OnWantToChangeSetup() : void
+    <<internal>> OnSetupChanged() : void
+    <<internal>> OnBindingModified() : void
+    <<internal>> ClearCachedActionData(onlyControls:bool) : void
+    <<internal>> GenerateId() : void
+    <<internal>> LazyResolveBindings(fullResolve:bool) : bool
+    <<internal>> ResolveBindingsIfNecessary() : bool
+    <<internal>> ResolveBindings() : void
+    + FindBinding(mask:InputBinding, action:InputAction) : int
+    <<internal>> FindBindingRelativeToMap(mask:InputBinding) : int
+    + {static} FromJson(json:string) : InputActionMap[]
+    + {static} ToJson(maps:IEnumerable<InputActionMap>) : string
+    + ToJson() : string
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+enum Flags {
+    NeedToResolveBindings= 1 << 0,
+    BindingResolutionNeedsFullReResolve= 1 << 1,
+    ControlsForEachActionInitialized= 1 << 2,
+    BindingsForEachActionInitialized= 1 << 3,
+}
+struct DeviceArray {
+    - m_HaveValue : bool
+    - m_DeviceCount : int
+    - m_DeviceArray : InputDevice[]
+    + IndexOf(device:InputDevice) : int
+    + Remove(device:InputDevice) : bool
+    + Get() : ReadOnlyArray<InputDevice>?
+    + Set(devices:ReadOnlyArray<InputDevice>?) : bool
+}
+struct BindingOverrideListJson {
+    + bindings : List<BindingOverrideJson>
+}
+struct BindingOverrideJson {
+    + action : string
+    + id : string
+    + path : string
+    + interactions : string
+    + processors : string
+    + {static} FromBinding(binding:InputBinding, actionName:string) : BindingOverrideJson
+    + {static} FromBinding(binding:InputBinding) : BindingOverrideJson
+    + {static} ToBinding(bindingOverride:BindingOverrideJson) : InputBinding
+}
+struct BindingJson {
+    + name : string
+    + id : string
+    + path : string
+    + interactions : string
+    + processors : string
+    + groups : string
+    + action : string
+    + isComposite : bool
+    + isPartOfComposite : bool
+    + ToBinding() : InputBinding
+    + {static} FromBinding(binding:InputBinding) : BindingJson
+}
+struct ReadActionJson {
+    + name : string
+    + type : string
+    + id : string
+    + expectedControlType : string
+    + expectedControlLayout : string
+    + processors : string
+    + interactions : string
+    + passThrough : bool
+    + initialStateCheck : bool
+    + bindings : BindingJson[]
+    + ToAction(actionName:string) : InputAction
+}
+struct WriteActionJson {
+    + name : string
+    + type : string
+    + id : string
+    + expectedControlType : string
+    + processors : string
+    + interactions : string
+    + initialStateCheck : bool
+    + {static} FromAction(action:InputAction) : WriteActionJson
+}
+struct ReadMapJson {
+    + name : string
+    + id : string
+    + actions : ReadActionJson[]
+    + bindings : BindingJson[]
+}
+struct WriteMapJson {
+    + name : string
+    + id : string
+    + actions : WriteActionJson[]
+    + bindings : BindingJson[]
+    + {static} FromMap(map:InputActionMap) : WriteMapJson
+}
+struct WriteFileJson {
+    + maps : WriteMapJson[]
+    + {static} FromMap(map:InputActionMap) : WriteFileJson
+    + {static} FromMaps(maps:IEnumerable<InputActionMap>) : WriteFileJson
+}
+struct ReadFileJson {
+    + actions : ReadActionJson[]
+    + maps : ReadMapJson[]
+    + ToMaps() : InputActionMap[]
+}
+ICloneable <|-- InputActionMap
+ISerializationCallbackReceiver <|-- InputActionMap
+IInputActionCollection2 <|-- InputActionMap
+IDisposable <|-- InputActionMap
+InputActionMap +-- Flags
+InputActionMap +-- DeviceArray
+InputActionMap +-- BindingOverrideListJson
+InputActionMap +-- BindingOverrideJson
+InputActionMap +-- BindingJson
+InputActionMap +-- ReadActionJson
+InputActionMap +-- WriteActionJson
+InputActionMap +-- ReadMapJson
+InputActionMap +-- WriteMapJson
+InputActionMap +-- WriteFileJson
+InputActionMap +-- ReadFileJson
+@enduml

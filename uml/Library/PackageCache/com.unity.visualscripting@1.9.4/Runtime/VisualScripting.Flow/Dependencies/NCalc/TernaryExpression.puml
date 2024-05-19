@@ -1,0 +1,10 @@
+@startuml
+class TernaryExpression {
+    + TernaryExpression(leftExpression:LogicalExpression, middleExpression:LogicalExpression, rightExpression:LogicalExpression)
+    + LeftExpression : LogicalExpression <<get>> <<set>>
+    + MiddleExpression : LogicalExpression <<get>> <<set>>
+    + RightExpression : LogicalExpression <<get>> <<set>>
+    + <<override>> Accept(visitor:LogicalExpressionVisitor) : void
+}
+LogicalExpression <|-- TernaryExpression
+@enduml

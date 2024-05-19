@@ -1,0 +1,16 @@
+@startuml
+class BoltStateResources <<sealed>> {
+    - BoltStateResources(plugin:BoltState)
+    + icons : Icons <<get>>
+    + <<override>> LateInitialize() : void
+}
+class Icons {
+    + Icons(resources:BoltStateResources)
+    - <<readonly>> resources : BoltStateResources
+    + graph : EditorTexture <<get>>
+    + state : EditorTexture <<get>>
+    + Load() : void
+}
+PluginResources <|-- BoltStateResources
+BoltStateResources +-- Icons
+@enduml

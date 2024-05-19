@@ -1,0 +1,31 @@
+@startuml
+class UpdateReportDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} ShowUpdateReport(wkInfo:WorkspaceInfo, errors:List<ErrorMessage>, parentWindow:EditorWindow) : UpdateReportResult
+    # <<override>> SaveSettings() : void
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - OnCheckedErrorChanged() : void
+    - GetUpdateReportResult() : UpdateReportResult
+    {static} - UpdateUpdateReportList(updateReportListView:UpdateReportListView, errorMessages:List<ErrorMessage>) : void
+    {static} - GetErrorDetailsText(selectedErrorMessage:ErrorMessage) : string
+    - DoUpdateReportArea(updateReportListView:UpdateReportListView, splitterState:object) : void
+    {static} - DoUpdateReportViewArea(updateReportListView:UpdateReportListView) : void
+    - DoErrorDetailsTextArea(selectedErrorMessage:ErrorMessage) : void
+    - DoSelectAllArea() : void
+    - DoButtonsArea(isUpdateForcedButtonEnabled:bool) : void
+    - DoUpdateForcedButton(isEnabled:bool) : void
+    - DoCloseButton() : void
+    - GetEnterKeyAction(isEnabled:bool) : Action
+    - BuildComponents(wkInfo:WorkspaceInfo) : void
+    {static} - Create(wkInfo:WorkspaceInfo, errors:List<ErrorMessage>) : UpdateReportDialog
+    - mIsSelectAllToggleChecked : bool
+    - mIsUpdateForcedButtonEnabled : bool
+    - mErrorDetailsSplitterState : object
+    - mErrorDetailsScrollPosition : Vector2
+    - mUpdateReportListView : UpdateReportListView
+    - mErrors : List<ErrorMessage>
+    - mWkInfo : WorkspaceInfo
+}
+PlasticDialog <|-- UpdateReportDialog
+@enduml

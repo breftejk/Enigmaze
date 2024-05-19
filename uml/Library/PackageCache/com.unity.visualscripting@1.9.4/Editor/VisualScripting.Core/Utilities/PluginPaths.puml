@@ -1,0 +1,22 @@
+@startuml
+class PluginPaths {
+    # PluginPaths(plugin:Plugin)
+    + <<virtual>> Initialize() : void
+    + <<virtual>> LateInitialize() : void
+    + plugin : Plugin <<get>>
+    - {static} _package : string
+    + {static} package : string <<get>>
+    + <<const>> FOLDER_BOLT_GENERATED : string = "Unity.VisualScripting.Generated"
+    + {static} ASSETS_FOLDER_BOLT_GENERATED : string
+    + isFirstPass : bool <<get>>
+    + {static} resourcesFolder : string <<get>>
+    <<internal>> <<const>> assetBundleRoot : string = "Assets/EditorResources"
+    <<internal>> <<const>> assetBundle : string = "visualscripting.editor_assets"
+    + {static} resourcesBundle : string
+    + {static} generated : string <<get>>
+    + persistentGenerated : string <<get>>
+    + transientGenerated : string <<get>>
+    + {static} projectSettings : string <<get>>
+}
+IPluginModule <|-- PluginPaths
+@enduml

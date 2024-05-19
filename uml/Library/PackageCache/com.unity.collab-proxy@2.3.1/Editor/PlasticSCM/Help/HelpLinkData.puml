@@ -1,0 +1,6 @@
+@startuml
+class HelpLinkData <<static>> {
+    <<internal>> {static} TryGet(link:string, type:HelpLink.LinkType, content:string) : bool
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

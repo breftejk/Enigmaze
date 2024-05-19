@@ -1,0 +1,23 @@
+@startuml
+class Texture2DArrayAssetNode {
+    + <<const>> OutputSlotId : int = 0
+    <<const>> - kOutputSlotName : string = "Out"
+    + Texture2DArrayAssetNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_Texture : SerializableTextureArray
+    + texture : Texture2DArray <<get>> <<set>>
+    - GetTexturePropertyName() : string
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+class Minimal2dArrayTextureAssetNode {
+    - m_Texture : SerializableTextureArray = null
+    + GetSourceAssetDependencies(assetCollection:AssetCollection) : void
+}
+AbstractMaterialNode <|-- Texture2DArrayAssetNode
+IPropertyFromNode <|-- Texture2DArrayAssetNode
+IHasDependencies <|-- Minimal2dArrayTextureAssetNode
+@enduml

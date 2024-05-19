@@ -1,0 +1,9 @@
+@startuml
+class GetSavedVariable <<sealed>> {
+    + GetSavedVariable()
+    + GetSavedVariable(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+GetVariableUnit <|-- GetSavedVariable
+ISavedVariableUnit <|-- GetSavedVariable
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+class TimelineMarkerHeaderGUI {
+    {static} <<readonly>> - k_Muted : GUIContent
+    - m_TrackHash : int
+    - timeline : TimelineAsset <<get>>
+    - state : WindowState <<get>>
+    - m_Layer : MarkersLayer
+    - m_ZOrder : LayerZOrder
+    + TimelineMarkerHeaderGUI(asset:TimelineAsset, state:WindowState)
+    + asset : TrackAsset <<get>>
+    + boundingRect : Rect <<get>>
+    + showMarkers : bool <<get>>
+    + muted : bool <<get>>
+    + locked : bool <<get>>
+    + zOrder : LayerZOrder <<get>>
+    - ToWindowSpace(rect:Rect) : Rect
+    + Draw(markerHeaderRect:Rect, markerContentRect:Rect, state:WindowState) : void
+    + Rebuild() : void
+    - HandleDragAndDrop() : void
+    {static} - ResolveType(types:IEnumerable<Type>, onComplete:Action<Type>, formatString:string) : bool
+    - Hash() : int
+    {static} - DrawMarkerDrawer(data:DrawData) : void
+    {static} - DrawMarkerDrawerHeaderBackground(data:DrawData) : void
+    {static} - DrawMarkerDrawerHeader(data:DrawData) : void
+    {static} - DrawMarkerDrawerContentBackground(data:DrawData) : void
+    {static} - DrawMuteOverlay(data:DrawData) : void
+    {static} - DrawTrackDropDownMenu(rect:Rect) : void
+    {static} - DrawMuteButton(rect:Rect, data:DrawData) : void
+    - IsSelected() : bool
+}
+struct DrawData {
+    + headerRect : Rect
+    + contentRect : Rect
+    + trackHeaderFont : GUIStyle
+    + colorTrackFont : Color
+    + isMuted : bool
+    + isSelected : bool
+}
+IRowGUI <|-- TimelineMarkerHeaderGUI
+ILayerable <|-- TimelineMarkerHeaderGUI
+TimelineMarkerHeaderGUI +-- DrawData
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class PlasticSplitterGUILayout <<static>> {
+    <<internal>> {static} BeginHorizontalSplit(splitterState:object) : void
+    <<internal>> {static} EndHorizontalSplit() : void
+    <<internal>> {static} BeginVerticalSplit(splitterState:object) : void
+    <<internal>> {static} EndVerticalSplit() : void
+    <<internal>> {static} InitSplitterState(relativeSizes:float[], minSizes:int[], maxSizes:int[]) : object
+    {static} <<readonly>> - SplitterState : Type
+    {static} <<readonly>> - InternalSplitterGUILayout : Type
+    {static} <<readonly>> - InternalBeginHorizontalSplit : MethodInfo
+    {static} <<readonly>> - InternalEndHorizontalSplit : MethodInfo
+    {static} <<readonly>> - InternalBeginVerticalSplit : MethodInfo
+    {static} <<readonly>> - InternalEndVerticalSplit : MethodInfo
+}
+@enduml

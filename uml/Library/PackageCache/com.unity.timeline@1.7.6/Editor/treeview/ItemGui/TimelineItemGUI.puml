@@ -1,0 +1,33 @@
+@startuml
+class ItemToItemGui <<static>> {
+    {static} - s_ItemToItemGUI : Dictionary<object, TimelineItemGUI>
+    + {static} Add(clip:TimelineClip, gui:TimelineItemGUI) : void
+    + {static} Add(marker:IMarker, gui:TimelineItemGUI) : void
+    + {static} GetGuiForClip(clip:TimelineClip) : TimelineClipGUI
+    + {static} GetGuiForMarker(marker:IMarker) : TimelineMarkerGUI
+    {static} - GetGuiForItem(item:object) : TimelineItemGUI
+}
+abstract class TimelineItemGUI {
+    # <<readonly>> m_Styles : DirectorStyles
+    + {abstract} item : ITimelineItem <<get>>
+    + {abstract} start : double <<get>>
+    + {abstract} end : double <<get>>
+    + {abstract} Draw(rect:Rect, rectChanged:bool, state:WindowState) : void
+    + {abstract} RectToTimeline(trackRect:Rect, state:WindowState) : Rect
+    + <<virtual>> Select() : void
+    + <<virtual>> IsSelected() : bool
+    + <<virtual>> Deselect() : void
+    + <<virtual>> CanSelect(evt:Event) : bool
+    + <<virtual>> StartDrag() : void
+    + <<virtual>> StopDrag() : void
+    + zOrder : LayerZOrder <<get>> <<set>>
+    + visible : bool <<get>> <<set>>
+    + isInvalid : bool <<get>> <<set>>
+    + parent : IRowGUI <<get>>
+    + rect : Rect <<get>>
+    + treeViewRect : Rect <<get>> <<protected set>>
+    - m_TreeViewRect : Rect
+    # TimelineItemGUI(parent:IRowGUI)
+}
+ISelectable <|-- TimelineItemGUI
+@enduml

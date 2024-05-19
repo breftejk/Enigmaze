@@ -1,0 +1,51 @@
+@startuml
+class SkinningModuleSettings {
+    + <<const>> kCompactToolbarKey : string
+    + {static} <<readonly>> kCompactToolbarLabel : GUIContent
+    + {static} compactToolBar : bool <<get>> <<set>>
+    + OnGUI() : void
+}
+class VisibilityToolSettings {
+    + <<const>> kBoneOpacitykey : string
+    + <<const>> kMeshOpacityKey : string
+    + {static} boneOpacity : float <<get>> <<set>>
+    + {static} meshOpacity : float <<get>> <<set>>
+}
+class GenerateGeomertySettings {
+    + <<const>> kDefaultOutlineDetail : int = 10
+    + <<const>> kDefaultAlphaTolerance : int = 10
+    + <<const>> kDefaultSubdivide : int = 0
+    + <<const>> kOutlineDetailKey : string
+    + <<const>> kAlphaToleranceKey : string
+    + <<const>> kSubdivideKey : string
+    + <<const>> kGenerateWeightsKey : string
+    + {static} outlineDetail : int <<get>> <<set>>
+    + {static} alphaTolerance : int <<get>> <<set>>
+    + {static} subdivide : int <<get>> <<set>>
+    + {static} generateWeights : bool <<get>> <<set>>
+}
+class SelectionOutlineSettings {
+    + <<const>> kSelectedOutlineRedKey : string
+    + <<const>> kSelectedOutlineGreenKey : string
+    + <<const>> kSelectedOutlineBlueKey : string
+    + <<const>> kSelectedOutlineAlphaKey : string
+    + <<const>> kSelectedSpriteOutlineSize : string
+    + <<const>> kSelectedBoneOutlineSize : string
+    + {static} <<readonly>> kSelectedOutlineColorLabel : GUIContent
+    + {static} <<readonly>> kSelectedOutlineSizeLabel : GUIContent
+    + {static} <<readonly>> kSelectedBoneOutlineSizeLabel : GUIContent
+    + {static} outlineColor : Color <<get>> <<set>>
+    + {static} selectedSpriteOutlineSize : int <<get>> <<set>>
+    + {static} selectedBoneOutlineSize : float <<get>> <<set>>
+    + OnGUI() : void
+}
+class UserSettings {
+    + <<const>> kSettingsUniqueKey : string = "UnityEditor.U2D.Animation/"
+    - {static} s_SelectionOutlineSettings : SelectionOutlineSettings
+    - {static} s_SkinningModuleSettings : SkinningModuleSettings
+    + UserSettings()
+    - {static} CreateSettingsProvider() : SettingsProvider
+    - {static} SettingsGUI(searchContext:string) : void
+}
+SettingsProvider <|-- UserSettings
+@enduml

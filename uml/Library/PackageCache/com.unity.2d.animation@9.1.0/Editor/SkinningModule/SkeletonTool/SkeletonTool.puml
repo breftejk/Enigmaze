@@ -1,0 +1,34 @@
+@startuml
+class SkeletonTool {
+    - m_SkeletonController : SkeletonController
+    - m_SkeletonToolView : SkeletonToolView
+    - m_RectBoneSelector : RectBoneSelector
+    - m_RectSelectionTool : RectSelectionTool<BoneCache>
+    - m_UnselectTool : UnselectTool<BoneCache>
+    + enableBoneInspector : bool <<get>> <<set>>
+    + mode : SkeletonMode <<get>> <<set>>
+    + editBindPose : bool <<get>> <<set>>
+    + skeletonStyle : ISkeletonStyle <<get>> <<set>>
+    + <<override>> defaultControlID : int <<get>>
+    + hoveredBone : BoneCache <<get>>
+    + skeleton : SkeletonCache <<get>>
+    <<internal>> <<override>> OnCreate() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - SkeletonTopologyChanged(skeletonCache:SkeletonCache) : void
+    - BoneDataChanged(bone:BoneCache) : void
+    - SelectedSpriteChanged(sprite:SpriteCache) : void
+    - BoneSelectionChanged() : void
+    - UpdateBoneInspector() : void
+    - SkinningModeChanged(mode:SkinningMode) : void
+    - SetupSkeleton(sk:SkeletonCache) : void
+    # <<override>> OnGUI() : void
+    - BoneColorChanged(selectedBone:BoneCache, color:Color32) : void
+    - BonePositionChanged(selectedBone:BoneCache, position:Vector2) : void
+    - BoneRotationChanged(selectedBone:BoneCache, rotation:float) : void
+    - BoneNameChanged(selectedBone:BoneCache, name:string) : void
+    - BoneDepthChanged(selectedBone:BoneCache, depth:int) : void
+}
+BaseTool <|-- SkeletonTool
+@enduml

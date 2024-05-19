@@ -1,0 +1,17 @@
+@startuml
+class PropertyDrawerUtils <<static>> {
+    + {static} CreateLabel(text:string, indentLevel:int, fontStyle:FontStyle) : Label
+    + {static} CreateLabel(text:string, indentLevel:int) : Label
+    <<internal>> {static} AddDefaultNodeProperties(parentElement:VisualElement, node:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    <<internal>> {static} AddCustomInterpolatorProperties(parentElement:VisualElement, node:BlockNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    <<internal>> {static} AddCustomCheckboxProperty(parentElement:VisualElement, node:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action, label:String, undoLabel:String, GetterFn:Func<bool>, SetterFn:Action<bool>) : void
+    <<internal>> {static} AddCustomEnumProperty(parentElement:VisualElement, node:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action, label:String, undoLabel:String, GetterFn:Func<T>, SetterFn:Action<T>) : void
+}
+enum UIPrecisionForShaderGraphs {
+    Inherit= Precision.Inherit,
+    Single= Precision.Single,
+    Half= Precision.Half,
+    UseGraphPrecision= Precision.Graph,
+}
+PropertyDrawerUtils +-- UIPrecisionForShaderGraphs
+@enduml

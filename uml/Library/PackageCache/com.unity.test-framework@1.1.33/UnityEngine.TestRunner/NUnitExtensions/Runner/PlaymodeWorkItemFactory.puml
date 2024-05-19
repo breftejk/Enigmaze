@@ -1,0 +1,6 @@
+@startuml
+class PlaymodeWorkItemFactory {
+    # <<override>> Create(method:TestMethod, filter:ITestFilter, loadedTest:ITest) : UnityWorkItem
+}
+WorkItemFactory <|-- PlaymodeWorkItemFactory
+@enduml

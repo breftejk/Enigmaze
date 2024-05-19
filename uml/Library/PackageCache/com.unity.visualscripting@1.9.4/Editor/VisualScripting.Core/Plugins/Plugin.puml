@@ -1,0 +1,18 @@
+@startuml
+abstract class Plugin {
+    # Plugin()
+    + id : string <<get>>
+    + dependencies : ReadOnlyCollection<Plugin> <<get>>
+    + manifest : PluginManifest <<get>> <<internal set>>
+    + configuration : PluginConfiguration <<get>> <<internal set>>
+    + paths : PluginPaths <<get>> <<internal set>>
+    + resources : PluginResources <<get>> <<internal set>>
+    + <<virtual>> scriptReferenceReplacements : IEnumerable<ScriptReferenceReplacement> <<get>>
+    + <<virtual>> aotStubs : IEnumerable<object> <<get>>
+    + <<virtual>> tips : IEnumerable<string> <<get>>
+    + <<virtual>> SetupWizardPages() : IEnumerable<Page>
+    + editorAssembly : Assembly <<get>>
+    + runtimeAssembly : Assembly <<get>>
+    + <<virtual>> RunAction() : void
+}
+@enduml

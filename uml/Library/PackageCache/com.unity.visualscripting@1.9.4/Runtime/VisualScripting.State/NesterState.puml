@@ -1,0 +1,20 @@
+@startuml
+abstract class "NesterState`2"<TGraph,TMacro> {
+    # NesterState()
+    # NesterState(macro:TMacro)
+    + nest : GraphNest<TGraph, TMacro> <<get>>
+    - nest : IGraphNest <<get>>
+    - childGraph : IGraph <<get>>
+    - isSerializationRoot : bool <<get>>
+    - serializedObject : UnityObject <<get>>
+    + <<override>> deserializationDependencies : IEnumerable<ISerializationDependency> <<get>>
+    # CopyFrom(source:NesterState<TGraph, TMacro>) : void
+    + <<override>> GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+    + {abstract} DefaultGraph() : TGraph
+    - DefaultGraph() : IGraph
+    - InstantiateNest() : void
+    - UninstantiateNest() : void
+}
+State <|-- "NesterState`2"
+INesterState <|-- "NesterState`2"
+@enduml

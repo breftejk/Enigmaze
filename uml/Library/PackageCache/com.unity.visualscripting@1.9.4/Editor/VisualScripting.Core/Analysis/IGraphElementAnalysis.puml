@@ -1,0 +1,6 @@
+@startuml
+interface IGraphElementAnalysis {
+    warnings : List<Warning> <<get>>
+}
+IAnalysis <|-- IGraphElementAnalysis
+@enduml

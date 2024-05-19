@@ -1,0 +1,150 @@
+@startuml
+class DebugUI <<partial>> {
+}
+abstract class "Field`1"<T> {
+    + getter : Func<T> <<get>> <<set>>
+    + setter : Action<T> <<get>> <<set>>
+    + onValueChanged : Action<Field<T>, T>
+    - ValidateValue(value:object) : object
+    + <<virtual>> ValidateValue(value:T) : T
+    - GetValue() : object
+    + GetValue() : T
+    + SetValue(value:object) : void
+    + <<virtual>> SetValue(value:T) : void
+}
+class BoolField {
+}
+class HistoryBoolField {
+    + historyGetter : Func<bool>[] <<get>> <<set>>
+    + historyDepth : int <<get>>
+    + GetHistoryValue(historyIndex:int) : bool
+}
+class IntField {
+    + min : Func<int>
+    + max : Func<int>
+    + incStep : int = 1
+    + intStepMult : int = 10
+    + <<override>> ValidateValue(value:int) : int
+}
+class UIntField {
+    + min : Func<uint>
+    + max : Func<uint>
+    + incStep : uint = 1u
+    + intStepMult : uint = 10u
+    + <<override>> ValidateValue(value:uint) : uint
+}
+class FloatField {
+    + min : Func<float>
+    + max : Func<float>
+    + incStep : float = 0.1f
+    + incStepMult : float = 10f
+    + decimals : int = 3
+    + <<override>> ValidateValue(value:float) : float
+}
+abstract class "EnumField`1"<T> {
+    + enumNames : GUIContent[]
+    - m_EnumValues : int[]
+    + enumValues : int[] <<get>> <<set>>
+    {static} - s_NicifyRegEx : Regex
+    # AutoFillFromType(enumType:Type) : void
+}
+class EnumField {
+    <<internal>> quickSeparators : int[]
+    - m_Indexes : int[]
+    <<internal>> indexes : int[] <<get>>
+    + getIndex : Func<int> <<get>> <<set>>
+    + setIndex : Action<int> <<get>> <<set>>
+    + currentIndex : int <<get>> <<set>>
+    + autoEnum : Type <<set>>
+    <<internal>> InitQuickSeparators() : void
+    + <<override>> SetValue(value:int) : void
+}
+class ObjectPopupField {
+    + getObjects : Func<IEnumerable<Object>> <<get>> <<set>>
+}
+class HistoryEnumField {
+    + historyIndexGetter : Func<int>[] <<get>> <<set>>
+    + historyDepth : int <<get>>
+    + GetHistoryValue(historyIndex:int) : int
+}
+class BitField {
+    - m_EnumType : Type
+    + enumType : Type <<get>> <<set>>
+}
+class ColorField {
+    + hdr : bool = false
+    + showAlpha : bool = true
+    + showPicker : bool = true
+    + incStep : float = 0.025f
+    + incStepMult : float = 5f
+    + decimals : int = 3
+    + <<override>> ValidateValue(value:Color) : Color
+}
+class Vector2Field {
+    + incStep : float = 0.025f
+    + incStepMult : float = 10f
+    + decimals : int = 3
+}
+class Vector3Field {
+    + incStep : float = 0.025f
+    + incStepMult : float = 10f
+    + decimals : int = 3
+}
+class Vector4Field {
+    + incStep : float = 0.025f
+    + incStepMult : float = 10f
+    + decimals : int = 3
+}
+class ObjectField {
+    + type : Type
+}
+class ObjectListField {
+    + type : Type
+}
+class MessageBox {
+    + style : Style
+}
+enum Style {
+    Info,
+    Warning,
+    Error,
+}
+DebugUI +-- "Field`1"
+Widget <|-- "Field`1"
+IValueField <|-- "Field`1"
+DebugUI +-- BoolField
+"Field`1" "<bool>" <|-- BoolField
+DebugUI +-- HistoryBoolField
+BoolField <|-- HistoryBoolField
+DebugUI +-- IntField
+"Field`1" "<int>" <|-- IntField
+DebugUI +-- UIntField
+"Field`1" "<uint>" <|-- UIntField
+DebugUI +-- FloatField
+"Field`1" "<float>" <|-- FloatField
+DebugUI +-- "EnumField`1"
+"Field`1" "<T>" <|-- "EnumField`1"
+DebugUI +-- EnumField
+"EnumField`1" "<int>" <|-- EnumField
+DebugUI +-- ObjectPopupField
+"Field`1" "<Object>" <|-- ObjectPopupField
+DebugUI +-- HistoryEnumField
+EnumField <|-- HistoryEnumField
+DebugUI +-- BitField
+"EnumField`1" "<Enum>" <|-- BitField
+DebugUI +-- ColorField
+"Field`1" "<Color>" <|-- ColorField
+DebugUI +-- Vector2Field
+"Field`1" "<Vector2>" <|-- Vector2Field
+DebugUI +-- Vector3Field
+"Field`1" "<Vector3>" <|-- Vector3Field
+DebugUI +-- Vector4Field
+"Field`1" "<Vector4>" <|-- Vector4Field
+DebugUI +-- ObjectField
+"Field`1" "<Object>" <|-- ObjectField
+DebugUI +-- ObjectListField
+"Field`1" "<Object[]>" <|-- ObjectListField
+DebugUI +-- MessageBox
+Widget <|-- MessageBox
+MessageBox +-- Style
+@enduml

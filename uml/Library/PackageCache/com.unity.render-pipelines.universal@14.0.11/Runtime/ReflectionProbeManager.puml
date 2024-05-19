@@ -1,0 +1,46 @@
+@startuml
+struct ReflectionProbeManager {
+    - m_Resolution : int2
+    - m_AtlasTexture0 : RenderTexture
+    - m_AtlasTexture1 : RenderTexture
+    - m_AtlasAllocator : BuddyAllocator
+    - m_Cache : Dictionary<int, CachedProbe>
+    - m_WarningCache : Dictionary<int, int>
+    - m_NeedsUpdate : List<int>
+    - m_NeedsRemove : List<int>
+    - m_BoxMax : Vector4[]
+    - m_BoxMin : Vector4[]
+    - m_ProbePosition : Vector4[]
+    - m_MipScaleOffset : Vector4[]
+    <<const>> - k_MaxMipCount : int = 7
+    <<const>> - k_ReflectionProbeAtlasName : string = "URP Reflection Probe Atlas"
+    + atlasRT : RenderTexture <<get>>
+    + {static} Create() : ReflectionProbeManager
+    - Init() : void
+    + <<unsafe>> UpdateGpuData(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - GetScaleOffset(level:int, dataIndex:int, includePadding:bool, yflip:bool) : float4
+    + Dispose() : void
+}
+struct CachedProbe {
+    + updateCount : uint
+    + imageContentsHash : Hash128
+    + size : int
+    + mipCount : int
+    + <<fixed>> dataIndices : int
+    + <<fixed>> levels : int
+    + texture : Texture
+    + lastUsed : int
+    + hdrData : Vector4
+}
+class ShaderProperties <<static>> {
+    + {static} <<readonly>> BoxMin : int
+    + {static} <<readonly>> BoxMax : int
+    + {static} <<readonly>> ProbePosition : int
+    + {static} <<readonly>> MipScaleOffset : int
+    + {static} <<readonly>> Count : int
+    + {static} <<readonly>> Atlas : int
+}
+IDisposable <|-- ReflectionProbeManager
+ReflectionProbeManager +-- CachedProbe
+ReflectionProbeManager +-- ShaderProperties
+@enduml

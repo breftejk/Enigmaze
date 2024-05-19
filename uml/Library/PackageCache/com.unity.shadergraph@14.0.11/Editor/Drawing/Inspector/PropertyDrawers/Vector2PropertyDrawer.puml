@@ -1,0 +1,16 @@
+@startuml
+class Vector2PropertyDrawer {
+    + preValueChangeCallback : Action <<get>> <<set>>
+    + postValueChangeCallback : Action <<get>> <<set>>
+    - m_KeyDownCallback : EventCallback<KeyDownEvent>
+    - m_FocusOutCallback : EventCallback<FocusOutEvent>
+    + mUndoGroup : int <<get>> <<set>>
+    + Vector2PropertyDrawer()
+    - CreateCallbacks() : void
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:Vector2, labelName:string, propertyVec2Field:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- Vector2PropertyDrawer
+@enduml

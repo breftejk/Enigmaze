@@ -1,0 +1,8 @@
+@startuml
+class Description {
+    + <<virtual>> title : string <<get>> <<set>>
+    + <<virtual>> summary : string <<get>> <<set>>
+    + <<virtual>> icon : EditorTexture <<get>> <<set>>
+}
+IDescription <|-- Description
+@enduml

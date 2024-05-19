@@ -1,0 +1,20 @@
+@startuml
+class ActivationTrack {
+    - m_PostPlaybackState : PostPlaybackState
+    - m_ActivationMixer : ActivationMixerPlayable
+    <<internal>> <<override>> CanCompileClips() : bool
+    + postPlaybackState : PostPlaybackState <<get>> <<set>>
+    + <<override>> CreateTrackMixer(graph:PlayableGraph, go:GameObject, inputCount:int) : Playable
+    <<internal>> UpdateTrackMode() : void
+    + <<override>> GatherProperties(director:PlayableDirector, driver:IPropertyCollector) : void
+    # <<override>> OnCreateClip(clip:TimelineClip) : void
+}
+enum PostPlaybackState {
+    Active,
+    Inactive,
+    Revert,
+    LeaveAsIs,
+}
+TrackAsset <|-- ActivationTrack
+ActivationTrack +-- PostPlaybackState
+@enduml

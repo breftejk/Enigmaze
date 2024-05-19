@@ -1,0 +1,15 @@
+@startuml
+class TMP_EditorPanelUI {
+    {static} <<readonly>> - k_RaycastTargetLabel : GUIContent
+    {static} <<readonly>> - k_MaskableLabel : GUIContent
+    - m_RaycastTargetProp : SerializedProperty
+    - m_MaskableProp : SerializedProperty
+    # <<override>> OnEnable() : void
+    # <<override>> DrawExtraSettings() : void
+    # DrawRaycastTarget() : void
+    # DrawMaskable() : void
+    # <<override>> IsMixSelectionTypes() : bool
+    # <<override>> OnUndoRedo() : void
+}
+TMP_BaseEditorPanel <|-- TMP_EditorPanelUI
+@enduml

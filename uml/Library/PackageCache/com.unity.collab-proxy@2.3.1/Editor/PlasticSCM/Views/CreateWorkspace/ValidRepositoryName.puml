@@ -1,0 +1,9 @@
+@startuml
+class ValidRepositoryName <<static>> {
+    <<internal>> {static} Get(repositoryName:string, repositories:IList) : string
+    {static} - RepositoryExists(repositoryName:string, repositories:IList) : bool
+    {static} - GetValidRepositoryName(newRepository:string) : string
+    <<const>> - SUBMODULE_SEPARATOR : char = '/'
+    <<const>> - PIPE_CHARACTER : char = '|'
+}
+@enduml

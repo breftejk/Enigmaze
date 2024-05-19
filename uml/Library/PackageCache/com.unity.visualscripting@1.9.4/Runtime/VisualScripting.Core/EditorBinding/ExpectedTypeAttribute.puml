@@ -1,0 +1,7 @@
+@startuml
+class ExpectedTypeAttribute <<sealed>> {
+    + ExpectedTypeAttribute(type:Type)
+    + type : Type <<get>>
+}
+Attribute <|-- ExpectedTypeAttribute
+@enduml

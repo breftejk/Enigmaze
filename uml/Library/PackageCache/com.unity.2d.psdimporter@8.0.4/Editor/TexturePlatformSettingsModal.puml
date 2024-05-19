@@ -1,0 +1,28 @@
+@startuml
+class TexturePlatformSettingsModal <<static>> {
+    + {static} <<readonly>> kFormatsWithCompressionSettings : TextureImporterFormat[]
+    + {static} <<readonly>> kValidBuildPlatform : BuildPlatformData[]
+    + {static} <<readonly>> kTextureFormatsValueApplePVR : int[]
+    + {static} <<readonly>> kTextureFormatsValueAndroid : int[]
+    + {static} <<readonly>> kTextureFormatsValueSTV : int[]
+    + {static} <<readonly>> kTextureFormatsValueWebGL : int[]
+    + {static} <<readonly>> kNormalFormatsValueDefault : int[]
+    + {static} <<readonly>> kTextureFormatsValueDefault : int[]
+    + {static} <<readonly>> kTextureFormatsValueSingleChannel : int[]
+    <<internal>> {static} s_TextureFormatStringsWebGL : string[]
+    <<internal>> {static} s_TextureFormatStringsApplePVR : string[]
+    <<internal>> {static} s_TextureFormatStringsAndroid : string[]
+    <<internal>> {static} s_TextureFormatStringsSTV : string[]
+    <<internal>> {static} s_TextureFormatStringsSingleChannel : string[]
+    <<internal>> {static} s_TextureFormatStringsDefault : string[]
+    {static} - TexturePlatformSettingsModal()
+    <<internal>> {static} BuildTextureStrings(texFormatValues:int[]) : string[]
+    {static} - GetTextureFormatString(format:TextureImporterFormat) : string
+}
+struct BuildPlatformData {
+    + buildTargetName : string
+    + defaultTextureFormat : TextureImporterFormat
+    + buildTarget : BuildTarget[]
+}
+TexturePlatformSettingsModal +-- BuildPlatformData
+@enduml

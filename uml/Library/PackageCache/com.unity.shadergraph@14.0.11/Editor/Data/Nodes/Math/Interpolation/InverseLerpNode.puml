@@ -1,0 +1,8 @@
+@startuml
+class InverseLerpNode {
+    + InverseLerpNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_InverseLerp(A:DynamicDimensionVector, B:DynamicDimensionVector, T:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- InverseLerpNode
+@enduml

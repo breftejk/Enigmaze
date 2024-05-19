@@ -1,0 +1,16 @@
+@startuml
+class UnityLogCheckDelegatingCommand {
+    {static} - s_AttributeCache : Dictionary<object, bool?>
+    + UnityLogCheckDelegatingCommand(innerCommand:TestCommand)
+    + <<override>> Execute(context:ITestExecutionContext) : TestResult
+    + ExecuteEnumerable(context:ITestExecutionContext) : IEnumerable
+    {static} - CaptureException(result:TestResult, action:Action) : bool
+    {static} - ExecuteAndCheckLog(logScope:LogScope, result:TestResult, action:Action) : bool
+    {static} - PostTestValidation(logScope:LogScope, command:TestCommand, result:TestResult) : void
+    {static} - CheckLogs(result:TestResult, logScope:LogScope) : bool
+    {static} - CheckFailingLogs(logScope:LogScope, result:TestResult) : bool
+    {static} - MustExpect(method:MemberInfo) : bool
+}
+DelegatingTestCommand <|-- UnityLogCheckDelegatingCommand
+IEnumerableTestMethodCommand <|-- UnityLogCheckDelegatingCommand
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+struct WeightedTriangle {
+    + p1 : int
+    + p2 : int
+    + p3 : int
+    + weight : float
+    + CompareTo(other:WeightedTriangle) : int
+}
+struct SpriteJobData {
+    + spriteMesh : BaseSpriteMeshData
+    + vertices : NativeArray<float2>
+    + edges : NativeArray<int2>
+    + indices : NativeArray<int>
+    + weights : NativeArray<BoneWeight>
+    + result : NativeArray<int4>
+}
+class SpriteMeshDataController {
+    + spriteMeshData : BaseSpriteMeshData
+    - m_VerticesTemp : float2[]
+    - m_EdgesTemp : int2[]
+    + CreateVertex(position:Vector2) : void
+    + CreateVertex(position:Vector2, edgeIndex:int) : void
+    + CreateEdge(index1:int, index2:int) : void
+    + RemoveVertex(index:int) : void
+    + RemoveVertex(indices:IEnumerable<int>) : void
+    - RemoveEdge(edge:int2) : void
+    - FindEdgesContainsIndex(index:int, result:List<int2>) : bool
+    + CreateQuad() : void
+    + TriangulateJob(triangulator:ITriangulator, spriteData:SpriteJobData) : JobHandle
+    + Triangulate(triangulator:ITriangulator) : void
+    - FillMeshDataContainers(vertices:float2[], edges:int2[], weightData:EditableBoneWeight[], hasWeightData:bool) : void
+    + Subdivide(triangulator:ITriangulator, spriteData:SpriteJobData, largestAreaFactor:float, areaThreshold:float) : JobHandle
+    + ClearWeights(selection:ISelection<int>) : void
+    + OutlineFromAlpha(outlineGenerator:IOutlineGenerator, textureDataProvider:ITextureDataProvider, outlineDetail:float, alphaTolerance:byte) : void
+    + NormalizeWeights(selection:ISelection<int>) : void
+    + CalculateWeightsJob(weightsGenerator:IWeightsGenerator, selection:ISelection<int>, filterTolerance:float, sd:SpriteJobData) : JobHandle
+    + CalculateWeights(weightsGenerator:IWeightsGenerator, selection:ISelection<int>, filterTolerance:float) : void
+    + CalculateWeightsSafe(weightsGenerator:IWeightsGenerator, selection:ISelection<int>, filterTolerance:float) : void
+    + SmoothWeights(iterations:int, selection:ISelection<int>) : void
+    + FindTriangle(point:Vector2, indices:Vector3Int, barycentricCoords:Vector3) : bool
+    - m_VertexOrderList : List<float>
+    - m_WeightedTriangles : List<WeightedTriangle>
+    + SortTrianglesByDepth() : void
+    + GetMultiEditChannelData(selection:ISelection<int>, channel:int, enabled:bool, boneIndex:int, weight:float, isEnabledMixed:bool, isBoneIndexMixed:bool, isWeightMixed:bool) : void
+    + SetMultiEditChannelData(selection:ISelection<int>, channel:int, oldEnabled:bool, newEnabled:bool, oldBoneIndex:int, newBoneIndex:int, oldWeight:float, newWeight:float) : void
+    + GetControlPoints(points:float2[], edges:int2[], pins:int[]) : void
+    {static} - FindPoint(points:IReadOnlyList<Vector2>, point:Vector2, distanceTolerance:float) : int
+    + SmoothFill() : void
+}
+"IComparable`1" "<WeightedTriangle>" <|-- WeightedTriangle
+@enduml

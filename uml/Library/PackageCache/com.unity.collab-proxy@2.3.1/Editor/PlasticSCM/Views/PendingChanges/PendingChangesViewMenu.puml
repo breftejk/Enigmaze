@@ -1,0 +1,25 @@
+@startuml
+class PendingChangesViewMenu {
+    <<internal>> PendingChangesViewMenu(wkInfo:WorkspaceInfo, pendingChangesViewOperations:IPendingChangesMenuOperations, filterMenuOperations:IFilesFilterPatternsMenuOperations, openMenuOperations:IOpenMenuOperations, metaMenuOperations:PendingChangesViewPendingChangeMenu.IMetaMenuOperations, changelistMenuOperations:IChangelistMenuOperations, getSelectedNodes:IGetSelectedNodes, isGluonMode:bool)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - GetPendingChangeMenu() : PendingChangesViewPendingChangeMenu
+    - GetChangelistMenu() : ChangelistMenu
+    {static} - AreAllChangelists(selectedNodes:List<IPlasticTreeNode>) : bool
+    {static} - AreAllPendingChanges(selectedNodes:List<IPlasticTreeNode>) : bool
+    - mPendingChangeMenu : PendingChangesViewPendingChangeMenu
+    - mChangelistMenu : ChangelistMenu
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mPendingChangesViewOperations : IPendingChangesMenuOperations
+    <<readonly>> - mFilterMenuOperations : IFilesFilterPatternsMenuOperations
+    <<readonly>> - mOpenMenuOperations : IOpenMenuOperations
+    <<readonly>> - mMetaMenuOperations : PendingChangesViewPendingChangeMenu.IMetaMenuOperations
+    <<readonly>> - mChangelistMenuOperations : IChangelistMenuOperations
+    <<readonly>> - mGetSelectedNodes : IGetSelectedNodes
+    <<readonly>> - mIsGluonMode : bool
+}
+interface IGetSelectedNodes {
+    GetSelectedNodes() : List<IPlasticTreeNode>
+}
+PendingChangesViewMenu +-- IGetSelectedNodes
+@enduml

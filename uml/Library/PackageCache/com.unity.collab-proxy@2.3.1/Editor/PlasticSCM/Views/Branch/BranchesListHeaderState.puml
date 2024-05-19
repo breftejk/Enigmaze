@@ -1,0 +1,24 @@
+@startuml
+enum BranchesListColumn {
+    Name,
+    Repository,
+    CreatedBy,
+    CreationDate,
+    Comment,
+    Branch,
+    Guid,
+}
+class BranchesListHeaderState {
+    <<internal>> {static} GetDefault() : BranchesListHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:BranchesListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - BranchesListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- BranchesListHeaderState
+ISerializationCallbackReceiver <|-- BranchesListHeaderState
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class MigrationProgressRender {
+    <<internal>> {static} FixNotificationPath(wkPath:string, notification:string) : string
+    <<internal>> {static} GetProgressString(status:CreateWorkspaceFromCollab.Progress, progressData:BuildProgressSpeedAndRemainingTime.ProgressData, now:DateTime, smoothingFactor:double, updateProgressCalculatingMessage:string, updateProgressSingularMessage:string, updateProgressPluralMessage:string, remainingMessage:string) : string
+    {static} - mLog : ILog
+}
+@enduml

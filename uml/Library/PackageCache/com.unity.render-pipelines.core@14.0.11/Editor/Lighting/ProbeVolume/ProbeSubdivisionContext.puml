@@ -1,0 +1,17 @@
+@startuml
+class ProbeSubdivisionContext {
+    + probeVolumes : List<(ProbeVolume component, ProbeReferenceVolume.Volume volume, Bounds bounds)>
+    + cells : List<(Vector3Int position, Bounds bounds)>
+    + contributors : GIContributors
+    + profile : ProbeReferenceVolumeProfile
+    + Initialize(profile:ProbeReferenceVolumeProfile, refVolOrigin:Vector3) : void
+}
+class RealtimeProbeSubdivisionDebug {
+    {static} - s_LastSubdivisionTime : double
+    {static} - s_LastRefreshTime : double
+    {static} - s_CurrentSubdivision : IEnumerator
+    {static} - RealtimeProbeSubdivisionDebug()
+    {static} - UpdateRealtimeSubdivisionDebug() : void
+}
+ProbeSubdivisionContext +-- RealtimeProbeSubdivisionDebug
+@enduml

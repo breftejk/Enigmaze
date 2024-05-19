@@ -1,0 +1,8 @@
+@startuml
+class ModuloNode {
+    + ModuloNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Modulo(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ModuloNode
+@enduml

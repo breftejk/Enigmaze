@@ -1,0 +1,10 @@
+@startuml
+class Surface {
+    - m_Color : NativeArray<Color32>
+    + Surface(w:int, h:int)
+    + Dispose() : void
+    + color : NativeArray<Color32> <<get>>
+    + width : int <<get>>
+    + height : int <<get>>
+}
+@enduml

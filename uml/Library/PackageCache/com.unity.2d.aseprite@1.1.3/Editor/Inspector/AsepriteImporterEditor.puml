@@ -1,0 +1,217 @@
+@startuml
+class AsepriteImporterEditor {
+    <<const>> - k_BaseFieldAlignedUssClass : string = "unity-base-field__aligned"
+    <<const>> - k_HiddenElementUssClass : string = "HiddenElement"
+    <<const>> - k_PaddingElementUssClass : string = "PaddingElement"
+    <<const>> - k_SubElementUssClass : string = "SubElement"
+    - m_GeneratePhysicsShape : SerializedProperty
+    - m_TextureType : SerializedProperty
+    - m_TextureShape : SerializedProperty
+    - m_SpriteMode : SerializedProperty
+    - m_SpritePixelsToUnits : SerializedProperty
+    - m_SpriteMeshType : SerializedProperty
+    - m_SpriteExtrude : SerializedProperty
+    - m_Alignment : SerializedProperty
+    - m_SpritePivot : SerializedProperty
+    - m_NPOTScale : SerializedProperty
+    - m_IsReadable : SerializedProperty
+    - m_sRGBTexture : SerializedProperty
+    - m_AlphaSource : SerializedProperty
+    - m_MipMapMode : SerializedProperty
+    - m_EnableMipMap : SerializedProperty
+    - m_FadeOut : SerializedProperty
+    - m_BorderMipMap : SerializedProperty
+    - m_MipMapsPreserveCoverage : SerializedProperty
+    - m_AlphaTestReferenceValue : SerializedProperty
+    - m_MipMapFadeDistanceStart : SerializedProperty
+    - m_MipMapFadeDistanceEnd : SerializedProperty
+    - m_AlphaIsTransparency : SerializedProperty
+    - m_FilterMode : SerializedProperty
+    - m_Aniso : SerializedProperty
+    - m_WrapU : SerializedProperty
+    - m_WrapV : SerializedProperty
+    - m_WrapW : SerializedProperty
+    - m_ConvertToNormalMap : SerializedProperty
+    - m_PlatformSettingsArrProp : SerializedProperty
+    - m_FileImportMode : SerializedProperty
+    - m_ImportHiddenLayers : SerializedProperty
+    - m_LayerImportMode : SerializedProperty
+    - m_DefaultPivotSpace : SerializedProperty
+    - m_DefaultPivotAlignment : SerializedProperty
+    - m_CustomPivotPosition : SerializedProperty
+    - m_MosaicPadding : SerializedProperty
+    - m_SpritePadding : SerializedProperty
+    - m_GenerateModelPrefab : SerializedProperty
+    - m_AddSortingGroup : SerializedProperty
+    - m_AddShadowCasters : SerializedProperty
+    - m_GenerateAnimationClips : SerializedProperty
+    - m_PrevGenerateAnimationClips : SerializedProperty
+    - m_RootVisualElement : VisualElement
+    - m_InspectorSettingsView : VisualElement
+    <<readonly>> - m_AdvancedInspectorGUI : Dictionary<TextureImporterType, Action[]>
+    - m_IsPowerOfTwo : bool = false
+    <<readonly>> - m_EditorFoldOutState : AsepriteImporterEditorFoldOutState
+    - m_ShowPerAxisWrapModes : bool = false
+    <<readonly>> - m_FilterModeOptions : int[]
+    - m_TexturePlatformSettingsHelper : TexturePlatformSettingsHelper
+    - m_InspectorUI : VisualElement[]
+    - m_ActiveEditorIndex : int = 0
+    - textureTypeHasMultipleDifferentValues : bool <<get>>
+    - textureType : TextureImporterType <<get>>
+    - spriteImportMode : SpriteImportMode <<get>>
+    - fileImportMode : FileImportModes <<get>>
+    - spriteImportMode : SpriteImportMode <<get>>
+    - m_DefaultClip : AnimationClip
+    - m_ModelPreviewer : ModelPreviewer
+    - m_ImporterTargets : AsepriteImporter[]
+    - m_AssetPaths : string[]
+    + platformSettingsArray : SerializedProperty <<get>>
+    + <<override>> showImportedObject : bool <<get>>
+    + <<override>> UseDefaultMargins() : bool
+    + <<override>> OnEnable() : void
+    - CacheImporterData() : void
+    - CacheSerializedProperties() : void
+    - SetupInspectorUI() : void
+    - SetupSpriteActorContainer() : VisualElement
+    - SetupGeneralContainer(root:VisualElement) : void
+    - SetupSpriteEditorButton(root:VisualElement) : void
+    - CanOpenSpriteEditor() : bool
+    - SetupLayerImportContainer(root:VisualElement) : void
+    - SetupGenerateAssetContainer(root:VisualElement) : void
+    - SetupAnimationAssetsButton(root:VisualElement) : void
+    - SetupCommonTextureSettingsContainer(root:VisualElement) : void
+    - SetupPlatformSettingsContainer(root:VisualElement) : void
+    - SetupAdvancedContainer(root:VisualElement) : void
+    - InitPreview() : void
+    - DisposePreview() : void
+    {static} - GetAllAnimationClips(assetPath:string) : AnimationClip[]
+    # <<override>> extraDataType : Type <<get>>
+    # <<override>> InitializeExtraDataInstance(extraTarget:UnityEngine.Object, targetIndex:int) : void
+    + <<override>> CreateInspectorGUI() : VisualElement
+    + <<override>> OnDisable() : void
+    # <<override>> ResetValues() : void
+    - ShowInspectorTab(tab:int) : void
+    <<internal>> SaveChanges() : void
+    {static} - WrapModePopup(wrapU:SerializedProperty, wrapV:SerializedProperty, wrapW:SerializedProperty, isVolumeTexture:bool, showPerAxisWrapModes:bool) : void
+    {static} - WrapModeAxisPopup(label:GUIContent, wrapProperty:SerializedProperty) : void
+    {static} - IsAnyTextureObjectUsingPerAxisWrapMode(objects:UnityEngine.Object[], isVolumeTexture:bool) : bool
+    - ColorSpaceGUI() : void
+    - AlphaHandlingGUI() : void
+    - POTScaleGUI() : void
+    - ReadableGUI() : void
+    - MipMapGUI() : void
+    # <<override>> Apply() : void
+    - ApplyTexturePlatformSettings() : void
+    + <<override>> HasModified() : bool
+    - GetTargetCount() : int
+    - GetPlatformTextureSettings(i:int, name:string) : TextureImporterPlatformSettings
+    - ShowPresetSettings() : bool
+    - DoesSourceTextureHaveAlpha(i:int) : bool
+    - IsSourceTextureHDR(i:int) : bool
+    - SetPlatformTextureSettings(i:int, platformSettings:TextureImporterPlatformSettings) : void
+    - GetImporterSettings(i:int, settings:TextureImporterSettings) : void
+    + GetBuildTargetName(sp:SerializedProperty) : string
+    - GetSerializedPropertySettings(settings:TextureImporterSettings) : TextureImporterSettings
+    {static} - ToggleFromInt(property:SerializedProperty, label:GUIContent) : void
+    {static} - EnumPopup(property:SerializedProperty, type:System.Type, label:GUIContent) : void
+    + <<override>> DrawPreview(r:Rect) : void
+    - ReloadPreviewData() : void
+    - HasRenamedAssets() : bool
+    {static} - s_Styles : Styles
+    {static} - styles : Styles <<get>>
+}
+class Styles {
+    <<readonly>> - textureShape2D : GUIContent
+    <<readonly>> - textureShapeCube : GUIContent
+    + <<readonly>> textureShapeOptionsDictionnary : Dictionary<TextureImporterShape, GUIContent[]>
+    + <<readonly>> textureShapeValuesDictionnary : Dictionary<TextureImporterShape, int[]>
+    + <<readonly>> filterMode : GUIContent
+    + <<readonly>> filterModeOptions : GUIContent[]
+    + <<readonly>> mipmapFadeOutToggle : GUIContent
+    + <<readonly>> mipmapFadeOut : GUIContent
+    + <<readonly>> readWrite : GUIContent
+    + <<readonly>> alphaSource : GUIContent
+    + <<readonly>> alphaSourceOptions : GUIContent[]
+    + <<readonly>> alphaSourceValues : int[]
+    + <<readonly>> generateMipMaps : GUIContent
+    + <<readonly>> sRGBTexture : GUIContent
+    + <<readonly>> borderMipMaps : GUIContent
+    + <<readonly>> mipMapsPreserveCoverage : GUIContent
+    + <<readonly>> alphaTestReferenceValue : GUIContent
+    + <<readonly>> mipMapFilter : GUIContent
+    + <<readonly>> mipMapFilterOptions : GUIContent[]
+    + <<readonly>> npot : GUIContent
+    + <<readonly>> spriteMeshTypeOptions : List<string>
+    + <<readonly>> fileImportMode : GUIContent
+    + <<readonly>> spritePixelsPerUnit : GUIContent
+    + <<readonly>> spriteMeshType : GUIContent
+    + <<readonly>> generatePhysicsShape : GUIContent
+    + <<readonly>> warpNotSupportWarning : GUIContent
+    + <<readonly>> anisoLevelLabel : GUIContent
+    + <<readonly>> anisotropicDisableInfo : GUIContent
+    + <<readonly>> anisotropicForceEnableInfo : GUIContent
+    + <<readonly>> unappliedSettingsDialogTitle : GUIContent
+    + <<readonly>> unappliedSettingsDialogContent : GUIContent
+    + <<readonly>> applyButtonLabel : GUIContent
+    + <<readonly>> cancelButtonLabel : GUIContent
+    + <<readonly>> spriteEditorButtonLabel : GUIContent
+    + <<readonly>> alphaIsTransparency : GUIContent
+    + <<readonly>> advancedHeaderText : GUIContent
+    + <<readonly>> platformSettingsHeaderText : GUIContent
+    + <<readonly>> platformSettingsSelection : GUIContent[]
+    + <<readonly>> wrapModeLabel : GUIContent
+    + <<readonly>> wrapU : GUIContent
+    + <<readonly>> wrapV : GUIContent
+    + <<readonly>> wrapW : GUIContent
+    + <<readonly>> wrapModeContents : GUIContent[]
+    + <<readonly>> wrapModeValues : int[]
+    + <<readonly>> importHiddenLayer : GUIContent
+    + <<readonly>> defaultPivotSpace : GUIContent
+    + <<readonly>> defaultPivotAlignment : GUIContent
+    + <<readonly>> customPivotPosition : GUIContent
+    + <<readonly>> mosaicPadding : GUIContent
+    + <<readonly>> spritePadding : GUIContent
+    + <<readonly>> spriteAlignmentOptions : List<string>
+    + <<readonly>> layerImportMode : GUIContent
+    + <<readonly>> layerImportOptions : List<string>
+    + <<readonly>> generateModelPrefab : GUIContent
+    + <<readonly>> addSortingGroup : GUIContent
+    + <<readonly>> addShadowCasters : GUIContent
+    + <<readonly>> generateAnimationClips : GUIContent
+    + <<readonly>> generalHeaderText : GUIContent
+    + <<readonly>> layerImportHeaderText : GUIContent
+    + <<readonly>> generateAssetsHeaderText : GUIContent
+    + <<readonly>> textureHeaderText : GUIContent
+    + <<readonly>> exportAnimationAssetsText : GUIContent
+    + <<readonly>> exportAnimationInfoText : GUIContent
+    + Styles()
+}
+class AsepriteImporterEditorFoldOutState {
+    <<readonly>> - m_GeneralFoldout : SavedBool
+    <<readonly>> - m_LayerImportFoldout : SavedBool
+    <<readonly>> - m_GenerateAssetFoldout : SavedBool
+    <<readonly>> - m_AdvancedFoldout : SavedBool
+    <<readonly>> - m_TextureFoldout : SavedBool
+    <<readonly>> - m_PlatformSettingsFoldout : SavedBool
+    + generalFoldout : bool <<get>> <<set>>
+    + layerImportFoldout : bool <<get>> <<set>>
+    + generateAssetFoldout : bool <<get>> <<set>>
+    + advancedFoldout : bool <<get>> <<set>>
+    + textureFoldout : bool <<get>> <<set>>
+    + platformSettingsFoldout : bool <<get>> <<set>>
+    + AsepriteImporterEditorFoldOutState()
+}
+class SavedBool {
+    <<readonly>> - m_Name : string
+    - m_Value : bool
+    - m_Loaded : bool
+    + SavedBool(name:string, value:bool)
+    - Load() : void
+    + value : bool <<get>> <<set>>
+}
+ScriptedImporterEditor <|-- AsepriteImporterEditor
+ITexturePlatformSettingsDataProvider <|-- AsepriteImporterEditor
+AsepriteImporterEditor +-- Styles
+AsepriteImporterEditor +-- AsepriteImporterEditorFoldOutState
+AsepriteImporterEditorFoldOutState +-- SavedBool
+@enduml

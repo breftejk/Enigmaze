@@ -1,0 +1,11 @@
+@startuml
+struct fsVersionedType {
+    + Ancestors : fsVersionedType[]
+    + VersionString : string
+    + ModelType : Type
+    + Migrate(ancestorInstance:object) : object
+    + <<override>> ToString() : string
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+@enduml

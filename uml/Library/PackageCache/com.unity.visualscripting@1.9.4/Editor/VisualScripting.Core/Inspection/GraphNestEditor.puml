@@ -1,0 +1,48 @@
+@startuml
+class GraphNestEditor {
+    + GraphNestEditor(metadata:Metadata)
+    - warnComponentPrefab : bool <<get>>
+    - warnBackgroundEmbed : bool <<get>>
+    - <<const>> ComponentPrefabWarning : string = "Changes made to embed graphs on prefabs will not be synced with the prefab instance. Consider using a macro instead."
+    - <<const>> BackgroundEmbedWarning : string = "Background embed graph detected."
+    # <<virtual>> nester : IGraphNester <<get>>
+    # <<virtual>> NewGraph() : IGraph
+    # <<virtual>> reference : GraphReference <<get>>
+    - UpdateActiveGraph() : void
+    # nesterMetadata : Metadata <<get>>
+    # sourceMetadata : Metadata <<get>>
+    # macroMetadata : Metadata <<get>>
+    # embedGraphMetadata : Metadata <<get>>
+    # macroGraphMetadata : Metadata <<get>>
+    # graphMetadata : Metadata <<get>>
+    # graphType : Type <<get>>
+    # macroType : Type <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - GetComponentPrefabWarningHeight(width:float) : float
+    - GetSourceHeight(width:float) : float
+    - GetMacroHeight(width:float) : float
+    - GetEditButtonHeight(width:float) : float
+    - GetBackgroundEmbedWarningHeight(width:float) : float
+    - OnComponentPrefabWarningGUI(position:Rect) : void
+    - OnBackgroundEmbedWarningGUI(position:Rect, y:float) : void
+    - OnSourceGUI(position:Rect) : void
+    - OnMacroGUI(position:Rect) : void
+    - OnEditButtonGUI(position:Rect) : void
+    - OnConvertToMacroButtonGUI(position:Rect) : void
+    - OnConvertToEmbedButtonGUI(position:Rect) : void
+    - OnNewEmbedGraphButtonGUI(position:Rect) : void
+    - OnNewMacroButtonGUI(position:Rect) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> spaceBeforeButton : float = 3
+    + {static} <<readonly>> spaceBeforeEditButton : float = 3
+    + {static} <<readonly>> convertButton : GUIStyle
+    + {static} <<readonly>> newButton : GUIStyle
+    + {static} <<readonly>> editButton : GUIStyle
+    + {static} <<readonly>> fixBackgroundEmbedButton : GUIStyle
+}
+Inspector <|-- GraphNestEditor
+GraphNestEditor +-- Styles
+@enduml

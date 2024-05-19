@@ -1,0 +1,6 @@
+@startuml
+interface IVariableUnit {
+    name : ValueInput <<get>>
+}
+IUnit <|-- IVariableUnit
+@enduml

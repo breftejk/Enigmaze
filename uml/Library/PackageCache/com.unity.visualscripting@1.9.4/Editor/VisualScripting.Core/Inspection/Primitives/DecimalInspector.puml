@@ -1,0 +1,6 @@
+@startuml
+class DecimalInspector {
+    + DecimalInspector(metadata:Metadata)
+}
+"ContinuousNumberInspector`1" "<decimal>" <|-- DecimalInspector
+@enduml

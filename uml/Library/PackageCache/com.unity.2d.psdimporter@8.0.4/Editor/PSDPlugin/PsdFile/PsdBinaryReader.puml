@@ -1,0 +1,28 @@
+@startuml
+class PsdBinaryReader {
+    - reader : BinaryReader
+    - encoding : Encoding
+    + BaseStream : Stream <<get>>
+    + PsdBinaryReader(stream:Stream, reader:PsdBinaryReader)
+    + PsdBinaryReader(stream:Stream, encoding:Encoding)
+    + ReadByte() : byte
+    + ReadBytes(count:int) : byte[]
+    + ReadBoolean() : bool
+    + ReadInt16() : Int16
+    + ReadInt32() : Int32
+    + ReadDouble() : double
+    + ReadInt64() : Int64
+    + ReadUInt16() : UInt16
+    + ReadUInt32() : UInt32
+    + ReadUInt64() : UInt64
+    + ReadPadding(startPosition:long, padMultiple:int) : void
+    + ReadRectangle() : Rectangle
+    + ReadAsciiChars(count:int) : string
+    + ReadPascalString(padMultiple:int) : string
+    + ReadUnicodeString() : string
+    - disposed : bool = false
+    + Dispose() : void
+    # <<virtual>> Dispose(disposing:bool) : void
+}
+IDisposable <|-- PsdBinaryReader
+@enduml

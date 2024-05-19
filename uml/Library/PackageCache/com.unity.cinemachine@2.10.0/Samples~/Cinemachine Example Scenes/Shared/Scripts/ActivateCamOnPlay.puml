@@ -1,0 +1,7 @@
+@startuml
+class ActivateCamOnPlay {
+    + vcam : CinemachineVirtualCameraBase
+    - Start() : void
+}
+MonoBehaviour <|-- ActivateCamOnPlay
+@enduml

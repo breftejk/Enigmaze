@@ -1,0 +1,6 @@
+@startuml
+class DrawSearchField <<static>> {
+    <<internal>> {static} For(searchField:SearchField, treeView:TreeView, width:float) : void
+    {static} - Draw(searchField:SearchField, searchFieldRect:Rect, searchString:string) : string
+}
+@enduml

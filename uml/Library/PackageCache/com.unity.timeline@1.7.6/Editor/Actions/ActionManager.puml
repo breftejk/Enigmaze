@@ -1,0 +1,34 @@
+@startuml
+class ActionManager <<static>> {
+    {static} - s_ShowActionTriggeredByShortcut : bool = false
+    + {static} <<readonly>> TimelineActions : IReadOnlyList<TimelineAction>
+    + {static} <<readonly>> ClipActions : IReadOnlyList<ClipAction>
+    + {static} <<readonly>> TrackActions : IReadOnlyList<TrackAction>
+    + {static} <<readonly>> MarkerActions : IReadOnlyList<MarkerAction>
+    + {static} <<readonly>> TimelineActionsWithShortcuts : IReadOnlyList<TimelineAction>
+    + {static} <<readonly>> ClipActionsWithShortcuts : IReadOnlyList<ClipAction>
+    + {static} <<readonly>> TrackActionsWithShortcuts : IReadOnlyList<TrackAction>
+    + {static} <<readonly>> MarkerActionsWithShortcuts : IReadOnlyList<MarkerAction>
+    + {static} <<readonly>> ActionsWithAutoUndo : HashSet<Type>
+    + {static} GetCachedAction(list:IReadOnlyList<TU>) : TU
+    + {static} GetMenuEntries(actions:IReadOnlyList<TimelineAction>, mousePos:Vector2?, menuItems:List<MenuActionItem>) : void
+    + {static} GetMenuEntries(actions:IReadOnlyList<TrackAction>, menuItems:List<MenuActionItem>) : void
+    + {static} GetMenuEntries(actions:IReadOnlyList<ClipAction>, menuItems:List<MenuActionItem>) : void
+    + {static} GetMenuEntries(actions:IReadOnlyList<MarkerAction>, menuItems:List<MenuActionItem>) : void
+    {static} - BuildMenu(action:TimelineAction, context:ActionContext, menuItems:List<MenuActionItem>) : void
+    {static} - BuildMenu(action:TrackAction, tracks:IEnumerable<TrackAsset>, menuItems:List<MenuActionItem>) : void
+    {static} - BuildMenu(action:ClipAction, clips:IEnumerable<TimelineClip>, menuItems:List<MenuActionItem>) : void
+    {static} - BuildMenu(action:MarkerAction, markers:IEnumerable<IMarker>, menuItems:List<MenuActionItem>) : void
+    {static} - BuildMenu(action:IAction, validity:ActionValidity, executeFunction:GenericMenu.MenuFunction, menuItems:List<MenuActionItem>) : void
+    <<internal>> {static} BuildMenu(menu:GenericMenu, items:List<MenuActionItem>) : void
+    + {static} HandleShortcut(evt:Event) : bool
+    + {static} HandleShortcut(evt:Event, actions:IReadOnlyList<T>, invoke:Func<T, bool>) : bool
+    + {static} ExecuteTimelineAction(timelineAction:TimelineAction, context:ActionContext) : bool
+    + {static} ExecuteTrackAction(trackAction:TrackAction, tracks:IEnumerable<TrackAsset>) : bool
+    + {static} ExecuteClipAction(clipAction:ClipAction, clips:IEnumerable<TimelineClip>) : bool
+    + {static} ExecuteMarkerAction(markerAction:MarkerAction, markers:IEnumerable<IMarker>) : bool
+    {static} - InstantiateClassesOfType() : List<T>
+    {static} - ActionsWithShortCuts(list:IReadOnlyList<T>) : List<T>
+    {static} - TypesWithAttribute() : HashSet<System.Type>
+}
+@enduml

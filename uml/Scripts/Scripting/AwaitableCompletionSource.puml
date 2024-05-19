@@ -1,0 +1,26 @@
+@startuml
+class AwaitableCompletionSource {
+    <<volatile>> - _state : int
+    + Awaitable : Awaitable <<get>>
+    + SetResult() : void
+    + SetCanceled() : void
+    + SetException(exception:Exception) : void
+    - CheckAndAcquireCompletionState() : bool
+    + TrySetResult() : bool
+    + TrySetCanceled() : bool
+    + TrySetException(exception:Exception) : bool
+    + Reset() : void
+}
+class "AwaitableCompletionSource`1"<T> {
+    <<volatile>> - _state : int
+    + Awaitable : Awaitable<T> <<get>>
+    + SetResult(value:T) : void
+    + SetCanceled() : void
+    + SetException(exception:Exception) : void
+    - CheckAndAcquireCompletionState() : bool
+    + TrySetResult(value:T) : bool
+    + TrySetCanceled() : bool
+    + TrySetException(exception:Exception) : bool
+    + Reset() : void
+}
+@enduml

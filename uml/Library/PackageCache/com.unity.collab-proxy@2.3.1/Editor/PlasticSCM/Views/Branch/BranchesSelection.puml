@@ -1,0 +1,11 @@
+@startuml
+class BranchesSelection <<static>> {
+    <<internal>> {static} SelectBranches(listView:BranchesListView, branchesToSelect:List<RepObjectInfo>, defaultRow:int) : void
+    <<internal>> {static} GetSelectedRepObjectInfos(listView:BranchesListView) : List<RepObjectInfo>
+    <<internal>> {static} GetSelectedBranchesCount(listView:BranchesListView) : int
+    <<internal>> {static} GetSelectedBranch(listView:BranchesListView) : BranchInfo
+    <<internal>> {static} GetSelectedBranches(listView:BranchesListView) : List<BranchInfo>
+    <<internal>> {static} GetSelectedRepository(listView:BranchesListView) : RepositorySpec
+    <<internal>> {static} GetSelectedRepositories(listView:BranchesListView) : List<RepositorySpec>
+}
+@enduml

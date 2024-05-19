@@ -1,0 +1,12 @@
+@startuml
+class SpriteDrawUtility {
+    {static} - s_ContrastTex : Texture2D
+    {static} - contrastTexture : Texture2D <<get>>
+    {static} - CreateCheckerTex(c0:Color, c1:Color) : Texture2D
+    {static} - CreateGradientTex() : Texture2D
+    {static} - DrawTiledTexture(rect:Rect, tex:Texture) : void
+    + {static} DrawSprite(sprite:Sprite, drawArea:Rect, color:Color) : void
+    + {static} DrawSprite(tex:Texture, drawArea:Rect, outer:Rect, uv:Rect, color:Color) : void
+    - {static} DrawSprite(tex:Texture, drawArea:Rect, padding:Vector4, outer:Rect, inner:Rect, uv:Rect, color:Color, mat:Material) : void
+}
+@enduml

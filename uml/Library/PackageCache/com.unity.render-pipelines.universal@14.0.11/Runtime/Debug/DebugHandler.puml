@@ -1,0 +1,101 @@
+@startuml
+class DebugHandler {
+    {static} <<readonly>> - k_DebugColorInvalidModePropertyId : int
+    {static} <<readonly>> - k_DebugColorPropertyId : int
+    {static} <<readonly>> - k_DebugTexturePropertyId : int
+    {static} <<readonly>> - k_DebugTextureNoStereoPropertyId : int
+    {static} <<readonly>> - k_DebugTextureDisplayRect : int
+    {static} <<readonly>> - k_DebugRenderTargetSupportsStereo : int
+    {static} <<readonly>> - k_DebugMaterialModeId : int
+    {static} <<readonly>> - k_DebugVertexAttributeModeId : int
+    {static} <<readonly>> - k_DebugMaterialValidationModeId : int
+    {static} <<readonly>> - k_DebugMipInfoModeId : int
+    {static} <<readonly>> - k_DebugSceneOverrideModeId : int
+    {static} <<readonly>> - k_DebugFullScreenModeId : int
+    {static} <<readonly>> - k_DebugValidationModeId : int
+    {static} <<readonly>> - k_DebugValidateBelowMinThresholdColorPropertyId : int
+    {static} <<readonly>> - k_DebugValidateAboveMaxThresholdColorPropertyId : int
+    {static} <<readonly>> - k_DebugMaxPixelCost : int
+    {static} <<readonly>> - k_DebugLightingModeId : int
+    {static} <<readonly>> - k_DebugLightingFeatureFlagsId : int
+    {static} <<readonly>> - k_DebugValidateAlbedoMinLuminanceId : int
+    {static} <<readonly>> - k_DebugValidateAlbedoMaxLuminanceId : int
+    {static} <<readonly>> - k_DebugValidateAlbedoSaturationToleranceId : int
+    {static} <<readonly>> - k_DebugValidateAlbedoHueToleranceId : int
+    {static} <<readonly>> - k_DebugValidateAlbedoCompareColorId : int
+    {static} <<readonly>> - k_DebugValidateMetallicMinValueId : int
+    {static} <<readonly>> - k_DebugValidateMetallicMaxValueId : int
+    {static} <<readonly>> - k_ValidationChannelsId : int
+    {static} <<readonly>> - k_RangeMinimumId : int
+    {static} <<readonly>> - k_RangeMaximumId : int
+    <<readonly>> - m_ReplacementMaterial : Material
+    <<readonly>> - m_HDRDebugViewMaterial : Material
+    - m_HDRDebugViewPass : HDRDebugViewPass
+    - m_DebugScreenColorHandle : RTHandle
+    - m_DebugScreenDepthHandle : RTHandle
+    - m_HasDebugRenderTarget : bool
+    - m_DebugRenderTargetSupportsStereo : bool
+    - m_DebugRenderTargetPixelRect : Vector4
+    - m_DebugRenderTargetIdentifier : RenderTargetIdentifier
+    <<readonly>> - m_DebugDisplaySettings : UniversalRenderPipelineDebugDisplaySettings
+    - LightingSettings : DebugDisplaySettingsLighting <<get>>
+    - MaterialSettings : DebugDisplaySettingsMaterial <<get>>
+    - RenderingSettings : DebugDisplaySettingsRendering <<get>>
+    + AreAnySettingsActive : bool <<get>>
+    + IsPostProcessingAllowed : bool <<get>>
+    + IsLightingActive : bool <<get>>
+    <<internal>> IsActiveModeUnsupportedForDeferred : bool <<get>>
+    + TryGetScreenClearColor(color:Color) : bool
+    <<internal>> ReplacementMaterial : Material <<get>>
+    <<internal>> DebugDisplaySettings : UniversalRenderPipelineDebugDisplaySettings <<get>>
+    <<internal>> DebugScreenColorHandle : ref RTHandle <<get>>
+    <<internal>> DebugScreenDepthHandle : ref RTHandle <<get>>
+    <<internal>> hdrDebugViewPass : HDRDebugViewPass <<get>>
+    <<internal>> HDRDebugViewIsActive(cameraData:CameraData) : bool
+    <<internal>> WriteToDebugScreenTexture(cameraData:CameraData) : bool
+    <<internal>> IsScreenClearNeeded : bool <<get>>
+    <<internal>> IsRenderPassSupported : bool <<get>>
+    <<internal>> DebugHandler(scriptableRendererData:ScriptableRendererData)
+    + Dispose() : void
+    <<internal>> IsActiveForCamera(cameraData:CameraData) : bool
+    <<internal>> TryGetFullscreenDebugMode(debugFullScreenMode:DebugFullScreenMode) : bool
+    <<internal>> TryGetFullscreenDebugMode(debugFullScreenMode:DebugFullScreenMode, textureHeightPercent:int) : bool
+    <<internal>> {static} ConfigureColorDescriptorForDebugScreen(descriptor:RenderTextureDescriptor, cameraWidth:int, cameraHeight:int) : void
+    <<internal>> {static} ConfigureDepthDescriptorForDebugScreen(descriptor:RenderTextureDescriptor, depthBufferBits:int, cameraWidth:int, cameraHeight:int) : void
+    <<internal>> SetupShaderProperties(cmd:CommandBuffer, passIndex:int) : void
+    <<internal>> SetDebugRenderTarget(renderTargetIdentifier:RenderTargetIdentifier, displayRect:Rect, supportsStereo:bool) : void
+    <<internal>> ResetDebugRenderTarget() : void
+    <<internal>> UpdateShaderGlobalPropertiesForFinalValidationPass(cmd:CommandBuffer, cameraData:CameraData, isFinalPass:bool) : void
+    <<internal>> Setup(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> CreateDebugRenderSetupEnumerable(context:ScriptableRenderContext, commandBuffer:CommandBuffer, filteringSettings:FilteringSettings) : IEnumerable<DebugRenderSetup>
+    <<internal>> DrawWithDebugRenderState(context:ScriptableRenderContext, cmd:CommandBuffer, renderingData:RenderingData, drawingSettings:DrawingSettings, filteringSettings:FilteringSettings, renderStateBlock:RenderStateBlock, func:DrawFunction) : void
+}
+class DebugRenderPassEnumerable {
+    - <<readonly>> m_DebugHandler : DebugHandler
+    - <<readonly>> m_Context : ScriptableRenderContext
+    - <<readonly>> m_CommandBuffer : CommandBuffer
+    <<readonly>> - m_FilteringSettings : FilteringSettings
+    + DebugRenderPassEnumerable(debugHandler:DebugHandler, context:ScriptableRenderContext, commandBuffer:CommandBuffer, filteringSettings:FilteringSettings)
+    + GetEnumerator() : IEnumerator<DebugRenderSetup>
+    - GetEnumerator() : IEnumerator
+}
+class Enumerator {
+    - <<readonly>> m_DebugHandler : DebugHandler
+    - <<readonly>> m_Context : ScriptableRenderContext
+    - <<readonly>> m_CommandBuffer : CommandBuffer
+    <<readonly>> - m_FilteringSettings : FilteringSettings
+    - <<readonly>> m_NumIterations : int
+    - m_Index : int
+    + Current : DebugRenderSetup <<get>>
+    - Current : object <<get>>
+    + Enumerator(debugHandler:DebugHandler, context:ScriptableRenderContext, commandBuffer:CommandBuffer, filteringSettings:FilteringSettings)
+    + MoveNext() : bool
+    + Reset() : void
+    + Dispose() : void
+}
+IDebugDisplaySettingsQuery <|-- DebugHandler
+DebugHandler +-- DebugRenderPassEnumerable
+"IEnumerable`1" "<DebugRenderSetup>" <|-- DebugRenderPassEnumerable
+DebugRenderPassEnumerable +-- Enumerator
+"IEnumerator`1" "<DebugRenderSetup>" <|-- Enumerator
+@enduml

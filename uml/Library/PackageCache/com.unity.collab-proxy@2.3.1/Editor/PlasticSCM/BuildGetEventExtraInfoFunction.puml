@@ -1,0 +1,8 @@
+@startuml
+class BuildGetEventExtraInfoFunction <<static>> {
+    <<internal>> {static} ForPingEvent() : Func<string>
+    {static} - GetScreenResolution() : string
+    {static} - GetUnityEditorVersion() : string
+    {static} - GetUnityPluginVersion() : string
+}
+@enduml

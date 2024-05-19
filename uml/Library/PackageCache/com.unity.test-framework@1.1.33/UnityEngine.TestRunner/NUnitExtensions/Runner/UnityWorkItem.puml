@@ -1,0 +1,23 @@
+@startuml
+abstract class UnityWorkItem {
+    # <<readonly>> m_Factory : WorkItemFactory
+    # m_ExecuteTestStartEvent : bool
+    # m_DontRunRestoringResult : bool
+    # <<const>> k_DefaultTimeout : int
+    +  <<event>> Completed : EventHandler 
+    + ResultedInDomainReload : bool <<get>> <<internal set>>
+    + Context : UnityTestExecutionContext <<get>>
+    + Test : Test <<get>>
+    + Result : TestResult <<get>> <<protected set>>
+    + State : WorkItemState <<get>>
+    + Actions : List<ITestAction> <<get>>
+    # UnityWorkItem(test:Test, factory:WorkItemFactory)
+    # {static} ShouldRestore(loadedTest:ITest) : bool
+    # ShouldExecuteStartEvent() : bool
+    # {abstract} PerformWork() : IEnumerable
+    + InitializeContext(context:UnityTestExecutionContext) : void
+    + <<virtual>> Execute() : IEnumerable
+    # WorkItemComplete() : void
+    + <<virtual>> Cancel(force:bool) : void
+}
+@enduml

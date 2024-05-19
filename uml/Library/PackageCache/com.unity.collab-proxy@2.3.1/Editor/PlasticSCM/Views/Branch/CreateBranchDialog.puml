@@ -1,0 +1,25 @@
+@startuml
+class CreateBranchDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    # <<override>> GetTitle() : string
+    # <<override>> OnModalGUI() : void
+    <<internal>> {static} CreateBranchFromLastParentBranchChangeset(parentWindow:EditorWindow, repSpec:RepositorySpec, parentBranchInfo:BranchInfo) : BranchCreationData
+    - DoTitleArea() : void
+    - DoFieldsArea() : void
+    - DoButtonsArea() : void
+    - DoCancelButton() : void
+    - DoCreateButton() : void
+    {static} - Create(repSpec:RepositorySpec, parentBranchInfo:BranchInfo, explanation:string) : CreateBranchDialog
+    - BuildCreationData() : BranchCreationData
+    - mProgressControls : ProgressControlsForDialogs
+    - mRepositorySpec : RepositorySpec
+    - mParentBranchInfo : BranchInfo
+    - mNewBranchName : string
+    - mComment : string
+    - mSwitchToBranch : bool
+    - mExplanation : string
+    - mWasNameFieldFocused : bool
+    <<const>> - NAME_FIELD_CONTROL_NAME : string = "CreateBranchNameField"
+}
+PlasticDialog <|-- CreateBranchDialog
+@enduml

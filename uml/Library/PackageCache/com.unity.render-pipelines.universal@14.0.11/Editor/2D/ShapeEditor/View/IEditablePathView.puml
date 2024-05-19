@@ -1,0 +1,7 @@
+@startuml
+interface IEditablePathView {
+    controller : IEditablePathController <<get>> <<set>>
+    Install(guiSystem:GUISystem) : void
+    Uninstall(guiSystem:GUISystem) : void
+}
+@enduml

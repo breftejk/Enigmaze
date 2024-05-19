@@ -1,0 +1,18 @@
+@startuml
+class GraphInspectorPanel <<sealed>> {
+    + context : IGraphContext <<get>>
+    + sidebarControlHint : object <<get>>
+    + titleContent : GUIContent <<get>>
+    + minSize : Vector2 <<get>>
+    + GraphInspectorPanel(context:IGraphContext)
+    + OnGUI(position:Rect) : void
+    + GetHeight(width:float) : float
+    - GetGraphPanelHeight(width:float) : float
+    - GetSelectionPanelHeight(width:float) : float
+    - GetNoMultiEditHeight(width:float) : float
+    - GetNoGraphSelectedHeight(width:float) : float
+    - <<const>> NoGraphSelectedMessage : string = "No graph selected."
+    - <<const>> NoMultiEditMessage : string = "Multi-element editing is not supported."
+}
+ISidebarPanelContent <|-- GraphInspectorPanel
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class IsSolved <<static>> {
+    <<internal>> {static} Conflict(changeInfo:MergeChangeInfo, metaChangeInfo:MergeChangeInfo, solvedFileConflicts:MergeSolvedFileConflicts) : bool
+    {static} - IsFileConflictResolved(changeInfo:MergeChangeInfo, solvedFileConflicts:MergeSolvedFileConflicts) : bool
+    {static} - IsDirectoryConflictResolved(changeInfo:MergeChangeInfo) : bool
+    {static} - IsDirectoryConflict(changeInfo:MergeChangeInfo) : bool
+}
+@enduml

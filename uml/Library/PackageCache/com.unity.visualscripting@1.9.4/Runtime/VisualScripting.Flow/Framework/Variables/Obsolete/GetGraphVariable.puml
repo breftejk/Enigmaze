@@ -1,0 +1,9 @@
+@startuml
+class GetGraphVariable <<sealed>> {
+    + GetGraphVariable()
+    + GetGraphVariable(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+GetVariableUnit <|-- GetGraphVariable
+IGraphVariableUnit <|-- GetGraphVariable
+@enduml

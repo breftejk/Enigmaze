@@ -1,0 +1,11 @@
+@startuml
+class Light2DEditorUtility <<static>> {
+    {static} - s_TexCapMaterial : Material
+    {static} - k_MeshQuad_Cache : Mesh
+    {static} - k_MeshQuad : Mesh <<get>>
+    {static} <<internal>> GUITextureCap(controlID:int, texture:Texture, position:Vector3, rotation:Quaternion, size:float, eventType:EventType, isAngleHandle:bool) : void
+    {static} - DistanceToRectangle(position:Vector3, rotation:Quaternion, size:Vector2) : float
+    + {static} GetRenderer2DData() : Renderer2DData
+    + {static} IsUsing2DRenderer() : bool
+}
+@enduml

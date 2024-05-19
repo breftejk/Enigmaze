@@ -1,0 +1,14 @@
+@startuml
+abstract class "SetGraph`3"<TGraph,TMacro,TMachine> {
+    + enter : ControlInput <<get>> <<protected set>>
+    + target : ValueInput <<get>> <<protected set>>
+    + graphInput : ValueInput <<get>> <<protected set>>
+    + graphOutput : ValueOutput <<get>> <<protected set>>
+    + exit : ControlOutput <<get>> <<protected set>>
+    # {abstract} isGameObject : bool <<get>>
+    - targetType : Type <<get>>
+    # <<override>> Definition() : void
+    - SetMacro(flow:Flow) : ControlOutput
+}
+Unit <|-- "SetGraph`3"
+@enduml

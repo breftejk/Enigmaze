@@ -1,0 +1,10 @@
+@startuml
+class AssociateBonesScope {
+    - m_Disposed : bool
+    - m_AssociateBones : bool
+    - m_Sprite : SpriteCache
+    + AssociateBonesScope(sprite:SpriteCache)
+    + Dispose() : void
+}
+IDisposable <|-- AssociateBonesScope
+@enduml

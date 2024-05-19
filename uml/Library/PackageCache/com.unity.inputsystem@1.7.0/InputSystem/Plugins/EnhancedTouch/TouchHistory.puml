@@ -1,0 +1,27 @@
+@startuml
+struct TouchHistory {
+    - <<readonly>> m_History : InputStateHistory<TouchState>
+    - <<readonly>> m_Finger : Finger
+    - <<readonly>> m_Count : int
+    - <<readonly>> m_StartIndex : int
+    - <<readonly>> m_Version : uint
+    <<internal>> TouchHistory(finger:Finger, history:InputStateHistory<TouchState>, startIndex:int, count:int)
+    + GetEnumerator() : IEnumerator<Touch>
+    - GetEnumerator() : IEnumerator
+    + Count : int <<get>>
+    <<internal>> CheckValid() : void
+}
+class Enumerator {
+    - <<readonly>> m_Owner : TouchHistory
+    - m_Index : int
+    <<internal>> Enumerator(owner:TouchHistory)
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : Touch <<get>>
+    - Current : object <<get>>
+    + Dispose() : void
+}
+"IReadOnlyList`1" "<Touch>" <|-- TouchHistory
+TouchHistory +-- Enumerator
+"IEnumerator`1" "<Touch>" <|-- Enumerator
+@enduml

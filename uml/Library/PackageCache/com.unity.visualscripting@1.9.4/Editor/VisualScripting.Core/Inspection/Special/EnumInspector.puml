@@ -1,0 +1,11 @@
+@startuml
+class EnumInspector {
+    + EnumInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- EnumInspector
+@enduml

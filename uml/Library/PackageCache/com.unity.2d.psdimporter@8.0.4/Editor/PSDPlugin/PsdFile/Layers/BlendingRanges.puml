@@ -1,0 +1,8 @@
+@startuml
+class BlendingRanges {
+    + Layer : Layer <<get>>
+    + Data : byte[] <<get>> <<set>>
+    + BlendingRanges(layer:Layer)
+    + BlendingRanges(reader:PsdBinaryReader, layer:Layer)
+}
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+struct AsepriteImporterSettings {
+    - m_FileImportMode : FileImportModes
+    + fileImportMode : FileImportModes <<get>> <<set>>
+    - m_ImportHiddenLayers : bool
+    + importHiddenLayers : bool <<get>> <<set>>
+    - m_LayerImportMode : LayerImportModes
+    + layerImportMode : LayerImportModes <<get>> <<set>>
+    - m_DefaultPivotSpace : PivotSpaces
+    + defaultPivotSpace : PivotSpaces <<get>> <<set>>
+    - m_DefaultPivotAlignment : SpriteAlignment
+    + defaultPivotAlignment : SpriteAlignment <<get>> <<set>>
+    - m_CustomPivotPosition : Vector2
+    + customPivotPosition : Vector2 <<get>> <<set>>
+    - m_MosaicPadding : uint
+    + mosaicPadding : uint <<get>> <<set>>
+    - m_SpritePadding : uint
+    + spritePadding : uint <<get>> <<set>>
+    - m_GenerateModelPrefab : bool
+    + generateModelPrefab : bool <<get>> <<set>>
+    - m_GenerateAnimationClips : bool
+    + generateAnimationClips : bool <<get>> <<set>>
+    - m_AddSortingGroup : bool
+    + addSortingGroup : bool <<get>> <<set>>
+    - m_AddShadowCasters : bool
+    + addShadowCasters : bool <<get>> <<set>>
+    + IsDefault() : bool
+}
+@enduml

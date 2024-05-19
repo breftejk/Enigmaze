@@ -1,0 +1,15 @@
+@startuml
+class VisibilityToolResizer {
+    - m_Start : Vector2
+    - m_Root : VisualElement
+    # m_Active : bool
+    - m_StartPos : Rect
+    + VisibilityToolResizer()
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    # OnMouseDown(e:MouseDownEvent) : void
+    # OnMouseMove(e:MouseMoveEvent) : void
+    # OnMouseUp(e:MouseUpEvent) : void
+}
+MouseManipulator <|-- VisibilityToolResizer
+@enduml

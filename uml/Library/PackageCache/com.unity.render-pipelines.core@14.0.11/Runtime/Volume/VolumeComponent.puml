@@ -1,0 +1,39 @@
+@startuml
+class VolumeComponentMenu {
+    + <<readonly>> menu : string
+    + VolumeComponentMenu(menu:string)
+}
+class VolumeComponentMenuForRenderPipeline {
+    + pipelineTypes : Type[] <<get>>
+    + VolumeComponentMenuForRenderPipeline(menu:string, pipelineTypes:Type[])
+}
+class VolumeComponentDeprecated <<sealed>> {
+}
+class VolumeComponent <<partial>> {
+    + active : bool = true
+    + displayName : string <<get>> <<protected set>> = ""
+    <<internal>> <<readonly>> parameterList : List<VolumeParameter>
+    - m_ParameterReadOnlyCollection : ReadOnlyCollection<VolumeParameter>
+    + parameters : ReadOnlyCollection<VolumeParameter> <<get>>
+    <<internal>> {static} FindParameters(o:object, parameters:List<VolumeParameter>, filter:Func<FieldInfo, bool>) : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + <<virtual>> Override(state:VolumeComponent, interpFactor:float) : void
+    + SetAllOverridesTo(state:bool) : void
+    <<internal>> SetOverridesTo(enumerable:IEnumerable<VolumeParameter>, state:bool) : void
+    + <<override>> GetHashCode() : int
+    + AnyPropertiesIsOverridden() : bool
+    # <<virtual>> OnDestroy() : void
+    + Release() : void
+}
+class Indent <<sealed>> {
+    + <<readonly>> relativeAmount : int
+    + Indent(relativeAmount:int)
+}
+Attribute <|-- VolumeComponentMenu
+VolumeComponentMenu <|-- VolumeComponentMenuForRenderPipeline
+Attribute <|-- VolumeComponentDeprecated
+ScriptableObject <|-- VolumeComponent
+VolumeComponent +-- Indent
+PropertyAttribute <|-- Indent
+@enduml

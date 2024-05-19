@@ -1,0 +1,41 @@
+@startuml
+class PixelBlends <<static>> {
+    + {static} Normal(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Darken(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Multiply(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} ColorBurn(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - BurnChannel(prevVal:byte, inVal:byte) : byte
+    + {static} Lighten(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Screen(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} ColorDodge(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - DodgeChannel(prevVal:byte, inVal:byte) : byte
+    + {static} Addition(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Overlay(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - HardLightChannel(valA:byte, valB:byte) : byte
+    + {static} SoftLight(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - SoftLightChannel(inA:byte, inB:byte) : byte
+    + {static} HardLight(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Difference(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - DifferenceChannel(valA:byte, valB:byte) : byte
+    + {static} Exclusion(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - ExclusionChannel(valA:byte, valB:byte) : byte
+    + {static} Subtract(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Divide(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - DivideChannel(valA:byte, valB:byte) : byte
+    + {static} Hue(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Saturation(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} ColorBlend(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    + {static} Luminosity(prevOutColor:Color32, inColor:Color32, outColor:Color32) : void
+    {static} - MultiplyUnsignedByte(valA:byte, valB:byte) : byte
+    {static} - ScreenUnsignedByte(valA:byte, valB:byte) : byte
+    {static} - DivideUnsignedByte(valA:byte, valB:byte) : byte
+    {static} - GetSaturation(r:float, g:float, b:float) : float
+    {static} - SetSaturation(r:float, g:float, b:float, s:float) : void
+    {static} - MaxRef(a:float, b:float) : ref float
+    {static} - MinRef(a:float, b:float) : ref float
+    {static} - MidRef(a:float, b:float, c:float) : ref float
+    {static} - GetLuminosity(r:float, g:float, b:float) : float
+    {static} - SetLuminosity(r:float, g:float, b:float, l:float) : void
+    {static} - ClipColor(r:float, g:float, b:float) : void
+}
+@enduml

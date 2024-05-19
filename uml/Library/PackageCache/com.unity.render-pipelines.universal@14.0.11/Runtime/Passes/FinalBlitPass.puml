@@ -1,0 +1,45 @@
+@startuml
+class FinalBlitPass {
+    - m_Source : RTHandle
+    - m_PassData : PassData
+    - m_BlitMaterialData : BlitMaterialData[]
+    + FinalBlitPass(evt:RenderPassEvent, blitMaterial:Material, blitHDRMaterial:Material)
+    + Dispose() : void
+    + Setup(baseDescriptor:RenderTextureDescriptor, colorHandle:RenderTargetHandle) : void
+    + Setup(baseDescriptor:RenderTextureDescriptor, colorHandle:RTHandle) : void
+    {static} - SetupHDROutput(hdrDisplayColorGamut:ColorGamut, material:Material, hdrOperation:HDROutputUtils.Operation, hdrOutputParameters:Vector4) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - {static} ExecutePass(renderingData:RenderingData, blitMaterialData:BlitMaterialData, cameraTarget:RTHandle, source:RTHandle) : void
+    - InitPassData(renderingData:RenderingData, passData:PassData, blitType:BlitType) : void
+    <<internal>> Render(renderGraph:RenderGraph, renderingData:RenderingData, src:TextureHandle, dest:TextureHandle, overlayUITexture:TextureHandle) : void
+}
+class BlitPassNames <<static>> {
+    + <<const>> NearestSampler : string = "NearestDebugDraw"
+    + <<const>> BilinearSampler : string = "BilinearDebugDraw"
+}
+enum BlitType {
+    Core= 0,
+    HDR= 1,
+    Count= 2,
+}
+struct BlitMaterialData {
+    + material : Material
+    + nearestSamplerPass : int
+    + bilinearSamplerPass : int
+}
+class PassData {
+    <<internal>> source : TextureHandle
+    <<internal>> destination : TextureHandle
+    <<internal>> sourceID : int
+    <<internal>> hdrOutputLuminanceParams : Vector4
+    <<internal>> requireSrgbConversion : bool
+    <<internal>> blitMaterialData : BlitMaterialData
+    <<internal>> renderingData : RenderingData
+}
+ScriptableRenderPass <|-- FinalBlitPass
+FinalBlitPass +-- BlitPassNames
+FinalBlitPass +-- BlitType
+FinalBlitPass +-- BlitMaterialData
+FinalBlitPass +-- PassData
+@enduml

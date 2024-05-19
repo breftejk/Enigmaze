@@ -1,0 +1,11 @@
+@startuml
+class KeyframeUtility {
+    {static} + ResetAnimationCurve(curve:AnimationCurve) : void
+    {static} - LerpSingleKeyframe(lhs:Keyframe, rhs:Keyframe, t:float) : Keyframe
+    {static} - GetKeyframeAndClampEdge(keys:NativeArray<Keyframe>, index:int) : Keyframe
+    {static} - FetchKeyFromIndexClampEdge(keys:NativeArray<Keyframe>, index:int, segmentStartTime:float, segmentEndTime:float) : Keyframe
+    {static} - EvalCurveSegmentAndDeriv(dstValue:float, dstDeriv:float, lhsKey:Keyframe, rhsKey:Keyframe, desiredTime:float) : void
+    {static} - EvalKeyAtTime(keys:NativeArray<Keyframe>, lhsIndex:int, rhsIndex:int, startTime:float, endTime:float, currTime:float) : Keyframe
+    {static} + InterpAnimationCurve(lhsAndResultCurve:AnimationCurve, rhsCurve:AnimationCurve, t:float) : void
+}
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+class TrackAssetInspector {
+    - m_TrackCurvesWrapper : TrackCurvesWrapper
+    - m_Name : SerializedProperty
+    - m_IsBuiltInType : bool
+    - m_HeaderIcon : Texture
+    # timelineWindow : TimelineWindow <<get>>
+    # IsTrackLocked() : bool
+    + <<override>> OnInspectorGUI() : void
+    <<internal>> <<override>> IsEnabled() : bool
+    <<internal>> <<override>> OnHeaderTitleGUI(titleRect:Rect, header:string) : void
+    <<internal>> <<override>> OnHeaderIconGUI(iconRect:Rect) : void
+    <<internal>> <<override>> DrawHeaderHelpAndSettingsGUI(r:Rect) : Rect
+    + <<virtual>> OnEnable() : void
+    - DrawInspector() : void
+    # <<virtual>> DrawTrackProperties() : void
+    # <<virtual>> ApplyChanges() : void
+    {static} - IsCurrentSequenceReadOnly() : bool
+}
+class TrackCurvesWrapper {
+    + curvesOwner : ICurvesOwner <<get>>
+    + serializedPlayableAsset : SerializedObject <<get>>
+    + lastCurveVersion : int <<get>> <<set>>
+    + lastEvalTime : double <<get>> <<set>>
+    + TrackCurvesWrapper(track:TrackAsset)
+    + ToLocalTime(time:double) : double
+}
+Editor <|-- TrackAssetInspector
+TrackAssetInspector +-- TrackCurvesWrapper
+ICurvesOwnerInspectorWrapper <|-- TrackCurvesWrapper
+@enduml

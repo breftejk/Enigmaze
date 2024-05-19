@@ -1,0 +1,11 @@
+@startuml
+class CheckMeshColorsAndColors32Match {
+    - m_CanvasGO : GameObject
+    - m_ColorMeshGO : GameObject
+    - m_Color32MeshGO : GameObject
+    - m_ScreenTexture : Texture2D
+    + TestSetup() : void
+    + TearDown() : void
+    + CheckMeshColorsAndColors32Matches() : IEnumerator
+}
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+class ScrollRectEditor {
+    - m_Content : SerializedProperty
+    - m_Horizontal : SerializedProperty
+    - m_Vertical : SerializedProperty
+    - m_MovementType : SerializedProperty
+    - m_Elasticity : SerializedProperty
+    - m_Inertia : SerializedProperty
+    - m_DecelerationRate : SerializedProperty
+    - m_ScrollSensitivity : SerializedProperty
+    - m_Viewport : SerializedProperty
+    - m_HorizontalScrollbar : SerializedProperty
+    - m_VerticalScrollbar : SerializedProperty
+    - m_HorizontalScrollbarVisibility : SerializedProperty
+    - m_VerticalScrollbarVisibility : SerializedProperty
+    - m_HorizontalScrollbarSpacing : SerializedProperty
+    - m_VerticalScrollbarSpacing : SerializedProperty
+    - m_OnValueChanged : SerializedProperty
+    - m_ShowElasticity : AnimBool
+    - m_ShowDecelerationRate : AnimBool
+    - m_ViewportIsNotChild : bool
+    - m_HScrollbarIsNotChild : bool
+    - m_VScrollbarIsNotChild : bool
+    {static} - s_HError : string = "For this visibility mode, the Viewport property and the Horizontal Scrollbar property both needs to be set to a Rect Transform that is a child to the Scroll Rect."
+    {static} - s_VError : string = "For this visibility mode, the Viewport property and the Vertical Scrollbar property both needs to be set to a Rect Transform that is a child to the Scroll Rect."
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    - SetAnimBools(instant:bool) : void
+    - SetAnimBool(a:AnimBool, value:bool, instant:bool) : void
+    - CalculateCachedValues() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- ScrollRectEditor
+@enduml

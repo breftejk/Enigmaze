@@ -1,0 +1,42 @@
+@startuml
+class AnimationPlayableAsset <<partial>> {
+    - m_Clip : AnimationClip
+    - m_Position : Vector3
+    - m_EulerAngles : Vector3
+    - m_UseTrackMatchFields : bool = true
+    - m_MatchTargetFields : MatchTargetFields
+    - m_RemoveStartOffset : bool = true
+    - m_ApplyFootIK : bool = true
+    - m_Loop : LoopMode
+    + position : Vector3 <<get>> <<set>>
+    + rotation : Quaternion <<get>> <<set>>
+    + eulerAngles : Vector3 <<get>> <<set>>
+    + useTrackMatchFields : bool <<get>> <<set>>
+    + matchTargetFields : MatchTargetFields <<get>> <<set>>
+    + removeStartOffset : bool <<get>> <<set>>
+    + applyFootIK : bool <<get>> <<set>>
+    + loop : LoopMode <<get>> <<set>>
+    <<internal>> hasRootTransforms : bool <<get>>
+    <<internal>> appliedOffsetMode : AppliedOffsetMode <<get>> <<set>>
+    + clip : AnimationClip <<get>> <<set>>
+    + <<override>> duration : double <<get>>
+    + <<override>> outputs : IEnumerable<PlayableBinding> <<get>>
+    + <<override>> CreatePlayable(graph:PlayableGraph, go:GameObject) : Playable
+    <<internal>> {static} CreatePlayable(graph:PlayableGraph, clip:AnimationClip, positionOffset:Vector3, eulerOffset:Vector3, removeStartOffset:bool, mode:AppliedOffsetMode, applyFootIK:bool, loop:LoopMode) : Playable
+    - {static} ShouldApplyOffset(mode:AppliedOffsetMode, clip:AnimationClip) : bool
+    - {static} ShouldApplyScaleRemove(mode:AppliedOffsetMode) : bool
+    + clipCaps : ClipCaps <<get>>
+    + ResetOffsets() : void
+    + GatherProperties(director:PlayableDirector, driver:IPropertyCollector) : void
+    <<internal>> {static} HasRootTransforms(clip:AnimationClip) : bool
+}
+enum LoopMode {
+    UseSourceAsset= 0,
+    On= 1,
+    Off= 2,
+}
+PlayableAsset <|-- AnimationPlayableAsset
+ITimelineClipAsset <|-- AnimationPlayableAsset
+IPropertyPreview <|-- AnimationPlayableAsset
+AnimationPlayableAsset +-- LoopMode
+@enduml

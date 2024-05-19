@@ -1,0 +1,14 @@
+@startuml
+class TrackAssetRecordingExtensions <<static>> {
+    {static} <<readonly>> - s_ActiveClips : Dictionary<TrackAsset, AnimationClip>
+    <<internal>> {static} OnRecordingArmed(track:TrackAsset, director:PlayableDirector) : void
+    <<internal>> {static} OnRecordingTimeChanged(track:TrackAsset, director:PlayableDirector) : void
+    <<internal>> {static} OnRecordingUnarmed(track:TrackAsset, director:PlayableDirector) : void
+    <<internal>> {static} CanRecordAtTime(track:TrackAsset, time:double) : bool
+    <<internal>> {static} GetActiveRecordingAnimationClip(track:TrackAsset) : AnimationClip
+    <<internal>> {static} IsRecordingToClip(track:TrackAsset, clip:TimelineClip) : bool
+    <<internal>> {static} FindRecordingClipAtTime(track:TrackAsset, time:double, target:TimelineClip) : bool
+    <<internal>> {static} FindRecordingAnimationClipAtTime(trackAsset:TrackAsset, time:double) : AnimationClip
+    <<internal>> {static} ClearRecordingState() : void
+}
+@enduml

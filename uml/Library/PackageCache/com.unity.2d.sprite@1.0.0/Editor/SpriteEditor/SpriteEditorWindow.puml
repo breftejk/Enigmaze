@@ -1,0 +1,186 @@
+@startuml
+interface "ISpriteDataProviderFactory`1"<T> {
+    CreateDataProvider(obj:T) : ISpriteEditorDataProvider
+}
+class SpriteEditorAssetPathProviderAttribute {
+    - {static} GetAssetPath(obj:UnityEngine.Object) : string
+}
+class SpriteObjectProviderAttribute {
+    - {static} GetSpriteObject(obj:UnityEngine.Object) : Sprite
+}
+class SpriteDataProviderFactories {
+    {static} - s_Factories : SpriteDataProviderFactory[]
+    {static} - s_AssetPathProvider : TypeCache.MethodCollection
+    {static} - s_SpriteObjectProvider : TypeCache.MethodCollection
+    {static} - GetFactories() : SpriteDataProviderFactory[]
+    {static} - GetAssetPathProvider() : TypeCache.MethodCollection
+    {static} - GetSpriteObjectProvider() : TypeCache.MethodCollection
+    {static} - CacheDataProviders() : void
+    + Init() : void
+    + GetSpriteEditorDataProviderFromObject(obj:UnityEngine.Object) : ISpriteEditorDataProvider
+    <<internal>> GetAssetPath(obj:UnityEngine.Object) : string
+    <<internal>> GetSpriteObject(obj:UnityEngine.Object) : Sprite
+}
+class SpriteEditorWindow {
+    {static} - SpriteEditorWindow()
+    - <<const>> k_MarginForFraming : float = 0.05f
+    - <<const>> k_WarningMessageWidth : float = 250f
+    - <<const>> k_WarningMessageHeight : float = 40f
+    - <<const>> k_ModuleListWidth : float = 90f
+    - <<const>> k_RefreshOnNextRepaintCommandEvent : string = "RefreshOnNextRepaintCommand"
+    - m_ResetOnNextRepaint : bool
+    - m_ResetCommandSent : bool
+    - m_RectsCache : List<SpriteRect>
+    - m_SpriteDataProvider : ISpriteEditorDataProvider
+    - m_RequestRepaint : bool = false
+    + {static} s_OneClickDragStarted : bool = false
+    - m_SelectedAssetPath : string
+    - m_AssetNotEditable : bool
+    - m_EventSystem : IEventSystem
+    - m_UndoSystem : IUndoSystem
+    - m_AssetDatabase : IAssetDatabase
+    - m_GUIUtility : IGUIUtility
+    - m_OutlineTexture : UnityTexture2D
+    - m_ReadableTexture : UnityTexture2D
+    - m_ModuleRequireSpriteDataProvider : Dictionary<Type, RequireSpriteDataProviderAttribute>
+    - m_ToolbarIMGUIElement : IMGUIContainer
+    - m_MainViewIMGUIElement : IMGUIContainer
+    - m_ModuleViewElement : VisualElement
+    - m_MainViewElement : VisualElement
+    - m_SpriteDataProviderFactories : SpriteDataProviderFactories
+    - m_SelectedObject : UnityEngine.Object
+    - m_SelectedSpriteRectGUID : string
+    <<internal>> onHandleApplyRevertDialog : Func<string, string, bool>
+    - m_CurrentResetContext : CurrentResetContext = null
+    + {static} GetWindow(obj:UnityEngine.Object) : void
+    + SpriteEditorWindow()
+    - ModifierKeysChanged() : void
+    - OnFocus() : void
+    <<internal>> selectedObject : UnityEngine.Object <<get>> <<set>>
+    - selectedAssetPath : string <<get>> <<set>>
+    + RefreshPropertiesCache() : void
+    <<internal>> GetSelectionAssetPath() : string
+    + InvalidatePropertiesCache() : void
+    - warningMessageRect : Rect <<get>>
+    + spriteImportMode : SpriteImportMode <<get>>
+    - activeDataProviderSelected : bool <<get>>
+    + textureIsDirty : bool <<get>> <<set>>
+    + selectedProviderChanged : bool <<get>>
+    - OnSelectionChange() : void
+    - RefreshSpriteEditorWindow() : void
+    - UpdateSelectedSpriteRectFromSelection() : void
+    + ResetWindow() : void
+    + ResetZoomAndScroll() : void
+    - spriteDataProviderFactories : SpriteDataProviderFactories <<get>>
+    - OnEnable() : void
+    - CreateGUI() : void
+    - SetupVisualElements() : bool
+    - UndoRedoPerformed() : void
+    - InitSelectedSpriteRect() : void
+    - OnGUI() : void
+    + <<override>> SaveChanges() : void
+    - OnDisable() : void
+    - OnPlayModeStateChanged(playModeState:PlayModeStateChange) : void
+    - OnEditorApplicationQuit() : void
+    - OnBeforeAssemblyReload() : void
+    {static} - ShowHandleApplyRevertDialog(dialogTitle:string, dialogContent:string) : bool
+    - HandleApplyRevertDialog(dialogTitle:string, dialogContent:string) : void
+    - IsSpriteDataProviderValid() : bool
+    - RefreshRects() : void
+    - UpdateAssetSelectionChange() : void
+    <<internal>> ResetOnNextRepaint() : void
+    - Update() : void
+    - RebuildCache() : void
+    - DoTextureAndModulesGUI() : void
+    # <<override>> DoTextureGUIExtras() : void
+    - DoToolbarGUI() : void
+    - DoEditingDisabledMessage() : void
+    - DoApply() : void
+    - DoRevert() : void
+    + HandleSpriteSelection() : bool
+    - HandleFrameSelected() : void
+    - UpdateSelectedSpriteRect(sprite:UnityEngine.Sprite) : void
+    - TrySelect(mousePosition:Vector2) : SpriteRect
+    + DoTextureReimport(path:string) : void
+    - m_RegisteredModuleNames : GUIContent[]
+    - m_AllRegisteredModules : List<SpriteEditorModuleBase>
+    - m_RegisteredModules : List<SpriteEditorModuleBase>
+    - m_CurrentModule : SpriteEditorModuleBase = null
+    - m_CurrentModuleIndex : int = 0
+    - m_LastUsedModuleTypeName : string
+    <<internal>> SetupModule(newModuleIndex:int) : void
+    - UpdateAvailableModules() : void
+    - InitModules() : void
+    - RegisterModule(module:SpriteEditorModuleBase) : void
+    - RegisterCustomModules() : void
+    <<internal>> activatedModules : List<SpriteEditorModuleBase> <<get>>
+    + spriteRects : List<SpriteRect> <<set>>
+    - m_CachedSelectedSpriteRect : SpriteRect
+    + selectedSpriteRect : SpriteRect <<get>> <<set>>
+    + spriteEditorDataProvider : ISpriteEditorDataProvider <<get>>
+    + enableMouseMoveEvent : bool <<set>>
+    + RequestRepaint() : void
+    + SetDataModified() : void
+    + windowDimension : Rect <<get>>
+    + previewTexture : ITexture2D <<get>>
+    + editingDisabled : bool <<get>>
+    + SetPreviewTexture(texture:UnityTexture2D, width:int, height:int) : void
+    + ApplyOrRevertModification(apply:bool) : void
+    + GetDataProvider() : T
+    + GetMainVisualContainer() : VisualElement
+    {static} <<internal>> OnTextureReimport(win:SpriteEditorWindow, path:string) : void
+    {static} - OpenSpriteEditorWindow() : void
+}
+class SpriteEditorTexturePostprocessor {
+    + <<override>> GetPostprocessOrder() : int
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+}
+class SpriteSelectionChangeEvent {
+}
+struct SpriteDataProviderFactory {
+    + instance : object
+    + method : MethodInfo
+    + methodType : Type
+}
+class SpriteEditorWindowStyles {
+    + {static} <<readonly>> editingDisableMessageBecausePlaymodeLabel : GUIContent
+    + {static} <<readonly>> editingDisableMessageBecauseNonEditableLabel : GUIContent
+    + {static} <<readonly>> revertButtonLabel : GUIContent
+    + {static} <<readonly>> applyButtonLabel : GUIContent
+    + {static} <<readonly>> pendingChangesDialogContent : GUIContent
+    + {static} <<readonly>> applyRevertDialogTitle : GUIContent
+    + {static} <<readonly>> applyRevertDialogContent : GUIContent
+    + {static} <<readonly>> noSelectionWarning : GUIContent
+    + {static} <<readonly>> noModuleWarning : GUIContent
+    + {static} <<readonly>> applyRevertModuleDialogTitle : GUIContent
+    + {static} <<readonly>> applyRevertModuleDialogContent : GUIContent
+    + {static} <<readonly>> revertConfirmationDialogTitle : GUIContent
+    + {static} <<readonly>> revertConfirmationDialogContent : GUIContent
+    + {static} <<readonly>> applyConfirmationDialogTitle : GUIContent
+    + {static} <<readonly>> applyConfirmationDialogContent : GUIContent
+    + {static} <<readonly>> yesLabel : GUIContent
+    + {static} <<readonly>> noLabel : GUIContent
+    + {static} <<readonly>> styleSheetPath : string = "Packages/com.unity.2d.sprite/Editor/UI/SpriteEditor/SpriteEditor.uss"
+}
+class CurrentResetContext {
+    + assetPath : string
+}
+class PreviewTexture2D {
+    - m_ActualWidth : int = 0
+    - m_ActualHeight : int = 0
+    + PreviewTexture2D(t:UnityTexture2D, width:int, height:int)
+    + <<override>> width : int <<get>>
+    + <<override>> height : int <<get>>
+}
+Attribute <|-- SpriteEditorAssetPathProviderAttribute
+Attribute <|-- SpriteObjectProviderAttribute
+SpriteUtilityWindow <|-- SpriteEditorWindow
+ISpriteEditor <|-- SpriteEditorWindow
+AssetPostprocessor <|-- SpriteEditorTexturePostprocessor
+"EventBase`1" "<SpriteSelectionChangeEvent>" <|-- SpriteSelectionChangeEvent
+SpriteDataProviderFactories +-- SpriteDataProviderFactory
+SpriteEditorWindow +-- SpriteEditorWindowStyles
+SpriteEditorWindow +-- CurrentResetContext
+SpriteEditorWindow +-- PreviewTexture2D
+Texture2DWrapper <|-- PreviewTexture2D
+@enduml

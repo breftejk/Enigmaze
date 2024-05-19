@@ -1,0 +1,7 @@
+@startuml
+class CinemachineBlendDefinitionPropertyDrawer <<sealed>> {
+    - myClass : CinemachineBlendDefinition
+    + <<override>> OnGUI(rect:Rect, property:SerializedProperty, label:GUIContent) : void
+}
+PropertyDrawer <|-- CinemachineBlendDefinitionPropertyDrawer
+@enduml

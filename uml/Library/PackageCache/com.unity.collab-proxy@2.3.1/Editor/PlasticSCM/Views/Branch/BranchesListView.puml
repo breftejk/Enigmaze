@@ -1,0 +1,39 @@
+@startuml
+class BranchesListView {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> BranchesListView(headerState:BranchesListHeaderState, columnNames:List<string>, menu:BranchesViewMenu, sizeChangedAction:Action)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    <<internal>> SetLoadedBranchId(loadedBranchId:long) : void
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(queryResult:ViewQueryResult, loadedBranchId:long) : void
+    <<internal>> Refilter() : void
+    <<internal>> Sort() : void
+    <<internal>> GetSelectedRepositories() : List<RepositorySpec>
+    <<internal>> GetSelectedRepObjectInfos() : List<RepObjectInfo>
+    <<internal>> SelectRepObjectInfos(repObjectsToSelect:List<RepObjectInfo>) : void
+    - GetTreeIdForItem(repObjectInfo:RepObjectInfo) : int
+    - DelayedSearchChanged() : void
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - RegenerateRows(listViewItemIds:ListViewItemIds<object>, objectInfos:List<object>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - BranchesListViewItemGUI(queryResult:ViewQueryResult, rowHeight:float, item:BranchListViewItem, args:RowGUIArgs, isBoldText:bool, avatarLoadedAction:Action) : void
+    {static} - BranchesListViewItemCellGUI(rect:Rect, rowHeight:float, queryResult:ViewQueryResult, item:BranchListViewItem, column:BranchesListColumn, avatarLoadedAction:Action, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    {static} - IsSizeChanged(currentRect:Rect, lastRect:Rect) : bool
+    - mLastRect : Rect
+    - mListViewItemIds : ListViewItemIds<object>
+    - mRows : List<TreeViewItem>
+    - mQueryResult : ViewQueryResult
+    - mLoadedBranchId : long
+    <<readonly>> - mCooldownFilterAction : CooldownWindowDelayer
+    <<readonly>> - mSizeChangedAction : Action
+    <<readonly>> - mMenu : BranchesViewMenu
+    <<readonly>> - mColumnNames : List<string>
+}
+TreeView <|-- BranchesListView
+@enduml

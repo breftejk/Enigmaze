@@ -1,0 +1,10 @@
+@startuml
+class "StateDescriptor`1"<TState> {
+    + StateDescriptor(target:TState)
+    + state : TState <<get>>
+    + <<override>> Title() : string
+    + <<override>> Summary() : string
+    + <<override>> Icon() : EditorTexture
+}
+"Descriptor`2" "<TState,StateDescription>" <|-- "StateDescriptor`1"
+@enduml

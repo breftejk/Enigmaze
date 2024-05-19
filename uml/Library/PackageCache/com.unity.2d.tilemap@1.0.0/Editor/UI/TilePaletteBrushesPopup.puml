@@ -1,0 +1,27 @@
+@startuml
+class TilePaletteBrushesPopup <<sealed>> {
+    - {static} k_NullGameObjectName : string
+    - {static} k_LabelTooltip : string
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushes-field"
+    - <<new>> {static} <<readonly>> labelUssClassName : string
+    - <<new>> {static} <<readonly>> inputUssClassName : string
+    + TilePaletteBrushesPopup()
+    + TilePaletteBrushesPopup(label:string)
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnBrushChanged(obj:GridBrushBase) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - FormatSelectedValueCallback(brush:GridBrushBase) : string
+    - CreateMenuCallback() : IGenericMenu
+    - {static} GetBrushIndex() : int
+    - UpdateBrush() : void
+}
+class TilePaletteBrushesPopupFactory {
+}
+class TilePaletteBrushesPopupUxmlTraits {
+}
+"PopupField`1" "<GridBrushBase>" <|-- TilePaletteBrushesPopup
+TilePaletteBrushesPopup +-- TilePaletteBrushesPopupFactory
+"UxmlFactory`2" "<TilePaletteBrushesPopup,TilePaletteBrushesPopupUxmlTraits>" <|-- TilePaletteBrushesPopupFactory
+TilePaletteBrushesPopup +-- TilePaletteBrushesPopupUxmlTraits
+UxmlTraits <|-- TilePaletteBrushesPopupUxmlTraits
+@enduml

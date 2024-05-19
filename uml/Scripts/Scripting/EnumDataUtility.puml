@@ -1,0 +1,29 @@
+@startuml
+struct EnumData {
+    + values : Enum[]
+    + flagValues : int[]
+    + displayNames : string[]
+    + names : string[]
+    + tooltip : string[]
+    + flags : bool
+    + underlyingType : Type
+    + unsigned : bool
+    + serializable : bool
+}
+class EnumDataUtility <<static>> {
+    - {static} <<readonly>> s_EnumData : Dictionary<(CachedType, Type), EnumData>
+    + {static} GetCachedEnumData(enumType:Type, cachedType:CachedType, nicifyName:Func<string, string>) : EnumData
+    + {static} EnumFlagsToInt(enumData:EnumData, enumValue:Enum) : int
+    + {static} IntToEnumFlags(enumType:Type, value:int) : Enum
+    + {static} HandleInspectorOrderAttribute(enumType:Type, enumData:EnumData) : void
+    - {static} CheckObsoleteAddition(field:FieldInfo, cachedType:CachedType) : bool
+    - {static} EnumTooltipFromEnumField(field:FieldInfo) : string
+    - {static} EnumNameFromEnumField(field:FieldInfo, nicifyName:Func<string, string>) : string
+}
+enum CachedType {
+    ExcludeObsolete,
+    IncludeObsoleteExceptErrors,
+    IncludeAllObsolete,
+}
+EnumDataUtility +-- CachedType
+@enduml

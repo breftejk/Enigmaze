@@ -1,0 +1,21 @@
+@startuml
+class Hero {
+    + m_MoveSpeed : float
+    + animator : Animator
+    - rb : Rigidbody2D
+    + playerState : PlayerState
+    + lookFacing : Vector2
+    + respawnPoint : Vector2
+    - dashCooldown : float = 0f
+    + dead : bool = false
+    - Start() : void
+    - Update() : void
+    + LevelComplete() : void
+}
+enum PlayerState {
+    Alive,
+    Dead,
+}
+MonoBehaviour <|-- Hero
+Hero +-- PlayerState
+@enduml

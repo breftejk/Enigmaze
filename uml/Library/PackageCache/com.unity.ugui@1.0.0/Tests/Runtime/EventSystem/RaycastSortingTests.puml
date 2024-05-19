@@ -1,0 +1,12 @@
+@startuml
+class RaycastSortingTests {
+    - m_PrefabRoot : GameObject
+    <<const>> - kPrefabPath : string = "Assets/Resources/RaycastSortingPrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + RaycastResult_Sorting() : IEnumerator
+    + TearDown() : void
+    + OneTimeTearDown() : void
+}
+IPrebuildSetup <|-- RaycastSortingTests
+@enduml

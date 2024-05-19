@@ -1,0 +1,12 @@
+@startuml
+class RawLayerInfo {
+    - signature : string
+    + <<override>> Signature : string <<get>>
+    - key : string
+    + <<override>> Key : string <<get>>
+    + Data : byte[] <<get>>
+    + RawLayerInfo(key:string, signature:string)
+    + RawLayerInfo(reader:PsdBinaryReader, signature:string, key:string, dataLength:long)
+}
+LayerInfo <|-- RawLayerInfo
+@enduml

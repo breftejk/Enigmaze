@@ -1,0 +1,19 @@
+@startuml
+class SpriteFrameModule <<partial>> {
+    + <<override>> DoMainGUI() : void
+    - DrawPotentialSpriteRectGizmos() : void
+    + <<override>> DoToolbarGUI(toolbarRect:Rect) : void
+    - HandleRectCornerScalingHandles() : void
+    - HandleRectSideScalingHandles() : void
+    - HandleDragging() : void
+    - HandleCreate() : void
+    - HandleDuplicate() : void
+    - HandleDelete() : void
+}
+class SpriteFrameModuleStyles <<static>> {
+    + {static} <<readonly>> sliceButtonLabel : GUIContent
+    + {static} <<readonly>> trimButtonLabel : GUIContent
+}
+SpriteFrameModuleBase <|-- SpriteFrameModule
+SpriteFrameModule +-- SpriteFrameModuleStyles
+@enduml

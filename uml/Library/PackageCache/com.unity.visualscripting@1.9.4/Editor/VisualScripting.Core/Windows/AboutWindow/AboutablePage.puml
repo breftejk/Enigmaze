@@ -1,0 +1,14 @@
+@startuml
+class AboutablePage {
+    + AboutablePage(aboutable:IAboutable)
+    - <<readonly>> aboutable : IAboutable
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> authorLogoHeight : float = 50
+}
+Page <|-- AboutablePage
+AboutablePage +-- Styles
+@enduml

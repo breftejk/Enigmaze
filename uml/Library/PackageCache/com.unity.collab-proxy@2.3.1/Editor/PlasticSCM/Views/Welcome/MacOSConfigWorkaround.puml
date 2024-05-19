@@ -1,0 +1,7 @@
+@startuml
+class MacOSConfigWorkaround {
+    <<internal>> CreateClientConfigIfNeeded() : void
+    <<internal>> DeleteClientConfigIfNeeded() : void
+    - mClientConfigCreated : bool
+}
+@enduml

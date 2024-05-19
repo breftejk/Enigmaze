@@ -1,0 +1,28 @@
+@startuml
+class TrimClip {
+    - <<readonly>> kDurationText : string
+    - <<readonly>> kSpeedText : string
+    - m_IsCaptured : bool
+    - m_TrimClipHandler : TimelineClipHandle
+    - m_OriginalDuration : double
+    - m_OriginalTimeScale : double
+    - m_OriginalEaseInDuration : double
+    - m_OriginalEaseOutDuration : double
+    - m_UndoSaved : bool
+    - m_SnapEngine : SnapEngine
+    <<readonly>> - m_OverlayStrings : List<string>
+    {static} <<readonly>> - kEpsilon : double = 0.0000001
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    + <<override>> Overlay(evt:Event, state:WindowState) : void
+    - RefreshOverlayStrings(handle:TimelineClipHandle, state:WindowState) : void
+}
+class TrimClipAttractionHandler {
+    + OnAttractedEdge(attractable:IAttractable, manipulateEdges:ManipulateEdges, edge:AttractedEdge, time:double) : void
+    - IsAffectingTimeScale(clip:TimelineClip) : bool
+}
+Manipulator <|-- TrimClip
+TrimClip +-- TrimClipAttractionHandler
+IAttractionHandler <|-- TrimClipAttractionHandler
+@enduml

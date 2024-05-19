@@ -1,0 +1,18 @@
+@startuml
+abstract class UIBehaviour {
+    # <<virtual>> Awake() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> Start() : void
+    # <<virtual>> OnDisable() : void
+    # <<virtual>> OnDestroy() : void
+    + <<virtual>> IsActive() : bool
+    # <<virtual>> OnRectTransformDimensionsChange() : void
+    # <<virtual>> OnBeforeTransformParentChanged() : void
+    # <<virtual>> OnTransformParentChanged() : void
+    # <<virtual>> OnDidApplyAnimationProperties() : void
+    # <<virtual>> OnCanvasGroupChanged() : void
+    # <<virtual>> OnCanvasHierarchyChanged() : void
+    + IsDestroyed() : bool
+}
+MonoBehaviour <|-- UIBehaviour
+@enduml

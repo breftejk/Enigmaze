@@ -1,0 +1,10 @@
+@startuml
+class TimelineUndo <<static>> {
+    <<internal>> {static} undoEnabled : bool <<get>>
+    + {static} PushDestroyUndo(timeline:TimelineAsset, thingToDirty:Object, objectToDestroy:Object) : void
+    + {static} PushUndo(thingsToDirty:Object[], operation:string) : void
+    + {static} PushUndo(thingToDirty:Object, operation:string) : void
+    + {static} RegisterCreatedObjectUndo(thingCreated:Object, operation:string) : void
+    <<internal>> {static} UndoName(name:string) : string
+}
+@enduml

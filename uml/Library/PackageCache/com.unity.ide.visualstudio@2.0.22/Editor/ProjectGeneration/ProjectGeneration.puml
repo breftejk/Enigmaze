@@ -1,0 +1,121 @@
+@startuml
+enum ScriptingLanguage {
+    None,
+    CSharp,
+}
+interface IGenerator {
+    SyncIfNeeded(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>) : bool
+    Sync() : void
+    HasSolutionBeenGenerated() : bool
+    IsSupportedFile(path:string) : bool
+    SolutionFile() : string
+    ProjectDirectory : string <<get>>
+    AssemblyNameProvider : IAssemblyNameProvider <<get>>
+}
+class ProjectGeneration {
+    + {static} <<readonly>> MSBuildNamespaceUri : string = "http://schemas.microsoft.com/developer/msbuild/2003"
+    + AssemblyNameProvider : IAssemblyNameProvider <<get>>
+    + ProjectDirectory : string <<get>>
+    <<internal>> <<const>> k_WindowsNewline : string = "\r\n"
+    <<const>> - m_SolutionProjectEntryTemplate : string = @"Project(""{{{0}}}"") = ""{1&#125;"", ""{2&#125;"", ""{{{3}}}""{4&#125;EndProject"
+    <<readonly>> - m_SolutionProjectConfigurationTemplate : string
+    {static} <<readonly>> - k_ReimportSyncExtensions : string[]
+    - m_ProjectSupportedExtensions : HashSet<string>
+    - m_BuiltinSupportedExtensions : HashSet<string>
+    <<readonly>> - m_ProjectName : string
+    <<internal>> <<readonly>> m_AssemblyNameProvider : IAssemblyNameProvider
+    <<readonly>> - m_FileIOProvider : IFileIO
+    <<readonly>> - m_GUIDGenerator : IGUIDGenerator
+    - m_ShouldGenerateAll : bool
+    - m_CurrentInstallation : IVisualStudioInstallation
+    + ProjectGeneration()
+    + ProjectGeneration(tempDirectory:string)
+    + ProjectGeneration(tempDirectory:string, assemblyNameProvider:IAssemblyNameProvider, fileIoProvider:IFileIO, guidGenerator:IGUIDGenerator)
+    <<internal>> <<virtual>> StyleName : string <<get>>
+    + SyncIfNeeded(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>) : bool
+    - CreateExtraFiles(installation:IVisualStudioInstallation) : void
+    - HasFilesBeenModified(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>) : bool
+    - {static} ShouldSyncOnReimportedAsset(asset:string) : bool
+    - RefreshCurrentInstallation() : void
+    {static} - solutionSyncMarker : ProfilerMarker
+    + Sync() : void
+    + HasSolutionBeenGenerated() : bool
+    - SetupProjectSupportedExtensions() : void
+    - ShouldFileBePartOfSolution(file:string) : bool
+    - {static} GetExtensionWithoutDot(path:string) : string
+    + IsSupportedFile(path:string) : bool
+    - IsSupportedFile(path:string, extensionWithoutDot:string) : bool
+    - {static} ScriptingLanguageFor(assembly:Assembly) : ScriptingLanguage
+    <<internal>> {static} ScriptingLanguageForExtension(extensionWithoutDot:string) : ScriptingLanguage
+    <<internal>> {static} ScriptingLanguageForFile(path:string) : ScriptingLanguage
+    + GenerateAndWriteSolutionAndProjects() : void
+    - ParseResponseFileData(assembly:Assembly) : IEnumerable<ResponseFileData>
+    - GenerateAllAssetProjectParts() : Dictionary<string, string>
+    <<internal>> <<virtual>> IncludeAsset(builder:StringBuilder, tag:IncludeAssetTag, asset:string) : void
+    - SyncProject(assembly:Assembly, allAssetsProjectParts:Dictionary<string, string>, responseFilesData:ResponseFileData[]) : void
+    - SyncProjectFileIfNotChanged(path:string, newContents:string) : void
+    - SyncSolutionFileIfNotChanged(path:string, newContents:string) : void
+    - {static} GetPostProcessorCallbacks(name:string) : IEnumerable<SR.MethodInfo>
+    {static} - OnGeneratedCSProjectFiles() : void
+    - {static} OnPreGeneratingCSProjectFiles() : bool
+    - {static} InvokeAssetPostProcessorGenerationCallbacks(name:string, path:string, content:string) : string
+    - {static} OnGeneratedCSProject(path:string, content:string) : string
+    - {static} OnGeneratedSlnSolution(path:string, content:string) : string
+    - SyncFileIfNotChanged(filename:string, newContents:string) : void
+    - ProjectText(assembly:Assembly, allAssetsProjectParts:Dictionary<string, string>, responseFilesData:ResponseFileData[]) : string
+    - {static} XmlFilename(path:string) : string
+    - {static} XmlEscape(s:string) : string
+    <<internal>> <<virtual>> AppendProjectReference(assembly:Assembly, reference:Assembly, projectBuilder:StringBuilder) : void
+    - AppendReference(fullReference:string, projectBuilder:StringBuilder) : void
+    + ProjectFile(assembly:Assembly) : string
+    - {static} <<readonly>> InvalidCharactersRegexPattern : Regex
+    + SolutionFile() : string
+    <<internal>> GetLangVersion(assembly:Assembly) : string
+    - {static} GetOtherArguments(responseFilesData:ResponseFileData[], names:HashSet<string>) : IEnumerable<string>
+    - SetAnalyzerAndSourceGeneratorProperties(assembly:Assembly, responseFilesData:ResponseFileData[], properties:ProjectProperties) : void
+    - ToNormalizedPath(path:string) : string
+    - ToNormalizedPaths(values:IEnumerable<string>) : string[]
+    - ProjectHeader(assembly:Assembly, responseFilesData:ResponseFileData[], headerBuilder:StringBuilder) : void
+    - {static} ProjectTypeOf(fileName:string) : ProjectType
+    <<internal>> <<virtual>> GetProjectHeader(properties:ProjectProperties, headerBuilder:StringBuilder) : void
+    <<internal>> {static} GetProjectHeaderConfigurations(properties:ProjectProperties, headerBuilder:StringBuilder) : void
+    <<internal>> {static} GetProjectHeaderAnalyzers(properties:ProjectProperties, headerBuilder:StringBuilder) : void
+    <<internal>> GetProjectHeaderVstuFlavoring(properties:ProjectProperties, headerBuilder:StringBuilder, includeProjectTypeGuids:bool) : void
+    <<internal>> <<virtual>> GetProjectFooter(footerBuilder:StringBuilder) : void
+    - {static} GetSolutionText() : string
+    - SyncSolution(assemblies:IEnumerable<Assembly>) : void
+    - SolutionText(assemblies:IEnumerable<Assembly>, previousSolution:Solution) : string
+    - {static} RelevantAssembliesForMode(assemblies:IEnumerable<Assembly>) : IEnumerable<Assembly>
+    - {static} GetPropertiesText(array:SolutionProperties[]) : string
+    - GetProjectEntriesText(entries:IEnumerable<SolutionProjectEntry>) : string
+    - ToProjectEntries(assemblies:IEnumerable<Assembly>) : IEnumerable<SolutionProjectEntry>
+    - GetProjectActiveConfigurations(projectGuid:string) : string
+    <<internal>> EscapedRelativePathFor(file:string, packageInfo:UnityEditor.PackageManager.PackageInfo) : string
+    <<internal>> {static} SkipPathPrefix(path:string, prefix:string) : string
+    <<internal>> {static} GetProjectExtension() : string
+    <<internal>> ProjectGuid(assemblyName:string) : string
+    <<internal>> ProjectGuid(assembly:Assembly) : string
+    - SolutionGuid(assembly:Assembly) : string
+    - {static} GetRootNamespace(assembly:Assembly) : string
+}
+class SolutionGuidGenerator <<static>> {
+    + {static} GuidForProject(projectName:string) : string
+    + {static} GuidForSolution(projectName:string, language:ScriptingLanguage) : string
+    - {static} ComputeGuidHashFor(input:string) : string
+    - {static} HashAsGuid(hash:string) : string
+    - {static} HashToString(bs:byte[]) : string
+}
+enum IncludeAssetTag {
+    Compile,
+    None,
+}
+enum ProjectType {
+    GamePlugins= 3,
+    Game= 1,
+    EditorPlugins= 7,
+    Editor= 5,
+}
+IGenerator <|-- ProjectGeneration
+ProjectGeneration +-- IncludeAssetTag
+ProjectGeneration +-- ProjectType
+@enduml

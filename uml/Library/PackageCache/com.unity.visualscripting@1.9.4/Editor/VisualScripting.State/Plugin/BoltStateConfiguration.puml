@@ -1,0 +1,11 @@
+@startuml
+class BoltStateConfiguration <<sealed>> {
+    - BoltStateConfiguration(plugin:BoltState)
+    + <<override>> header : string <<get>>
+    + statesReveal : StateRevealCondition <<get>> <<set>>
+    + transitionsReveal : StateRevealCondition <<get>> <<set>>
+    + transitionsEndArrow : bool <<get>> <<set>> = false
+    + animateTransitions : bool <<get>> <<set>> = true
+}
+PluginConfiguration <|-- BoltStateConfiguration
+@enduml

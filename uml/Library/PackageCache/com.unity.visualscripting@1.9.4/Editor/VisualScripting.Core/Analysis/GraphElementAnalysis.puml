@@ -1,0 +1,6 @@
+@startuml
+class GraphElementAnalysis {
+    + warnings : List<Warning> <<get>> <<set>>
+}
+IGraphElementAnalysis <|-- GraphElementAnalysis
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+class TerrainLitShaderGUI {
+    {static} - s_Styles : StylesLayer = null
+    - {static} styles : StylesLayer <<get>>
+    + TerrainLitShaderGUI()
+    - enableHeightBlend : MaterialProperty = null
+    <<const>> - kEnableHeightBlend : string = "_EnableHeightBlend"
+    - heightTransition : MaterialProperty = null
+    <<const>> - kHeightTransition : string = "_HeightTransition"
+    - enableInstancedPerPixelNormal : MaterialProperty = null
+    <<const>> - kEnableInstancedPerPixelNormal : string = "_EnableInstancedPerPixelNormal"
+    - m_ShowChannelRemapping : bool = false
+    - m_HeightParametrization : HeightParametrization
+    - {static} DoesTerrainUseMaskMaps(terrainLayers:TerrainLayer[]) : bool
+    # FindMaterialProperties(props:MaterialProperty[]) : void
+    {static} + SetupMaterialKeywords(material:Material) : void
+    {static} + TextureHasAlpha(inTex:Texture2D) : bool
+    + <<override>> OnGUI(materialEditorIn:MaterialEditor, properties:MaterialProperty[]) : void
+    - OnTerrainLayerGUI(terrainLayer:TerrainLayer, terrain:Terrain) : bool
+}
+class StylesLayer {
+    + <<readonly>> warningHeightBasedBlending : GUIContent
+    + <<readonly>> enableHeightBlend : GUIContent
+    + <<readonly>> heightTransition : GUIContent
+    + <<readonly>> enableInstancedPerPixelNormal : GUIContent
+    + <<readonly>> diffuseTexture : GUIContent
+    + <<readonly>> colorTint : GUIContent
+    + <<readonly>> opacityAsDensity : GUIContent
+    + <<readonly>> normalMapTexture : GUIContent
+    + <<readonly>> normalScale : GUIContent
+    + <<readonly>> maskMapTexture : GUIContent
+    + <<readonly>> maskMapTextureWithoutHeight : GUIContent
+    + <<readonly>> channelRemapping : GUIContent
+    + <<readonly>> defaultValues : GUIContent
+    + <<readonly>> metallic : GUIContent
+    + <<readonly>> ao : GUIContent
+    + <<readonly>> height : GUIContent
+    + <<readonly>> heightParametrization : GUIContent
+    + <<readonly>> heightAmplitude : GUIContent
+    + <<readonly>> heightBase : GUIContent
+    + <<readonly>> heightMin : GUIContent
+    + <<readonly>> heightMax : GUIContent
+    + <<readonly>> heightCm : GUIContent
+    + <<readonly>> smoothness : GUIContent
+}
+enum HeightParametrization {
+    Amplitude,
+    MinMax,
+}
+ITerrainLayerCustomUI <|-- TerrainLitShaderGUI
+TerrainLitShaderGUI +-- StylesLayer
+TerrainLitShaderGUI +-- HeightParametrization
+@enduml

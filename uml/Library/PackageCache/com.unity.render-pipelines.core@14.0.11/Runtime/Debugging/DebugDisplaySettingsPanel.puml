@@ -1,0 +1,21 @@
+@startuml
+abstract class DebugDisplaySettingsPanel {
+    - <<readonly>> m_Widgets : List<DebugUI.Widget>
+    - <<readonly>> m_DisplayInfo : DisplayInfoAttribute
+    + <<virtual>> PanelName : string <<get>>
+    + <<virtual>> Order : int <<get>>
+    + Widgets : DebugUI.Widget[] <<get>>
+    + <<virtual>> Flags : DebugUI.Flags <<get>>
+    # AddWidget(widget:DebugUI.Widget) : void
+    # Clear() : void
+    + Dispose() : void
+    # DebugDisplaySettingsPanel()
+}
+abstract class "DebugDisplaySettingsPanel`1"<T> {
+    <<internal>> m_Data : T
+    + data : T <<get>> <<internal set>>
+    # DebugDisplaySettingsPanel(data:T)
+}
+IDebugDisplaySettingsPanelDisposable <|-- DebugDisplaySettingsPanel
+DebugDisplaySettingsPanel <|-- "DebugDisplaySettingsPanel`1"
+@enduml

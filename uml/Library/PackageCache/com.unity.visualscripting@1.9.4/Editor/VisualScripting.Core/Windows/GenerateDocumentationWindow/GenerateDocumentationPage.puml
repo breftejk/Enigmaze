@@ -1,0 +1,47 @@
+@startuml
+class GenerateDocumentationPage {
+    + GenerateDocumentationPage()
+    - <<readonly>> steps : List<DocumentationGenerationStep>
+    - <<readonly>> queue : Queue<DocumentationGenerationStep>
+    - generating : bool
+    # <<override>> OnShow() : void
+    + <<override>> Update() : void
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> explanationLabel : GUIStyle
+    + {static} <<readonly>> generateButton : GUIStyle
+    + {static} <<readonly>> nextButton : GUIStyle
+    + {static} <<readonly>> stepLabel : GUIStyle
+    + {static} <<readonly>> stepIdleIcon : GUIStyle
+    + {static} <<readonly>> stepShowLogButton : GUIStyle
+    + {static} <<readonly>> stepShowLogHiddenButton : GUIStyle
+    + {static} <<readonly>> stepIcon : GUIStyle
+    + {static} <<readonly>> spaceBetweenSteps : float = 5
+}
+class DocumentationGenerationStep {
+    + DocumentationGenerationStep(projectPath:string, label:string)
+    - <<readonly>> projectPath : string
+    - <<readonly>> label : string
+    - lastDrawnState : State
+    - logPath : string
+    + state : State <<get>>
+    - GetStateIcon(state:State) : EditorTexture
+    + Generate() : void
+    + Reset() : void
+    + Update() : void
+    + OnGUI() : void
+}
+enum State {
+    Idle,
+    Generating,
+    Success,
+    Failure,
+}
+Page <|-- GenerateDocumentationPage
+GenerateDocumentationPage +-- Styles
+GenerateDocumentationPage +-- DocumentationGenerationStep
+DocumentationGenerationStep +-- State
+@enduml

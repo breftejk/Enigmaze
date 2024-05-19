@@ -1,0 +1,9 @@
+@startuml
+class NotNode {
+    + NotNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Not(In:Boolean, Out:Boolean) : string
+}
+CodeFunctionNode <|-- NotNode
+@enduml

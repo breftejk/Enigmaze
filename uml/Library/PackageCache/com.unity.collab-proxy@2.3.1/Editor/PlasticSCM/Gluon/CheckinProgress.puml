@@ -1,0 +1,7 @@
+@startuml
+class CheckinProgress {
+    <<internal>> CheckinProgress(workspaceWindow:WorkspaceWindow)
+    <<internal>> Refresh(progress:CheckinProgressData) : void
+    - mWorkspaceWindow : WorkspaceWindow
+}
+@enduml

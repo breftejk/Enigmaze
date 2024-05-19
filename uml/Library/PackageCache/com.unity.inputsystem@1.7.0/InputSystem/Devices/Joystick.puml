@@ -1,0 +1,32 @@
+@startuml
+struct JoystickState {
+    + {static} kFormat : FourCC <<get>>
+    + buttons : int
+    + stick : Vector2
+    + format : FourCC <<get>>
+}
+class Joystick {
+    + trigger : ButtonControl <<get>> <<protected set>>
+    + stick : StickControl <<get>> <<protected set>>
+    + twist : AxisControl <<get>> <<protected set>>
+    + hatswitch : Vector2Control <<get>> <<protected set>>
+    + {static} current : Joystick <<get>>
+    + <<new>> {static} all : ReadOnlyArray<Joystick> <<get>>
+    # <<override>> FinishSetup() : void
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnAdded() : void
+    # <<override>> OnRemoved() : void
+    - {static} s_JoystickCount : int
+    - {static} s_Joysticks : Joystick[]
+}
+enum Button {
+    HatSwitchUp,
+    HatSwitchDown,
+    HatSwitchLeft,
+    HatSwitchRight,
+    Trigger,
+}
+IInputStateTypeInfo <|-- JoystickState
+InputDevice <|-- Joystick
+JoystickState +-- Button
+@enduml

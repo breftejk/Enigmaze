@@ -1,0 +1,19 @@
+@startuml
+class DistortTunnelRendererFeature {
+    + passEvent : RenderPassEvent
+    + distortShader : Shader
+    - m_DistortMaterial : Material
+    - m_CopyColorPass : DistortTunnelPass_CopyColor
+    - m_TunnelPass : DistortTunnelPass_Tunnel
+    - m_DistortPass : DistortTunnelPass_Distort
+    - m_CopyColorTexHandle : RTHandle
+    - <<const>> k_CopyColorTexName : string = "_TunnelDistortBgTexture"
+    - m_TunnelTexHandle : RTHandle
+    - <<const>> k_TunnelTexName : string = "_TunnelDistortTexture"
+    + <<override>> Create() : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    + <<override>> SetupRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+}
+ScriptableRendererFeature <|-- DistortTunnelRendererFeature
+@enduml

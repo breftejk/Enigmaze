@@ -1,0 +1,20 @@
+@startuml
+class ExecutionSettings {
+    + ExecutionSettings(filtersToExecute:Filter[])
+    - m_TargetPlatform : BuildTarget
+    - m_HasTargetPlatform : bool
+    + overloadTestRunSettings : ITestRunSettings
+    <<internal>> filter : Filter
+    + filters : Filter[]
+    + runSynchronously : bool
+    + playerHeartbeatTimeout : int
+    <<internal>> orderedTestNames : string[]
+    <<internal>> playerSavePath : string <<get>> <<set>>
+    <<internal>> EditModeIncluded() : bool
+    <<internal>> PlayModeInEditorIncluded() : bool
+    <<internal>> PlayerIncluded() : bool
+    - {static} IncludesTestMode(testMode:TestMode, modeToCheckFor:TestMode) : bool
+    <<internal>> BuildNUnitFilter() : ITestFilter
+    <<internal>> targetPlatform : BuildTarget? <<get>> <<set>>
+}
+@enduml

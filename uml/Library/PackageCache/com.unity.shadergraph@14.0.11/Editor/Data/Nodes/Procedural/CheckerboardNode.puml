@@ -1,0 +1,8 @@
+@startuml
+class CheckerboardNode {
+    + CheckerboardNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Checkerboard(UV:Vector2, ColorA:ColorRGB, ColorB:ColorRGB, Frequency:Vector2, Out:Vector3) : string
+}
+CodeFunctionNode <|-- CheckerboardNode
+@enduml

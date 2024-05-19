@@ -1,0 +1,39 @@
+@startuml
+class ProbeVolumePerSceneData {
+    <<internal>> asset : ProbeVolumeAsset
+    <<internal>> cellSharedDataAsset : TextAsset
+    <<internal>> cellSupportDataAsset : TextAsset
+    - serializedScenarios : List<SerializablePerScenarioDataItem>
+    <<internal>> scenarios : Dictionary<string, PerScenarioData>
+    - assetLoaded : bool = false
+    - activeScenario : string = null
+    - otherScenario : string = null
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    <<internal>> Clear() : void
+    <<internal>> RemoveScenario(scenario:string) : void
+    <<internal>> RenameScenario(scenario:string, newName:string) : void
+    <<internal>> ResolveCells() : bool
+    <<internal>> ResolveSharedCellData() : bool
+    - ResolvePerScenarioCellData() : bool
+    <<internal>> QueueAssetLoading() : void
+    <<internal>> QueueAssetRemoval() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    <<internal>> Initialize() : void
+    <<internal>> UpdateActiveScenario(activeScenario:string, otherScenario:string) : void
+}
+struct PerScenarioData {
+    + sceneHash : int
+    + cellDataAsset : TextAsset
+    + cellOptionalDataAsset : TextAsset
+}
+struct SerializablePerScenarioDataItem {
+    + scenario : string
+    + data : PerScenarioData
+}
+MonoBehaviour <|-- ProbeVolumePerSceneData
+ISerializationCallbackReceiver <|-- ProbeVolumePerSceneData
+ProbeVolumePerSceneData +-- PerScenarioData
+ProbeVolumePerSceneData +-- SerializablePerScenarioDataItem
+@enduml

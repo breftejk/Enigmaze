@@ -1,0 +1,19 @@
+@startuml
+class OneModifierComposite {
+    + modifier : int
+    + binding : int
+    + <<override>> valueType : Type <<get>>
+    + <<override>> valueSizeInBytes : int <<get>>
+    + overrideModifiersNeedToBePressedFirst : bool
+    - m_ValueSizeInBytes : int
+    - m_ValueType : Type
+    - m_BindingIsButton : bool
+    + <<override>> EvaluateMagnitude(context:InputBindingCompositeContext) : float
+    + <<override>> <<unsafe>> ReadValue(context:InputBindingCompositeContext, buffer:void*, bufferSize:int) : void
+    - ModifierIsPressed(context:InputBindingCompositeContext) : bool
+    # <<override>> FinishSetup(context:InputBindingCompositeContext) : void
+    + <<override>> ReadValueAsObject(context:InputBindingCompositeContext) : object
+    <<internal>> {static} DetermineValueTypeAndSize(context:InputBindingCompositeContext, part:int, valueType:Type, valueSizeInBytes:int, isButton:bool) : void
+}
+InputBindingComposite <|-- OneModifierComposite
+@enduml

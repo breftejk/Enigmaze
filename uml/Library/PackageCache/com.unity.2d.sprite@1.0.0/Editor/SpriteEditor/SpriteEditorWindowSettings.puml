@@ -1,0 +1,15 @@
+@startuml
+class SpriteEditorWindowSettings {
+    + <<const>> kSettingsUniqueKey : string = "UnityEditor.U2D.Sprites/SpriteEditorWindow"
+    + <<const>> kShowRevertConfirmation : string
+    + <<const>> kShowApplyConfirmation : string
+    + {static} <<readonly>> kShowRevertConfirmationLabel : GUIContent
+    + {static} <<readonly>> kShowApplyConfirmationLabel : GUIContent
+    + SpriteEditorWindowSettings()
+    - {static} CreateSettingsProvider() : SettingsProvider
+    - {static} SettingsGUI(searchContext:string) : void
+    + {static} showRevertConfirmation : bool <<get>> <<set>>
+    + {static} showApplyConfirmation : bool <<get>> <<set>>
+}
+SettingsProvider <|-- SpriteEditorWindowSettings
+@enduml

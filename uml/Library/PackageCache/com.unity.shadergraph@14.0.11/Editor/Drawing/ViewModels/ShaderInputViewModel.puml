@@ -1,0 +1,13 @@
+@startuml
+class ShaderInputViewModel {
+    + model : ShaderInput <<get>> <<set>>
+    + parentView : VisualElement <<get>> <<set>>
+    <<internal>> isSubGraph : bool <<get>> <<set>>
+    <<internal>> isInputExposed : bool <<get>> <<set>>
+    <<internal>> inputName : string <<get>> <<set>>
+    <<internal>> inputTypeName : string <<get>> <<set>>
+    <<internal>> requestModelChangeAction : Action<IGraphDataAction> <<get>> <<set>>
+    + ResetViewModelData() : void
+}
+ISGViewModel <|-- ShaderInputViewModel
+@enduml

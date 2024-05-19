@@ -1,0 +1,39 @@
+@startuml
+class InspectorView {
+    <<const>> - k_InspectorUpdateInterval : float = 0.25f
+    <<const>> - k_InspectorElementLimit : int = 20
+    - m_GraphSettingsTabFocused : bool = false
+    - m_CurrentlyInspectedElementsCount : int = 0
+    <<readonly>> - m_PropertyDrawerList : List<Type>
+    - cachedInspectables : HashSet<IInspectable>
+    - m_graphSettingsPropertyDrawer : IPropertyDrawer
+    + <<override>> windowTitle : string <<get>>
+    + <<override>> elementName : string <<get>>
+    + <<override>> styleName : string <<get>>
+    + <<override>> UxmlName : string <<get>>
+    + <<override>> layoutKey : string <<get>>
+    - m_GraphInspectorView : TabbedView
+    # m_GraphSettingsContainer : VisualElement
+    # m_NodeSettingsContainer : VisualElement
+    - m_AllActivePropertyDrawers : List<IPropertyDrawer>
+    - m_MaxItemsMessageLabel : Label
+    - RegisterPropertyDrawer(newPropertyDrawerType:Type) : void
+    + InspectorView(viewModel:InspectorViewModel)
+    - GraphSettingsTabClicked(button:TabButton) : void
+    - NodeSettingsTabClicked(button:TabButton) : void
+    + InitializeGraphSettings() : void
+    + doesInspectorNeedUpdate : bool <<get>> <<set>>
+    + TriggerInspectorUpdate(selectionList:IEnumerable<ISelectable>) : void
+    + Update() : void
+    - DrawInspectable(outputVisualElement:VisualElement, inspectable:IInspectable, propertyDrawerToUse:IPropertyDrawer) : void
+    <<internal>> HandleGraphChanges() : void
+    - TriggerInspectorUpdate() : void
+    + <<override>> Dispose() : void
+    # <<virtual>> ShowGraphSettings_Internal(contentContainer:VisualElement) : void
+}
+class InspectorUtils <<static>> {
+    <<internal>> {static} GatherInspectorContent(propertyDrawerList:List<Type>, outputVisualElement:VisualElement, inspectable:IInspectable, propertyChangeCallback:Action, allPropertyDrawerInstances:List<IPropertyDrawer>, propertyDrawerToUse:IPropertyDrawer) : void
+    {static} - IsPropertyTypeHandled(propertyDrawerList:List<Type>, typeOfProperty:Type, propertyDrawerToUse:Type) : bool
+}
+GraphSubWindow <|-- InspectorView
+@enduml

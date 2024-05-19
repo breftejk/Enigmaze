@@ -1,0 +1,38 @@
+@startuml
+struct RTHandleStaticHelpers {
+    + {static} s_RTHandleWrapper : RTHandle
+    + {static} SetRTHandleStaticWrapper(rtId:RenderTargetIdentifier) : void
+    + {static} SetRTHandleUserManagedWrapper(rtWrapper:RTHandle, rtId:RenderTargetIdentifier) : void
+}
+class RTHandle {
+    <<internal>> m_Owner : RTHandleSystem
+    <<internal>> m_RT : RenderTexture
+    <<internal>> m_ExternalTexture : Texture
+    <<internal>> m_NameID : RenderTargetIdentifier
+    <<internal>> m_EnableMSAA : bool = false
+    <<internal>> m_EnableRandomWrite : bool = false
+    <<internal>> m_EnableHWDynamicScale : bool = false
+    <<internal>> m_Name : string
+    <<internal>> m_UseCustomHandleScales : bool = false
+    <<internal>> m_CustomHandleProperties : RTHandleProperties
+    + SetCustomHandleProperties(properties:RTHandleProperties) : void
+    + ClearCustomHandleProperties() : void
+    + scaleFactor : Vector2 <<get>> <<internal set>>
+    <<internal>> scaleFunc : ScaleFunc
+    + useScaling : bool <<get>> <<internal set>>
+    + referenceSize : Vector2Int <<get>> <<internal set>>
+    + rtHandleProperties : RTHandleProperties <<get>>
+    + rt : RenderTexture <<get>>
+    + nameID : RenderTargetIdentifier <<get>>
+    + name : string <<get>>
+    + isMSAAEnabled : bool <<get>>
+    <<internal>> RTHandle(owner:RTHandleSystem)
+    <<internal>> SetRenderTexture(rt:RenderTexture) : void
+    <<internal>> SetTexture(tex:Texture) : void
+    <<internal>> SetTexture(tex:RenderTargetIdentifier) : void
+    + GetInstanceID() : int
+    + Release() : void
+    + GetScaledSize(refSize:Vector2Int) : Vector2Int
+    + GetScaledSize() : Vector2Int
+}
+@enduml

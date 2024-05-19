@@ -1,0 +1,21 @@
+@startuml
+class BooleanMaterialSlot {
+    - m_Value : bool
+    - m_DefaultValue : bool
+    + BooleanMaterialSlot()
+    + BooleanMaterialSlot(slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, value:bool, stageCapability:ShaderStageCapability, hidden:bool)
+    + <<override>> InstantiateControl() : VisualElement
+    + defaultValue : bool <<get>>
+    + value : bool <<get>> <<set>>
+    + <<override>> isDefaultValue : bool <<get>>
+    # <<override>> ConcreteSlotValueAsVariable() : string
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + <<override>> GetPreviewProperties(properties:List<PreviewProperty>, name:string) : void
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + <<override>> CopyDefaultValue(other:MaterialSlot) : void
+}
+MaterialSlot <|-- BooleanMaterialSlot
+"IMaterialSlotHasValue`1" "<bool>" <|-- BooleanMaterialSlot
+@enduml

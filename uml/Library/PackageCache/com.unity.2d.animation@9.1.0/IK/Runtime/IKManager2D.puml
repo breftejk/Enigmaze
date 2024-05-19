@@ -1,0 +1,19 @@
+@startuml
+class IKManager2D <<partial>> {
+    - m_Solvers : List<Solver2D>
+    - m_Weight : float = 1f
+    + weight : float <<get>> <<set>>
+    + solvers : List<Solver2D> <<get>>
+    - OnValidate() : void
+    - Reset() : void
+    - FindChildSolvers() : void
+    + AddSolver(solver:Solver2D) : void
+    + RemoveSolver(solver:Solver2D) : void
+    + UpdateManager() : void
+    + OnPreviewUpdate() : void
+    {static} - IsInGUIUpdateLoop() : bool
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- IKManager2D
+IPreviewable <|-- IKManager2D
+@enduml

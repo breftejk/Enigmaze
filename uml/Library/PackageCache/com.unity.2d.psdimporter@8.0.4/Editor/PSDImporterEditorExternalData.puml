@@ -1,0 +1,7 @@
+@startuml
+class PSDImporterEditorExternalData {
+    + platformSettings : List<TextureImporterPlatformSettings>
+    + Init(importer:PSDImporter, platformSettingsNeeded:IList<TextureImporterPlatformSettings>) : void
+}
+ScriptableObject <|-- PSDImporterEditorExternalData
+@enduml

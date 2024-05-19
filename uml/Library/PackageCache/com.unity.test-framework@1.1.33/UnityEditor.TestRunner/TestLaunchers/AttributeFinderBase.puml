@@ -1,0 +1,19 @@
+@startuml
+abstract class AttributeFinderBase {
+    + {abstract} Search(tests:ITest, filter:ITestFilter, testTargetPlatform:RuntimePlatform) : IEnumerable<Type>
+}
+interface IAttributeFinder {
+    Search(tests:ITest, filter:ITestFilter, testTargetPlatform:RuntimePlatform) : IEnumerable<Type>
+}
+abstract class "AttributeFinderBase`2"<T1,T2> {
+    - <<readonly>> m_TypeSelector : Func<T2, Type>
+    # AttributeFinderBase(typeSelector:Func<T2, Type>)
+    + <<override>> Search(tests:ITest, filter:ITestFilter, testTargetPlatform:RuntimePlatform) : IEnumerable<Type>
+    - {static} GetMatchingTests(tests:ITest, filter:ITestFilter, resultList:List<ITest>, testTargetPlatform:RuntimePlatform) : void
+    - {static} IsTestEnabledOnPlatform(test:ITest, testTargetPlatform:RuntimePlatform) : bool
+    - GetTypesFromPrebuildAttributes(tests:IEnumerable<ITest>) : IEnumerable<Type>
+    - {static} GetTypesFromInterface(selectedTests:IEnumerable<ITest>, testTargetPlatform:RuntimePlatform) : IEnumerable<Type>
+}
+IAttributeFinder <|-- AttributeFinderBase
+AttributeFinderBase <|-- "AttributeFinderBase`2"
+@enduml

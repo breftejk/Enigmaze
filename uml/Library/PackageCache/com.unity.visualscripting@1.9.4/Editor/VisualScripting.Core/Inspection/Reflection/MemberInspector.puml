@@ -1,0 +1,23 @@
+@startuml
+class MemberInspector <<sealed>> {
+    + MemberInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - GetOptions() : IFuzzyOptionTree
+    - nameMetadata : Metadata <<get>>
+    - infoMetadata : Metadata <<get>>
+    - targetTypeMetadata : Metadata <<get>>
+    - direction : ActionDirection
+    - typeSet : ReadOnlyCollection<Type>
+    - memberFilter : MemberFilter
+    - memberTypeFilter : TypeFilter
+    - expectingBoolean : bool <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> failurePopup : GUIStyle
+}
+Inspector <|-- MemberInspector
+MemberInspector +-- Styles
+@enduml

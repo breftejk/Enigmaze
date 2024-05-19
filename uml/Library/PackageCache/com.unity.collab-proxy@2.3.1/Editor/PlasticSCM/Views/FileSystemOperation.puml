@@ -1,0 +1,8 @@
+@startuml
+class FileSystemOperation <<static>> {
+    <<internal>> {static} GetExePath() : string
+    <<internal>> {static} Open(files:List<string>) : void
+    <<internal>> {static} OpenInExplorer(path:string) : void
+    {static} - OpenFile(path:string) : void
+}
+@enduml

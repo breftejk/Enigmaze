@@ -1,0 +1,10 @@
+@startuml
+abstract class UnifiedVariableUnit {
+    + kind : VariableKind <<get>> <<set>>
+    + name : ValueInput <<get>>
+    + @object : ValueInput <<get>>
+    # <<override>> Definition() : void
+}
+Unit <|-- UnifiedVariableUnit
+IUnifiedVariableUnit <|-- UnifiedVariableUnit
+@enduml

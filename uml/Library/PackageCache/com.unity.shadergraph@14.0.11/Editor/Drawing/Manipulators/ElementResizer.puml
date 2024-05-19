@@ -1,0 +1,21 @@
+@startuml
+class ElementResizer {
+    - m_IsEnabled : bool = true
+    + isEnabled : bool <<get>> <<set>>
+    + <<readonly>> direction : ResizableElement.Resizer
+    + <<readonly>> resizedElement : VisualElement
+    + ElementResizer(resizedElement:VisualElement, direction:ResizableElement.Resizer)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - m_StartMouse : Vector2
+    - m_StartSize : Vector2
+    - m_MinSize : Vector2
+    - m_MaxSize : Vector2
+    - m_StartPosition : Vector2
+    - m_DragStarted : bool = false
+    - OnMouseDown(e:MouseDownEvent) : void
+    - OnMouseMove(e:MouseMoveEvent) : void
+    - OnMouseUp(e:MouseUpEvent) : void
+}
+Manipulator <|-- ElementResizer
+@enduml

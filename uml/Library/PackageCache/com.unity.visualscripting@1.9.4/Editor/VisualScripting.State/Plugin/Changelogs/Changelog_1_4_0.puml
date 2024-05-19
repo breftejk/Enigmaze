@@ -1,0 +1,16 @@
+@startuml
+class Changelog_1_4_0f6 {
+    + Changelog_1_4_0f6(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class Changelog_1_4_0f10 {
+    + Changelog_1_4_0f10(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+PluginChangelog <|-- Changelog_1_4_0f6
+PluginChangelog <|-- Changelog_1_4_0f10
+@enduml

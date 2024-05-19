@@ -1,0 +1,6 @@
+@startuml
+interface "IRectSelector`1"<T> {
+    rect : Rect <<get>> <<set>>
+}
+"ISelector`1" "<T>" <|-- "IRectSelector`1"
+@enduml

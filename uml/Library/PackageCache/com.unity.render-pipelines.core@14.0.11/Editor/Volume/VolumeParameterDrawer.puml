@@ -1,0 +1,11 @@
+@startuml
+class VolumeParameterDrawerAttribute <<sealed>> {
+    + <<readonly>> parameterType : Type
+    + VolumeParameterDrawerAttribute(parameterType:Type)
+}
+abstract class VolumeParameterDrawer {
+    + <<virtual>> IsAutoProperty() : bool
+    + {abstract} OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+Attribute <|-- VolumeParameterDrawerAttribute
+@enduml

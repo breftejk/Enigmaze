@@ -1,0 +1,43 @@
+@startuml
+class SceneViewTilemapFocusOverlay {
+    <<internal>> <<const>> k_OverlayId : string = "Scene View/Tilemap Focus"
+    - <<const>> k_DisplayName : string = "Tilemap Focus"
+    + SceneViewTilemapFocusOverlay()
+    + visible : bool <<get>>
+}
+class TilePaletteFocusLabel <<sealed>> {
+    <<const>> - k_ToolSettingsClass : string = "unity-tool-settings"
+    <<readonly>> - m_Label : TextElement
+    - {static} k_LabelText : string
+    + TilePaletteFocusLabel()
+}
+class TilePaletteFocusDropdown <<sealed>> {
+    <<const>> - k_DropdownIconClass : string = "unity-toolbar-dropdown-label-icon"
+    <<const>> - k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_Name : string
+    - {static} <<readonly>> k_FocusNoneIconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.FocusNone.png"
+    - {static} <<readonly>> k_FocusTilemapIconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.FocusTilemap.png"
+    - {static} <<readonly>> k_FocusGridIconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.FocusGrid.png"
+    <<readonly>> - m_Label : TextElement
+    <<readonly>> - m_Icon : VisualElement
+    <<readonly>> - m_None : GUIContent
+    <<readonly>> - m_Tilemap : GUIContent
+    <<readonly>> - m_Grid : GUIContent
+    + TilePaletteFocusDropdown()
+    - OpenContextMenu() : void
+    - SetFocusMode(mode:TilemapFocusModeUtility.TilemapFocusMode) : void
+    - FocusModeChanged() : void
+}
+class TilePaletteFocusDropdownFactory {
+}
+class TilePaletteFocusDropdownUxmlTraits {
+}
+ToolbarOverlay <|-- SceneViewTilemapFocusOverlay
+ITransientOverlay <|-- SceneViewTilemapFocusOverlay
+VisualElement <|-- TilePaletteFocusLabel
+EditorToolbarDropdown <|-- TilePaletteFocusDropdown
+TilePaletteFocusDropdown +-- TilePaletteFocusDropdownFactory
+"UxmlFactory`2" "<TilePaletteFocusDropdown,TilePaletteFocusDropdownUxmlTraits>" <|-- TilePaletteFocusDropdownFactory
+TilePaletteFocusDropdown +-- TilePaletteFocusDropdownUxmlTraits
+UxmlTraits <|-- TilePaletteFocusDropdownUxmlTraits
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class UniversalProjectSettings {
+    + {static} filePath : string <<get>>
+    - m_LastMaterialVersion : int
+    <<internal>> <<const>> k_NeverProcessedMaterialVersion : int
+    + {static} materialVersionForUpgrade : int <<get>> <<set>>
+    {static} - s_Instance : UniversalProjectSettings
+    {static} - instance : UniversalProjectSettings <<get>>
+    - UniversalProjectSettings()
+    {static} - CreateOrLoad() : UniversalProjectSettings
+    <<internal>> {static} Save() : void
+}
+enum Version {
+    None,
+    First,
+}
+ScriptableObject <|-- UniversalProjectSettings
+UniversalProjectSettings +-- Version
+@enduml

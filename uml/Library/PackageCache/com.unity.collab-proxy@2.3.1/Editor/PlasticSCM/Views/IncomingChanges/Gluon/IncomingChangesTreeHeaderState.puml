@@ -1,0 +1,22 @@
+@startuml
+enum IncomingChangesTreeColumn {
+    Path,
+    LastEditedBy,
+    Size,
+    DateModififed,
+    Comment,
+}
+class IncomingChangesTreeHeaderState {
+    <<internal>> {static} GetDefault() : IncomingChangesTreeHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:IncomingChangesTreeColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - IncomingChangesTreeHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- IncomingChangesTreeHeaderState
+ISerializationCallbackReceiver <|-- IncomingChangesTreeHeaderState
+@enduml

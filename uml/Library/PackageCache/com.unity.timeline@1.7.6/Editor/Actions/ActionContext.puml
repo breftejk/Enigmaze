@@ -1,0 +1,13 @@
+@startuml
+struct ActionContext {
+    - m_Tracks : IEnumerable<TrackAsset>
+    - m_Clips : IEnumerable<TimelineClip>
+    - m_Markers : IEnumerable<IMarker>
+    + timeline : TimelineAsset
+    + director : PlayableDirector
+    + invocationTime : double?
+    + tracks : IEnumerable<TrackAsset> <<get>> <<set>>
+    + clips : IEnumerable<TimelineClip> <<get>> <<set>>
+    + markers : IEnumerable<IMarker> <<get>> <<set>>
+}
+@enduml

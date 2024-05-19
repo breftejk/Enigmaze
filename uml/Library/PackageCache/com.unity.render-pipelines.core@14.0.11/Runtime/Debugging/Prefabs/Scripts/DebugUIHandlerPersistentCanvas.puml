@@ -1,0 +1,13 @@
+@startuml
+class DebugUIHandlerPersistentCanvas {
+    + panel : RectTransform
+    + valuePrefab : RectTransform
+    - m_Items : List<DebugUIHandlerValue>
+    <<internal>> Toggle(widget:DebugUI.Value, displayName:string) : void
+    - m_ValueTupleWidgets : List<DebugUI.ValueTuple>
+    <<internal>> Toggle(widget:DebugUI.ValueTuple, forceTupleIndex:int?) : void
+    <<internal>> IsEmpty() : bool
+    <<internal>> Clear() : void
+}
+MonoBehaviour <|-- DebugUIHandlerPersistentCanvas
+@enduml

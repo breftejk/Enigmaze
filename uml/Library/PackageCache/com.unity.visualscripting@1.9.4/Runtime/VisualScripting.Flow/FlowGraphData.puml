@@ -1,0 +1,10 @@
+@startuml
+class FlowGraphData <<sealed>> {
+    + variables : VariableDeclarations <<get>>
+    + isListening : bool <<get>> <<set>>
+    + FlowGraphData(definition:FlowGraph)
+}
+"GraphData`1" "<FlowGraph>" <|-- FlowGraphData
+IGraphDataWithVariables <|-- FlowGraphData
+IGraphEventListenerData <|-- FlowGraphData
+@enduml

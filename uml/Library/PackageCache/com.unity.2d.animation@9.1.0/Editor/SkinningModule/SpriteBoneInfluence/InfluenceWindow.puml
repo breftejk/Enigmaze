@@ -1,0 +1,50 @@
+@startuml
+interface IInfluenceWindow {
+    UpdateList(transformsList:List<TransformCache>) : void
+    UpdateSelection(newSelection:IEnumerable<TransformCache>) : void
+    ToggleAddButton(enabled:bool) : void
+    ToggleRemoveButton(enabled:bool) : void
+    headerText : string <<get>> <<set>>
+    listLabelText : string <<set>>
+    SetHiddenFromLayout(hide:bool) : void
+    SetTooltips(addButtonTooltip:string, removeButtonTooltip:string) : void
+    visible : bool <<get>>
+     <<event>> onAddElement : Action 
+     <<event>> onRemoveElement : Action 
+     <<event>> onReordered : Action<IEnumerable<TransformCache>> 
+     <<event>> onSelectionChanged : Action<IEnumerable<object>> 
+}
+class InfluenceWindow {
+    +  <<event>> onAddElement : Action 
+    +  <<event>> onRemoveElement : Action 
+    +  <<event>> onReordered : Action<IEnumerable<TransformCache>> 
+    +  <<event>> onSelectionChanged : Action<IEnumerable<object>> 
+    - m_HeaderLabel : UnityEngine.UIElements.PopupWindow
+    - m_ListLabel : Label
+    - m_Selection : IEnumerable<TransformCache>
+    - m_ListView : ListView
+    - m_Influences : List<TransformCache>
+    - m_AddButton : Button
+    - m_RemoveButton : Button
+    - m_IgnoreSelectionChange : bool = false
+    + headerText : string <<get>> <<set>>
+    + listLabelText : string <<get>> <<set>>
+    + SetTooltips(addButtonTooltip:string, removeButtonTooltip:string) : void
+    <<internal>> {static} CreateFromUxml() : InfluenceWindow
+    + SetListReorderable(reorderable:bool) : void
+    + SetAllowMultiselect(allowMultiselect:bool) : void
+    - BindElements() : void
+    + UpdateList(transformsList:List<TransformCache>) : void
+    + UpdateSelection(newSelection:IEnumerable<TransformCache>) : void
+    - OnListViewSelectionChanged(newSelection:IEnumerable<object>) : void
+    + ToggleAddButton(enabled:bool) : void
+    + ToggleRemoveButton(enabled:bool) : void
+    - SetHiddenFromLayout(hide:bool) : void
+}
+class CustomUxmlFactory {
+}
+VisualElement <|-- InfluenceWindow
+IInfluenceWindow <|-- InfluenceWindow
+InfluenceWindow +-- CustomUxmlFactory
+"UxmlFactory`2" "<InfluenceWindow,UxmlTraits>" <|-- CustomUxmlFactory
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class LitDetailGUI {
+    + {static} DoDetailArea(properties:LitProperties, materialEditor:MaterialEditor) : void
+    + {static} SetMaterialKeywords(material:Material) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> detailInputs : GUIContent
+    + {static} <<readonly>> detailMaskText : GUIContent
+    + {static} <<readonly>> detailAlbedoMapText : GUIContent
+    + {static} <<readonly>> detailNormalMapText : GUIContent
+    + {static} <<readonly>> detailAlbedoMapScaleInfo : GUIContent
+    + {static} <<readonly>> detailAlbedoMapFormatError : GUIContent
+}
+struct LitProperties {
+    + detailMask : MaterialProperty
+    + detailAlbedoMapScale : MaterialProperty
+    + detailAlbedoMap : MaterialProperty
+    + detailNormalMapScale : MaterialProperty
+    + detailNormalMap : MaterialProperty
+    + LitProperties(properties:MaterialProperty[])
+}
+LitDetailGUI +-- Styles
+LitDetailGUI +-- LitProperties
+@enduml

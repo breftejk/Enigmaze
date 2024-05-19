@@ -1,0 +1,17 @@
+@startuml
+class BurstCompatibleAttribute {
+    + GenericTypeArguments : Type[] <<get>> <<set>>
+    + RequiredUnityDefine : string = null
+    + CompileTarget : BurstCompatibleCompileTarget
+}
+class NotBurstCompatibleAttribute {
+}
+enum BurstCompatibleCompileTarget {
+    Player,
+    Editor,
+    PlayerAndEditor,
+}
+Attribute <|-- BurstCompatibleAttribute
+Attribute <|-- NotBurstCompatibleAttribute
+BurstCompatibleAttribute +-- BurstCompatibleCompileTarget
+@enduml

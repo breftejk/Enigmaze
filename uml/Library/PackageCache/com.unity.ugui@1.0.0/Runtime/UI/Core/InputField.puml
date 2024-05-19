@@ -1,0 +1,253 @@
+@startuml
+class InputField {
+    # m_Keyboard : TouchScreenKeyboard
+    {static} - <<readonly>> kSeparators : char[]
+    {static} - s_IsQuestDevice : bool = false
+    # m_TextComponent : Text
+    # m_Placeholder : Graphic
+    - m_ContentType : ContentType
+    - m_InputType : InputType
+    - m_AsteriskChar : char = '*'
+    - m_KeyboardType : TouchScreenKeyboardType
+    - m_LineType : LineType
+    - m_HideMobileInput : bool = false
+    - m_CharacterValidation : CharacterValidation
+    - m_CharacterLimit : int = 0
+    - m_OnSubmit : SubmitEvent
+    - m_OnDidEndEdit : EndEditEvent
+    - m_OnValueChanged : OnChangeEvent
+    - m_OnValidateInput : OnValidateInput
+    - m_CaretColor : Color
+    - m_CustomCaretColor : bool = false
+    - m_SelectionColor : Color
+    # m_Text : string
+    - m_CaretBlinkRate : float = 0.85f
+    - m_CaretWidth : int = 1
+    - m_ReadOnly : bool = false
+    - m_ShouldActivateOnSelect : bool = true
+    # m_CaretPosition : int = 0
+    # m_CaretSelectPosition : int = 0
+    - caretRectTrans : RectTransform = null
+    # m_CursorVerts : UIVertex[] = null
+    - m_InputTextCache : TextGenerator
+    - m_CachedInputRenderer : CanvasRenderer
+    - m_PreventFontCallback : bool = false
+    # m_Mesh : Mesh
+    - m_AllowInput : bool = false
+    - m_ShouldActivateNextUpdate : bool = false
+    - m_UpdateDrag : bool = false
+    - m_DragPositionOutOfBounds : bool = false
+    - <<const>> kHScrollSpeed : float = 0.05f
+    - <<const>> kVScrollSpeed : float = 0.10f
+    # m_CaretVisible : bool
+    - m_BlinkCoroutine : Coroutine = null
+    - m_BlinkStartTime : float = 0.0f
+    # m_DrawStart : int = 0
+    # m_DrawEnd : int = 0
+    - m_DragCoroutine : Coroutine = null
+    - m_OriginalText : string = ""
+    - m_WasCanceled : bool = false
+    - m_HasDoneFocusTransition : bool = false
+    - m_WaitForSecondsRealtime : WaitForSecondsRealtime
+    - m_TouchKeyboardAllowsInPlaceEditing : bool = false
+    - m_IsCompositionActive : bool = false
+    - input : BaseInput <<get>>
+    - compositionString : string <<get>>
+    <<const>> - kEmailSpecialCharacters : string = "!#$%&'*+-/=?^_`{|&#125;~"
+    <<const>> - kOculusQuestDeviceModel : string = "Oculus Quest"
+    # InputField()
+    # mesh : Mesh <<get>>
+    # cachedInputTextGenerator : TextGenerator <<get>>
+    + shouldHideMobileInput : bool <<set>> <<get>>
+    + <<virtual>> shouldActivateOnSelect : bool <<set>> <<get>>
+    + text : string <<get>> <<set>>
+    + SetTextWithoutNotify(input:string) : void
+    - SetText(value:string, sendCallback:bool) : void
+    + isFocused : bool <<get>>
+    + caretBlinkRate : float <<get>> <<set>>
+    + caretWidth : int <<get>> <<set>>
+    + textComponent : Text <<get>> <<set>>
+    + placeholder : Graphic <<get>> <<set>>
+    + caretColor : Color <<get>> <<set>>
+    + customCaretColor : bool <<get>> <<set>>
+    + selectionColor : Color <<get>> <<set>>
+    + onEndEdit : EndEditEvent <<get>> <<set>>
+    + onSubmit : SubmitEvent <<get>> <<set>>
+    + onValueChange : OnChangeEvent <<get>> <<set>>
+    + onValueChanged : OnChangeEvent <<get>> <<set>>
+    + onValidateInput : OnValidateInput <<get>> <<set>>
+    + characterLimit : int <<get>> <<set>>
+    + contentType : ContentType <<get>> <<set>>
+    + lineType : LineType <<get>> <<set>>
+    + inputType : InputType <<get>> <<set>>
+    + touchScreenKeyboard : TouchScreenKeyboard <<get>>
+    + keyboardType : TouchScreenKeyboardType <<get>> <<set>>
+    + characterValidation : CharacterValidation <<get>> <<set>>
+    + readOnly : bool <<get>> <<set>>
+    + multiLine : bool <<get>>
+    + asteriskChar : char <<get>> <<set>>
+    + wasCanceled : bool <<get>>
+    # ClampPos(pos:int) : void
+    # caretPositionInternal : int <<get>> <<set>>
+    # caretSelectPositionInternal : int <<get>> <<set>>
+    - hasSelection : bool <<get>>
+    + caretPosition : int <<get>> <<set>>
+    + selectionAnchorPosition : int <<get>> <<set>>
+    + selectionFocusPosition : int <<get>> <<set>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    - CaretBlink() : IEnumerator
+    - SetCaretVisible() : void
+    - SetCaretActive() : void
+    - UpdateCaretMaterial() : void
+    # OnFocus() : void
+    # SelectAll() : void
+    + MoveTextEnd(shift:bool) : void
+    + MoveTextStart(shift:bool) : void
+    {static} - clipboard : string <<get>> <<set>>
+    - TouchScreenKeyboardShouldBeUsed() : bool
+    - InPlaceEditing() : bool
+    - InPlaceEditingChanged() : bool
+    - GetInternalSelection() : RangeInt
+    - UpdateKeyboardCaret() : void
+    - UpdateCaretFromKeyboard() : void
+    # <<virtual>> LateUpdate() : void
+    + ScreenToLocal(screen:Vector2) : Vector2
+    - GetUnclampedCharacterLineFromPosition(pos:Vector2, generator:TextGenerator) : int
+    # GetCharacterIndexFromPosition(pos:Vector2) : int
+    - MayDrag(eventData:PointerEventData) : bool
+    + <<virtual>> OnBeginDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    - MouseDragOutsideRect(eventData:PointerEventData) : IEnumerator
+    + <<virtual>> OnEndDrag(eventData:PointerEventData) : void
+    + <<override>> OnPointerDown(eventData:PointerEventData) : void
+    # KeyPressed(evt:Event) : EditState
+    - IsValidChar(c:char) : bool
+    - m_ProcessingEvent : Event
+    + ProcessEvent(e:Event) : void
+    + <<virtual>> OnUpdateSelected(eventData:BaseEventData) : void
+    - GetSelectedString() : string
+    - FindtNextWordBegin() : int
+    - MoveRight(shift:bool, ctrl:bool) : void
+    - FindtPrevWordBegin() : int
+    - MoveLeft(shift:bool, ctrl:bool) : void
+    - DetermineCharacterLine(charPos:int, generator:TextGenerator) : int
+    - LineUpCharacterPosition(originalPos:int, goToFirstChar:bool) : int
+    - LineDownCharacterPosition(originalPos:int, goToLastChar:bool) : int
+    - MoveDown(shift:bool) : void
+    - MoveDown(shift:bool, goToLastChar:bool) : void
+    - MoveUp(shift:bool) : void
+    - MoveUp(shift:bool, goToFirstChar:bool) : void
+    - Delete() : void
+    - ForwardSpace() : void
+    - Backspace() : void
+    - Insert(c:char) : void
+    - UpdateTouchKeyboardFromEditChanges() : void
+    - SendOnValueChangedAndUpdateLabel() : void
+    - SendOnValueChanged() : void
+    # SendOnEndEdit() : void
+    # SendOnSubmit() : void
+    # <<virtual>> Append(input:string) : void
+    - <<const>> k_MaxTextLength : int
+    # <<virtual>> Append(input:char) : void
+    # UpdateLabel() : void
+    - IsSelectionVisible() : bool
+    - {static} GetLineStartPosition(gen:TextGenerator, line:int) : int
+    - {static} GetLineEndPosition(gen:TextGenerator, line:int) : int
+    - SetDrawRangeToContainCaretPosition(caretPos:int) : void
+    + ForceLabelUpdate() : void
+    - MarkGeometryAsDirty() : void
+    + <<virtual>> Rebuild(update:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    - UpdateGeometry() : void
+    - AssignPositioningIfNeeded() : void
+    - OnFillVBO(vbo:Mesh) : void
+    - GenerateCaret(vbo:VertexHelper, roundingOffset:Vector2) : void
+    - CreateCursorVerts() : void
+    - GenerateHighlight(vbo:VertexHelper, roundingOffset:Vector2) : void
+    # Validate(text:string, pos:int, ch:char) : char
+    + ActivateInputField() : void
+    - ActivateInputFieldInternal() : void
+    + <<override>> OnSelect(eventData:BaseEventData) : void
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + DeactivateInputField() : void
+    + <<override>> OnDeselect(eventData:BaseEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+    - EnforceContentType() : void
+    - EnforceTextHOverflow() : void
+    - SetToCustomIfContentTypeIsNot(allowedContentTypes:ContentType[]) : void
+    - SetToCustom() : void
+    # <<override>> DoStateTransition(state:SelectionState, instant:bool) : void
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+}
+enum ContentType {
+    Standard,
+    Autocorrected,
+    IntegerNumber,
+    DecimalNumber,
+    Alphanumeric,
+    Name,
+    EmailAddress,
+    Password,
+    Pin,
+    Custom,
+}
+enum InputType {
+    Standard,
+    AutoCorrect,
+    Password,
+}
+enum CharacterValidation {
+    None,
+    Integer,
+    Decimal,
+    Alphanumeric,
+    Name,
+    EmailAddress,
+}
+enum LineType {
+    SingleLine,
+    MultiLineSubmit,
+    MultiLineNewline,
+}
+class SubmitEvent {
+}
+class EndEditEvent {
+}
+class OnChangeEvent {
+}
+enum EditState {
+    Continue,
+    Finish,
+}
+Selectable <|-- InputField
+IUpdateSelectedHandler <|-- InputField
+IBeginDragHandler <|-- InputField
+IDragHandler <|-- InputField
+IEndDragHandler <|-- InputField
+IPointerClickHandler <|-- InputField
+ISubmitHandler <|-- InputField
+ICanvasElement <|-- InputField
+ILayoutElement <|-- InputField
+InputField +-- ContentType
+InputField +-- InputType
+InputField +-- CharacterValidation
+InputField +-- LineType
+InputField +-- SubmitEvent
+"UnityEvent`1" "<string>" <|-- SubmitEvent
+InputField +-- EndEditEvent
+"UnityEvent`1" "<string>" <|-- EndEditEvent
+InputField +-- OnChangeEvent
+"UnityEvent`1" "<string>" <|-- OnChangeEvent
+InputField +-- EditState
+@enduml

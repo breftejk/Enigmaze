@@ -1,0 +1,12 @@
+@startuml
+class ItemsPerTrack {
+    + <<virtual>> targetTrack : TrackAsset <<get>>
+    + items : IEnumerable<ITimelineItem> <<get>>
+    + clips : IEnumerable<TimelineClip> <<get>>
+    + markers : IEnumerable<IMarker> <<get>>
+    + leftMostItem : ITimelineItem <<get>>
+    + rightMostItem : ITimelineItem <<get>>
+    # <<readonly>> m_ItemsGroup : ItemsGroup
+    + ItemsPerTrack(targetTrack:TrackAsset, items:IEnumerable<ITimelineItem>)
+}
+@enduml

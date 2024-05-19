@@ -1,0 +1,12 @@
+@startuml
+class X86 <<unsafe>> <<static>> <<partial>> {
+    - {static} GenericCSharpLoad(ptr:void*) : v128
+    - {static} GenericCSharpStore(ptr:void*, val:v128) : void
+    - {static} Saturate_To_Int8(val:int) : sbyte
+    - {static} Saturate_To_UnsignedInt8(val:int) : byte
+    - {static} Saturate_To_Int16(val:int) : short
+    - {static} Saturate_To_UnsignedInt16(val:int) : ushort
+    - {static} IsNaN(v:uint) : bool
+    - {static} IsNaN(v:ulong) : bool
+}
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+enum VertexSortingOrder {
+    Normal,
+    Reverse,
+}
+struct TMP_MeshInfo {
+    - {static} <<readonly>> s_DefaultColor : Color32
+    - {static} <<readonly>> s_DefaultNormal : Vector3
+    - {static} <<readonly>> s_DefaultTangent : Vector4
+    - {static} <<readonly>> s_DefaultBounds : Bounds
+    + mesh : Mesh
+    + vertexCount : int
+    + vertices : Vector3[]
+    + normals : Vector3[]
+    + tangents : Vector4[]
+    + uvs0 : Vector2[]
+    + uvs2 : Vector2[]
+    + colors32 : Color32[]
+    + triangles : int[]
+    + material : Material
+    + TMP_MeshInfo(mesh:Mesh, size:int)
+    + TMP_MeshInfo(mesh:Mesh, size:int, isVolumetric:bool)
+    + ResizeMeshInfo(size:int) : void
+    + ResizeMeshInfo(size:int, isVolumetric:bool) : void
+    + Clear() : void
+    + Clear(uploadChanges:bool) : void
+    + ClearUnusedVertices() : void
+    + ClearUnusedVertices(startIndex:int) : void
+    + ClearUnusedVertices(startIndex:int, updateMesh:bool) : void
+    + SortGeometry(order:VertexSortingOrder) : void
+    + SortGeometry(sortingOrder:IList<int>) : void
+    + SwapVertexData(src:int, dst:int) : void
+}
+@enduml

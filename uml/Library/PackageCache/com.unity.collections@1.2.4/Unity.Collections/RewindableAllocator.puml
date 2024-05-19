@@ -1,0 +1,53 @@
+@startuml
+struct Spinner {
+    - m_value : int
+    + Lock() : void
+    + Unlock() : void
+}
+struct "UnmanagedArray`1"<T> {
+    - m_pointer : IntPtr
+    - m_length : int
+    - m_allocator : AllocatorManager.AllocatorHandle
+    + UnmanagedArray(length:int, allocator:AllocatorManager.AllocatorHandle)
+    + Dispose() : void
+    + <<unsafe>> GetUnsafePointer() : T*
+}
+struct RewindableAllocator {
+    - m_spinner : Spinner
+    - m_handle : AllocatorManager.AllocatorHandle
+    - m_block : UnmanagedArray<MemoryBlock>
+    - m_best : int
+    - m_last : int
+    - m_used : int
+    - m_enableBlockFree : bool
+    + Initialize(initialSizeInBytes:int, enableBlockFree:bool) : void
+    + EnableBlockFree : bool <<get>> <<set>>
+    + BlocksAllocated : int <<get>>
+    + InitialSizeInBytes : int <<get>>
+    + Rewind() : void
+    + Dispose() : void
+    + Function : AllocatorManager.TryFunction <<get>>
+    + Try(block:AllocatorManager.Block) : int
+    <<internal>> {static} Try(state:IntPtr, block:AllocatorManager.Block) : int
+    + Handle : AllocatorManager.AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    + AllocateNativeArray(length:int) : NativeArray<T>
+    + AllocateNativeList(capacity:int) : NativeList<T>
+}
+struct MemoryBlock {
+    + <<const>> kMaximumAlignment : int = 16384
+    + m_pointer : byte*
+    + m_bytes : long
+    + m_current : long
+    + m_allocations : long
+    + MemoryBlock(bytes:long)
+    + Rewind() : void
+    + Dispose() : void
+    + TryAllocate(block:AllocatorManager.Block) : int
+    + Contains(ptr:IntPtr) : bool
+}
+IDisposable <|-- "UnmanagedArray`1"
+RewindableAllocator +-- MemoryBlock
+IDisposable <|-- MemoryBlock
+@enduml

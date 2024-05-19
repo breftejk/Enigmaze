@@ -1,0 +1,9 @@
+@startuml
+class ControlOutputWidget {
+    + ControlOutputWidget(canvas:FlowCanvas, port:ControlOutput)
+    # <<override>> handleTextureConnected : Texture <<get>>
+    # <<override>> handleTextureUnconnected : Texture <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+}
+"UnitOutputPortWidget`1" "<ControlOutput>" <|-- ControlOutputWidget
+@enduml

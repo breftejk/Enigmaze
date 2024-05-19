@@ -1,0 +1,40 @@
+@startuml
+struct CoordinateSpaceConversion {
+    + from : CoordinateSpace
+    + to : CoordinateSpace
+    + CoordinateSpaceConversion(from:CoordinateSpace, to:CoordinateSpace)
+    - from : Enum <<get>> <<set>>
+    - to : Enum <<get>> <<set>>
+}
+class TransformNode {
+    + <<override>> latestVersion : int <<get>>
+    - <<const>> InputSlotId : int = 0
+    - <<const>> OutputSlotId : int = 1
+    - <<const>> kInputSlotName : string = "In"
+    - <<const>> kOutputSlotName : string = "Out"
+    + TransformNode()
+    - m_Conversion : CoordinateSpaceConversion
+    + conversion : CoordinateSpaceConversion <<get>> <<set>>
+    + m_ConversionType : ConversionType
+    + conversionType : ConversionType <<get>> <<set>>
+    - m_Normalize : bool = true
+    + normalize : bool <<get>> <<set>>
+    <<internal>> spaceTransform : SpaceTransform <<get>>
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresTangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresTransform(stageCapability:ShaderStageCapability) : NeededTransform[]
+    - RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+IEnumConversion <|-- CoordinateSpaceConversion
+AbstractMaterialNode <|-- TransformNode
+IGeneratesBodyCode <|-- TransformNode
+IMayRequireTangent <|-- TransformNode
+IMayRequireBitangent <|-- TransformNode
+IMayRequireNormal <|-- TransformNode
+IMayRequireTransform <|-- TransformNode
+IMayRequirePosition <|-- TransformNode
+@enduml

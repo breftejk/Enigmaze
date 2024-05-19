@@ -1,0 +1,10 @@
+@startuml
+class GetDictionaryItem <<sealed>> {
+    + dictionary : ValueInput <<get>>
+    + key : ValueInput <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Get(flow:Flow) : object
+}
+Unit <|-- GetDictionaryItem
+@enduml

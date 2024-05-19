@@ -1,0 +1,95 @@
+@startuml
+class SerializedBitArrayUtilities <<static>> {
+    + {static} ToSerializeBitArray8(serializedProperty:SerializedProperty) : SerializedBitArray8
+    + {static} TryGetSerializeBitArray8(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray8) : bool
+    + {static} ToSerializeBitArray16(serializedProperty:SerializedProperty) : SerializedBitArray16
+    + {static} TryGetSerializeBitArray16(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray16) : bool
+    + {static} ToSerializeBitArray32(serializedProperty:SerializedProperty) : SerializedBitArray32
+    + {static} TryGetSerializeBitArray32(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray32) : bool
+    + {static} ToSerializeBitArray64(serializedProperty:SerializedProperty) : SerializedBitArray64
+    + {static} TryGetSerializeBitArray64(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray64) : bool
+    + {static} ToSerializeBitArray128(serializedProperty:SerializedProperty) : SerializedBitArray128
+    + {static} TryGetSerializeBitArray128(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray128) : bool
+    + {static} ToSerializeBitArray256(serializedProperty:SerializedProperty) : SerializedBitArray256
+    + {static} TryGetSerializeBitArray256(serializedProperty:SerializedProperty, serializedBitArray:SerializedBitArray256) : bool
+    {static} - IsBitArrayOfCapacity(serializedProperty:SerializedProperty, capacity:uint) : bool
+}
+interface ISerializedBitArray {
+    capacity : uint <<get>>
+    GetBitAt(bitIndex:uint) : bool
+    SetBitAt(bitIndex:uint, value:bool) : void
+    HasBitMultipleDifferentValue(bitIndex:uint) : bool
+}
+abstract class SerializedBitArray {
+    # {static} SetBitAtIndexForAllTargetsImmediate : Action<SerializedProperty, int, bool>
+    # {static} HasMultipleDifferentValuesBitwise : Func<SerializedProperty, int>
+    {static} - SerializedBitArray()
+    # m_SerializedProperty : SerializedProperty
+    - m_SerializedProperties : SerializedProperty[]
+    + capacity : uint <<get>>
+    <<internal>> SerializedBitArray(serializedProperty:SerializedProperty, capacity:uint)
+    # GetOrInitializeSerializedProperties() : SerializedProperty[]
+    + HasBitMultipleDifferentValue(bitIndex:uint) : bool
+    {abstract} # HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    <<unsafe>> # HasBitMultipleDifferentValue_For64Bits(propertyPath:string, serializedProperty:SerializedProperty, bitIndex:uint) : bool
+    + GetBitAt(bitIndex:uint) : bool
+    {abstract} # GetBitAt_Internal(bitIndex:uint) : bool
+    + SetBitAt(bitIndex:uint, value:bool) : void
+    {abstract} # SetBitAt_Internal(bitIndex:uint, value:bool) : void
+    # ResyncSerialization() : void
+    + Update() : void
+}
+class SerializedBitArray8 <<sealed>> {
+    - m_Data : SerializedProperty
+    + SerializedBitArray8(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+class SerializedBitArray16 <<sealed>> {
+    - m_Data : SerializedProperty
+    + SerializedBitArray16(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+class SerializedBitArray32 <<sealed>> {
+    - m_Data : SerializedProperty
+    + SerializedBitArray32(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+class SerializedBitArray64 <<sealed>> {
+    - m_Data : SerializedProperty
+    + SerializedBitArray64(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+class SerializedBitArray128 <<sealed>> {
+    - m_Data1 : SerializedProperty
+    - m_Data2 : SerializedProperty
+    + SerializedBitArray128(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+class SerializedBitArray256 <<sealed>> {
+    - m_Data1 : SerializedProperty
+    - m_Data2 : SerializedProperty
+    - m_Data3 : SerializedProperty
+    - m_Data4 : SerializedProperty
+    + SerializedBitArray256(serializedProperty:SerializedProperty)
+    # <<override>> HasBitMultipleDifferentValue_Internal(bitIndex:uint) : bool
+    # <<override>> GetBitAt_Internal(bitIndex:uint) : bool
+    # <<override>> SetBitAt_Internal(bitIndex:uint, value:bool) : void
+}
+ISerializedBitArray <|-- SerializedBitArray
+SerializedBitArray <|-- SerializedBitArray8
+SerializedBitArray <|-- SerializedBitArray16
+SerializedBitArray <|-- SerializedBitArray32
+SerializedBitArray <|-- SerializedBitArray64
+SerializedBitArray <|-- SerializedBitArray128
+SerializedBitArray <|-- SerializedBitArray256
+@enduml

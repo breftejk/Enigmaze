@@ -1,0 +1,14 @@
+@startuml
+class TestTreeViewBuilder {
+    + results : List<TestRunnerResult>
+    - <<readonly>> m_OldTestResults : Dictionary<string, TestRunnerResult>
+    - <<readonly>> m_UIFilter : TestRunnerUIFilter
+    - <<readonly>> m_TestListRoot : ITestAdaptor
+    - <<readonly>> m_AvailableCategories : List<string>
+    + AvailableCategories : string[] <<get>>
+    + TestTreeViewBuilder(tests:ITestAdaptor, oldTestResultResults:Dictionary<string, TestRunnerResult>, uiFilter:TestRunnerUIFilter)
+    + BuildTreeView(settings:TestFilterSettings, sceneBased:bool, sceneName:string) : TreeViewItem
+    - IsFilteredOutByUIFilter(test:ITestAdaptor, result:TestRunnerResult) : bool
+    - ParseTestTree(depth:int, rootItem:TreeViewItem, testElement:ITestAdaptor) : void
+}
+@enduml

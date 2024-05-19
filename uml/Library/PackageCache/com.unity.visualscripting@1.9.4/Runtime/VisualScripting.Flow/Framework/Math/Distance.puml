@@ -1,0 +1,11 @@
+@startuml
+abstract class "Distance`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + distance : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : float
+    + {abstract} Operation(a:T, b:T) : float
+}
+Unit <|-- "Distance`1"
+@enduml

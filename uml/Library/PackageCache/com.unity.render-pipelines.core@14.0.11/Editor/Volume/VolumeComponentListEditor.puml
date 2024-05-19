@@ -1,0 +1,38 @@
+@startuml
+class VolumeComponentListEditor <<sealed>> {
+    + asset : VolumeProfile <<get>>
+    <<internal>> hasHiddenVolumeComponents : bool <<get>>
+    - m_BaseEditor : Editor
+    - m_SerializedObject : SerializedObject
+    - m_ComponentsProperty : SerializedProperty
+    - m_Editors : List<VolumeComponentEditor>
+    - m_VolumeComponentHelpUrls : Dictionary<VolumeComponentEditor, string>
+    + VolumeComponentListEditor(editor:Editor)
+    + Init(asset:VolumeProfile, serializedObject:SerializedObject) : void
+    - OnUndoRedoPerformed() : void
+    - CreateEditor(component:VolumeComponent, property:SerializedProperty, index:int, forceOpen:bool) : void
+    - m_CurrentHashCode : int
+    - ClearEditors() : void
+    - RefreshEditors() : void
+    + Clear() : void
+    + OnGUI() : void
+    - OnContextClick(position:Vector2, targetEditor:VolumeComponentEditor, id:int) : void
+    - CreateNewComponent(type:Type) : VolumeComponent
+    <<internal>> AddComponent(type:Type) : void
+    <<internal>> RemoveComponent(id:int) : void
+    <<internal>> ResetComponent(type:Type, id:int) : void
+    <<internal>> MoveComponent(id:int, move:Move) : void
+    <<internal>> CollapseComponents() : void
+    <<internal>> ExpandComponents() : void
+    {static} - CanPaste(targetComponent:VolumeComponent) : bool
+    {static} - CopySettings(targetComponent:VolumeComponent) : void
+    {static} - PasteSettings(targetComponent:VolumeComponent) : void
+}
+enum Move {
+    Up,
+    Down,
+    Top,
+    Bottom,
+}
+VolumeComponentListEditor +-- Move
+@enduml

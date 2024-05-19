@@ -1,0 +1,17 @@
+@startuml
+class ChannelMixerEditor <<sealed>> {
+    - m_RedOutRedIn : SerializedDataParameter
+    - m_RedOutGreenIn : SerializedDataParameter
+    - m_RedOutBlueIn : SerializedDataParameter
+    - m_GreenOutRedIn : SerializedDataParameter
+    - m_GreenOutGreenIn : SerializedDataParameter
+    - m_GreenOutBlueIn : SerializedDataParameter
+    - m_BlueOutRedIn : SerializedDataParameter
+    - m_BlueOutGreenIn : SerializedDataParameter
+    - m_BlueOutBlueIn : SerializedDataParameter
+    - m_SelectedChannel : SavedInt
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- ChannelMixerEditor
+@enduml

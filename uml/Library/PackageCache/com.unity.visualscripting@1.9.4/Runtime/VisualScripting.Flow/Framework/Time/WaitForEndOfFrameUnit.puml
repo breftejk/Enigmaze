@@ -1,0 +1,6 @@
+@startuml
+class WaitForEndOfFrameUnit {
+    # <<override>> Await(flow:Flow) : IEnumerator
+}
+WaitUnit <|-- WaitForEndOfFrameUnit
+@enduml

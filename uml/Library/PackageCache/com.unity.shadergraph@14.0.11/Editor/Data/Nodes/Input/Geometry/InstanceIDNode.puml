@@ -1,0 +1,9 @@
+@startuml
+class InstanceIDNode {
+    + <<override>> hasPreview : bool <<get>>
+    + InstanceIDNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - UnityGetInstanceID(Out:Vector1) : string
+}
+CodeFunctionNode <|-- InstanceIDNode
+@enduml

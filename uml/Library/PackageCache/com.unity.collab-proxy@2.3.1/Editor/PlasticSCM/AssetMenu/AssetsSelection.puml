@@ -1,0 +1,9 @@
+@startuml
+class AssetsSelection <<static>> {
+    <<internal>> {static} GetSelectedAsset(wkPath:string, assetList:AssetList) : Asset
+    <<internal>> {static} GetSelectedPath(wkPath:string, assetList:AssetList) : string
+    <<internal>> {static} GetSelectedPaths(wkPath:string, assetList:AssetList) : List<string>
+    <<internal>> {static} GetSelectedPathsGroupInfo(wkPath:string, assetList:AssetList, statusCache:IAssetStatusCache) : SelectedPathsGroupInfo
+    {static} - GetAssetName(asset:Asset) : string
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+abstract class "EventMachine`2"<TGraph,TMacro> {
+    # TriggerEvent(name:string) : void
+    # TriggerEvent(name:string, args:TArgs) : void
+    # TriggerUnregisteredEvent(name:string) : void
+    # <<virtual>> TriggerRegisteredEvent(hook:EventHook, args:TArgs) : void
+    # <<virtual>> TriggerUnregisteredEvent(hook:EventHook, args:TArgs) : void
+    # <<override>> Awake() : void
+    # <<override>> OnEnable() : void
+    # <<virtual>> Start() : void
+    # <<override>> OnInstantiateWhileEnabled() : void
+    # <<virtual>> Update() : void
+    # <<virtual>> FixedUpdate() : void
+    # <<virtual>> LateUpdate() : void
+    # <<override>> OnUninstantiateWhileEnabled() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    + <<override>> TriggerUnityEvent(name:string) : void
+    # <<virtual>> OnDrawGizmos() : void
+    # <<virtual>> OnDrawGizmosSelected() : void
+}
+"Machine`2" "<TGraph,TMacro>" <|-- "EventMachine`2"
+IEventMachine <|-- "EventMachine`2"
+@enduml

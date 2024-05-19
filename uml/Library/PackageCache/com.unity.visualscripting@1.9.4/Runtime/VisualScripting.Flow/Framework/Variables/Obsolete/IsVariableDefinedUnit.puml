@@ -1,0 +1,10 @@
+@startuml
+abstract class IsVariableDefinedUnit {
+    # IsVariableDefinedUnit()
+    # IsVariableDefinedUnit(defaultName:string)
+    + <<new>> isDefined : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<virtual>> IsDefined(flow:Flow) : bool
+}
+VariableUnit <|-- IsVariableDefinedUnit
+@enduml

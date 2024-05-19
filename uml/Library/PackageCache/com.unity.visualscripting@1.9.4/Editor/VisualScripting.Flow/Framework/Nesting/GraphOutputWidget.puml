@@ -1,0 +1,7 @@
+@startuml
+class GraphOutputWidget <<sealed>> {
+    + GraphOutputWidget(canvas:FlowCanvas, unit:GraphOutput)
+    # <<override>> baseColor : NodeColorMix <<get>>
+}
+"UnitWidget`1" "<GraphOutput>" <|-- GraphOutputWidget
+@enduml

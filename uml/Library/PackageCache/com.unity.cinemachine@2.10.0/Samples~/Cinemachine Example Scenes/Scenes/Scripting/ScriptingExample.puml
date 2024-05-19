@@ -1,0 +1,10 @@
+@startuml
+class ScriptingExample {
+    - vcam : CinemachineVirtualCamera
+    - freelook : CinemachineFreeLook
+    - Start() : void
+    - lastSwapTime : float = 0
+    - Update() : void
+}
+MonoBehaviour <|-- ScriptingExample
+@enduml

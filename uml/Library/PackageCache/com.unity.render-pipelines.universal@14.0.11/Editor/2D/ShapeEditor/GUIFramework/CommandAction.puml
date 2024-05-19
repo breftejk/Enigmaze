@@ -1,0 +1,11 @@
+@startuml
+class CommandAction {
+    - m_CommandName : string
+    + onCommand : Action<IGUIState>
+    + CommandAction(commandName:string)
+    # <<override>> GetTriggerContidtion(guiState:IGUIState) : bool
+    # <<override>> GetFinishContidtion(guiState:IGUIState) : bool
+    # <<override>> OnFinish(guiState:IGUIState) : void
+}
+GUIAction <|-- CommandAction
+@enduml

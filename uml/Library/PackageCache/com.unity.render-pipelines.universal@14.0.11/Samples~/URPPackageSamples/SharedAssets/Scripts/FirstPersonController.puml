@@ -1,0 +1,18 @@
+@startuml
+class FirstPersonController {
+    - m_MouseSensitivity : float = 100f
+    - m_MovementSpeed : float = 5f
+    - m_PlayerCamera : Transform = null
+    - m_MoveWithMouse : bool = true
+    - m_CharacterController : CharacterController
+    - m_XRotation : float = 0f
+    - m_ButtonMovementFlags : byte
+    - Start() : void
+    - Update() : void
+    - Look() : void
+    - Move() : void
+    - GetLookInput() : Vector2
+    - GetMovementInput() : Vector3
+}
+MonoBehaviour <|-- FirstPersonController
+@enduml

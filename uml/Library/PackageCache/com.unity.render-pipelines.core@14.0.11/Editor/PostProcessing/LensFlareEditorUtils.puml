@@ -1,0 +1,17 @@
+@startuml
+class LensFlareEditorUtils <<static>> {
+    <<internal>> {static} CreateLensFlareDataSRPAsset() : void
+    <<internal>> {static} CreateLensFlareDataSRPAsset(scene:Scene, targetName:string) : LensFlareDataSRP
+}
+class Icons <<static>> {
+    <<const>> - k_IconFolder : string = @"Packages/com.unity.render-pipelines.core/Editor/PostProcessing/LensFlareResource/"
+    + {static} <<readonly>> circle : Texture2D
+    + {static} <<readonly>> polygon : Texture2D
+    + {static} <<readonly>> generic : Texture2D
+}
+class LensFlareDataSRPCreator {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+LensFlareEditorUtils +-- Icons
+LensFlareEditorUtils +-- LensFlareDataSRPCreator
+@enduml

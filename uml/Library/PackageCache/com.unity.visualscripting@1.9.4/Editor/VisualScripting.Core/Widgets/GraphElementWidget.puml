@@ -1,0 +1,76 @@
+@startuml
+abstract class "GraphElementWidget`2"<TCanvas,TElement> {
+    # GraphElementWidget(canvas:TCanvas, element:TElement)
+    # headerPosition : Rect <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<override>> Dispose() : void
+    + element : TElement <<get>>
+    - element : IGraphElement <<get>>
+    + <<override>> FetchMetadata() : Metadata
+    # GetData() : T
+    # GetDebugData() : T
+    + <<override>> BeforeFrame() : void
+    + <<override>> HandleCapture() : void
+    + <<override>> HandleInput() : void
+    + <<virtual>> canAlignAndDistribute : bool <<get>>
+    + <<override>> zIndex : float <<get>> <<set>>
+    # <<override>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    # <<virtual>> HandleDoubleClick() : void
+    # <<virtual>> OnDoubleClick() : void
+    + <<virtual>> canSelect : bool <<get>>
+    + isSelected : bool <<get>>
+    - Select() : void
+    # <<override>> OnContext() : void
+    - HandleSelecting() : void
+    - isResizingXMin : bool
+    - isResizingXMax : bool
+    - isResizingYMin : bool
+    - isResizingYMax : bool
+    - xMinResizeOffset : float
+    - xMaxResizeOffset : float
+    - yMinResizeOffset : float
+    - yMaxResizeOffset : float
+    # <<readonly>> resizeInnerOffset : RectOffset
+    # <<readonly>> resizeOuterOffset : RectOffset
+    # minResizeSize : Vector2
+    # maxResizeSize : Vector2
+    + <<virtual>> canResizeHorizontal : bool <<get>>
+    + <<virtual>> canResizeVertical : bool <<get>>
+    + canResize : bool <<get>>
+    + isResizing : bool <<get>>
+    # <<virtual>> resizeArea : Rect <<get>>
+    - resizeTopArea : Rect
+    - resizeBottomArea : Rect
+    - resizeLeftArea : Rect
+    - resizeRightArea : Rect
+    - resizeTopLeftArea : Rect
+    - resizeTopRightArea : Rect
+    - resizeBottomLeftArea : Rect
+    - resizeBottomRightArea : Rect
+    - CalculateResizeAreas() : void
+    # isMouseOverHeaderArea : bool <<get>>
+    - isMouseOverResizeArea : bool <<get>>
+    - canStartResize : bool <<get>>
+    - HandleResizing() : void
+    + AddCursorRect(rect:Rect, cursor:MouseCursor) : void
+    - AddResizeCursorRects() : void
+    + <<virtual>> canDrag : bool <<get>>
+    + isDragging : bool <<get>>
+    - dragPosition : Rect
+    - dragLockOrigin : Rect
+    - RelayDragEvents() : void
+    + BeginDrag() : void
+    + Drag(delta:Vector2, constraint:Vector2) : void
+    + EndDrag() : void
+    + LockDragOrigin() : void
+    + <<virtual>> ExpandDragGroup(dragGroup:HashSet<IGraphElement>) : void
+    + <<virtual>> canDelete : bool <<get>>
+    + Delete() : void
+    + <<virtual>> ExpandDeleteGroup(deleteGroup:HashSet<IGraphElement>) : void
+    + <<override>> DrawOverlay() : void
+    + <<virtual>> canCopy : bool <<get>>
+    + <<virtual>> ExpandCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+}
+"Widget`2" "<TCanvas,TElement>" <|-- "GraphElementWidget`2"
+IGraphElementWidget <|-- "GraphElementWidget`2"
+@enduml

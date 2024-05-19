@@ -1,0 +1,8 @@
+@startuml
+class Arctangent2Node {
+    + Arctangent2Node()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Arctangent2(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- Arctangent2Node
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+interface IDualShockHaptics {
+    SetLightBarColor(color:Color) : void
+}
+IDualMotorRumble <|-- IDualShockHaptics
+@enduml

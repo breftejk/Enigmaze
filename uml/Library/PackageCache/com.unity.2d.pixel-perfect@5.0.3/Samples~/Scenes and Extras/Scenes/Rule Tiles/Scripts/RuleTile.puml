@@ -1,0 +1,50 @@
+@startuml
+class RuleTile {
+    + m_DefaultSprite : Sprite
+    + m_DefaultColliderType : Tile.ColliderType
+    + m_TilingRules : List<TilingRule>
+    + <<override>> GetTileData(position:Vector3Int, tileMap:ITilemap, tileData:TileData) : void
+    - {static} GetPerlinValue(position:Vector3Int, scale:float, offset:float) : float
+    + <<override>> GetTileAnimationData(position:Vector3Int, tilemap:ITilemap, tileAnimationData:TileAnimationData) : bool
+    + <<override>> RefreshTile(location:Vector3Int, tileMap:ITilemap) : void
+    + RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, transform:Matrix4x4) : bool
+    - {static} ApplyRandomTransform(type:TilingRule.Transform, original:Matrix4x4, perlinScale:float, position:Vector3Int) : Matrix4x4
+    + RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, angle:int) : bool
+    + RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, mirrorX:bool, mirrorY:bool) : bool
+    - GetIndexOfOffset(offset:Vector3Int) : int
+    + GetRotatedPos(original:Vector3Int, rotation:int) : Vector3Int
+    + GetMirroredPos(original:Vector3Int, mirrorX:bool, mirrorY:bool) : Vector3Int
+}
+class TilingRule {
+    + m_Neighbors : Neighbor[]
+    + m_Sprites : Sprite[]
+    + m_AnimationSpeed : float
+    + m_PerlinScale : float
+    + m_RuleTransform : Transform
+    + m_Output : OutputSprite
+    + m_ColliderType : Tile.ColliderType
+    + m_RandomTransform : Transform
+    + TilingRule()
+}
+enum Transform {
+    Fixed,
+    Rotated,
+    MirrorX,
+    MirrorY,
+}
+enum Neighbor {
+    DontCare,
+    This,
+    NotThis,
+}
+enum OutputSprite {
+    Single,
+    Random,
+    Animation,
+}
+TileBase <|-- RuleTile
+RuleTile +-- TilingRule
+TilingRule +-- Transform
+TilingRule +-- Neighbor
+TilingRule +-- OutputSprite
+@enduml

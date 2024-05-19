@@ -1,0 +1,22 @@
+@startuml
+class UnitPortDefinitionInspector {
+    + UnitPortDefinitionInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - keyMetadata : Metadata <<get>>
+    - labelMetadata : Metadata <<get>>
+    - descriptionMetadata : Metadata <<get>>
+    - hideLabelMetadata : Metadata <<get>>
+    # GetKeyHeight(width:float) : float
+    # GetLabelHeight(width:float) : float
+    # GetDescriptionHeight(width:float) : float
+    # GetHideLabelHeight(width:float) : float
+    # OnKeyGUI(position:Rect) : void
+    # OnLabelGUI(position:Rect) : void
+    # OnDescriptionGUI(position:Rect) : void
+    # OnHideLabelGUI(position:Rect) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<virtual>> OnFieldsGUI(position:Rect) : void
+    # <<sealed>> <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- UnitPortDefinitionInspector
+@enduml

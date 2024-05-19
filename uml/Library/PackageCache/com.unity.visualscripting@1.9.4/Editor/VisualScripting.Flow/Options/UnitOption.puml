@@ -1,0 +1,90 @@
+@startuml
+class "UnitOption`1"<TUnit> {
+    + UnitOption()
+    + UnitOption(unit:TUnit)
+    # filled : bool <<get>>
+    - _unit : TUnit
+    # source : UnitOptionRow <<get>>
+    + unit : TUnit <<get>> <<protected set>>
+    - unit : IUnit <<get>>
+    + unitType : Type <<get>>
+    # descriptor : IUnitDescriptor <<get>>
+    # description : UnitDescription <<get>>
+    # PortDescription(port:IUnitPort) : UnitPortDescription
+    + <<virtual>> InstantiateUnit() : IUnit
+    - PreconfigureUnit(unit:IUnit) : void
+    + <<virtual>> PreconfigureUnit(unit:TUnit) : void
+    # <<virtual>> FillFromUnit() : void
+    # <<virtual>> FillFromData() : void
+    + <<virtual>> Deserialize(row:UnitOptionRow) : void
+    + <<virtual>> Serialize() : UnitOptionRow
+    + <<virtual>> OnPopulate() : void
+    + <<virtual>> Prewarm() : void
+    + value : object <<get>>
+    + parentOnly : bool <<get>>
+    + <<virtual>> headerLabel : string <<get>>
+    + <<virtual>> showHeaderIcon : bool <<get>>
+    + <<virtual>> favoritable : bool <<get>>
+    + sourceScriptGuids : HashSet<string> <<get>> <<protected set>>
+    # labelHuman : string <<get>> <<set>>
+    # labelProgrammer : string <<get>> <<set>>
+    + label : string <<get>>
+    + category : UnitCategory <<get>>
+    + order : int <<get>>
+    + icon : EditorTexture <<get>>
+    # haystackHuman : string <<get>> <<set>>
+    # haystackProgrammer : string <<get>> <<set>>
+    + haystack : string <<get>>
+    + favoriteKey : string <<get>>
+    + <<virtual>> formerHaystack : string <<get>>
+    - style : GUIStyle <<get>>
+    + controlInputCount : int <<get>>
+    + controlOutputCount : int <<get>>
+    - _valueInputTypes : HashSet<Type>
+    - _valueOutputTypes : HashSet<Type>
+    + valueInputTypes : HashSet<Type> <<get>>
+    + valueOutputTypes : HashSet<Type> <<get>>
+    # <<virtual>> Label(human:bool) : string
+    # <<virtual>> Category() : UnitCategory
+    # <<virtual>> Order() : int
+    # <<virtual>> Haystack(human:bool) : string
+    # <<virtual>> Icon() : EditorTexture
+    # <<virtual>> Style() : GUIStyle
+    # <<virtual>> FavoriteKey() : string
+    + <<virtual>> SearchResultLabel(query:string) : string
+    - summary : string <<get>>
+    + hasFooter : bool <<get>>
+    # <<virtual>> ShowControlInputsInFooter() : bool
+    # <<virtual>> ShowControlOutputsInFooter() : bool
+    # <<virtual>> ShowValueInputsInFooter() : bool
+    # <<virtual>> ShowValueOutputsInFooter() : bool
+    # showControlInputsInFooter : bool <<get>>
+    # showControlOutputsInFooter : bool <<get>>
+    # showValueInputsInFooter : bool <<get>>
+    # showValueOutputsInFooter : bool <<get>>
+    - footerPorts : IEnumerable<IUnitPort> <<get>>
+    + GetFooterHeight(width:float) : float
+    + OnFooterGUI(position:Rect) : void
+    - GetFooterSummaryHeight(width:float) : float
+    - OnFooterSummaryGUI(position:Rect) : void
+    - GetFooterPortLabel(port:IUnitPort) : string
+    - GetFooterPortDescriptionHeight(width:float, port:IUnitPort) : float
+    - OnFooterPortDescriptionGUI(position:Rect, port:IUnitPort) : void
+    - GetFooterPortHeight(width:float, port:IUnitPort) : float
+    - OnFooterPortGUI(position:Rect, port:IUnitPort) : void
+}
+class FooterStyles <<static>> {
+    {static} - FooterStyles()
+    + {static} <<readonly>> description : GUIStyle
+    + {static} <<readonly>> portDescription : GUIStyle
+    + {static} <<readonly>> spaceAfterUnitIcon : float = 7
+    + {static} <<readonly>> unitIconSize : int
+    + {static} <<readonly>> spaceAfterPortIcon : float = 6
+    + {static} <<readonly>> portIconSize : int
+    + {static} <<readonly>> spaceBetweenDescriptionAndPorts : float = 8
+    + {static} <<readonly>> spaceBetweenPorts : float = 8
+    + {static} <<readonly>> padding : float = 8
+}
+IUnitOption <|-- "UnitOption`1"
+"UnitOption`1" +-- FooterStyles
+@enduml

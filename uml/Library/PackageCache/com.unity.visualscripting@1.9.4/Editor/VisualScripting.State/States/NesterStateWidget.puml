@@ -1,0 +1,8 @@
+@startuml
+abstract class "NesterStateWidget`1"<TNesterState> {
+    # NesterStateWidget(canvas:StateCanvas, state:TNesterState)
+    # <<override>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    # <<override>> OnDoubleClick() : void
+}
+"StateWidget`1" "<TNesterState>" <|-- "NesterStateWidget`1"
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class InputRegisteringTests {
+    {static} - s_DuplicateTestCaseDatas : TestCaseData[]
+    + GetEntriesWithoutDuplicates(entries:List<InputManagerEntry>) : string[]
+    {static} - s_AlreadyRegisteredTestCaseDatas : TestCaseData[]
+    + GetEntriesWithoutAlreadyRegistered(entries:List<InputManagerEntry>, cachedEntries:List<(string, InputManagerEntry.Kind)>) : string[]
+}
+@enduml

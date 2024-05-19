@@ -1,0 +1,270 @@
+@startuml
+class InputControlLayout {
+    - {static} s_DefaultVariant : InternedString
+    + {static} DefaultVariant : InternedString <<get>>
+    + <<const>> VariantSeparator : string = ";"
+    + name : InternedString <<get>>
+    + displayName : string <<get>>
+    + type : Type <<get>>
+    + variants : InternedString <<get>>
+    + stateFormat : FourCC <<get>>
+    + stateSizeInBytes : int <<get>>
+    + baseLayouts : IEnumerable<InternedString> <<get>>
+    + appliedOverrides : IEnumerable<InternedString> <<get>>
+    + commonUsages : ReadOnlyArray<InternedString> <<get>>
+    + controls : ReadOnlyArray<ControlItem> <<get>>
+    + updateBeforeRender : bool <<get>>
+    + isDeviceLayout : bool <<get>>
+    + isControlLayout : bool <<get>>
+    + isOverride : bool <<get>> <<internal set>>
+    + isGenericTypeOfDevice : bool <<get>> <<internal set>>
+    + hideInUI : bool <<get>> <<internal set>>
+    + isNoisy : bool <<get>> <<internal set>>
+    + canRunInBackground : bool? <<get>> <<internal set>>
+    + FindControl(path:InternedString) : ControlItem?
+    + FindControlIncludingArrayElements(path:string, arrayIndex:int) : ControlItem?
+    + GetValueType() : Type
+    + {static} FromType(name:string, type:Type) : InputControlLayout
+    + ToJson() : string
+    + {static} FromJson(json:string) : InputControlLayout
+    - m_Name : InternedString
+    - m_Type : Type
+    - m_Variants : InternedString
+    - m_StateFormat : FourCC
+    <<internal>> m_StateSizeInBytes : int
+    <<internal>> m_UpdateBeforeRender : bool?
+    <<internal>> m_BaseLayouts : InlinedArray<InternedString>
+    - m_AppliedOverrides : InlinedArray<InternedString>
+    - m_CommonUsages : InternedString[]
+    <<internal>> m_Controls : ControlItem[]
+    <<internal>> m_DisplayName : string
+    - m_Description : string
+    - m_Flags : Flags
+    - InputControlLayout(name:string, type:Type)
+    - {static} AddControlItems(type:Type, controlLayouts:List<ControlItem>, layoutName:string) : void
+    - {static} AddControlItemsFromFields(type:Type, controlLayouts:List<ControlItem>, layoutName:string) : void
+    - {static} AddControlItemsFromProperties(type:Type, controlLayouts:List<ControlItem>, layoutName:string) : void
+    - {static} AddControlItemsFromMembers(members:MemberInfo[], controlItems:List<ControlItem>, layoutName:string) : void
+    - {static} AddControlItemsFromMember(member:MemberInfo, attributes:InputControlAttribute[], controlItems:List<ControlItem>) : void
+    - {static} CreateControlItemFromMember(member:MemberInfo, attribute:InputControlAttribute) : ControlItem
+    - {static} InferLayoutFromValueType(type:Type) : string
+    + MergeLayout(other:InputControlLayout) : void
+    - {static} CreateLookupTableForControls(controlItems:ControlItem[], variants:List<string>) : Dictionary<string, ControlItem>
+    <<internal>> {static} VariantsMatch(expected:InternedString, actual:InternedString) : bool
+    <<internal>> {static} VariantsMatch(expected:string, actual:string) : bool
+    <<internal>> {static} ParseHeaderFieldsFromJson(json:string, name:InternedString, baseLayouts:InlinedArray<InternedString>, deviceMatcher:InputDeviceMatcher) : void
+    <<internal>> {static} s_Layouts : Collection
+    <<internal>> {static} s_CacheInstance : Cache
+    <<internal>> {static} s_CacheInstanceRef : int
+    <<internal>> {static} cache : ref Cache <<get>>
+    <<internal>> {static} CacheRef() : CacheRefInstance
+}
+struct ControlItem {
+    + name : InternedString <<get>> <<internal set>>
+    + layout : InternedString <<get>> <<internal set>>
+    + variants : InternedString <<get>> <<internal set>>
+    + useStateFrom : string <<get>> <<internal set>>
+    + displayName : string <<get>> <<internal set>>
+    + shortDisplayName : string <<get>> <<internal set>>
+    + usages : ReadOnlyArray<InternedString> <<get>> <<internal set>>
+    + aliases : ReadOnlyArray<InternedString> <<get>> <<internal set>>
+    + parameters : ReadOnlyArray<NamedValue> <<get>> <<internal set>>
+    + processors : ReadOnlyArray<NameAndParameters> <<get>> <<internal set>>
+    + offset : uint <<get>> <<internal set>>
+    + bit : uint <<get>> <<internal set>>
+    + sizeInBits : uint <<get>> <<internal set>>
+    + format : FourCC <<get>> <<internal set>>
+    - flags : Flags <<get>> <<set>>
+    + arraySize : int <<get>> <<internal set>>
+    + defaultState : PrimitiveValue <<get>> <<internal set>>
+    + minValue : PrimitiveValue <<get>> <<internal set>>
+    + maxValue : PrimitiveValue <<get>> <<internal set>>
+    + isModifyingExistingControl : bool <<get>> <<internal set>>
+    + isNoisy : bool <<get>> <<internal set>>
+    + isSynthetic : bool <<get>> <<internal set>>
+    + dontReset : bool <<get>> <<internal set>>
+    + isFirstDefinedInThisLayout : bool <<get>> <<internal set>>
+    + isArray : bool <<get>>
+    + Merge(other:ControlItem) : ControlItem
+}
+class Builder {
+    + name : string <<get>> <<set>>
+    + displayName : string <<get>> <<set>>
+    + type : Type <<get>> <<set>>
+    + stateFormat : FourCC <<get>> <<set>>
+    + stateSizeInBytes : int <<get>> <<set>>
+    + extendsLayout : string <<get>> <<set>>
+    - m_ExtendsLayout : string
+    + updateBeforeRender : bool? <<get>> <<set>>
+    + controls : ReadOnlyArray<ControlItem> <<get>>
+    - m_ControlCount : int
+    - m_Controls : ControlItem[]
+    + AddControl(name:string) : ControlBuilder
+    + WithName(name:string) : Builder
+    + WithDisplayName(displayName:string) : Builder
+    + WithType() : Builder
+    + WithFormat(format:FourCC) : Builder
+    + WithFormat(format:string) : Builder
+    + WithSizeInBytes(sizeInBytes:int) : Builder
+    + Extend(baseLayoutName:string) : Builder
+    + Build() : InputControlLayout
+}
+enum Flags {
+    IsGenericTypeOfDevice= 1 << 0,
+    HideInUI= 1 << 1,
+    IsOverride= 1 << 2,
+    CanRunInBackground= 1 << 3,
+    CanRunInBackgroundIsSet= 1 << 4,
+    IsNoisy= 1 << 5,
+}
+struct LayoutJsonNameAndDescriptorOnly {
+    + name : string
+    + extend : string
+    + extendMultiple : string[]
+    + device : InputDeviceMatcher.MatcherJson
+}
+struct LayoutJson {
+    + name : string
+    + extend : string
+    + extendMultiple : string[]
+    + format : string
+    + beforeRender : string
+    + runInBackground : string
+    + commonUsages : string[]
+    + displayName : string
+    + description : string
+    + type : string
+    + variant : string
+    + isGenericTypeOfDevice : bool
+    + hideInUI : bool
+    + controls : ControlItemJson[]
+    + ToLayout() : InputControlLayout
+    + {static} FromLayout(layout:InputControlLayout) : LayoutJson
+}
+class ControlItemJson {
+    + name : string
+    + layout : string
+    + variants : string
+    + usage : string
+    + alias : string
+    + useStateFrom : string
+    + offset : uint
+    + bit : uint
+    + sizeInBits : uint
+    + format : string
+    + arraySize : int
+    + usages : string[]
+    + aliases : string[]
+    + parameters : string
+    + processors : string
+    + displayName : string
+    + shortDisplayName : string
+    + noisy : bool
+    + dontReset : bool
+    + synthetic : bool
+    + defaultState : string
+    + minValue : string
+    + maxValue : string
+    + ControlItemJson()
+    + ToLayout() : ControlItem
+    + {static} FromControlItems(items:ControlItem[]) : ControlItemJson[]
+}
+struct Collection {
+    + <<const>> kBaseScoreForNonGeneratedLayouts : float = 1.0f
+    + layoutTypes : Dictionary<InternedString, Type>
+    + layoutStrings : Dictionary<InternedString, string>
+    + layoutBuilders : Dictionary<InternedString, Func<InputControlLayout>>
+    + baseLayoutTable : Dictionary<InternedString, InternedString>
+    + layoutOverrides : Dictionary<InternedString, InternedString[]>
+    + layoutOverrideNames : HashSet<InternedString>
+    + precompiledLayouts : Dictionary<InternedString, PrecompiledLayout>
+    + layoutMatchers : List<LayoutMatcher>
+    + Allocate() : void
+    + TryFindLayoutForType(layoutType:Type) : InternedString
+    + TryFindMatchingLayout(deviceDescription:InputDeviceDescription) : InternedString
+    + HasLayout(name:InternedString) : bool
+    - TryLoadLayoutInternal(name:InternedString) : InputControlLayout
+    + TryLoadLayout(name:InternedString, table:Dictionary<InternedString, InputControlLayout>) : InputControlLayout
+    + GetBaseLayoutName(layoutName:InternedString) : InternedString
+    + GetRootLayoutName(layoutName:InternedString) : InternedString
+    + ComputeDistanceInInheritanceHierarchy(firstLayout:InternedString, secondLayout:InternedString, distance:int) : bool
+    + FindLayoutThatIntroducesControl(control:InputControl, cache:Cache) : InternedString
+    + GetControlTypeForLayout(layoutName:InternedString) : Type
+    + ValueTypeIsAssignableFrom(layoutName:InternedString, valueType:Type) : bool
+    + IsGeneratedLayout(layout:InternedString) : bool
+    + GetBaseLayouts(layout:InternedString, includeSelf:bool) : IEnumerable<InternedString>
+    + IsBasedOn(parentLayout:InternedString, childLayout:InternedString) : bool
+    + AddMatcher(layout:InternedString, matcher:InputDeviceMatcher) : void
+}
+class LayoutNotFoundException {
+    + layout : string <<get>>
+    + LayoutNotFoundException()
+    + LayoutNotFoundException(name:string, message:string)
+    + LayoutNotFoundException(name:string)
+    + LayoutNotFoundException(message:string, innerException:Exception)
+    # LayoutNotFoundException(info:SerializationInfo, context:StreamingContext)
+}
+struct Cache {
+    + table : Dictionary<InternedString, InputControlLayout>
+    + Clear() : void
+    + FindOrLoadLayout(name:string, throwIfNotFound:bool) : InputControlLayout
+}
+struct CacheRefInstance {
+    + valid : bool
+    + Dispose() : void
+}
+enum Flags {
+    isModifyingExistingControl= 1 << 0,
+    IsNoisy= 1 << 1,
+    IsSynthetic= 1 << 2,
+    IsFirstDefinedInThisLayout= 1 << 3,
+    DontReset= 1 << 4,
+}
+struct ControlBuilder {
+    <<internal>> builder : Builder
+    <<internal>> index : int
+    + WithDisplayName(displayName:string) : ControlBuilder
+    + WithLayout(layout:string) : ControlBuilder
+    + WithFormat(format:FourCC) : ControlBuilder
+    + WithFormat(format:string) : ControlBuilder
+    + WithByteOffset(offset:uint) : ControlBuilder
+    + WithBitOffset(bit:uint) : ControlBuilder
+    + IsSynthetic(value:bool) : ControlBuilder
+    + IsNoisy(value:bool) : ControlBuilder
+    + DontReset(value:bool) : ControlBuilder
+    + WithSizeInBits(sizeInBits:uint) : ControlBuilder
+    + WithRange(minValue:float, maxValue:float) : ControlBuilder
+    + WithUsages(usages:InternedString[]) : ControlBuilder
+    + WithUsages(usages:IEnumerable<string>) : ControlBuilder
+    + WithUsages(usages:string[]) : ControlBuilder
+    + WithParameters(parameters:string) : ControlBuilder
+    + WithProcessors(processors:string) : ControlBuilder
+    + WithDefaultState(value:PrimitiveValue) : ControlBuilder
+    + UsingStateFrom(path:string) : ControlBuilder
+    + AsArrayOfControlsWithSize(arraySize:int) : ControlBuilder
+}
+struct LayoutMatcher {
+    + layoutName : InternedString
+    + deviceMatcher : InputDeviceMatcher
+}
+struct PrecompiledLayout {
+    + factoryMethod : Func<InputDevice>
+    + metadata : string
+}
+InputControlLayout +-- ControlItem
+InputControlLayout +-- Builder
+InputControlLayout +-- Flags
+InputControlLayout +-- LayoutJsonNameAndDescriptorOnly
+InputControlLayout +-- LayoutJson
+InputControlLayout +-- ControlItemJson
+InputControlLayout +-- Collection
+InputControlLayout +-- LayoutNotFoundException
+Exception <|-- LayoutNotFoundException
+InputControlLayout +-- Cache
+InputControlLayout +-- CacheRefInstance
+IDisposable <|-- CacheRefInstance
+ControlItem +-- Flags
+Builder +-- ControlBuilder
+Collection +-- LayoutMatcher
+Collection +-- PrecompiledLayout
+@enduml

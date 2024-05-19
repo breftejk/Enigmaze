@@ -1,0 +1,161 @@
+@startuml
+class DeferredConfig <<static>> {
+    <<internal>> {static} IsOpenGL : bool <<get>> <<set>>
+    <<internal>> {static} IsDX10 : bool <<get>> <<set>>
+}
+enum LightFlag {
+    SubtractiveMixedLighting= 4,
+}
+class DeferredLights {
+    <<internal>> {static} <<readonly>> k_GBufferNames : string[]
+    {static} <<readonly>> - k_StencilDeferredPassNames : string[]
+    {static} <<readonly>> - k_InvalidLightOffset : ushort = 0xFFFF
+    {static} <<readonly>> - k_SetupLights : string = "SetupLights"
+    {static} <<readonly>> - k_DeferredPass : string = "Deferred Pass"
+    {static} <<readonly>> - k_DeferredStencilPass : string = "Deferred Shading (Stencil)"
+    {static} <<readonly>> - k_DeferredFogPass : string = "Deferred Fog"
+    {static} <<readonly>> - k_ClearStencilPartial : string = "Clear Stencil Partial"
+    {static} <<readonly>> - k_SetupLightConstants : string = "Setup Light Constants"
+    {static} <<readonly>> - kStencilShapeGuard : float = 1.06067f
+    - {static} <<readonly>> m_ProfilingSetupLights : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingDeferredPass : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSetupLightConstants : ProfilingSampler
+    <<internal>> GBufferAlbedoIndex : int <<get>>
+    <<internal>> GBufferSpecularMetallicIndex : int <<get>>
+    <<internal>> GBufferNormalSmoothnessIndex : int <<get>>
+    <<internal>> GBufferLightingIndex : int <<get>>
+    <<internal>> GbufferDepthIndex : int <<get>>
+    <<internal>> GBufferRenderingLayers : int <<get>>
+    <<internal>> GBufferShadowMask : int <<get>>
+    <<internal>> GBufferSliceCount : int <<get>>
+    <<internal>> GetGBufferFormat(index:int) : GraphicsFormat
+    <<internal>> UseShadowMask : bool <<get>>
+    <<internal>> UseRenderingLayers : bool <<get>>
+    <<internal>> RenderingLayerMaskSize : RenderingLayerUtils.MaskSize <<get>> <<set>>
+    <<internal>> UseDecalLayers : bool <<get>> <<set>>
+    <<internal>> UseLightLayers : bool <<get>>
+    <<internal>> UseRenderPass : bool <<get>> <<set>>
+    <<internal>> HasDepthPrepass : bool <<get>> <<set>>
+    <<internal>> HasNormalPrepass : bool <<get>> <<set>>
+    <<internal>> HasRenderingLayerPrepass : bool <<get>> <<set>>
+    <<internal>> IsOverlay : bool <<get>> <<set>>
+    <<internal>> AccurateGbufferNormals : bool <<get>> <<set>>
+    <<internal>> MixedLightingSetup : MixedLightingSetup <<get>> <<set>>
+    <<internal>> UseJobSystem : bool <<get>> <<set>>
+    <<internal>> RenderWidth : int <<get>> <<set>>
+    <<internal>> RenderHeight : int <<get>> <<set>>
+    <<internal>> GbufferAttachments : RTHandle[] <<get>> <<set>>
+    - GbufferRTHandles : RTHandle[]
+    <<internal>> GbufferTextureHandles : TextureHandle[] <<get>> <<set>>
+    <<internal>> DeferredInputAttachments : RTHandle[] <<get>> <<set>>
+    <<internal>> DeferredInputIsTransient : bool[] <<get>> <<set>>
+    <<internal>> DepthAttachment : RTHandle <<get>> <<set>>
+    <<internal>> DepthCopyTexture : RTHandle <<get>> <<set>>
+    <<internal>> GbufferFormats : GraphicsFormat[] <<get>> <<set>>
+    <<internal>> DepthAttachmentHandle : RTHandle <<get>> <<set>>
+    - m_stencilVisLights : NativeArray<ushort>
+    - m_stencilVisLightOffsets : NativeArray<ushort>
+    - m_AdditionalLightsShadowCasterPass : AdditionalLightsShadowCasterPass
+    - m_SphereMesh : Mesh
+    - m_HemisphereMesh : Mesh
+    - m_FullscreenMesh : Mesh
+    - m_StencilDeferredMaterial : Material
+    - m_StencilDeferredPasses : int[]
+    - m_ScreenToWorld : Matrix4x4[]
+    - m_ProfilingSamplerDeferredStencilPass : ProfilingSampler
+    - m_ProfilingSamplerDeferredFogPass : ProfilingSampler
+    - m_ProfilingSamplerClearStencilPartialPass : ProfilingSampler
+    - m_LightCookieManager : LightCookieManager
+    <<internal>> DeferredLights(initParams:InitParams, useNativeRenderPass:bool)
+    <<internal>> SetupLights(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> ResolveMixedLightingMode(renderingData:RenderingData) : void
+    <<internal>> DisableFramebufferFetchInput() : void
+    <<internal>> ReleaseGbufferResources() : void
+    <<internal>> ReAllocateGBufferIfNeeded(gbufferSlice:RenderTextureDescriptor, gbufferIndex:int) : void
+    <<internal>> CreateGbufferResources() : void
+    <<internal>> UpdateDeferredInputAttachments() : void
+    <<internal>> IsRuntimeSupportedThisFrame() : bool
+    + Setup(renderingData:RenderingData, additionalLightsShadowCasterPass:AdditionalLightsShadowCasterPass, hasDepthPrepass:bool, hasNormalPrepass:bool, hasRenderingLayerPrepass:bool, depthCopyTexture:RTHandle, depthAttachment:RTHandle, colorAttachment:RTHandle) : void
+    <<internal>> Setup(additionalLightsShadowCasterPass:AdditionalLightsShadowCasterPass) : void
+    + OnCameraCleanup(cmd:CommandBuffer) : void
+    <<internal>> {static} OverwriteStencil(s:StencilState, stencilWriteMask:int) : StencilState
+    <<internal>> {static} OverwriteStencil(block:RenderStateBlock, stencilWriteMask:int, stencilRef:int) : RenderStateBlock
+    <<internal>> ClearStencilPartial(cmd:CommandBuffer) : void
+    <<internal>> ExecuteDeferredPass(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - SetupShaderLightConstants(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - SetupMainLightConstants(cmd:CommandBuffer, lightData:LightData) : void
+    - SetupMatrixConstants(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - PrecomputeLights(stencilVisLights:NativeArray<ushort>, stencilVisLightOffsets:NativeArray<ushort>, visibleLights:NativeArray<VisibleLight>, hasAdditionalLights:bool, view:Matrix4x4, isOrthographic:bool, zNear:float) : void
+    - HasStencilLightsOfType(type:LightType) : bool
+    - RenderStencilLights(context:ScriptableRenderContext, cmd:CommandBuffer, renderingData:RenderingData) : void
+    - SetAdditionalLightsShadowsKeyword(cmd:CommandBuffer, renderingData:RenderingData, hasDeferredShadows:bool) : void
+    - RenderStencilDirectionalLights(cmd:CommandBuffer, renderingData:RenderingData, visibleLights:NativeArray<VisibleLight>, mainLightIndex:int) : void
+    - RenderStencilPointLights(cmd:CommandBuffer, renderingData:RenderingData, visibleLights:NativeArray<VisibleLight>) : void
+    - RenderStencilSpotLights(cmd:CommandBuffer, renderingData:RenderingData, visibleLights:NativeArray<VisibleLight>) : void
+    - RenderSSAOBeforeShading(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - RenderFog(context:ScriptableRenderContext, cmd:CommandBuffer, renderingData:RenderingData) : void
+    - InitStencilDeferredMaterial() : void
+    {static} - CreateSphereMesh() : Mesh
+    {static} - CreateHemisphereMesh() : Mesh
+    {static} - CreateFullscreenMesh() : Mesh
+}
+class ShaderConstants <<static>> {
+    + {static} <<readonly>> _LitStencilRef : int
+    + {static} <<readonly>> _LitStencilReadMask : int
+    + {static} <<readonly>> _LitStencilWriteMask : int
+    + {static} <<readonly>> _SimpleLitStencilRef : int
+    + {static} <<readonly>> _SimpleLitStencilReadMask : int
+    + {static} <<readonly>> _SimpleLitStencilWriteMask : int
+    + {static} <<readonly>> _StencilRef : int
+    + {static} <<readonly>> _StencilReadMask : int
+    + {static} <<readonly>> _StencilWriteMask : int
+    + {static} <<readonly>> _LitPunctualStencilRef : int
+    + {static} <<readonly>> _LitPunctualStencilReadMask : int
+    + {static} <<readonly>> _LitPunctualStencilWriteMask : int
+    + {static} <<readonly>> _SimpleLitPunctualStencilRef : int
+    + {static} <<readonly>> _SimpleLitPunctualStencilReadMask : int
+    + {static} <<readonly>> _SimpleLitPunctualStencilWriteMask : int
+    + {static} <<readonly>> _LitDirStencilRef : int
+    + {static} <<readonly>> _LitDirStencilReadMask : int
+    + {static} <<readonly>> _LitDirStencilWriteMask : int
+    + {static} <<readonly>> _SimpleLitDirStencilRef : int
+    + {static} <<readonly>> _SimpleLitDirStencilReadMask : int
+    + {static} <<readonly>> _SimpleLitDirStencilWriteMask : int
+    + {static} <<readonly>> _ClearStencilRef : int
+    + {static} <<readonly>> _ClearStencilReadMask : int
+    + {static} <<readonly>> _ClearStencilWriteMask : int
+    + {static} <<readonly>> _ScreenToWorld : int
+    + {static} _MainLightPosition : int
+    + {static} _MainLightColor : int
+    + {static} _MainLightLayerMask : int
+    + {static} _SpotLightScale : int
+    + {static} _SpotLightBias : int
+    + {static} _SpotLightGuard : int
+    + {static} _LightPosWS : int
+    + {static} _LightColor : int
+    + {static} _LightAttenuation : int
+    + {static} _LightOcclusionProbInfo : int
+    + {static} _LightDirection : int
+    + {static} _LightFlags : int
+    + {static} _ShadowLightIndex : int
+    + {static} _LightLayerMask : int
+    + {static} _CookieLightIndex : int
+}
+enum StencilDeferredPasses {
+    StencilVolume,
+    PunctualLit,
+    PunctualSimpleLit,
+    DirectionalLit,
+    DirectionalSimpleLit,
+    ClearStencilPartial,
+    Fog,
+    SSAOOnly,
+}
+struct InitParams {
+    + stencilDeferredMaterial : Material
+    + lightCookieManager : LightCookieManager
+}
+DeferredLights +-- ShaderConstants
+DeferredLights +-- StencilDeferredPasses
+DeferredLights +-- InitParams
+@enduml

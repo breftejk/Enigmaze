@@ -1,0 +1,8 @@
+@startuml
+class "VariableUnitDescriptor`1"<TVariableUnit> {
+    + VariableUnitDescriptor(unit:TVariableUnit)
+    # hasDefaultName : bool <<get>>
+    # <<override>> DefinedSummary() : string
+}
+"UnitDescriptor`1" "<TVariableUnit>" <|-- "VariableUnitDescriptor`1"
+@enduml

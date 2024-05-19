@@ -1,0 +1,33 @@
+@startuml
+class CompositeWorkItem {
+    - <<readonly>> _suite : TestSuite
+    - <<readonly>> _suiteResult : TestSuiteResult
+    - <<readonly>> _childFilter : ITestFilter
+    - _setupCommand : TestCommand
+    - _teardownCommand : TestCommand
+    + Children : List<UnityWorkItem> <<get>>
+    - _countOrder : int
+    - _childTestCountdown : CountdownEvent
+    + CompositeWorkItem(suite:TestSuite, childFilter:ITestFilter, factory:WorkItemFactory)
+    # <<override>> PerformWork() : IEnumerable
+    - CheckForCancellation() : bool
+    - InitializeSetUpAndTearDownCommands() : void
+    - PerformOneTimeSetUp() : void
+    - RunChildren() : IEnumerable
+    - CreateChildWorkItems() : void
+    - SortChildren() : void
+    - SkipFixture(resultState:ResultState, message:string, stackTrace:string) : void
+    - SkipChildren(suite:TestSuite, resultState:ResultState, message:string) : void
+    - PerformOneTimeTearDown() : void
+    - GetSkipReason() : string
+    - GetProviderStackTrace() : string
+    - CountDownChildTest() : void
+    + <<override>> Cancel(force:bool) : void
+}
+class UnityWorkItemOrderComparer {
+    + Compare(x:UnityWorkItem, y:UnityWorkItem) : int
+}
+UnityWorkItem <|-- CompositeWorkItem
+CompositeWorkItem +-- UnityWorkItemOrderComparer
+"IComparer`1" "<UnityWorkItem>" <|-- UnityWorkItemOrderComparer
+@enduml

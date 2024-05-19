@@ -1,0 +1,39 @@
+@startuml
+class HistoryListView {
+    <<internal>> HistoryListView(wkPath:string, repSpec:RepositorySpec, headerState:HistoryListHeaderState, menu:HistoryListViewMenu, columnNames:List<string>)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(historyRevisionList:HistoryRevisionList, loadedRevisionId:long) : void
+    <<internal>> Refilter() : void
+    <<internal>> Sort() : void
+    <<internal>> GetLoadedRevisionId() : long
+    <<internal>> GetSelectedRepObjectInfos() : List<RepObjectInfo>
+    <<internal>> GetAllRepObjectInfos() : List<RepObjectInfo>
+    <<internal>> GetSelectedHistoryRevisions() : List<HistoryRevision>
+    <<internal>> SelectRepObjectInfos(repObjectsToSelect:List<RepObjectInfo>) : void
+    - GetTreeIdForItem(currentRepObjectInfo:RepObjectInfo) : int
+    - DelayedSearchChanged() : void
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - RegenerateRows(listViewItemIds:ListViewItemIds<RepObjectInfo>, revisions:HistoryRevisionList, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - HistoryListViewItemGUI(wkPath:string, repSpec:RepositorySpec, rowHeight:float, item:HistoryListViewItem, args:RowGUIArgs, isBoldText:bool, avatarLoadedAction:Action) : void
+    {static} - HistoryListViewItemCellGUI(rect:Rect, rowHeight:float, wkPath:string, repSpec:RepositorySpec, item:HistoryListViewItem, column:HistoryListColumn, avatarLoadedAction:Action, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    {static} - GetRevisionIcon(revision:RepObjectInfo) : Texture
+    - mListViewItemIds : ListViewItemIds<RepObjectInfo>
+    - mRows : List<TreeViewItem>
+    - mRevisionsList : HistoryRevisionList
+    - mLoadedRevisionId : long
+    <<readonly>> - mCooldownFilterAction : CooldownWindowDelayer
+    <<readonly>> - mMenu : HistoryListViewMenu
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mRepSpec : RepositorySpec
+    <<readonly>> - mWkPath : string
+}
+TreeView <|-- HistoryListView
+@enduml

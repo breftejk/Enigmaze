@@ -1,0 +1,9 @@
+@startuml
+class CinemachineCameraOffset {
+    + m_Offset : Vector3
+    + m_ApplyAfter : CinemachineCore.Stage
+    + m_PreserveComposition : bool
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+}
+CinemachineExtension <|-- CinemachineCameraOffset
+@enduml

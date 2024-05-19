@@ -1,0 +1,11 @@
+@startuml
+struct IntArray {
+    + array : int[]
+}
+class GraphCompilationResult {
+    + codeSnippets : string[]
+    + sharedCodeIndices : int[]
+    + outputCodeIndices : IntArray[]
+    + GenerateCode(outputIndices:int[]) : string
+}
+@enduml

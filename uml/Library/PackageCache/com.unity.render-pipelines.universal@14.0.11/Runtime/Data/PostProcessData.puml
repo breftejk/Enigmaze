@@ -1,0 +1,32 @@
+@startuml
+class PostProcessData {
+    + shaders : ShaderResources
+    + textures : TextureResources
+}
+class ShaderResources <<sealed>> {
+    + stopNanPS : Shader
+    + subpixelMorphologicalAntialiasingPS : Shader
+    + gaussianDepthOfFieldPS : Shader
+    + bokehDepthOfFieldPS : Shader
+    + cameraMotionBlurPS : Shader
+    + paniniProjectionPS : Shader
+    + lutBuilderLdrPS : Shader
+    + lutBuilderHdrPS : Shader
+    + bloomPS : Shader
+    + temporalAntialiasingPS : Shader
+    + LensFlareDataDrivenPS : Shader
+    + scalingSetupPS : Shader
+    + easuPS : Shader
+    + uberPostPS : Shader
+    + finalPostPassPS : Shader
+}
+class TextureResources <<sealed>> {
+    + blueNoise16LTex : Texture2D[]
+    + filmGrainTex : Texture2D[]
+    + smaaAreaTex : Texture2D
+    + smaaSearchTex : Texture2D
+}
+ScriptableObject <|-- PostProcessData
+PostProcessData +-- ShaderResources
+PostProcessData +-- TextureResources
+@enduml

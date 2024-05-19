@@ -1,0 +1,32 @@
+@startuml
+class UnityDiffTree {
+    <<internal>> UnityDiffTree()
+    <<internal>> BuildCategories(wkInfo:WorkspaceInfo, diffs:List<ClientDiff>, brResolver:BranchResolver, skipMergeTracking:bool) : void
+    <<internal>> GetNodes() : List<IDiffCategory>
+    <<internal>> HasMeta(difference:ClientDiffInfo) : bool
+    <<internal>> GetMetaDiff(diff:ClientDiffInfo) : ClientDiffInfo
+    <<internal>> FillWithMeta(diffs:List<ClientDiffInfo>) : void
+    <<internal>> Sort(key:string, sortAscending:bool) : void
+    <<internal>> Filter(filter:Filter, columnNames:List<string>) : void
+    - mMetaCache : MetaCache
+    - mInnerTree : DiffTree
+}
+class MetaCache {
+    <<internal>> Build(categories:List<IDiffCategory>) : void
+    <<internal>> ContainsMeta(diff:ClientDiffInfo) : bool
+    <<internal>> GetExistingMeta(diff:ClientDiffInfo) : ClientDiffInfo
+    <<internal>> GetExistingMeta(diffs:List<ClientDiffInfo>) : List<ClientDiffInfo>
+    {static} - ExtractToMetaCache(node:ITreeViewNode, nodeIndex:int, cache:Dictionary<string, ClientDiffInfo>, indexedKeys:HashSet<string>) : void
+    - BuildIndexedKeys(diffs:List<ClientDiffInfo>) : HashSet<string>
+    - mCache : Dictionary<string, ClientDiffInfo>
+}
+class BuildKey <<static>> {
+    <<internal>> {static} ForDiff(diff:ClientDiffInfo) : string
+    <<internal>> {static} ForMetaDiff(diff:ClientDiffInfo) : string
+    <<internal>> {static} BuildCacheKey(categoryGroup:CategoryGroup, changeCategory:ChangeCategory, path:string) : string
+    <<internal>> {static} GetChangeCategory(diff:ClientDiffInfo) : ChangeCategory
+    <<internal>> {static} GetCategoryGroup(diff:ClientDiffInfo) : CategoryGroup
+}
+UnityDiffTree +-- MetaCache
+MetaCache +-- BuildKey
+@enduml

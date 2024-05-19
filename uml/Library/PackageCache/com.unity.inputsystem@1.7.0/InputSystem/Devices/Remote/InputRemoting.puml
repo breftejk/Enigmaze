@@ -1,0 +1,140 @@
+@startuml
+class InputRemoting <<sealed>> {
+    + sending : bool <<get>>
+    <<internal>> InputRemoting(manager:InputManager, startSendingOnConnect:bool)
+    + StartSending() : void
+    + StopSending() : void
+    - OnNext(msg:Message) : void
+    - OnError(error:Exception) : void
+    - OnCompleted() : void
+    + Subscribe(observer:IObserver<Message>) : IDisposable
+    - SendInitialMessages() : void
+    - SendAllGeneratedLayouts() : void
+    - SendLayout(layoutName:string) : void
+    - SendAllDevices() : void
+    - SendDevice(device:InputDevice) : void
+    - <<unsafe>> SendEvent(eventPtr:InputEventPtr, device:InputDevice) : void
+    - SendDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    - SendLayoutChange(layout:string, change:InputControlLayoutChange) : void
+    - Send(msg:Message) : void
+    - FindOrCreateSenderRecord(senderId:int) : int
+    - {static} BuildLayoutNamespace(senderId:int) : InternedString
+    - FindLocalDeviceId(remoteDeviceId:int, senderIndex:int) : int
+    - TryGetDeviceByRemoteId(remoteDeviceId:int, senderIndex:int) : InputDevice
+    <<internal>> manager : InputManager <<get>>
+    - m_Flags : Flags
+    - m_LocalManager : InputManager
+    - m_Subscribers : Subscriber[]
+    - m_Senders : RemoteSender[]
+    + RemoveRemoteDevices(participantId:int) : void
+    - {static} SerializeData(data:TData) : byte[]
+    - {static} DeserializeData(data:byte[]) : TData
+}
+enum MessageType {
+    Connect,
+    Disconnect,
+    NewLayout,
+    NewDevice,
+    NewEvents,
+    RemoveDevice,
+    RemoveLayout,
+    ChangeUsages,
+    StartSending,
+    StopSending,
+}
+struct Message {
+    + participantId : int
+    + type : MessageType
+    + data : byte[]
+}
+enum Flags {
+    Sending= 1 << 0,
+    StartSendingOnConnect= 1 << 1,
+}
+struct RemoteSender {
+    + senderId : int
+    + layouts : InternedString[]
+    + devices : RemoteInputDevice[]
+}
+struct RemoteInputDevice {
+    + remoteId : int
+    + localId : int
+    + description : InputDeviceDescription
+}
+class Subscriber {
+    + owner : InputRemoting
+    + observer : IObserver<Message>
+    + Dispose() : void
+}
+class ConnectMsg <<static>> {
+    + {static} Process(receiver:InputRemoting) : void
+}
+class StartSendingMsg <<static>> {
+    + {static} Process(receiver:InputRemoting) : void
+}
+class StopSendingMsg <<static>> {
+    + {static} Process(receiver:InputRemoting) : void
+}
+class DisconnectMsg <<static>> {
+    + {static} Process(receiver:InputRemoting, msg:Message) : void
+}
+class NewLayoutMsg <<static>> {
+    + {static} Create(sender:InputRemoting, layoutName:string) : Message?
+    + {static} Process(receiver:InputRemoting, msg:Message) : void
+}
+class NewDeviceMsg <<static>> {
+    + {static} Create(device:InputDevice) : Message
+    + {static} Process(receiver:InputRemoting, msg:Message) : void
+}
+class NewEventsMsg <<static>> {
+    + {static} <<unsafe>> CreateResetEvent(device:InputDevice, isHardReset:bool) : Message
+    + {static} <<unsafe>> CreateStateEvent(device:InputDevice) : Message
+    + {static} <<unsafe>> Create(events:InputEvent*, eventCount:int) : Message
+    + {static} <<unsafe>> Process(receiver:InputRemoting, msg:Message) : void
+}
+class ChangeUsageMsg <<static>> {
+    + {static} Create(device:InputDevice) : Message
+    + {static} Process(receiver:InputRemoting, msg:Message) : void
+}
+class RemoveDeviceMsg <<static>> {
+    + {static} Create(device:InputDevice) : Message
+    + {static} Process(receiver:InputRemoting, msg:Message) : void
+}
+struct Data {
+    + name : string
+    + layoutJson : string
+    + isOverride : bool
+}
+struct Data {
+    + name : string
+    + layout : string
+    + deviceId : int
+    + usages : string[]
+    + description : InputDeviceDescription
+}
+struct Data {
+    + deviceId : int
+    + usages : string[]
+}
+"IObservable`1" "<InputRemoting.Message>" <|-- InputRemoting
+"IObserver`1" "<InputRemoting.Message>" <|-- InputRemoting
+InputRemoting +-- MessageType
+InputRemoting +-- Message
+InputRemoting +-- Flags
+InputRemoting +-- RemoteSender
+InputRemoting +-- RemoteInputDevice
+InputRemoting +-- Subscriber
+IDisposable <|-- Subscriber
+InputRemoting +-- ConnectMsg
+InputRemoting +-- StartSendingMsg
+InputRemoting +-- StopSendingMsg
+InputRemoting +-- DisconnectMsg
+InputRemoting +-- NewLayoutMsg
+InputRemoting +-- NewDeviceMsg
+InputRemoting +-- NewEventsMsg
+InputRemoting +-- ChangeUsageMsg
+InputRemoting +-- RemoveDeviceMsg
+NewLayoutMsg +-- Data
+NewDeviceMsg +-- Data
+ChangeUsageMsg +-- Data
+@enduml

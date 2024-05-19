@@ -1,0 +1,24 @@
+@startuml
+enum DepthSamplingMode {
+    Linear01,
+    Raw,
+    Eye,
+}
+class SceneDepthNode <<sealed>> {
+    <<const>> - kScreenPositionSlotName : string = "UV"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<const>> ScreenPositionSlotId : int = 0
+    + <<const>> OutputSlotId : int = 1
+    - m_DepthSamplingMode : DepthSamplingMode
+    + depthSamplingMode : DepthSamplingMode <<get>> <<set>>
+    + SceneDepthNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SceneDepth_Linear01(UV:Vector4, Out:Vector1) : string
+    {static} - Unity_SceneDepth_Raw(UV:Vector4, Out:Vector1) : string
+    {static} - Unity_SceneDepth_Eye(UV:Vector4, Out:Vector1) : string
+    + RequiresDepthTexture(stageCapability:ShaderStageCapability) : bool
+}
+CodeFunctionNode <|-- SceneDepthNode
+IMayRequireDepthTexture <|-- SceneDepthNode
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class ColorBlockDrawer {
+    <<const>> - kNormalColor : string = "m_NormalColor"
+    <<const>> - kHighlightedColor : string = "m_HighlightedColor"
+    <<const>> - kPressedColor : string = "m_PressedColor"
+    <<const>> - kSelectedColor : string = "m_SelectedColor"
+    <<const>> - kDisabledColor : string = "m_DisabledColor"
+    <<const>> - kColorMultiplier : string = "m_ColorMultiplier"
+    <<const>> - kFadeDuration : string = "m_FadeDuration"
+    + <<override>> OnGUI(rect:Rect, prop:SerializedProperty, label:GUIContent) : void
+    + <<override>> GetPropertyHeight(prop:SerializedProperty, label:GUIContent) : float
+    + <<override>> CreatePropertyGUI(property:SerializedProperty) : VisualElement
+}
+PropertyDrawer <|-- ColorBlockDrawer
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class "ContinuousNumberInspector`1"<T> {
+    # ContinuousNumberInspector(metadata:Metadata)
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    {static} - Is64Bits(value:object) : bool
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- "ContinuousNumberInspector`1"
+@enduml

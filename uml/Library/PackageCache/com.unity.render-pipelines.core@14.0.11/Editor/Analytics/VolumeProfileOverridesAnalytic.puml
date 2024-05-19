@@ -1,0 +1,18 @@
+@startuml
+class VolumeProfileOverridesAnalytic {
+    + callbackOrder : int <<get>>
+    - OnPostprocessBuild(_:BuildReport) : void
+    - {static} <<readonly>> k_SearchFolders : string[]
+    {static} - TryGatherData(datas:List<Data>, warning:string) : bool
+    {static} - SendAnalyitic() : void
+}
+struct Data {
+    <<internal>> <<const>> k_EventName : string = "uVolumeProfileOverridesAnalytic"
+    <<internal>> <<const>> k_Version : int = 2
+    + volume_profile_asset_guid : string
+    + component_type : string
+    + overrided_parameters : string[]
+}
+IPostprocessBuildWithReport <|-- VolumeProfileOverridesAnalytic
+VolumeProfileOverridesAnalytic +-- Data
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class TestJobData {
+    + guid : string
+    + startTime : string
+    + taskIndex : int
+    + taskPC : int
+    + isRunning : bool
+    + executionSettings : ExecutionSettings
+    + existingFiles : string[]
+    + undoGroup : int
+    + editModeRunner : EditModeRunner
+    + isHandledByRunner : bool
+    + testTree : ITest
+    + TestJobData(settings:ExecutionSettings)
+}
+@enduml

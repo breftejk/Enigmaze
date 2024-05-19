@@ -1,0 +1,52 @@
+@startuml
+interface ISystemObjectInspector {
+    OnGUI(position:Rect, label:GUIContent, showLabels:bool, y:float) : void
+    GetHeight(width:float, label:GUIContent) : float
+    GetWidth() : float
+}
+class ValueInspector {
+    - parent : SystemObjectInspector <<get>>
+    - typeMetadata : Metadata
+    + ValueInspector(parent:SystemObjectInspector)
+    + Dispose() : void
+    - OnTypeChanged(obj:object) : void
+    - ResolveType() : bool
+    + OnGUI(position:Rect, label:GUIContent, showLabels:bool, y:float) : void
+    + GetHeight(width:float, label:GUIContent) : float
+    + GetWidth() : float
+}
+class ValueTypeInspector {
+    - parent : SystemObjectInspector <<get>>
+    + ValueTypeInspector(parent:SystemObjectInspector)
+    + Dispose() : void
+    + OnGUI(position:Rect, label:GUIContent, showLabels:bool, y:float) : void
+    + GetHeight(width:float, label:GUIContent) : float
+    + GetWidth() : float
+    - GetTypeOptions() : IFuzzyOptionTree
+    - InferType(previousValue:object) : void
+}
+class SystemObjectInspector {
+    <<internal>> type : Type
+    - _typeFilter : TypeFilter
+    - inspector : ISystemObjectInspector
+    + chooseType : bool <<get>>
+    + showValue : bool <<get>>
+    + typeFilter : TypeFilter <<get>>
+    + SystemObjectInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    + <<override>> Dispose() : void
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    + <<override>> GetAdaptiveWidth() : float
+    <<internal>> SetValue() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> spaceBetweenTypeAndValue : float = 2
+    + {static} <<readonly>> labelWidth : float = 38
+}
+IDisposable <|-- ISystemObjectInspector
+ISystemObjectInspector <|-- ValueInspector
+ISystemObjectInspector <|-- ValueTypeInspector
+Inspector <|-- SystemObjectInspector
+SystemObjectInspector +-- Styles
+@enduml

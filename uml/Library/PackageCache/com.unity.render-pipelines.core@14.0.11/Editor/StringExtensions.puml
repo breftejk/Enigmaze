@@ -1,0 +1,7 @@
+@startuml
+class StringExtensions <<static>> {
+    - {static} k_InvalidRegEx : Regex
+    + {static} ReplaceInvalidFileNameCharacters(input:string, replacement:string) : string
+    + {static} ContainsAny(input:string, stringsToCheck:string[]) : bool
+}
+@enduml

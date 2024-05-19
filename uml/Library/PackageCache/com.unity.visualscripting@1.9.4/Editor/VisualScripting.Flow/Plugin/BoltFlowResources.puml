@@ -1,0 +1,27 @@
+@startuml
+class BoltFlowResources <<sealed>> {
+    - BoltFlowResources(plugin:BoltFlow)
+    + icons : Icons <<get>>
+    + <<override>> LateInitialize() : void
+}
+class Icons {
+    + Icons(resources:BoltFlowResources)
+    - <<readonly>> unitCategoryIcons : Dictionary<UnitCategory, EditorTexture>
+    - <<readonly>> resources : BoltFlowResources
+    + graph : EditorTexture <<get>>
+    + unit : EditorTexture <<get>>
+    + flowMacro : EditorTexture <<get>>
+    + unitCategory : EditorTexture <<get>>
+    + controlPortConnected : EditorTexture <<get>>
+    + controlPortUnconnected : EditorTexture <<get>>
+    + valuePortConnected : EditorTexture <<get>>
+    + valuePortUnconnected : EditorTexture <<get>>
+    + invalidPortConnected : EditorTexture <<get>>
+    + invalidPortUnconnected : EditorTexture <<get>>
+    + coroutine : EditorTexture <<get>>
+    + Load() : void
+    + UnitCategory(category:UnitCategory) : EditorTexture
+}
+PluginResources <|-- BoltFlowResources
+BoltFlowResources +-- Icons
+@enduml

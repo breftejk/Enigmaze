@@ -1,0 +1,17 @@
+@startuml
+interface IMultiInputUnit {
+    inputCount : int <<get>> <<set>>
+    multiInputs : ReadOnlyCollection<ValueInput> <<get>>
+}
+abstract class "MultiInputUnit`1"<T> {
+    - _inputCount : int = 2
+    # <<virtual>> minInputCount : int <<get>>
+    + <<virtual>> inputCount : int <<get>> <<set>>
+    + multiInputs : ReadOnlyCollection<ValueInput> <<get>> <<protected set>>
+    # <<override>> Definition() : void
+    # InputsAllowNull() : void
+}
+IUnit <|-- IMultiInputUnit
+Unit <|-- "MultiInputUnit`1"
+IMultiInputUnit <|-- "MultiInputUnit`1"
+@enduml

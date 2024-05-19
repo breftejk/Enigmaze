@@ -1,0 +1,6 @@
+@startuml
+class MarkerTrack {
+    + <<override>> outputs : IEnumerable<PlayableBinding> <<get>>
+}
+TrackAsset <|-- MarkerTrack
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class AnimationTriggers {
+    - <<const>> kDefaultNormalAnimName : string = "Normal"
+    - <<const>> kDefaultHighlightedAnimName : string = "Highlighted"
+    - <<const>> kDefaultPressedAnimName : string = "Pressed"
+    - <<const>> kDefaultSelectedAnimName : string = "Selected"
+    - <<const>> kDefaultDisabledAnimName : string = "Disabled"
+    - m_NormalTrigger : string
+    - m_HighlightedTrigger : string
+    - m_PressedTrigger : string
+    - m_SelectedTrigger : string
+    - m_DisabledTrigger : string
+    + normalTrigger : string <<get>> <<set>>
+    + highlightedTrigger : string <<get>> <<set>>
+    + pressedTrigger : string <<get>> <<set>>
+    + selectedTrigger : string <<get>> <<set>>
+    + disabledTrigger : string <<get>> <<set>>
+}
+@enduml

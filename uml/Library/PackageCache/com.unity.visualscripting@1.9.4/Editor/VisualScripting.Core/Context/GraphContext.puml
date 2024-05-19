@@ -1,0 +1,27 @@
+@startuml
+abstract class "GraphContext`2"<TGraph,TCanvas> {
+    # GraphContext(reference:GraphReference)
+    + reference : GraphReference <<get>>
+    + analyserProvider : AnalyserProvider <<get>>
+    + canvas : TCanvas <<get>>
+    - canvas : ICanvas <<get>>
+    + selection : GraphSelection <<get>>
+    + graph : TGraph <<get>>
+    - graph : IGraph <<get>>
+    + graphMetadata : Metadata <<get>>
+    + selectionMetadata : Metadata <<get>>
+    + ElementMetadata(element:IGraphElement) : Metadata
+    + extensions : ReadOnlyCollection<IGraphContextExtension> <<get>>
+    - extensions : IEnumerable<IGraphContextExtension> <<get>>
+    + <<virtual>> windowTitle : string <<get>>
+    # <<virtual>> SidebarPanels() : IEnumerable<ISidebarPanelContent>
+    + sidebarPanels : ReadOnlyCollection<ISidebarPanelContent> <<get>>
+    - sidebarPanels : IEnumerable<ISidebarPanelContent> <<get>>
+    + isPrefabInstance : bool <<get>>
+    + <<virtual>> Dispose() : void
+    + BeginEdit(disablePrefabInstance:bool) : void
+    + EndEdit() : void
+    + DescribeAndAnalyze() : void
+}
+IGraphContext <|-- "GraphContext`2"
+@enduml

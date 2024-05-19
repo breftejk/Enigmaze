@@ -1,0 +1,23 @@
+@startuml
+class TilePaletteBrushesButton <<sealed>> {
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushes-button"
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Brushes Button"
+    - <<const>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.DefaultBrush.png"
+    - m_DefaultIcon : Texture2D
+    + TilePaletteBrushesButton()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnBrushChanged(obj:GridBrushBase) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - UpdateBrush() : void
+    - OnClicked() : void
+}
+class TilePaletteBrushesButtonFactory {
+}
+class TilePaletteBrushesButtonUxmlTraits {
+}
+EditorToolbarDropdown <|-- TilePaletteBrushesButton
+TilePaletteBrushesButton +-- TilePaletteBrushesButtonFactory
+"UxmlFactory`2" "<TilePaletteBrushesButton,TilePaletteBrushesButtonUxmlTraits>" <|-- TilePaletteBrushesButtonFactory
+TilePaletteBrushesButton +-- TilePaletteBrushesButtonUxmlTraits
+UxmlTraits <|-- TilePaletteBrushesButtonUxmlTraits
+@enduml

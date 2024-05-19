@@ -1,0 +1,27 @@
+@startuml
+abstract class OnScreenControl {
+    + controlPath : string <<get>> <<set>>
+    + control : InputControl <<get>>
+    - m_Control : InputControl
+    - m_NextControlOnDevice : OnScreenControl
+    - m_InputEventPtr : InputEventPtr
+    # {abstract} controlPathInternal : string <<get>> <<set>>
+    - SetupInputControl() : void
+    # SendValueToControl(value:TValue) : void
+    # SentDefaultValueToControl() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    - {static} s_OnScreenDevices : InlinedArray<OnScreenDeviceInfo>
+}
+struct OnScreenDeviceInfo {
+    + eventPtr : InputEventPtr
+    + buffer : NativeArray<byte>
+    + device : InputDevice
+    + firstControl : OnScreenControl
+    + AddControl(control:OnScreenControl) : OnScreenDeviceInfo
+    + RemoveControl(control:OnScreenControl) : OnScreenDeviceInfo
+    + Destroy() : void
+}
+MonoBehaviour <|-- OnScreenControl
+OnScreenControl +-- OnScreenDeviceInfo
+@enduml

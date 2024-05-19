@@ -1,0 +1,15 @@
+@startuml
+class BuddyAllocatorTests {
+    {static} - levelsCounts1D : IEnumerable<int>
+    + Empty1D(levelCount:int) : void
+    {static} - levelsCounts2D : IEnumerable<int>
+    + Empty2D(levelCount:int) : void
+    {static} - levelsCounts3D : IEnumerable<int>
+    + Empty3D(levelCount:int) : void
+    + Allocate1() : void
+    + Allocate6() : void
+    + Allocate6Recycle2() : void
+    + Allocate6Recycle4() : void
+    + CubemapScenario1() : void
+}
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+class WaveformWindow {
+    - mWaveformGenerator : WaveformGenerator
+    - mScreenshot : Texture2D
+    - mScreenshotFilename : string
+    + {static} UpdateInterval : float = 0.5f
+    + {static} SetDefaultUpdateInterval() : void
+    + {static} OpenWindow() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnGUI() : void
+    - mLastUpdateTime : float = 0
+    - UpdateScreenshot() : void
+}
+class WaveformGenerator {
+    + m_Exposure : float = 0.2f
+    - mOutput : RenderTexture
+    - mData : ComputeBuffer
+    - mThreadGroupSize : int
+    - mThreadGroupSizeX : int
+    - mThreadGroupSizeY : int
+    - mWaveformCompute : ComputeShader
+    - mWaveformProperties : MaterialPropertyBlock
+    - mWaveformMaterial : Material
+    - mCmd : CommandBuffer
+    {static} - sFullscreenTriangle : Mesh
+    {static} - FullscreenTriangle : Mesh <<get>>
+    + WaveformGenerator()
+    - CreateBuffers(width:int, height:int) : void
+    + DestroyBuffers() : void
+    + Result : RenderTexture <<get>>
+    + RenderWaveform(source:Texture2D) : void
+}
+EditorWindow <|-- WaveformWindow
+WaveformWindow +-- WaveformGenerator
+@enduml

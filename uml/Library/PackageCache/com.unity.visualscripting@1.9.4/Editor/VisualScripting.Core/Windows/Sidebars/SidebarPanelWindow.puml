@@ -1,0 +1,15 @@
+@startuml
+abstract class "SidebarPanelWindow`1"<TPanelContent> {
+    # {abstract} defaultTitleContent : GUIContent <<get>>
+    # e : Event <<get>>
+    - _panel : TPanelContent
+    + panel : TPanelContent <<get>> <<set>>
+    - scroll : Vector2
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    # <<override>> Update() : void
+    # <<virtual>> BeforeGUI() : void
+    # <<override>> OnGUI() : void
+}
+LudiqEditorWindow <|-- "SidebarPanelWindow`1"
+@enduml

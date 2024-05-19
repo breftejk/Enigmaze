@@ -1,0 +1,110 @@
+@startuml
+class ProbeBrickPool {
+    <<const>> - kProbePoolChunkSizeInBricks : int = 128
+    <<internal>> <<const>> kBrickCellCount : int = 3
+    <<internal>> <<const>> kBrickProbeCountPerDim : int
+    <<internal>> <<const>> kBrickProbeCountTotal : int
+    <<internal>> <<const>> kChunkProbeCountPerDim : int
+    <<internal>> estimatedVMemCost : int <<get>>
+    <<const>> - kMaxPoolWidth : int
+    <<internal>> m_Pool : DataLocation
+    - m_NextFreeChunk : BrickChunkAlloc
+    - m_FreeList : Stack<BrickChunkAlloc>
+    - m_AvailableChunkCount : int
+    - m_SHBands : ProbeVolumeSHBands
+    - m_ContainsValidity : bool
+    <<internal>> ProbeBrickPool(memoryBudget:ProbeVolumeTextureMemoryBudget, shBands:ProbeVolumeSHBands, allocateValidityData:bool)
+    + GetRemainingChunkCount() : int
+    <<internal>> EnsureTextureValidity() : void
+    <<internal>> {static} GetChunkSizeInBrickCount() : int
+    <<internal>> {static} GetChunkSizeInProbeCount() : int
+    <<internal>> GetPoolWidth() : int
+    <<internal>> GetPoolHeight() : int
+    <<internal>> GetPoolDimensions() : Vector3Int
+    <<internal>> GetRuntimeResources(rr:ProbeReferenceVolume.RuntimeResources) : void
+    <<internal>> Clear() : void
+    <<internal>> {static} GetChunkCount(brickCount:int, chunkSizeInBricks:int) : int
+    <<internal>> Allocate(numberOfBrickChunks:int, outAllocations:List<BrickChunkAlloc>, ignoreErrorLog:bool) : bool
+    <<internal>> Deallocate(allocations:List<BrickChunkAlloc>) : void
+    <<internal>> Update(source:DataLocation, srcLocations:List<BrickChunkAlloc>, dstLocations:List<BrickChunkAlloc>, destStartIndex:int, bands:ProbeVolumeSHBands) : void
+    <<internal>> UpdateValidity(source:DataLocation, srcLocations:List<BrickChunkAlloc>, dstLocations:List<BrickChunkAlloc>, destStartIndex:int) : void
+    <<internal>> {static} ProbeCountToDataLocSize(numProbes:int) : Vector3Int
+    + {static} CreateDataTexture(width:int, height:int, depth:int, format:GraphicsFormat, name:string, allocateRendertexture:bool, allocatedBytes:int) : Texture
+    + {static} CreateDataLocation(numProbes:int, compressed:bool, bands:ProbeVolumeSHBands, name:string, allocateRendertexture:bool, allocateValidityData:bool, allocatedBytes:int) : DataLocation
+    - DerivePoolSizeFromBudget(memoryBudget:ProbeVolumeTextureMemoryBudget, width:int, height:int, depth:int) : void
+    <<internal>> Cleanup() : void
+}
+class ProbeBrickBlendingPool {
+    {static} - stateBlendShader : ComputeShader
+    {static} - scenarioBlendingKernel : int
+    {static} <<readonly>> - _PoolDim_LerpFactor : int
+    {static} <<readonly>> - _ChunkList : int
+    {static} <<readonly>> - _State0_L0_L1Rx : int
+    {static} <<readonly>> - _State0_L1G_L1Ry : int
+    {static} <<readonly>> - _State0_L1B_L1Rz : int
+    {static} <<readonly>> - _State0_L2_0 : int
+    {static} <<readonly>> - _State0_L2_1 : int
+    {static} <<readonly>> - _State0_L2_2 : int
+    {static} <<readonly>> - _State0_L2_3 : int
+    {static} <<readonly>> - _State1_L0_L1Rx : int
+    {static} <<readonly>> - _State1_L1G_L1Ry : int
+    {static} <<readonly>> - _State1_L1B_L1Rz : int
+    {static} <<readonly>> - _State1_L2_0 : int
+    {static} <<readonly>> - _State1_L2_1 : int
+    {static} <<readonly>> - _State1_L2_2 : int
+    {static} <<readonly>> - _State1_L2_3 : int
+    {static} <<readonly>> - _Out_L0_L1Rx : int
+    {static} <<readonly>> - _Out_L1G_L1Ry : int
+    {static} <<readonly>> - _Out_L1B_L1Rz : int
+    {static} <<readonly>> - _Out_L2_0 : int
+    {static} <<readonly>> - _Out_L2_1 : int
+    {static} <<readonly>> - _Out_L2_2 : int
+    {static} <<readonly>> - _Out_L2_3 : int
+    <<internal>> {static} isSupported : bool <<get>>
+    <<internal>> {static} Initialize(parameters:ProbeVolumeSystemParameters) : void
+    - m_ChunkList : Vector4[]
+    - m_MappedChunks : int
+    - m_State0 : ProbeBrickPool
+    - m_State1 : ProbeBrickPool
+    - m_MemoryBudget : ProbeVolumeTextureMemoryBudget
+    - m_ShBands : ProbeVolumeSHBands
+    <<internal>> isAllocated : bool <<get>>
+    <<internal>> estimatedVMemCost : int <<get>>
+    <<internal>> GetPoolWidth() : int
+    <<internal>> GetPoolHeight() : int
+    <<internal>> GetPoolDepth() : int
+    <<internal>> ProbeBrickBlendingPool(memoryBudget:ProbeVolumeBlendingTextureMemoryBudget, shBands:ProbeVolumeSHBands)
+    <<internal>> AllocateResourcesIfNeeded() : void
+    <<internal>> Update(source:ProbeBrickPool.DataLocation, srcLocations:List<ProbeBrickPool.BrickChunkAlloc>, dstLocations:List<ProbeBrickPool.BrickChunkAlloc>, destStartIndex:int, bands:ProbeVolumeSHBands, state:int) : void
+    {static} - DivRoundUp(x:int, y:int) : int
+    <<internal>> PerformBlending(cmd:CommandBuffer, factor:float, dstPool:ProbeBrickPool) : void
+    <<internal>> BlendChunks(blendingCell:ProbeReferenceVolume.BlendingCellInfo, dstPool:ProbeBrickPool) : void
+    <<internal>> Clear() : void
+    <<internal>> Allocate(numberOfBrickChunks:int, outAllocations:List<ProbeBrickPool.BrickChunkAlloc>) : bool
+    <<internal>> Deallocate(allocations:List<ProbeBrickPool.BrickChunkAlloc>) : void
+    <<internal>> EnsureTextureValidity() : void
+    <<internal>> Cleanup() : void
+}
+struct BrickChunkAlloc {
+    + x : int
+    + y : int
+    + z : int
+    <<internal>> flattenIndex(sx:int, sy:int) : int
+}
+struct DataLocation {
+    <<internal>> TexL0_L1rx : Texture
+    <<internal>> TexL1_G_ry : Texture
+    <<internal>> TexL1_B_rz : Texture
+    <<internal>> TexL2_0 : Texture
+    <<internal>> TexL2_1 : Texture
+    <<internal>> TexL2_2 : Texture
+    <<internal>> TexL2_3 : Texture
+    <<internal>> TexValidity : Texture3D
+    <<internal>> width : int
+    <<internal>> height : int
+    <<internal>> depth : int
+    <<internal>> Cleanup() : void
+}
+ProbeBrickPool +-- BrickChunkAlloc
+ProbeBrickPool +-- DataLocation
+@enduml

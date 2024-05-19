@@ -1,0 +1,7 @@
+@startuml
+class Extrapolation <<static>> {
+    <<internal>> {static} <<readonly>> kMinExtrapolationTime : double
+    <<internal>> {static} CalculateExtrapolationTimes(asset:TrackAsset) : void
+    {static} - SortClipsByStartTime(clips:TimelineClip[]) : TimelineClip[]
+}
+@enduml

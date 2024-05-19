@@ -1,0 +1,12 @@
+@startuml
+abstract class VectorInspector {
+    # VectorInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+}
+class Styles <<static>> {
+    + {static} compactThreshold : float = 120
+    + {static} compactSpacing : float = 2
+}
+Inspector <|-- VectorInspector
+VectorInspector +-- Styles
+@enduml

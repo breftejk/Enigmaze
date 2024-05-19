@@ -1,0 +1,7 @@
+@startuml
+class IncomingChangesSelection <<static>> {
+    <<internal>> {static} GetPathsFromSelectedFileConflictsIncludingMeta(treeView:IncomingChangesTreeView) : List<string>
+    <<internal>> {static} GetSelectedGroupInfo(treeView:IncomingChangesTreeView) : SelectedIncomingChangesGroupInfo
+    <<internal>> {static} GetSingleSelectedIncomingChange(treeView:IncomingChangesTreeView) : MergeChangeInfo
+}
+@enduml

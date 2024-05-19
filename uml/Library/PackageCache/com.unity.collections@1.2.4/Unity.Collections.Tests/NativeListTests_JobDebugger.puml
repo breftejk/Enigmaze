@@ -1,0 +1,93 @@
+@startuml
+class NativeListJobDebuggerTests {
+    + AddElementToListFromJobInvalidatesArray() : void
+    + AccessBefore() : void
+    + AccessAfter() : void
+    + ScheduleDerivedArrayAllowDerivingArrayAgain() : void
+    + ScheduleDerivedArrayExceptions() : void
+    + ScheduleDerivedArrayExceptions2() : void
+    + ReadOnlyListInJobKeepsAsArrayValid() : void
+    + AsArrayJobKeepsAsArrayValid() : void
+    + CastListToArrayInsideJob() : void
+    + WriteToArrayFromJobThenReadListFromMainThread() : void
+    + NativeList_DisposeJob() : void
+    + NativeList_DisposeJobWithMissingDependencyThrows() : void
+    + NativeList_DisposeJobCantBeScheduled() : void
+    + InvalidatedArrayAccessFromListThrowsInsideJob() : void
+    + DisposeAliasedArrayDoesNotThrow() : void
+    + ReadOnlyAliasedArrayThrows() : void
+    + NativeList_AsArray_Jobs() : void
+    + NativeList_ParallelReader() : void
+    + NativeList_ParallelWriter() : void
+    + NativeList_ParallelWriter_NoPtrCaching() : void
+    + NativeList_ParallelReaderWriter() : void
+    <<unsafe>> - Expected(list:NativeList<int>, expectedLength:int, expected:int[]) : void
+    + <<unsafe>> NativeList_RemoveRange() : void
+}
+struct NativeListAddJob {
+    - list : NativeList<int>
+    + NativeListAddJob(list:NativeList<int>)
+    + Execute() : void
+}
+struct NativeArrayTest {
+    - array : NativeArray<int>
+    + NativeArrayTest(array:NativeArray<int>)
+    + Execute() : void
+}
+struct ReadOnlyListAccess {
+    - list : NativeList<int>
+    + ReadOnlyListAccess(list:NativeList<int>)
+    + Execute() : void
+}
+struct NativeListToArrayConversionFromJob {
+    + list : NativeList<int>
+    + Execute() : void
+}
+struct WriteJob {
+    + output : NativeArray<float>
+    + Execute(i:int) : void
+}
+struct InvalidArrayAccessFromListJob {
+    + list : NativeList<int>
+    + Execute() : void
+}
+struct NativeArrayTestReadOnly {
+    - array : NativeArray<int>
+    + NativeArrayTestReadOnly(array:NativeArray<int>)
+    + Execute() : void
+}
+struct NativeArrayTestWriteOnly {
+    - array : NativeArray<int>
+    + NativeArrayTestWriteOnly(array:NativeArray<int>)
+    + Execute() : void
+}
+struct NativeListTestParallelReader {
+    + reader : NativeArray<int>.ReadOnly
+    + Execute() : void
+}
+struct NativeListTestParallelWriter {
+    + writer : NativeList<int>.ParallelWriter
+    + <<unsafe>> Execute() : void
+}
+CollectionsTestFixture <|-- NativeListJobDebuggerTests
+NativeListJobDebuggerTests +-- NativeListAddJob
+IJob <|-- NativeListAddJob
+NativeListJobDebuggerTests +-- NativeArrayTest
+IJob <|-- NativeArrayTest
+NativeListJobDebuggerTests +-- ReadOnlyListAccess
+IJob <|-- ReadOnlyListAccess
+NativeListJobDebuggerTests +-- NativeListToArrayConversionFromJob
+IJob <|-- NativeListToArrayConversionFromJob
+NativeListJobDebuggerTests +-- WriteJob
+IJobParallelFor <|-- WriteJob
+NativeListJobDebuggerTests +-- InvalidArrayAccessFromListJob
+IJob <|-- InvalidArrayAccessFromListJob
+NativeListJobDebuggerTests +-- NativeArrayTestReadOnly
+IJob <|-- NativeArrayTestReadOnly
+NativeListJobDebuggerTests +-- NativeArrayTestWriteOnly
+IJob <|-- NativeArrayTestWriteOnly
+NativeListJobDebuggerTests +-- NativeListTestParallelReader
+IJob <|-- NativeListTestParallelReader
+NativeListJobDebuggerTests +-- NativeListTestParallelWriter
+IJob <|-- NativeListTestParallelWriter
+@enduml

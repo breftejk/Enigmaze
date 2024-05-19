@@ -1,0 +1,43 @@
+@startuml
+class ScreenSpaceAmbientOcclusionEditor {
+    - m_AOMethod : SerializedProperty
+    - m_Downsample : SerializedProperty
+    - m_AfterOpaque : SerializedProperty
+    - m_Source : SerializedProperty
+    - m_NormalQuality : SerializedProperty
+    - m_Intensity : SerializedProperty
+    - m_DirectLightingStrength : SerializedProperty
+    - m_Radius : SerializedProperty
+    - m_Falloff : SerializedProperty
+    - m_Samples : SerializedProperty
+    - m_BlurQuality : SerializedProperty
+    - m_IsInitialized : bool = false
+    - m_ShowQualitySettings : HeaderBool
+    - Init() : void
+    + <<override>> OnInspectorGUI() : void
+    - RendererIsDeferred() : bool
+}
+class HeaderBool {
+    - key : string
+    + value : bool
+    <<internal>> HeaderBool(_key:string, _default:bool)
+    <<internal>> SetValue(newValue:bool) : void
+}
+struct Styles {
+    + {static} AOMethod : GUIContent
+    + {static} Intensity : GUIContent
+    + {static} Radius : GUIContent
+    + {static} Falloff : GUIContent
+    + {static} DirectLightingStrength : GUIContent
+    + {static} Quality : GUIContent
+    + {static} Source : GUIContent
+    + {static} NormalQuality : GUIContent
+    + {static} Downsample : GUIContent
+    + {static} AfterOpaque : GUIContent
+    + {static} BlurQuality : GUIContent
+    + {static} Samples : GUIContent
+}
+Editor <|-- ScreenSpaceAmbientOcclusionEditor
+ScreenSpaceAmbientOcclusionEditor +-- HeaderBool
+ScreenSpaceAmbientOcclusionEditor +-- Styles
+@enduml

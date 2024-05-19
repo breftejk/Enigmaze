@@ -1,0 +1,17 @@
+@startuml
+interface INodeValidationExtension {
+    GetValidatorKey() : string
+    GetValidationStatus(node:AbstractMaterialNode, msg:string) : Status
+}
+class NodeValidation <<static>> {
+    - {static} s_validators : List<INodeValidationExtension>
+    - {static} Init() : void
+    <<internal>> {static} HandleValidationExtensions(node:AbstractMaterialNode) : void
+}
+enum Status {
+    Warning,
+    Error,
+    None,
+}
+INodeValidationExtension +-- Status
+@enduml

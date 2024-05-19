@@ -1,0 +1,36 @@
+@startuml
+class Awaitable <<partial>> {
+}
+struct AwaitableAsyncMethodBuilder {
+    - _stateMachineBox : IStateMachineBox
+    - EnsureStateMachineBox() : IStateMachineBox
+    + {static} Create() : AwaitableAsyncMethodBuilder
+    - _resultingCoroutine : Awaitable
+    + Task : Awaitable <<get>>
+    + Start(stateMachine:TStateMachine) : void
+    + SetStateMachine(stateMachine:IAsyncStateMachine) : void
+    + AwaitOnCompleted(awaiter:TAwaiter, stateMachine:TStateMachine) : void
+    + AwaitUnsafeOnCompleted(awaiter:TAwaiter, stateMachine:TStateMachine) : void
+    + SetException(e:Exception) : void
+    + SetResult() : void
+}
+interface IStateMachineBox {
+    ResultingCoroutine : Awaitable <<get>> <<set>>
+    MoveNext : Action <<get>>
+}
+class "StateMachineBox`1"<TStateMachine> {
+    {static} <<readonly>> - _pool : ThreadSafeObjectPool<StateMachineBox<TStateMachine>>
+    + {static} GetOne() : StateMachineBox<TStateMachine>
+    + Dispose() : void
+    + StateMachine : TStateMachine <<get>> <<set>>
+    - DoMoveNext() : void
+    + MoveNext : Action <<get>>
+    + StateMachineBox()
+    + ResultingCoroutine : Awaitable <<get>> <<set>>
+}
+Awaitable +-- AwaitableAsyncMethodBuilder
+AwaitableAsyncMethodBuilder +-- IStateMachineBox
+IDisposable <|-- IStateMachineBox
+AwaitableAsyncMethodBuilder +-- "StateMachineBox`1"
+IStateMachineBox <|-- "StateMachineBox`1"
+@enduml

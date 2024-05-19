@@ -1,0 +1,9 @@
+@startuml
+class UniversalRenderPipelineGlobalSettingsUI <<partial>> {
+    {static} <<readonly>> - RenderingLayerNamesSection : CED.IDrawer
+    {static} - DrawRenderingLayerNames(serialized:SerializedUniversalRenderPipelineGlobalSettings, owner:Editor) : void
+    {static} - OnContextClickRenderingLayerNames(position:Vector2, serialized:SerializedUniversalRenderPipelineGlobalSettings) : void
+    {static} <<readonly>> - MiscSection : CED.IDrawer
+    + {static} <<readonly>> Inspector : CED.IDrawer
+}
+@enduml

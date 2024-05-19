@@ -1,0 +1,14 @@
+@startuml
+struct "fsOption`1"<T> {
+    - _hasValue : bool
+    - _value : T
+    + HasValue : bool <<get>>
+    + IsEmpty : bool <<get>>
+    + Value : T <<get>>
+    + fsOption(value:T)
+    + {static} Empty : fsOption<T>
+}
+class fsOption <<static>> {
+    + {static} Just(value:T) : fsOption<T>
+}
+@enduml

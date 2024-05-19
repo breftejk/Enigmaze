@@ -1,0 +1,12 @@
+@startuml
+class GraphicRaycasterWorldSpaceCanvasTests {
+    - m_Camera : Camera
+    - m_EventSystem : EventSystem
+    - m_Canvas : Canvas
+    - m_CanvasRectTrans : RectTransform
+    + TestSetup() : void
+    + GraphicRaycasterDoesNotHitGraphicBehindCameraFarClipPlane() : IEnumerator
+    + GraphicRaycasterReturnsWorldPositionAndWorldNormal() : IEnumerator
+    + TearDown() : void
+}
+@enduml

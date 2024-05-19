@@ -1,0 +1,6 @@
+@startuml
+class UnityOnSliderValueChangedMessageListener <<sealed>> {
+    - Start() : void
+}
+MessageListener <|-- UnityOnSliderValueChangedMessageListener
+@enduml

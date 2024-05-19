@@ -1,0 +1,54 @@
+@startuml
+class GenerationUtils <<static>> {
+    <<const>> - kErrorString : string = @"ERROR!"
+    <<internal>> {static} GetActiveFieldsFromConditionals(conditionalFields:ConditionalField[]) : List<FieldDescriptor>
+    <<internal>> {static} GenerateSubShaderTags(target:Target, descriptor:SubShaderDescriptor, builder:ShaderStringBuilder) : void
+    {static} - IsFieldActive(field:FieldDescriptor, activeFields:IActiveFields, isOptional:bool) : bool
+    <<internal>> {static} GenerateShaderStruct(shaderStruct:StructDescriptor, activeFields:ActiveFields, humanReadable:bool, structBuilder:ShaderStringBuilder) : void
+    {static} - GetActiveFieldsAndKeyword(shaderStruct:StructDescriptor, activeFields:ActiveFields) : IEnumerable<(FieldDescriptor field, string keywordIfDefs)>
+    {static} - GetActiveFields(shaderStruct:StructDescriptor, activeFields:ActiveFields) : IEnumerable<FieldDescriptor>
+    {static} - GetActiveFields(shaderStruct:StructDescriptor, activeFields:IActiveFields) : IEnumerable<FieldDescriptor>
+    {static} - GeneratePackingLayout(shaderStruct:StructDescriptor, activeFields:ActiveFields) : PackedEntry[]
+    {static} - GeneratePackingLayout(shaderStruct:StructDescriptor, activeFields:IActiveFields) : PackedEntry[]
+    {static} - GeneratePackingLayout(baseStructName:string, activeFields:IEnumerable<FieldDescriptor>) : PackedEntry[]
+    <<internal>> {static} GeneratePackedStruct(shaderStruct:StructDescriptor, activeFields:ActiveFields, packStruct:StructDescriptor) : void
+    <<internal>> {static} GenerateInterpolatorFunctions(shaderStruct:StructDescriptor, activeFields:IActiveFields, humanReadable:bool, interpolatorBuilder:ShaderStringBuilder) : void
+    <<internal>> {static} GetUpstreamNodesForShaderPass(outputNode:AbstractMaterialNode, pass:PassDescriptor, vertexNodes:List<AbstractMaterialNode>, pixelNodes:List<AbstractMaterialNode>) : void
+    <<internal>> {static} GetActiveFieldsAndPermutationsForNodes(pass:PassDescriptor, keywordCollector:KeywordCollector, vertexNodes:List<AbstractMaterialNode>, pixelNodes:List<AbstractMaterialNode>, vertexNodePermutations:List<int>[], pixelNodePermutations:List<int>[], activeFields:ActiveFields, graphRequirements:ShaderGraphRequirementsPerKeyword) : void
+    {static} - GetConditionalFieldsFromVertexRequirements(requirements:ShaderGraphRequirements) : ConditionalField[]
+    {static} - GetConditionalFieldsFromPixelRequirements(requirements:ShaderGraphRequirements) : ConditionalField[]
+    <<internal>> {static} AddRequiredFields(passRequiredFields:FieldCollection, activeFields:IActiveFieldsSet) : void
+    <<internal>> {static} ApplyFieldDependencies(activeFields:IActiveFields, dependencies:DependencyCollection) : void
+    <<internal>> {static} FindMaterialSlotsOnNode(slots:IEnumerable<int>, node:AbstractMaterialNode) : List<MaterialSlot>
+    <<internal>> {static} AdaptNodeOutput(node:AbstractMaterialNode, outputSlotId:int, convertToType:ConcreteSlotValueType) : string
+    <<internal>> {static} AdaptNodeOutputForPreview(node:AbstractMaterialNode, outputSlotId:int) : string
+    <<internal>> {static} AdaptNodeOutputForPreview(node:AbstractMaterialNode, slotId:int, variableName:string) : string
+    {static} - GenerateSpaceTranslationSurfaceInputs(neededSpaces:NeededCoordinateSpace, interpolatorType:InterpolatorType, builder:ShaderStringBuilder, format:string) : void
+    <<internal>> {static} GeneratePropertiesBlock(sb:ShaderStringBuilder, propertyCollector:PropertyCollector, keywordCollector:KeywordCollector, mode:GenerationMode, graphInputs:List<GraphInputData>) : void
+    <<internal>> {static} GenerateSurfaceInputStruct(sb:ShaderStringBuilder, requirements:ShaderGraphRequirements, structName:string) : void
+    <<internal>> {static} GenerateSurfaceInputTransferCode(sb:ShaderStringBuilder, requirements:ShaderGraphRequirements, structName:string, variableName:string) : void
+    <<internal>> {static} GenerateSurfaceDescriptionStruct(surfaceDescriptionStruct:ShaderStringBuilder, slots:List<MaterialSlot>, structName:string, activeFields:IActiveFieldsSet, isSubgraphOutput:bool, virtualTextureFeedback:bool) : void
+    <<internal>> {static} GenerateSurfaceDescriptionFunction(nodes:List<AbstractMaterialNode>, keywordPermutationsPerNode:List<int>[], rootNode:AbstractMaterialNode, graph:GraphData, surfaceDescriptionFunction:ShaderStringBuilder, functionRegistry:FunctionRegistry, shaderProperties:PropertyCollector, shaderKeywords:KeywordCollector, mode:GenerationMode, functionName:string, surfaceDescriptionName:string, outputIdProperty:Vector1ShaderProperty, slots:IEnumerable<MaterialSlot>, graphInputStructName:string, virtualTextureFeedback:bool) : void
+    {static} - GenerateDescriptionForNode(activeNode:AbstractMaterialNode, keywordPermutations:List<int>, functionRegistry:FunctionRegistry, descriptionFunction:ShaderStringBuilder, shaderProperties:PropertyCollector, shaderKeywords:KeywordCollector, graph:GraphData, mode:GenerationMode) : void
+    {static} - GenerateSurfaceDescriptionRemap(graph:GraphData, rootNode:AbstractMaterialNode, slots:IEnumerable<MaterialSlot>, surfaceDescriptionFunction:ShaderStringBuilder, mode:GenerationMode) : void
+    <<const>> - k_VertexDescriptionStructName : string = "VertexDescription"
+    <<internal>> {static} GenerateVertexDescriptionStruct(builder:ShaderStringBuilder, slots:List<MaterialSlot>, structName:string, activeFields:IActiveFieldsSet) : void
+    <<internal>> {static} GenerateVertexDescriptionFunction(graph:GraphData, builder:ShaderStringBuilder, functionRegistry:FunctionRegistry, shaderProperties:PropertyCollector, shaderKeywords:KeywordCollector, mode:GenerationMode, rootNode:AbstractMaterialNode, nodes:List<AbstractMaterialNode>, keywordPermutationsPerNode:List<int>[], slots:List<MaterialSlot>, graphInputStructName:string, functionName:string, graphOutputStructName:string) : void
+    <<internal>> {static} GetSpliceCommand(command:string, token:string) : string
+    <<internal>> {static} GetDefaultTemplatePath(templateName:string) : string
+    <<internal>> {static} defaultDefaultSharedTemplateDirectories : string[]
+    <<internal>> {static} GetDefaultSharedTemplateDirectories() : string[]
+    + {static} FinalCustomEditorString(canChangeShaderGUI:ICanChangeShaderGUI) : string
+}
+struct PackedEntry {
+    + inputFields : Input[]
+    + packedField : FieldDescriptor
+}
+struct Input {
+    + field : FieldDescriptor
+    + startChannel : int
+    + channelCount : int
+}
+GenerationUtils +-- PackedEntry
+PackedEntry +-- Input
+@enduml

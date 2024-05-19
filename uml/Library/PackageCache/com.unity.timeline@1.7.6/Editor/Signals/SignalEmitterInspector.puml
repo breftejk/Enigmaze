@@ -1,0 +1,46 @@
+@startuml
+class SignalEmitterInspector {
+    - m_RetroactiveProperty : SerializedProperty
+    - m_EmitOnceProperty : SerializedProperty
+    - m_Signal : SignalEmitter
+    - m_BoundGameObject : GameObject
+    - m_AssociatedDirector : PlayableDirector
+    - m_TargetsHaveTheSameBinding : bool
+    <<readonly>> - m_Editors : Dictionary<Component, Editor>
+    <<readonly>> - m_Foldouts : Dictionary<Component, bool>
+    - m_Receivers : List<Component>
+    {static} - s_FoldoutStyle : GUIStyle
+    <<internal>> {static} foldoutStyle : GUIStyle <<get>>
+    + signalAsset : SignalAsset <<get>> <<set>>
+    - signalAssetSameValue : bool <<get>>
+    - OnEnable() : void
+    <<internal>> <<override>> IsEnabled() : bool
+    + <<override>> OnInspectorGUI() : void
+    <<internal>> <<override>> OnHeaderIconGUI(iconRect:Rect) : void
+    <<internal>> <<override>> DrawHeaderHelpAndSettingsGUI(r:Rect) : Rect
+    - AvailableSignalAssets() : IEnumerable<SignalAsset>
+    - CreateNewSignalAsset(path:string) : void
+    - UpdateState() : void
+    - GetOrCreateReceiverEditor(c:Component) : Editor
+    - OnDisable() : void
+    - OnDestroy() : void
+    - OnUndoRedo() : void
+    - ApplyChangesAndRefreshReceivers() : void
+    - DrawNameSelectorAndSignalList() : void
+    - DrawReceivers() : void
+    - DrawSignalFlags() : void
+    - DrawSignal() : void
+    <<internal>> CreateNewSignalAsset(path:string) : void
+    - AssignSignalAsset(newAsset:SignalAsset) : void
+    - DrawNameSelector() : void
+    - DrawReceiverHeader(receiver:Component) : bool
+    - DrawReceiverObjectField() : void
+    - AddReceiverComponent() : void
+    {static} - SkipField(fieldName:string) : bool
+    {static} - DrawSplitLine(y:float) : void
+    {static} - GetBoundGameObject(track:TrackAsset, associatedDirector:PlayableDirector) : GameObject
+    {static} - IsCurrentSequenceReadOnly() : bool
+}
+MarkerInspector <|-- SignalEmitterInspector
+ISignalAssetProvider <|-- SignalEmitterInspector
+@enduml

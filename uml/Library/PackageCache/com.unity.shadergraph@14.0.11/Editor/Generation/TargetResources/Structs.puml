@@ -1,0 +1,7 @@
+@startuml
+class Structs <<static>> {
+    + {static} Attributes : StructDescriptor
+    + {static} VertexDescriptionInputs : StructDescriptor
+    + {static} SurfaceDescriptionInputs : StructDescriptor
+}
+@enduml

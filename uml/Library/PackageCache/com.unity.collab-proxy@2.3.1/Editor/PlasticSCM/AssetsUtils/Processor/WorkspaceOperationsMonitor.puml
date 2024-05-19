@@ -1,0 +1,68 @@
+@startuml
+class WorkspaceOperationsMonitor {
+    <<internal>> WorkspaceOperationsMonitor(plasticApi:IPlasticAPI, disableAssetsProcessor:IDisableAssetsProcessor, isGluonMode:bool)
+    <<internal>> RegisterWindow(workspaceWindow:WorkspaceWindow, viewHost:ViewHost, incomingChangesUpdater:NewIncomingChangesUpdater) : void
+    <<internal>> UnRegisterWindow() : void
+    <<internal>> RegisterPendingChangesView(pendingChangesTab:PendingChangesTab) : void
+    <<internal>> RegisterIncomingChangesView(incomingChangesTab:IIncomingChangesTab) : void
+    <<internal>> UnRegisterViews() : void
+    <<internal>> Start() : void
+    <<internal>> Stop() : void
+    <<internal>> Disable() : void
+    <<internal>> Enable() : void
+    <<internal>> AddAssetsProcessorPathsToAdd(paths:List<string>) : void
+    <<internal>> AddAssetsProcessorPathsToDelete(paths:List<string>) : void
+    <<internal>> AddAssetsProcessorPathsToCheckout(paths:List<string>) : void
+    <<internal>> AddAssetsProcessorPathsToMove(paths:List<AssetPostprocessor.PathToMove>) : void
+    <<internal>> AddPathsToCheckout(paths:List<string>) : void
+    - TaskLoopThread() : void
+    - ProcessOperations(plasticApi:IPlasticAPI, assetsProcessorPathsToAdd:List<string>, assetsProcessorPathsToDelete:List<string>, assetsProcessorPathsToCheckout:List<string>, assetsProcessorPathsToMove:List<AssetPostprocessor.PathToMove>, pathsToCheckout:List<string>, lockObj:object, disableAssetsProcessor:IDisableAssetsProcessor, hasAssetProcessorOpsPending:bool, hasCheckoutOpsPending:bool) : void
+    - AfterAssetProcessorOperation() : void
+    - AfterCheckoutOperation() : void
+    - SetAsFinished() : void
+    - SleepUntilNextWorkload() : void
+    {static} - ProcessAssetProcessorOperations(plasticApi:IPlasticAPI, assetsProcessorPathsToAdd:List<string>, assetsProcessorPathsToDelete:List<string>, assetsProcessorPathsToCheckout:List<string>, assetsProcessorPathsToMove:List<AssetPostprocessor.PathToMove>, lockObj:object, disableAssetsProcessor:IDisableAssetsProcessor) : bool
+    {static} - ProcessCheckoutOperation(plasticApi:IPlasticAPI, pathsToProcess:List<string>, lockObj:object) : bool
+    {static} - AddPathsToProcess(pathsToProcess:List<string>, paths:List<string>, lockObj:object, resetEvent:ManualResetEvent, isEnabled:bool) : void
+    {static} - AddPathsToMoveToProcess(pathsToProcess:List<AssetPostprocessor.PathToMove>, paths:List<AssetPostprocessor.PathToMove>, lockObj:object, resetEvent:ManualResetEvent, isEnabled:bool) : void
+    {static} - ExtractPathsToProcess(pathsToProcess:List<string>, lockObj:object) : List<string>
+    {static} - ExtractPathsToMoveToProcess(pathsToProcess:List<AssetPostprocessor.PathToMove>, lockObj:object) : List<AssetPostprocessor.PathToMove>
+    {static} - HasPendingOperationsToProcess(assetsProcessorPathsToAdd:List<string>, assetsProcessorPathsToDelete:List<string>, assetsProcessorPathsToCheckout:List<string>, assetsProcessorPathsToMove:List<AssetPostprocessor.PathToMove>, pathsToCheckout:List<string>, lockObj:object, hasAssetProcessorOperations:bool, hasCheckoutOperations:bool) : void
+    {static} - RefreshViewsAfterAssetProcessorForGluon(viewHost:ViewHost) : void
+    {static} - RefreshViewsAfterAssetProcessorForDeveloper(workspaceWindow:IWorkspaceWindow) : void
+    {static} - RefreshViewsAfterCheckoutForDeveloper(workspaceWindow:IWorkspaceWindow) : void
+    {static} - RefreshViewsAfterCheckoutForGluon(viewHost:ViewHost) : void
+    {static} - LogProcessedPaths(operation:string, paths:List<string>) : void
+    {static} - LogException(ex:Exception) : void
+    - mLock : object
+    <<volatile>> - mIsRunning : bool
+    <<volatile>> - mIsEnabled : bool
+    <<volatile>> - mResetEvent : ManualResetEvent
+    - mAssetsProcessorPathsToAdd : List<string>
+    - mAssetsProcessorPathsToDelete : List<string>
+    - mAssetsProcessorPathsToCheckout : List<string>
+    - mAssetsProcessorPathsToMove : List<AssetPostprocessor.PathToMove>
+    - mPathsToCheckout : List<string>
+    - mPendingChangesTab : PendingChangesTab
+    - mIncomingChangesTab : IIncomingChangesTab
+    - mNewIncomingChangesUpdater : NewIncomingChangesUpdater
+    - mViewHost : ViewHost
+    - mWorkspaceWindow : IWorkspaceWindow
+    <<readonly>> - mIsGluonMode : bool = false
+    <<readonly>> - mDisableAssetsProcessor : IDisableAssetsProcessor
+    <<readonly>> - mPlasticAPI : IPlasticAPI
+    {static} <<readonly>> - mLog : ILog
+}
+interface IDisableAssetsProcessor {
+    Disable() : void
+}
+class AssetsProcessorOperations <<static>> {
+    <<internal>> {static} AddIfNotControlled(plasticApi:IPlasticAPI, paths:List<string>, ignoredFilter:IgnoredFilesFilter) : bool
+    <<internal>> {static} DeleteIfControlled(plasticApi:IPlasticAPI, paths:List<string>) : bool
+    <<internal>> {static} MoveIfControlled(plasticApi:IPlasticAPI, paths:List<AssetPostprocessor.PathToMove>) : bool
+    <<internal>> {static} CheckoutIfControlledAndChanged(plasticApi:IPlasticAPI, paths:List<string>) : bool
+    {static} - GetDefaultAddOptions() : AddOptions
+}
+WorkspaceOperationsMonitor +-- IDisableAssetsProcessor
+WorkspaceOperationsMonitor +-- AssetsProcessorOperations
+@enduml

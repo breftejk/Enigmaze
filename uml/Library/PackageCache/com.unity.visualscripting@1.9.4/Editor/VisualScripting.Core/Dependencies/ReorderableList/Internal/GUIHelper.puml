@@ -1,0 +1,17 @@
+@startuml
+class GUIHelper <<static>> {
+    {static} - GUIHelper()
+    + {static} VisibleRect : Func<Rect>
+    + {static} FocusTextInControl : Action<string>
+    - {static} s_TempStyle : GUIStyle
+    - {static} s_TempIconContent : GUIContent
+    - {static} <<readonly>> s_IconButtonHint : int
+    - {static} <<readonly>> s_SeparatorColor : Color
+    - {static} <<readonly>> s_SeparatorStyle : GUIStyle
+    + {static} DrawTexture(position:Rect, texture:Texture2D) : void
+    + {static} IconButton(position:Rect, visible:bool, iconNormal:Texture2D, iconActive:Texture2D, style:GUIStyle) : bool
+    + {static} IconButton(position:Rect, iconNormal:Texture2D, iconActive:Texture2D, style:GUIStyle) : bool
+    + {static} Separator(position:Rect, color:Color) : void
+    + {static} Separator(position:Rect) : void
+}
+@enduml

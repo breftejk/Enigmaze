@@ -1,0 +1,13 @@
+@startuml
+class TilePaletteMouseCursorUtility {
+}
+class MouseStyles <<static>> {
+    + {static} <<readonly>> mouseCursorOSPath : string[]
+    + {static} <<readonly>> mouseCursorOSHotspot : Vector2[]
+    + {static} <<readonly>> mouseCursorTexturePaths : string[]
+    + {static} <<readonly>> mouseCursorTextures : Texture2D[]
+    + {static} <<readonly>> sceneViewEditModes : GridBrushBase.Tool[]
+    {static} - MouseStyles()
+}
+TilePaletteMouseCursorUtility +-- MouseStyles
+@enduml

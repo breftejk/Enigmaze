@@ -1,0 +1,13 @@
+@startuml
+class Sequence <<sealed>> {
+    - _outputCount : int = 2
+    + enter : ControlInput <<get>>
+    + outputCount : int <<get>> <<set>>
+    + multiOutputs : ReadOnlyCollection<ControlOutput> <<get>>
+    # <<override>> Definition() : void
+    - Enter(flow:Flow) : ControlOutput
+    - EnterCoroutine(flow:Flow) : IEnumerator
+    + CopyFrom(source:Sequence) : void
+}
+Unit <|-- Sequence
+@enduml

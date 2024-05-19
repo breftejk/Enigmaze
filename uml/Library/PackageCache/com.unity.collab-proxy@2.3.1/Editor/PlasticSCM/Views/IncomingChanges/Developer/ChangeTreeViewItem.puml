@@ -1,0 +1,7 @@
+@startuml
+class ChangeTreeViewItem {
+    <<internal>> ChangeInfo : MergeChangeInfo <<get>>
+    <<internal>> ChangeTreeViewItem(id:int, change:MergeChangeInfo)
+}
+TreeViewItem <|-- ChangeTreeViewItem
+@enduml

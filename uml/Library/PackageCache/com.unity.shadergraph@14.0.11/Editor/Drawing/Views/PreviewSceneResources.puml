@@ -1,0 +1,23 @@
+@startuml
+class PreviewSceneResources {
+    <<readonly>> - m_Scene : Scene
+    - m_Camera : Camera
+    + light0 : Light <<get>>
+    + light1 : Light <<get>>
+    - m_CheckerboardMaterial : Material
+    - m_BlitNoAlphaMaterial : Material
+    {static} <<readonly>> - s_Meshes : Mesh[]
+    {static} <<readonly>> - s_MeshIcons : GUIContent[]
+    {static} <<readonly>> - s_LightIcons : GUIContent[]
+    {static} <<readonly>> - s_TimeIcons : GUIContent[]
+    {static} - CreateLight() : GameObject
+    + PreviewSceneResources()
+    + sphere : Mesh <<get>>
+    + quad : Mesh <<get>>
+    + checkerboardMaterial : Material <<get>>
+    + blitNoAlphaMaterial : Material <<get>>
+    + camera : Camera <<get>>
+    + Dispose() : void
+}
+IDisposable <|-- PreviewSceneResources
+@enduml

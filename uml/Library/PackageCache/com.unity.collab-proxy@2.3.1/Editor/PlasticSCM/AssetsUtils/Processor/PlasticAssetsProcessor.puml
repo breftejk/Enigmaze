@@ -1,0 +1,14 @@
+@startuml
+class PlasticAssetsProcessor {
+    <<internal>> SetWorkspaceOperationsMonitor(workspaceOperationsMonitor:WorkspaceOperationsMonitor) : void
+    <<internal>> AddToSourceControl(paths:List<string>) : void
+    <<internal>> DeleteFromSourceControl(paths:List<string>) : void
+    <<internal>> MoveOnSourceControl(paths:List<AssetPostprocessor.PathToMove>) : void
+    <<internal>> CheckoutOnSourceControl(paths:List<string>) : void
+    - Disable() : void
+    - IsDisableBecauseExceptionHappened(now:DateTime) : bool
+    - mLastExceptionDateTime : DateTime
+    - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

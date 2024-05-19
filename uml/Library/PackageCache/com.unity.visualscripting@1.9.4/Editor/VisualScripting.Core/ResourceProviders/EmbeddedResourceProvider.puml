@@ -1,0 +1,21 @@
+@startuml
+class EmbeddedResourceProvider <<sealed>> {
+    <<internal>> <<const>> VISUAL_SCRIPTING_PACKAGE : string = "com.unity.visualscripting"
+    - {static} <<readonly>> cache : Dictionary<string, Texture2D>
+    - <<readonly>> cachedResources : HashSet<string>
+    + EmbeddedResourceProvider()
+    <<internal>> {static} LoadFromMemoryResources(name:string) : Texture2D
+    + GetAllFiles() : IEnumerable<string>
+    + GetFiles(path:string) : IEnumerable<string>
+    + GetDirectories(path:string) : IEnumerable<string>
+    - GetPersonalPath(path:string, width:float) : string
+    + GetProfessionalPath(path:string, width:float) : string
+    + FileExists(path:string) : bool
+    + DirectoryExists(path:string) : bool
+    + DebugPath(path:string) : string
+    <<internal>> {static} CreatePixelTexture(name:string, color:Color, width:int, height:int) : Texture2D
+    + LoadAsset(path:string) : T
+    + LoadTexture(path:string, options:CreateTextureOptions) : Texture2D
+}
+IResourceProvider <|-- EmbeddedResourceProvider
+@enduml

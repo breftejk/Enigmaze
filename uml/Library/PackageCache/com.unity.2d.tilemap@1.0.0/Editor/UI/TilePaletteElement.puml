@@ -1,0 +1,95 @@
+@startuml
+class TilePaletteElement {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-element"
+    - {static} <<readonly>> toolbarUssClassName : string
+    - {static} <<readonly>> rightToolbarUssClassName : string
+    - {static} <<readonly>> buttonStripClassName : string = "unity-editor-toolbar__button-strip"
+    - {static} <<readonly>> stripElementClassName : string
+    - {static} <<readonly>> leftStripElementClassName : string
+    - {static} <<readonly>> middleStripElementClassName : string
+    - {static} <<readonly>> rightStripElementClassName : string
+    - {static} <<readonly>> aloneStripElementClassName : string
+    - {static} <<readonly>> k_Name : string
+    - m_ClipboardElement : TilePaletteClipboardElement
+    - m_EditToggle : TilePaletteEditToggle
+    + clipboardUnlocked : bool <<get>> <<set>>
+    <<internal>> clipboardView : GridPaintPaletteClipboard <<get>>
+    + TilePaletteElement()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachedToPanel(evt:DetachFromPanelEvent) : void
+    - {static} SetupChildrenAsButtonStripForVisible(root:VisualElement) : void
+    - OnEditToggleChanged(unlock:bool) : void
+    - OnUnlockedChanged(unlock:bool) : void
+    - OnGridToggleChanged(drawGridGizmo:bool) : void
+    - OnGizmoToggleChanged(drawGizmo:bool) : void
+}
+class TilePaletteEditToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Tile Palette Edit"
+    - {static} <<readonly>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_ElementClass : string = "unity-tilepalette-element-tilepaletteedit"
+    - {static} <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.EditPalette.png"
+    - {static} <<readonly>> k_TooltipText : string
+    + ToggleChanged : Action<bool>
+    + TilePaletteEditToggle()
+    # <<override>> ToggleValue() : void
+}
+class TilePaletteGridToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Tile Palette Grid"
+    - {static} <<readonly>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_ElementClass : string = "unity-tilepalette-element-gridtoggle"
+    - {static} <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.ShowGrid.png"
+    - {static} <<readonly>> k_TooltipText : string
+    + ToggleChanged : Action<bool>
+    + TilePaletteGridToggle()
+    # <<override>> ToggleValue() : void
+}
+class TilePaletteBrushElementToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Tile Palette Brush Element"
+    - {static} <<readonly>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_ElementClass : string = "unity-tilepalette-element-brushelement"
+    - {static} <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.BrushSettings.png"
+    - {static} <<readonly>> k_TooltipText : string
+    + ToggleChanged : Action<bool>
+    + TilePaletteBrushElementToggle()
+    # <<override>> ToggleValue() : void
+}
+class TilePaletteGizmoToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Tile Palette Gizmo"
+    - {static} <<readonly>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_ElementClass : string = "unity-tilepalette-element-gizmotoggle"
+    - {static} <<readonly>> k_IconPath : string = "GizmosToggle"
+    - {static} <<readonly>> k_TooltipText : string
+    + ToggleChanged : Action<bool>
+    + TilePaletteGizmoToggle()
+    # <<override>> ToggleValue() : void
+}
+class TilePaletteHideClipboardToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Tile Palette Hide Clipboard"
+    - {static} <<readonly>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} <<readonly>> k_ElementClass : string = "unity-tilepalette-element-hideclipboard"
+    - {static} <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.ShowTilePalette.png"
+    - {static} <<readonly>> k_TooltipFormatText : string
+    - {static} <<readonly>> k_ShortcutId : string = "Grid Painting/Toggle SceneView Palette"
+    + ToggleChanged : Action<bool>
+    + TilePaletteHideClipboardToggle()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - OnShortcutBindingChanged(arg1:IShortcutProfileManager, arg2:Identifier, arg3:ShortcutBinding, arg4:ShortcutBinding) : void
+    - UpdateTooltip() : void
+    # <<override>> ToggleValue() : void
+}
+class TilePaletteElementFactory {
+}
+class TilePaletteElementUxmlTraits {
+}
+VisualElement <|-- TilePaletteElement
+EditorToolbarToggle <|-- TilePaletteEditToggle
+EditorToolbarToggle <|-- TilePaletteGridToggle
+EditorToolbarToggle <|-- TilePaletteBrushElementToggle
+EditorToolbarToggle <|-- TilePaletteGizmoToggle
+EditorToolbarToggle <|-- TilePaletteHideClipboardToggle
+TilePaletteElement +-- TilePaletteElementFactory
+"UxmlFactory`2" "<TilePaletteElement,TilePaletteElementUxmlTraits>" <|-- TilePaletteElementFactory
+TilePaletteElement +-- TilePaletteElementUxmlTraits
+UxmlTraits <|-- TilePaletteElementUxmlTraits
+@enduml

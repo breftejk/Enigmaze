@@ -1,0 +1,15 @@
+@startuml
+class CustomPropertyDrawerInspector {
+    + CustomPropertyDrawerInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - _adaptiveWidth : float
+    - property : SerializedProperty
+    - propertyType : Type
+    + <<override>> Dispose() : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> cacheHeight : bool <<get>>
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- CustomPropertyDrawerInspector
+@enduml

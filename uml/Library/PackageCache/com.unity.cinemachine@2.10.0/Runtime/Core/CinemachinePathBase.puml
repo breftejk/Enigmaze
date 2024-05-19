@@ -1,0 +1,50 @@
+@startuml
+abstract class CinemachinePathBase {
+    + m_Resolution : int = 20
+    + m_Appearance : Appearance
+    + {abstract} MinPos : float <<get>>
+    + {abstract} MaxPos : float <<get>>
+    + {abstract} Looped : bool <<get>>
+    + <<virtual>> StandardizePos(pos:float) : float
+    + <<virtual>> EvaluatePosition(pos:float) : Vector3
+    + <<virtual>> EvaluateTangent(pos:float) : Vector3
+    + <<virtual>> EvaluateOrientation(pos:float) : Quaternion
+    + {abstract} EvaluateLocalPosition(pos:float) : Vector3
+    + {abstract} EvaluateLocalTangent(pos:float) : Vector3
+    + {abstract} EvaluateLocalOrientation(pos:float) : Quaternion
+    + <<virtual>> FindClosestPoint(p:Vector3, startSegment:int, searchRadius:int, stepsPerSegment:int) : float
+    + MinUnit(units:PositionUnits) : float
+    + MaxUnit(units:PositionUnits) : float
+    + <<virtual>> StandardizeUnit(pos:float, units:PositionUnits) : float
+    + EvaluatePositionAtUnit(pos:float, units:PositionUnits) : Vector3
+    + EvaluateTangentAtUnit(pos:float, units:PositionUnits) : Vector3
+    + EvaluateOrientationAtUnit(pos:float, units:PositionUnits) : Quaternion
+    + {abstract} DistanceCacheSampleStepsPerSegment : int <<get>>
+    + <<virtual>> InvalidateDistanceCache() : void
+    + DistanceCacheIsValid() : bool
+    + PathLength : float <<get>>
+    + StandardizePathDistance(distance:float) : float
+    + ToNativePathUnits(pos:float, units:PositionUnits) : float
+    + FromPathNativeUnits(pos:float, units:PositionUnits) : float
+    - m_DistanceToPos : float[]
+    - m_PosToDistance : float[]
+    - m_CachedSampleSteps : int
+    - m_PathLength : float
+    - m_cachedPosStepSize : float
+    - m_cachedDistanceStepSize : float
+    - ResamplePath(stepsPerSegment:int) : void
+}
+class Appearance {
+    + pathColor : Color
+    + inactivePathColor : Color
+    + width : float = 0.2f
+}
+enum PositionUnits {
+    PathUnits,
+    Distance,
+    Normalized,
+}
+MonoBehaviour <|-- CinemachinePathBase
+CinemachinePathBase +-- Appearance
+CinemachinePathBase +-- PositionUnits
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class SplitNode {
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotRName : string = "R"
+    <<const>> - kOutputSlotGName : string = "G"
+    <<const>> - kOutputSlotBName : string = "B"
+    <<const>> - kOutputSlotAName : string = "A"
+    + <<const>> InputSlotId : int = 0
+    + <<const>> OutputSlotRId : int = 1
+    + <<const>> OutputSlotGId : int = 2
+    + <<const>> OutputSlotBId : int = 3
+    + <<const>> OutputSlotAId : int = 4
+    + SplitNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    {static} - s_OutputSlots : int[]
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- SplitNode
+IGeneratesBodyCode <|-- SplitNode
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class NotApproximatelyEqual <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + notEqual : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Comparison(flow:Flow) : bool
+}
+Unit <|-- NotApproximatelyEqual
+@enduml

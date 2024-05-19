@@ -1,0 +1,24 @@
+@startuml
+class ComparisonGizmoState {
+    <<internal>> <<const>> thickness : float = 0.0028f
+    <<internal>> <<const>> thicknessSelected : float = 0.015f
+    <<internal>> <<const>> circleRadius : float = 0.014f
+    <<internal>> <<const>> circleRadiusSelected : float = 0.03f
+    <<internal>> <<const>> blendFactorCircleRadius : float = 0.01f
+    <<internal>> <<const>> blendFactorCircleRadiusSelected : float = 0.03f
+    + point1 : Vector2 <<get>>
+    + point2 : Vector2 <<get>>
+    + center : Vector2 <<get>>
+    + angle : float <<get>>
+    + length : float <<get>> = 0.2f
+    <<internal>> plane : Vector4 <<get>>
+    <<internal>> planeOrtho : Vector4 <<get>>
+    + blendFactor : float <<get>> <<set>>
+    <<internal>> blendFactorMaxGizmoDistance : float <<get>>
+    <<internal>> blendFactorMinGizmoDistance : float <<get>>
+    <<internal>> Init() : void
+    - Get2DPlane(firstPoint:Vector2, angle:float) : Vector4
+    + Update(point1:Vector2, point2:Vector2) : void
+    + Update(center:Vector2, length:float, angle:float) : void
+}
+@enduml

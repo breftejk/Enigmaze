@@ -1,0 +1,10 @@
+@startuml
+class TreeHeaderColumns <<static>> {
+    <<internal>> {static} SetTitles(columns:MultiColumnHeaderState.Column[], headerTitles:string[]) : void
+    <<internal>> {static} SetVisibilities(columns:MultiColumnHeaderState.Column[], visibilities:bool[]) : void
+    <<internal>> {static} SetWidths(columns:MultiColumnHeaderState.Column[], widths:float[]) : void
+    <<internal>> {static} GetTitles(columns:MultiColumnHeaderState.Column[]) : string[]
+    <<internal>> {static} GetVisibilities(columns:MultiColumnHeaderState.Column[]) : bool[]
+    <<internal>> {static} GetWidths(columns:MultiColumnHeaderState.Column[]) : float[]
+}
+@enduml

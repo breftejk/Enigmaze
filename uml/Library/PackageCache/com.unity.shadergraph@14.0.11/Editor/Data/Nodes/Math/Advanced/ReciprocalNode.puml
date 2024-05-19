@@ -1,0 +1,15 @@
+@startuml
+enum ReciprocalMethod {
+    Default,
+    Fast,
+}
+class ReciprocalNode {
+    + ReciprocalNode()
+    - m_ReciprocalMethod : ReciprocalMethod
+    + reciprocalMethod : ReciprocalMethod <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Reciprocal(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+    {static} - Unity_Reciprocal_Fast(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ReciprocalNode
+@enduml

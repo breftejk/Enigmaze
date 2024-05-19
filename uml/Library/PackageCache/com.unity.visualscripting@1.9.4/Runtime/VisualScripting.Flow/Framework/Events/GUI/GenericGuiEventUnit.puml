@@ -1,0 +1,8 @@
+@startuml
+abstract class GenericGuiEventUnit {
+    + data : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, data:BaseEventData) : void
+}
+"GameObjectEventUnit`1" "<BaseEventData>" <|-- GenericGuiEventUnit
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+class LayerManagementTreeViewData {
+    + assetName : string
+    + importData : PSDImportData
+    + layerImportSettings : SerializedProperty
+    + mosaicLayers : SerializedProperty
+    + importHiddenLayers : SerializedProperty
+    + importFileNodeState : SerializedProperty
+    + mappingStrategy : IPSDLayerMappingStrategy
+    + LayerManagementTreeViewData(so:SerializedObject)
+    + Update(so:SerializedObject) : void
+}
+class PSDImporterLayerManagementMultiColumnTreeView {
+    - m_LastArraySize : int
+    - m_LayerManagementTreeViewData : LayerManagementTreeViewData
+    - m_Data : PSDTreeViewNode[]
+    - m_LayerImportColumn : UILayerImportColumn
+    + UpdateTreeView(so:SerializedObject) : void
+    - SetupColumns() : void
+    + PSDImporterLayerManagementMultiColumnTreeView(so:SerializedObject)
+    + data : PSDTreeViewNode[] <<get>>
+    + importHidden : bool <<get>>
+    - layerImportSetting : SerializedProperty <<get>>
+    - importLayerData : IList<PSDLayerData> <<get>>
+    - layerMappingStrategy : IPSDLayerMappingStrategy <<get>>
+    - RebuildTree() : void
+    + Update() : void
+    - BuildTree() : List<TreeViewItemData<int>>
+    + GetFromIndex(i:int) : PSDTreeViewNode
+}
+MultiColumnTreeView <|-- PSDImporterLayerManagementMultiColumnTreeView
+@enduml

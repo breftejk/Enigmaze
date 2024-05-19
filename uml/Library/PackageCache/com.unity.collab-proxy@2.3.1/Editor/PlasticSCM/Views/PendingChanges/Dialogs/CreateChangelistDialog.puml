@@ -1,0 +1,30 @@
+@startuml
+class CreateChangelistDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    # <<override>> GetTitle() : string
+    # <<override>> OnModalGUI() : void
+    <<internal>> {static} CreateChangelist(wkInfo:WorkspaceInfo, parentWindow:EditorWindow) : ChangelistCreationData
+    <<internal>> {static} EditChangelist(wkInfo:WorkspaceInfo, changelistToEdit:ChangeListInfo, parentWindow:EditorWindow) : ChangelistCreationData
+    - DoTitleArea() : void
+    - DoFieldsArea() : void
+    - DoNameFieldArea() : void
+    - DoDescriptionFieldArea() : void
+    - DoPersistentFieldArea() : void
+    - DoButtonsArea() : void
+    - DoCancelButton() : void
+    - DoCreateButton() : void
+    {static} - Create(wkInfo:WorkspaceInfo) : CreateChangelistDialog
+    {static} - Edit(wkInfo:WorkspaceInfo, changelistToEdit:ChangeListInfo) : CreateChangelistDialog
+    - BuildCreationData() : ChangelistCreationData
+    - mProgressControls : ProgressControlsForDialogs
+    - mWkInfo : WorkspaceInfo
+    - mChangelistToEdit : ChangeListInfo
+    - mChangelistName : string
+    - mChangelistDescription : string
+    - mIsPersistent : bool
+    - mIsCreateMode : bool
+    - mWasNameFieldFocused : bool
+    <<const>> - NAME_FIELD_CONTROL_NAME : string = "CreateChangelistNameField"
+}
+PlasticDialog <|-- CreateChangelistDialog
+@enduml

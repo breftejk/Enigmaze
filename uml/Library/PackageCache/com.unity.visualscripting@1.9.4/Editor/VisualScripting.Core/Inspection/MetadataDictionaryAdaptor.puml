@@ -1,0 +1,38 @@
+@startuml
+class MetadataDictionaryAdaptor {
+    + MetadataDictionaryAdaptor(metadata:Metadata, parentDrawer:Inspector)
+    +  <<event>> itemAdded : Action<object, object> 
+    - newKeyMetadata : Metadata
+    - newValueMetadata : Metadata
+    # metadata : Metadata <<get>>
+    # <<virtual>> ConstructDictionary() : IDictionary
+    # <<virtual>> ConstructKey() : object
+    # <<virtual>> ConstructValue() : object
+    - <<const>> spaceBetweenKeyAndValue : float = 5
+    - <<const>> itemPadding : float = 2
+    + <<override>> Count : int <<get>>
+    + <<override>> Add() : void
+    + <<override>> Clear() : void
+    + <<override>> Insert(index:int) : void
+    + <<override>> Remove(index:int) : void
+    + <<override>> Move(sourceIndex:int, destinationIndex:int) : void
+    + <<override>> Duplicate(index:int) : void
+    # CanAdd() : bool
+    + <<override>> CanDrag(index:int) : bool
+    + <<override>> CanRemove(index:int) : bool
+    + <<override>> GetItemAdaptiveWidth(index:int) : float
+    + <<override>> GetItemHeight(width:float, index:int) : float
+    + <<override>> DrawItem(position:Rect, index:int) : void
+    - GetNewItemHeight(width:float) : float
+    - DrawNewItem(position:Rect) : void
+    - GetKeyHeight(keyMetadata:Metadata, keyWidth:float) : float
+    - GetValueHeight(valueMetadata:Metadata, valueWidth:float) : float
+    - GetKeyWidth(width:float) : float
+    - GetValueWidth(width:float) : float
+    - GetItemHeight(keyMetadata:Metadata, valueMetadata:Metadata, width:float) : float
+    - OnKeyGUI(keyMetadata:Metadata, keyPosition:Rect) : void
+    - OnValueGUI(valueMetadata:Metadata, valuePosition:Rect) : void
+    - OnItemGUI(keyMetadata:Metadata, valueMetadata:Metadata, position:Rect, editableKey:bool) : void
+}
+MetadataCollectionAdaptor <|-- MetadataDictionaryAdaptor
+@enduml

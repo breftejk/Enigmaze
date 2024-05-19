@@ -1,0 +1,11 @@
+@startuml
+interface IDebugDisplaySettingsPanel {
+    PanelName : string <<get>>
+    Widgets : DebugUI.Widget[] <<get>>
+    Flags : DebugUI.Flags <<get>>
+}
+interface IDebugDisplaySettingsPanelDisposable {
+}
+IDebugDisplaySettingsPanel <|-- IDebugDisplaySettingsPanelDisposable
+IDisposable <|-- IDebugDisplaySettingsPanelDisposable
+@enduml

@@ -1,0 +1,73 @@
+@startuml
+class EditMode <<static>> {
+    {static} <<readonly>> - k_EditModes : Dictionary<EditType, ISubEditMode>
+    {static} - s_CurrentEditType : EditType
+    {static} - s_OverrideEditType : EditType
+    {static} - s_CurrentTrimItem : ITrimmable
+    {static} - s_CurrentTrimDirection : TrimEdge
+    {static} - s_CurrentMoveItemHandler : MoveItemHandler
+    {static} - s_InputHandler : EditModeInputHandler
+    {static} - trimMode : ITrimItemMode <<get>>
+    {static} - trimDrawer : ITrimItemDrawer <<get>>
+    {static} - moveMode : IMoveItemMode <<get>>
+    {static} - moveDrawer : IMoveItemDrawer <<get>>
+    {static} - addDeleteMode : IAddDeleteItemMode <<get>>
+    + {static} inputHandler : EditModeInputHandler <<get>>
+    {static} - modeColor : Color <<get>>
+    + {static} editType : EditType <<get>> <<set>>
+    {static} - GetSubEditMode(type:EditType) : ISubEditMode
+    {static} - GetSubEditType(key:KeyCode) : EditType
+    + {static} ClearEditMode() : void
+    + {static} BeginTrim(item:ITimelineItem, trimDirection:TrimEdge) : void
+    + {static} TrimStart(item:ITimelineItem, time:double, affectTimeScale:bool) : void
+    + {static} TrimEnd(item:ITimelineItem, time:double, affectTimeScale:bool) : void
+    + {static} DrawTrimGUI(state:WindowState, item:TimelineItemGUI, edge:TrimEdge) : void
+    + {static} FinishTrim() : void
+    + {static} BeginMove(moveItemHandler:MoveItemHandler) : void
+    + {static} UpdateMove() : void
+    + {static} OnTrackDetach(grabbedTrackItems:IEnumerable<ItemsPerTrack>) : void
+    + {static} HandleTrackSwitch(grabbedTrackItems:IEnumerable<ItemsPerTrack>) : void
+    + {static} AllowTrackSwitch() : bool
+    + {static} AdjustStartTime(state:WindowState, itemsGroup:ItemsPerTrack, time:double) : double
+    + {static} ValidateDrag(itemsGroup:ItemsPerTrack) : bool
+    + {static} DrawMoveGUI(state:WindowState, movingItems:IEnumerable<MovingItems>) : void
+    + {static} FinishMove() : void
+    + {static} FinalizeInsertItemsAtTime(newItems:IEnumerable<ItemsPerTrack>, requestedTime:double) : void
+    + {static} PrepareItemsDelete(newItems:IEnumerable<ItemsPerTrack>) : void
+    + {static} HandleModeClutch() : void
+}
+enum EditType {
+    None= -1,
+    Mix= 0,
+    Ripple= 1,
+    Replace= 2,
+}
+interface ISubEditMode {
+    moveItemMode : IMoveItemMode <<get>>
+    moveItemDrawer : IMoveItemDrawer <<get>>
+    trimItemMode : ITrimItemMode <<get>>
+    trimItemDrawer : ITrimItemDrawer <<get>>
+    addDeleteItemMode : IAddDeleteItemMode <<get>>
+    color : Color <<get>>
+    clutchKey : KeyCode <<get>>
+    Reset() : void
+}
+class "SubEditMode`3"<TMoveMode,TTrimMode,TAddDeleteMode> {
+    + SubEditMode(guiColor:Color, key:KeyCode)
+    + Reset() : void
+    - m_MoveItemMode : TMoveMode
+    - m_TrimItemMode : TTrimMode
+    - m_AddDeleteItemMode : TAddDeleteMode
+    + moveItemMode : IMoveItemMode <<get>>
+    + moveItemDrawer : IMoveItemDrawer <<get>>
+    + trimItemMode : ITrimItemMode <<get>>
+    + trimItemDrawer : ITrimItemDrawer <<get>>
+    + addDeleteItemMode : IAddDeleteItemMode <<get>>
+    + color : Color <<get>>
+    + clutchKey : KeyCode <<get>>
+}
+EditMode +-- EditType
+EditMode +-- ISubEditMode
+EditMode +-- "SubEditMode`3"
+ISubEditMode <|-- "SubEditMode`3"
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class GUIActionRunner <<static>> {
+    <<internal>> {static} RunGUIAction(action:ActionDelegate) : void
+    {static} - mLock : object
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

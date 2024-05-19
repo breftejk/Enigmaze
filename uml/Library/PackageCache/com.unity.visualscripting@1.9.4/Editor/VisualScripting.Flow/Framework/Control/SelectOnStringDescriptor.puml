@@ -1,0 +1,7 @@
+@startuml
+class SelectOnStringDescriptor {
+    + SelectOnStringDescriptor(unit:SelectOnString)
+    # <<override>> GetLabelForOption(option:string) : string
+}
+"SelectUnitDescriptor`1" "<string>" <|-- SelectOnStringDescriptor
+@enduml

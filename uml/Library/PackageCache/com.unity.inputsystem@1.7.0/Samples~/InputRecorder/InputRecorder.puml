@@ -1,0 +1,67 @@
+@startuml
+class InputRecorder {
+    + captureIsRunning : bool <<get>>
+    + replayIsRunning : bool <<get>>
+    + startRecordingWhenEnabled : bool <<get>> <<set>>
+    + eventCount : long <<get>>
+    + totalEventSizeInBytes : long <<get>>
+    + allocatedSizeInBytes : long <<get>>
+    + recordFrames : bool <<get>> <<set>>
+    + recordStateEventsOnly : bool <<get>> <<set>>
+    + devicePath : string <<get>> <<set>>
+    + recordButtonPath : string <<get>> <<set>>
+    + playButtonPath : string <<get>> <<set>>
+    + capture : InputEventTrace <<get>>
+    + replay : InputEventTrace.ReplayController <<get>>
+    + replayPosition : int <<get>>
+    + replayOnNewDevices : bool <<get>> <<set>>
+    + simulateOriginalTimingOnReplay : bool <<get>> <<set>>
+    + changeEvent : ChangeEvent <<get>>
+    + StartCapture() : void
+    + StopCapture() : void
+    + StartReplay() : void
+    + StopReplay() : void
+    + PauseReplay() : void
+    + ClearCapture() : void
+    + LoadCaptureFromFile(fileName:string) : void
+    + SaveCaptureToFile(fileName:string) : void
+    # OnEnable() : void
+    # OnDisable() : void
+    # OnDestroy() : void
+    - OnFilterInputEvent(eventPtr:InputEventPtr, device:InputDevice) : bool
+    - OnEventRecorded(eventPtr:InputEventPtr) : void
+    - OnInputEvent(eventPtr:InputEventPtr, device:InputDevice) : void
+    - m_StartRecordingWhenEnabled : bool = false
+    - m_RecordFrames : bool = true
+    - m_ReplayOnNewDevices : bool
+    - m_SimulateOriginalTimingOnReplay : bool
+    - m_RecordStateEventsOnly : bool
+    - m_CaptureMemoryDefaultSize : int
+    - m_CaptureMemoryMaxSize : int
+    - m_DevicePath : string
+    - m_RecordButtonPath : string
+    - m_PlayButtonPath : string
+    - m_ChangeEvent : ChangeEvent
+    - m_OnInputEventDelegate : Action<InputEventPtr, InputDevice>
+    - m_EventTrace : InputEventTrace
+    - m_ReplayController : InputEventTrace.ReplayController
+    - CreateEventTrace() : void
+    - HookOnInputEvent() : void
+    - UnhookOnInputEvent() : void
+}
+enum Change {
+    None,
+    EventCaptured,
+    EventPlayed,
+    CaptureStarted,
+    CaptureStopped,
+    ReplayStarted,
+    ReplayStopped,
+}
+class ChangeEvent {
+}
+MonoBehaviour <|-- InputRecorder
+InputRecorder +-- Change
+InputRecorder +-- ChangeEvent
+"UnityEvent`1" "<Change>" <|-- ChangeEvent
+@enduml

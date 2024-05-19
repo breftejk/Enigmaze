@@ -1,0 +1,19 @@
+@startuml
+class EnumerableTestMethodCommand {
+    - <<readonly>> testMethod : TestMethod
+    + EnumerableTestMethodCommand(testMethod:TestMethod)
+    + ExecuteEnumerable(context:ITestExecutionContext) : IEnumerable
+    - AdvanceEnumerator(enumerator:IEnumerator) : bool
+    - ExecuteEnumerableAndRecordExceptions(enumerator:IEnumerator, context:EnumeratorContext) : IEnumerator
+    + <<override>> Execute(context:ITestExecutionContext) : TestResult
+}
+class EnumeratorContext {
+    - <<readonly>> m_Context : ITestExecutionContext
+    + EnumeratorContext(context:ITestExecutionContext)
+    + ExceptionWasRecorded : bool <<get>>
+    + RecordExceptionWithHint(ex:Exception) : void
+}
+TestCommand <|-- EnumerableTestMethodCommand
+IEnumerableTestMethodCommand <|-- EnumerableTestMethodCommand
+EnumerableTestMethodCommand +-- EnumeratorContext
+@enduml

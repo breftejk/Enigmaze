@@ -1,0 +1,8 @@
+@startuml
+class SortingLayerHelper <<static>> {
+    + {static} sortingLayerNames : string[] <<get>>
+    {static} - GetSortingLayerNames() : string[]
+    <<internal>> {static} GetSortingLayerIndexFromValue(value:int) : int
+    <<internal>> {static} GetSortingLayerIndexFromSortingLayerID(id:int) : int
+}
+@enduml

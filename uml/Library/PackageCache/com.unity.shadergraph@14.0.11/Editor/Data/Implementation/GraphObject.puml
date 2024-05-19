@@ -1,0 +1,36 @@
+@startuml
+class HandleUndoRedoAction {
+    - HandleGraphUndoRedo(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + newGraphData : GraphData <<get>> <<set>>
+}
+class GraphObject {
+    - m_SerializedGraph : SerializationHelper.JSONSerializedElement
+    - m_SerializedVersion : int
+    - m_IsDirty : bool
+    - m_IsSubGraph : bool
+    - m_AssetGuid : string
+    <<internal>> AssetGuid : string <<get>>
+    - m_Graph : GraphData
+    - m_DeserializedVersion : int
+    + graphDataStore : DataStore<GraphData> <<get>>
+    - m_DataStore : DataStore<GraphData>
+    + graph : GraphData <<get>> <<set>>
+    - m_MaterialArtifact : Material
+    + materialArtifact : Material <<get>>
+    + isDirty : bool <<get>> <<set>>
+    + <<virtual>> RegisterCompleteObjectUndo(actionName:string) : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    + wasUndoRedoPerformed : bool <<get>>
+    + HandleUndoRedo() : void
+    - DeserializeGraph() : GraphData
+    + Validate() : void
+    - ReduceGraphDataAction(initialState:GraphData, graphDataAction:IGraphDataAction) : void
+    - OnEnable() : void
+    - OnDestroy() : void
+}
+IGraphDataAction <|-- HandleUndoRedoAction
+ScriptableObject <|-- GraphObject
+ISerializationCallbackReceiver <|-- GraphObject
+@enduml

@@ -1,0 +1,136 @@
+@startuml
+class ScrollRect {
+    - m_Content : RectTransform
+    + content : RectTransform <<get>> <<set>>
+    - m_Horizontal : bool = true
+    + horizontal : bool <<get>> <<set>>
+    - m_Vertical : bool = true
+    + vertical : bool <<get>> <<set>>
+    - m_MovementType : MovementType
+    + movementType : MovementType <<get>> <<set>>
+    - m_Elasticity : float = 0.1f
+    + elasticity : float <<get>> <<set>>
+    - m_Inertia : bool = true
+    + inertia : bool <<get>> <<set>>
+    - m_DecelerationRate : float = 0.135f
+    + decelerationRate : float <<get>> <<set>>
+    - m_ScrollSensitivity : float = 1.0f
+    + scrollSensitivity : float <<get>> <<set>>
+    - m_Viewport : RectTransform
+    + viewport : RectTransform <<get>> <<set>>
+    - m_HorizontalScrollbar : Scrollbar
+    + horizontalScrollbar : Scrollbar <<get>> <<set>>
+    - m_VerticalScrollbar : Scrollbar
+    + verticalScrollbar : Scrollbar <<get>> <<set>>
+    - m_HorizontalScrollbarVisibility : ScrollbarVisibility
+    + horizontalScrollbarVisibility : ScrollbarVisibility <<get>> <<set>>
+    - m_VerticalScrollbarVisibility : ScrollbarVisibility
+    + verticalScrollbarVisibility : ScrollbarVisibility <<get>> <<set>>
+    - m_HorizontalScrollbarSpacing : float
+    + horizontalScrollbarSpacing : float <<get>> <<set>>
+    - m_VerticalScrollbarSpacing : float
+    + verticalScrollbarSpacing : float <<get>> <<set>>
+    - m_OnValueChanged : ScrollRectEvent
+    + onValueChanged : ScrollRectEvent <<get>> <<set>>
+    - m_PointerStartLocalCursor : Vector2
+    # m_ContentStartPosition : Vector2
+    - m_ViewRect : RectTransform
+    # viewRect : RectTransform <<get>>
+    # m_ContentBounds : Bounds
+    - m_ViewBounds : Bounds
+    - m_Velocity : Vector2
+    + velocity : Vector2 <<get>> <<set>>
+    - m_Dragging : bool
+    - m_Scrolling : bool
+    - m_PrevPosition : Vector2
+    - m_PrevContentBounds : Bounds
+    - m_PrevViewBounds : Bounds
+    - m_HasRebuiltLayout : bool = false
+    - m_HSliderExpand : bool
+    - m_VSliderExpand : bool
+    - m_HSliderHeight : float
+    - m_VSliderWidth : float
+    - m_Rect : RectTransform
+    - rectTransform : RectTransform <<get>>
+    - m_HorizontalScrollbarRect : RectTransform
+    - m_VerticalScrollbarRect : RectTransform
+    - m_Tracker : DrivenRectTransformTracker
+    # ScrollRect()
+    + <<virtual>> Rebuild(executing:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    - UpdateCachedData() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> IsActive() : bool
+    - EnsureLayoutHasRebuilt() : void
+    + <<virtual>> StopMovement() : void
+    + <<virtual>> OnScroll(data:PointerEventData) : void
+    + <<virtual>> OnInitializePotentialDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnBeginDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnEndDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    # <<virtual>> SetContentAnchoredPosition(position:Vector2) : void
+    # <<virtual>> LateUpdate() : void
+    # UpdatePrevData() : void
+    - UpdateScrollbars(offset:Vector2) : void
+    + normalizedPosition : Vector2 <<get>> <<set>>
+    + horizontalNormalizedPosition : float <<get>> <<set>>
+    + verticalNormalizedPosition : float <<get>> <<set>>
+    - SetHorizontalNormalizedPosition(value:float) : void
+    - SetVerticalNormalizedPosition(value:float) : void
+    # <<virtual>> SetNormalizedPosition(value:float, axis:int) : void
+    - {static} RubberDelta(overStretching:float, viewSize:float) : float
+    # <<override>> OnRectTransformDimensionsChange() : void
+    - hScrollingNeeded : bool <<get>>
+    - vScrollingNeeded : bool <<get>>
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+    + <<virtual>> SetLayoutHorizontal() : void
+    + <<virtual>> SetLayoutVertical() : void
+    - UpdateScrollbarVisibility() : void
+    - {static} UpdateOneScrollbarVisibility(xScrollingNeeded:bool, xAxisEnabled:bool, scrollbarVisibility:ScrollbarVisibility, scrollbar:Scrollbar) : void
+    - UpdateScrollbarLayout() : void
+    # UpdateBounds() : void
+    <<internal>> {static} AdjustBounds(viewBounds:Bounds, contentPivot:Vector2, contentSize:Vector3, contentPos:Vector3) : void
+    - <<readonly>> m_Corners : Vector3[]
+    - GetBounds() : Bounds
+    <<internal>> {static} InternalGetBounds(corners:Vector3[], viewWorldToLocalMatrix:Matrix4x4) : Bounds
+    - CalculateOffset(delta:Vector2) : Vector2
+    <<internal>> {static} InternalCalculateOffset(viewBounds:Bounds, contentBounds:Bounds, horizontal:bool, vertical:bool, movementType:MovementType, delta:Vector2) : Vector2
+    # SetDirty() : void
+    # SetDirtyCaching() : void
+}
+enum MovementType {
+    Unrestricted,
+    Elastic,
+    Clamped,
+}
+enum ScrollbarVisibility {
+    Permanent,
+    AutoHide,
+    AutoHideAndExpandViewport,
+}
+class ScrollRectEvent {
+}
+UIBehaviour <|-- ScrollRect
+IInitializePotentialDragHandler <|-- ScrollRect
+IBeginDragHandler <|-- ScrollRect
+IEndDragHandler <|-- ScrollRect
+IDragHandler <|-- ScrollRect
+IScrollHandler <|-- ScrollRect
+ICanvasElement <|-- ScrollRect
+ILayoutElement <|-- ScrollRect
+ILayoutGroup <|-- ScrollRect
+ScrollRect +-- MovementType
+ScrollRect +-- ScrollbarVisibility
+ScrollRect +-- ScrollRectEvent
+"UnityEvent`1" "<Vector2>" <|-- ScrollRectEvent
+@enduml

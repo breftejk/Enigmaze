@@ -1,0 +1,5 @@
+@startuml
+interface IGeneratesFunction {
+    GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+@enduml

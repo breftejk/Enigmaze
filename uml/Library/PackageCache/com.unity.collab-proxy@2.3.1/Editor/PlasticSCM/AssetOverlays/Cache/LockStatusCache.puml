@@ -1,0 +1,33 @@
+@startuml
+class LockStatusCache {
+    <<internal>> LockStatusCache(wkInfo:WorkspaceInfo, repaintProjectWindow:Action, repaintInspector:Action)
+    <<internal>> GetStatus(fullPath:string) : AssetStatus
+    <<internal>> GetLockStatusData(fullPath:string) : LockStatusData
+    <<internal>> Clear() : void
+    - AsyncCalculateStatus(cancelToken:CancelToken) : void
+    - mCurrentCancelToken : CancelToken
+    - mStatusByPathCache : Dictionary<string, LockStatusData>
+    <<readonly>> - mRepaintInspector : Action
+    <<readonly>> - mRepaintProjectWindow : Action
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    {static} - mLock : object
+}
+class FillLockCandidates <<static>> {
+    <<internal>> {static} ForTree(wkInfo:WorkspaceInfo, lockCandidates:Dictionary<MountPointWithPath, List<WorkspaceTreeNode>>) : void
+    {static} - ForChildren(wkPath:string, parentMount:MountPointWithPath, dirPath:string, dirNode:WorkspaceTreeNode, pendingDirectories:Queue<NodeWithPath>, lockCandidates:Dictionary<MountPointWithPath, List<WorkspaceTreeNode>>) : void
+}
+class BuildStatusByNodeCache <<static>> {
+    <<internal>> {static} ForLocks(wkPath:string, lockInfoByNode:Dictionary<WorkspaceTreeNode, LockInfo>) : Dictionary<string, LockStatusData>
+    {static} - BuildLockStatusData(node:WorkspaceTreeNode, lockInfo:LockInfo, nameResolver:LockOwnerNameResolver) : LockStatusData
+    {static} - GetAssetStatus(node:WorkspaceTreeNode, lockInfo:LockInfo) : AssetStatus
+}
+class NodeWithPath {
+    <<internal>> <<readonly>> Mount : MountPointWithPath
+    <<internal>> <<readonly>> Node : WorkspaceTreeNode
+    <<internal>> <<readonly>> Path : string
+    <<internal>> NodeWithPath(mount:MountPointWithPath, node:WorkspaceTreeNode, path:string)
+}
+LockStatusCache +-- FillLockCandidates
+LockStatusCache +-- BuildStatusByNodeCache
+FillLockCandidates +-- NodeWithPath
+@enduml

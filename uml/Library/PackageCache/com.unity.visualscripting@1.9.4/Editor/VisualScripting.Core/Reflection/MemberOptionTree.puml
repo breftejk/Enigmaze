@@ -1,0 +1,45 @@
+@startuml
+class MemberOptionTree {
+    + MemberOptionTree(types:IEnumerable<Type>, memberFilter:MemberFilter, memberTypeFilter:TypeFilter, direction:ActionDirection)
+    + MemberOptionTree(target:UnityObject, memberFilter:MemberFilter, memberTypeFilter:TypeFilter, direction:ActionDirection)
+    - <<readonly>> codebase : CodebaseSubset
+    - <<readonly>> direction : ActionDirection
+    - <<readonly>> expectingBoolean : bool
+    - <<readonly>> rootMode : RootMode
+    + <<override>> Prewarm() : void
+    + <<override>> Option(item:object) : IFuzzyOption
+    + <<override>> Root() : IEnumerable<object>
+    + <<override>> Children(parent:object) : IEnumerable<object>
+    + <<override>> searchable : bool <<get>> = true
+    + <<override>> OrderedSearchResults(query:string, cancellation:CancellationToken) : IEnumerable<object>
+    + <<override>> SearchResultLabel(item:object, query:string) : string
+    + <<override>> favorites : ICollection<object> <<get>>
+    + <<override>> FavoritesLabel(item:object) : string
+    + <<override>> CanFavorite(item:object) : bool
+    + <<override>> OnFavoritesChange() : void
+}
+enum RootMode {
+    Members,
+    Types,
+    Namespaces,
+}
+class Favorites {
+    + Favorites(tree:MemberOptionTree)
+    - <<readonly>> tree : MemberOptionTree
+    - validFavorites : IEnumerable<Member> <<get>>
+    + Count : int <<get>>
+    + IsReadOnly : bool <<get>>
+    + GetEnumerator() : IEnumerator<object>
+    - GetEnumerator() : IEnumerator
+    + Contains(item:object) : bool
+    + Add(item:object) : void
+    + Remove(item:object) : bool
+    + Clear() : void
+    + CopyTo(array:object[], arrayIndex:int) : void
+    - {static} <<readonly>> favorites : ICollection<object>
+}
+FuzzyOptionTree <|-- MemberOptionTree
+MemberOptionTree +-- RootMode
+MemberOptionTree +-- Favorites
+"ICollection`1" "<object>" <|-- Favorites
+@enduml

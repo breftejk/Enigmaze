@@ -1,0 +1,11 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    + {static} Register_Bounds_DirectConverter : Bounds_DirectConverter
+}
+class Bounds_DirectConverter {
+    # <<override>> DoSerialize(model:Bounds, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:Bounds) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<Bounds>" <|-- Bounds_DirectConverter
+@enduml

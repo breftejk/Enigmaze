@@ -1,0 +1,51 @@
+@startuml
+class FullscreenData {
+    - m_Version : Version
+    + version : Version <<get>> <<set>>
+    - m_fullscreenMode : FullscreenMode
+    + fullscreenMode : FullscreenMode <<get>> <<set>>
+    - m_BlendMode : FullscreenBlendMode
+    + blendMode : FullscreenBlendMode <<get>> <<set>>
+    - m_SrcColorBlendMode : BlendMode
+    + srcColorBlendMode : BlendMode <<get>> <<set>>
+    - m_DstColorBlendMode : BlendMode
+    + dstColorBlendMode : BlendMode <<get>> <<set>>
+    - m_ColorBlendOperation : BlendOp
+    + colorBlendOperation : BlendOp <<get>> <<set>>
+    - m_SrcAlphaBlendMode : BlendMode
+    + srcAlphaBlendMode : BlendMode <<get>> <<set>>
+    - m_DstAlphaBlendMode : BlendMode
+    + dstAlphaBlendMode : BlendMode <<get>> <<set>>
+    - m_AlphaBlendOperation : BlendOp
+    + alphaBlendOperation : BlendOp <<get>> <<set>>
+    - m_EnableStencil : bool = false
+    + enableStencil : bool <<get>> <<set>>
+    - m_StencilReference : int = 0
+    + stencilReference : int <<get>> <<set>>
+    - m_StencilReadMask : int = 255
+    + stencilReadMask : int <<get>> <<set>>
+    - m_StencilWriteMask : int = 255
+    + stencilWriteMask : int <<get>> <<set>>
+    - m_StencilCompareFunction : CompareFunction
+    + stencilCompareFunction : CompareFunction <<get>> <<set>>
+    - m_StencilPassOperation : StencilOp
+    + stencilPassOperation : StencilOp <<get>> <<set>>
+    - m_StencilFailOperation : StencilOp
+    + stencilFailOperation : StencilOp <<get>> <<set>>
+    - m_StencilDepthFailOperation : StencilOp
+    + stencilDepthTestFailOperation : StencilOp <<get>> <<set>>
+    - m_DepthWrite : bool = false
+    + depthWrite : bool <<get>> <<set>>
+    - m_depthWriteMode : FullscreenDepthWriteMode
+    + depthWriteMode : FullscreenDepthWriteMode <<get>> <<set>>
+    - m_AllowMaterialOverride : bool = false
+    + allowMaterialOverride : bool <<get>> <<set>>
+    - m_DepthTestMode : CompareFunction
+    + depthTestMode : CompareFunction <<get>> <<set>>
+}
+enum Version {
+    Initial,
+}
+JsonObject <|-- FullscreenData
+FullscreenData +-- Version
+@enduml

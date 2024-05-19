@@ -1,0 +1,19 @@
+@startuml
+class Formula <<sealed>> {
+    - _formula : string
+    - ncalc : NCalc
+    + formula : string <<get>> <<set>>
+    + cacheArguments : bool <<get>> <<set>>
+    + result : ValueOutput <<get>>
+    # <<override>> minInputCount : int <<get>>
+    # <<override>> Definition() : void
+    - InitializeNCalc() : void
+    - Evaluate(flow:Flow) : object
+    - EvaluateTreeFunction(flow:Flow, name:string, args:FunctionArgs) : void
+    + GetParameterValue(flow:Flow, name:string) : object
+    - EvaluateTreeParameter(flow:Flow, name:string, args:ParameterArgs) : void
+    + {static} GetArgumentName(index:int) : string
+    + {static} GetArgumentIndex(name:char) : int
+}
+"MultiInputUnit`1" "<object>" <|-- Formula
+@enduml

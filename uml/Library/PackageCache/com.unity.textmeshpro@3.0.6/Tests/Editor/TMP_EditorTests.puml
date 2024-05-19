@@ -1,0 +1,19 @@
+@startuml
+class TMP_EditorTests {
+    - m_TextComponent : TextMeshPro
+    - <<const>> m_TextBlock_00 : string = "A simple line of text."
+    - <<const>> m_TextBlock_01 : string = "Unity 2017 introduces new features that help teams of artists and developers build experiences together."
+    - <<const>> m_TextBlock_02 : string
+    - <<const>> m_TextBlock_03 : string
+    - <<const>> m_TextBlock_04 : string
+    - <<const>> m_TextBlock_05 : string = "This block of text contains <b>bold</b> and <i>italicized</i> characters."
+    - <<const>> m_TextBlock_06 : string
+    - <<readonly>> testStrings : string[]
+    + Setup() : void
+    + InternalResourceCheck(filePath:string, guid:string) : void
+    + TextParsing_TextInfoTest_WordWrappingDisabled(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + TextParsing_TextInfoTest_WordWrappingEnabled(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + TextParsing_TextInfoTest_TopJustifiedAlignment(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + TextParsing_TextInfoTest_RichText(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+}
+@enduml

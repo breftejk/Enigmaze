@@ -1,0 +1,17 @@
+@startuml
+class "AdditionalPropertiesState`2"<TState,TTarget> {
+    - m_State : EditorPrefBoolFlags<TState>
+    - m_Editors : HashSet<Editor>
+    - m_AnimFloats : Dictionary<TState, AnimFloat>
+    - RepaintAll() : void
+    + AdditionalPropertiesState(defaultValue:TState, prefix:string)
+    + GetAdditionalPropertiesState(mask:TState) : bool
+    + SetAdditionalPropertiesState(mask:TState, value:bool) : void
+    + ShowAll() : void
+    + HideAll() : void
+    <<internal>> GetAnimation(mask:TState) : AnimFloat
+    - ResetAnimation(mask:TState) : void
+    + RegisterEditor(editor:Editor) : void
+    + UnregisterEditor(editor:Editor) : void
+}
+@enduml

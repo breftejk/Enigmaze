@@ -1,0 +1,25 @@
+@startuml
+class BoneWeightChannel {
+    - m_Enabled : bool
+    - m_BoneIndex : int
+    - m_Weight : float
+    + enabled : bool <<get>> <<set>>
+    + boneIndex : int <<get>> <<set>>
+    + weight : float <<get>> <<set>>
+    + BoneWeightChannel()
+    + BoneWeightChannel(i:int, w:float, e:bool)
+    + CompareTo(other:BoneWeightChannel) : int
+}
+class EditableBoneWeight {
+    - m_Channels : List<BoneWeightChannel>
+    + Count : int <<get>>
+    + Clear() : void
+    + AddChannel(boneIndex:int, weight:float, enabled:bool) : void
+    + RemoveChannel(channelIndex:int) : void
+    + Sort() : void
+    + GetEnumerator() : IEnumerator<BoneWeightChannel>
+    - GetEnumerator() : IEnumerator
+}
+"IComparable`1" "<BoneWeightChannel>" <|-- BoneWeightChannel
+"IEnumerable`1" "<BoneWeightChannel>" <|-- EditableBoneWeight
+@enduml

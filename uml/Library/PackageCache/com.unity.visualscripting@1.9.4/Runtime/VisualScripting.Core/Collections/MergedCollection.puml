@@ -1,0 +1,22 @@
+@startuml
+class "MergedCollection`1"<T> {
+    + MergedCollection()
+    - <<readonly>> collections : Dictionary<Type, ICollection<T>>
+    + Count : int <<get>>
+    + IsReadOnly : bool <<get>>
+    + Include(collection:ICollection<TI>) : void
+    + Includes() : bool
+    + Includes(implementationType:Type) : bool
+    + ForType() : ICollection<TI>
+    - GetEnumerator() : IEnumerator
+    + GetEnumerator() : IEnumerator<T>
+    - GetCollectionForItem(item:T) : ICollection<T>
+    - GetCollectionForType(type:Type, throwOnFail:bool) : ICollection<T>
+    + Contains(item:T) : bool
+    + <<virtual>> Add(item:T) : void
+    + <<virtual>> Clear() : void
+    + <<virtual>> Remove(item:T) : bool
+    + CopyTo(array:T[], arrayIndex:int) : void
+}
+"IMergedCollection`1" "<T>" <|-- "MergedCollection`1"
+@enduml

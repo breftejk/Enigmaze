@@ -1,0 +1,15 @@
+@startuml
+interface IAboutable {
+    name : string <<get>>
+    description : string <<get>>
+    logo : Texture2D <<get>>
+    author : string <<get>>
+    authorLabel : string <<get>>
+    authorLogo : Texture2D <<get>>
+    copyrightHolder : string <<get>>
+    copyrightYear : int <<get>>
+    url : string <<get>>
+    authorUrl : string <<get>>
+    version : SemanticVersion <<get>>
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+interface IMachine {
+    graphData : IGraphData <<get>> <<set>>
+    threadSafeGameObject : GameObject <<get>>
+}
+IGraphRoot <|-- IMachine
+IGraphNester <|-- IMachine
+IAotStubbable <|-- IMachine
+@enduml

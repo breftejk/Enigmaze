@@ -1,0 +1,5 @@
+@startuml
+interface IInspectableAttribute {
+    order : int <<get>>
+}
+@enduml

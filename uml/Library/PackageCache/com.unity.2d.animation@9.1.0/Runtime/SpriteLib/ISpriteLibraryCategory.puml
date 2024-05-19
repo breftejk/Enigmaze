@@ -1,0 +1,6 @@
+@startuml
+interface ISpriteLibraryCategory {
+    name : string <<get>>
+    labels : IEnumerable<ISpriteLibraryLabel> <<get>>
+}
+@enduml

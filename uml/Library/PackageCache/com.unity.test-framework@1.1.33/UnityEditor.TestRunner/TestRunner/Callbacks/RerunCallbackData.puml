@@ -1,0 +1,7 @@
+@startuml
+class RerunCallbackData {
+    <<internal>> runFilters : UITestRunnerFilter[]
+    <<internal>> testMode : TestMode
+}
+"ScriptableSingleton`1" "<RerunCallbackData>" <|-- RerunCallbackData
+@enduml

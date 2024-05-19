@@ -1,0 +1,11 @@
+@startuml
+class ScrollBarTests {
+    - m_PrefabRoot : GameObject
+    <<const>> - kPrefabPath : string = "Assets/Resources/ScrollBarPrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + ScrollBarSetValueWithoutNotifyWillNotNotify() : void
+    + TearDown() : void
+}
+IPrebuildSetup <|-- ScrollBarTests
+@enduml

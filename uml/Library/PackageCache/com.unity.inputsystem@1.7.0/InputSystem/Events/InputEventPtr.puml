@@ -1,0 +1,28 @@
+@startuml
+struct InputEventPtr {
+    - <<readonly>> m_EventPtr : InputEvent*
+    + InputEventPtr(eventPtr:InputEvent*)
+    + valid : bool <<get>>
+    + handled : bool <<get>> <<set>>
+    + id : int <<get>> <<set>>
+    + type : FourCC <<get>>
+    + sizeInBytes : uint <<get>>
+    + deviceId : int <<get>> <<set>>
+    + time : double <<get>> <<set>>
+    <<internal>> internalTime : double <<get>> <<set>>
+    + data : InputEvent* <<get>>
+    <<internal>> stateFormat : FourCC <<get>>
+    <<internal>> stateSizeInBytes : uint <<get>>
+    <<internal>> stateOffset : uint <<get>>
+    + IsA() : bool
+    + Next() : InputEventPtr
+    + <<override>> ToString() : string
+    + ToPointer() : InputEvent*
+    + Equals(other:InputEventPtr) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + {static} From(eventPtr:InputEvent*) : InputEventPtr
+    + {static} FromInputEventPtr(eventPtr:InputEventPtr) : InputEvent*
+}
+"IEquatable`1" "<InputEventPtr>" <|-- InputEventPtr
+@enduml

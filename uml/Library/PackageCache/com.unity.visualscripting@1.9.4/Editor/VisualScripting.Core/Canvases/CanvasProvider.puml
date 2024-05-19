@@ -1,0 +1,17 @@
+@startuml
+class CanvasProvider {
+    {static} - CanvasProvider()
+    + {static} instance : CanvasProvider <<get>>
+    # <<override>> cache : bool <<get>>
+    + <<override>> IsValid(graph:IGraph) : bool
+}
+class XCanvasProvider <<static>> {
+    + {static} Canvas(graph:IGraph) : ICanvas
+    + {static} Canvas(graph:IGraph) : TCanvas
+    + {static} Widget(context:ICanvas, item:IGraphItem) : IWidget
+    + {static} Widget(context:ICanvas, item:IGraphItem) : TWidget
+    + {static} Widget(context:ICanvas, element:IGraphElement) : IGraphElementWidget
+    + {static} Widget(context:ICanvas, element:IGraphElement) : TWidget
+}
+"SingleDecoratorProvider`3" "<IGraph,ICanvas,CanvasAttribute>" <|-- CanvasProvider
+@enduml

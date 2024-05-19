@@ -1,0 +1,11 @@
+@startuml
+class GraphInstances <<static>> {
+    - {static} <<readonly>> @lock : object
+    - {static} <<readonly>> byGraph : Dictionary<IGraph, HashSet<GraphReference>>
+    - {static} <<readonly>> byParent : Dictionary<IGraphParent, HashSet<GraphReference>>
+    + {static} Instantiate(instance:GraphReference) : void
+    + {static} Uninstantiate(instance:GraphReference) : void
+    + {static} OfPooled(graph:IGraph) : HashSet<GraphReference>
+    + {static} ChildrenOfPooled(parent:IGraphParent) : HashSet<GraphReference>
+}
+@enduml

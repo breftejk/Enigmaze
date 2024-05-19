@@ -1,0 +1,33 @@
+@startuml
+class SearcherItem {
+    - m_Id : int
+    - m_ChildrenIds : List<int>
+    - m_Name : string
+    - m_Help : string
+    - m_Synonyms : string[]
+    - m_Icon : Texture2D
+    - m_CollapseEmptyIcon : bool = true
+    + Id : int <<get>>
+    + <<virtual>> Name : string <<get>>
+    + Path : string <<get>>
+    + Help : string <<get>> <<set>>
+    + Synonyms : string[] <<get>> <<set>>
+    + Depth : int <<get>>
+    + UserData : object <<get>> <<set>>
+    + Icon : Texture2D <<get>> <<set>>
+    + CollapseEmptyIcon : bool <<get>> <<set>>
+    + Parent : SearcherItem <<get>>
+    + Database : SearcherDatabaseBase <<get>>
+    + Children : List<SearcherItem> <<get>>
+    + HasChildren : bool <<get>>
+    + SearcherItem(name:string, help:string, children:List<SearcherItem>, userData:object, icon:Texture2D, collapseEmptyIcon:bool)
+    + AddChild(child:SearcherItem) : void
+    <<internal>> OverwriteId(newId:int) : void
+    - OverwriteParent(newParent:SearcherItem) : void
+    <<internal>> OverwriteDatabase(newDatabase:SearcherDatabaseBase) : void
+    <<internal>> OverwriteChildrenIds(childrenIds:List<int>) : void
+    <<internal>> GeneratePath() : void
+    <<internal>> ReInitAfterLoadFromFile() : void
+    + <<override>> ToString() : string
+}
+@enduml

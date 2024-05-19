@@ -1,0 +1,43 @@
+@startuml
+class ShadowCascadeGUI <<static>> {
+    - <<const>> kPathToHorizontalGradientTexture : string = "Packages/com.unity.render-pipelines.core/Editor/Lighting/Icons/HorizontalGradient.png"
+    - <<const>> kPathToUpSnatchTexture : string = "Packages/com.unity.render-pipelines.core/Editor/Lighting/Icons/UpSnatch.png"
+    - <<const>> kPathToUpSnatchFocusedTexture : string = "Packages/com.unity.render-pipelines.core/Editor/Lighting/Icons/UpSnatchFocused.png"
+    - <<const>> kPathToDownSnatchTexture : string = "Packages/com.unity.render-pipelines.core/Editor/Lighting/Icons/DownSnatch.png"
+    - <<const>> kPathTDownSnatchFocusedTexture : string = "Packages/com.unity.render-pipelines.core/Editor/Lighting/Icons/DownSnatchFocused.png"
+    - <<const>> kSliderbarMargin : float = 2.0f
+    - <<const>> kSliderbarHeight : float = 28.0f
+    - <<const>> kLODSliderRangeModifier : float = 0.78824f
+    - {static} <<readonly>> kCascadeColors : Color[]
+    - {static} <<readonly>> kDisabledColor : Color
+    - {static} s_DragLastMousePosition : Vector2
+    - {static} <<readonly>> s_CascadeSliderId : int
+    - {static} s_HorizontalGradient : GUIStyle = null
+    - {static} s_UpSnatch : GUIStyle = null
+    - {static} s_DownSnatch : GUIStyle = null
+    - {static} <<readonly>> s_CascadeSliderBG : GUIStyle = "LODSliderRange"
+    - {static} <<readonly>> s_TextCenteredStyle : GUIStyle
+    + {static} DrawCascades(cascades:Cascade[], useMetric:bool, baseMetric:float) : void
+    - {static} DrawBackgroundBoxGUI(rect:Rect, color:Color) : float
+    - {static} DrawGradientBoxGUI(rect:Rect, leftColor:Color, rightColor:Color) : float
+    - {static} DrawBoxGUI(rect:Rect, color:Color) : float
+    - {static} DrawLabelGUI(rect:Rect, text:string, color:Color) : float
+    - {static} DrawSnatchWithHandle(rect:Rect, distance:float, color:Color, snatch:GUIStyle, enabled:bool) : float
+    - {static} GetDownSnatchStyle() : GUIStyle
+    - {static} GetUpSnatchStyle() : GUIStyle
+    {static} - RGBMultiplied(multiplier:float, color:Color) : Color
+}
+enum HandleState {
+    Hidden,
+    Disabled,
+    Enabled,
+}
+struct Cascade {
+    + size : float
+    + borderSize : float
+    + cascadeHandleState : HandleState
+    + borderHandleState : HandleState
+}
+ShadowCascadeGUI +-- HandleState
+ShadowCascadeGUI +-- Cascade
+@enduml

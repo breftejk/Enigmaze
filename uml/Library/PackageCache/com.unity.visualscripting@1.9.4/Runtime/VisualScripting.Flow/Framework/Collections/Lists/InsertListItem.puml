@@ -1,0 +1,13 @@
+@startuml
+class InsertListItem <<sealed>> {
+    + enter : ControlInput <<get>>
+    + listInput : ValueInput <<get>>
+    + listOutput : ValueOutput <<get>>
+    + index : ValueInput <<get>>
+    + item : ValueInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Insert(flow:Flow) : ControlOutput
+}
+Unit <|-- InsertListItem
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+class LightExplorer {
+    # <<override>> GetReflectionProbeColumns() : LightingExplorerTableColumn[]
+}
+class Styles <<static>> {
+    + {static} <<readonly>> Enabled : GUIContent
+    + {static} <<readonly>> Name : GUIContent
+    + {static} <<readonly>> Mode : GUIContent
+    + {static} <<readonly>> HDR : GUIContent
+    + {static} <<readonly>> ShadowDistance : GUIContent
+    + {static} <<readonly>> NearPlane : GUIContent
+    + {static} <<readonly>> FarPlane : GUIContent
+    + {static} <<readonly>> Resolution : GUIContent
+    + {static} <<readonly>> ReflectionProbeModeTitles : GUIContent[]
+    + {static} <<readonly>> ReflectionProbeModeValues : int[]
+    + {static} <<readonly>> ReflectionProbeSizeTitles : GUIContent[]
+    + {static} <<readonly>> ReflectionProbeSizeValues : int[]
+}
+DefaultLightingExplorerExtension <|-- LightExplorer
+LightExplorer +-- Styles
+@enduml

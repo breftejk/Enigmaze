@@ -1,0 +1,11 @@
+@startuml
+class IsObjectVariableDefined <<sealed>> {
+    + IsObjectVariableDefined()
+    + IsObjectVariableDefined(name:string)
+    + source : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+IsVariableDefinedUnit <|-- IsObjectVariableDefined
+IObjectVariableUnit <|-- IsObjectVariableDefined
+@enduml

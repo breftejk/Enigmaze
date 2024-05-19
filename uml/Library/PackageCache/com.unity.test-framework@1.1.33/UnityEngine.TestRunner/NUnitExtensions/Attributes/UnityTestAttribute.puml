@@ -1,0 +1,18 @@
+@startuml
+class UnityTestAttribute {
+    <<const>> - k_MethodMarkedWithUnitytestMustReturnIenumerator : string = "Method marked with UnityTest must return IEnumerator."
+    + UnityTestAttribute()
+    - <<readonly>> _builder : NUnitTestCaseBuilder
+    - BuildFrom(method:IMethodInfo, suite:Test) : TestMethod
+    - BuildFrom(method:IMethodInfo, suite:Test) : IEnumerable<TestMethod>
+    - CreateTestMethod(method:IMethodInfo, suite:Test) : TestMethod
+    {static} - AdaptToUnityTestMethod(t:TestMethod) : void
+    {static} - IsMethodReturnTypeIEnumerator(method:IMethodInfo) : bool
+    + <<new>> ApplyToTest(test:Test) : void
+}
+CombiningStrategyAttribute <|-- UnityTestAttribute
+ISimpleTestBuilder <|-- UnityTestAttribute
+IImplyFixture <|-- UnityTestAttribute
+ITestBuilder <|-- UnityTestAttribute
+IApplyToTest <|-- UnityTestAttribute
+@enduml

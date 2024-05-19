@@ -1,0 +1,6 @@
+@startuml
+class ExampleDirect {
+    - Update() : void
+}
+MonoBehaviour <|-- ExampleDirect
+@enduml

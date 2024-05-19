@@ -1,0 +1,8 @@
+@startuml
+class xxHash3 <<static>> <<partial>> {
+    <<internal>> {static} <<unsafe>> Avx2HashLongInternalLoop(acc:ulong*, input:byte*, dest:byte*, length:long, secret:byte*, isHash64:int) : void
+    <<internal>> {static} <<unsafe>> Avx2ScrambleAcc(acc:ulong*, secret:byte*) : void
+    <<internal>> {static} <<unsafe>> Avx2Accumulate(acc:ulong*, input:byte*, dest:byte*, secret:byte*, nbStripes:long, isHash64:int) : void
+    <<internal>> {static} <<unsafe>> Avx2Accumulate512(acc:ulong*, input:byte*, dest:byte*, secret:byte*) : void
+}
+@enduml

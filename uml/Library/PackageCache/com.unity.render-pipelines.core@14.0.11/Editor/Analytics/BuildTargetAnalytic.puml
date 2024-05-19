@@ -1,0 +1,20 @@
+@startuml
+class BuildTargetAnalytic {
+    + callbackOrder : int <<get>>
+    <<const>> - k_MaxEventsPerHour : int = 10
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.srp"
+    - OnPostprocessBuild(_:BuildReport) : void
+    {static} - TryGatherData(data:BuildTargetAnalyticData, warning:string) : bool
+    {static} - SendAnalyitic() : void
+}
+struct BuildTargetAnalyticData {
+    <<internal>> <<const>> k_EventName : string = "uBuildTargetAnalytic"
+    + build_target : string
+    + render_pipeline_asset_type : string
+    + quality_levels : int
+    + total_quality_levels_on_project : int
+}
+IPostprocessBuildWithReport <|-- BuildTargetAnalytic
+BuildTargetAnalytic +-- BuildTargetAnalyticData
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+class HistoryTab {
+    <<internal>> Table : HistoryListView <<get>>
+    <<internal>> HistoryTab(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, repSpec:RepositorySpec, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, newIncomingChangesUpdater:NewIncomingChangesUpdater, viewHost:ViewHost, parentWindow:EditorWindow, isGluonMode:bool)
+    <<internal>> RefreshForItem(itemId:long, path:string, isDirectory:bool) : void
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    <<internal>> DrawSearchFieldForHistoryTab() : void
+    <<internal>> OnDisable() : void
+    <<internal>> SetLaunchToolForTesting(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor) : void
+    - Refresh() : void
+    - GetSelectedRevisions() : List<RepObjectInfo>
+    - SelectRevisions(revisionsToSelect:List<RepObjectInfo>) : void
+    - UpdateData(branchesAndChangesets:Dictionary<BranchInfo, ChangesetInfo>, workingBranch:BranchInfo, list:HistoryRevisionList, loadedRevisionId:long) : void
+    - GetSelectedChangesetId() : long
+    - GetSelectedHistoryGroupInfo() : SelectedHistoryGroupInfo
+    - Open() : void
+    - OpenWith() : void
+    - OpenWithCustom(exePath:string, args:string) : void
+    - OpenInExplorer() : void
+    - SaveRevisionAs() : void
+    - DiffWithPrevious() : void
+    - DiffSelectedRevisions() : void
+    - DiffChangeset() : void
+    - RevertToThisRevision() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    {static} - GetFullPath(wkPath:string, path:string) : string
+    {static} - DoActionsToolbar(refreshableView:IRefreshableView, progressControls:ProgressControlsForViews, searchField:SearchField, listView:HistoryListView, viewTitle:string) : void
+    {static} - DoHistoryArea(historyListView:HistoryListView, isOperationRunning:bool) : void
+    {static} - GetViewTitle(path:string) : string
+    - BuildComponents(wkInfo:WorkspaceInfo, repSpec:RepositorySpec) : void
+    - mSearchField : SearchField
+    - mHistoryListView : HistoryListView
+    - mItemId : long
+    - mPath : string
+    - mIsDirectory : bool
+    - mProcessExecutor : LaunchTool.IProcessExecutor
+    - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mHistoryViewLogic : HistoryViewLogic
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mWorkspaceWindow : IWorkspaceWindow
+    <<readonly>> - mRepSpec : RepositorySpec
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mViewHost : ViewHost
+    <<readonly>> - mNewIncomingChangesUpdater : NewIncomingChangesUpdater
+}
+IRefreshableView <|-- HistoryTab
+IOpenMenuOperations <|-- HistoryTab
+IHistoryViewMenuOperations <|-- HistoryTab
+@enduml

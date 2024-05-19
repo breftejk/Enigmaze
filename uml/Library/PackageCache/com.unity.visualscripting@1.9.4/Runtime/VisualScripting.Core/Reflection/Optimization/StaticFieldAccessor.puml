@@ -1,0 +1,15 @@
+@startuml
+class "StaticFieldAccessor`1"<TField> {
+    + StaticFieldAccessor(fieldInfo:FieldInfo)
+    - <<readonly>> fieldInfo : FieldInfo
+    - getter : Func<TField>
+    - setter : Action<TField>
+    - targetType : Type
+    + Compile() : void
+    + GetValue(target:object) : object
+    - GetValueUnsafe(target:object) : object
+    + SetValue(target:object, value:object) : void
+    - SetValueUnsafe(target:object, value:object) : void
+}
+IOptimizedAccessor <|-- "StaticFieldAccessor`1"
+@enduml

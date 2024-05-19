@@ -1,0 +1,12 @@
+@startuml
+class DebugUIHandlerGroup {
+    + nameLabel : Text
+    + header : Transform
+    - m_Field : DebugUI.Container
+    - m_Container : DebugUIHandlerContainer
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> Next() : DebugUIHandlerWidget
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerGroup
+@enduml

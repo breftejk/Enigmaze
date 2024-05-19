@@ -1,0 +1,36 @@
+@startuml
+interface IInterval {
+    intervalStart : Int64 <<get>>
+    intervalEnd : Int64 <<get>>
+}
+struct IntervalTreeNode {
+    + center : Int64
+    + first : int
+    + last : int
+    + left : int
+    + right : int
+}
+class "IntervalTree`1"<T> {
+    <<const>> - kMinNodeSize : int = 10
+    <<const>> - kInvalidNode : int
+    <<const>> - kCenterUnknown : Int64
+    <<readonly>> - m_Entries : List<Entry>
+    <<readonly>> - m_Nodes : List<IntervalTreeNode>
+    + dirty : bool <<get>> <<internal set>>
+    + Add(item:T) : void
+    + IntersectsWith(value:Int64, results:List<T>) : void
+    + IntersectsWithRange(start:Int64, end:Int64, results:List<T>) : void
+    + UpdateIntervals() : void
+    - Query(intervalTreeNode:IntervalTreeNode, value:Int64, results:List<T>) : void
+    - QueryRange(intervalTreeNode:IntervalTreeNode, start:Int64, end:Int64, results:List<T>) : void
+    - Rebuild() : void
+    - Rebuild(start:int, end:int) : int
+    + Clear() : void
+}
+struct Entry {
+    + intervalStart : Int64
+    + intervalEnd : Int64
+    + item : T
+}
+"IntervalTree`1" +-- Entry
+@enduml

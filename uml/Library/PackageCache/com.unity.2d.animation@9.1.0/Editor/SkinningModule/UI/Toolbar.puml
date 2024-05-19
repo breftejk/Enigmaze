@@ -1,0 +1,21 @@
+@startuml
+class Toolbar {
+    - <<const>> k_UssPath : string = "SkinningModule/ToolbarStyle.uss"
+    # m_ShortcutUtility : ShortcutUtility
+    # {static} GetClone(uxmlPath:string, toolbarId:string) : Toolbar
+    + Toolbar()
+    + SetButtonChecked(toCheck:Button) : void
+    # SetButtonChecked(button:Button, check:bool) : void
+    + CollapseToolBar(collapse:bool) : void
+    # RestoreButtonTooltips(uxmlPath:string, toolbarId:string) : void
+}
+class ToolbarFactory {
+}
+class ToolbarUxmlTraits {
+}
+VisualElement <|-- Toolbar
+Toolbar +-- ToolbarFactory
+"UxmlFactory`2" "<Toolbar,ToolbarUxmlTraits>" <|-- ToolbarFactory
+Toolbar +-- ToolbarUxmlTraits
+UxmlTraits <|-- ToolbarUxmlTraits
+@enduml

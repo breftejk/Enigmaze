@@ -1,0 +1,6 @@
+@startuml
+class EditmodeWorkItemFactory {
+    # <<override>> Create(method:TestMethod, filter:ITestFilter, loadedTest:ITest) : UnityWorkItem
+}
+WorkItemFactory <|-- EditmodeWorkItemFactory
+@enduml

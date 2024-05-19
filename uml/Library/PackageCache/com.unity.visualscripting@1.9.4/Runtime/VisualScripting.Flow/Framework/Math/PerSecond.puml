@@ -1,0 +1,10 @@
+@startuml
+abstract class "PerSecond`1"<T> {
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + {abstract} Operation(input:T) : T
+    + Operation(flow:Flow) : T
+}
+Unit <|-- "PerSecond`1"
+@enduml

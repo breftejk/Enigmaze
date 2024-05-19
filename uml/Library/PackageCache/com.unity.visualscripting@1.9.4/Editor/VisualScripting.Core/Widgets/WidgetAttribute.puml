@@ -1,0 +1,8 @@
+@startuml
+class WidgetAttribute <<sealed>> {
+    + WidgetAttribute(type:Type)
+    + type : Type <<get>>
+}
+Attribute <|-- WidgetAttribute
+IDecoratorAttribute <|-- WidgetAttribute
+@enduml

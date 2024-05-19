@@ -1,0 +1,6 @@
+@startuml
+class ExternalLink {
+    <<internal>> Label : string
+    <<internal>> Url : string
+}
+@enduml

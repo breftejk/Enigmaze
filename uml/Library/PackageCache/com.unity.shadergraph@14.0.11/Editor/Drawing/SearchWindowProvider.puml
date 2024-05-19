@@ -1,0 +1,37 @@
+@startuml
+struct NodeEntry {
+    + title : string[]
+    + node : AbstractMaterialNode
+    + compatibleSlotId : int
+    + slotName : string
+}
+class SearchWindowProvider {
+    <<internal>> m_EditorWindow : EditorWindow
+    <<internal>> m_Graph : GraphData
+    <<internal>> m_GraphView : GraphView
+    <<internal>> m_Icon : Texture2D
+    + currentNodeEntries : List<NodeEntry>
+    + connectedPort : ShaderPort <<get>> <<set>>
+    + nodeNeedsRepositioning : bool <<get>> <<set>>
+    + targetSlotReference : SlotReference <<get>> <<internal set>>
+    + targetPosition : Vector2 <<get>> <<internal set>>
+    + target : VisualElement <<get>> <<internal set>>
+    + regenerateEntries : bool <<get>> <<set>>
+    - <<const>> k_HiddenFolderName : string = "Hidden"
+    - m_ConnectedSlotCapability : ShaderStageCapability
+    + Initialize(editorWindow:EditorWindow, graph:GraphData, graphView:GraphView) : void
+    + Dispose() : void
+    - m_Ids : List<int>
+    - m_Slots : List<MaterialSlot>
+    + GenerateNodeEntries() : void
+    - SortEntries(nodeEntries:List<NodeEntry>) : void
+    - AddEntries(node:AbstractMaterialNode, title:string[], addNodeEntries:List<NodeEntry>) : void
+}
+class SearcherProvider {
+    + LoadSearchWindow() : Searcher.Searcher
+    + OnSearcherSelectEntry(entry:SearcherItem, screenMousePosition:Vector2) : bool
+    + CopyNodeForGraph(oldNode:AbstractMaterialNode) : AbstractMaterialNode
+}
+IDisposable <|-- SearchWindowProvider
+SearchWindowProvider <|-- SearcherProvider
+@enduml

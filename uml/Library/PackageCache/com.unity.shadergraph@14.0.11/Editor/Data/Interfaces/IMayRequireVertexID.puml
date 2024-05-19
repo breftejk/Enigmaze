@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireVertexID {
+    RequiresVertexID(stageCapability:ShaderStageCapability) : bool
+}
+class MayRequireVertexIDExtensions <<static>> {
+    + {static} RequiresVertexID(slot:MaterialSlot) : bool
+}
+@enduml

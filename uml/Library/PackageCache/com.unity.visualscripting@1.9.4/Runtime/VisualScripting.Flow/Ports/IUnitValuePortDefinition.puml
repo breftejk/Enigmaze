@@ -1,0 +1,6 @@
+@startuml
+interface IUnitValuePortDefinition {
+    type : Type <<get>>
+}
+IUnitPortDefinition <|-- IUnitValuePortDefinition
+@enduml

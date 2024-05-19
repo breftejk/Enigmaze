@@ -1,0 +1,78 @@
+@startuml
+class fsSerializer {
+    + fsSerializer()
+    - <<readonly>> _availableConverters : List<fsConverter>
+    - <<readonly>> _availableDirectConverters : Dictionary<Type, fsDirectConverter>
+    - <<readonly>> _processors : List<fsObjectProcessor>
+    - <<readonly>> _references : fsCyclicReferenceManager
+    - <<readonly>> _lazyReferenceWriter : fsLazyCycleDefinitionWriter
+    - <<readonly>> _abstractTypeRemap : Dictionary<Type, Type>
+    - _cachedConverterTypeInstances : Dictionary<Type, fsBaseConverter>
+    - _cachedConverters : Dictionary<Type, fsBaseConverter>
+    - _cachedProcessors : Dictionary<Type, List<fsObjectProcessor>>
+    + Context : fsContext
+    + Config : fsConfig
+    - RemapAbstractStorageTypeToDefaultType(storageType:Type) : void
+    + AddProcessor(processor:fsObjectProcessor) : void
+    + RemoveProcessor() : void
+    + SetDefaultStorageType(abstractType:Type, defaultStorageType:Type) : void
+    - GetProcessors(type:Type) : List<fsObjectProcessor>
+    + AddConverter(converter:fsBaseConverter) : void
+    - GetConverter(type:Type, overrideConverterType:Type) : fsBaseConverter
+    + TrySerialize(instance:T, data:fsData) : fsResult
+    + TryDeserialize(data:fsData, instance:T) : fsResult
+    + TrySerialize(storageType:Type, instance:object, data:fsData) : fsResult
+    + TrySerialize(storageType:Type, overrideConverterType:Type, instance:object, data:fsData) : fsResult
+    - InternalSerialize_1_ProcessCycles(storageType:Type, overrideConverterType:Type, instance:object, data:fsData) : fsResult
+    - InternalSerialize_2_Inheritance(storageType:Type, overrideConverterType:Type, instance:object, data:fsData) : fsResult
+    - InternalSerialize_3_ProcessVersioning(overrideConverterType:Type, instance:object, data:fsData) : fsResult
+    - InternalSerialize_4_Converter(overrideConverterType:Type, instance:object, data:fsData) : fsResult
+    + TryDeserialize(data:fsData, storageType:Type, result:object) : fsResult
+    + TryDeserialize(data:fsData, storageType:Type, overrideConverterType:Type, result:object) : fsResult
+    - InternalDeserialize_1_CycleReference(overrideConverterType:Type, data:fsData, storageType:Type, result:object, processors:List<fsObjectProcessor>) : fsResult
+    - InternalDeserialize_2_Version(overrideConverterType:Type, data:fsData, storageType:Type, result:object, processors:List<fsObjectProcessor>) : fsResult
+    - InternalDeserialize_3_Inheritance(overrideConverterType:Type, data:fsData, storageType:Type, result:object, processors:List<fsObjectProcessor>) : fsResult
+    - InternalDeserialize_4_Cycles(overrideConverterType:Type, data:fsData, resultType:Type, result:object) : fsResult
+    - InternalDeserialize_5_Converter(overrideConverterType:Type, data:fsData, resultType:Type, result:object) : fsResult
+    - {static} GetDataType(data:fsData, defaultType:Type, deserializeResult:fsResult) : Type
+    - {static} EnsureDictionary(data:fsData) : void
+    - {static} _reservedKeywords : HashSet<string>
+    {static} - fsSerializer()
+    + {static} IsReservedKeyword(key:string) : bool
+    - {static} <<readonly>> Key_ObjectReference : string
+    - {static} <<readonly>> Key_ObjectDefinition : string
+    - {static} <<readonly>> Key_InstanceType : string
+    - {static} <<readonly>> Key_Version : string
+    - {static} <<readonly>> Key_Content : string
+    <<internal>> {static} <<readonly>> Key_UnitDefault : string = "defaultValues"
+    <<internal>> {static} <<readonly>> Key_UnitPosition : string = "position"
+    <<internal>> {static} <<readonly>> Key_UnitGuid : string = "guid"
+    <<internal>> {static} <<readonly>> Key_UnitFormerType : string = "formerType"
+    <<internal>> {static} <<readonly>> Key_UnitFormerValue : string = "formerValue"
+    <<internal>> {static} <<readonly>> TypeName_Unit : string = "Unity.VisualScripting.Unit"
+    {static} <<readonly>> - Type_Unit : Type
+    <<internal>> {static} <<readonly>> TypeName_MissingType : string = "Unity.VisualScripting.MissingType"
+    {static} <<readonly>> - Type_MissingType : Type
+    - {static} IsObjectReference(data:fsData) : bool
+    - {static} IsObjectDefinition(data:fsData) : bool
+    - {static} IsVersioned(data:fsData) : bool
+    - {static} IsTypeSpecified(data:fsData) : bool
+    - {static} IsWrappedData(data:fsData) : bool
+    - {static} IsVisualScriptingUnit(data:fsData) : bool
+    + {static} StripDeserializationMetadata(data:fsData) : void
+    - {static} ConvertLegacyData(data:fsData) : void
+    - {static} Invoke_OnBeforeSerialize(processors:List<fsObjectProcessor>, storageType:Type, instance:object) : void
+    - {static} Invoke_OnAfterSerialize(processors:List<fsObjectProcessor>, storageType:Type, instance:object, data:fsData) : void
+    - {static} Invoke_OnBeforeDeserialize(processors:List<fsObjectProcessor>, storageType:Type, data:fsData) : void
+    - {static} Invoke_OnBeforeDeserializeAfterInstanceCreation(processors:List<fsObjectProcessor>, storageType:Type, instance:object, data:fsData) : void
+    - {static} Invoke_OnAfterDeserialize(processors:List<fsObjectProcessor>, storageType:Type, instance:object) : void
+}
+class fsLazyCycleDefinitionWriter {
+    - _pendingDefinitions : Dictionary<int, fsData>
+    - _references : HashSet<int>
+    + WriteDefinition(id:int, data:fsData) : void
+    + WriteReference(id:int, dict:Dictionary<string, fsData>) : void
+    + Clear() : void
+}
+fsSerializer +-- fsLazyCycleDefinitionWriter
+@enduml

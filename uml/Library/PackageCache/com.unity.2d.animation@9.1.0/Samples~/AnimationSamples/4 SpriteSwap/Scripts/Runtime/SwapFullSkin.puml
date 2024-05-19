@@ -1,0 +1,10 @@
+@startuml
+class SwapFullSkin {
+    + spriteLibraries : SpriteLibraryAsset[]
+    + spriteLibraryTarget : SpriteLibrary
+    - Start() : void
+    - OnDropDownValueChanged(value:int) : void
+    <<internal>> UpdateSelectionChoice() : void
+}
+MonoBehaviour <|-- SwapFullSkin
+@enduml

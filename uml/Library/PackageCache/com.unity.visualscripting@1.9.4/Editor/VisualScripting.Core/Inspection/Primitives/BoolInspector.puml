@@ -1,0 +1,10 @@
+@startuml
+class BoolInspector {
+    + BoolInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- BoolInspector
+@enduml

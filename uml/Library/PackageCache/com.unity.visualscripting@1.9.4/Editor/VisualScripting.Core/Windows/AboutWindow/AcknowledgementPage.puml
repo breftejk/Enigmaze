@@ -1,0 +1,20 @@
+@startuml
+class AcknowledgementPage {
+    + AcknowledgementPage(acknowledgement:PluginAcknowledgement)
+    - <<readonly>> acknowledgement : PluginAcknowledgement
+    - <<readonly>> licenseText : string
+    - licenseScroll : Vector2
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> title : GUIStyle
+    + {static} <<readonly>> property : GUIStyle
+    + {static} <<readonly>> url : GUIStyle
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> licenseBackground : GUIStyle
+    + {static} <<readonly>> licenseText : GUIStyle
+}
+Page <|-- AcknowledgementPage
+AcknowledgementPage +-- Styles
+@enduml

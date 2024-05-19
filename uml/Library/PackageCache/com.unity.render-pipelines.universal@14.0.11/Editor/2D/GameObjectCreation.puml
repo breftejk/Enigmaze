@@ -1,0 +1,9 @@
+@startuml
+class GameObjectCreation <<static>> {
+    <<const>> - k_PixelPerfectCameraGameObjectMenuPriority : int = 5
+    {static} - GameObjectCreatePixelPerfectCamera(menuCommand:MenuCommand) : void
+    {static} + CreateGameObject(name:string, menuCommand:MenuCommand, components:Type[]) : GameObject
+    <<internal>> {static} Place(go:GameObject, parentTransform:GameObject) : void
+    <<internal>> {static} PlaceGameObjectInFrontOfSceneView(go:GameObject) : void
+}
+@enduml

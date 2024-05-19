@@ -1,0 +1,8 @@
+@startuml
+class Break {
+    + enter : ControlInput <<get>>
+    # <<override>> Definition() : void
+    + Operation(flow:Flow) : ControlOutput
+}
+Unit <|-- Break
+@enduml

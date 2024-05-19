@@ -1,0 +1,9 @@
+@startuml
+class DictionaryAssetEditor <<sealed>> {
+    + DictionaryAssetEditor(metadata:Metadata)
+    - dictionaryMetadata : Metadata <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- DictionaryAssetEditor
+@enduml

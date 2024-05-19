@@ -1,0 +1,6 @@
+@startuml
+interface IGraphContextExtension {
+    contextMenuItems : IEnumerable<GraphContextMenuItem> <<get>>
+}
+IDragAndDropHandler <|-- IGraphContextExtension
+@enduml

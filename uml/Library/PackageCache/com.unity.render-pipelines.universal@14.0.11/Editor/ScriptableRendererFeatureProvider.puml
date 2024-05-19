@@ -1,0 +1,14 @@
+@startuml
+class ScriptableRendererFeatureProvider {
+    <<readonly>> - m_Editor : ScriptableRendererDataEditor
+    + position : Vector2 <<get>> <<set>>
+    + ScriptableRendererFeatureProvider(editor:ScriptableRendererDataEditor)
+    + CreateComponentTree(tree:List<FilterWindow.Element>) : void
+    + GoToChild(element:FilterWindow.Element, addIfComponent:bool) : bool
+    - GetMenuNameFromType(type:Type) : string
+}
+class FeatureElement {
+    + type : Type
+}
+ScriptableRendererFeatureProvider +-- FeatureElement
+@enduml

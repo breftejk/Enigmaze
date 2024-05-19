@@ -1,0 +1,8 @@
+@startuml
+class CompensateDirectionProcessor {
+    + <<override>> Process(value:Vector3, control:InputControl) : Vector3
+    + <<override>> ToString() : string
+    + <<override>> cachingPolicy : CachingPolicy <<get>>
+}
+"InputProcessor`1" "<Vector3>" <|-- CompensateDirectionProcessor
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class ShadowsMidtonesHighlights <<sealed>> {
+    + shadows : Vector4Parameter
+    + midtones : Vector4Parameter
+    + highlights : Vector4Parameter
+    + shadowsStart : MinFloatParameter
+    + shadowsEnd : MinFloatParameter
+    + highlightsStart : MinFloatParameter
+    + highlightsEnd : MinFloatParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+VolumeComponent <|-- ShadowsMidtonesHighlights
+IPostProcessComponent <|-- ShadowsMidtonesHighlights
+@enduml

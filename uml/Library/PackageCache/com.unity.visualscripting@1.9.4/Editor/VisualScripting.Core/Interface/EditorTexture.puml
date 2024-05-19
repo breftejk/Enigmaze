@@ -1,0 +1,20 @@
+@startuml
+class EditorTexture {
+    - EditorTexture()
+    - EditorTexture(texture:Texture2D)
+    - EditorTexture(texture:Texture)
+    + {static} Single(texture:Texture2D) : EditorTexture
+    + {static} Single(texture:Texture) : EditorTexture
+    <<internal>> IsValid() : bool
+    - textureName : string
+    - <<readonly>> personal : Dictionary<int, Texture2D>
+    - <<readonly>> professional : Dictionary<int, Texture2D>
+    + Single() : Texture2D
+    - GetHighestResolution(dictionary:Dictionary<int, Texture2D>) : Texture2D
+    + {static} <<readonly>> StandardIconResolutions : TextureResolution[]
+    + {static} Load(resourceProviders:IEnumerable<IResourceProvider>, path:string, options:CreateTextureOptions, required:bool) : EditorTexture
+    + {static} Load(resourceProviders:IEnumerable<IResourceProvider>, path:string, resolutions:TextureResolution[], options:CreateTextureOptions, required:bool) : EditorTexture
+    + {static} Load(resources:IResourceProvider, path:string, options:CreateTextureOptions, required:bool) : EditorTexture
+    + {static} Load(resources:IResourceProvider, path:string, resolutions:TextureResolution[], options:CreateTextureOptions, required:bool) : EditorTexture
+}
+@enduml

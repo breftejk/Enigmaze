@@ -1,0 +1,9 @@
+@startuml
+class PostProcessDataEditor {
+    - m_Shaders : SerializedProperty
+    - m_Textures : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- PostProcessDataEditor
+@enduml

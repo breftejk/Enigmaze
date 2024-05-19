@@ -1,0 +1,27 @@
+@startuml
+class RenderObjectsPass {
+    - renderQueueType : RenderQueueType
+    - m_FilteringSettings : FilteringSettings
+    - m_CameraSettings : RenderObjects.CustomCameraSettings
+    - m_ProfilerTag : string
+    - m_ProfilingSampler : ProfilingSampler
+    + overrideMaterial : Material <<get>> <<set>>
+    + overrideMaterialPassIndex : int <<get>> <<set>>
+    + overrideShader : Shader <<get>> <<set>>
+    + overrideShaderPassIndex : int <<get>> <<set>>
+    - m_ShaderTagIdList : List<ShaderTagId>
+    + SetDetphState(writeEnabled:bool, function:CompareFunction) : void
+    + SetStencilState(reference:int, compareFunction:CompareFunction, passOp:StencilOp, failOp:StencilOp, zFailOp:StencilOp) : void
+    - m_RenderStateBlock : RenderStateBlock
+    + RenderObjectsPass(profilerTag:string, renderPassEvent:RenderPassEvent, shaderTags:string[], renderQueueType:RenderQueueType, layerMask:int, cameraSettings:RenderObjects.CustomCameraSettings)
+    <<internal>> RenderObjectsPass(profileId:URPProfileId, renderPassEvent:RenderPassEvent, shaderTags:string[], renderQueueType:RenderQueueType, layerMask:int, cameraSettings:RenderObjects.CustomCameraSettings)
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> <<override>> RecordRenderGraph(renderGraph:RenderGraph, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> pass : RenderObjectsPass
+    <<internal>> renderingData : RenderingData
+}
+ScriptableRenderPass <|-- RenderObjectsPass
+RenderObjectsPass +-- PassData
+@enduml

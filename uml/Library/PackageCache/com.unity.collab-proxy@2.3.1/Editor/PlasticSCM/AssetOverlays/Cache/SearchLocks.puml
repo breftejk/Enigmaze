@@ -1,0 +1,7 @@
+@startuml
+class SearchLocks <<static>> {
+    <<internal>> {static} GetLocksInfo(wkInfo:WorkspaceInfo, locksCandidates:Dictionary<MountPointWithPath, List<WorkspaceTreeNode>>) : Dictionary<WorkspaceTreeNode, LockInfo>
+    {static} - FillRepositoryLocks(wkInfo:WorkspaceInfo, mount:MountPointWithPath, candidates:List<WorkspaceTreeNode>, locksForWorkingBranchOnRepoByItem:ServerLocks.ForWorkingBranchOnRepoByItem, locks:Dictionary<WorkspaceTreeNode, LockInfo>) : void
+    {static} - GetLockableCandidates(candidates:List<WorkspaceTreeNode>, lockRule:LockRule) : List<WorkspaceTreeNode>
+}
+@enduml

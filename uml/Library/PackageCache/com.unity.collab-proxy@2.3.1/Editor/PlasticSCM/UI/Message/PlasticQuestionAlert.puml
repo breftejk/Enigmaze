@@ -1,0 +1,26 @@
+@startuml
+class PlasticQuestionAlert {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} Show(title:string, message:string, first:string, second:string, third:string, isFirstButtonEnabled:bool, alertType:GuiMessage.GuiMessageType, parentWindow:EditorWindow) : ResponseType
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - DoMessageArea() : void
+    - DoButtonsArea() : void
+    - DoFirstButton() : void
+    - DoSecondButton() : void
+    - DoThirdButton() : void
+    {static} - Create(title:string, message:string, first:string, second:string, third:string, isFirstButtonEnabled:bool, alertType:GuiMessage.GuiMessageType) : PlasticQuestionAlert
+    {static} - GetEnterKeyAction(isFirstButtonEnabled:bool, instance:PlasticQuestionAlert) : Action
+    - mTitle : string
+    - mMessage : string
+    - mFirst : string
+    - mSecond : string
+    - mThird : string
+    - mIsFirstButtonEnabled : bool
+    - mAlertType : GuiMessage.GuiMessageType
+    - mScroll : Vector2
+    - mMessageDesiredHeight : float
+    - mMessageViewHeight : float
+}
+PlasticDialog <|-- PlasticQuestionAlert
+@enduml

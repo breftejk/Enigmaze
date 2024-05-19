@@ -1,0 +1,24 @@
+@startuml
+abstract class "Macro`1"<TGraph> {
+    - _graph : TGraph
+    + graph : TGraph <<get>> <<set>>
+    - graph : IGraph <<get>> <<set>>
+    - childGraph : IGraph <<get>>
+    + GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+    - isSerializationRoot : bool <<get>>
+    - serializedObject : UnityObject <<get>>
+    - _reference : GraphReference = null
+    # reference : GraphReference <<get>>
+    + isDescriptionValid : bool <<get>> <<set>>
+    # <<override>> OnBeforeDeserialize() : void
+    # <<override>> OnAfterDeserialize() : void
+    + {abstract} DefaultGraph() : TGraph
+    - DefaultGraph() : IGraph
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + GetReference() : GraphPointer
+    - IsDeserialized : bool <<get>> <<set>>
+}
+MacroScriptableObject <|-- "Macro`1"
+IMacro <|-- "Macro`1"
+@enduml

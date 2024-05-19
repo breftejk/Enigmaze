@@ -1,0 +1,10 @@
+@startuml
+class VisibilityToolColumnHeader {
+    + SetAllVisibility : Action<bool>
+    + GetAllVisibility : Func<bool>
+    + VisibilityToolColumnHeader(state:MultiColumnHeaderState)
+    + visibilityColumn : int <<set>>
+    # <<override>> ColumnHeaderGUI(column:MultiColumnHeaderState.Column, headerRect:Rect, columnIndex:int) : void
+}
+MultiColumnHeader <|-- VisibilityToolColumnHeader
+@enduml

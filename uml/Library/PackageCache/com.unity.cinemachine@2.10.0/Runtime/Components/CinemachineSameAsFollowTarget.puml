@@ -1,0 +1,11 @@
+@startuml
+class CinemachineSameAsFollowTarget {
+    + m_Damping : float = 0
+    - m_PreviousReferenceOrientation : Quaternion
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + <<override>> GetMaxDampTime() : float
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+}
+CinemachineComponentBase <|-- CinemachineSameAsFollowTarget
+@enduml

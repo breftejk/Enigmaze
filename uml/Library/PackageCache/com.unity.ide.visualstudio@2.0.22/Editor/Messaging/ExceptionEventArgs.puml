@@ -1,0 +1,6 @@
+@startuml
+class ExceptionEventArgs {
+    + Exception : Exception <<get>>
+    + ExceptionEventArgs(exception:Exception)
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CubemapSlotControlView {
+    - m_Slot : CubemapInputMaterialSlot
+    + CubemapSlotControlView(slot:CubemapInputMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Object>) : void
+}
+VisualElement <|-- CubemapSlotControlView
+@enduml

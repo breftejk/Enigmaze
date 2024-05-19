@@ -1,0 +1,8 @@
+@startuml
+class TangentNode {
+    + TangentNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Tangent(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- TangentNode
+@enduml

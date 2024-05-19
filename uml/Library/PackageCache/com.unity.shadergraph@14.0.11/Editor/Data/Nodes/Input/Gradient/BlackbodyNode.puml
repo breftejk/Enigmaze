@@ -1,0 +1,9 @@
+@startuml
+class BlackbodyNode {
+    + BlackbodyNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Blackbody(Temperature:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- BlackbodyNode
+@enduml

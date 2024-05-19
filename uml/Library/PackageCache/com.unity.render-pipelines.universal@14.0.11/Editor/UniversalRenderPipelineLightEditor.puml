@@ -1,0 +1,12 @@
+@startuml
+class UniversalRenderPipelineLightEditor {
+    - serializedLight : UniversalRenderPipelineSerializedLight <<get>> <<set>>
+    # <<override>> OnEnable() : void
+    <<internal>> ReconstructReferenceToAdditionalDataSO() : void
+    # OnDisable() : void
+    <<internal>> {static} IsPresetEditor(editor:UnityEditor.Editor) : bool
+    + <<override>> OnInspectorGUI() : void
+    # <<override>> OnSceneGUI() : void
+}
+LightEditor <|-- UniversalRenderPipelineLightEditor
+@enduml

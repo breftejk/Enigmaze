@@ -1,0 +1,19 @@
+@startuml
+class DebugRenderSetup {
+    - <<readonly>> m_DebugHandler : DebugHandler
+    - <<readonly>> m_Context : ScriptableRenderContext
+    - <<readonly>> m_CommandBuffer : CommandBuffer
+    - <<readonly>> m_Index : int
+    <<readonly>> - m_FilteringSettings : FilteringSettings
+    - MaterialSettings : DebugDisplaySettingsMaterial <<get>>
+    - RenderingSettings : DebugDisplaySettingsRendering <<get>>
+    - LightingSettings : DebugDisplaySettingsLighting <<get>>
+    - Begin() : void
+    - End() : void
+    <<internal>> DebugRenderSetup(debugHandler:DebugHandler, context:ScriptableRenderContext, commandBuffer:CommandBuffer, index:int, filteringSettings:FilteringSettings)
+    <<internal>> CreateDrawingSettings(drawingSettings:DrawingSettings) : DrawingSettings
+    <<internal>> GetRenderStateBlock(renderStateBlock:RenderStateBlock) : RenderStateBlock
+    + Dispose() : void
+}
+IDisposable <|-- DebugRenderSetup
+@enduml

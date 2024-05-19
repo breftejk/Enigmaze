@@ -1,0 +1,9 @@
+@startuml
+class GetSceneVariable <<sealed>> {
+    + GetSceneVariable()
+    + GetSceneVariable(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+GetVariableUnit <|-- GetSceneVariable
+ISceneVariableUnit <|-- GetSceneVariable
+@enduml

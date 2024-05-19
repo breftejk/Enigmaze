@@ -1,0 +1,68 @@
+@startuml
+class CinemachineSettings <<sealed>> {
+    - {static} ShowCoreSettings : bool <<get>> <<set>>
+    - {static} ShowComposerSettings : bool <<get>> <<set>>
+    - {static} sCinemachineLogoTexture : Texture2D = null
+    <<internal>> {static} CinemachineLogoTexture : Texture2D <<get>>
+    - {static} sCinemachineHeader : Texture2D = null
+    <<internal>> {static} CinemachineHeader : Texture2D <<get>>
+    - {static} <<readonly>> kCoreSettingsFoldKey : string = "CNMCN_Core_Folded"
+    - {static} <<readonly>> kComposerSettingsFoldKey : string = "CNMCN_Composer_Folded"
+    <<internal>> {static}  <<event>> AdditionalCategories : Action 
+    {static} - OnPackageLoadedInEditor() : void
+    {static} - CinemachineSettings()
+    - {static} sScrollPosition : Vector2
+    {static} - sDraggableText : GUIContent
+    {static} - sGlobalMuteText : GUIContent
+    - {static} OnGUI() : void
+    - {static} OnHierarchyGUI(instanceID:int, selectionRect:Rect) : void
+    <<internal>> {static} UnpackColour(str:string) : Color
+    <<internal>> {static} PackColor(col:Color) : string
+    - {static} Base64Encode(data:byte[]) : string
+    - {static} Base64Decode(base64EncodedData:string) : byte[]
+}
+class CinemachineCoreSettings <<static>> {
+    - {static} <<readonly>> hShowInGameGuidesKey : string = "CNMCN_Core_ShowInGameGuides"
+    + {static} ShowInGameGuides : bool <<get>> <<set>>
+    {static} - kUseTimelneScrubbingCache : string = "CNMCN_Timeeline_UseTimelineScrubbingCache"
+    + {static} UseTimelneScrubbingCache : bool <<get>> <<set>>
+    - {static} <<readonly>> kCoreActiveGizmoColourKey : string = "CNMCN_Core_Active_Gizmo_Colour"
+    + {static} <<readonly>> kDefaultActiveColour : Color
+    + {static} ActiveGizmoColour : Color <<get>> <<set>>
+    - {static} <<readonly>> kCoreInactiveGizmoColourKey : string = "CNMCN_Core_Inactive_Gizmo_Colour"
+    + {static} <<readonly>> kDefaultInactiveColour : Color
+    + {static} InactiveGizmoColour : Color <<get>> <<set>>
+    - {static} <<readonly>> kCoreBoundaryObjectGizmoColorKey : string = "CNMCN_Core_BoundaryObject_Gizmo_Colour"
+    + {static} <<readonly>> kDefaultBoundaryObjectColour : Color
+    + {static} BoundaryObjectGizmoColour : Color <<get>> <<set>>
+}
+class ComposerSettings <<static>> {
+    - {static} <<readonly>> kOverlayOpacityKey : string = "CNMCN_Overlay_Opacity"
+    - {static} <<readonly>> kComposerHardBoundsColourKey : string = "CNMCN_Composer_HardBounds_Colour"
+    - {static} <<readonly>> kComposerSoftBoundsColourKey : string = "CNMCN_Composer_SoftBounds_Colour"
+    - {static} <<readonly>> kComposerTargetColourKey : string = "CNMCN_Composer_Target_Colour"
+    - {static} <<readonly>> kComposerTargetSizeKey : string = "CNMCN_Composer_Target_Size"
+    + <<const>> kDefaultOverlayOpacity : float = 0.15f
+    + {static} <<readonly>> kDefaultHardBoundsColour : Color
+    + {static} <<readonly>> kDefaultSoftBoundsColour : Color
+    + {static} <<readonly>> kDefaultTargetColour : Color
+    + {static} OverlayOpacity : float <<get>> <<set>>
+    + {static} HardBoundsOverlayColour : Color <<get>> <<set>>
+    + {static} SoftBoundsOverlayColour : Color <<get>> <<set>>
+    + {static} TargetColour : Color <<get>> <<set>>
+    + {static} TargetSize : float <<get>> <<set>>
+}
+class Styles {
+    + {static} <<readonly>> sCoreActiveGizmosColour : GUIContent
+    + {static} <<readonly>> sCoreInactiveGizmosColour : GUIContent
+    + {static} <<readonly>> sCoreBoundaryObjectGizmosColour : GUIContent
+    + {static} <<readonly>> sComposerOverlayOpacity : GUIContent
+    + {static} <<readonly>> sComposerHardBoundsOverlay : GUIContent
+    + {static} <<readonly>> sComposerSoftBoundsOverlay : GUIContent
+    + {static} <<readonly>> sComposerTargetOverlay : GUIContent
+    + {static} <<readonly>> sComposerTargetOverlayPixels : GUIContent
+}
+CinemachineSettings +-- CinemachineCoreSettings
+CinemachineSettings +-- ComposerSettings
+CinemachineSettings +-- Styles
+@enduml

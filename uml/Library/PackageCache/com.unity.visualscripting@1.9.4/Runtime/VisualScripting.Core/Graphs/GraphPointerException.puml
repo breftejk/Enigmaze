@@ -1,0 +1,7 @@
+@startuml
+class GraphPointerException <<sealed>> {
+    + pointer : GraphPointer <<get>>
+    + GraphPointerException(message:string, pointer:GraphPointer)
+}
+Exception <|-- GraphPointerException
+@enduml

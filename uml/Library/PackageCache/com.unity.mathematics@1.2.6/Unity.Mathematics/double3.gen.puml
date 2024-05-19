@@ -1,0 +1,177 @@
+@startuml
+struct double3 {
+    + x : double
+    + y : double
+    + z : double
+    + {static} <<readonly>> zero : double3
+    + double3(x:double, y:double, z:double)
+    + double3(x:double, yz:double2)
+    + double3(xy:double2, z:double)
+    + double3(xyz:double3)
+    + double3(v:double)
+    + double3(v:bool)
+    + double3(v:bool3)
+    + double3(v:int)
+    + double3(v:int3)
+    + double3(v:uint)
+    + double3(v:uint3)
+    + double3(v:half)
+    + double3(v:half3)
+    + double3(v:float)
+    + double3(v:float3)
+    + xxxx : double4 <<get>>
+    + xxxy : double4 <<get>>
+    + xxxz : double4 <<get>>
+    + xxyx : double4 <<get>>
+    + xxyy : double4 <<get>>
+    + xxyz : double4 <<get>>
+    + xxzx : double4 <<get>>
+    + xxzy : double4 <<get>>
+    + xxzz : double4 <<get>>
+    + xyxx : double4 <<get>>
+    + xyxy : double4 <<get>>
+    + xyxz : double4 <<get>>
+    + xyyx : double4 <<get>>
+    + xyyy : double4 <<get>>
+    + xyyz : double4 <<get>>
+    + xyzx : double4 <<get>>
+    + xyzy : double4 <<get>>
+    + xyzz : double4 <<get>>
+    + xzxx : double4 <<get>>
+    + xzxy : double4 <<get>>
+    + xzxz : double4 <<get>>
+    + xzyx : double4 <<get>>
+    + xzyy : double4 <<get>>
+    + xzyz : double4 <<get>>
+    + xzzx : double4 <<get>>
+    + xzzy : double4 <<get>>
+    + xzzz : double4 <<get>>
+    + yxxx : double4 <<get>>
+    + yxxy : double4 <<get>>
+    + yxxz : double4 <<get>>
+    + yxyx : double4 <<get>>
+    + yxyy : double4 <<get>>
+    + yxyz : double4 <<get>>
+    + yxzx : double4 <<get>>
+    + yxzy : double4 <<get>>
+    + yxzz : double4 <<get>>
+    + yyxx : double4 <<get>>
+    + yyxy : double4 <<get>>
+    + yyxz : double4 <<get>>
+    + yyyx : double4 <<get>>
+    + yyyy : double4 <<get>>
+    + yyyz : double4 <<get>>
+    + yyzx : double4 <<get>>
+    + yyzy : double4 <<get>>
+    + yyzz : double4 <<get>>
+    + yzxx : double4 <<get>>
+    + yzxy : double4 <<get>>
+    + yzxz : double4 <<get>>
+    + yzyx : double4 <<get>>
+    + yzyy : double4 <<get>>
+    + yzyz : double4 <<get>>
+    + yzzx : double4 <<get>>
+    + yzzy : double4 <<get>>
+    + yzzz : double4 <<get>>
+    + zxxx : double4 <<get>>
+    + zxxy : double4 <<get>>
+    + zxxz : double4 <<get>>
+    + zxyx : double4 <<get>>
+    + zxyy : double4 <<get>>
+    + zxyz : double4 <<get>>
+    + zxzx : double4 <<get>>
+    + zxzy : double4 <<get>>
+    + zxzz : double4 <<get>>
+    + zyxx : double4 <<get>>
+    + zyxy : double4 <<get>>
+    + zyxz : double4 <<get>>
+    + zyyx : double4 <<get>>
+    + zyyy : double4 <<get>>
+    + zyyz : double4 <<get>>
+    + zyzx : double4 <<get>>
+    + zyzy : double4 <<get>>
+    + zyzz : double4 <<get>>
+    + zzxx : double4 <<get>>
+    + zzxy : double4 <<get>>
+    + zzxz : double4 <<get>>
+    + zzyx : double4 <<get>>
+    + zzyy : double4 <<get>>
+    + zzyz : double4 <<get>>
+    + zzzx : double4 <<get>>
+    + zzzy : double4 <<get>>
+    + zzzz : double4 <<get>>
+    + xxx : double3 <<get>>
+    + xxy : double3 <<get>>
+    + xxz : double3 <<get>>
+    + xyx : double3 <<get>>
+    + xyy : double3 <<get>>
+    + xyz : double3 <<get>> <<set>>
+    + xzx : double3 <<get>>
+    + xzy : double3 <<get>> <<set>>
+    + xzz : double3 <<get>>
+    + yxx : double3 <<get>>
+    + yxy : double3 <<get>>
+    + yxz : double3 <<get>> <<set>>
+    + yyx : double3 <<get>>
+    + yyy : double3 <<get>>
+    + yyz : double3 <<get>>
+    + yzx : double3 <<get>> <<set>>
+    + yzy : double3 <<get>>
+    + yzz : double3 <<get>>
+    + zxx : double3 <<get>>
+    + zxy : double3 <<get>> <<set>>
+    + zxz : double3 <<get>>
+    + zyx : double3 <<get>> <<set>>
+    + zyy : double3 <<get>>
+    + zyz : double3 <<get>>
+    + zzx : double3 <<get>>
+    + zzy : double3 <<get>>
+    + zzz : double3 <<get>>
+    + xx : double2 <<get>>
+    + xy : double2 <<get>> <<set>>
+    + xz : double2 <<get>> <<set>>
+    + yx : double2 <<get>> <<set>>
+    + yy : double2 <<get>>
+    + yz : double2 <<get>> <<set>>
+    + zx : double2 <<get>> <<set>>
+    + zy : double2 <<get>> <<set>>
+    + zz : double2 <<get>>
+    + Equals(rhs:double3) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} double3(x:double, y:double, z:double) : double3
+    + {static} double3(x:double, yz:double2) : double3
+    + {static} double3(xy:double2, z:double) : double3
+    + {static} double3(xyz:double3) : double3
+    + {static} double3(v:double) : double3
+    + {static} double3(v:bool) : double3
+    + {static} double3(v:bool3) : double3
+    + {static} double3(v:int) : double3
+    + {static} double3(v:int3) : double3
+    + {static} double3(v:uint) : double3
+    + {static} double3(v:uint3) : double3
+    + {static} double3(v:half) : double3
+    + {static} double3(v:half3) : double3
+    + {static} double3(v:float) : double3
+    + {static} double3(v:float3) : double3
+    + {static} hash(v:double3) : uint
+    + {static} hashwide(v:double3) : uint3
+    + {static} shuffle(left:double3, right:double3, x:ShuffleComponent) : double
+    + {static} shuffle(left:double3, right:double3, x:ShuffleComponent, y:ShuffleComponent) : double2
+    + {static} shuffle(left:double3, right:double3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : double3
+    + {static} shuffle(left:double3, right:double3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : double4
+    <<internal>> {static} select_shuffle_component(a:double3, b:double3, component:ShuffleComponent) : double
+}
+class DebuggerProxy <<sealed>> {
+    + x : double
+    + y : double
+    + z : double
+    + DebuggerProxy(v:double3)
+}
+IFormattable <|-- double3
+double3 +-- DebuggerProxy
+@enduml

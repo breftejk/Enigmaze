@@ -1,0 +1,6 @@
+@startuml
+class ScalarPerSecond <<sealed>> {
+    + <<override>> Operation(input:float) : float
+}
+"PerSecond`1" "<float>" <|-- ScalarPerSecond
+@enduml

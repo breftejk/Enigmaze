@@ -1,0 +1,96 @@
+@startuml
+interface ICameraOverrideStack {
+    SetCameraOverride(overrideId:int, camA:ICinemachineCamera, camB:ICinemachineCamera, weightB:float, deltaTime:float) : int
+    ReleaseCameraOverride(overrideId:int) : void
+    DefaultWorldUp : Vector3 <<get>>
+}
+class CinemachineBrain {
+    + m_ShowDebugText : bool = false
+    + m_ShowCameraFrustum : bool = true
+    + m_IgnoreTimeScale : bool = false
+    + m_WorldUpOverride : Transform
+    + m_UpdateMethod : UpdateMethod
+    + m_BlendUpdateMethod : BrainUpdateMethod
+    + m_DefaultBlend : CinemachineBlendDefinition
+    + m_CustomBlends : CinemachineBlenderSettings = null
+    + OutputCamera : Camera <<get>>
+    - m_OutputCamera : Camera = null
+    + ControlledObject : GameObject <<get>> <<set>>
+    - m_TargetOverride : GameObject = null
+    + m_CameraCutEvent : BrainEvent
+    + m_CameraActivatedEvent : VcamActivatedEvent
+    + {static} SoloCamera : ICinemachineCamera <<get>> <<set>>
+    + {static} GetSoloGUIColor() : Color
+    + DefaultWorldUp : Vector3 <<get>>
+    - {static} mSoloCamera : ICinemachineCamera
+    - mPhysicsCoroutine : Coroutine
+    - m_LastFrameUpdated : int
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnSceneLoaded(scene:Scene, mode:LoadSceneMode) : void
+    - OnSceneUnloaded(scene:Scene) : void
+    - Awake() : void
+    - Start() : void
+    - OnGuiHandler() : void
+    - mWaitForFixedUpdate : WaitForFixedUpdate
+    - AfterPhysics() : IEnumerator
+    - LateUpdate() : void
+    + ManualUpdate() : void
+    - GetEffectiveDeltaTime(fixedDelta:bool) : float
+    - UpdateVirtualCameras(updateFilter:CinemachineCore.UpdateFilter, deltaTime:float) : void
+    + ActiveVirtualCamera : ICinemachineCamera <<get>>
+    {static} - DeepCamBFromBlend(blend:CinemachineBlend) : ICinemachineCamera
+    + IsLiveInBlend(vcam:ICinemachineCamera) : bool
+    + IsBlending : bool <<get>>
+    + ActiveBlend : CinemachineBlend <<get>> <<set>>
+    - mFrameStack : List<BrainFrame>
+    - mNextFrameId : int = 1
+    - GetBrainFrame(withId:int) : int
+    - mCurrentLiveCameras : CinemachineBlend
+    - {static} <<readonly>> mDefaultLinearAnimationCurve : AnimationCurve
+    + SetCameraOverride(overrideId:int, camA:ICinemachineCamera, camB:ICinemachineCamera, weightB:float, deltaTime:float) : int
+    + ReleaseCameraOverride(overrideId:int) : void
+    - mActiveCameraPreviousFrame : ICinemachineCamera
+    - mActiveCameraPreviousFrameGameObject : GameObject
+    - ProcessActiveCamera(deltaTime:float) : void
+    - UpdateFrame0(deltaTime:float) : void
+    + ComputeCurrentBlend(outputBlend:CinemachineBlend, numTopLayersToExclude:int) : void
+    + IsLive(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    + CurrentCameraState : CameraState <<get>>
+    # <<virtual>> TopCameraFromPriorityQueue() : ICinemachineCamera
+    - LookupBlend(fromKey:ICinemachineCamera, toKey:ICinemachineCamera) : CinemachineBlendDefinition
+    - PushStateToUnityCamera(state:CameraState) : void
+}
+enum UpdateMethod {
+    FixedUpdate,
+    LateUpdate,
+    SmartUpdate,
+    ManualUpdate,
+}
+enum BrainUpdateMethod {
+    FixedUpdate,
+    LateUpdate,
+}
+class BrainEvent {
+}
+class VcamActivatedEvent {
+}
+class BrainFrame {
+    + id : int
+    + blend : CinemachineBlend
+    + Active : bool <<get>>
+    + workingBlend : CinemachineBlend
+    + workingBlendSource : BlendSourceVirtualCamera
+    + deltaTimeOverride : float
+    + blendStartPosition : float
+}
+MonoBehaviour <|-- CinemachineBrain
+ICameraOverrideStack <|-- CinemachineBrain
+CinemachineBrain +-- UpdateMethod
+CinemachineBrain +-- BrainUpdateMethod
+CinemachineBrain +-- BrainEvent
+"UnityEvent`1" "<CinemachineBrain>" <|-- BrainEvent
+CinemachineBrain +-- VcamActivatedEvent
+"UnityEvent`2" "<ICinemachineCamera,ICinemachineCamera>" <|-- VcamActivatedEvent
+CinemachineBrain +-- BrainFrame
+@enduml

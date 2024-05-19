@@ -1,0 +1,8 @@
+@startuml
+struct DrawState {
+    - m_Expanded : bool
+    - m_Position : Rect
+    + expanded : bool <<get>> <<set>>
+    + position : Rect <<get>> <<set>>
+}
+@enduml

@@ -1,0 +1,86 @@
+@startuml
+class IncomingChangesTab {
+    <<internal>> IncomingChangesTab(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, switcher:IViewSwitcher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, newIncomingChangesUpdater:NewIncomingChangesUpdater, parentWindow:EditorWindow)
+    - IsVisible : bool <<get>> <<set>>
+    - OnDisable() : void
+    - Update() : void
+    - OnGUI() : void
+    - AutoRefresh() : void
+    - Refresh() : void
+    - UpdateData(mergeChangesTree:MergeChangesTree, explainMergeData:ExplainMergeData, solvedFileConflicts:MergeSolvedFileConflicts, isIncomingMerge:bool, isMergeTo:bool, mergeHasFinished:bool) : void
+    - UpdateSolvedDirectoryConflicts() : void
+    - UpdateSolvedFileConflicts(solvedFileConflicts:MergeSolvedFileConflicts) : void
+    - ShowMessage(title:string, message:string, isErrorMessage:bool) : void
+    - GetComments(bCancel:bool) : string
+    - DisableProcessMergesButton() : void
+    - ShowCancelButton() : void
+    - HideCancelButton() : void
+    - EnableMergeOptionButton() : void
+    - DisableMergeOptionsButton() : void
+    - GetSelectedIncomingChangesGroupInfo() : SelectedIncomingChangesGroupInfo
+    - MergeContributors() : void
+    - MergeKeepingSourceChanges() : void
+    - MergeKeepingWorkspaceChanges() : void
+    - DiffYoursWithIncoming() : void
+    - DiffIncomingChanges() : void
+    - DiffIncomingChanges() : void
+    - DiffYoursWithIncoming() : void
+    - SelectionHasMeta() : bool
+    {static} - DiffYoursWithIncoming(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, incomingChange:MergeChangeInfo, wkInfo:WorkspaceInfo) : void
+    {static} - DiffIncomingChanges(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, incomingChange:MergeChangeInfo, wkInfo:WorkspaceInfo) : void
+    - ShowProcessMergesButton(processMergesButtonText:string) : void
+    - HideMessage() : void
+    - DelayedClearUpdateSuccess() : void
+    {static} - DoDirectoryConflictResolutionPanel(selectedChangeInfos:List<MergeChangeInfo>, resolveDirectoryConflictAction:Action<MergeChangeInfo>, conflictResolutionStates:Dictionary<DirectoryConflict, ConflictResolutionState>) : void
+    - ResolveDirectoryConflict(conflict:MergeChangeInfo) : void
+    {static} - AddConflictResolution(conflict:MergeChangeInfo, resolveAction:DirectoryConflictResolveActions, renameValue:string, conflictResolutions:List<DirectoryConflictResolutionData>) : void
+    {static} - DoConflictsTree(incomingChangesTreeView:IncomingChangesTreeView, isOperationRunning:bool, hasNothingToDownload:bool, isUpdateSuccessful:bool) : void
+    {static} - DrawEmptyState(rect:Rect, isUpdateSuccessful:bool) : void
+    {static} - DoActionToolbarMessage(isMessageLabelVisible:bool, messageLabelText:string, hasNothingToDownload:bool, isErrorMessageLabelVisible:bool, errorMessageLabelText:string, directoryConflictCount:int, fileConflictCount:int, changesSummary:MergeViewTexts.ChangesToApplySummary) : void
+    - AfterProcessMerges(afterAssetLongOperation:Action) : void
+    {static} - DoProcessMergesButton(isEnabled:bool, processMergesButtonText:string, switcher:IViewSwitcher, workspaceWindow:IWorkspaceWindow, guiMessage:GuiMessage.IGuiMessage, mergeViewLogic:MergeViewLogic, beforeProcessMergesAction:Action, afterProcessMergesAction:Action) : void
+    {static} - DoCancelMergesButton(isEnabled:bool, mergeViewLogic:MergeViewLogic) : bool
+    {static} - DoWarningMessage() : void
+    - UpdateFileConflictsTree(incomingChangesTree:MergeChangesTree, incomingChangesTreeView:IncomingChangesTreeView, resolveChangeset:IResolveChangeset) : void
+    - UpdateOverview(mergeChangesTree:MergeChangesTree, solvedFileConflicts:MergeSolvedFileConflicts) : void
+    {static} - DoInfoMessage(message:string) : void
+    {static} - DoErrorMessage(message:string) : void
+    - BuildComponents(wkInfo:WorkspaceInfo) : void
+    {static} - GetConflictResolutionState(directoryConflict:DirectoryConflict, conflictActions:DirectoryConflictAction[], conflictResoltionStates:Dictionary<DirectoryConflict, ConflictResolutionState>) : ConflictResolutionState
+    {static} - GetPendingConflictsCount(selectedChangeInfos:List<MergeChangeInfo>) : int
+    - mIsProcessMergesButtonVisible : bool
+    - mIsCancelMergesButtonVisible : bool
+    - mIsMessageLabelVisible : bool
+    - mIsErrorMessageLabelVisible : bool
+    - mHasNothingToDownload : bool
+    - mIsProcessMergesButtonEnabled : bool
+    - mIsCancelMergesButtonEnabled : bool
+    - mHasPendingDirectoryConflicts : bool
+    - mIsOperationRunning : bool
+    - mIsUpdateSuccessful : bool
+    - mProcessMergesButtonText : string
+    - mMessageLabelText : string
+    - mErrorMessageLabelText : string
+    - mIncomingChangesTreeView : IncomingChangesTreeView
+    - mMergeChangesTree : MergeChangesTree
+    - mConflictResolutionStates : Dictionary<DirectoryConflict, ConflictResolutionState>
+    - mDirectoryConflictCount : int
+    - mFileConflictCount : int
+    - mChangesSummary : MergeViewTexts.ChangesToApplySummary
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mCooldownClearUpdateSuccessAction : CooldownWindowDelayer
+    <<readonly>> - mMergeViewLogic : MergeViewLogic
+    <<readonly>> - mMergeController : MergeController
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mNewIncomingChangesUpdater : NewIncomingChangesUpdater
+    <<readonly>> - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mSwitcher : IViewSwitcher
+    <<readonly>> - mWorkspaceWindow : IWorkspaceWindow
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mResolveChangeset : IResolveChangeset
+}
+IIncomingChangesTab <|-- IncomingChangesTab
+IRefreshableView <|-- IncomingChangesTab
+IIncomingChangesViewMenuOperations <|-- IncomingChangesTab
+@enduml

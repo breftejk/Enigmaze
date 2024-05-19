@@ -1,0 +1,7 @@
+@startuml
+interface IPropertyDrawer {
+    inspectorUpdateDelegate : Action <<get>> <<set>>
+    DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    DisposePropertyDrawer() : void
+}
+@enduml

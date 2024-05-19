@@ -1,0 +1,14 @@
+@startuml
+class NestedCanvas {
+    - m_GO1 : Object
+    - m_GO2 : Object
+    <<const>> - kPrefabPath : string = "Assets/Resources/NestedCanvasPrefab.prefab"
+    + Setup() : void
+    + WorldCanvas_CanFindCameraAfterDisablingAndEnablingRootCanvas() : IEnumerator
+    + WorldCanvas_CanFindTheSameCameraAfterDisablingAndEnablingRootCanvas() : IEnumerator
+    + NestedCanvasHasProperInheritedAlpha() : IEnumerator
+    + TearDown() : void
+    + OneTimeTearDown() : void
+}
+IPrebuildSetup <|-- NestedCanvas
+@enduml

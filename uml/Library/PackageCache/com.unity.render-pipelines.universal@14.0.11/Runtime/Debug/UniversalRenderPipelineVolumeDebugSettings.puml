@@ -1,0 +1,9 @@
+@startuml
+class UniversalRenderPipelineVolumeDebugSettings {
+    + <<override>> targetRenderPipeline : Type <<get>>
+    + <<override>> selectedCameraVolumeStack : VolumeStack <<get>>
+    + <<override>> selectedCameraLayerMask : LayerMask <<get>>
+    + <<override>> selectedCameraPosition : Vector3 <<get>>
+}
+"VolumeDebugSettings`1" "<UniversalAdditionalCameraData>" <|-- UniversalRenderPipelineVolumeDebugSettings
+@enduml

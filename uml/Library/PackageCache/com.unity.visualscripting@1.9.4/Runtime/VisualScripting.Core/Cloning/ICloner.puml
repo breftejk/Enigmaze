@@ -1,0 +1,9 @@
+@startuml
+interface ICloner {
+    Handles(type:Type) : bool
+    ConstructClone(type:Type, original:object) : object
+    BeforeClone(type:Type, original:object) : void
+    FillClone(type:Type, clone:object, original:object, context:CloningContext) : void
+    AfterClone(type:Type, clone:object) : void
+}
+@enduml

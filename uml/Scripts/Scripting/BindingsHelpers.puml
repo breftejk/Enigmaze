@@ -1,0 +1,10 @@
+@startuml
+struct Unmarshal {
+    + {static} UnmarshalUnityObject(gcHandlePtr:IntPtr) : T
+    + {static} FromIntPtrUnsafe(gcHandle:IntPtr) : GCHandle
+}
+class ThrowHelper <<static>> {
+    + {static} ThrowArgumentNullException(obj:object, parameterName:string) : void
+    + {static} ThrowNullReferenceException(obj:object) : void
+}
+@enduml

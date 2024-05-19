@@ -1,0 +1,8 @@
+@startuml
+class InputValue {
+    + Get() : object
+    + Get() : TValue
+    + isPressed : bool <<get>>
+    <<internal>> m_Context : InputAction.CallbackContext?
+}
+@enduml

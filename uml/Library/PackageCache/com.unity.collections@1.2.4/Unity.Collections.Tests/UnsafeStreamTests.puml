@@ -1,0 +1,13 @@
+@startuml
+class UnsafeStreamTests {
+    + UnsafeStream_CustomAllocatorTest() : void
+    + <<unsafe>> UnsafeStream_BurstedCustomAllocatorTest() : void
+}
+struct BurstedCustomAllocatorJob {
+    + <<unsafe>> Allocator : CustomAllocatorTests.CountingAllocator*
+    + Execute() : void
+}
+CollectionsTestCommonBase <|-- UnsafeStreamTests
+UnsafeStreamTests +-- BurstedCustomAllocatorJob
+IJob <|-- BurstedCustomAllocatorJob
+@enduml

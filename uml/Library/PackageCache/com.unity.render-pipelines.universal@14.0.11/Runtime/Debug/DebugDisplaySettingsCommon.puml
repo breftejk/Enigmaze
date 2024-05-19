@@ -1,0 +1,21 @@
+@startuml
+class DebugDisplaySettingsCommon {
+    + AreAnySettingsActive : bool <<get>>
+    + IsPostProcessingAllowed : bool <<get>>
+    + IsLightingActive : bool <<get>>
+    + TryGetScreenClearColor(_:Color) : bool
+    + CreatePanel() : IDebugDisplaySettingsPanelDisposable
+}
+class WidgetFactory <<static>> {
+    <<internal>> {static} CreateMissingDebugShadersWarning() : DebugUI.Widget
+}
+class SettingsPanel {
+    <<const>> - k_GoToSectionString : string = "Go to Section..."
+    + <<override>> Flags : DebugUI.Flags <<get>>
+    + SettingsPanel()
+}
+IDebugDisplaySettingsData <|-- DebugDisplaySettingsCommon
+DebugDisplaySettingsCommon +-- WidgetFactory
+DebugDisplaySettingsCommon +-- SettingsPanel
+DebugDisplaySettingsPanel <|-- SettingsPanel
+@enduml

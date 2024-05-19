@@ -1,0 +1,9 @@
+@startuml
+class FlowStateTransitionDescriptor {
+    + FlowStateTransitionDescriptor(transition:FlowStateTransition)
+    + <<override>> Title() : string
+    + <<override>> Summary() : string
+    + <<override>> Icon() : EditorTexture
+}
+"NesterStateTransitionDescriptor`1" "<FlowStateTransition>" <|-- FlowStateTransitionDescriptor
+@enduml

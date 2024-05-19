@@ -1,0 +1,7 @@
+@startuml
+abstract class RenderPipelineResources {
+    # <<virtual>> packagePath : string <<get>>
+    <<internal>> packagePath_Internal : string <<get>>
+}
+ScriptableObject <|-- RenderPipelineResources
+@enduml

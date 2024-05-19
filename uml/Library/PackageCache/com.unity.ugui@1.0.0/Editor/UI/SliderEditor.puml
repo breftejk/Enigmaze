@@ -1,0 +1,15 @@
+@startuml
+class SliderEditor {
+    - m_Direction : SerializedProperty
+    - m_FillRect : SerializedProperty
+    - m_HandleRect : SerializedProperty
+    - m_MinValue : SerializedProperty
+    - m_MaxValue : SerializedProperty
+    - m_WholeNumbers : SerializedProperty
+    - m_Value : SerializedProperty
+    - m_OnValueChanged : SerializedProperty
+    # <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+SelectableEditor <|-- SliderEditor
+@enduml

@@ -1,0 +1,67 @@
+@startuml
+class PixelPerfectCamera {
+    + cropFrame : CropFrame <<get>> <<set>>
+    + gridSnapping : GridSnapping <<get>> <<set>>
+    + orthographicSize : float <<get>>
+    + assetsPPU : int <<get>> <<set>>
+    + refResolutionX : int <<get>> <<set>>
+    + refResolutionY : int <<get>> <<set>>
+    + upscaleRT : bool <<get>> <<set>>
+    + pixelSnapping : bool <<get>> <<set>>
+    + cropFrameX : bool <<get>> <<set>>
+    + cropFrameY : bool <<get>> <<set>>
+    + stretchFill : bool <<get>> <<set>>
+    + pixelRatio : int <<get>>
+    + requiresUpscalePass : bool <<get>>
+    + RoundToPixel(position:Vector3) : Vector3
+    + CorrectCinemachineOrthoSize(targetOrthoSize:float) : float
+    - m_AssetsPPU : int = 100
+    - m_RefResolutionX : int = 320
+    - m_RefResolutionY : int = 180
+    - m_CropFrame : CropFrame
+    - m_GridSnapping : GridSnapping
+    - m_FilterMode : PixelPerfectFilterMode
+    - m_Camera : Camera
+    - m_Internal : PixelPerfectCameraInternal
+    - m_CinemachineCompatibilityMode : bool
+    <<internal>> finalBlitFilterMode : FilterMode <<get>>
+    <<internal>> offscreenRTSize : Vector2Int <<get>>
+    - cameraRTSize : Vector2Int <<get>>
+    - PixelSnap() : void
+    - Awake() : void
+    - UpdateCameraProperties() : void
+    - OnBeginCameraRendering(context:ScriptableRenderContext, camera:Camera) : void
+    - OnEndCameraRendering(context:ScriptableRenderContext, camera:Camera) : void
+    - OnEnable() : void
+    <<internal>> OnDisable() : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+enum CropFrame {
+    None,
+    Pillarbox,
+    Letterbox,
+    Windowbox,
+    StretchFill,
+}
+enum GridSnapping {
+    None,
+    PixelSnapping,
+    UpscaleRenderTexture,
+}
+enum PixelPerfectFilterMode {
+    RetroAA,
+    Point,
+}
+enum ComponentVersions {
+    Version_Unserialized= 0,
+    Version_1= 1,
+}
+MonoBehaviour <|-- PixelPerfectCamera
+IPixelPerfectCamera <|-- PixelPerfectCamera
+ISerializationCallbackReceiver <|-- PixelPerfectCamera
+PixelPerfectCamera +-- CropFrame
+PixelPerfectCamera +-- GridSnapping
+PixelPerfectCamera +-- PixelPerfectFilterMode
+PixelPerfectCamera +-- ComponentVersions
+@enduml

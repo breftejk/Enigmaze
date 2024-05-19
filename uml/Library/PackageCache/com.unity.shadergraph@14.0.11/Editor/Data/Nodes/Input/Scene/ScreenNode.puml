@@ -1,0 +1,12 @@
+@startuml
+class ScreenNode <<sealed>> {
+    <<const>> - kOutputSlotName : string = "Width"
+    <<const>> - kOutputSlot1Name : string = "Height"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> OutputSlot1Id : int = 1
+    + ScreenNode()
+    + <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+}
+AbstractMaterialNode <|-- ScreenNode
+@enduml

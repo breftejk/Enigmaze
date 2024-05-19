@@ -1,0 +1,11 @@
+@startuml
+class NormalUnpackNode {
+    + NormalUnpackNode()
+    - m_NormalMapSpace : NormalMapSpace
+    + normalMapSpace : NormalMapSpace <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_NormalUnpack(In:Vector4, Out:Vector3) : string
+    {static} - Unity_NormalUnpackRGB(In:Vector4, Out:Vector3) : string
+}
+CodeFunctionNode <|-- NormalUnpackNode
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class StackTests {
+    {static} - s_DescriptorA : BlockFieldDescriptor
+    {static} - s_DescriptorB : BlockFieldDescriptor
+    + RunBeforeAnyTests() : void
+    + CanAddBlockNodeToContext() : void
+    + CanRemoveBlockNodeFromContext() : void
+    + CanInsertBlockNodeToContext() : void
+    + CanFilterBlockNodeByShaderStage() : void
+}
+@enduml

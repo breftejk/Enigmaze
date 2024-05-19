@@ -1,0 +1,8 @@
+@startuml
+class PixelPerfectBackgroundPass {
+    - {static} <<readonly>> m_ProfilingScope : ProfilingSampler
+    + PixelPerfectBackgroundPass(evt:RenderPassEvent)
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRenderPass <|-- PixelPerfectBackgroundPass
+@enduml

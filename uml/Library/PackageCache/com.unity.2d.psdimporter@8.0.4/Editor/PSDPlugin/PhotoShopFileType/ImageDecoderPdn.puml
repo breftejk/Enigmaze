@@ -1,0 +1,58 @@
+@startuml
+enum DecodeType {
+    RGB32= 0,
+    Grayscale32= 1,
+    RGB= 2,
+    CMYK= 3,
+    Bitmap= 4,
+    Grayscale= 5,
+    Indexed= 6,
+    Lab= 7,
+}
+class ImageDecoderPdn <<static>> {
+    <<const>> - rgbExponent : double
+    <<internal>> {static} RGBByteFromHDRFloat(ptr:float) : byte
+    - {static} GetDecodeDelegate(psdColorMode:PsdColorMode, decoderType:DecodeType) : DecodeDelegate
+    - {static} GetDecodeDelegate32(psdColorMode:PsdColorMode, decoderType:DecodeType) : DecodeDelegate
+    + {static} DecodeImage(pdnLayer:BitmapLayer, psdLayer:PhotoshopFile.Layer, inputDeps:JobHandle) : JobHandle
+    {static} - DecodeImage(pdnLayer:BitmapLayer, decodeContext:DecodeContext, decoderType:DecodeType, inputDeps:JobHandle) : JobHandle
+    + {static} DecodeImage(pdnLayer:BitmapLayer, psdLayer:PhotoshopFile.Layer) : void
+    - {static} DecodeImage(pdnLayer:BitmapLayer, decodeContext:DecodeContext, decoder:DecodeDelegate) : void
+    - {static} <<unsafe>> GetMaskAlphaRow(y:int, layerContext:DecodeContext, maskContext:MaskDecodeContext, alphaBuffer:NativeArray<byte>) : void
+    - {static} SetPDNAlphaRow(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, byteDepth:int, hasAlphaChannel:int, alphaChannel:NativeArray<byte>) : void
+    - {static} DecodeMaskAlphaRow32(pAlpha:NativeArray<byte>, pAlphaStart:int, pAlphaEnd:int, pMask:NativeArray<byte>, pMaskStart:int) : void
+    - {static} DecodeMaskAlphaRow(pAlpha:NativeArray<byte>, pAlphaStart:int, pAlphaEnd:int, pMask:NativeArray<byte>, pMaskStart:int, byteDepth:int) : void
+    - {static} ApplyPDNMask(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, layerMaskAlpha:NativeArray<byte>, userMaskAlpha:NativeArray<byte>) : void
+    - {static} SetPDNRowRgb32(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowGrayscale32(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowRgb(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowCmyk(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowBitmap(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowGrayscale(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowIndexed(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+    - {static} SetPDNRowLab(pDestStart:int, pDestEnd:int, width:int, color:NativeArray<Color32>, idxSrc:int, context:DecodeContext) : void
+}
+class DecodeContext {
+    + Layer : PhotoshopFile.Layer <<get>>
+    + ByteDepth : int <<get>>
+    + HasAlphaChannel : int <<get>>
+    + Channels : Channel[] <<get>>
+    + AlphaChannel : NativeArray<byte> <<get>>
+    + ColorMode : PsdColorMode <<get>>
+    + ColorModeData : NativeArray<byte> <<get>>
+    + Rectangle : Rectangle <<get>>
+    + LayerMaskContext : MaskDecodeContext <<get>>
+    + UserMaskContext : MaskDecodeContext <<get>>
+    + DecodeContext(layer:PhotoshopFile.Layer, bounds:Rectangle)
+    <<internal>> Cleanup() : void
+    - GetMaskContext(mask:Mask) : MaskDecodeContext
+}
+class MaskDecodeContext {
+    + Mask : Mask <<get>>
+    + Rectangle : Rectangle <<get>>
+    + MaskDecodeContext(mask:Mask, layerContext:DecodeContext)
+    + IsRowEmpty(row:int) : bool
+}
+ImageDecoderPdn +-- DecodeContext
+ImageDecoderPdn +-- MaskDecodeContext
+@enduml

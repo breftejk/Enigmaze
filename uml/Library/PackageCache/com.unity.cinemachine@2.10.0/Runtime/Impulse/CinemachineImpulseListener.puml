@@ -1,0 +1,27 @@
+@startuml
+class CinemachineImpulseListener {
+    + m_ApplyAfter : CinemachineCore.Stage
+    + m_ChannelMask : int
+    + m_Gain : float
+    + m_Use2DDistance : bool
+    + m_UseCameraSpace : bool
+    + m_ReactionSettings : ImpulseReaction
+    - Reset() : void
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+}
+struct ImpulseReaction {
+    + m_SecondaryNoise : NoiseSettings
+    + m_AmplitudeGain : float
+    + m_FrequencyGain : float
+    + m_Duration : float
+    - m_CurrentAmount : float
+    - m_CurrentTime : float
+    - m_CurrentDamping : float
+    - m_Initialized : bool
+    - m_NoiseOffsets : Vector3
+    + ReSeed() : void
+    + GetReaction(deltaTime:float, impulsePos:Vector3, pos:Vector3, rot:Quaternion) : bool
+}
+CinemachineExtension <|-- CinemachineImpulseListener
+CinemachineImpulseListener +-- ImpulseReaction
+@enduml

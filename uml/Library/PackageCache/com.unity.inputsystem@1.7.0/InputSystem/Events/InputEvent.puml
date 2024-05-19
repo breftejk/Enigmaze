@@ -1,0 +1,22 @@
+@startuml
+struct InputEvent {
+    - <<const>> kHandledMask : uint = 0x80000000
+    - <<const>> kIdMask : uint = 0x7FFFFFFF
+    <<internal>> <<const>> kBaseEventSize : int
+    + <<const>> InvalidEventId : int = 0
+    <<internal>> <<const>> kAlignment : int = 4
+    - m_Event : NativeInputEvent
+    + type : FourCC <<get>> <<set>>
+    + sizeInBytes : uint <<get>> <<set>>
+    + eventId : int <<get>> <<set>>
+    + deviceId : int <<get>> <<set>>
+    + time : double <<get>> <<set>>
+    <<internal>> internalTime : double <<get>> <<set>>
+    + InputEvent(type:FourCC, sizeInBytes:int, deviceId:int, time:double)
+    + handled : bool <<get>> <<set>>
+    + <<override>> ToString() : string
+    <<internal>> {static} <<unsafe>> GetNextInMemory(currentPtr:InputEvent*) : InputEvent*
+    <<internal>> {static} <<unsafe>> GetNextInMemoryChecked(currentPtr:InputEvent*, buffer:InputEventBuffer) : InputEvent*
+    + {static} <<unsafe>> Equals(first:InputEvent*, second:InputEvent*) : bool
+}
+@enduml

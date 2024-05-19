@@ -1,0 +1,160 @@
+@startuml
+struct half3 {
+    + x : half
+    + y : half
+    + z : half
+    + {static} <<readonly>> zero : half3
+    + half3(x:half, y:half, z:half)
+    + half3(x:half, yz:half2)
+    + half3(xy:half2, z:half)
+    + half3(xyz:half3)
+    + half3(v:half)
+    + half3(v:float)
+    + half3(v:float3)
+    + half3(v:double)
+    + half3(v:double3)
+    + xxxx : half4 <<get>>
+    + xxxy : half4 <<get>>
+    + xxxz : half4 <<get>>
+    + xxyx : half4 <<get>>
+    + xxyy : half4 <<get>>
+    + xxyz : half4 <<get>>
+    + xxzx : half4 <<get>>
+    + xxzy : half4 <<get>>
+    + xxzz : half4 <<get>>
+    + xyxx : half4 <<get>>
+    + xyxy : half4 <<get>>
+    + xyxz : half4 <<get>>
+    + xyyx : half4 <<get>>
+    + xyyy : half4 <<get>>
+    + xyyz : half4 <<get>>
+    + xyzx : half4 <<get>>
+    + xyzy : half4 <<get>>
+    + xyzz : half4 <<get>>
+    + xzxx : half4 <<get>>
+    + xzxy : half4 <<get>>
+    + xzxz : half4 <<get>>
+    + xzyx : half4 <<get>>
+    + xzyy : half4 <<get>>
+    + xzyz : half4 <<get>>
+    + xzzx : half4 <<get>>
+    + xzzy : half4 <<get>>
+    + xzzz : half4 <<get>>
+    + yxxx : half4 <<get>>
+    + yxxy : half4 <<get>>
+    + yxxz : half4 <<get>>
+    + yxyx : half4 <<get>>
+    + yxyy : half4 <<get>>
+    + yxyz : half4 <<get>>
+    + yxzx : half4 <<get>>
+    + yxzy : half4 <<get>>
+    + yxzz : half4 <<get>>
+    + yyxx : half4 <<get>>
+    + yyxy : half4 <<get>>
+    + yyxz : half4 <<get>>
+    + yyyx : half4 <<get>>
+    + yyyy : half4 <<get>>
+    + yyyz : half4 <<get>>
+    + yyzx : half4 <<get>>
+    + yyzy : half4 <<get>>
+    + yyzz : half4 <<get>>
+    + yzxx : half4 <<get>>
+    + yzxy : half4 <<get>>
+    + yzxz : half4 <<get>>
+    + yzyx : half4 <<get>>
+    + yzyy : half4 <<get>>
+    + yzyz : half4 <<get>>
+    + yzzx : half4 <<get>>
+    + yzzy : half4 <<get>>
+    + yzzz : half4 <<get>>
+    + zxxx : half4 <<get>>
+    + zxxy : half4 <<get>>
+    + zxxz : half4 <<get>>
+    + zxyx : half4 <<get>>
+    + zxyy : half4 <<get>>
+    + zxyz : half4 <<get>>
+    + zxzx : half4 <<get>>
+    + zxzy : half4 <<get>>
+    + zxzz : half4 <<get>>
+    + zyxx : half4 <<get>>
+    + zyxy : half4 <<get>>
+    + zyxz : half4 <<get>>
+    + zyyx : half4 <<get>>
+    + zyyy : half4 <<get>>
+    + zyyz : half4 <<get>>
+    + zyzx : half4 <<get>>
+    + zyzy : half4 <<get>>
+    + zyzz : half4 <<get>>
+    + zzxx : half4 <<get>>
+    + zzxy : half4 <<get>>
+    + zzxz : half4 <<get>>
+    + zzyx : half4 <<get>>
+    + zzyy : half4 <<get>>
+    + zzyz : half4 <<get>>
+    + zzzx : half4 <<get>>
+    + zzzy : half4 <<get>>
+    + zzzz : half4 <<get>>
+    + xxx : half3 <<get>>
+    + xxy : half3 <<get>>
+    + xxz : half3 <<get>>
+    + xyx : half3 <<get>>
+    + xyy : half3 <<get>>
+    + xyz : half3 <<get>> <<set>>
+    + xzx : half3 <<get>>
+    + xzy : half3 <<get>> <<set>>
+    + xzz : half3 <<get>>
+    + yxx : half3 <<get>>
+    + yxy : half3 <<get>>
+    + yxz : half3 <<get>> <<set>>
+    + yyx : half3 <<get>>
+    + yyy : half3 <<get>>
+    + yyz : half3 <<get>>
+    + yzx : half3 <<get>> <<set>>
+    + yzy : half3 <<get>>
+    + yzz : half3 <<get>>
+    + zxx : half3 <<get>>
+    + zxy : half3 <<get>> <<set>>
+    + zxz : half3 <<get>>
+    + zyx : half3 <<get>> <<set>>
+    + zyy : half3 <<get>>
+    + zyz : half3 <<get>>
+    + zzx : half3 <<get>>
+    + zzy : half3 <<get>>
+    + zzz : half3 <<get>>
+    + xx : half2 <<get>>
+    + xy : half2 <<get>> <<set>>
+    + xz : half2 <<get>> <<set>>
+    + yx : half2 <<get>> <<set>>
+    + yy : half2 <<get>>
+    + yz : half2 <<get>> <<set>>
+    + zx : half2 <<get>> <<set>>
+    + zy : half2 <<get>> <<set>>
+    + zz : half2 <<get>>
+    + Equals(rhs:half3) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} half3(x:half, y:half, z:half) : half3
+    + {static} half3(x:half, yz:half2) : half3
+    + {static} half3(xy:half2, z:half) : half3
+    + {static} half3(xyz:half3) : half3
+    + {static} half3(v:half) : half3
+    + {static} half3(v:float) : half3
+    + {static} half3(v:float3) : half3
+    + {static} half3(v:double) : half3
+    + {static} half3(v:double3) : half3
+    + {static} hash(v:half3) : uint
+    + {static} hashwide(v:half3) : uint3
+}
+class DebuggerProxy <<sealed>> {
+    + x : half
+    + y : half
+    + z : half
+    + DebuggerProxy(v:half3)
+}
+IFormattable <|-- half3
+half3 +-- DebuggerProxy
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+interface IPropertyKeyDataSource {
+    GetKeys() : float[]
+    GetDescriptions() : Dictionary<float, string>
+}
+abstract class BasePropertyKeyDataSource {
+    {static} <<readonly>> - k_StringBuilder : StringBuilder
+    # {abstract} animationClip : AnimationClip <<get>>
+    + <<virtual>> GetKeys() : float[]
+    + <<virtual>> GetDescriptions() : Dictionary<float, string>
+    # <<virtual>> TransformKeyTime(keyTime:float) : float
+}
+IPropertyKeyDataSource <|-- BasePropertyKeyDataSource
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class AnyNode {
+    + AnyNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Any(In:DynamicDimensionVector, Out:Boolean) : string
+}
+CodeFunctionNode <|-- AnyNode
+@enduml

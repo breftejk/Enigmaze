@@ -1,0 +1,72 @@
+@startuml
+enum DebugProbeShadingMode {
+    SH,
+    SHL0,
+    SHL0L1,
+    Validity,
+    ValidityOverDilationThreshold,
+    InvalidatedByTouchupVolumes,
+    Size,
+}
+class ProbeVolumeDebug {
+    + drawProbes : bool
+    + drawBricks : bool
+    + drawCells : bool
+    + realtimeSubdivision : bool
+    + subdivisionCellUpdatePerFrame : int = 4
+    + subdivisionDelayInSeconds : float = 1
+    + probeShading : DebugProbeShadingMode
+    + probeSize : float = 0.3f
+    + subdivisionViewCullingDistance : float = 500.0f
+    + probeCullingDistance : float = 200.0f
+    + maxSubdivToVisualize : int
+    + minSubdivToVisualize : int = 0
+    + exposureCompensation : float
+    + drawVirtualOffsetPush : bool
+    + offsetSize : float = 0.025f
+    + freezeStreaming : bool
+    + otherStateIndex : int = 0
+    + ProbeVolumeDebug()
+    - Init() : void
+    + GetReset() : Action
+}
+class ProbeReferenceVolume <<partial>> {
+    <<const>> - kProbesPerBatch : int = 511
+    + {static} <<readonly>> k_DebugPanelName : string = "Probe Volume"
+    <<internal>> probeVolumeDebug : ProbeVolumeDebug <<get>>
+    + subdivisionDebugColors : Color[] <<get>>
+    - m_DebugItems : DebugUI.Widget[]
+    - m_DebugMesh : Mesh
+    - m_DebugMaterial : Material
+    - m_DebugOffsetMesh : Mesh
+    - m_DebugOffsetMaterial : Material
+    - m_DebugFrustumPlanes : Plane[]
+    - m_DebugScenarioNames : GUIContent[]
+    - m_DebugScenarioValues : int[]
+    - m_DebugActiveSceneGUID : string
+    - m_DebugActiveScenario : string
+    - m_DebugScenarioField : DebugUI.EnumField
+    <<internal>> bakingProcessSettings : ProbeVolumeBakingProcessSettings
+    <<internal>> realtimeSubdivisionInfo : Dictionary<Bounds, ProbeBrickIndex.Brick[]>
+    - m_MaxSubdivVisualizedIsMaxAvailable : bool = false
+    + RenderDebug(camera:Camera) : void
+    - InitializeDebug(parameters:ProbeVolumeSystemParameters) : void
+    - CleanupDebug() : void
+    - DebugCellIndexChanged(field:DebugUI.Field<T>, value:T) : void
+    - RegisterDebug(parameters:ProbeVolumeSystemParameters) : void
+    - UnregisterDebug(destroyPanel:bool) : void
+    - ShouldCullCell(cellPosition:Vector3, cameraTransform:Transform, frustumPlanes:Plane[]) : bool
+    - DrawProbeDebug(camera:Camera) : void
+    <<internal>> ResetDebugViewToMaxSubdiv() : void
+    - ClearDebugData() : void
+    - CreateInstancedProbes(cellInfo:CellInfo) : CellInstancedDebugProbes
+    - OnClearLightingdata() : void
+}
+class CellInstancedDebugProbes {
+    + probeBuffers : List<Matrix4x4[]>
+    + offsetBuffers : List<Matrix4x4[]>
+    + props : List<MaterialPropertyBlock>
+}
+IDebugData <|-- ProbeVolumeDebug
+ProbeReferenceVolume +-- CellInstancedDebugProbes
+@enduml

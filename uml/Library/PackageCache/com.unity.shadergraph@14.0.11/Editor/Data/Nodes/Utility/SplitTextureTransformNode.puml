@@ -1,0 +1,9 @@
+@startuml
+class SplitTextureTransformNode {
+    + <<override>> hasPreview : bool <<get>>
+    + SplitTextureTransformNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SplitTextureTransform(In:Texture2D, Tiling:Vector2, Offset:Vector2, TextureOnly:Texture2D) : string
+}
+CodeFunctionNode <|-- SplitTextureTransformNode
+@enduml

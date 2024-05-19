@@ -1,0 +1,10 @@
+@startuml
+class DebugUIHandlerContainer {
+    + contentHolder : RectTransform
+    <<internal>> GetFirstItem() : DebugUIHandlerWidget
+    <<internal>> GetLastItem() : DebugUIHandlerWidget
+    <<internal>> IsDirectChild(widget:DebugUIHandlerWidget) : bool
+    - GetActiveChildren() : List<DebugUIHandlerWidget>
+}
+MonoBehaviour <|-- DebugUIHandlerContainer
+@enduml

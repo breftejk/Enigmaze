@@ -1,0 +1,11 @@
+@startuml
+struct DefaultTilemapEditorTool {
+    + fullTypeName : string
+    + tilemapEditorToolType : Type
+    + toolInstance : TilemapEditorTool
+}
+class TilemapEditorToolPreferencesAsset {
+    + m_UserDefaultTools : List<DefaultTilemapEditorTool>
+}
+ScriptableObject <|-- TilemapEditorToolPreferencesAsset
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class JsonObject {
+    + <<virtual>> latestVersion : int <<get>> = 0
+    # m_SGVersion : int = 0
+    + <<virtual>> sgVersion : int <<get>> <<protected set>>
+    <<internal>> # onBeforeVersionChange : VersionChange
+    <<internal>> # onAfterVersionChange : Action
+    <<internal>> ChangeVersion(newVersion:int) : void
+    + JsonObject()
+    + {static} <<readonly>> emptyObjectId : string
+    - m_Type : string
+    - m_ObjectId : string
+    <<internal>> OverrideObjectId(namespaceUid:string, newObjectId:string) : void
+    <<internal>> OverrideObjectId(newObjectId:string) : void
+    + objectId : string <<get>>
+    + objectIdIsEmpty : bool <<get>>
+    - OnBeforeSerialize() : void
+    + <<virtual>> CastTo() : T
+    + <<virtual>> Serialize() : string
+    + <<virtual>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<virtual>> OnBeforeSerialize() : void
+    + <<virtual>> OnBeforeDeserialize() : void
+    + <<virtual>> OnAfterDeserialize() : void
+    + <<virtual>> OnAfterDeserialize(json:string) : void
+    + <<virtual>> OnAfterMultiDeserialize(json:string) : void
+    <<internal>> {static} GenerateNamespaceUUID(Namespace:string, Name:string) : Guid
+    <<internal>> {static} GenerateNamespaceUUID(Namespace:Guid, Name:string) : Guid
+}
+ISerializationCallbackReceiver <|-- JsonObject
+@enduml

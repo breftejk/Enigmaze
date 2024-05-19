@@ -1,0 +1,50 @@
+@startuml
+class HableCurve {
+    + whitePoint : float <<get>>
+    + inverseWhitePoint : float <<get>>
+    + x0 : float <<get>>
+    + x1 : float <<get>>
+    + <<readonly>> segments : Segment[]
+    + HableCurve()
+    + Eval(x:float) : float
+    + Init(toeStrength:float, toeLength:float, shoulderStrength:float, shoulderLength:float, shoulderAngle:float, gamma:float) : void
+    - InitSegments(srcParams:DirectParams) : void
+    - SolveAB(lnA:float, B:float, x0:float, y0:float, m:float) : void
+    - AsSlopeIntercept(m:float, b:float, x0:float, x1:float, y0:float, y1:float) : void
+    - EvalDerivativeLinearGamma(m:float, b:float, g:float, x:float) : float
+    + <<readonly>> uniforms : Uniforms
+}
+class Segment {
+    + offsetX : float
+    + offsetY : float
+    + scaleX : float
+    + scaleY : float
+    + lnA : float
+    + B : float
+    + Eval(x:float) : float
+}
+struct DirectParams {
+    <<internal>> x0 : float
+    <<internal>> y0 : float
+    <<internal>> x1 : float
+    <<internal>> y1 : float
+    <<internal>> W : float
+    <<internal>> overshootX : float
+    <<internal>> overshootY : float
+    <<internal>> gamma : float
+}
+class Uniforms {
+    - parent : HableCurve
+    <<internal>> Uniforms(parent:HableCurve)
+    + curve : Vector4 <<get>>
+    + toeSegmentA : Vector4 <<get>>
+    + toeSegmentB : Vector4 <<get>>
+    + midSegmentA : Vector4 <<get>>
+    + midSegmentB : Vector4 <<get>>
+    + shoSegmentA : Vector4 <<get>>
+    + shoSegmentB : Vector4 <<get>>
+}
+HableCurve +-- Segment
+HableCurve +-- DirectParams
+HableCurve +-- Uniforms
+@enduml

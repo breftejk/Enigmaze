@@ -1,0 +1,22 @@
+@startuml
+class ScheduleRuntimeClip {
+    - m_Clip : TimelineClip
+    - m_Playable : Playable
+    - m_ParentMixer : Playable
+    - m_StartDelay : double
+    - m_FinishTail : double
+    - m_Started : bool = false
+    + <<override>> start : double <<get>>
+    + <<override>> duration : double <<get>>
+    + SetTime(time:double) : void
+    + clip : TimelineClip <<get>>
+    + mixer : Playable <<get>>
+    + playable : Playable <<get>>
+    + ScheduleRuntimeClip(clip:TimelineClip, clipPlayable:Playable, parentMixer:Playable, startDelay:double, finishTail:double)
+    - Create(clip:TimelineClip, clipPlayable:Playable, parentMixer:Playable, startDelay:double, finishTail:double) : void
+    + <<override>> enable : bool <<set>>
+    + <<override>> EvaluateAt(localTime:double, frameData:FrameData) : void
+    + <<override>> DisableAt(localTime:double, rootDuration:double, frameData:FrameData) : void
+}
+RuntimeClipBase <|-- ScheduleRuntimeClip
+@enduml

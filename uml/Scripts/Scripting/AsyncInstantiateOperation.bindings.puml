@@ -1,0 +1,46 @@
+@startuml
+class AsyncInstantiateOperation {
+    <<internal>> m_Result : Object[]
+    - m_CancellationToken : CancellationToken
+    + Result : Object[] <<get>>
+    + <<extern>> IsWaitingForSceneActivation() : bool
+    + <<extern>> WaitForCompletion() : void
+    + <<extern>> Cancel() : void
+    <<internal>> <<extern>> {static} IntegrationTimeMS : float <<get>> <<set>>
+    + AsyncInstantiateOperation()
+    # AsyncInstantiateOperation(ptr:IntPtr, cancellationToken:CancellationToken)
+    + {static} GetIntegrationTimeMS() : float
+    + {static} SetIntegrationTimeMS(integrationTimeMS:float) : void
+    - IsCancellationRequested() : bool
+}
+class "AsyncInstantiateOperation`1"<T> {
+    <<internal>> AsyncInstantiateOperation(ptr:IntPtr, cancellationToken:CancellationToken)
+    + <<new>> Result : T[] <<get>>
+    + GetAwaiter() : Awaiter
+}
+class AsyncInstantiateOperationHelper {
+    + {static} SetAsyncInstantiateOperationResult(op:AsyncInstantiateOperation, result:UnityEngine.Object[]) : void
+}
+class BindingsMarshaller <<static>> <<new>> {
+    + {static} ConvertToManaged(ptr:IntPtr) : AsyncInstantiateOperation
+    + {static} ConvertToNative(obj:AsyncInstantiateOperation) : IntPtr
+}
+class BindingsMarshaller <<static>> <<new>> {
+    + {static} ConvertToManaged(ptr:IntPtr) : AsyncInstantiateOperation<T>
+    + {static} ConvertToNative(obj:AsyncInstantiateOperation<T>) : IntPtr
+}
+struct Awaiter {
+    - <<readonly>> _awaitable : Awaitable
+    - <<readonly>> _op : AsyncInstantiateOperation<T>
+    + Awaiter(op:AsyncInstantiateOperation<T>)
+    + OnCompleted(continuation:Action) : void
+    + IsCompleted : bool <<get>>
+    + GetResult() : T[]
+}
+AsyncOperation <|-- AsyncInstantiateOperation
+AsyncInstantiateOperation <|-- "AsyncInstantiateOperation`1"
+AsyncInstantiateOperation +-- BindingsMarshaller
+"AsyncInstantiateOperation`1" +-- BindingsMarshaller
+"AsyncInstantiateOperation`1" +-- Awaiter
+INotifyCompletion <|-- Awaiter
+@enduml

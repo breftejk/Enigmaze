@@ -1,0 +1,47 @@
+@startuml
+class TestRunnerWindow {
+    - <<readonly>> m_GUIHorizontalSplit : GUIContent
+    - <<readonly>> m_GUIVerticalSplit : GUIContent
+    - <<readonly>> m_GUIDisablePlaymodeTestsRunner : GUIContent
+    - <<readonly>> m_GUIRunPlayModeTestAsEditModeTests : GUIContent
+    <<internal>> {static} s_Instance : TestRunnerWindow
+    - m_IsBuilding : bool
+    - m_Enabled : bool
+    <<internal>> filterSettings : TestFilterSettings
+    - m_Spl : SplitterState
+    - m_Settings : TestRunnerWindowSettings
+    - m_TestTypeToolbarIndex : int
+    - m_PlayModeTestListGUI : PlayModeTestListGUI
+    - m_EditModeTestListGUI : EditModeTestListGUI
+    <<internal>> m_SelectedTestTypes : TestListGUI
+    - m_testRunnerApi : ITestRunnerApi
+    - m_WindowResultUpdater : WindowResultUpdater
+    + {static} ShowWindow() : void
+    {static} - TestRunnerWindow()
+    - {static} InitBackgroundRunners() : void
+    - {static} CompilationCallback() : void
+    - {static} OnPlayModeStateChanged(state:PlayModeStateChange) : void
+    <<internal>> OnDestroy() : void
+    - OnEnable() : void
+    - Enable() : void
+    - SelectTestListGUI(testTypeToolbarIndex:int) : void
+    - StartRetrieveTestList() : void
+    <<internal>> OnGUI() : void
+    + AddItemsToMenu(menu:GenericMenu) : void
+    <<internal>> RebuildUIFilter() : void
+    <<internal>> {static} UpdateWindow() : void
+}
+class Styles <<static>> {
+    + {static} info : GUIStyle
+    + {static} testList : GUIStyle
+    {static} - Styles()
+}
+enum TestRunnerMenuLabels {
+    PlayMode= 0,
+    EditMode= 1,
+}
+EditorWindow <|-- TestRunnerWindow
+IHasCustomMenu <|-- TestRunnerWindow
+TestRunnerWindow +-- Styles
+TestRunnerWindow +-- TestRunnerMenuLabels
+@enduml

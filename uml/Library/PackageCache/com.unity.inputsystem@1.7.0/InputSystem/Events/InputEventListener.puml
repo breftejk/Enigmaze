@@ -1,0 +1,19 @@
+@startuml
+struct InputEventListener {
+    <<internal>> {static} s_ObserverState : ObserverState
+    + Subscribe(observer:IObserver<InputEventPtr>) : IDisposable
+}
+class ObserverState {
+    + observers : InlinedArray<IObserver<InputEventPtr>>
+    + onEventDelegate : Action<InputEventPtr, InputDevice>
+    + ObserverState()
+}
+class DisposableObserver {
+    + observer : IObserver<InputEventPtr>
+    + Dispose() : void
+}
+"IObservable`1" "<InputEventPtr>" <|-- InputEventListener
+InputEventListener +-- ObserverState
+InputEventListener +-- DisposableObserver
+IDisposable <|-- DisposableObserver
+@enduml

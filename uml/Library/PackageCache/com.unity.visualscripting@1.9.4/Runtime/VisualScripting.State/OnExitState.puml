@@ -1,0 +1,6 @@
+@startuml
+class OnExitState {
+    # <<override>> hookName : string <<get>>
+}
+"ManualEventUnit`1" "<EmptyEventArgs>" <|-- OnExitState
+@enduml

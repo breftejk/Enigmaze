@@ -1,0 +1,13 @@
+@startuml
+class AssetCreation <<static>> {
+    <<const>> - k_SpriteShapeAssetMenuPriority : int = 9
+    {static} <<internal>> StartNewAssetNameEditingDelegate : Action<int, ProjectWindowCallback.EndNameEditAction, string, Texture2D, string>
+    {static} - MenuItem_AssetsCreate2DSpriteShapeProfile(menuCommand:MenuCommand) : void
+    {static} + CreateAssetObject(obj:T) : T
+    {static} - StartNewAssetNameEditing(source:string, dest:string, icon:Texture2D, instanceId:int) : void
+}
+class CreateAssetEndNameEditAction {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+AssetCreation +-- CreateAssetEndNameEditAction
+@enduml

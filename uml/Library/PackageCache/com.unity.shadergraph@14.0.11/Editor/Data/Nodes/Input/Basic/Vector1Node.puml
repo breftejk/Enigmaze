@@ -1,0 +1,18 @@
+@startuml
+class Vector1Node {
+    - m_Value : float = 0
+    <<const>> - kInputSlotXName : string = "X"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<const>> InputSlotXId : int = 1
+    + <<const>> OutputSlotId : int = 0
+    + Vector1Node()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + <<override>> OnAfterDeserialize() : void
+    - outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- Vector1Node
+IGeneratesBodyCode <|-- Vector1Node
+IPropertyFromNode <|-- Vector1Node
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class UnityOnButtonClickMessageListener <<sealed>> {
+    - Start() : void
+}
+MessageListener <|-- UnityOnButtonClickMessageListener
+@enduml

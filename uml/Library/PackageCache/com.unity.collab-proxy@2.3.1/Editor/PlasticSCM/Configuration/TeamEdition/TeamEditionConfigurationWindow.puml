@@ -1,0 +1,43 @@
+@startuml
+class TeamEditionConfigurationWindow {
+    <<internal>> {static} ShowWindow(restApi:IPlasticWebRestApi, welcomeView:WelcomeView) : void
+    - OnEnable() : void
+    - Dispose() : void
+    - ConnectButton_Clicked() : void
+    - OnDestroy() : void
+    - CheckConnectionButton_Clicked() : void
+    - CancelButton_Clicked() : void
+    - OkButton_Clicked() : void
+    - HideCredentialsValidationError() : void
+    - BuildComponents() : void
+    - OnUseSslToggleChanged(evt:ChangeEvent<bool>) : void
+    - InitializeLayoutAndStyles() : void
+    - OnServerTextFieldChanged(evt:ChangeEvent<string>) : void
+    - ShowServerNotificationMessage(message:string) : void
+    - ShowServerValidationError(message:string) : void
+    - ShowCredentialsNotificationMessage(message:string) : void
+    - ShowCheckCredentialsError(message:string) : void
+    - HideValidation() : void
+    - ShowProgress(text:string) : void
+    - HideProgress() : void
+    - UpdatePasswordEntries(bIsPasswordRequired:bool) : void
+    - mConnectButton : Button
+    - mConnectedLabel : Label
+    - mServerTextField : TextField
+    - mPasswordTextField : TextField
+    - mUseSslToggle : Toggle
+    - mLoadingSpinner : LoadingSpinner
+    - mSpinnerLabel : Label
+    - mSpinnerContainer : VisualElement
+    - mCheckConnectionButton : Button
+    - mCredentialsLabel : Label
+    - mOkButton : Button
+    - mCancelButton : Button
+    - mSEIDWorkingMode : SEIDWorkingMode
+    - mUserAssistant : ConfigurationDialogUserAssistant
+    - mRestApi : IPlasticWebRestApi
+    - mWelcomeView : WelcomeView
+    - mUserTextField : TextField
+}
+EditorWindow <|-- TeamEditionConfigurationWindow
+@enduml

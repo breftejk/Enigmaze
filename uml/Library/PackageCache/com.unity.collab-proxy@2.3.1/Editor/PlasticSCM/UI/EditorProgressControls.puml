@@ -1,0 +1,13 @@
+@startuml
+class EditorProgressControls {
+    <<internal>> EditorProgressControls(guiMessage:GuiMessage.IGuiMessage)
+    - HideProgress() : void
+    - ShowError(message:string) : void
+    - ShowNotification(message:string) : void
+    - ShowProgress(message:string) : void
+    - ShowSuccess(message:string) : void
+    - ShowWarning(message:string) : void
+    - mGuiMessage : GuiMessage.IGuiMessage
+}
+IProgressControls <|-- EditorProgressControls
+@enduml

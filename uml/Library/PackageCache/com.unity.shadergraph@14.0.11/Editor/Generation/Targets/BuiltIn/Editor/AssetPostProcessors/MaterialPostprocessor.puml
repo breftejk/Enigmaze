@@ -1,0 +1,20 @@
+@startuml
+class MaterialModificationProcessor {
+    {static} - OnWillCreateAsset(asset:string) : void
+}
+class MaterialReimporter {
+    {static} - ReimportAllMaterials() : void
+    {static} - RegisterUpgraderReimport() : void
+}
+class MaterialPostprocessor {
+    + {static} s_CreatedAssets : List<string>
+    <<internal>> {static} s_ImportedAssetThatNeedSaving : List<string>
+    <<internal>> {static} s_NeedsSavingAssets : bool = false
+    <<internal>> {static} <<readonly>> k_Upgraders : Action<Material, ShaderID>[]
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+    {static} - InitializeLatest(material:Material, shaderID:ShaderID) : void
+}
+AssetModificationProcessor <|-- MaterialModificationProcessor
+Editor <|-- MaterialReimporter
+AssetPostprocessor <|-- MaterialPostprocessor
+@enduml

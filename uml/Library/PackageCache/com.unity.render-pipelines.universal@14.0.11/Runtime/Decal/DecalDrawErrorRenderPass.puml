@@ -1,0 +1,9 @@
+@startuml
+class DecalDrawErrorSystem {
+    - m_Technique : DecalTechnique
+    + DecalDrawErrorSystem(entityManager:DecalEntityManager, technique:DecalTechnique)
+    # <<override>> GetPassIndex(decalCachedChunk:DecalCachedChunk) : int
+    # <<override>> GetMaterial(decalEntityChunk:DecalEntityChunk) : Material
+}
+DecalDrawSystem <|-- DecalDrawErrorSystem
+@enduml

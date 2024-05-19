@@ -1,0 +1,7 @@
+@startuml
+class ChangelistTreeViewItem {
+    <<internal>> Changelist : ChangelistNode <<get>>
+    <<internal>> ChangelistTreeViewItem(id:int, changelist:ChangelistNode)
+}
+TreeViewItem <|-- ChangelistTreeViewItem
+@enduml

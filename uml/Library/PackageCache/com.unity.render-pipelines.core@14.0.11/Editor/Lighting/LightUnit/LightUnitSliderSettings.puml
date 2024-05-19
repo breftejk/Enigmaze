@@ -1,0 +1,95 @@
+@startuml
+struct LightUnitSliderUIDescriptor {
+    + LightUnitSliderUIDescriptor(valueRanges:LightUnitSliderUIRange[], sliderDistribution:float[], cautionTooltip:string, unitName:string, hasMarkers:bool, clampValue:bool)
+    + LightUnitSliderUIDescriptor(valueRanges:LightUnitSliderUIRange[], sliderDistribution:float[], belowRangeTooltip:string, aboveRangeTooltip:string, unitName:string, hasMarkers:bool, clampValue:bool)
+    + <<readonly>> sliderDistribution : float[]
+    + <<readonly>> valueRanges : LightUnitSliderUIRange[]
+    + <<readonly>> sliderRange : Vector2
+    + <<readonly>> belowRangeTooltip : string
+    + <<readonly>> aboveRangeTooltip : string
+    + <<readonly>> unitName : string
+    + <<readonly>> hasMarkers : bool
+    + <<readonly>> clampValue : bool
+}
+struct LightUnitSliderUIRange {
+    + LightUnitSliderUIRange(icon:Texture2D, tooltip:string, value:Vector2)
+    + LightUnitSliderUIRange(icon:Texture2D, tooltip:string, value:Vector2, presetValue:float)
+    + {static} CautionRange(tooltip:string, value:float) : LightUnitSliderUIRange
+    + content : GUIContent
+    + value : Vector2
+    + presetValue : float
+}
+class LightUnitSliderDescriptors <<static>> {
+    + {static} LuxDescriptor : LightUnitSliderUIDescriptor
+    + {static} LumenDescriptor : LightUnitSliderUIDescriptor
+    + {static} ExposureDescriptor : LightUnitSliderUIDescriptor
+    + {static} TemperatureDescriptor : LightUnitSliderUIDescriptor
+}
+class LightUnitValueRanges <<static>> {
+    + {static} <<readonly>> LumenValueTable : LightUnitSliderUIRange[]
+    + {static} <<readonly>> LuxValueTable : LightUnitSliderUIRange[]
+    + {static} <<readonly>> ExposureValueTable : LightUnitSliderUIRange[]
+    + {static} <<readonly>> KelvinValueTableNew : LightUnitSliderUIRange[]
+}
+class LightUnitSliderDistributions <<static>> {
+    + {static} <<readonly>> LuxDistribution : float[]
+    - <<const>> LumenStep : float
+    + {static} <<readonly>> LumenDistribution : float[]
+    - <<const>> ExposureStep : float
+    + {static} <<readonly>> ExposureDistribution : float[]
+}
+class LightUnitIcon <<static>> {
+    {static} - GetLightUnitIcon(name:string) : Texture2D
+    + {static} BlueSky : Texture2D
+    + {static} ClearSky : Texture2D
+    + {static} Candlelight : Texture2D
+    + {static} DecorativeLight : Texture2D
+    + {static} DirectSunlight : Texture2D
+    + {static} ExteriorLight : Texture2D
+    + {static} IntenseAreaLight : Texture2D
+    + {static} InteriorLight : Texture2D
+    + {static} MediumAreaLight : Texture2D
+    + {static} MoonlessNight : Texture2D
+    + {static} Moonlight : Texture2D
+    + {static} Overcast : Texture2D
+    + {static} CloudySky : Texture2D
+    + {static} SoftAreaLight : Texture2D
+    + {static} SunriseSunset : Texture2D
+    + {static} VeryBrightSun : Texture2D
+    + {static} BrightSky : Texture2D
+    + {static} Shade : Texture2D
+    + {static} Fluorescent : Texture2D
+}
+class LightUnitTooltips <<static>> {
+    + <<const>> k_SunCaution : string = "Higher than Sunlight"
+    + <<const>> k_PunctualCaution : string = "Very high intensity light"
+    + <<const>> k_ExposureBelowCaution : string = "Lower than a moonless scene"
+    + <<const>> k_ExposureAboveCaution : string = "Higher than a sunlit scene"
+    + <<const>> k_TemperatureCaution : string = ""
+    + <<const>> k_LuxBrightSky : string = "High Sun"
+    + <<const>> k_LuxOvercastSky : string = "Cloudy"
+    + <<const>> k_LuxSunriseSunset : string = "Low Sun"
+    + <<const>> k_LuxMoonlight : string = "Moon"
+    + <<const>> k_PunctualExterior : string = "Exterior"
+    + <<const>> k_PunctualInterior : string = "Interior"
+    + <<const>> k_PunctualDecorative : string = "Decorative"
+    + <<const>> k_PunctualCandle : string = "Candle"
+    + <<const>> k_ExposureBrightSky : string = "Sunlit Scene"
+    + <<const>> k_ExposureOvercastSky : string = "Cloudy Scene"
+    + <<const>> k_ExposureSunriseSunset : string = "Low Sun Scene"
+    + <<const>> k_ExposureInterior : string = "Interior Scene"
+    + <<const>> k_ExposureMoonlitSky : string = "Moonlit Scene"
+    + <<const>> k_ExposureMoonlessNight : string = "Moonless Scene"
+    + <<const>> k_TemperatureBlueSky : string = "Blue Sky"
+    + <<const>> k_TemperatureShade : string = "Shade (Clear Sky)"
+    + <<const>> k_TemperatureCloudySky : string = "Cloudy Skylight"
+    + <<const>> k_TemperatureDirectSunlight : string = "Direct Sunlight"
+    + <<const>> k_TemperatureFluorescent : string = "Fluorescent Light"
+    + <<const>> k_TemperatureIncandescent : string = "Incandescent Light"
+    + <<const>> k_TemperatureCandle : string = "Candlelight"
+}
+LightUnitSliderDescriptors +-- LightUnitValueRanges
+LightUnitSliderDescriptors +-- LightUnitSliderDistributions
+LightUnitSliderDescriptors +-- LightUnitIcon
+LightUnitSliderDescriptors +-- LightUnitTooltips
+@enduml

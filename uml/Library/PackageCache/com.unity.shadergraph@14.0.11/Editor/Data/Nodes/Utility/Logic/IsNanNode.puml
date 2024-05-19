@@ -1,0 +1,9 @@
+@startuml
+class IsNanNode {
+    + IsNanNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_IsNaN(In:Vector1, Out:Boolean) : string
+}
+CodeFunctionNode <|-- IsNanNode
+@enduml

@@ -1,0 +1,151 @@
+@startuml
+class UnityStyles <<static>> {
+    <<internal>> {static} Initialize(repaintPlasticWindow:Action) : void
+    <<internal>> {static} <<readonly>> ActionToolbar : LazyStyle
+    <<internal>> {static} <<readonly>> SplitterIndicator : LazyStyle
+    <<internal>> {static} <<readonly>> HelpBoxLabel : LazyStyle
+    <<internal>> {static} <<readonly>> ProgressLabel : LazyStyle
+    <<internal>> {static} <<readonly>> TextFieldWithWrapping : LazyStyle
+    <<internal>> {static} <<readonly>> Search : LazyStyle
+    <<internal>> {static} <<readonly>> WarningMessage : LazyStyle
+    <<internal>> {static} <<readonly>> CancelButton : LazyStyle
+    <<internal>> {static} <<readonly>> MiniToggle : LazyStyle
+    <<internal>> {static} <<readonly>> Paragraph : LazyStyle
+    {static} - GetEditorSkin() : GUISkin
+    {static} - CreateUnderlineStyle(color:Color, height:int) : GUIStyle
+    {static} - EnsureBackgroundStyles(lazy:LazyStyle) : void
+    {static} - mLazyBackgroundStyles : List<LazyStyle>
+    {static} - mRepaintPlasticWindow : Action
+    <<const>> - MODAL_FONT_SIZE : int = 13
+}
+class Colors <<static>> {
+    <<internal>> {static} Transparent : Color
+    <<internal>> {static} GreenBackground : Color
+    <<internal>> {static} GreenText : Color
+    <<internal>> {static} Red : Color
+    <<internal>> {static} Warning : Color
+    <<internal>> {static} Splitter : Color
+    <<internal>> {static} BarBorder : Color
+    <<internal>> {static} InspectorHeaderBackground : Color
+    <<internal>> {static} InspectorHeaderBackgroundDisabled : Color
+    <<internal>> {static} TabUnderline : Color
+    <<internal>> {static} Link : Color
+    <<internal>> {static} SecondaryLabel : Color
+    <<internal>> {static} BackgroundBar : Color
+    <<internal>> {static} TreeViewBackground : Color
+    <<internal>> {static} CommentsBackground : Color
+    <<internal>> {static} ColumnsBackground : Color
+    <<internal>> {static} ToggleOffText : Color
+    <<internal>> {static} ToggleHoverText : Color
+}
+class HexColors <<static>> {
+    <<internal>> <<const>> LINK_COLOR : string = "#0078DA"
+}
+class Dialog <<static>> {
+    <<internal>> {static} <<readonly>> MessageTitle : LazyStyle
+    <<internal>> {static} <<readonly>> MessageText : LazyStyle
+    <<internal>> {static} <<readonly>> Toggle : LazyStyle
+    <<internal>> {static} <<readonly>> RadioToggle : LazyStyle
+    <<internal>> {static} <<readonly>> Foldout : LazyStyle
+    <<internal>> {static} <<readonly>> EntryLabel : LazyStyle
+    <<internal>> {static} <<readonly>> AcceptButtonText : LazyStyle
+    <<internal>> {static} <<readonly>> NormalButton : LazyStyle
+}
+class Tree <<static>> {
+    <<internal>> {static} <<readonly>> IconStyle : LazyStyle
+    <<internal>> {static} <<readonly>> Label : LazyStyle
+    <<internal>> {static} <<readonly>> SecondaryLabel : LazyStyle
+    <<internal>> {static} <<readonly>> InfoLabel : LazyStyle
+    <<internal>> {static} <<readonly>> SecondaryBoldLabel : LazyStyle
+    <<internal>> {static} <<readonly>> RedLabel : LazyStyle
+    <<internal>> {static} <<readonly>> GreenLabel : LazyStyle
+    <<internal>> {static} <<readonly>> BoldLabel : LazyStyle
+    <<internal>> {static} <<readonly>> LabelRightAligned : LazyStyle
+    <<internal>> {static} <<readonly>> SecondaryLabelRightAligned : LazyStyle
+    <<internal>> {static} <<readonly>> SecondaryLabelBoldRightAligned : LazyStyle
+    <<internal>> {static} <<readonly>> StatusLabel : LazyStyle
+    <<internal>> {static} <<readonly>> Columns : LazyStyle
+}
+class Inspector <<static>> {
+    + {static} <<readonly>> HeaderBackgroundStyle : LazyStyle
+    + {static} <<readonly>> DisabledHeaderBackgroundStyle : LazyStyle
+}
+class ProjectSettings <<static>> {
+    <<internal>> {static} <<readonly>> ToggleOn : LazyStyle
+    {static} <<readonly>> - Toggle : LazyStyle
+}
+class PlasticWindow <<static>> {
+    <<internal>> {static} <<readonly>> TabButton : LazyStyle
+    <<internal>> {static} <<readonly>> ActiveTabUnderline : LazyStyle
+}
+class StatusBar <<static>> {
+    <<internal>> {static} <<readonly>> Icon : LazyStyle
+    <<internal>> {static} <<readonly>> Label : LazyStyle
+    <<internal>> {static} <<readonly>> LinkLabel : LazyStyle
+    <<internal>> {static} <<readonly>> NotificationLabel : LazyStyle
+    <<internal>> {static} <<readonly>> Button : LazyStyle
+    <<internal>> {static} <<readonly>> NotificationPanel : LazyStyle
+    <<internal>> {static} <<readonly>> NotificationPanelCloseButton : LazyStyle
+}
+class DiffPanel <<static>> {
+    <<internal>> {static} <<readonly>> HeaderLabel : LazyStyle
+}
+class PendingChangesTab <<static>> {
+    <<internal>> {static} <<readonly>> CommentPlaceHolder : LazyStyle
+    <<internal>> {static} <<readonly>> CommentTextArea : LazyStyle
+    <<internal>> {static} <<readonly>> CommentWarningIcon : LazyStyle
+    <<internal>> {static} <<readonly>> HeaderLabel : LazyStyle
+    <<internal>> {static} <<readonly>> Comment : LazyStyle
+    <<internal>> {static} <<readonly>> DefaultMultiColumHeader : GUIStyle
+}
+class IncomingChangesTab <<static>> {
+    <<internal>> {static} <<readonly>> PendingConflictsLabel : LazyStyle
+    <<internal>> {static} <<readonly>> RedPendingConflictsOfTotalLabel : LazyStyle
+    <<internal>> {static} <<readonly>> GreenPendingConflictsOfTotalLabel : LazyStyle
+    <<internal>> {static} <<readonly>> ChangesToApplySummaryLabel : LazyStyle
+    <<internal>> <<readonly>> {static} HeaderWarningLabel : LazyStyle
+}
+class ChangesetsTab <<static>> {
+    <<internal>> {static} <<readonly>> HeaderLabel : LazyStyle
+}
+class HistoryTab <<static>> {
+    <<internal>> {static} <<readonly>> HeaderLabel : LazyStyle
+}
+class DirectoryConflictResolution <<static>> {
+    <<internal>> <<readonly>> {static} WarningLabel : LazyStyle
+}
+class Notification <<static>> {
+    <<internal>> {static} <<readonly>> Label : LazyStyle
+    <<internal>> {static} <<readonly>> GreenNotification : LazyStyle
+    <<internal>> {static} <<readonly>> RedNotification : LazyStyle
+}
+class DirectoryConflicts <<static>> {
+    <<internal>> <<readonly>> {static} TitleLabel : LazyStyle
+    <<internal>> <<readonly>> {static} BoldLabel : LazyStyle
+    <<internal>> <<readonly>> {static} FileNameTextField : LazyStyle
+}
+class LazyStyle {
+    <<internal>> IsInitialized : bool <<get>>
+    <<internal>> LazyStyle(builder:Func<GUIStyle>)
+    <<internal>> Value : GUIStyle <<get>>
+    <<internal>> Reset() : void
+    <<readonly>> - mBuilder : Func<GUIStyle>
+}
+UnityStyles +-- Colors
+UnityStyles +-- HexColors
+UnityStyles +-- Dialog
+UnityStyles +-- Tree
+UnityStyles +-- Inspector
+UnityStyles +-- ProjectSettings
+UnityStyles +-- PlasticWindow
+UnityStyles +-- StatusBar
+UnityStyles +-- DiffPanel
+UnityStyles +-- PendingChangesTab
+UnityStyles +-- IncomingChangesTab
+UnityStyles +-- ChangesetsTab
+UnityStyles +-- HistoryTab
+UnityStyles +-- DirectoryConflictResolution
+UnityStyles +-- Notification
+UnityStyles +-- DirectoryConflicts
+UnityStyles +-- LazyStyle
+@enduml

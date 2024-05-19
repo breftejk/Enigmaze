@@ -1,0 +1,15 @@
+@startuml
+abstract class ExtensibleFuzzyOptionTree {
+    # ExtensibleFuzzyOptionTree()
+    # ExtensibleFuzzyOptionTree(header:GUIContent)
+    + extensions : IList<IFuzzyOptionTree> <<get>>
+    + <<override>> Prewarm() : void
+    + <<override>> Option(item:object) : IFuzzyOption
+    + <<override>> Root() : IEnumerable<object>
+    + <<override>> Children(parent:object) : IEnumerable<object>
+    + <<override>> OrderedSearchResults(query:string, cancellation:CancellationToken) : IEnumerable<object>
+    + <<override>> SearchResults(query:string, cancellation:CancellationToken) : IEnumerable<ISearchResult>
+    + <<override>> SearchResultLabel(item:object, query:string) : string
+}
+FuzzyOptionTree <|-- ExtensibleFuzzyOptionTree
+@enduml

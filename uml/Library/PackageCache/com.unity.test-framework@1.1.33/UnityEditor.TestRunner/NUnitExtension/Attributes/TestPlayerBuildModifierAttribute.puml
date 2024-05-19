@@ -1,0 +1,8 @@
+@startuml
+class TestPlayerBuildModifierAttribute {
+    - m_Type : Type
+    + TestPlayerBuildModifierAttribute(type:Type)
+    <<internal>> ConstructModifier() : ITestPlayerBuildModifier
+}
+Attribute <|-- TestPlayerBuildModifierAttribute
+@enduml

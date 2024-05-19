@@ -1,0 +1,15 @@
+@startuml
+abstract class "HasGraph`3"<TGraph,TMacro,TMachine> {
+    + enter : ControlInput <<get>>
+    + target : ValueInput <<get>>
+    + graphInput : ValueInput <<get>>
+    + hasGraphOutput : ValueOutput <<get>>
+    + exit : ControlOutput <<get>>
+    # {abstract} isGameObject : bool <<get>>
+    - targetType : Type <<get>>
+    # <<override>> Definition() : void
+    - TriggerHasGraph(flow:Flow) : ControlOutput
+    - OutputHasGraph(flow:Flow) : bool
+}
+Unit <|-- "HasGraph`3"
+@enduml

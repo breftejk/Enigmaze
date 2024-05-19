@@ -1,0 +1,35 @@
+@startuml
+class KeywordDependentCollection <<static>> {
+}
+abstract class "KeywordDependentCollection`7"<TStorage,TAll,TAllPermutations,TForPermutation,TBase,TIInstance,TISet> {
+    - m_Base : TStorage
+    - m_PerPermutationIndex : List<TStorage>
+    + permutationCount : int <<get>>
+    + all : TAll <<get>>
+    + allPermutations : TAllPermutations <<get>>
+    + baseInstance : TBase <<get>>
+    # baseStorage : TStorage <<get>> <<set>>
+    # permutationStorages : IEnumerable<TStorage> <<get>>
+    # GetOrCreateForPermutationIndex(index:int) : TStorage
+    # SetForPermutationIndex(index:int, value:TStorage) : void
+    # {abstract} CreateAllSmartPointer() : TAll
+    # {abstract} CreateAllPermutationsSmartPointer() : TAllPermutations
+    # {abstract} CreateForPermutationSmartPointer(index:int) : TForPermutation
+    # {abstract} CreateBaseSmartPointer() : TBase
+}
+enum KeywordPermutationInstanceType {
+    Base,
+    Permutation,
+}
+interface "ISet`1"<IInstance> {
+    instanceCount : int <<get>>
+    instances : IEnumerable<IInstance> <<get>>
+}
+interface IInstance {
+    type : KeywordPermutationInstanceType <<get>>
+    permutationIndex : int <<get>>
+}
+KeywordDependentCollection +-- KeywordPermutationInstanceType
+KeywordDependentCollection +-- "ISet`1"
+KeywordDependentCollection +-- IInstance
+@enduml

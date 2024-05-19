@@ -1,0 +1,33 @@
+@startuml
+class VisualStudioIntegration {
+    - {static} _messager : Messager
+    - {static} <<readonly>> _incoming : Queue<Message>
+    - {static} <<readonly>> _clients : Dictionary<IPEndPoint, Client>
+    - {static} <<readonly>> _incomingLock : object
+    - {static} <<readonly>> _clientsLock : object
+    {static} - VisualStudioIntegration()
+    - {static} CheckLegacyAssemblies() : void
+    - {static} RunOnceOnUpdate(action:Action) : void
+    - {static} RunOnShutdown(action:Action) : void
+    - {static} DebuggingPort() : int
+    - {static} MessagingPort() : int
+    - {static} ReceiveMessage(sender:object, args:MessageEventArgs) : void
+    - {static} OnUpdate() : void
+    - {static} AddMessage(message:Message) : void
+    - {static} ProcessIncoming(message:Message) : void
+    - {static} CheckClient(message:Message) : void
+    <<internal>> {static} PackageVersion() : string
+    - {static} Refresh() : void
+    - {static} OnMessage(message:Message) : void
+    - {static} Answer(client:Client, answerType:MessageType, answerValue:string) : void
+    - {static} Answer(message:Message, answerType:MessageType, answerValue:string) : void
+    - {static} Answer(targetEndPoint:IPEndPoint, answerType:MessageType, answerValue:string) : void
+    - {static} Shutdown() : void
+    <<internal>> {static} BroadcastMessage(type:MessageType, value:string) : void
+}
+class Client {
+    + EndPoint : IPEndPoint <<get>> <<set>>
+    + LastMessage : double <<get>> <<set>>
+}
+VisualStudioIntegration +-- Client
+@enduml

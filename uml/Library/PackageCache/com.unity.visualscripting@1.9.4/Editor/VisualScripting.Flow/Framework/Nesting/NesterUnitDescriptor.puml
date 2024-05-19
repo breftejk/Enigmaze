@@ -1,0 +1,10 @@
+@startuml
+class "NesterUnitDescriptor`1"<TNesterUnit> {
+    + NesterUnitDescriptor(unit:TNesterUnit)
+    # <<override>> DefinedTitle() : string
+    # <<override>> DefinedSummary() : string
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedSurtitle() : string
+}
+"UnitDescriptor`1" "<TNesterUnit>" <|-- "NesterUnitDescriptor`1"
+@enduml

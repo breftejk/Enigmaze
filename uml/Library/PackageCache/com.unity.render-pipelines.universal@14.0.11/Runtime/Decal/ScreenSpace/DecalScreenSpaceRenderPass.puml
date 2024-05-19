@@ -1,0 +1,19 @@
+@startuml
+class DecalDrawScreenSpaceSystem {
+    + DecalDrawScreenSpaceSystem(entityManager:DecalEntityManager)
+    # <<override>> GetPassIndex(decalCachedChunk:DecalCachedChunk) : int
+}
+class DecalScreenSpaceRenderPass {
+    - m_FilteringSettings : FilteringSettings
+    - m_ProfilingSampler : ProfilingSampler
+    - m_ShaderTagIdList : List<ShaderTagId>
+    - m_DrawSystem : DecalDrawScreenSpaceSystem
+    - m_Settings : DecalScreenSpaceSettings
+    - m_DecalLayers : bool
+    + DecalScreenSpaceRenderPass(settings:DecalScreenSpaceSettings, drawSystem:DecalDrawScreenSpaceSystem, decalLayers:bool)
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<override>> OnCameraCleanup(cmd:CommandBuffer) : void
+}
+DecalDrawSystem <|-- DecalDrawScreenSpaceSystem
+ScriptableRenderPass <|-- DecalScreenSpaceRenderPass
+@enduml

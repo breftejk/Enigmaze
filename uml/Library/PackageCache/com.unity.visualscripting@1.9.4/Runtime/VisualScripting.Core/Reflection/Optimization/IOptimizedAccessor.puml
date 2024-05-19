@@ -1,0 +1,7 @@
+@startuml
+interface IOptimizedAccessor {
+    Compile() : void
+    GetValue(target:object) : object
+    SetValue(target:object, value:object) : void
+}
+@enduml

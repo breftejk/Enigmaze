@@ -1,0 +1,6 @@
+@startuml
+class UnityOnParticleCollisionMessageListener <<sealed>> {
+    - OnParticleCollision(other:GameObject) : void
+}
+MessageListener <|-- UnityOnParticleCollisionMessageListener
+@enduml

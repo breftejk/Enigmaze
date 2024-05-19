@@ -1,0 +1,16 @@
+@startuml
+class BlockNodeTests {
+    {static} - s_DescriptorA : BlockFieldDescriptor
+    {static} - s_DescriptorB : BlockFieldDescriptor
+    {static} - s_MaterialSlot : Vector3MaterialSlot
+    {static} - s_CustomSlotDescriptor : CustomSlotBlockFieldDescriptor
+    + RunBeforeAnyTests() : void
+    + CanGatherBlockDescriptors() : void
+    + CanInitializeBlockNode() : void
+    + CanCreateSlotFromBlockDescriptor() : void
+    + CanCreateSlotFromCustomSlotBlockDescriptor() : void
+    + CanGetRequirementsFromBlockNode() : void
+    + CanSerializeDescriptor() : void
+    + CanGetBlockIndex() : void
+}
+@enduml

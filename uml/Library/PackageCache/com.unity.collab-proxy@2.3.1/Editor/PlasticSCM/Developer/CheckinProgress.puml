@@ -1,0 +1,10 @@
+@startuml
+class CheckinProgress {
+    <<internal>> CancelPressed : bool
+    <<internal>> CheckinProgress(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow)
+    <<internal>> Refresh(checkinStatus:CheckinStatus, progressData:BuildProgressSpeedAndRemainingTime.ProgressData) : void
+    - mProgressRender : CheckinUploadProgressRender
+    - mWorkspaceWindow : WorkspaceWindow
+    - mWkInfo : WorkspaceInfo
+}
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+class SpriteLibraryInspector {
+    - m_OverrideLibraryObject : SpriteLibCombineCache
+    - m_OverrideLibraryCache : SerializedObject
+    - m_MasterLibraryProperty : SerializedProperty
+    - m_MasterLibraryObject : SpriteLibraryAsset
+    - m_MasterLibraryCategories : SerializedProperty
+    - m_OverrideLibraryCategories : SerializedProperty
+    - m_SpriteLibraryDataInspector : SpriteLibraryDataInspector
+    - m_PreviousModificationHash : long
+    - m_CachedLibraryTargets : List<SpriteLibrary>
+    - m_CachedResolvers : List<SpriteResolver>
+    + OnEnable() : void
+    - UpdateMasterLibraryObject() : void
+    - CacheTargets() : void
+    - UpdateSpriteLibraryDataCache() : void
+    + <<override>> OnInspectorGUI() : void
+    - RefreshMasterLibraryAssetData() : void
+    - UpdateSpriteResolvers() : void
+    {static} - CopySpriteLibraryToOverride(libOverride:List<SpriteLibCategoryOverride>, lib:SerializedProperty) : void
+    {static} - CopyOverrideToSpriteLibrary(libOverride:List<SpriteLibCategoryOverride>, lib:SerializedProperty) : void
+}
+class Style <<static>> {
+    + {static} libraryDifferentValue : string
+}
+Editor <|-- SpriteLibraryInspector
+SpriteLibraryInspector +-- Style
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+class EventTrigger {
+    - m_Delegates : List<Entry>
+    + delegates : List<Entry> <<get>> <<set>>
+    # EventTrigger()
+    + triggers : List<Entry> <<get>> <<set>>
+    - Execute(id:EventTriggerType, eventData:BaseEventData) : void
+    + <<virtual>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerExit(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnDrop(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerDown(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerUp(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + <<virtual>> OnSelect(eventData:BaseEventData) : void
+    + <<virtual>> OnDeselect(eventData:BaseEventData) : void
+    + <<virtual>> OnScroll(eventData:PointerEventData) : void
+    + <<virtual>> OnMove(eventData:AxisEventData) : void
+    + <<virtual>> OnUpdateSelected(eventData:BaseEventData) : void
+    + <<virtual>> OnInitializePotentialDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnBeginDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnEndDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+    + <<virtual>> OnCancel(eventData:BaseEventData) : void
+}
+class TriggerEvent {
+}
+class Entry {
+    + eventID : EventTriggerType
+    + callback : TriggerEvent
+}
+MonoBehaviour <|-- EventTrigger
+IPointerEnterHandler <|-- EventTrigger
+IPointerExitHandler <|-- EventTrigger
+IPointerDownHandler <|-- EventTrigger
+IPointerUpHandler <|-- EventTrigger
+IPointerClickHandler <|-- EventTrigger
+IInitializePotentialDragHandler <|-- EventTrigger
+IBeginDragHandler <|-- EventTrigger
+IDragHandler <|-- EventTrigger
+IEndDragHandler <|-- EventTrigger
+IDropHandler <|-- EventTrigger
+IScrollHandler <|-- EventTrigger
+IUpdateSelectedHandler <|-- EventTrigger
+ISelectHandler <|-- EventTrigger
+IDeselectHandler <|-- EventTrigger
+IMoveHandler <|-- EventTrigger
+ISubmitHandler <|-- EventTrigger
+ICancelHandler <|-- EventTrigger
+EventTrigger +-- TriggerEvent
+"UnityEvent`1" "<BaseEventData>" <|-- TriggerEvent
+EventTrigger +-- Entry
+@enduml

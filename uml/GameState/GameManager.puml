@@ -1,0 +1,13 @@
+@startuml
+class GameManager {
+    + {static} Instance : GameManager
+    + Username : string <<get>> = ""
+    + CurrentLevel : int <<get>> = 1
+    - Awake() : void
+    + SetUsername(name:string) : void
+    + IncrementLevel() : void
+    + ResetProgress() : void
+    - LoadProgress() : void
+}
+MonoBehaviour <|-- GameManager
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class BooleanSlotControlView {
+    - m_Slot : BooleanMaterialSlot
+    + BooleanSlotControlView(slot:BooleanMaterialSlot)
+    - OnChangeToggle(evt:ChangeEvent<bool>) : void
+}
+VisualElement <|-- BooleanSlotControlView
+@enduml

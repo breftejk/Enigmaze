@@ -1,0 +1,9 @@
+@startuml
+class RunSettings {
+    - m_TestSettings : ITestSettings
+    + RunSettings(testSettings:ITestSettings)
+    + Apply() : void
+    + Dispose() : void
+}
+ITestRunSettings <|-- RunSettings
+@enduml

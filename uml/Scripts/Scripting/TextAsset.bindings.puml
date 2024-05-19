@@ -1,0 +1,12 @@
+@startuml
+class TextAsset <<partial>> {
+    + <<extern>> bytes : byte[] <<get>>
+    <<extern>> - GetPreviewBytes(maxByteCount:int) : byte[]
+    <<extern>> {static} - Internal_CreateInstance(self:TextAsset, text:string) : void
+    <<extern>> {static} - Internal_CreateInstanceFromBytes(self:TextAsset, bytes:ReadOnlySpan<byte>) : void
+    <<extern>> - GetDataPtr() : IntPtr
+    <<extern>> - GetDataSize() : long
+    {static} <<extern>> - GetSafetyHandle(self:TextAsset) : AtomicSafetyHandle
+}
+Object <|-- TextAsset
+@enduml

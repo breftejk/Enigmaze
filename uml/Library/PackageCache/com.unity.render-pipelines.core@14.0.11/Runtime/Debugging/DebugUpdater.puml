@@ -1,0 +1,20 @@
+@startuml
+class DebugUpdater {
+    {static} - s_Instance : DebugUpdater = null
+    - m_Orientation : ScreenOrientation
+    - m_RuntimeUiWasVisibleLastFrame : bool = false
+    {static} - RuntimeInit() : void
+    <<internal>> {static} SetEnabled(enabled:bool) : void
+    {static} - EnableRuntime() : void
+    {static} - DisableRuntime() : void
+    <<internal>> {static} HandleInternalEventSystemComponents(uiEnabled:bool) : void
+    - EnsureExactlyOneEventSystem() : void
+    - DoAfterInputModuleUpdated(action:Action) : IEnumerator
+    - CheckInputModuleExists() : void
+    - CreateDebugEventSystem() : void
+    - DestroyDebugEventSystem() : void
+    - Update() : void
+    {static} - RefreshRuntimeUINextFrame() : IEnumerator
+}
+MonoBehaviour <|-- DebugUpdater
+@enduml

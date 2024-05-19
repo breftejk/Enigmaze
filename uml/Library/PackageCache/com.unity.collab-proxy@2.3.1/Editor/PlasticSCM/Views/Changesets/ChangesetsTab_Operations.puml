@@ -1,0 +1,7 @@
+@startuml
+class ChangesetsTab <<partial>> {
+    - SwitchToChangesetForMode(isGluonMode:bool) : void
+    - SwitchToChangesetForDeveloper() : void
+    - SwitchToChangesetForGluon() : void
+}
+@enduml

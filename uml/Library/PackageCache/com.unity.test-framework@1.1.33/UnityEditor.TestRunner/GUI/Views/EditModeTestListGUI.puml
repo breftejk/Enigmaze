@@ -1,0 +1,11 @@
+@startuml
+class EditModeTestListGUI {
+    + <<override>> TestMode : TestMode <<get>>
+    + <<override>> RenderNoTestsInfo() : void
+    + <<override>> PrintHeadPanel() : void
+    # <<override>> RunTests(filters:UITestRunnerFilter[]) : void
+    + <<override>> TestPlatform : TestPlatform <<get>>
+    # <<override>> IsBusy() : bool
+}
+TestListGUI <|-- EditModeTestListGUI
+@enduml

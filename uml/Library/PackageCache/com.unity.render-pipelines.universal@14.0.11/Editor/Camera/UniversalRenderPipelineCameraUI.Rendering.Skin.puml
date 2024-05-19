@@ -1,0 +1,32 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Rendering <<partial>> {
+}
+class Styles {
+    + {static} rendererType : GUIContent
+    + {static} renderPostProcessing : GUIContent
+    + {static} antialiasing : GUIContent
+    + {static} antialiasingQuality : GUIContent
+    + {static} taaContrastAdaptiveSharpening : GUIContent
+    + {static} <<readonly>> taaBaseBlendFactor : GUIContent
+    + {static} <<readonly>> taaJitterScale : GUIContent
+    + {static} <<readonly>> taaMipBias : GUIContent
+    + {static} <<readonly>> taaVarianceClampScale : GUIContent
+    + {static} taaResetHistory : GUIContent
+    + {static} requireDepthTexture : GUIContent
+    + {static} requireOpaqueTexture : GUIContent
+    + {static} clearDepth : GUIContent
+    + {static} renderingShadows : GUIContent
+    + {static} priority : GUIContent
+    + {static} <<readonly>> noRendererError : string
+    + {static} <<readonly>> missingRendererWarning : string
+    + {static} <<readonly>> disabledPostprocessing : string
+    + {static} <<readonly>> stopNaNsMessage : string
+    + {static} <<readonly>> SMAANotSupported : string
+    + {static} <<readonly>> selectRenderPipelineAsset : string
+    + {static} <<readonly>> disabledPostprocessingAntiAliasWarning : string
+}
+UniversalRenderPipelineCameraUI +-- Rendering
+Rendering +-- Styles
+@enduml

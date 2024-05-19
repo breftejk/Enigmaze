@@ -1,0 +1,16 @@
+@startuml
+class DateFilter {
+    <<internal>> FilterType : Type
+    <<internal>> DateFilter(filterType:Type)
+    <<internal>> GetTimeAgo() : string
+}
+enum Type {
+    LastWeek,
+    Last15Days,
+    LastMonth,
+    Last3Months,
+    LastYear,
+    AllTime,
+}
+DateFilter +-- Type
+@enduml

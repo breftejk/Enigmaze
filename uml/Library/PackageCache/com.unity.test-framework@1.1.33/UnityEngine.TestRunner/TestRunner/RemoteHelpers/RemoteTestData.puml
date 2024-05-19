@@ -1,0 +1,23 @@
+@startuml
+class RemoteTestData {
+    + id : string
+    + name : string
+    + fullName : string
+    + testCaseCount : int
+    + ChildIndex : int
+    + hasChildren : bool
+    + isSuite : bool
+    + childrenIds : string[]
+    + testCaseTimeout : int
+    + Categories : string[]
+    + IsTestAssembly : bool
+    + RunState : RunState
+    + Description : string
+    + SkipReason : string
+    + ParentId : string
+    + UniqueName : string
+    + ParentUniqueName : string
+    + ParentFullName : string
+    <<internal>> RemoteTestData(test:ITest)
+}
+@enduml

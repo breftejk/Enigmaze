@@ -1,0 +1,101 @@
+@startuml
+class FloatingWindowsLayout {
+    + previewLayout : WindowDockingLayout
+}
+class UserViewSettings {
+    + isBlackboardVisible : bool = true
+    + isPreviewVisible : bool = true
+    + isInspectorVisible : bool = true
+    + colorProvider : string
+}
+class GraphEditorView {
+    - m_GraphView : MaterialGraphView
+    - m_MasterPreviewView : MasterPreviewView
+    - m_InspectorView : InspectorView
+    - m_Graph : GraphData
+    - m_PreviewManager : PreviewManager
+    - m_MessageManager : MessageManager
+    - m_SearchWindowProvider : SearchWindowProvider
+    - m_EdgeConnectorListener : EdgeConnectorListener
+    - m_HoveredContextView : VisualElement
+    - m_BlackboardController : BlackboardController
+    <<internal>> blackboardController : BlackboardController <<get>> <<set>>
+    - m_ColorManager : ColorManager
+    - m_EditorWindow : EditorWindow
+    <<const>> - k_UserViewSettings : string = "UnityEditor.ShaderGraph.ToggleSettings"
+    - m_UserViewSettings : UserViewSettings
+    <<internal>> viewSettings : UserViewSettings <<get>>
+    <<const>> - k_FloatingWindowsLayoutKey : string = "UnityEditor.ShaderGraph.FloatingWindowsLayout2"
+    - m_FloatingWindowsLayout : FloatingWindowsLayout
+    + saveRequested : Action <<get>> <<set>>
+    + saveAsRequested : Action <<get>> <<set>>
+    + isCheckedOut : Func<bool> <<get>> <<set>>
+    + checkOut : Action <<get>> <<set>>
+    + convertToSubgraphRequested : Action <<get>> <<set>>
+    + showInProjectRequested : Action <<get>> <<set>>
+    + graphView : MaterialGraphView <<get>>
+    <<internal>> previewManager : PreviewManager <<get>> <<set>>
+    + assetName : string <<get>> <<set>>
+    + colorManager : ColorManager <<get>>
+    - {static} <<readonly>> AddGroupsMarker : ProfilerMarker
+    - {static} <<readonly>> AddStickyNotesMarker : ProfilerMarker
+    + GraphEditorView(editorWindow:EditorWindow, graph:GraphData, messageManager:MessageManager, graphName:string)
+    - CreateBlackboard() : void
+    - AddContexts() : void
+    <<internal>> UserViewSettingsChangeCheck(newColorIndex:int) : void
+    - NodeCreationRequest(c:NodeCreationContext) : void
+    - UpdateSubWindowsVisibility() : void
+    - m_GraphViewGroupTitleChanged : Action<Group, string>
+    - m_GraphViewElementsAddedToGroup : Action<Group, IEnumerable<GraphElement>>
+    - m_GraphViewElementsRemovedFromGroup : Action<Group, IEnumerable<GraphElement>>
+    - RegisterGraphViewCallbacks() : void
+    - UnregisterGraphViewCallbacks() : void
+    - CreateMasterPreview() : void
+    - CreateInspector() : void
+    - OnKeyDown(evt:KeyDownEvent) : void
+    - GraphViewChanged(graphViewChange:GraphViewChange) : GraphViewChange
+    - SetGroupPosition(groupNode:ShaderGroup) : void
+    - SetStickyNotePosition(stickyNote:StickyNote) : void
+    - OnGroupTitleChanged(graphGroup:Group, title:string) : void
+    - OnElementsAddedToGroup(graphGroup:Group, elements:IEnumerable<GraphElement>) : void
+    - OnElementsRemovedFromGroup(graphGroup:Group, elements:IEnumerable<GraphElement>) : void
+    - OnNodeChanged(inNode:AbstractMaterialNode, scope:ModificationScope) : void
+    - m_NodeViewHashSet : HashSet<IShaderNodeView>
+    - m_GroupHashSet : HashSet<ShaderGroup>
+    - lastUpdate : float = 0f
+    + HandleGraphChanges(wasUndoRedoPerformed:bool) : void
+    - HandleRemovedNodes(lookupTable:Dictionary<object, GraphElement>) : void
+    - UpdateBadges() : void
+    - m_GraphElementsTemp : List<GraphElement>
+    - AddNode(node:AbstractMaterialNode, usePrebuiltVisualGroupMap:bool, lookupTable:Dictionary<object, GraphElement>) : void
+    - {static} visualGroupMap : Dictionary<GroupData, ShaderGroup>
+    - {static} AddToVisualGroupMap(e:GraphElement) : void
+    - {static} AddToVisualGroupMapAction : Action<GraphElement>
+    - BuildVisualGroupMap() : void
+    - {static} <<readonly>> AddNodesMarker : ProfilerMarker
+    - AddNodes(nodes:IEnumerable<AbstractMaterialNode>) : void
+    - {static} <<readonly>> AddBlocksMarker : ProfilerMarker
+    - AddBlocks(blocks:IEnumerable<BlockNode>) : void
+    - AddGroup(groupData:GroupData, lookupTable:Dictionary<object, GraphElement>) : void
+    - AddStickyNote(stickyNoteData:StickyNoteData, lookupTable:Dictionary<object, GraphElement>) : void
+    {static} - RepositionNode(evt:GeometryChangedEvent) : void
+    - {static} visualNodeMap : Dictionary<AbstractMaterialNode, IShaderNodeView>
+    - {static} AddToVisualNodeMap(n:Node) : void
+    - {static} AddToVisualNodeMapAction : Action<Node>
+    - BuildVisualNodeMap() : void
+    - {static} <<readonly>> AddEdgesMarker : ProfilerMarker
+    - AddEdges(edges:IEnumerable<IEdge>) : void
+    - AddEdge(edge:IEdge, useVisualNodeMap:bool, updateNodePorts:bool, lookupTable:Dictionary<object, GraphElement>) : Edge
+    - OnMouseDown(evt:MouseDownEvent) : void
+    - m_NodeStack : Stack<Node>
+    - m_AssetName : string
+    - UpdateEdgeColors(nodeViews:HashSet<IShaderNodeView>) : void
+    - ApplySerializedWindowLayouts(evt:GeometryChangedEvent) : void
+    - ApplyMasterPreviewLayout() : void
+    - SerializeMasterPreviewLayout(evt:GeometryChangedEvent) : void
+    - UpdateSerializedWindowLayout() : void
+    + Dispose() : void
+}
+VisualElement <|-- GraphEditorView
+IDisposable <|-- GraphEditorView
+@enduml

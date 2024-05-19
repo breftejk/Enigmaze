@@ -1,0 +1,20 @@
+@startuml
+class AssetPostprocessor {
+    <<internal>> {static} Enable(wkPath:string, plasticAssetsProcessor:PlasticAssetsProcessor) : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} SetIsRepaintNeededAfterAssetDatabaseRefresh() : void
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+    {static} - GetPathsToMoveContainedOnWorkspace(wkPath:string, movedAssets:string[], movedFromAssetPaths:string[]) : List<PathToMove>
+    {static} - GetPathsContainedOnWorkspace(wkPath:string, assets:string[]) : List<string>
+    {static} - mIsEnabled : bool
+    {static} - mIsRepaintNeededAfterAssetDatabaseRefresh : bool
+    {static} - mPlasticAssetsProcessor : PlasticAssetsProcessor
+    {static} - mWkPath : string
+}
+struct PathToMove {
+    <<internal>> <<readonly>> SrcPath : string
+    <<internal>> <<readonly>> DstPath : string
+    <<internal>> PathToMove(srcPath:string, dstPath:string)
+}
+AssetPostprocessor +-- PathToMove
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class GenerateWeightsTool {
+    - <<const>> kWeightTolerance : float = 0.01f
+    - m_SpriteMeshDataController : SpriteMeshDataController
+    - m_WeightGenerator : IWeightsGenerator
+    - m_GenerateWeightsPanel : GenerateWeightsPanel
+    <<internal>> <<override>> OnCreate() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    - BindElements() : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - OnModeChanged(mode:SkinningMode) : void
+    - OnSpriteSelectionChanged(sprite:SpriteCache) : void
+    - HandleWeights(action:Action<SpriteCache>, undoName:string) : void
+    - HandleWeightsForSprite(sprite:SpriteCache, action:Action<SpriteCache>) : void
+    - GenerateWeights(sprite:SpriteCache) : void
+    - NormalizeWeights(sprite:SpriteCache) : void
+    - ClearWeights(sprite:SpriteCache) : void
+    # <<override>> OnGUI() : void
+}
+MeshToolWrapper <|-- GenerateWeightsTool
+@enduml

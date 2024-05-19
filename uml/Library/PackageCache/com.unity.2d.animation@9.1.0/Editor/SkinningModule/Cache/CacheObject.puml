@@ -1,0 +1,14 @@
+@startuml
+class CacheObject {
+    + {static} Create(owner:Cache) : T
+    - m_Owner : Cache
+    + owner : Cache <<get>> <<set>>
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    <<internal>> <<virtual>> OnCreate() : void
+    # <<virtual>> OnAfterDeserialize() : void
+    # <<virtual>> OnBeforeSerialize() : void
+}
+BaseObject <|-- CacheObject
+ISerializationCallbackReceiver <|-- CacheObject
+@enduml

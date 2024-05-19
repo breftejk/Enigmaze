@@ -1,0 +1,31 @@
+@startuml
+class Renderer2DMenus <<static>> {
+    {static} - Create2DRendererData(onCreatedCallback:Action<Renderer2DData>) : void
+    <<internal>> {static} PlaceGameObjectInFrontOfSceneView(go:GameObject) : void
+    <<internal>> {static} Place(go:GameObject, parent:GameObject) : void
+    {static} - CreateLight(menuCommand:MenuCommand, type:Light2D.LightType, shapePath:Vector3[]) : Light2D
+    {static} - CreateLightValidation() : bool
+    {static} - CreateSquareFreeformLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateCircleFreeformLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateIsometricDiamondFreeformLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateHexagonFlatTopFreeformLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateHexagonPointedTopFreeformLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateSpriteLight2D(menuCommand:MenuCommand) : void
+    {static} - CreatePointLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateGlobalLight2D(menuCommand:MenuCommand) : void
+    {static} - CreateLight2DValidation() : bool
+    {static} - CreateUniversalPipeline() : void
+    {static} - Create2DRendererData() : void
+}
+class Create2DRendererDataAsset {
+    +  <<event>> onCreated : Action<Renderer2DData> 
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+class CreateUniversalPipelineAsset {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+Renderer2DMenus +-- Create2DRendererDataAsset
+EndNameEditAction <|-- Create2DRendererDataAsset
+Renderer2DMenus +-- CreateUniversalPipelineAsset
+EndNameEditAction <|-- CreateUniversalPipelineAsset
+@enduml

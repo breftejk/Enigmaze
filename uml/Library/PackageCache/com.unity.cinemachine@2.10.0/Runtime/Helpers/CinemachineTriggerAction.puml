@@ -1,0 +1,56 @@
+@startuml
+class CinemachineTriggerAction {
+    + m_LayerMask : LayerMask = 1
+    + m_WithTag : string
+    + m_WithoutTag : string
+    + m_SkipFirst : int = 0
+    + m_Repeating : bool = true
+    + m_OnObjectEnter : ActionSettings
+    + m_OnObjectExit : ActionSettings
+    - m_ActiveTriggerObjects : HashSet<GameObject>
+    - Filter(other:GameObject) : bool
+    - InternalDoTriggerEnter(other:GameObject) : void
+    - InternalDoTriggerExit(other:GameObject) : void
+    - OnTriggerEnter(other:Collider) : void
+    - OnTriggerExit(other:Collider) : void
+    - OnCollisionEnter(other:Collision) : void
+    - OnCollisionExit(other:Collision) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - OnTriggerExit2D(other:Collider2D) : void
+    - OnCollisionEnter2D(other:Collision2D) : void
+    - OnCollisionExit2D(other:Collision2D) : void
+    - OnEnable() : void
+}
+struct ActionSettings {
+    + m_Action : Mode
+    + m_Target : UnityEngine.Object
+    + m_BoostAmount : int
+    + m_StartTime : float
+    + m_Mode : TimeMode
+    + m_Event : TriggerEvent
+    + ActionSettings(action:Mode)
+    + Invoke() : void
+}
+enum Mode {
+    Custom,
+    PriorityBoost,
+    Activate,
+    Deactivate,
+    Enable,
+    Disable,
+}
+class TriggerEvent {
+}
+enum TimeMode {
+    FromStart,
+    FromEnd,
+    BeforeNow,
+    AfterNow,
+}
+MonoBehaviour <|-- CinemachineTriggerAction
+CinemachineTriggerAction +-- ActionSettings
+ActionSettings +-- Mode
+ActionSettings +-- TriggerEvent
+UnityEvent <|-- TriggerEvent
+ActionSettings +-- TimeMode
+@enduml

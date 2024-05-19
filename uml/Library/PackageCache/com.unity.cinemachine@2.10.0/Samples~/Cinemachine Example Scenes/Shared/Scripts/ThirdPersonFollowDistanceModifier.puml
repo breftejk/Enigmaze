@@ -1,0 +1,15 @@
+@startuml
+class ThirdPersonFollowDistanceModifier {
+    + MinAngle : float
+    + MaxAngle : float
+    + DistanceScale : AnimationCurve
+    - TpsFollow : Cinemachine3rdPersonFollow
+    - FollowTarget : Transform
+    - BaseDistance : float
+    - Reset() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+}
+MonoBehaviour <|-- ThirdPersonFollowDistanceModifier
+@enduml

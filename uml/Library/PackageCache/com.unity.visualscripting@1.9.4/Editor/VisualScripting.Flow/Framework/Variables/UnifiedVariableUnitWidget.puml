@@ -1,0 +1,11 @@
+@startuml
+class UnifiedVariableUnitWidget <<sealed>> {
+    + UnifiedVariableUnitWidget(canvas:FlowCanvas, unit:UnifiedVariableUnit)
+    # <<override>> baseColor : NodeColorMix <<get>>
+    - nameInspector : VariableNameInspector
+    - nameInspectorConstructor : Func<Metadata, VariableNameInspector>
+    + <<override>> GetPortInspector(port:IUnitPort, metadata:Metadata) : Inspector
+    - GetNameSuggestions() : IEnumerable<string>
+}
+"UnitWidget`1" "<UnifiedVariableUnit>" <|-- UnifiedVariableUnitWidget
+@enduml

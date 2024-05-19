@@ -1,0 +1,8 @@
+@startuml
+class PointerExitCallbackCheck {
+    + pointerData : PointerEventData <<get>>
+    + OnPointerExit(eventData:PointerEventData) : void
+}
+MonoBehaviour <|-- PointerExitCallbackCheck
+IPointerExitHandler <|-- PointerExitCallbackCheck
+@enduml

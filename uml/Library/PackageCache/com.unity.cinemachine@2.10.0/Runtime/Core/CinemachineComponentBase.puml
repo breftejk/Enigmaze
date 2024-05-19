@@ -1,0 +1,29 @@
+@startuml
+abstract class CinemachineComponentBase {
+    # <<const>> Epsilon : float
+    + VirtualCamera : CinemachineVirtualCameraBase <<get>>
+    - m_vcamOwner : CinemachineVirtualCameraBase
+    + FollowTarget : Transform <<get>>
+    + LookAtTarget : Transform <<get>>
+    + AbstractFollowTargetGroup : ICinemachineTargetGroup <<get>>
+    + FollowTargetGroup : CinemachineTargetGroup <<get>>
+    + FollowTargetPosition : Vector3 <<get>>
+    + FollowTargetRotation : Quaternion <<get>>
+    + AbstractLookAtTargetGroup : ICinemachineTargetGroup <<get>>
+    + LookAtTargetGroup : CinemachineTargetGroup <<get>>
+    + LookAtTargetPosition : Vector3 <<get>>
+    + LookAtTargetRotation : Quaternion <<get>>
+    + VcamState : CameraState <<get>>
+    + {abstract} IsValid : bool <<get>>
+    + <<virtual>> PrePipelineMutateCameraState(curState:CameraState, deltaTime:float) : void
+    + {abstract} Stage : CinemachineCore.Stage <<get>>
+    + <<virtual>> BodyAppliesAfterAim : bool <<get>>
+    + {abstract} MutateCameraState(curState:CameraState, deltaTime:float) : void
+    + <<virtual>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float, transitionParams:CinemachineVirtualCameraBase.TransitionParams) : bool
+    + <<virtual>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<virtual>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<virtual>> GetMaxDampTime() : float
+    + <<virtual>> RequiresUserInput : bool <<get>>
+}
+MonoBehaviour <|-- CinemachineComponentBase
+@enduml

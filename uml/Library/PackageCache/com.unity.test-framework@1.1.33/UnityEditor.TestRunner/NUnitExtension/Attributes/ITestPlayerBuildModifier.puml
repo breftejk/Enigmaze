@@ -1,0 +1,5 @@
+@startuml
+interface ITestPlayerBuildModifier {
+    ModifyOptions(playerOptions:BuildPlayerOptions) : BuildPlayerOptions
+}
+@enduml

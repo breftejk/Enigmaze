@@ -1,0 +1,40 @@
+@startuml
+class CameraController {
+    - cameraTransform : Transform
+    - dummyTarget : Transform
+    + CameraTarget : Transform
+    + FollowDistance : float = 30.0f
+    + MaxFollowDistance : float = 100.0f
+    + MinFollowDistance : float = 2.0f
+    + ElevationAngle : float = 30.0f
+    + MaxElevationAngle : float = 85.0f
+    + MinElevationAngle : float = 0f
+    + OrbitalAngle : float = 0f
+    + CameraMode : CameraModes
+    + MovementSmoothing : bool = true
+    + RotationSmoothing : bool = false
+    - previousSmoothing : bool
+    + MovementSmoothingValue : float = 25f
+    + RotationSmoothingValue : float = 5.0f
+    + MoveSensitivity : float = 2.0f
+    - currentVelocity : Vector3
+    - desiredPosition : Vector3
+    - mouseX : float
+    - mouseY : float
+    - moveVector : Vector3
+    - mouseWheel : float
+    - <<const>> event_SmoothingValue : string = "Slider - Smoothing Value"
+    - <<const>> event_FollowDistance : string = "Slider - Camera Zoom"
+    - Awake() : void
+    - Start() : void
+    - LateUpdate() : void
+    - GetPlayerInput() : void
+}
+enum CameraModes {
+    Follow,
+    Isometric,
+    Free,
+}
+MonoBehaviour <|-- CameraController
+CameraController +-- CameraModes
+@enduml

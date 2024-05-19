@@ -1,0 +1,64 @@
+@startuml
+class Codebase <<static>> {
+    {static} - Codebase()
+    - {static} <<readonly>> _assemblies : List<Assembly>
+    - {static} <<readonly>> _runtimeAssemblies : List<Assembly>
+    - {static} <<readonly>> _editorAssemblies : List<Assembly>
+    - {static} <<readonly>> _ludiqAssemblies : List<Assembly>
+    - {static} <<readonly>> _ludiqRuntimeAssemblies : List<Assembly>
+    - {static} <<readonly>> _ludiqEditorAssemblies : List<Assembly>
+    - {static} <<readonly>> _types : List<Type>
+    - {static} <<readonly>> _runtimeTypes : List<Type>
+    - {static} <<readonly>> _editorTypes : List<Type>
+    - {static} <<readonly>> _ludiqTypes : List<Type>
+    - {static} <<readonly>> _ludiqRuntimeTypes : List<Type>
+    - {static} <<readonly>> _ludiqEditorTypes : List<Type>
+    - {static} _settingsAssemblies : List<Assembly>
+    - {static} _settingsAssembliesTypes : List<Type>
+    - {static} _settingsTypes : List<Type>
+    - {static} <<readonly>> _editorAssemblyCache : Dictionary<Assembly, bool>
+    - {static} <<readonly>> _assemblyNameCache : Dictionary<Assembly, string>
+    + {static} SerializeType(type:Type) : string
+    + {static} TryDeserializeType(typeName:string, type:Type) : bool
+    + {static} DeserializeType(typeName:string) : Type
+    - <<const>> memberDataSeparator : char = ';'
+    + {static} SerializeMember(member:Member) : string
+    + {static} DeserializeMember(memberData:string) : Member
+    + {static}  <<event>> settingsChanged : Action 
+    + {static} assemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} runtimeAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} editorAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} ludiqAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} ludiqRuntimeAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} ludiqEditorAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} settingsAssemblies : ReadOnlyCollection<Assembly> <<get>>
+    + {static} types : ReadOnlyCollection<Type> <<get>>
+    + {static} runtimeTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} editorTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} ludiqTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} ludiqRuntimeTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} ludiqEditorTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} settingsAssembliesTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} settingsTypes : ReadOnlyCollection<Type> <<get>>
+    + {static} GetTypeSet(typeSet:TypeSet) : ReadOnlyCollection<Type>
+    + {static} GetTypeSetFromAttribute(attributeProvider:IAttributeProvider, fallback:TypeSet) : ReadOnlyCollection<Type>
+    - {static} IsUnityEditorAssembly(assembly:Assembly) : bool
+    - {static} IsUnityEditorAssembly(name:string) : bool
+    - {static} IsSpecialCaseRuntimeAssembly(assemblyName:string) : bool
+    - {static} IsEditorAssembly(assembly:Assembly, visited:HashSet<string>) : bool
+    - {static} IsUserAssembly(name:string) : bool
+    - {static} IsRuntimeAssembly(assembly:Assembly) : bool
+    - {static} IsLudiqRuntimeDependentAssembly(assembly:Assembly) : bool
+    - {static} IsLudiqEditorDependentAssembly(assembly:Assembly) : bool
+    + {static} IsEditorType(type:Type) : bool
+    + {static} IsRuntimeType(type:Type) : bool
+    <<internal>> {static} IsUnityEditorType(type:Type) : bool
+    + {static} IsInternalType(type:Type) : bool
+    - {static} RootNamespace(type:Type) : string
+    + {static} UpdateSettings() : void
+    - {static} IncludeInSettings(a:Assembly, assemblyOptionsHashSet:HashSet<LooseAssemblyName>) : bool
+    - {static} IncludeInSettings(t:Type, couldHaveAttribute:bool, typeOptionsHashSet:HashSet<Type>) : bool
+    + {static} Subset(types:IEnumerable<Type>, memberFilter:MemberFilter, memberTypeFilter:TypeFilter) : CodebaseSubset
+    + {static} Subset(typeSet:IEnumerable<Type>, typeFilter:TypeFilter, memberFilter:MemberFilter, memberTypeFilter:TypeFilter) : CodebaseSubset
+}
+@enduml

@@ -1,0 +1,164 @@
+@startuml
+class UniversalDecalSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    - <<const>> kMaterial : string = "Material"
+    - {static} AffectsAlbedo : FieldDescriptor
+    - {static} AffectsNormal : FieldDescriptor
+    - {static} AffectsNormalBlend : FieldDescriptor
+    - {static} AffectsMAOS : FieldDescriptor
+    - {static} AffectsEmission : FieldDescriptor
+    - {static} AffectsDBuffer : FieldDescriptor
+    - {static} DecalDefault : FieldDescriptor
+    - {static} AngleFade : FieldDescriptor
+    - m_DecalData : DecalData
+    - decalData : DecalData <<get>>
+    + UniversalDecalSubTarget()
+    + <<override>> IsActive() : bool
+    # <<override>> shaderID : ShaderUtils.ShaderID <<get>>
+    + <<override>> Setup(context:TargetSetupContext) : void
+    - CollectPassRenderState(pass:PassDescriptor) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+}
+class Styles {
+    + <<const>> header : string = "Surface Options"
+    + {static} affectAlbedoText : GUIContent
+    + {static} affectNormalText : GUIContent
+    + {static} affectNormalBlendText : GUIContent
+    + {static} affectMetalText : GUIContent
+    + {static} affectAmbientOcclusionText : GUIContent
+    + {static} affectSmoothnessText : GUIContent
+    + {static} affectEmissionText : GUIContent
+    + {static} supportLodCrossFadeText : GUIContent
+}
+class DecalData {
+    + affectsAlbedo : bool = true
+    + affectsNormalBlend : bool = true
+    + affectsNormal : bool = true
+    + affectsMAOS : bool
+    + affectsEmission : bool
+    + drawOrder : int
+    + supportLodCrossFade : bool
+    + angleFade : bool
+}
+class SubShaders <<static>> {
+    + {static} Decal(disableBatchingTag:string) : SubShaderDescriptor
+}
+class DecalPasses <<static>> {
+    + {static} ScenePicking : PassDescriptor
+    + {static} GetScenePicking(pragma:PragmaCollection) : PassDescriptor
+    + {static} DBufferProjector : PassDescriptor
+    + {static} ForwardEmissiveProjector : PassDescriptor
+    + {static} ScreenSpaceProjector : PassDescriptor
+    + {static} GetScreenSpaceProjector(pragma:PragmaCollection, keywords:KeywordCollection) : PassDescriptor
+    + {static} GBufferProjector : PassDescriptor
+    + {static} DBufferMesh : PassDescriptor
+    + {static} ForwardEmissiveMesh : PassDescriptor
+    + {static} ScreenSpaceMesh : PassDescriptor
+    + {static} GetScreenSpaceMesh(pragma:PragmaCollection, keywords:KeywordCollection) : PassDescriptor
+    + {static} GBufferMesh : PassDescriptor
+}
+class DecalBlockMasks <<static>> {
+    + {static} FragmentWithoutEmessive : BlockFieldDescriptor[]
+    + {static} ForwardOnlyEmissive : BlockFieldDescriptor[]
+    + {static} Fragment : BlockFieldDescriptor[]
+}
+class DecalRequiredFields <<static>> {
+    + {static} Mesh : FieldCollection
+    + {static} ScreenSpaceProjector : FieldCollection
+    + {static} GBufferProjector : FieldCollection
+    + {static} ScreenSpaceMesh : FieldCollection
+}
+class DecalColorMasks <<static>> {
+    + {static} ColorMaskRGBA0 : RenderStateDescriptor
+    + {static} ColorMaskNone0 : RenderStateDescriptor
+    + {static} ColorMaskRGBA1 : RenderStateDescriptor
+    + {static} ColorMaskNone1 : RenderStateDescriptor
+    + {static} ColorMaskRGBA2 : RenderStateDescriptor
+    + {static} ColorMaskNone2 : RenderStateDescriptor
+}
+class DecalRenderStates <<static>> {
+    - <<readonly>> {static} s_DBufferBlends : string[]
+    - <<readonly>> {static} s_GBufferBlends : string[]
+    + {static} ScenePicking : RenderStateCollection
+    + {static} DBufferProjector : RenderStateCollection
+    + {static} ForwardEmissiveProjector : RenderStateCollection
+    + {static} ScreenSpaceProjector : RenderStateCollection
+    + {static} GBufferProjector : RenderStateCollection
+    + {static} DBufferMesh : RenderStateCollection
+    + {static} ForwardEmissiveMesh : RenderStateCollection
+    + {static} ScreenSpaceMesh : RenderStateCollection
+    + {static} GBufferMesh : RenderStateCollection
+}
+class DecalPragmas <<static>> {
+    + {static} ScreenSpace : PragmaCollection
+    + {static} GBuffer : PragmaCollection
+    + {static} MultipleRenderTargets : PragmaCollection
+    + {static} <<readonly>> Instanced : PragmaCollection
+}
+class DecalDefines <<static>> {
+    + {static} Projector : DefineCollection
+    + {static} ProjectorEmission : DefineCollection
+    + {static} ProjectorWithEmission : DefineCollection
+    + {static} Mesh : DefineCollection
+    + {static} MeshEmission : DefineCollection
+    + {static} MeshWithEmission : DefineCollection
+    + {static} ScenePicking : DefineCollection
+}
+class DecalKeywords <<static>> {
+    + {static} DBufferMesh : KeywordCollection
+    + {static} DBufferProjector : KeywordCollection
+    + {static} ForwardEmissiveProjector : KeywordCollection
+    + {static} <<readonly>> ScreenSpaceMeshGl : KeywordCollection
+    + {static} <<readonly>> ScreenSpaceMesh : KeywordCollection
+    + {static} <<readonly>> ScreenSpaceProjector : KeywordCollection
+    + {static} <<readonly>> GBufferMesh : KeywordCollection
+    + {static} <<readonly>> GBufferProjector : KeywordCollection
+}
+class DecalIncludes <<static>> {
+    <<const>> - kDecalInput : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
+    <<const>> - kShaderVariablesDecal : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
+    <<const>> - kPassDecal : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPassDecal.hlsl"
+    <<const>> - kShaderPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+    <<const>> - kVaryings : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl"
+    <<const>> - kDBuffer : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
+    <<const>> - kGBuffer : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+    <<const>> - kLODCrossFade : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
+    + {static} DecalPregraph : IncludeCollection
+    + {static} DecalPostgraph : IncludeCollection
+    + {static} DBuffer : IncludeCollection
+    + {static} ScreenSpace : IncludeCollection
+    + {static} GBuffer : IncludeCollection
+    + {static} ScenePicking : IncludeCollection
+}
+class Descriptors <<static>> {
+    + {static} AffectsAlbedo : KeywordDescriptor
+    + {static} AffectsNormal : KeywordDescriptor
+    + {static} AffectsNormalBlend : KeywordDescriptor
+    + {static} AffectsMAOS : KeywordDescriptor
+    + {static} AffectsEmission : KeywordDescriptor
+    + {static} AngleFade : KeywordDescriptor
+    + {static} ScenePickingPass : KeywordDescriptor
+}
+class Descriptors <<static>> {
+    + {static} DecalsNormalBlend : KeywordDescriptor
+    + {static} <<readonly>> DecalLayers : KeywordDescriptor
+}
+UniversalSubTarget <|-- UniversalDecalSubTarget
+UniversalDecalSubTarget +-- Styles
+UniversalDecalSubTarget +-- DecalData
+UniversalDecalSubTarget +-- SubShaders
+UniversalDecalSubTarget +-- DecalPasses
+UniversalDecalSubTarget +-- DecalBlockMasks
+UniversalDecalSubTarget +-- DecalRequiredFields
+UniversalDecalSubTarget +-- DecalColorMasks
+UniversalDecalSubTarget +-- DecalRenderStates
+UniversalDecalSubTarget +-- DecalPragmas
+UniversalDecalSubTarget +-- DecalDefines
+UniversalDecalSubTarget +-- DecalKeywords
+UniversalDecalSubTarget +-- DecalIncludes
+DecalDefines +-- Descriptors
+DecalKeywords +-- Descriptors
+@enduml

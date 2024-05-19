@@ -1,0 +1,17 @@
+@startuml
+abstract class "MemberUnitDescriptor`1"<TMemberUnit> {
+    # MemberUnitDescriptor(unit:TMemberUnit)
+    # member : Member <<get>>
+    # {abstract} direction : ActionDirection <<get>>
+    - Name() : string
+    # <<override>> DefinedTitle() : string
+    # <<override>> ErrorSurtitle(exception:Exception) : string
+    # <<override>> ErrorTitle(exception:Exception) : string
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedIcon() : EditorTexture
+    # <<override>> ErrorIcon(exception:Exception) : EditorTexture
+    # <<override>> DefinedSurtitle() : string
+    # <<override>> DefinedSummary() : string
+}
+"UnitDescriptor`1" "<TMemberUnit>" <|-- "MemberUnitDescriptor`1"
+@enduml

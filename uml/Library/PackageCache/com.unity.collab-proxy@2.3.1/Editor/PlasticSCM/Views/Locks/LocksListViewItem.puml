@@ -1,0 +1,7 @@
+@startuml
+class LocksListViewItem <<sealed>> {
+    <<internal>> LockInfo : LockInfo <<get>>
+    <<internal>> LocksListViewItem(id:int, lockInfo:LockInfo)
+}
+TreeViewItem <|-- LocksListViewItem
+@enduml

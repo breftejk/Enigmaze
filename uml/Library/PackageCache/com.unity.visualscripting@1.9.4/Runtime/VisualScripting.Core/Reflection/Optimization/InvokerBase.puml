@@ -1,0 +1,22 @@
+@startuml
+abstract class InvokerBase {
+    # InvokerBase(methodInfo:MethodInfo)
+    # <<readonly>> targetType : Type
+    # <<readonly>> methodInfo : MethodInfo
+    # VerifyArgument(methodInfo:MethodInfo, argIndex:int, arg:object) : void
+    + Compile() : void
+    # GetParameterExpressions() : ParameterExpression[]
+    # {abstract} GetParameterTypes() : Type[]
+    + {abstract} Invoke(target:object, args:object[]) : object
+    + <<virtual>> Invoke(target:object) : object
+    + <<virtual>> Invoke(target:object, arg0:object) : object
+    + <<virtual>> Invoke(target:object, arg0:object, arg1:object) : object
+    + <<virtual>> Invoke(target:object, arg0:object, arg1:object, arg2:object) : object
+    + <<virtual>> Invoke(target:object, arg0:object, arg1:object, arg2:object, arg3:object) : object
+    + <<virtual>> Invoke(target:object, arg0:object, arg1:object, arg2:object, arg3:object, arg4:object) : object
+    # {abstract} CompileExpression() : void
+    # {abstract} CreateDelegate() : void
+    # {abstract} VerifyTarget(target:object) : void
+}
+IOptimizedInvoker <|-- InvokerBase
+@enduml

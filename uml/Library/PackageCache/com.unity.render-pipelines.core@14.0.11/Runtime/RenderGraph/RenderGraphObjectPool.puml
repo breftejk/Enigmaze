@@ -1,0 +1,31 @@
+@startuml
+class RenderGraphObjectPool <<sealed>> {
+    - m_ArrayPool : Dictionary<(Type, int), Stack<object>>
+    - m_AllocatedArrays : List<(object, (Type, int))>
+    - m_AllocatedMaterialPropertyBlocks : List<MaterialPropertyBlock>
+    <<internal>> RenderGraphObjectPool()
+    + GetTempArray(size:int) : T[]
+    + GetTempMaterialPropertyBlock() : MaterialPropertyBlock
+    <<internal>> ReleaseAllTempAlloc() : void
+    <<internal>> Get() : T
+    <<internal>> Release(value:T) : void
+    <<internal>> Cleanup() : void
+}
+abstract class SharedObjectPoolBase {
+    # {static} s_AllocatedPools : List<SharedObjectPoolBase>
+    # {abstract} Clear() : void
+    + {static} ClearAll() : void
+}
+class "SharedObjectPool`1"<T> {
+    - m_Pool : Stack<T>
+    + Get() : T
+    + Release(value:T) : void
+    {static} - AllocatePool() : SharedObjectPool<T>
+    <<override>> # Clear() : void
+    {static} <<readonly>> - s_Instance : Lazy<SharedObjectPool<T>>
+    + {static} sharedPool : SharedObjectPool<T> <<get>>
+}
+RenderGraphObjectPool +-- SharedObjectPoolBase
+RenderGraphObjectPool +-- "SharedObjectPool`1"
+SharedObjectPoolBase <|-- "SharedObjectPool`1"
+@enduml

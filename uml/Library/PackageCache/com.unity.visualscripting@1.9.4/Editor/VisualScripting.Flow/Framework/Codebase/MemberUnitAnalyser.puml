@@ -1,0 +1,7 @@
+@startuml
+class MemberUnitAnalyser {
+    + MemberUnitAnalyser(reference:GraphReference, target:MemberUnit)
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"UnitAnalyser`1" "<MemberUnit>" <|-- MemberUnitAnalyser
+@enduml

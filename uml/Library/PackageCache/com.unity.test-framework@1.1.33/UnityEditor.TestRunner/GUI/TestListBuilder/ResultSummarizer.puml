@@ -1,0 +1,28 @@
+@startuml
+class ResultSummarizer {
+    - m_ErrorCount : int
+    - m_FailureCount : int
+    - m_IgnoreCount : int
+    - m_InconclusiveCount : int
+    - m_NotRunnable : int
+    - m_ResultCount : int
+    - m_SkipCount : int
+    - m_SuccessCount : int
+    - m_TestsRun : int
+    - m_Duration : TimeSpan
+    + ResultSummarizer(results:IEnumerable<TestRunnerResult>)
+    + success : bool <<get>>
+    + ResultCount : int <<get>>
+    + TestsRun : int <<get>>
+    + Passed : int <<get>>
+    + errors : int <<get>>
+    + failures : int <<get>>
+    + inconclusive : int <<get>>
+    + notRunnable : int <<get>>
+    + Skipped : int <<get>>
+    + ignored : int <<get>>
+    + duration : double <<get>>
+    + testsNotRun : int <<get>>
+    + Summarize(result:TestRunnerResult) : void
+}
+@enduml

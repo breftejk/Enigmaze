@@ -1,0 +1,10 @@
+@startuml
+class TimelineWindow <<partial>> {
+    - m_PlayRangeEnd : TimeAreaItem
+    - m_PlayRangeStart : TimeAreaItem
+    - PlayRangeGUI(area:TimelineItemArea) : void
+    - DrawPlayRange(drawHeads:bool, drawLines:bool) : void
+    - OnTrackHeadMinSelectDrag(newTime:double) : void
+    - OnTrackHeadMaxSelectDrag(newTime:double) : void
+}
+@enduml

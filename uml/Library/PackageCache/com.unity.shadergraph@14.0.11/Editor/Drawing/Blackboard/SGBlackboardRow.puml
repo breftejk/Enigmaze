@@ -1,0 +1,16 @@
+@startuml
+class SGBlackboardRow {
+    {static} <<readonly>> - k_UxmlTemplatePath : string = "UXML/Blackboard/SGBlackboardRow"
+    {static} <<readonly>> - k_StyleSheetPath : string = "Styles/SGBlackboard"
+    - m_Root : VisualElement
+    - m_ExpandButton : Button
+    - m_ItemContainer : VisualElement
+    - m_PropertyViewContainer : VisualElement
+    - m_Expanded : bool = true
+    + expanded : bool <<get>> <<set>>
+    + SGBlackboardRow(item:VisualElement, propertyView:VisualElement)
+    + Dispose() : void
+}
+VisualElement <|-- SGBlackboardRow
+IDisposable <|-- SGBlackboardRow
+@enduml

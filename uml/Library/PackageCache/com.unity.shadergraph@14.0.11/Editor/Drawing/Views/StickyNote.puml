@@ -1,0 +1,78 @@
+@startuml
+class StickyNodeChangeEvent {
+    + {static} GetPooled(target:StickyNote, change:Change) : StickyNodeChangeEvent
+    + change : Change <<get>> <<protected set>>
+}
+class StickyNote {
+    - m_Graph : GraphData
+    + <<new>> userData : StickyNoteData <<get>> <<set>>
+    - m_Theme : Theme
+    + theme : Theme <<get>> <<set>>
+    - m_TextSize : TextSize
+    + textSize : TextSize <<get>> <<set>>
+    + <<virtual>> OnStartResize() : void
+    + <<virtual>> OnResized() : void
+    + CanResizePastParentBounds() : bool
+    - AllExtraSpace(element:VisualElement) : Vector2
+    - OnFitToText(a:DropdownMenuAction) : void
+    + FitText(onlyIfSmaller:bool) : void
+    - UpdateThemeClasses() : void
+    - UpdateSizeClasses() : void
+    + {static} <<readonly>> defaultSize : Vector2
+    + StickyNote(position:Rect, graph:GraphData)
+    + displayName : string <<get>>
+    + StickyNote(uiFile:string, position:Rect, graph:GraphData)
+    + BuildContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    - OnDelete(menuAction:DropdownMenuAction) : void
+    - OnTitleChange(e:EventBase) : void
+    + GetInspectorContent() : PropertySheet
+    <<const>> - fitTextClass : string = "fit-text"
+    + <<override>> SetPosition(rect:Rect) : void
+    + <<override>> GetPosition() : Rect
+    + contents : string <<get>> <<set>>
+    + <<new>> title : string <<get>> <<set>>
+    - OnChangeTheme(action:DropdownMenuAction) : void
+    - OnChangeSize(action:DropdownMenuAction) : void
+    - OnAttachToPanel(e:AttachToPanelEvent) : void
+    - OnTitleBlur(e:BlurEvent) : void
+    - OnContentsBlur(e:BlurEvent) : void
+    - OnTitleRelayout(e:GeometryChangedEvent) : void
+    - UpdateTitleFieldRect() : void
+    - OnTitleMouseDown(e:MouseDownEvent) : void
+    - NotifyChange(change:StickyNodeChangeEvent.Change) : void
+    + OnChange : System.Action<StickyNodeChangeEvent.Change>
+    - OnContentsMouseDown(e:MouseDownEvent) : void
+    - m_Title : Label
+    # m_TitleField : TextField
+    - m_Contents : Label
+    # m_ContentsField : TextField
+}
+enum Change {
+    title,
+    contents,
+    theme,
+    textSize,
+}
+enum Theme {
+    Classic,
+    Black,
+    Orange,
+    Green,
+    Blue,
+    Red,
+    Purple,
+    Teal,
+}
+enum TextSize {
+    Small,
+    Medium,
+    Large,
+    Huge,
+}
+"EventBase`1" "<StickyNodeChangeEvent>" <|-- StickyNodeChangeEvent
+GraphElement <|-- StickyNote
+ISGResizable <|-- StickyNote
+StickyNodeChangeEvent +-- Change
+StickyNote +-- Theme
+StickyNote +-- TextSize
+@enduml

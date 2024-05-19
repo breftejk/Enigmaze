@@ -1,0 +1,17 @@
+@startuml
+class UniversalRenderPipelineAssetEditor {
+    - m_RendererDataProp : SerializedProperty
+    - m_DefaultRendererProp : SerializedProperty
+    <<internal>> rendererList : ReorderableList <<get>>
+    - m_RendererDataList : ReorderableList
+    - m_SerializedURPAsset : SerializedUniversalRenderPipelineAsset
+    + <<override>> OnInspectorGUI() : void
+    - OnEnable() : void
+    - CreateRendererReorderableList() : void
+    - OnRemoveElement(reorderableList:ReorderableList) : void
+    - OnDrawElement(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - UpdateDefaultRendererValue(index:int) : void
+    - UpdateDefaultRendererValue(prevIndex:int, newIndex:int) : void
+}
+Editor <|-- UniversalRenderPipelineAssetEditor
+@enduml

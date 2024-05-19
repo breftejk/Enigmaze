@@ -1,0 +1,12 @@
+@startuml
+class PendingChangesMultiColumnHeader {
+    <<internal>> PendingChangesMultiColumnHeader(treeView:PendingChangesTreeView, headerState:MultiColumnHeaderState, tree:UnityPendingChangesTree)
+    # <<override>> ColumnHeaderGUI(column:MultiColumnHeaderState.Column, headerRect:Rect, columnIndex:int) : void
+    <<internal>> IsAllCheckedState() : bool
+    # IsMixedCheckedState() : bool
+    <<internal>> UpdateCheckedState(isChecked:bool) : void
+    <<readonly>> - mPendingChangesTreeView : PendingChangesTreeView
+    # mPendingChangesTree : UnityPendingChangesTree
+}
+MultiColumnHeader <|-- PendingChangesMultiColumnHeader
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class BurstILPostProcessor {
+    + IsDebugging : bool
+    + DebuggingLevel : int
+    - SetupDebugging() : void
+    - {static} FindBestSequencePointFor(method:MethodDefinition, instruction:Instruction) : SequencePoint
+    - {static} MakeDiagnosticError(method:MethodDefinition, errorLocation:Instruction, message:string) : DiagnosticMessage
+    + <<override>> <<unsafe>> Process(compiledAssembly:ICompiledAssembly) : ILPostProcessResult
+    - {static} Log(message:string) : void
+    + <<override>> GetInstance() : ILPostProcessor
+    + <<override>> WillProcess(compiledAssembly:ICompiledAssembly) : bool
+}
+class CachedAssemblyResolver <<sealed>> {
+    - _cache : Dictionary<string, AssemblyDefinition>
+    - _knownLocations : Dictionary<string, string>
+    + RegisterKnownLocation(path:string) : void
+    + <<override>> Resolve(name:AssemblyNameReference) : AssemblyDefinition
+}
+ILPostProcessor <|-- BurstILPostProcessor
+BurstILPostProcessor +-- CachedAssemblyResolver
+AssemblyResolver <|-- CachedAssemblyResolver
+@enduml

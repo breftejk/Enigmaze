@@ -1,0 +1,34 @@
+@startuml
+struct SpriteShapeGeometryInfo {
+    <<internal>> geomIndex : int
+    <<internal>> indexCount : int
+    <<internal>> vertexCount : int
+    <<internal>> spriteIndex : int
+}
+class SpriteShapeGeometryCache {
+    - m_MaxArrayCount : int
+    - m_PosArray : Vector3[] = null
+    - m_Uv0Array : Vector2[] = null
+    - m_TanArray : Vector4[] = null
+    - m_IndexArray : ushort[] = null
+    - m_GeomArray : SpriteShapeGeometryInfo[] = null
+    - m_RequiresUpdate : bool = false
+    - m_RequiresUpload : bool = false
+    - m_PosArrayCache : NativeSlice<Vector3>
+    - m_Uv0ArrayCache : NativeSlice<Vector2>
+    - m_TanArrayCache : NativeSlice<Vector4>
+    - m_IndexArrayCache : NativeArray<ushort>
+    - m_GeomArrayCache : NativeArray<SpriteShapeSegment>
+    <<internal>> indexArray : ushort[] <<get>>
+    <<internal>> posArray : Vector3[] <<get>>
+    + tanArray : Vector4[] <<get>>
+    <<internal>> maxArrayCount : int <<get>>
+    <<internal>> requiresUpdate : bool <<get>>
+    <<internal>> requiresUpload : bool <<get>>
+    - OnEnable() : void
+    <<internal>> SetGeometryCache(_maxArrayCount:int, _posArray:NativeSlice<Vector3>, _uv0Array:NativeSlice<Vector2>, _tanArray:NativeSlice<Vector4>, _indexArray:NativeArray<ushort>, _geomArray:NativeArray<UnityEngine.U2D.SpriteShapeSegment>) : void
+    <<internal>> UpdateGeometryCache() : void
+    <<internal>> Upload(sr:SpriteShapeRenderer, sc:SpriteShapeController) : JobHandle
+}
+MonoBehaviour <|-- SpriteShapeGeometryCache
+@enduml

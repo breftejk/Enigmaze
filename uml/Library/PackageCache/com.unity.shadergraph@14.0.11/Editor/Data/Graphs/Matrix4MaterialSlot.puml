@@ -1,0 +1,21 @@
+@startuml
+class Matrix4MaterialSlot {
+    - m_Value : Matrix4x4
+    - m_DefaultValue : Matrix4x4
+    + Matrix4MaterialSlot()
+    + Matrix4MaterialSlot(slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, stageCapability:ShaderStageCapability, hidden:bool)
+    + <<override>> InstantiateControl() : VisualElement
+    + defaultValue : Matrix4x4 <<get>>
+    + value : Matrix4x4 <<get>> <<set>>
+    + <<override>> isDefaultValue : bool <<get>>
+    # <<override>> ConcreteSlotValueAsVariable() : string
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetPreviewProperties(properties:List<PreviewProperty>, name:string) : void
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + <<override>> CopyDefaultValue(other:MaterialSlot) : void
+}
+MaterialSlot <|-- Matrix4MaterialSlot
+"IMaterialSlotHasValue`1" "<Matrix4x4>" <|-- Matrix4MaterialSlot
+@enduml

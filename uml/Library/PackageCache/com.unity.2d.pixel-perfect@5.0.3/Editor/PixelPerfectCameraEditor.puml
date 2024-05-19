@@ -1,0 +1,44 @@
+@startuml
+class PixelPerfectCameraEditor {
+    - {static} m_Style : Style
+    - <<const>> k_SingleLetterLabelWidth : float = 15.0f
+    - <<const>> k_DottedLineSpacing : float = 2.5f
+    - m_AssetsPPU : SerializedProperty
+    - m_RefResX : SerializedProperty
+    - m_RefResY : SerializedProperty
+    - m_UpscaleRT : SerializedProperty
+    - m_PixelSnapping : SerializedProperty
+    - m_CropFrameY : SerializedProperty
+    - m_CropFrameX : SerializedProperty
+    - m_StretchFill : SerializedProperty
+    - m_GameViewSize : Vector2
+    - m_CurrentPixelRatioValue : GUIContent
+    - LazyInit() : void
+    + OnEnable() : void
+    + <<override>> RequiresConstantRepaint() : bool
+    + <<override>> OnInspectorGUI() : void
+    - OnSceneGUI() : void
+}
+class Style {
+    + x : GUIContent
+    + y : GUIContent
+    + assetsPPU : GUIContent
+    + refRes : GUIContent
+    + upscaleRT : GUIContent
+    + pixelSnapping : GUIContent
+    + cropFrame : GUIContent
+    + stretchFill : GUIContent
+    + currentPixelRatio : GUIContent
+    + runInEditMode : GUIContent
+    + {static} srpWarning : string = "Pixel Perfect Camera in the 2D Pixel Perfect package isn't compatible with Scriptable Render Pipeline. If you are using the Universal Render Pipeline, you can upgrade this to the Pixel Perfect Camera component that ships with URP."
+    + {static} pixelPerfectButtonUpgrade : GUIContent
+    + {static} pixelPerfectDialogUpgrade : string = "The upgrade will convert the selected Pixel Perfect Camera to the URP version. You can't undo this operation."
+    + {static} pixelPerfectDialogTitle : string = "Pixel Perfect Camera Converter"
+    + {static} pixelPerfectDialogProceed : string = "Proceed"
+    + {static} pixelPerfectDialogCancel : string = "Cancel"
+    + centeredLabel : GUIStyle
+    + Style()
+}
+Editor <|-- PixelPerfectCameraEditor
+PixelPerfectCameraEditor +-- Style
+@enduml

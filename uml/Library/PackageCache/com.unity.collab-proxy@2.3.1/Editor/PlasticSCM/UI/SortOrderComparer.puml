@@ -1,0 +1,9 @@
+@startuml
+class "SortOrderComparer`1"<T> {
+    <<internal>> SortOrderComparer(comparer:IComparer<T>, isAscending:bool)
+    - Compare(x:T, y:T) : int
+    - mIsAscending : bool
+    - mComparer : IComparer<T>
+}
+"IComparer`1" "<T>" <|-- "SortOrderComparer`1"
+@enduml

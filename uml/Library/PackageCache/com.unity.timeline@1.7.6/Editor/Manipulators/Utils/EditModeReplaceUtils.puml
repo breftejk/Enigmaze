@@ -1,0 +1,6 @@
+@startuml
+class EditModeReplaceUtils <<static>> {
+    + {static} Insert(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    {static} - Insert(track:TrackAsset, items:IEnumerable<ITimelineItem>) : void
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class ImporterEditorUtils <<static>> {
+    <<const>> - k_DarkSkinUssClass : string = "asepriteImporter-editor-dark"
+    <<const>> - k_LightSkinUssClass : string = "asepriteImporter-editor-light"
+    + {static} AddSkinUssClass(element:VisualElement) : void
+}
+@enduml

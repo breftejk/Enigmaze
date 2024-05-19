@@ -1,0 +1,24 @@
+@startuml
+class ShadowUtility {
+    {static} - CreateEdge(triangleIndexA:int, triangleIndexB:int, vertices:List<Vector3>, triangles:List<int>) : Edge
+    {static} - PopulateEdgeArray(vertices:List<Vector3>, triangles:List<int>, edges:List<Edge>) : void
+    {static} - IsOutsideEdge(edgeIndex:int, edgesToProcess:List<Edge>) : bool
+    {static} - SortEdges(edgesToProcess:List<Edge>) : void
+    {static} - CreateShadowTriangles(vertices:List<Vector3>, colors:List<Color>, triangles:List<int>, tangents:List<Vector4>, edges:List<Edge>) : void
+    {static} - InterpCustomVertexData(position:Vec3, data:object[], weights:float[]) : object
+    {static} - InitializeTangents(tangentsToAdd:int, tangents:List<Vector4>) : void
+    {static} <<internal>> CalculateLocalBounds(inVertices:Vector3[]) : Bounds
+    + {static} GenerateShadowMesh(mesh:Mesh, shapePath:Vector3[]) : Bounds
+}
+struct Edge {
+    + vertexIndex0 : int
+    + vertexIndex1 : int
+    + tangent : Vector4
+    - compareReversed : bool
+    + AssignVertexIndices(vi0:int, vi1:int) : void
+    + Compare(a:Edge, b:Edge) : int
+    + CompareTo(edgeToCompare:Edge) : int
+}
+ShadowUtility +-- Edge
+"IComparable`1" "<Edge>" <|-- Edge
+@enduml

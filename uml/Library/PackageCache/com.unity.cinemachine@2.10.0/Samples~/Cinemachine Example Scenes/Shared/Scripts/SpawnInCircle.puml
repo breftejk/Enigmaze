@@ -1,0 +1,10 @@
+@startuml
+class SpawnInCircle {
+    + Prefab : GameObject
+    + Radius : float = 1000
+    + Amount : float = 10000
+    + DoIt : bool
+    - Update() : void
+}
+MonoBehaviour <|-- SpawnInCircle
+@enduml

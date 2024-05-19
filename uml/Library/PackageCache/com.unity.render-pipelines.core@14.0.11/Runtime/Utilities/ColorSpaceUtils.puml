@@ -1,0 +1,9 @@
+@startuml
+class ColorSpaceUtils <<static>> {
+    + {static} <<readonly>> Rec709ToRec2020Mat : Matrix4x4
+    + {static} <<readonly>> Rec709ToP3D65Mat : Matrix4x4
+    + {static} <<readonly>> Rec2020ToRec709Mat : Matrix4x4
+    + {static} <<readonly>> Rec2020ToP3D65Mat : Matrix4x4
+    + {static} <<readonly>> P3D65ToRec2020Mat : Matrix4x4
+}
+@enduml

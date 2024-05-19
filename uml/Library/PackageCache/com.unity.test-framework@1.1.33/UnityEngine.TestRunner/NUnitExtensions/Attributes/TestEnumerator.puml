@@ -1,0 +1,18 @@
+@startuml
+class TestEnumerator {
+    - <<readonly>> m_Context : ITestExecutionContext
+    - {static} m_TestEnumerator : IEnumerator
+    + {static} Enumerator : IEnumerator <<get>>
+    + {static} Reset() : void
+    + TestEnumerator(context:ITestExecutionContext, testEnumerator:IEnumerator)
+    + Execute() : IEnumerator
+    - Execute(enumerator:IEnumerator, context:EnumeratorContext) : IEnumerator
+}
+class EnumeratorContext {
+    - <<readonly>> m_Context : ITestExecutionContext
+    + EnumeratorContext(context:ITestExecutionContext)
+    + ExceptionWasRecorded : bool <<get>>
+    + RecordExceptionWithHint(ex:Exception) : void
+}
+TestEnumerator +-- EnumeratorContext
+@enduml

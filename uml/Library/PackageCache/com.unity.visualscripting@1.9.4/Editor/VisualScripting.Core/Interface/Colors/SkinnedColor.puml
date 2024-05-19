@@ -1,0 +1,10 @@
+@startuml
+struct SkinnedColor {
+    - {static} <<readonly>> isProSkin : bool
+    + SkinnedColor(personalColor:Color, proColor:Color)
+    + SkinnedColor(personalAndProColor:Color)
+    - <<readonly>> personalColor : Color
+    - <<readonly>> proColor : Color
+    + color : Color <<get>>
+}
+@enduml

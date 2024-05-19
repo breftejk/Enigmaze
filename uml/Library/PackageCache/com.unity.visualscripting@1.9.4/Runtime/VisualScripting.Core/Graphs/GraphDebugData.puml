@@ -1,0 +1,11 @@
+@startuml
+class GraphDebugData {
+    # elementsData : Dictionary<IGraphElementWithDebugData, IGraphElementDebugData> <<get>>
+    # childrenGraphsData : Dictionary<IGraphParentElement, IGraphDebugData> <<get>>
+    - elementsData : IEnumerable<IGraphElementDebugData> <<get>>
+    + GraphDebugData(definition:IGraph)
+    + GetOrCreateElementData(element:IGraphElementWithDebugData) : IGraphElementDebugData
+    + GetOrCreateChildGraphData(element:IGraphParentElement) : IGraphDebugData
+}
+IGraphDebugData <|-- GraphDebugData
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+class BlockFields <<static>> {
+}
+struct VertexDescription {
+    + {static} name : string = "VertexDescription"
+    + {static} Position : BlockFieldDescriptor
+    + {static} Normal : BlockFieldDescriptor
+    + {static} Tangent : BlockFieldDescriptor
+}
+struct SurfaceDescription {
+    + {static} name : string = "SurfaceDescription"
+    + {static} BaseColor : BlockFieldDescriptor
+    + {static} NormalTS : BlockFieldDescriptor
+    + {static} NormalOS : BlockFieldDescriptor
+    + {static} NormalWS : BlockFieldDescriptor
+    + {static} Metallic : BlockFieldDescriptor
+    + {static} Specular : BlockFieldDescriptor
+    + {static} Smoothness : BlockFieldDescriptor
+    + {static} Occlusion : BlockFieldDescriptor
+    + {static} Emission : BlockFieldDescriptor
+    + {static} Alpha : BlockFieldDescriptor
+    + {static} AlphaClipThreshold : BlockFieldDescriptor
+    + {static} CoatMask : BlockFieldDescriptor
+    + {static} CoatSmoothness : BlockFieldDescriptor
+}
+struct SurfaceDescriptionLegacy {
+    + {static} name : string = "SurfaceDescription"
+    + {static} SpriteColor : BlockFieldDescriptor
+}
+BlockFields +-- VertexDescription
+BlockFields +-- SurfaceDescription
+BlockFields +-- SurfaceDescriptionLegacy
+@enduml

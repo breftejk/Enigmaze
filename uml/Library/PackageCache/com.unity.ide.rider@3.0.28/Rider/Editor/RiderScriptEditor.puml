@@ -1,0 +1,34 @@
+@startuml
+class RiderScriptEditor {
+    - m_Discoverability : IDiscovery
+    {static} - m_ProjectGeneration : IGenerator
+    - m_Initiliazer : RiderInitializer
+    {static} - m_RiderScriptEditor : RiderScriptEditor
+    {static} - RiderScriptEditor()
+    - {static} ShowWarningOnUnexpectedScriptEditor(path:string) : void
+    <<internal>> {static} GetEditorRealPath(path:string) : string
+    + RiderScriptEditor(discovery:IDiscovery, projectGeneration:IGenerator)
+    + OnGUI() : void
+    - RegenerateProjectFiles() : void
+    - SettingsButton(preference:ProjectGenerationFlag, guiMessage:string, toolTip:string) : void
+    + SyncIfNeeded(addedFiles:string[], deletedFiles:string[], movedFiles:string[], movedFromFiles:string[], importedFiles:string[]) : void
+    + SyncAll() : void
+    + {static} SyncSolution() : void
+    + {static} SyncIfNeeded(checkProjectFiles:bool) : void
+    + {static} SyncSolutionAndOpenExternalEditor() : void
+    + Initialize(editorInstallationPath:string) : void
+    - {static} InitializeInternal(currentEditorPath:string) : void
+    + OpenProject(path:string, line:int, column:int) : bool
+    - GetSolutionFile(path:string) : string
+    {static} - IsUnityScript(path:string) : bool
+    {static} - GetBaseUnityDeveloperFolder() : string
+    + TryGetInstallationForPath(editorPath:string, installation:CodeEditor.Installation) : bool
+    + {static} IsRiderOrFleetInstallation(path:string) : bool
+    + {static} ExecutableStartsWith(path:string, input:string) : bool
+    - {static} IsAssetImportWorkerProcess() : bool
+    + {static} CurrentEditor : string <<get>>
+    + Installations : CodeEditor.Installation[] <<get>>
+    - CreateSolutionIfDoesntExist() : void
+}
+IExternalCodeEditor <|-- RiderScriptEditor
+@enduml

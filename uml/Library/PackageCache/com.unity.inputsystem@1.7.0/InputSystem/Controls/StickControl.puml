@@ -1,0 +1,10 @@
+@startuml
+class StickControl {
+    + up : ButtonControl <<get>> <<set>>
+    + down : ButtonControl <<get>> <<set>>
+    + left : ButtonControl <<get>> <<set>>
+    + right : ButtonControl <<get>> <<set>>
+    # <<override>> FinishSetup() : void
+}
+Vector2Control <|-- StickControl
+@enduml

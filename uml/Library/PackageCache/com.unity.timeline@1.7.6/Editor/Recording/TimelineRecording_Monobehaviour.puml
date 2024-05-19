@@ -1,0 +1,54 @@
+@startuml
+class TimelineRecording <<static>> <<partial>> {
+    {static} <<readonly>> - s_RecordState : RecordingState
+    {static} <<readonly>> - s_TrackRecorder : AnimationTrackRecorder
+    {static} <<readonly>> - s_UnprocessedMods : List<UndoPropertyModification>
+    {static} <<readonly>> - s_ModsToProcess : List<UndoPropertyModification>
+    {static} - s_LastTrackWarning : AnimationTrack
+    + <<const>> kLocalPosition : string = "m_LocalPosition"
+    + <<const>> kLocalRotation : string = "m_LocalRotation"
+    + <<const>> kLocalEulerHint : string = "m_LocalEulerAnglesHint"
+    <<const>> - kRotationWarning : string = "You are recording with an initial rotation offset. This may result in a misrepresentation of euler angles. When recording transform properties, it is recommended to reset rotation prior to recording"
+    + {static} IsRecordingAnimationTrack : bool <<get>>
+    <<internal>> {static} ProcessMonoBehaviourModification(modifications:UndoPropertyModification[], state:WindowState) : UndoPropertyModification[]
+    <<internal>> {static} IsPosition(modification:UndoPropertyModification) : bool
+    <<internal>> {static} IsRotation(modification:UndoPropertyModification) : bool
+    <<internal>> {static} IsPositionOrRotation(modification:UndoPropertyModification) : bool
+    <<internal>> {static} UpdatePreviewMode(mods:UndoPropertyModification[], go:GameObject) : void
+    <<internal>> {static} IsRootModification(modification:UndoPropertyModification) : bool
+    <<internal>> {static} ClipHasPositionOrRotation(clip:AnimationClip) : bool
+    <<internal>> {static} ComputeInitialClipOffsets(track:AnimationTrack, mods:UndoPropertyModification[], animator:Animator) : TimelineAnimationUtilities.RigidTransform
+    <<internal>> {static} GetInitialTransform(mods:UndoPropertyModification[], animator:Animator) : TimelineAnimationUtilities.RigidTransform
+    <<internal>> {static} SetPreviousPositionAndRotation(mods:UndoPropertyModification[], animator:Animator, pos:Vector3, rot:Quaternion) : void
+    <<internal>> {static} AddTrackOffset(track:AnimationTrack, mods:UndoPropertyModification[], clip:AnimationClip, animator:Animator) : void
+    <<internal>> {static} AddClipOffset(track:AnimationTrack, mods:UndoPropertyModification[], clip:TimelineClip, animator:Animator) : void
+    <<internal>> {static} GetLocalToTrack(track:AnimationTrack, clip:TimelineClip) : TimelineAnimationUtilities.RigidTransform
+    <<internal>> {static} HasOffsets(track:AnimationTrack, clip:TimelineClip) : bool
+    <<internal>> {static} RemoveOffsets(modification:UndoPropertyModification, track:AnimationTrack, clip:TimelineClip, mods:UndoPropertyModification[]) : void
+    <<internal>> {static} ReapplyOffsets(modification:UndoPropertyModification, track:AnimationTrack, clip:TimelineClip, mods:UndoPropertyModification[]) : void
+    {static} - GatherRelatedModifications(toMatch:UndoPropertyModification, list:List<UndoPropertyModification>) : UndoPropertyModification[]
+    {static} - GetGameObjectFromModification(mod:UndoPropertyModification) : GameObject
+    {static} - GetChildLevel(parent:GameObject, child:GameObject) : int
+    {static} - IsRotationCurve(propertyName:string) : bool
+    + {static} DoesPropertyPathMatch(a:string, b:string) : bool
+    <<internal>> {static} GetPreviousPositionAndRotation(mods:UndoPropertyModification[], position:Vector3, rotation:Quaternion) : void
+    <<internal>> {static} GetCurrentPositionAndRotation(mods:UndoPropertyModification[], position:Vector3, rotation:Quaternion) : void
+    <<internal>> {static} SetPreviousPositionAndRotation(mods:UndoPropertyModification[], pos:Vector3, rot:Quaternion) : void
+    <<internal>> {static} SetCurrentPositionAndRotation(mods:UndoPropertyModification[], pos:Vector3, rot:Quaternion) : void
+    <<internal>> {static} ParseFloat(str:string, defaultVal:float) : float
+    <<internal>> {static} HandleEulerModifications(track:AnimationTrack, clip:TimelineClip, animClip:AnimationClip, time:float, mods:UndoPropertyModification[]) : UndoPropertyModification[]
+    <<internal>> {static} FindBestEulerHint(rotation:Quaternion, clip:AnimationClip, time:float, transform:Transform) : IEnumerable<UndoPropertyModification>
+}
+class RecordingState {
+    + activeGameObject : GameObject <<get>> <<set>>
+    + activeRootGameObject : GameObject <<get>> <<set>>
+    + activeAnimationClip : AnimationClip <<get>> <<set>>
+    + SaveCurve(curve:AnimationWindowCurve) : void
+    + AddPropertyModification(binding:EditorCurveBinding, propertyModification:PropertyModification, keepPrefabOverride:bool) : void
+    + addZeroFrame : bool <<get>>
+    + currentFrame : int <<get>> <<set>>
+    + DiscardModification(modification:PropertyModification) : bool
+}
+TimelineRecording +-- RecordingState
+IAnimationRecordingState <|-- RecordingState
+@enduml

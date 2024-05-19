@@ -1,0 +1,15 @@
+@startuml
+class ForEach {
+    + collection : ValueInput <<get>>
+    + currentIndex : ValueOutput <<get>>
+    + currentKey : ValueOutput <<get>>
+    + currentItem : ValueOutput <<get>>
+    + dictionary : bool <<get>> <<set>>
+    # <<override>> Definition() : void
+    - Start(flow:Flow, enumerator:IEnumerator, dictionaryEnumerator:IDictionaryEnumerator, currentIndex:int) : int
+    - MoveNext(flow:Flow, enumerator:IEnumerator, dictionaryEnumerator:IDictionaryEnumerator, currentIndex:int) : bool
+    # <<override>> Loop(flow:Flow) : ControlOutput
+    # <<override>> LoopCoroutine(flow:Flow) : IEnumerator
+}
+LoopUnit <|-- ForEach
+@enduml

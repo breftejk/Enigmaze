@@ -1,0 +1,47 @@
+@startuml
+class DiffTreeView {
+    <<internal>> DiffTreeView(menu:DiffTreeViewMenu)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> CanChangeExpandedState(item:TreeViewItem) : bool
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> CommandEventHandling() : void
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> AfterRowsGUI() : void
+    <<internal>> ClearModel() : void
+    <<internal>> BuildModel(wkInfo:WorkspaceInfo, diffs:List<ClientDiff>, brResolver:BranchResolver, skipMergeTracking:bool) : void
+    <<internal>> Refilter() : void
+    <<internal>> Sort() : void
+    <<internal>> GetMetaDiff(diff:ClientDiffInfo) : ClientDiffInfo
+    <<internal>> SelectionHasMeta() : bool
+    <<internal>> GetSelectedDiffs(includeMetaFiles:bool) : List<ClientDiffInfo>
+    - DelayedSearchChanged() : void
+    - EnableHorizontalScrollbar() : void
+    {static} - RegenerateRows(diffTree:UnityDiffTree, treeViewItemIds:TreeViewItemIds<IDiffCategory, ITreeViewNode>, treeView:TreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - AddMergeCategory(rootItem:TreeViewItem, category:IDiffCategory, rows:List<TreeViewItem>, treeViewItemIds:TreeViewItemIds<IDiffCategory, ITreeViewNode>, treeView:TreeView, expandCategories:bool) : void
+    {static} - AddChangeCategory(parentItem:TreeViewItem, category:IDiffCategory, rows:List<TreeViewItem>, treeViewItemIds:TreeViewItemIds<IDiffCategory, ITreeViewNode>, treeView:TreeView, expandCategories:bool) : void
+    {static} - AddClientDiffs(parentItem:TreeViewItem, parentNode:ITreeViewNode, rows:List<TreeViewItem>, treeViewItemIds:TreeViewItemIds<IDiffCategory, ITreeViewNode>) : void
+    {static} - TreeViewItemGUI(item:TreeViewItem, rowRect:Rect, rowHeight:float, diffTree:UnityDiffTree, isSelected:bool, isFocused:bool, itemWidth:float) : void
+    {static} - MergeCategoryTreeViewItemGUI(rowRect:Rect, item:MergeCategoryTreeViewItem, isSelected:bool, isFocused:bool, itemWidth:float) : void
+    {static} - ChangeCategoryTreeViewItemGUI(rowRect:Rect, item:ChangeCategoryTreeViewItem, isSelected:bool, isFocused:bool, itemWidth:float) : void
+    {static} - ClientDiffTreeViewItemGUI(rowRect:Rect, rowHeight:float, diffTree:UnityDiffTree, item:ClientDiffTreeViewItem, isSelected:bool, isFocused:bool, itemWidth:float) : void
+    {static} - CalculateItemWidth(label:string, icon:Texture, rowHeight:float) : float
+    {static} - CalculateLabelWidth(label:string) : float
+    {static} - GetClientDiffIcon(isDirectory:bool, path:string) : Texture
+    - mExpandCategories : bool
+    - mTreeViewItemIds : TreeViewItemIds<IDiffCategory, ITreeViewNode>
+    - mRows : List<TreeViewItem>
+    - mDiffTree : UnityDiffTree
+    - mHorizontalColumn : MultiColumnHeaderState.Column
+    - mLargestRowWidth : float
+    <<readonly>> - mCooldownFilterAction : CooldownWindowDelayer
+    {static} <<readonly>> - ColumnsNames : List<string>
+    <<readonly>> - mMenu : DiffTreeViewMenu
+}
+TreeView <|-- DiffTreeView
+@enduml

@@ -1,0 +1,57 @@
+@startuml
+interface IEnvironmentDisplayer {
+    Repaint() : void
+     <<event>> OnChangingEnvironmentLibrary : Action<EnvironmentLibrary> 
+}
+class DisplayWindow <<partial>> {
+    - m_EnvironmentContainer : VisualElement
+    - m_EnvironmentList : ListView
+    - m_EnvironmentInspector : EnvironmentElement
+    - m_EnvironmentListToolbar : UIElements.Toolbar
+    - m_LibraryField : UIElements.ObjectField
+    -  <<event>> OnChangingEnvironmentLibraryInternal : Action<EnvironmentLibrary> 
+    {static} - FirstVisibleIndex(listView:ListView) : int
+    - CreateEnvironment() : void
+    - ScrollToEnd(attemptRemaining:int) : void
+    - RefreshLibraryDisplay() : void
+    - StartDragging(item:VisualElement, worldPosition:Vector2) : DraggingContext
+    - EndDragging(context:DraggingContext, mouseWorldPosition:Vector2) : void
+    - Repaint() : void
+    - OnFocus() : void
+    - FullRefreshEnvironmentList() : void
+}
+class Style <<static>> <<partial>> {
+    <<internal>> {static} <<readonly>> k_AddIcon : Texture2D
+    <<internal>> {static} <<readonly>> k_RemoveIcon : Texture2D
+    <<internal>> {static} <<readonly>> k_DuplicateIcon : Texture2D
+    <<internal>> <<const>> k_DragAndDropLibrary : string = "Drag and drop EnvironmentLibrary here"
+}
+class DraggingContext {
+    <<const>> - k_CursorFollowerName : string = "cursorFollower"
+    + <<readonly>> draggedIndex : int
+    <<readonly>> - cursorFollower : Image
+    <<readonly>> - cursorOffset : Vector2
+    <<readonly>> - windowContent : VisualElement
+    + DraggingContext(windowContent:VisualElement, draggedElement:Image, draggedIndex:int, worldPosition:Vector2)
+    + UpdateCursorFollower(mouseWorldPosition:Vector2) : void
+    + Dispose() : void
+}
+class EnvironmentPreviewDragger {
+    - m_DropArea : VisualElement
+    - m_Window : DisplayWindow
+    {static} - s_Context : DraggingContext
+    + EnvironmentPreviewDragger(window:DisplayWindow, dropArea:VisualElement)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - Release() : void
+    - OnMouseDown(evt:MouseDownEvent) : void
+    - OnMouseUp(evt:MouseUpEvent) : void
+    - OnMouseMove(evt:MouseMoveEvent) : void
+}
+IEnvironmentDisplayer <|-- DisplayWindow
+DisplayWindow +-- Style
+DisplayWindow +-- DraggingContext
+IDisposable <|-- DraggingContext
+DisplayWindow +-- EnvironmentPreviewDragger
+Manipulator <|-- EnvironmentPreviewDragger
+@enduml

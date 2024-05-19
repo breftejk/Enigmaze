@@ -1,0 +1,11 @@
+@startuml
+class "PooledList`1"<T> {
+    {static} - s_Pool : Stack<PooledList<T>>
+    - m_Active : bool
+    - PooledList()
+    + {static} Get() : PooledList<T>
+    + Dispose() : void
+}
+"List`1" "<T>" <|-- "PooledList`1"
+IDisposable <|-- "PooledList`1"
+@enduml

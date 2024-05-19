@@ -1,0 +1,27 @@
+@startuml
+class Awaitable <<partial>> {
+    {static} - _synchronizationContext : SynchronizationContext
+    <<internal>> {static} SetSynchronizationContext(synchronizationContext:SynchronizationContext) : void
+    + {static} MainThreadAsync() : MainThreadAwaitable
+    + {static} BackgroundThreadAsync() : BackgroundThreadAwaitable
+}
+struct MainThreadAwaitable {
+    - <<readonly>> _synchronizationContext : SynchronizationContext
+    <<internal>> MainThreadAwaitable(syncContext:SynchronizationContext)
+    + GetAwaiter() : MainThreadAwaitable
+    + IsCompleted : bool <<get>>
+    + GetResult() : void
+    + OnCompleted(continuation:Action) : void
+    {static} - DoOnCompleted(continuation:object) : void
+}
+struct BackgroundThreadAwaitable {
+    - <<readonly>> _synchronizationContext : SynchronizationContext
+    <<internal>> BackgroundThreadAwaitable(syncContext:SynchronizationContext)
+    + GetAwaiter() : BackgroundThreadAwaitable
+    + IsCompleted : bool <<get>>
+    + GetResult() : void
+    + OnCompleted(continuation:Action) : void
+}
+INotifyCompletion <|-- MainThreadAwaitable
+INotifyCompletion <|-- BackgroundThreadAwaitable
+@enduml

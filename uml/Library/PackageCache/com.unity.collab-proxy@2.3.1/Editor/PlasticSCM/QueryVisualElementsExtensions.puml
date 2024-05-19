@@ -1,0 +1,7 @@
+@startuml
+class QueryVisualElementsExtensions <<static>> {
+    <<internal>> {static} Show(query:UQueryBuilder<T>) : void
+    <<internal>> {static} Collapse(query:UQueryBuilder<T>) : void
+    <<internal>> {static} Hide(query:UQueryBuilder<T>) : void
+}
+@enduml

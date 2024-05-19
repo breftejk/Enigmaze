@@ -1,0 +1,60 @@
+@startuml
+interface ISkinningCachePersistentState {
+    lastSpriteId : string <<get>> <<set>>
+    lastUsedTool : Tools <<get>> <<set>>
+    lastBoneSelectionIds : List<int> <<get>>
+    lastTexture : Texture2D <<get>> <<set>>
+    lastPreviewPose : SerializableDictionary<int, BonePose> <<get>>
+    lastBoneVisibility : SerializableDictionary<int, bool> <<get>>
+    lastBoneExpansion : SerializableDictionary<int, bool> <<get>>
+    lastSpriteVisibility : SerializableDictionary<string, bool> <<get>>
+    lastGroupVisibility : SerializableDictionary<int, bool> <<get>>
+    lastMode : SkinningMode <<get>> <<set>>
+    lastVisibilityToolActive : bool <<get>> <<set>>
+    lastVisibilityToolIndex : int <<get>> <<set>>
+    lastVertexSelection : IndexedSelection <<get>>
+    lastBrushSize : float <<get>> <<set>>
+    lastBrushHardness : float <<get>> <<set>>
+    lastBrushStep : float <<get>> <<set>>
+}
+class SkinningCachePersistentState {
+    - m_LastUsedTool : Tools
+    - m_LastMode : SkinningMode
+    - m_LastSpriteId : string
+    - m_LastBoneSelectionIds : List<int>
+    - m_LastTexture : Texture2D
+    - m_SkeletonPreviewPose : SerializableDictionary<int, BonePose>
+    - m_BoneVisibility : SerializableDictionary<int, bool>
+    - m_BoneExpansion : SerializableDictionary<int, bool>
+    - m_SpriteVisibility : SerializableDictionary<string, bool>
+    - m_GroupVisibility : SerializableDictionary<int, bool>
+    - m_VertexSelection : IndexedSelection
+    - m_VisibilityToolActive : bool
+    - m_VisibilityToolIndex : int
+    - m_LastBrushSize : float = 25f
+    - m_LastBrushHardness : float = 1f
+    - m_LastBrushStep : float = 20f
+    + SkinningCachePersistentState()
+    - OnEnable() : void
+    - OnDisable() : void
+    + SetDefault() : void
+    + lastSpriteId : string <<get>> <<set>>
+    + lastUsedTool : Tools <<get>> <<set>>
+    + lastBoneSelectionIds : List<int> <<get>>
+    + lastTexture : Texture2D <<get>> <<set>>
+    + lastPreviewPose : SerializableDictionary<int, BonePose> <<get>>
+    + lastBoneVisibility : SerializableDictionary<int, bool> <<get>>
+    + lastBoneExpansion : SerializableDictionary<int, bool> <<get>>
+    + lastSpriteVisibility : SerializableDictionary<string, bool> <<get>>
+    + lastGroupVisibility : SerializableDictionary<int, bool> <<get>>
+    + lastMode : SkinningMode <<get>> <<set>>
+    + lastVisibilityToolActive : bool <<get>> <<set>>
+    + lastVisibilityToolIndex : int <<get>> <<set>>
+    + lastVertexSelection : IndexedSelection <<get>>
+    + lastBrushSize : float <<get>> <<set>>
+    + lastBrushHardness : float <<get>> <<set>>
+    + lastBrushStep : float <<get>> <<set>>
+}
+"ScriptableSingleton`1" "<SkinningCachePersistentState>" <|-- SkinningCachePersistentState
+ISkinningCachePersistentState <|-- SkinningCachePersistentState
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class DitherNode {
+    + DitherNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Dither(In:DynamicDimensionVector, ScreenPosition:Vector2, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- DitherNode
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class CinemachineFramingTransposerEditor {
+    - m_ScreenGuideEditor : CinemachineScreenComposerGuides
+    - m_GameViewEventCatcher : GameViewEventCatcher
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    # <<virtual>> OnGUI() : void
+    - {static} DrawGroupComposerGizmos(target:CinemachineFramingTransposer, selectionType:GizmoType) : void
+}
+"BaseEditor`1" "<CinemachineFramingTransposer>" <|-- CinemachineFramingTransposerEditor
+@enduml

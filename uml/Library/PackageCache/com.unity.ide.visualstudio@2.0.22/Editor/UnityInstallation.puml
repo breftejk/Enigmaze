@@ -1,0 +1,8 @@
+@startuml
+class UnityInstallation <<static>> {
+    + {static} IsMainUnityEditorProcess : bool <<get>>
+    - {static} <<readonly>> _lazyIsInSafeMode : Lazy<bool>
+    + {static} IsInSafeMode : bool <<get>>
+    + {static} LatestLanguageVersionSupported(assembly:Assembly) : Version
+}
+@enduml

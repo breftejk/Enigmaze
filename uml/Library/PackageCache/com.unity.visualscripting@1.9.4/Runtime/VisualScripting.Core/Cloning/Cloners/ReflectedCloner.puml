@@ -1,0 +1,14 @@
+@startuml
+abstract class ReflectedCloner {
+    + <<override>> Handles(type:Type) : bool
+    + <<override>> FillClone(type:Type, clone:object, original:object, context:CloningContext) : void
+    - <<readonly>> accessors : Dictionary<Type, MemberInfo[]>
+    - GetAccessors(type:Type) : MemberInfo[]
+    - <<readonly>> optimizedAccessors : Dictionary<Type, IOptimizedAccessor[]>
+    - GetOptimizedAccessors(type:Type) : IOptimizedAccessor[]
+    # <<virtual>> GetMembers(type:Type) : IEnumerable<MemberInfo>
+    # <<virtual>> IncludeField(field:FieldInfo) : bool
+    # <<virtual>> IncludeProperty(property:PropertyInfo) : bool
+}
+"Cloner`1" "<object>" <|-- ReflectedCloner
+@enduml

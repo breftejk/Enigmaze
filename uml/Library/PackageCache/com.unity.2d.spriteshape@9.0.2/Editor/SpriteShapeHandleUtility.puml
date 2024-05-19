@@ -1,0 +1,33 @@
+@startuml
+class SpriteShapeHandleUtility {
+    - {static} s_Styles : Styles
+    - {static} styles : Styles <<get>>
+    {static} - s_HandleWireMaterial : Material
+    - {static} handleWireMaterial : Material <<get>>
+    - {static} s_FillTextureMaterial : Material
+    - {static} fillTextureMaterial : Material <<get>>
+    - {static} s_TextureCapMesh : Mesh
+    - {static} textureCapMesh : Mesh <<get>>
+    - {static} <<readonly>> s_WireArcPoints : Vector3[]
+    + {static} PosToAngle(position:Vector2, center:Vector2, angleOffset:float) : float
+    + {static} Slider2D(id:int, position:Vector2, capOffset:Vector3, rotation:Quaternion, size:float, drawCapFunction:Handles.CapFunction) : Vector2
+    + {static} DrawRangeOutline(start:float, end:float, angleOffset:float, center:Vector2, radius:float, width:float) : void
+    - {static} ApplyWireMaterial() : void
+    - {static} ApplyWireMaterial(zTest:UnityEngine.Rendering.CompareFunction) : void
+    {static} - SetDiscSectionPoints(dest:Vector3[], center:Vector3, normal:Vector3, from:Vector3, angle:float, radius:float) : void
+    + {static} DrawSolidArc(center:Vector3, normal:Vector3, from:Vector3, angle:float, radius:float, width:float) : void
+    + {static} DrawTextureArc(texture:Texture, pixelsPerRadius:float, center:Vector3, normal:Vector3, from:Vector3, angle:float, radius:float) : void
+    + {static} PlayHeadCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + {static} RangeLeftCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + {static} RangeRightCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + {static} GUITextureCap(controlID:int, texture:Texture, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + {static} DistanceToArcWidth(position:Vector2, center:Vector2, start:float, end:float, radius:float, width:float, angleOffet:float) : float
+    + {static} DistanceToRectangle(position:Vector3, rotation:Quaternion, size:Vector2) : float
+}
+class Styles {
+    + playheadTex : Texture
+    + handRightTex : Texture
+    + handLeftTex : Texture
+}
+SpriteShapeHandleUtility +-- Styles
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+enum CanvasUpdate {
+    Prelayout= 0,
+    Layout= 1,
+    PostLayout= 2,
+    PreRender= 3,
+    LatePreRender= 4,
+    MaxUpdateValue= 5,
+}
+interface ICanvasElement {
+    Rebuild(executing:CanvasUpdate) : void
+    transform : Transform <<get>>
+    LayoutComplete() : void
+    GraphicUpdateComplete() : void
+    IsDestroyed() : bool
+}
+class CanvasUpdateRegistry {
+    - {static} s_Instance : CanvasUpdateRegistry
+    - m_PerformingLayoutUpdate : bool
+    - m_PerformingGraphicUpdate : bool
+    - m_CanvasUpdateProfilerStrings : string[]
+    - <<const>> m_CullingUpdateProfilerString : string = "ClipperRegistry.Cull"
+    - <<readonly>> m_LayoutRebuildQueue : IndexedSet<ICanvasElement>
+    - <<readonly>> m_GraphicRebuildQueue : IndexedSet<ICanvasElement>
+    # CanvasUpdateRegistry()
+    + {static} instance : CanvasUpdateRegistry <<get>>
+    - ObjectValidForUpdate(element:ICanvasElement) : bool
+    - CleanInvalidItems() : void
+    - {static} <<readonly>> s_SortLayoutFunction : Comparison<ICanvasElement>
+    - PerformUpdate() : void
+    - {static} ParentCount(child:Transform) : int
+    - {static} SortLayoutList(x:ICanvasElement, y:ICanvasElement) : int
+    + {static} RegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : void
+    + {static} TryRegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : bool
+    - InternalRegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : bool
+    + {static} RegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : void
+    + {static} TryRegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : bool
+    - InternalRegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : bool
+    + {static} UnRegisterCanvasElementForRebuild(element:ICanvasElement) : void
+    + {static} DisableCanvasElementForRebuild(element:ICanvasElement) : void
+    - InternalUnRegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : void
+    - InternalUnRegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : void
+    - InternalDisableCanvasElementForLayoutRebuild(element:ICanvasElement) : void
+    - InternalDisableCanvasElementForGraphicRebuild(element:ICanvasElement) : void
+    + {static} IsRebuildingLayout() : bool
+    + {static} IsRebuildingGraphics() : bool
+}
+@enduml

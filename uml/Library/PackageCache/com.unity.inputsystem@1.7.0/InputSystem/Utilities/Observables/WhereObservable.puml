@@ -1,0 +1,19 @@
+@startuml
+class "WhereObservable`1"<TValue> {
+    - <<readonly>> m_Source : IObservable<TValue>
+    - <<readonly>> m_Predicate : Func<TValue, bool>
+    + WhereObservable(source:IObservable<TValue>, predicate:Func<TValue, bool>)
+    + Subscribe(observer:IObserver<TValue>) : IDisposable
+}
+class Where {
+    - m_Observable : WhereObservable<TValue>
+    - <<readonly>> m_Observer : IObserver<TValue>
+    + Where(observable:WhereObservable<TValue>, observer:IObserver<TValue>)
+    + OnCompleted() : void
+    + OnError(error:Exception) : void
+    + OnNext(evt:TValue) : void
+}
+"IObservable`1" "<TValue>" <|-- "WhereObservable`1"
+"WhereObservable`1" +-- Where
+"IObserver`1" "<TValue>" <|-- Where
+@enduml

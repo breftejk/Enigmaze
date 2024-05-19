@@ -1,0 +1,22 @@
+@startuml
+class fsCyclicReferenceManager {
+    - _objectIds : Dictionary<object, int>
+    - _nextId : int
+    - _marked : Dictionary<int, object>
+    - _depth : int
+    + Enter() : void
+    + Exit() : bool
+    + GetReferenceObject(id:int) : object
+    + AddReferenceWithId(id:int, reference:object) : void
+    + GetReferenceId(item:object) : int
+    + IsReference(item:object) : bool
+    + MarkSerialized(item:object) : void
+}
+class ObjectReferenceEqualityComparator {
+    - Equals(x:object, y:object) : bool
+    - GetHashCode(obj:object) : int
+    + {static} <<readonly>> Instance : IEqualityComparer<object>
+}
+fsCyclicReferenceManager +-- ObjectReferenceEqualityComparator
+"IEqualityComparer`1" "<object>" <|-- ObjectReferenceEqualityComparator
+@enduml

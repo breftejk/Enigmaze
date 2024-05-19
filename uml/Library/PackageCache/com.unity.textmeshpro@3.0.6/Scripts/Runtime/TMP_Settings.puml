@@ -1,0 +1,82 @@
+@startuml
+class TMP_Settings {
+    - {static} s_Instance : TMP_Settings
+    + {static} version : string <<get>>
+    + {static} enableWordWrapping : bool <<get>>
+    - m_enableWordWrapping : bool
+    + {static} enableKerning : bool <<get>>
+    - m_enableKerning : bool
+    + {static} enableExtraPadding : bool <<get>>
+    - m_enableExtraPadding : bool
+    + {static} enableTintAllSprites : bool <<get>>
+    - m_enableTintAllSprites : bool
+    + {static} enableParseEscapeCharacters : bool <<get>>
+    - m_enableParseEscapeCharacters : bool
+    + {static} enableRaycastTarget : bool <<get>>
+    - m_EnableRaycastTarget : bool = true
+    + {static} getFontFeaturesAtRuntime : bool <<get>>
+    - m_GetFontFeaturesAtRuntime : bool = true
+    + {static} missingGlyphCharacter : int <<get>> <<set>>
+    - m_missingGlyphCharacter : int
+    + {static} warningsDisabled : bool <<get>>
+    - m_warningsDisabled : bool
+    + {static} defaultFontAsset : TMP_FontAsset <<get>>
+    - m_defaultFontAsset : TMP_FontAsset
+    + {static} defaultFontAssetPath : string <<get>>
+    - m_defaultFontAssetPath : string
+    + {static} defaultFontSize : float <<get>>
+    - m_defaultFontSize : float
+    + {static} defaultTextAutoSizingMinRatio : float <<get>>
+    - m_defaultAutoSizeMinRatio : float
+    + {static} defaultTextAutoSizingMaxRatio : float <<get>>
+    - m_defaultAutoSizeMaxRatio : float
+    + {static} defaultTextMeshProTextContainerSize : Vector2 <<get>>
+    - m_defaultTextMeshProTextContainerSize : Vector2
+    + {static} defaultTextMeshProUITextContainerSize : Vector2 <<get>>
+    - m_defaultTextMeshProUITextContainerSize : Vector2
+    + {static} autoSizeTextContainer : bool <<get>>
+    - m_autoSizeTextContainer : bool
+    + {static} isTextObjectScaleStatic : bool <<get>> <<set>>
+    - m_IsTextObjectScaleStatic : bool
+    + {static} fallbackFontAssets : List<TMP_FontAsset> <<get>>
+    - m_fallbackFontAssets : List<TMP_FontAsset>
+    + {static} matchMaterialPreset : bool <<get>>
+    - m_matchMaterialPreset : bool
+    + {static} defaultSpriteAsset : TMP_SpriteAsset <<get>>
+    - m_defaultSpriteAsset : TMP_SpriteAsset
+    + {static} defaultSpriteAssetPath : string <<get>>
+    - m_defaultSpriteAssetPath : string
+    + {static} enableEmojiSupport : bool <<get>> <<set>>
+    - m_enableEmojiSupport : bool
+    + {static} missingCharacterSpriteUnicode : uint <<get>> <<set>>
+    - m_MissingCharacterSpriteUnicode : uint
+    + {static} defaultColorGradientPresetsPath : string <<get>>
+    - m_defaultColorGradientPresetsPath : string
+    + {static} defaultStyleSheet : TMP_StyleSheet <<get>>
+    - m_defaultStyleSheet : TMP_StyleSheet
+    + {static} styleSheetsResourcePath : string <<get>>
+    - m_StyleSheetsResourcePath : string
+    + {static} leadingCharacters : TextAsset <<get>>
+    - m_leadingCharacters : TextAsset
+    + {static} followingCharacters : TextAsset <<get>>
+    - m_followingCharacters : TextAsset
+    + {static} linebreakingRules : LineBreakingTable <<get>>
+    - m_linebreakingRules : LineBreakingTable
+    + {static} useModernHangulLineBreakingRules : bool <<get>> <<set>>
+    - m_UseModernHangulLineBreakingRules : bool
+    + {static} instance : TMP_Settings <<get>>
+    + {static} LoadDefaultSettings() : TMP_Settings
+    + {static} GetSettings() : TMP_Settings
+    + {static} GetFontAsset() : TMP_FontAsset
+    + {static} GetSpriteAsset() : TMP_SpriteAsset
+    + {static} GetStyleSheet() : TMP_StyleSheet
+    + {static} LoadLinebreakingRules() : void
+    - {static} GetCharacters(file:TextAsset) : Dictionary<int, char>
+}
+class LineBreakingTable {
+    + leadingCharacters : Dictionary<int, char>
+    + followingCharacters : Dictionary<int, char>
+}
+ScriptableObject <|-- TMP_Settings
+TMP_Settings +-- LineBreakingTable
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+abstract class MatrixShaderProperty {
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> <<override>> GetDefaultHLSLDeclaration() : HLSLDeclaration
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+}
+"AbstractShaderProperty`1" "<Matrix4x4>" <|-- MatrixShaderProperty
+@enduml

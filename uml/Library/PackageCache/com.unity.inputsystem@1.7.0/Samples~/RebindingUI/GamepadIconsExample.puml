@@ -1,0 +1,32 @@
+@startuml
+class GamepadIconsExample {
+    + xbox : GamepadIcons
+    + ps4 : GamepadIcons
+    # OnEnable() : void
+    # OnUpdateBindingDisplay(component:RebindActionUI, bindingDisplayString:string, deviceLayoutName:string, controlPath:string) : void
+}
+struct GamepadIcons {
+    + buttonSouth : Sprite
+    + buttonNorth : Sprite
+    + buttonEast : Sprite
+    + buttonWest : Sprite
+    + startButton : Sprite
+    + selectButton : Sprite
+    + leftTrigger : Sprite
+    + rightTrigger : Sprite
+    + leftShoulder : Sprite
+    + rightShoulder : Sprite
+    + dpad : Sprite
+    + dpadUp : Sprite
+    + dpadDown : Sprite
+    + dpadLeft : Sprite
+    + dpadRight : Sprite
+    + leftStick : Sprite
+    + rightStick : Sprite
+    + leftStickPress : Sprite
+    + rightStickPress : Sprite
+    + GetSprite(controlPath:string) : Sprite
+}
+MonoBehaviour <|-- GamepadIconsExample
+GamepadIconsExample +-- GamepadIcons
+@enduml

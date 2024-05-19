@@ -1,0 +1,85 @@
+@startuml
+abstract class PaintableGrid {
+    - <<const>> k_MaxMouseCellDelta : int = 500
+    - m_PermanentControlID : int
+    + {abstract} Repaint() : void
+    # {abstract} RegisterUndo() : void
+    # {abstract} Paint(position:Vector3Int) : void
+    # {abstract} Erase(position:Vector3Int) : void
+    # {abstract} BoxFill(position:BoundsInt) : void
+    # {abstract} BoxErase(position:BoundsInt) : void
+    # {abstract} FloodFill(position:Vector3Int) : void
+    # {abstract} PickBrush(position:BoundsInt, pickStart:Vector3Int) : void
+    # {abstract} Select(position:BoundsInt) : void
+    # {abstract} Move(from:BoundsInt, to:BoundsInt) : void
+    # {abstract} MoveStart(position:BoundsInt) : void
+    # {abstract} MoveEnd(position:BoundsInt) : void
+    # {abstract} CustomTool(isToolHotControl:bool, tool:TilemapEditorTool, position:Vector3Int) : bool
+    # {abstract} ValidateFloodFillPosition(position:Vector3Int) : bool
+    # {abstract} ScreenToGrid(screenPosition:Vector2) : Vector2Int
+    # {abstract} PickingIsDefaultTool() : bool
+    # {abstract} CanPickOutsideEditMode() : bool
+    # {abstract} CellLayout() : GridLayout.CellLayout
+    # {abstract} ClearGridSelection() : void
+    + {abstract} isActive : bool <<get>>
+    # <<virtual>> OnBrushPickStarted() : void
+    # <<virtual>> OnBrushPickDragged(position:BoundsInt) : void
+    # <<virtual>> OnBrushPickCancelled() : void
+    # <<virtual>> OnEditStart() : void
+    # <<virtual>> OnEditEnd() : void
+    # <<virtual>> IsMouseUpInWindow() : bool
+    <<internal>> {static} s_LastActivePaintableGrid : PaintableGrid
+    - m_MousePosition : Vector2
+    - m_PreviousMouseGridPosition : Vector2Int
+    - m_MouseGridPosition : Vector2Int
+    - m_MouseGridPositionChanged : bool
+    - m_PositionChangeRepaintDone : bool
+    # m_PreviousMove : Vector2Int?
+    # m_MarqueeStart : Vector2Int?
+    - m_MarqueeType : MarqueeType
+    - m_IsExecuting : bool
+    - m_TypeBeforeExecution : Type
+    - m_ZPosition : int
+    + mousePosition : Vector2 <<get>>
+    + mouseGridPosition : Vector2Int <<get>>
+    + isPicking : bool <<get>>
+    + isBoxing : bool <<get>>
+    + cellLayout : GridLayout.CellLayout <<get>>
+    + zPosition : int <<get>> <<set>>
+    # executing : bool <<get>> <<set>>
+    # isNearestControl : bool <<get>>
+    # isHotControl : bool <<get>>
+    # mouseGridPositionChanged : bool <<get>>
+    # inEditMode : bool <<get>>
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + <<virtual>> OnGUI() : void
+    # ResetPreviousMousePositionToCurrentPosition() : void
+    # UpdateMouseGridPosition(forceUpdate:bool) : void
+    - MouseGridPositionChanged() : void
+    - HandleEditModeChange() : void
+    - HandleBrushPicking() : void
+    - IsPickingEvent(evt:Event) : bool
+    - HandleSelectTool() : void
+    - HandleMoveTool() : void
+    - HandleBrushPaintAndErase() : void
+    - IsPaintingEvent(evt:Event) : bool
+    - IsErasingEvent(evt:Event) : bool
+    - HandleFloodFill() : void
+    - HandleBoxTool() : void
+    - HandleCustomTool() : void
+    - GetMarqueePivot(start:Vector2Int, end:Vector2Int) : Vector2Int
+    + ChangeZPosition(change:int) : void
+    + ResetZPosition() : void
+    + {static} InGridEditMode() : bool
+    + {static} EditTypeToBrushTool(activeToolType:Type) : GridBrushBase.Tool
+}
+enum MarqueeType {
+    None= 0,
+    Pick,
+    Box,
+    Select,
+}
+ScriptableObject <|-- PaintableGrid
+PaintableGrid +-- MarqueeType
+@enduml

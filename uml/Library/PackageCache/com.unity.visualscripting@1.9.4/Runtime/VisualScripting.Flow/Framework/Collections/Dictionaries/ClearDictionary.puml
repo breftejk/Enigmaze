@@ -1,0 +1,11 @@
+@startuml
+class ClearDictionary <<sealed>> {
+    + enter : ControlInput <<get>>
+    + dictionaryInput : ValueInput <<get>>
+    + dictionaryOutput : ValueOutput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    - Clear(flow:Flow) : ControlOutput
+}
+Unit <|-- ClearDictionary
+@enduml

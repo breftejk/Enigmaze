@@ -1,0 +1,37 @@
+@startuml
+abstract class "SingleDecoratorProvider`3"<TDecorated,TDecorator,TAttribute> {
+    # <<readonly>> typesLock : object
+    # <<readonly>> instancesLock : object
+    # SingleDecoratorProvider()
+    # <<virtual>> CreateDecorator(decoratorType:Type, decorated:TDecorated) : TDecorator
+    - CreateDecorator(decorated:TDecorated) : TDecorator
+    # <<virtual>> typeset : IEnumerable<Type> <<get>>
+    # <<readonly>> definedDecoratorTypes : Dictionary<Type, Type>
+    # <<readonly>> resolvedDecoratorTypes : Dictionary<Type, Type>
+    - MapAttributeTypes() : void
+    + HasDecorator(decoratedType:Type) : bool
+    + TryGetDecoratorType(decoratedType:Type, decoratorType:Type) : bool
+    # <<virtual>> GetDecoratedType(decorated:TDecorated) : Type
+    + GetDecoratorType(decoratedType:Type) : Type
+    # <<virtual>> ResolveDecoratorType(decoratedType:Type) : Type
+    # ResolveDecoratorTypeByHierarchy(decoratedType:Type, inherit:bool) : Type
+    - DirectResolve(decoratedType:Type) : Type
+    - GenericResolve(decoratedType:Type) : Type
+    # <<readonly>> decorators : Dictionary<TDecorated, TDecorator>
+    # <<readonly>> decorateds : Dictionary<TDecorator, TDecorated>
+    # {abstract} cache : bool <<get>>
+    + {abstract} IsValid(decorated:TDecorated) : bool
+    + GetDecorator(decorated:TDecorated) : TDecorator
+    + GetDecorator(decorated:TDecorated) : T
+    - lastFreeTime : DateTime
+    # <<virtual>> freeInterval : TimeSpan <<get>>
+    - Freed() : void
+    - shouldFree : bool <<get>>
+    - FreeIfNeeded() : void
+    + Free(decorator:TDecorator) : void
+    + Free(decorators:IEnumerable<TDecorator>) : void
+    + FreeInvalid() : void
+    + FreeAll() : void
+    + Renew(decorator:TSpecificDecorator, decorated:TDecorated, constructor:Func<TDecorated, TSpecificDecorator>) : void
+}
+@enduml

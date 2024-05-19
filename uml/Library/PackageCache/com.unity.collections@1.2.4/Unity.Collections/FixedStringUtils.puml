@@ -1,0 +1,16 @@
+@startuml
+interface IUTF8Bytes {
+    IsEmpty : bool <<get>>
+    <<unsafe>> GetUnsafePtr() : byte*
+    TryResize(newLength:int, clearOptions:NativeArrayOptions) : bool
+}
+class FixedStringUtils <<unsafe>> <<static>> {
+    <<internal>> {static} Base10ToBase2(output:float, mantissa10:ulong, exponent10:int) : ParseError
+    <<internal>> {static} Base2ToBase10(mantissa10:ulong, exponent10:int, input:float) : void
+}
+struct UintFloatUnion {
+    + uintValue : uint
+    + floatValue : float
+}
+FixedStringUtils +-- UintFloatUnion
+@enduml

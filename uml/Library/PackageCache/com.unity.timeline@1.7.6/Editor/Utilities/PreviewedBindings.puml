@@ -1,0 +1,11 @@
+@startuml
+struct "PreviewedBindings`1"<T> {
+    <<readonly>> - m_UniqueBindings : IEnumerable<T>
+    <<readonly>> - m_BindingsPerObject : IReadOnlyDictionary<Object, HashSet<T>>
+    - PreviewedBindings(uniqueBindings:IEnumerable<T>, bindingsPerObject:IReadOnlyDictionary<Object, HashSet<T>>)
+    + GetUniqueBindings() : IEnumerable<T>
+    + GetBindingsForObject(track:Object) : IEnumerable<T>
+    + {static} GetPreviewedBindings(directors:IEnumerable<PlayableDirector>) : PreviewedBindings<T>
+    {static} - Add(obj:Object, binding:T, bindings:HashSet<T>, bindingsPerObject:Dictionary<Object, HashSet<T>>) : void
+}
+@enduml

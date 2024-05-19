@@ -1,0 +1,12 @@
+@startuml
+class LayoutGroupArrangement {
+    <<const>> - k_LayoutDefaultSize : float = 100f
+    - m_Canvas : GameObject
+    - m_LayoutGameObject : GameObject
+    - m_Child1 : RectTransform
+    - m_Child2 : RectTransform
+    + TestSetup() : void
+    + LayoutGroup_ShouldResizeChildren_AfterDisablingAndEnablingAnyChild(layoutGroup:Type) : IEnumerator
+    + TearDown() : void
+}
+@enduml

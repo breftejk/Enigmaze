@@ -1,0 +1,13 @@
+@startuml
+class ItemsGroup {
+    <<readonly>> - m_Items : ITimelineItem[]
+    <<readonly>> - m_LeftMostItem : ITimelineItem
+    <<readonly>> - m_RightMostItem : ITimelineItem
+    + items : ITimelineItem[] <<get>>
+    + start : double <<get>> <<set>>
+    + end : double <<get>>
+    + leftMostItem : ITimelineItem <<get>>
+    + rightMostItem : ITimelineItem <<get>>
+    + ItemsGroup(items:IEnumerable<ITimelineItem>)
+}
+@enduml

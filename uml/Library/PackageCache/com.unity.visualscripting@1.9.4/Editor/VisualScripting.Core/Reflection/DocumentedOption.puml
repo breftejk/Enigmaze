@@ -1,0 +1,34 @@
+@startuml
+abstract class "DocumentedOption`1"<T> {
+    + documentation : XmlDocumentationTags <<get>> <<protected set>>
+    + zoom : bool <<get>> <<protected set>>
+    + showType : bool <<get>> <<protected set>>
+    + <<override>> hasFooter : bool <<get>>
+    - showIcon : bool <<get>>
+    + <<override>> GetFooterHeight(width:float) : float
+    + <<override>> OnFooterGUI(position:Rect) : void
+    - GetSummaryHeight(width:float) : float
+    - OnSummaryGUI(summaryPosition:Rect) : void
+    - GetParameterReturnsHeight(label:GUIContent, width:float) : float
+    - OnParameterReturnsGUI(type:Type, label:GUIContent, position:Rect) : void
+    - GetParameterHeight(documentation:KeyValuePair<string, string>, type:Type, width:float) : float
+    - GetParameterLabel(documentation:KeyValuePair<string, string>, type:Type) : GUIContent
+    - GetReturnsLabel() : GUIContent
+    - OnParameterGUI(parameterPosition:Rect, documentation:KeyValuePair<string, string>, type:Type) : void
+    - GetReturnsHeight(width:float) : float
+    - OnReturnsGUI(returnsPosition:Rect) : void
+    - GetRemarksHeight(width:float) : float
+    - OnRemarksGUI(remarksPosition:Rect) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> summary : GUIStyle
+    + {static} <<readonly>> parameterSummary : GUIStyle
+    + {static} <<readonly>> remarks : GUIStyle
+    + {static} <<readonly>> iconSpacing : float = 0
+    + {static} <<readonly>> zoomSize : float = 32
+    + {static} <<readonly>> zoomSpacing : float = 8
+}
+"FuzzyOption`1" "<T>" <|-- "DocumentedOption`1"
+"DocumentedOption`1" +-- Styles
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class StringExtensionsTests {
+    {static} - s_Input : TestCaseData[]
+    + ReplaceInvalidFileNameCharacters(input:string) : string
+}
+@enduml

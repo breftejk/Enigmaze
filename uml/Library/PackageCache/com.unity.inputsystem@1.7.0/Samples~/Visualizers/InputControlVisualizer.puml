@@ -1,0 +1,32 @@
+@startuml
+class InputControlVisualizer {
+    + visualization : Mode <<get>> <<set>>
+    + controlPath : string <<get>> <<set>>
+    + controlIndex : int <<get>> <<set>>
+    + control : InputControl <<get>>
+    # <<new>> OnEnable() : void
+    # <<new>> OnDisable() : void
+    # <<new>> OnGUI() : void
+    # <<new>> OnValidate() : void
+    - m_Visualization : Mode
+    - m_ControlPath : string
+    - m_ControlIndex : int
+    - m_Control : InputControl
+    - {static} s_EnabledInstances : List<InputControlVisualizer>
+    - ResolveControl() : void
+    - SetupVisualizer() : void
+    - {static} OnDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    - {static} OnEvent(eventPtr:InputEventPtr, device:InputDevice) : void
+    - <<unsafe>> OnEventImpl(eventPtr:InputEventPtr, device:InputDevice) : void
+}
+enum Mode {
+    None= 0,
+    Value= 1,
+    Events= 4,
+    MaximumLag= 6,
+    Bytes= 7,
+    DeviceCurrent= 8,
+}
+InputVisualizer <|-- InputControlVisualizer
+InputControlVisualizer +-- Mode
+@enduml

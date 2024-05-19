@@ -1,0 +1,10 @@
+@startuml
+class EditorDispatcher <<static>> {
+    <<internal>> {static} Initialize() : void
+    <<internal>> {static} IsOnMainThread : bool <<get>>
+    <<internal>> {static} Dispatch(task:Action) : void
+    <<internal>> {static} Update() : void
+    {static} <<readonly>> - mDispatchQueue : Queue<Action>
+    {static} - mMainThread : Thread
+}
+@enduml

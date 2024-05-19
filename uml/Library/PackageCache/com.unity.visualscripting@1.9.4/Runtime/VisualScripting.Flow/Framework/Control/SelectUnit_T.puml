@@ -1,0 +1,15 @@
+@startuml
+abstract class "SelectUnit`1"<T> {
+    + branches : List<KeyValuePair<T, ValueInput>> <<get>>
+    + options : List<T> <<get>> <<set>>
+    + selector : ValueInput <<get>>
+    + @default : ValueInput <<get>>
+    + selection : ValueOutput <<get>>
+    + <<override>> canDefine : bool <<get>>
+    # <<override>> Definition() : void
+    # <<virtual>> Matches(a:T, b:T) : bool
+    + Result(flow:Flow) : object
+}
+Unit <|-- "SelectUnit`1"
+ISelectUnit <|-- "SelectUnit`1"
+@enduml

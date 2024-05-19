@@ -1,0 +1,25 @@
+@startuml
+class ClassLibraryInitializer <<static>> {
+    {static} - Init() : void
+    {static} - InitAssemblyRedirections() : void
+}
+struct AssemblyVersion {
+    + major : ushort
+    + minor : ushort
+    + build : ushort
+    + revision : ushort
+    + AssemblyVersion(major:ushort, minor:ushort, build:ushort, revision:ushort)
+    + <<override>> ToString() : string
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+}
+struct AssemblyFullName {
+    + Name : string
+    + Version : AssemblyVersion
+    + PublicKeyToken : string
+    + Culture : string
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+@enduml

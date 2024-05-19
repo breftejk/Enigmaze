@@ -1,0 +1,71 @@
+@startuml
+class CinemachineImpulseEnvelopePropertyAttribute <<sealed>> {
+}
+class CinemachineImpulseChannelPropertyAttribute <<sealed>> {
+}
+class CinemachineImpulseManager {
+    - CinemachineImpulseManager()
+    - {static} sInstance : CinemachineImpulseManager = null
+    + {static} Instance : CinemachineImpulseManager <<get>>
+    {static} - InitializeModule() : void
+    <<const>> - Epsilon : float
+    <<internal>> {static} EvaluateDissipationScale(spread:float, normalizedDistance:float) : float
+    - m_ExpiredEvents : List<ImpulseEvent>
+    - m_ActiveEvents : List<ImpulseEvent>
+    + GetImpulseAt(listenerLocation:Vector3, distance2D:bool, channelMask:int, pos:Vector3, rot:Quaternion) : bool
+    + IgnoreTimeScale : bool
+    + CurrentTime : float <<get>>
+    + NewImpulseEvent() : ImpulseEvent
+    + AddImpulseEvent(e:ImpulseEvent) : void
+    + Clear() : void
+}
+struct EnvelopeDefinition {
+    + m_AttackShape : AnimationCurve
+    + m_DecayShape : AnimationCurve
+    + m_AttackTime : float
+    + m_SustainTime : float
+    + m_DecayTime : float
+    + m_ScaleWithImpact : bool
+    + m_HoldForever : bool
+    + {static} Default() : EnvelopeDefinition
+    + Duration : float <<get>>
+    + GetValueAt(offset:float) : float
+    + ChangeStopTime(offset:float, forceNoDecay:bool) : void
+    + Clear() : void
+    + Validate() : void
+}
+class ImpulseEvent {
+    + m_StartTime : float
+    + m_Envelope : EnvelopeDefinition
+    + m_SignalSource : ISignalSource6D
+    + m_Position : Vector3
+    + m_Radius : float
+    + m_DirectionMode : DirectionMode
+    + m_Channel : int
+    + m_DissipationMode : DissipationMode
+    + m_DissipationDistance : float
+    + m_CustomDissipation : float
+    + m_PropagationSpeed : float
+    + Expired : bool <<get>>
+    + Cancel(time:float, forceNoDecay:bool) : void
+    + DistanceDecay(distance:float) : float
+    + GetDecayedSignal(listenerPosition:Vector3, use2D:bool, pos:Vector3, rot:Quaternion) : bool
+    + Clear() : void
+    <<internal>> ImpulseEvent()
+}
+enum DirectionMode {
+    Fixed,
+    RotateTowardSource,
+}
+enum DissipationMode {
+    LinearDecay,
+    SoftDecay,
+    ExponentialDecay,
+}
+PropertyAttribute <|-- CinemachineImpulseEnvelopePropertyAttribute
+PropertyAttribute <|-- CinemachineImpulseChannelPropertyAttribute
+CinemachineImpulseManager +-- EnvelopeDefinition
+CinemachineImpulseManager +-- ImpulseEvent
+ImpulseEvent +-- DirectionMode
+ImpulseEvent +-- DissipationMode
+@enduml

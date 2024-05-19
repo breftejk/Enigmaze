@@ -1,0 +1,78 @@
+@startuml
+class InputControlPath <<static>> {
+    + <<const>> Wildcard : string = "*"
+    + <<const>> DoubleWildcard : string = "**"
+    + <<const>> Separator : char = '/'
+    <<internal>> <<const>> SeparatorReplacement : char = ' '
+    <<internal>> {static} CleanSlashes(pathComponent:String) : string
+    + {static} Combine(parent:InputControl, path:string) : string
+    + {static} ToHumanReadableString(path:string, options:HumanReadableStringOptions, control:InputControl) : string
+    + {static} ToHumanReadableString(path:string, deviceLayoutName:string, controlPath:string, options:HumanReadableStringOptions, control:InputControl) : string
+    + {static} TryGetDeviceUsages(path:string) : string[]
+    + {static} TryGetDeviceLayout(path:string) : string
+    + {static} TryGetControlLayout(path:string) : string
+    - {static} FindControlLayoutRecursive(parser:PathParser, layoutName:string) : string
+    - {static} FindControlLayoutRecursive(parser:PathParser, layout:InputControlLayout) : string
+    - {static} ControlLayoutMatchesPathComponent(controlItem:InputControlLayout.ControlItem, parser:PathParser) : bool
+    - {static} StringMatches(str:Substring, matchTo:InternedString) : bool
+    + {static} TryFindControl(control:InputControl, path:string, indexInPath:int) : InputControl
+    + {static} TryFindControls(control:InputControl, path:string, indexInPath:int) : InputControl[]
+    + {static} TryFindControls(control:InputControl, path:string, matches:InputControlList<InputControl>, indexInPath:int) : int
+    + {static} TryFindControl(control:InputControl, path:string, indexInPath:int) : TControl
+    + {static} TryFindControls(control:InputControl, path:string, indexInPath:int, matches:InputControlList<TControl>) : int
+    + {static} TryFindChild(control:InputControl, path:string, indexInPath:int) : InputControl
+    + {static} TryFindChild(control:InputControl, path:string, indexInPath:int) : TControl
+    + {static} Matches(expected:string, control:InputControl) : bool
+    <<internal>> {static} MatchControlComponent(expectedControlComponent:ParsedPathComponent, controlItem:InputControlLayout.ControlItem, matchAlias:bool) : bool
+    + {static} MatchesPrefix(expected:string, control:InputControl) : bool
+    - {static} MatchesRecursive(parser:PathParser, currentControl:InputControl, prefixOnly:bool) : bool
+    - {static} MatchControlsRecursive(control:InputControl, path:string, indexInPath:int, matches:InputControlList<TControl>, matchMultiple:bool) : TControl
+    - {static} MatchByUsageAtDeviceRootRecursive(device:InputDevice, path:string, indexInPath:int, matches:InputControlList<TControl>, matchMultiple:bool) : TControl
+    - {static} MatchChildrenRecursive(control:InputControl, path:string, indexInPath:int, matches:InputControlList<TControl>, matchMultiple:bool) : TControl
+    - {static} MatchPathComponent(component:string, path:string, indexInPath:int, componentType:PathComponentType, startIndexInComponent:int) : bool
+    - {static} PathComponentCanYieldMultipleMatches(path:string, indexInPath:int) : bool
+    + {static} Parse(path:string) : IEnumerable<ParsedPathComponent>
+}
+enum HumanReadableStringOptions {
+    None= 0,
+    OmitDevice= 1 << 1,
+    UseShortNames= 1 << 2,
+}
+enum PathComponentType {
+    Name,
+    DisplayName,
+    Usage,
+    Layout,
+}
+struct ParsedPathComponent {
+    <<internal>> m_Layout : Substring
+    <<internal>> m_Usages : InlinedArray<Substring>
+    <<internal>> m_Name : Substring
+    <<internal>> m_DisplayName : Substring
+    + layout : string <<get>>
+    + usages : IEnumerable<string> <<get>>
+    + name : string <<get>>
+    + displayName : string <<get>>
+    <<internal>> isWildcard : bool <<get>>
+    <<internal>> isDoubleWildcard : bool <<get>>
+    <<internal>> ToHumanReadableString(parentLayoutName:string, parentControlPath:string, referencedLayoutName:string, controlPath:string, options:HumanReadableStringOptions) : string
+    - {static} ToHumanReadableString(substring:Substring) : string
+    + Matches(control:InputControl) : bool
+    - {static} ComparePathElementToString(pathElement:Substring, element:string) : bool
+}
+struct PathParser {
+    - path : string
+    - length : int
+    - leftIndexInPath : int
+    - rightIndexInPath : int
+    + current : ParsedPathComponent
+    + isAtEnd : bool <<get>>
+    + PathParser(path:string)
+    + MoveToNextComponent() : bool
+    - ParseComponentPart(terminator:char) : Substring
+}
+InputControlPath +-- HumanReadableStringOptions
+InputControlPath +-- PathComponentType
+InputControlPath +-- ParsedPathComponent
+InputControlPath +-- PathParser
+@enduml

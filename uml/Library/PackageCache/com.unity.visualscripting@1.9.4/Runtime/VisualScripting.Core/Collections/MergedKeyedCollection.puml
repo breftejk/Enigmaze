@@ -1,0 +1,43 @@
+@startuml
+class "MergedKeyedCollection`2"<TKey,TItem> {
+    + MergedKeyedCollection()
+    # <<readonly>> collections : Dictionary<Type, IKeyedCollection<TKey, TItem>>
+    # <<readonly>> collectionsLookup : Dictionary<Type, IKeyedCollection<TKey, TItem>>
+    + Count : int <<get>>
+    + IsReadOnly : bool <<get>>
+    + Includes() : bool
+    + Includes(elementType:Type) : bool
+    + ForType() : IKeyedCollection<TKey, TSubItem>
+    + <<virtual>> Include(collection:IKeyedCollection<TKey, TSubItem>) : void
+    # GetCollectionForItem(item:TItem) : IKeyedCollection<TKey, TItem>
+    # GetCollectionForType(type:Type, throwOnFail:bool) : IKeyedCollection<TKey, TItem>
+    # GetCollectionForKey(key:TKey, throwOnFail:bool) : IKeyedCollection<TKey, TItem>
+    + TryGetValue(key:TKey, value:TItem) : bool
+    + <<virtual>> Add(item:TItem) : void
+    + Clear() : void
+    + Contains(item:TItem) : bool
+    + Remove(item:TItem) : bool
+    + CopyTo(array:TItem[], arrayIndex:int) : void
+    + Contains(key:TKey) : bool
+    + Remove(key:TKey) : bool
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<TItem>
+    + GetEnumerator() : Enumerator
+}
+struct Enumerator {
+    - collectionsEnumerator : Dictionary<Type, IKeyedCollection<TKey, TItem>>.Enumerator
+    - currentItem : TItem
+    - currentCollection : IKeyedCollection<TKey, TItem>
+    - indexInCurrentCollection : int
+    - exceeded : bool
+    + Enumerator(merged:MergedKeyedCollection<TKey, TItem>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Current : TItem <<get>>
+    - Current : Object <<get>>
+    - Reset() : void
+}
+"IMergedCollection`1" "<TItem>" <|-- "MergedKeyedCollection`2"
+"MergedKeyedCollection`2" +-- Enumerator
+"IEnumerator`1" "<TItem>" <|-- Enumerator
+@enduml

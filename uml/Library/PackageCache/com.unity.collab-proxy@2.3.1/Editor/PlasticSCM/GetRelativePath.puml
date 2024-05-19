@@ -1,0 +1,6 @@
+@startuml
+class GetRelativePath <<static>> {
+    <<internal>> {static} ToApplication(path:string) : string
+    {static} - FixVolumeLetterPath(path:string) : string
+}
+@enduml

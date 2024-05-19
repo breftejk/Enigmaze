@@ -1,0 +1,10 @@
+@startuml
+class Awaitable <<partial>> {
+    - SetExceptionFromNative(ex:Exception) : void
+    - RunContinuation() : void
+    - {static} <<extern>> AttachManagedGCHandleToNativeAwaitable(nativeAwaitable:IntPtr, gcHandle:UIntPtr) : void
+    - {static} <<extern>> ReleaseNativeAwaitable(nativeAwaitable:IntPtr) : void
+    - {static} <<extern>> CancelNativeAwaitable(nativeAwaitable:IntPtr) : void
+    - {static} <<extern>> IsNativeAwaitableCompleted(nativeAwaitable:IntPtr) : int
+}
+@enduml

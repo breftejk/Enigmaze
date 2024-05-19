@@ -1,0 +1,6 @@
+@startuml
+class ProfiledSegmentCollection {
+    # <<override>> GetKeyForItem(item:ProfiledSegment) : string
+}
+"KeyedCollection`2" "<string,ProfiledSegment>" <|-- ProfiledSegmentCollection
+@enduml

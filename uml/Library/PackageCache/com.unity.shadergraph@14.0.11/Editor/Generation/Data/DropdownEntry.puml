@@ -1,0 +1,8 @@
+@startuml
+struct DropdownEntry {
+    + id : int
+    + displayName : string
+    + DropdownEntry(displayName:string)
+    <<internal>> DropdownEntry(id:int, displayName:string)
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class RenderingData {
+    + sizeMissmatched : bool
+    + stage : Stage
+    + updater : ICameraUpdater
+    + viewPort : Rect
+    + output : RenderTexture
+    - disposed : bool = false
+    + Dispose() : void
+}
+class Renderer {
+    + pixelPerfect : bool <<get>> <<set>>
+    + Renderer(pixelPerfect:bool)
+    + BeginRendering(data:RenderingData, dataProvider:IDataProvider) : void
+    + EndRendering(data:RenderingData, dataProvider:IDataProvider) : void
+    - CheckWrongSizeOutput(data:RenderingData) : bool
+    + Acquire(data:RenderingData) : void
+    <<internal>> {static} DrawFullScreenQuad(rect:Rect) : void
+}
+class RectExtension <<static>> <<partial>> {
+    + {static} IsNullOrInverted(r:Rect) : bool
+}
+IDisposable <|-- RenderingData
+@enduml

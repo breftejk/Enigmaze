@@ -1,0 +1,24 @@
+@startuml
+class CinemachineFreeLookEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - OnSceneGUI() : void
+    {static} - s_RigNames : GUIContent[]
+    <<internal>> {static} RigNames : GUIContent[] <<get>>
+    {static} - GetSelectedRig(freelook:CinemachineFreeLook) : int
+    <<internal>> {static} SetSelectedRig(freelook:CinemachineFreeLook, rigIndex:int) : void
+    - m_rigEditor : UnityEditor.Editor
+    - m_RigEditorOnSceneGUI : System.Reflection.MethodInfo
+    - m_EditedRig : CinemachineVirtualCameraBase = null
+    - UpdateRigEditor() : void
+    - {static} DrawFreeLookGizmos(vcam:CinemachineFreeLook, selectionType:GizmoType) : void
+    - {static} DrawCameraPath(atPos:Vector3, orient:Quaternion, vcam:CinemachineFreeLook) : void
+}
+class CreateRigWithUndo {
+    {static} - CreateRigWithUndo()
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineFreeLook>" <|-- CinemachineFreeLookEditor
+CinemachineFreeLookEditor +-- CreateRigWithUndo
+@enduml

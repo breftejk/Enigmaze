@@ -1,0 +1,11 @@
+@startuml
+abstract class IndividualEditor {
+    + Initialize(serializedObject:SerializedObject, editorParent:Editor) : void
+    # {abstract} Initialize() : void
+    + editorParent : Editor <<get>>
+    + serializedObject : SerializedObject <<get>>
+    + {abstract} OnGUI() : void
+    + <<virtual>> Dispose() : void
+}
+IDisposable <|-- IndividualEditor
+@enduml

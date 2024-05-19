@@ -1,0 +1,50 @@
+@startuml
+class RenderSettingsConverter {
+    + <<override>> priority : int <<get>>
+    + <<override>> name : string <<get>>
+    + <<override>> info : string <<get>>
+    + <<override>> container : Type <<get>>
+    - m_GraphicsTierSettings : GraphicsTierSettings
+    - m_SettingsItems : List<SettingsItem>
+    - m_RenderingModes : List<RenderingMode>
+    <<const>> - k_PipelineAssetPath : string = "Settings"
+    + <<override>> OnInitialize(context:InitializeConverterContext, callback:Action) : void
+    - GatherGraphicsTiers() : void
+    - GatherQualityLevels(context:InitializeConverterContext) : void
+    + <<override>> OnRun(context:RunItemContext) : void
+    - GeneratePipelineAsset(settings:RenderSettingItem) : void
+    - CreateRendererDataAsset(assetPath:string, renderingPath:RenderingPath, fileName:string) : ScriptableRendererData
+    - SetPipelineSettings(asset:UniversalRenderPipelineAsset, settings:RenderSettingItem) : void
+    - {static} GetEquivalentMainlightShadowResolution(value:int) : int
+    - {static} GetEquivalentAdditionalLightAtlasShadowResolution(value:int) : int
+    - {static} GetEquivalentShadowResolution(value:int) : int
+    - GetEquivalentRenderMode(path:RenderingPath) : RenderingMode
+}
+struct GraphicsTierSettings {
+    + ReflectionProbeBoxProjection : bool
+    + ReflectionProbeBlending : bool
+    + CascadeShadows : bool
+    + HDR : bool
+    + RenderingPath : RenderingPath
+}
+class SettingsItem {
+}
+class RenderSettingItem {
+    + Index : int
+    + LevelName : string
+    + PixelLightCount : int
+    + MSAA : int
+    + Shadows : ShadowQuality
+    + ShadowResolution : ShadowResolution
+    + ShadowDistance : float
+    + ShadowCascadeCount : int
+    + CascadeSplit2 : float
+    + CascadeSplit4 : Vector3
+    + SoftParticles : bool
+}
+RenderPipelineConverter <|-- RenderSettingsConverter
+RenderSettingsConverter +-- GraphicsTierSettings
+RenderSettingsConverter +-- SettingsItem
+RenderSettingsConverter +-- RenderSettingItem
+SettingsItem <|-- RenderSettingItem
+@enduml

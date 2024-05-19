@@ -1,0 +1,8 @@
+@startuml
+interface IMacro {
+    graph : IGraph <<get>> <<set>>
+}
+IGraphRoot <|-- IMacro
+ISerializationDependency <|-- IMacro
+IAotStubbable <|-- IMacro
+@enduml

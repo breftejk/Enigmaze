@@ -1,0 +1,66 @@
+@startuml
+class InputTestRuntime {
+    + AllocateDeviceId() : int
+    + <<unsafe>> Update(type:InputUpdateType) : void
+    + <<unsafe>> QueueEvent(eventPtr:InputEvent*) : void
+    + <<unsafe>> SetCanRunInBackground(deviceId:int) : void
+    + SetDeviceCommandCallback(device:InputDevice, callback:DeviceCommandCallback) : void
+    + SetDeviceCommandCallback(deviceId:int, callback:DeviceCommandCallback) : void
+    + SetDeviceCommandCallback(deviceId:int, result:TCommand) : void
+    + <<unsafe>> DeviceCommand(deviceId:int, commandPtr:InputDeviceCommand*) : long
+    + InvokePlayerFocusChanged(newFocusState:bool) : void
+    + PlayerFocusLost() : void
+    + PlayerFocusGained() : void
+    + ReportNewInputDevice(deviceDescriptor:string, deviceId:int) : int
+    + ReportNewInputDevice(description:InputDeviceDescription, deviceId:int, userHandle:ulong, userName:string, userId:string) : int
+    + ReportNewInputDevice(deviceId:int, userHandle:ulong, userName:string, userId:string) : int
+    + <<unsafe>> ReportInputDeviceRemoved(deviceId:int) : void
+    + ReportInputDeviceRemoved(device:InputDevice) : void
+    + AssociateInputDeviceWithUser(deviceId:int, userHandle:ulong, userName:string, userId:string) : void
+    + AssociateInputDeviceWithUser(device:InputDevice, userHandle:ulong, userName:string, userId:string) : void
+    + onUpdate : InputUpdateDelegate <<get>> <<set>>
+    + onBeforeUpdate : Action<InputUpdateType> <<get>> <<set>>
+    + onShouldRunUpdate : Func<InputUpdateType, bool> <<get>> <<set>>
+    + onDeviceDiscovered : Action<int, string> <<get>> <<set>>
+    + onShutdown : Action <<get>> <<set>>
+    + onPlayerFocusChanged : Action<bool> <<get>> <<set>>
+    + isPlayerFocused : bool <<get>>
+    + pollingFrequency : float <<get>> <<set>>
+    + currentTime : double <<get>> <<set>>
+    + currentTimeForFixedUpdate : double <<get>> <<set>>
+    + unscaledGameTime : float <<get>> <<set>> = 1
+    + dontAdvanceUnscaledGameTimeNextDynamicUpdate : bool <<get>> <<set>>
+    + advanceTimeEachDynamicUpdate : double <<get>> <<set>>
+    + dontAdvanceTimeNextDynamicUpdate : bool <<get>> <<set>>
+    + runInBackground : bool <<get>> <<set>> = false
+    + screenSize : Vector2 <<get>> <<set>>
+    + screenOrientation : ScreenOrientation <<set>> <<get>>
+    + userAccountPairings : List<PairedUser> <<get>>
+    + Dispose() : void
+    + currentTimeOffsetToRealtimeSinceStartup : double <<get>> <<set>>
+    + isInBatchMode : bool <<get>> <<set>>
+    + eventCount : int <<get>>
+    <<internal>> <<const>> kDefaultEventBufferSize : int
+    - m_HasFocus : bool = true
+    - m_NextDeviceId : int = 1
+    - m_NextEventId : int = 1
+    <<internal>> m_EventCount : int
+    - m_EventWritePosition : int
+    - m_EventBuffer : NativeArray<byte>
+    - m_UserPairings : List<PairedUser>
+    - m_NewDeviceDiscoveries : List<KeyValuePair<int, string>>
+    - m_DeviceCommandCallbacks : List<KeyValuePair<int, DeviceCommandCallback>>
+    - m_Lock : object
+    - m_CurrentTimeOffsetToRealtimeSinceStartup : double
+    - m_UnityRemoteMessageHandler : Func<IntPtr, bool>
+}
+struct PairedUser {
+    + deviceId : int
+    + userHandle : ulong
+    + userName : string
+    + userId : string
+}
+IInputRuntime <|-- InputTestRuntime
+IDisposable <|-- InputTestRuntime
+InputTestRuntime +-- PairedUser
+@enduml

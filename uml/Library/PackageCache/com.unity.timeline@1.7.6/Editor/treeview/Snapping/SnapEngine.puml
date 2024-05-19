@@ -1,0 +1,42 @@
+@startuml
+enum ManipulateEdges {
+    Left,
+    Right,
+    Both,
+}
+class SnapEngine {
+    {static} <<readonly>> - k_MagnetInfluenceInPixels : float = 10.0f
+    + {static} displayDebugLayout : bool
+    <<readonly>> - m_Attractable : IAttractable
+    <<readonly>> - m_AttractionHandler : IAttractionHandler
+    <<readonly>> - m_ManipulateEdges : ManipulateEdges
+    <<readonly>> - m_State : WindowState
+    - m_GrabbedTime : double
+    - m_GrabbedTimes : TimeBoundaries
+    - m_CurrentTimes : TimeBoundaries
+    <<readonly>> - m_Magnets : List<SnapInfo>
+    - m_SnapEnabled : bool
+    + SnapEngine(attractable:IAttractable, attractionHandler:IAttractionHandler, manipulateEdges:ManipulateEdges, state:WindowState, mousePosition:Vector2, snappables:IEnumerable<ISnappable>)
+    + {static} GetVisibleSnappables(state:WindowState) : IEnumerable<ISnappable>
+    - AddMagnet(magnetTime:double, showSnapHint:bool, state:WindowState) : void
+    {static} - IsMagnetInShownArea(time:double, state:WindowState) : bool
+    - GetMagnetAt(time:double) : SnapInfo
+    - ClosestMagnet(time:double) : SnapInfo
+    + Snap(currentMousePosition:Vector2, modifiers:EventModifiers) : void
+    + OnGUI(showLeft:bool, showRight:bool) : void
+    - DrawMagnetLineAt(time:double) : void
+}
+class SnapInfo {
+    + time : double <<get>> <<set>>
+    + showSnapHint : bool <<get>> <<set>>
+    + IsInInfluenceZone(currentTime:double, state:WindowState) : bool
+}
+struct TimeBoundaries {
+    + TimeBoundaries(l:double, r:double)
+    + <<readonly>> left : double
+    + <<readonly>> right : double
+    + Translate(d:double) : TimeBoundaries
+}
+SnapEngine +-- SnapInfo
+SnapEngine +-- TimeBoundaries
+@enduml

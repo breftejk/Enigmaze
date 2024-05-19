@@ -1,0 +1,15 @@
+@startuml
+interface IBoneGizmoToggle {
+    enableGizmos : bool <<get>>
+    OnGUI() : void
+}
+class BoneGizmoToggle {
+    - m_EnableGizmos : bool
+    - m_CurrentEnableGizmoState : bool
+    + enableGizmos : bool <<get>>
+    + BoneGizmoToggle()
+    - OnDrawGizmos() : void
+    + OnGUI() : void
+}
+IBoneGizmoToggle <|-- BoneGizmoToggle
+@enduml

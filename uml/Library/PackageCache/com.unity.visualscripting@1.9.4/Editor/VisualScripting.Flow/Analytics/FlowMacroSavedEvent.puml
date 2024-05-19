@@ -1,0 +1,5 @@
+@startuml
+class FlowMacroSavedEvent {
+    {static} - OnWillSaveAssets(paths:string[]) : string[]
+}
+@enduml

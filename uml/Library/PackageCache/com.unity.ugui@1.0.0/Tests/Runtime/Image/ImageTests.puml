@@ -1,0 +1,17 @@
+@startuml
+class ImageTests {
+    - <<const>> Width : int = 32
+    - <<const>> Height : int = 32
+    - m_CanvasGO : GameObject
+    - m_Image : TestableImage
+    - m_defaultTexture : Texture2D
+    - m_dirtyLayout : bool
+    - m_dirtyMaterial : bool
+    + SetUp() : void
+    + TightMeshSpritePopulatedVertexHelperProperly() : void
+    + CanvasCustomRefPixPerUnitToggleWillUpdateImageMesh() : IEnumerator
+    + Sprite_Layout() : IEnumerator
+    + Sprite_Material() : IEnumerator
+    + TearDown() : void
+}
+@enduml

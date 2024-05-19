@@ -1,0 +1,8 @@
+@startuml
+class DDXYNode {
+    + DDXYNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    - Unity_DDXY(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- DDXYNode
+@enduml

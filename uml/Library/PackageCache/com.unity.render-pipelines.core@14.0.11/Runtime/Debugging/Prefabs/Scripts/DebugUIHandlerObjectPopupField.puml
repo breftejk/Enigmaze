@@ -1,0 +1,11 @@
+@startuml
+class DebugUIHandlerObjectPopupField {
+    - m_Index : int
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    - ChangeSelectedObject() : void
+    + <<override>> OnIncrement(fast:bool) : void
+    + <<override>> OnDecrement(fast:bool) : void
+    + <<override>> UpdateValueLabel() : void
+}
+"DebugUIHandlerField`1" "<DebugUI.ObjectPopupField>" <|-- DebugUIHandlerObjectPopupField
+@enduml

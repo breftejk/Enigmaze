@@ -1,0 +1,8 @@
+@startuml
+class LerpNode {
+    + LerpNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Lerp(A:DynamicDimensionVector, B:DynamicDimensionVector, T:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- LerpNode
+@enduml

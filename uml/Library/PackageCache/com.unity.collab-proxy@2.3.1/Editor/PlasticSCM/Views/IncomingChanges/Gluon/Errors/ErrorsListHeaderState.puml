@@ -1,0 +1,18 @@
+@startuml
+enum ErrorsListColumn {
+    Path,
+    Reason,
+}
+class ErrorsListHeaderState {
+    <<internal>> {static} GetDefault() : ErrorsListHeaderState
+    {static} - GetColumnName(column:ErrorsListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - ErrorsListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- ErrorsListHeaderState
+ISerializationCallbackReceiver <|-- ErrorsListHeaderState
+@enduml

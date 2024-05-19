@@ -1,0 +1,11 @@
+@startuml
+class GraphGroup <<sealed>> {
+    + {static} <<readonly>> defaultColor : Color
+    + GraphGroup()
+    + position : Rect <<get>> <<set>>
+    + label : string <<get>> <<set>> = "Group"
+    + comment : string <<get>> <<set>>
+    + color : Color <<get>> <<set>>
+}
+"GraphElement`1" "<IGraph>" <|-- GraphGroup
+@enduml

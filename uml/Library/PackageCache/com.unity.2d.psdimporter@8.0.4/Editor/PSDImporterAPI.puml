@@ -1,0 +1,38 @@
+@startuml
+class PSDImporter <<partial>> {
+    + isReadable : bool <<get>> <<set>>
+    + anisoLevel : int <<get>> <<set>>
+    + borderMipmap : bool <<get>> <<set>>
+    + fadeout : bool <<get>> <<set>>
+    + filterMode : FilterMode <<get>> <<set>>
+    + mipMapBias : float <<get>> <<set>>
+    + mipmapEnabled : bool <<get>> <<set>>
+    + mipmapFadeDistanceEnd : int <<get>> <<set>>
+    + mipmapFadeDistanceStart : int <<get>> <<set>>
+    + mipmapFilter : TextureImporterMipFilter <<get>> <<set>>
+    + mipMapsPreserveCoverage : bool <<get>> <<set>>
+    + spriteImportMode : SpriteImportMode <<get>> <<set>>
+    + spriteMeshType : SpriteMeshType <<get>> <<set>>
+    + textureType : TextureImporterType <<get>> <<set>>
+    + wrapMode : TextureWrapMode <<get>> <<set>>
+    + wrapModeU : TextureWrapMode <<get>> <<set>>
+    + wrapModeV : TextureWrapMode <<get>> <<set>>
+    + wrapModeW : TextureWrapMode <<get>> <<set>>
+    + spritePixelsPerUnit : float <<get>> <<set>>
+    + GetImporterPlatformSettings(buildTarget:BuildTarget) : TextureImporterPlatformSettings
+    + SetImporterPlatformSettings(setting:TextureImporterPlatformSettings) : void
+    + secondarySpriteTextures : SecondarySpriteTexture[] <<get>> <<set>>
+    + useCharacterMode : bool <<get>> <<set>>
+    + useMosaicMode : bool <<get>> <<set>>
+    + mosiacPadding : uint <<get>> <<set>>
+    + spriteSizeExpand : ushort <<get>> <<set>>
+    <<internal>> swizzleR : TextureImporterSwizzle <<get>> <<set>>
+    <<internal>> swizzleG : TextureImporterSwizzle <<get>> <<set>>
+    <<internal>> swizzleB : TextureImporterSwizzle <<get>> <<set>>
+    <<internal>> swizzleA : TextureImporterSwizzle <<get>> <<set>>
+    <<internal>> sRGBTexture : bool <<get>> <<set>>
+    - SetDirty() : void
+}
+ScriptedImporter <|-- PSDImporter
+ISpriteEditorDataProvider <|-- PSDImporter
+@enduml

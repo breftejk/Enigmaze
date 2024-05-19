@@ -1,0 +1,40 @@
+@startuml
+class Toggle {
+    + toggleTransition : ToggleTransition
+    + graphic : Graphic
+    - m_Group : ToggleGroup
+    + group : ToggleGroup <<get>> <<set>>
+    + onValueChanged : ToggleEvent
+    - m_IsOn : bool
+    # Toggle()
+    + <<virtual>> Rebuild(executing:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    - SetToggleGroup(newGroup:ToggleGroup, setMemberValue:bool) : void
+    + isOn : bool <<get>> <<set>>
+    + SetIsOnWithoutNotify(value:bool) : void
+    - Set(value:bool, sendCallback:bool) : void
+    - PlayEffect(instant:bool) : void
+    # <<override>> Start() : void
+    - InternalToggle() : void
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+}
+enum ToggleTransition {
+    None,
+    Fade,
+}
+class ToggleEvent {
+}
+Selectable <|-- Toggle
+IPointerClickHandler <|-- Toggle
+ISubmitHandler <|-- Toggle
+ICanvasElement <|-- Toggle
+Toggle +-- ToggleTransition
+Toggle +-- ToggleEvent
+"UnityEvent`1" "<bool>" <|-- ToggleEvent
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+struct QueryKeyNameCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kMaxNameLength : int = 256
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + scanOrKeyCode : int
+    + <<fixed>> nameBuffer : byte
+    + ReadKeyName() : string
+    + typeStatic : FourCC <<get>>
+    + {static} Create(key:Key) : QueryKeyNameCommand
+}
+IInputDeviceCommandInfo <|-- QueryKeyNameCommand
+@enduml

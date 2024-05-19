@@ -1,0 +1,39 @@
+@startuml
+enum AssetStatus {
+    None= 0,
+    Private= 1 << 0,
+    Ignored= 1 << 2,
+    Added= 1 << 3,
+    Checkout= 1 << 4,
+    Controlled= 1 << 5,
+    UpToDate= 1 << 6,
+    OutOfDate= 1 << 7,
+    Conflicted= 1 << 8,
+    DeletedOnServer= 1 << 9,
+    Locked= 1 << 10,
+    LockedRemote= 1 << 11,
+    Retained= 1 << 12,
+    HiddenChanged= 1 << 13,
+}
+class LockStatusData {
+    <<internal>> <<readonly>> Status : AssetStatus
+    <<internal>> <<readonly>> LockedBy : string
+    <<internal>> <<readonly>> HolderBranchName : string
+    <<internal>> LockStatusData(status:AssetStatus, lockedBy:string, holderBranchName:string)
+}
+class ClassifyAssetStatus {
+    <<internal>> {static} IsPrivate(status:AssetStatus) : bool
+    <<internal>> {static} IsIgnored(status:AssetStatus) : bool
+    <<internal>> {static} IsControlled(status:AssetStatus) : bool
+    <<internal>> {static} IsLocked(status:AssetStatus) : bool
+    <<internal>> {static} IsLockedRemote(status:AssetStatus) : bool
+    <<internal>> {static} IsRetained(status:AssetStatus) : bool
+    <<internal>> {static} IsOutOfDate(status:AssetStatus) : bool
+    <<internal>> {static} IsDeletedOnServer(status:AssetStatus) : bool
+    <<internal>> {static} IsConflicted(status:AssetStatus) : bool
+    <<internal>> {static} IsAdded(status:AssetStatus) : bool
+    <<internal>> {static} IsCheckedOut(status:AssetStatus) : bool
+    <<internal>> {static} IsHiddenChanged(status:AssetStatus) : bool
+    {static} - ContainsAny(status:AssetStatus, matchTo:AssetStatus) : bool
+}
+@enduml

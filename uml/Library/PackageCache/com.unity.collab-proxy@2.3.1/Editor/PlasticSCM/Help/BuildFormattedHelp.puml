@@ -1,0 +1,32 @@
+@startuml
+class FormattedHelpLink {
+    <<internal>> Source : HelpLink
+    <<internal>> Position : int
+    <<internal>> Length : int
+}
+class BuildFormattedHelp <<static>> {
+    <<internal>> {static} ForData(plainText:string, formattedBlocks:HelpFormat[], links:HelpLink[], formattedHelpText:string, formattedLinks:List<FormattedHelpLink>) : void
+    <<internal>> {static} IsLinkMetaChar(formattedLink:FormattedHelpLink, charIndex:int) : bool
+    {static} - GetSegmentData(segment:object) : Segment.Data
+}
+class Segment <<static>> {
+    <<internal>> {static} BuildForLink(link:HelpLink) : Data
+    <<internal>> {static} BuildForFormat(format:HelpFormat) : Data
+    <<internal>> <<const>> LINK_PREFIX : string
+    <<internal>> <<const>> LINK_SUFFIX : string = "</color>"
+    <<const>> - TITLE_PREFIX : string = "<size=16>"
+    <<const>> - TITLE_SUFFIX : string = "</size>"
+    <<const>> - BOLD_PREFIX : string = "<b>"
+    <<const>> - BOLD_SUFFIX : string = "</b>"
+    <<const>> - ITALIC_PREFIX : string = "<i>"
+    <<const>> - ITALIC_SUFFIX : string = "</i>"
+}
+class Data {
+    <<internal>> Begin : int
+    <<internal>> Length : int
+    <<internal>> Prefix : string
+    <<internal>> Suffix : string
+}
+BuildFormattedHelp +-- Segment
+Segment +-- Data
+@enduml

@@ -1,0 +1,72 @@
+@startuml
+class Layer {
+    - m_LayerIndex : int
+    - m_Guid : int
+    - m_Name : string
+    - m_LayerFlags : LayerFlags
+    - m_LayerType : LayerTypes
+    - m_BlendMode : BlendModes
+    - m_Cells : List<Cell>
+    - m_LinkedCells : List<LinkedCell>
+    - m_ParentIndex : int
+    + opacity : float
+    + index : int <<get>> <<set>>
+    + guid : int <<get>> <<set>>
+    + name : string <<get>> <<set>>
+    + layerFlags : LayerFlags <<get>> <<set>>
+    + layerType : LayerTypes <<get>> <<set>>
+    + blendMode : BlendModes <<get>> <<set>>
+    + cells : List<Cell> <<get>> <<set>>
+    + linkedCells : List<LinkedCell> <<get>> <<set>>
+    + parentIndex : int <<get>> <<set>>
+    + {static} GenerateGuid(layer:Layer) : int
+}
+struct Cell {
+    - m_Name : string
+    - m_FrameIndex : int
+    - m_AdditiveSortOrder : int
+    - m_CellRect : RectInt
+    - m_SpriteId : string
+    + updatedCellRect : bool
+    + opacity : float
+    + blendMode : BlendModes
+    + image : NativeArray<Color32>
+    + name : string <<get>> <<set>>
+    + frameIndex : int <<get>> <<set>>
+    + additiveSortOrder : int <<get>> <<set>>
+    + cellRect : RectInt <<get>> <<set>>
+    + spriteId : GUID <<get>> <<set>>
+}
+class LinkedCell {
+    - m_FrameIndex : int
+    - m_LinkedToFrame : int
+    + frameIndex : int <<get>> <<set>>
+    + linkedToFrame : int <<get>> <<set>>
+}
+class Frame {
+    - m_Duration : int
+    - m_EventStrings : string[]
+    + duration : int <<get>> <<set>>
+    + eventStrings : string[] <<get>> <<set>>
+}
+class Tag {
+    + name : string <<get>> <<set>>
+    + fromFrame : int <<get>> <<set>>
+    + toFrame : int <<get>> <<set>>
+    + noOfRepeats : int <<get>> <<set>>
+    + noOfFrames : int <<get>>
+    + isRepeating : bool <<get>>
+}
+enum FileImportModes {
+    SpriteSheet= 0,
+    AnimatedSprite= 1,
+}
+enum LayerImportModes {
+    IndividualLayers,
+    MergeFrame,
+}
+enum PivotSpaces {
+    Canvas,
+    Local,
+}
+@enduml

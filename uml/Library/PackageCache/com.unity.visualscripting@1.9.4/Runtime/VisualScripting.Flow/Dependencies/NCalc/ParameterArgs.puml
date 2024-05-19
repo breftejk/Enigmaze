@@ -1,0 +1,8 @@
+@startuml
+class ParameterArgs {
+    - _result : object
+    + Result : object <<get>> <<set>>
+    + HasResult : bool <<get>> <<set>>
+}
+EventArgs <|-- ParameterArgs
+@enduml

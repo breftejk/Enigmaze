@@ -1,0 +1,23 @@
+@startuml
+class VariableDeclarationInspector <<sealed>> {
+    - nameMetadata : Metadata <<get>>
+    - valueMetadata : Metadata <<get>>
+    - typeMetadata : Metadata <<get>>
+    + VariableDeclarationInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    - GetNameHeight(width:float) : float
+    - GetValueHeight(width:float) : float
+    - GetTypeHeight(width:float) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + OnNameGUI(namePosition:Rect) : void
+    + OnValueGUI(valuePosition:Rect) : void
+    + OnTypeGUI(position:Rect) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> labelWidth : float
+    + {static} <<readonly>> padding : float = 2
+    + {static} <<readonly>> spacing : float
+}
+Inspector <|-- VariableDeclarationInspector
+VariableDeclarationInspector +-- Styles
+@enduml

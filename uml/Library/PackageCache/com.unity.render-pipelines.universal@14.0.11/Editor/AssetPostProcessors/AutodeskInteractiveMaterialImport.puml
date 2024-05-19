@@ -1,0 +1,18 @@
+@startuml
+class AutodeskInteractiveMaterialImport {
+    {static} <<readonly>> - k_Version : uint = 2
+    {static} <<readonly>> - k_Order : int
+    + <<override>> GetVersion() : uint
+    + <<override>> GetPostprocessOrder() : int
+    + OnPreprocessMaterialDescription(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    {static} - IsAutodeskInteractiveMaterial(description:MaterialDescription) : bool
+    {static} - ConvertKeys(curve:AnimationCurve, convertionDelegate:System.Func<float, float>) : void
+    {static} - ConvertAndCopyKeys(curveDest:AnimationCurve, curveSource:AnimationCurve, convertionDelegate:System.Func<float, float>) : void
+    {static} - ConvertFloatNegate(value:float) : float
+    {static} - ConvertFloatMultiply(value:float, multiplier:float) : float
+    {static} - MultiplyCurves(curve:AnimationCurve, curveMultiplier:AnimationCurve) : void
+    {static} - RemapCurve(description:MaterialDescription, clips:AnimationClip[], originalPropertyName:string, newPropertyName:string) : void
+    {static} - RemapColorCurves(description:MaterialDescription, clips:AnimationClip[], originalPropertyName:string, newPropertyName:string) : void
+}
+AssetPostprocessor <|-- AutodeskInteractiveMaterialImport
+@enduml

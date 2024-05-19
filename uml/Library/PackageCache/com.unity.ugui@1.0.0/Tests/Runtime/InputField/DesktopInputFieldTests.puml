@@ -1,0 +1,13 @@
+@startuml
+class DesktopInputFieldTests {
+    # <<const>> kPrefabPath : string = "Assets/Resources/DesktopInputFieldPrefab.prefab"
+    + Setup() : void
+    + <<virtual>> TestSetup() : void
+    + <<virtual>> TearDown() : void
+    + OnetimeTearDown() : void
+    + FocusOnPointerClickWithLeftButton() : IEnumerator
+    + DoesNotFocusOnPointerClickWithRightOrMiddleButton() : IEnumerator
+}
+BaseInputFieldTests <|-- DesktopInputFieldTests
+IPrebuildSetup <|-- DesktopInputFieldTests
+@enduml

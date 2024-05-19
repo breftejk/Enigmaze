@@ -1,0 +1,19 @@
+@startuml
+abstract class ScriptableRendererFeature {
+    - m_Active : bool = true
+    + isActive : bool <<get>>
+    + {abstract} Create() : void
+    + <<virtual>> OnCameraPreCull(renderer:ScriptableRenderer, cameraData:CameraData) : void
+    + {abstract} AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    + <<virtual>> SetupRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    - OnEnable() : void
+    - OnValidate() : void
+    <<internal>> <<virtual>> SupportsNativeRenderPass() : bool
+    <<internal>> <<virtual>> RequireRenderingLayers(isDeferred:bool, needsGBufferAccurateNormals:bool, atEvent:RenderingLayerUtils.Event, maskSize:RenderingLayerUtils.MaskSize) : bool
+    + SetActive(active:bool) : void
+    + Dispose() : void
+    # <<virtual>> Dispose(disposing:bool) : void
+}
+ScriptableObject <|-- ScriptableRendererFeature
+IDisposable <|-- ScriptableRendererFeature
+@enduml

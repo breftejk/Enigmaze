@@ -1,0 +1,7 @@
+@startuml
+class SaveModiedSceneTask {
+    <<internal>> SaveCurrentModifiedScenesIfUserWantsTo : Func<bool>
+    + <<override>> Execute(testJobData:TestJobData) : IEnumerator
+}
+TestTaskBase <|-- SaveModiedSceneTask
+@enduml

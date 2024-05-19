@@ -1,0 +1,9 @@
+@startuml
+class UniversalShaderGraphSaveContext {
+    + updateMaterials : bool
+}
+class ShaderGraphMaterialsUpdater {
+    {static} - ShaderGraphMaterialsUpdater()
+    {static} - OnShaderGraphSaved(shader:Shader, saveContext:object) : void
+}
+@enduml

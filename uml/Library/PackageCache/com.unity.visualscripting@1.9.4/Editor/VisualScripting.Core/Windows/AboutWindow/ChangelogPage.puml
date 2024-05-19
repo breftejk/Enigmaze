@@ -1,0 +1,27 @@
+@startuml
+class ChangelogPage {
+    + ChangelogPage(changelog:PluginChangelog, showPluginName:bool)
+    - <<readonly>> changes : List<Change>
+    - <<readonly>> changelog : PluginChangelog
+    # <<override>> OnContentGUI() : void
+    - {static} FormatChange(change:string) : Change
+    + {static} <<readonly>> changeTypesColors : Dictionary<string, Color>
+}
+struct Change {
+    + type : GUIContent <<get>> <<set>>
+    + content : GUIContent <<get>> <<set>>
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> plugin : GUIStyle
+    + {static} <<readonly>> version : GUIStyle
+    + {static} <<readonly>> description : GUIStyle
+    + {static} <<readonly>> changeType : GUIStyle
+    + {static} <<readonly>> changeContent : GUIStyle
+    + {static} <<readonly>> bullet : GUIStyle
+}
+Page <|-- ChangelogPage
+ChangelogPage +-- Change
+ChangelogPage +-- Styles
+@enduml

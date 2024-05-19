@@ -1,0 +1,81 @@
+@startuml
+class SpriteEditorMenuSetting {
+    + gridCellCount : Vector2
+    + gridSpriteSize : Vector2
+    + gridSpriteOffset : Vector2
+    + gridSpritePadding : Vector2
+    + pivot : Vector2
+    + autoSlicingMethod : int
+    + spriteAlignment : int
+    + slicingType : SlicingType
+    + keepEmptyRects : bool
+    + isAlternate : bool
+}
+class SpriteEditorMenu {
+    - {static} s_Styles : Styles
+    - {static} s_LastClosedTime : long
+    - {static} s_Setting : SpriteEditorMenuSetting
+    - m_TextureDataProvider : ITextureDataProvider
+    - m_SpriteFrameModule : SpriteFrameModule
+    - m_PotentialRects : List<Rect>
+    <<internal>> GetPotentialRects() : List<Rect>
+    - Init(buttonRect:Rect, sf:SpriteFrameModule, dataProvider:ITextureDataProvider) : void
+    - UndoRedoPerformed() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - RectSettingsDirty() : void
+    <<internal>> {static} ShowAtPosition(buttonRect:Rect, sf:SpriteFrameModule, textureProvider:ITextureDataProvider) : bool
+    - OnGUI() : void
+    - DoesNotNeedWarning() : bool
+    - {static} UpdateToDefaultAutoSliceMethod() : void
+    - DoSlicing() : void
+    - TwoIntFields(label:GUIContent, labelX:GUIContent, labelY:GUIContent, x:int, y:int) : void
+    - OnGridGUI() : void
+    - OnAutomaticGUI() : void
+    - OnIsometricGridGUI() : void
+    - DoPivotGUI() : void
+    - DoAutomaticSlicing() : void
+    - DoGridSlicing() : void
+    - DoIsometricGridSlicing() : void
+    - SetGridCellSizeWithCellCount() : void
+    - DetermineGridCellSizeWithCellCount(cellSize:Vector2) : void
+}
+enum SlicingType {
+    Automatic= 0,
+    GridByCellSize= 1,
+    GridByCellCount= 2,
+    IsometricGrid= 3,
+}
+class Styles {
+    + background : GUIStyle = "grey_border"
+    + notice : GUIStyle
+    + Styles()
+    + <<readonly>> spriteAlignmentOptions : GUIContent[]
+    + <<readonly>> slicingMethodOptions : GUIContent[]
+    + <<readonly>> slicingMethodInfoText : string[]
+    + <<readonly>> methodLabel : GUIContent
+    + <<readonly>> pivotLabel : GUIContent
+    + <<readonly>> typeLabel : GUIContent
+    + <<readonly>> sliceButtonLabel : GUIContent
+    + <<readonly>> columnAndRowLabel : GUIContent
+    + <<readonly>> columnLabel : GUIContent
+    + <<readonly>> rowLabel : GUIContent
+    + <<readonly>> pixelSizeLabel : GUIContent
+    + <<readonly>> xLabel : GUIContent
+    + <<readonly>> yLabel : GUIContent
+    + <<readonly>> offsetLabel : GUIContent
+    + <<readonly>> paddingLabel : GUIContent
+    + <<readonly>> automaticSlicingHintLabel : GUIContent
+    + <<readonly>> customPivotLabel : GUIContent
+    + <<readonly>> keepEmptyRectsLabel : GUIContent
+    + <<readonly>> isAlternateLabel : GUIContent
+    + <<readonly>> deleteExistingTitle : string
+    + <<readonly>> deleteExistingMessage : string
+    + <<readonly>> yes : string
+    + <<readonly>> no : string
+}
+ScriptableObject <|-- SpriteEditorMenuSetting
+EditorWindow <|-- SpriteEditorMenu
+SpriteEditorMenuSetting +-- SlicingType
+SpriteEditorMenu +-- Styles
+@enduml

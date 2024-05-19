@@ -1,0 +1,19 @@
+@startuml
+class HelpPanel {
+    <<internal>> TextScroll : Vector2
+    <<internal>> Visible : bool <<get>>
+    <<internal>> Data : HelpData <<get>>
+    <<internal>> GUIContent : GUIContent <<get>>
+    <<internal>> HelpPanel(window:EditorWindow)
+    <<internal>> Show(helpData:HelpData) : void
+    <<internal>> Hide() : void
+    <<internal>> TryGetLinkAtChar(charIndex:int, link:HelpLink) : bool
+    - ClearData() : void
+    - UpdateData(helpData:HelpData) : void
+    {static} - GetFormattedLinkAtChar(formattedLinks:List<FormattedHelpLink>, charIndex:int) : FormattedHelpLink
+    - mHelpData : HelpData
+    - mHelpGUIContent : GUIContent
+    - mFormattedLinks : List<FormattedHelpLink>
+    - mWindow : EditorWindow
+}
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+class TilePaletteActiveTargetsPopup <<sealed>> {
+    - {static} k_NullGameObjectName : string
+    - {static} k_LabelTooltip : string
+    - {static} k_WarningTooltip : string
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-activetargets-field"
+    - <<new>> {static} <<readonly>> labelUssClassName : string
+    - <<new>> {static} <<readonly>> inputUssClassName : string
+    - {static} <<readonly>> inputWarningUssClassName : string
+    - {static} <<readonly>> warningUssClassName : string
+    - <<readonly>> m_WarningIconElement : VisualElement
+    - {static} s_InvalidTargetsList : List<GameObject>
+    + TilePaletteActiveTargetsPopup()
+    + TilePaletteActiveTargetsPopup(label:string)
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - FormatSelectedValueCallback(go:GameObject) : string
+    - CreateMenuCallback() : IGenericMenu
+    - {static} GetActiveTargetIndex() : int
+    - OnScenePaintTargetChanged(_:GameObject) : void
+    - UpdateChoices() : void
+    - UpdateActiveTarget() : void
+    - UpdateTargets() : void
+}
+class TilePaletteActiveTargetsPopupIcon {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-activetargets-icon"
+    - <<readonly>> kTooltip : string
+    - <<readonly>> kIconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.ActiveTargetLayers.png"
+    + TilePaletteActiveTargetsPopupIcon()
+}
+class TilePaletteActiveTargetsPopupFactory {
+}
+class TilePaletteActiveTargetsPopupUxmlTraits {
+}
+"PopupField`1" "<GameObject>" <|-- TilePaletteActiveTargetsPopup
+VisualElement <|-- TilePaletteActiveTargetsPopupIcon
+TilePaletteActiveTargetsPopup +-- TilePaletteActiveTargetsPopupFactory
+"UxmlFactory`2" "<TilePaletteActiveTargetsPopup,TilePaletteActiveTargetsPopupUxmlTraits>" <|-- TilePaletteActiveTargetsPopupFactory
+TilePaletteActiveTargetsPopup +-- TilePaletteActiveTargetsPopupUxmlTraits
+UxmlTraits <|-- TilePaletteActiveTargetsPopupUxmlTraits
+@enduml

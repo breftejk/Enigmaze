@@ -1,0 +1,32 @@
+@startuml
+class BlendNode {
+    + BlendNode()
+    - GetCurrentBlendName() : string
+    - m_BlendMode : BlendMode
+    + blendMode : BlendMode <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Blend_Burn(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Darken(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Difference(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Dodge(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Divide(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Exclusion(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_HardLight(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_HardMix(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Lighten(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_LinearBurn(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_LinearDodge(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_LinearLight(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_LinearLightAddSub(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Multiply(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Negation(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Screen(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Overlay(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_PinLight(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_SoftLight(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_VividLight(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Subtract(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+    {static} - Unity_Blend_Overwrite(Base:DynamicDimensionVector, Blend:DynamicDimensionVector, Opacity:Vector1, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- BlendNode
+@enduml

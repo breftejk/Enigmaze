@@ -1,0 +1,51 @@
+@startuml
+class CoreEditorConstants <<static>> {
+    + {static} <<readonly>> additionalPropertiesHightLightSpeed : float = 0.3f
+    + {static} standardHorizontalSpacing : float <<get>>
+}
+class CoreEditorStyles <<static>> {
+    {static} - m_SmallTickbox : System.Lazy<GUIStyle>
+    + {static} smallTickbox : GUIStyle <<get>>
+    {static} - m_SmallMixedTickbox : System.Lazy<GUIStyle>
+    + {static} smallMixedTickbox : GUIStyle <<get>>
+    {static} - m_MiniLabelButton : GUIStyle
+    + {static} miniLabelButton : GUIStyle <<get>>
+    {static} - m_ContextMenuStyle : System.Lazy<GUIStyle>
+    + {static} contextMenuStyle : GUIStyle <<get>>
+    {static} - m_AdditionalPropertiesHighlightStyle : System.Lazy<GUIStyle>
+    + {static} additionalPropertiesHighlightStyle : GUIStyle <<get>>
+    + {static} iconHelpStyle : GUIStyle <<get>>
+    {static} - m_SectionHeaderStyle : System.Lazy<GUIStyle>
+    + {static} sectionHeaderStyle : GUIStyle <<get>>
+    {static} - m_SubSectionHeaderStyle : System.Lazy<GUIStyle>
+    + {static} subSectionHeaderStyle : GUIStyle <<get>>
+    {static} - m_HelpBox : System.Lazy<GUIStyle>
+    <<internal>> {static} helpBox : GUIStyle <<get>>
+    {static} - m_TransparentTexture : Texture2D
+    + {static} <<readonly>> redTexture : Texture2D
+    + {static} <<readonly>> greenTexture : Texture2D
+    + {static} <<readonly>> blueTexture : Texture2D
+    {static} <<readonly>> - paneOptionsIconDark : Texture2D
+    {static} <<readonly>> - paneOptionsIconLight : Texture2D
+    + {static} paneOptionsIcon : Texture2D <<get>>
+    + {static} <<readonly>> iconWarn : Texture2D
+    + {static} <<readonly>> iconHelp : Texture2D
+    + {static} <<readonly>> iconFail : Texture2D
+    + {static} <<readonly>> iconSuccess : Texture2D
+    + {static} <<readonly>> iconComplete : Texture2D
+    + {static} <<readonly>> iconPending : Texture2D
+    + {static} <<readonly>> globalSettingsIcon : Texture2D
+    <<internal>> {static} GetMessageTypeIcon(messageType:MessageType) : Texture2D
+    {static} <<readonly>> - m_LightThemeBackgroundColor : Color
+    {static} <<readonly>> - m_LightThemeBackgroundHighlightColor : Color
+    {static} <<readonly>> - m_DarkThemeBackgroundColor : Color
+    {static} <<readonly>> - m_DarkThemeBackgroundHighlightColor : Color
+    + {static} backgroundColor : Color <<get>>
+    + {static} backgroundHighlightColor : Color <<get>>
+    + {static} <<readonly>> contextMenuIcon : GUIContent
+    + {static} <<readonly>> resetButtonLabel : GUIContent
+    + {static} <<readonly>> resetAllButtonLabel : GUIContent
+    + {static} <<readonly>> empty : GUIContent
+    {static} - CoreEditorStyles()
+}
+@enduml

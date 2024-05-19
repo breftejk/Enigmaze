@@ -1,0 +1,8 @@
+@startuml
+class FlowGraphContext {
+    + FlowGraphContext(reference:GraphReference)
+    + <<override>> windowTitle : string <<get>>
+    # <<override>> SidebarPanels() : IEnumerable<ISidebarPanelContent>
+}
+"GraphContext`2" "<FlowGraph,FlowCanvas>" <|-- FlowGraphContext
+@enduml

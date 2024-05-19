@@ -1,0 +1,13 @@
+@startuml
+class CinemachineMixer <<sealed>> {
+    {static} + GetMasterPlayableDirector : MasterDirectorDelegate
+    - m_BrainOverrideStack : ICameraOverrideStack
+    - m_BrainOverrideId : int
+    - m_PreviewPlay : bool
+    + <<override>> OnPlayableDestroy(playable:Playable) : void
+    + <<override>> PrepareFrame(playable:Playable, info:FrameData) : void
+    + <<override>> ProcessFrame(playable:Playable, info:FrameData, playerData:object) : void
+    - GetDeltaTime(deltaTime:float) : float
+}
+PlayableBehaviour <|-- CinemachineMixer
+@enduml

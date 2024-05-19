@@ -1,0 +1,5 @@
+@startuml
+interface IInputDeviceCommandInfo {
+    typeStatic : FourCC <<get>>
+}
+@enduml

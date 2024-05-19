@@ -1,0 +1,15 @@
+@startuml
+class TilePaletteActivePaletteDropdownMenu {
+    - <<const>> k_DropdownWidth : float = 150f
+    - m_Dropdown : GridPalettesDropdown
+    + TilePaletteActivePaletteDropdownMenu()
+    + AddItem(itemName:string, isChecked:bool, action:System.Action) : void
+    + AddItem(itemName:string, isChecked:bool, action:System.Action<object>, data:object) : void
+    + AddDisabledItem(itemName:string, isChecked:bool) : void
+    + AddSeparator(path:string) : void
+    + DropDown(position:Rect, targetElement:VisualElement, anchored:bool) : void
+    - SelectPalette(i:int, o:object) : void
+    - OpenAddPalettePopup(rect:Rect) : void
+}
+IGenericMenu <|-- TilePaletteActivePaletteDropdownMenu
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+struct QueryCanRunInBackground {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + canRunInBackground : bool
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : QueryCanRunInBackground
+}
+IInputDeviceCommandInfo <|-- QueryCanRunInBackground
+@enduml

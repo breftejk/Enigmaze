@@ -1,0 +1,11 @@
+@startuml
+class RleImage {
+    - rleData : byte[]
+    - rleRowLengths : RleRowLengths
+    # <<override>> AltersWrittenData : bool <<get>>
+    + RleImage(rleData:byte[], rleRowLengths:RleRowLengths, size:Size, bitDepth:int)
+    <<internal>> <<override>> Read(buffer:byte[]) : void
+    + <<override>> ReadCompressed() : byte[]
+}
+ImageData <|-- RleImage
+@enduml

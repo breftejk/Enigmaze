@@ -1,0 +1,64 @@
+@startuml
+class AnimationTrackInspector {
+    - m_OffsetEditMode : TimelineAnimationUtilities.OffsetEditMode
+    - m_MatchFieldsProperty : SerializedProperty
+    - m_TrackPositionProperty : SerializedProperty
+    - m_TrackRotationProperty : SerializedProperty
+    - m_AvatarMaskProperty : SerializedProperty
+    - m_ApplyAvatarMaskProperty : SerializedProperty
+    - m_TrackOffsetProperty : SerializedProperty
+    - m_RecordedOffsetPositionProperty : SerializedProperty
+    - m_RecordedOffsetEulerProperty : SerializedProperty
+    - m_RecordedApplyFootIK : SerializedProperty
+    - m_lastPosition : Vector3
+    - m_lastRotation : Vector3
+    - m_TempContent : GUIContent
+    - Evaluate() : void
+    - RebuildGraph() : void
+    + <<override>> OnInspectorGUI() : void
+    - AnimatesRootTransform() : bool
+    - ShouldDrawOffsets() : bool
+    - DrawRootTransformOffset() : void
+    - SetupOffsetTooltip() : bool
+    - DrawRootTransformDropDown() : void
+    - DrawMatchFieldsGUI() : void
+    - DrawRootMotionOffsetFields() : void
+    - DrawRootMotionToolBar() : void
+    - UpdateOffsets() : void
+    - DrawAvatarProperties() : void
+    + {static} ShowMotionOffsetEditModeToolbar(motionOffset:TimelineAnimationUtilities.OffsetEditMode) : void
+    + <<override>> OnEnable() : void
+    + OnDestroy() : void
+    - OnSceneGUI(sceneView:SceneView) : void
+    - DoOffsetManipulator() : void
+    + DrawRecordedProperties() : void
+    + {static} MatchTargetsFieldGUI(property:SerializedProperty) : void
+    {static} - GetOffsetMode(track:AnimationTrack) : TrackOffset
+    - GetOffsetMode(hasMultiple:bool) : TrackOffset
+}
+class Styles <<static>> {
+    + {static} MatchTargetFieldsTitle : GUIContent
+    + {static} <<readonly>> PositionIcon : GUIContent
+    + {static} <<readonly>> RotationIcon : GUIContent
+    + {static} XTitle : GUIContent
+    + {static} YTitle : GUIContent
+    + {static} ZTitle : GUIContent
+    + {static} PositionTitle : GUIContent
+    + {static} RotationTitle : GUIContent
+    + {static} <<readonly>> OffsetModeTitle : GUIContent
+    + {static} <<readonly>> TransformOffsetInfo : string
+    + {static} <<readonly>> SceneOffsetInfo : string
+    + {static} <<readonly>> AutoOffsetInfo : string
+    + {static} <<readonly>> AutoOffsetWarning : string
+    + {static} <<readonly>> InheritedFromParent : string
+    + {static} <<readonly>> InheritedToolTip : string
+    + {static} <<readonly>> AvatarMaskWarning : string
+    + {static} <<readonly>> RecordingOffsets : GUIContent
+    + {static} <<readonly>> RecordingIkApplied : GUIContent
+    + {static} <<readonly>> OffsetContents : GUIContent[]
+    + {static} <<readonly>> OffsetInheritContents : GUIContent[]
+    {static} - Styles()
+}
+TrackAssetInspector <|-- AnimationTrackInspector
+AnimationTrackInspector +-- Styles
+@enduml

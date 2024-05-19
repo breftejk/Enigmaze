@@ -1,0 +1,8 @@
+@startuml
+class MaskEditor {
+    - m_ShowMaskGraphic : SerializedProperty
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- MaskEditor
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+class "ScriptableObjectViewPrefs`1"<TViewModel> {
+    <<const>> - k_DefaultFilePath : string = "Library/"
+    <<const>> - k_Extension : string = ".pref"
+    <<readonly>> - m_RelativePath : string
+    <<readonly>> - m_AbsolutePath : string
+    <<readonly>> - m_FileName : string
+    - m_Asset : ScriptableObject
+    - m_ViewModel : TViewModel
+    - isSavable : bool <<get>>
+    + ScriptableObjectViewPrefs(asset:ScriptableObject, relativeSavePath:string)
+    + viewModel : TViewModel <<get>>
+    + Save() : void
+    + DeleteFile() : void
+    + Dispose() : void
+    + {static} CreateViewModel() : TViewModel
+    - LoadViewModel() : TViewModel
+    {static} - GetAssetKey(asset:UnityObject) : string
+}
+IDisposable <|-- "ScriptableObjectViewPrefs`1"
+@enduml

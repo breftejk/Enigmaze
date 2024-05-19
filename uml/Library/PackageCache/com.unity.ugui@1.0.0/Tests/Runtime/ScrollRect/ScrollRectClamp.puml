@@ -1,0 +1,14 @@
+@startuml
+class ScrollRectClamp {
+    - m_PrefabRoot : GameObject
+    - Root : RectTransform <<get>> <<set>>
+    - Scroll : ScrollRect <<get>> <<set>>
+    - ScrollTransform : RectTransform <<get>> <<set>>
+    - Content : RectTransform <<get>> <<set>>
+    - ScrollSizeY : float <<get>>
+    - ContentSizeY : float <<get>>
+    + Setup() : void
+    + TearDown() : void
+    + ScrollRect_CorrectClampOnResize() : IEnumerator
+}
+@enduml

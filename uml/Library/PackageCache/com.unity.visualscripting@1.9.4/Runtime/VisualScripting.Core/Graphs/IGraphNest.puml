@@ -1,0 +1,13 @@
+@startuml
+interface IGraphNest {
+    nester : IGraphNester <<get>> <<set>>
+    source : GraphSource <<get>> <<set>>
+    embed : IGraph <<get>> <<set>>
+    macro : IMacro <<get>> <<set>>
+    graph : IGraph <<get>>
+    graphType : Type <<get>>
+    macroType : Type <<get>>
+    hasBackgroundEmbed : bool <<get>>
+}
+IAotStubbable <|-- IGraphNest
+@enduml

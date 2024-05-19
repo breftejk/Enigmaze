@@ -1,0 +1,18 @@
+@startuml
+class UnityPlasticTimerBuilder {
+    - Get(bModalMode:bool, timerTickDelegate:ThreadWaiter.TimerTick) : IPlasticTimer
+    - Get(bModalMode:bool, timerInterval:int, timerTickDelegate:ThreadWaiter.TimerTick) : IPlasticTimer
+    <<const>> - DEFAULT_TIMER_INTERVAL : int = 100
+}
+class UnityPlasticTimer {
+    <<internal>> UnityPlasticTimer(timerInterval:int, timerTickDelegate:ThreadWaiter.TimerTick)
+    - Start() : void
+    - Stop() : void
+    - OnTimerTick(sender:object, e:EventArgs) : void
+    - mTimer : Timer
+    - mTimerInterval : int
+    - mTimerTickDelegate : ThreadWaiter.TimerTick
+}
+IPlasticTimerBuilder <|-- UnityPlasticTimerBuilder
+IPlasticTimer <|-- UnityPlasticTimer
+@enduml

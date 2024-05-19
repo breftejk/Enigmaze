@@ -1,0 +1,179 @@
+@startuml
+interface IPostProcessComponent {
+    IsActive() : bool
+    IsTileCompatible() : bool
+}
+class PostProcessPass {
+    - m_Descriptor : RenderTextureDescriptor
+    - m_Source : RTHandle
+    - m_Destination : RTHandle
+    - m_Depth : RTHandle
+    - m_InternalLut : RTHandle
+    - m_MotionVectors : RTHandle
+    - m_FullCoCTexture : RTHandle
+    - m_HalfCoCTexture : RTHandle
+    - m_PingTexture : RTHandle
+    - m_PongTexture : RTHandle
+    - m_BloomMipDown : RTHandle[]
+    - m_BloomMipUp : RTHandle[]
+    - m_BlendTexture : RTHandle
+    - m_EdgeColorTexture : RTHandle
+    - m_EdgeStencilTexture : RTHandle
+    - m_TempTarget : RTHandle
+    - m_TempTarget2 : RTHandle
+    <<const>> - k_RenderPostProcessingTag : string = "Render PostProcessing Effects"
+    <<const>> - k_RenderFinalPostProcessingTag : string = "Render Final PostProcessing Pass"
+    - {static} <<readonly>> m_ProfilingRenderPostProcessing : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingRenderFinalPostProcessing : ProfilingSampler
+    - m_Materials : MaterialLibrary
+    - m_Data : PostProcessData
+    - m_DepthOfField : DepthOfField
+    - m_MotionBlur : MotionBlur
+    - m_PaniniProjection : PaniniProjection
+    - m_Bloom : Bloom
+    - m_LensDistortion : LensDistortion
+    - m_ChromaticAberration : ChromaticAberration
+    - m_Vignette : Vignette
+    - m_ColorLookup : ColorLookup
+    - m_ColorAdjustments : ColorAdjustments
+    - m_Tonemapping : Tonemapping
+    - m_FilmGrain : FilmGrain
+    <<const>> - k_MaxPyramidSize : int = 16
+    <<readonly>> - m_DefaultHDRFormat : GraphicsFormat
+    - m_UseRGBM : bool
+    <<readonly>> - m_SMAAEdgeFormat : GraphicsFormat
+    <<readonly>> - m_GaussianCoCFormat : GraphicsFormat
+    - m_DitheringTextureIndex : int
+    - m_MRT2 : RenderTargetIdentifier[]
+    - m_BokehKernel : Vector4[]
+    - m_BokehHash : int
+    - m_BokehMaxRadius : float
+    - m_BokehRCPAspect : float
+    - m_IsFinalPass : bool
+    - m_HasFinalPass : bool
+    - m_EnableColorEncodingIfNeeded : bool
+    - m_UseFastSRGBLinearConversion : bool
+    - m_SupportDataDrivenLensFlare : bool
+    - m_ResolveToScreen : bool
+    - m_UseSwapBuffer : bool
+    - m_ScalingSetupTarget : RTHandle
+    - m_UpscaledTarget : RTHandle
+    - m_BlitMaterial : Material
+    + PostProcessPass(evt:RenderPassEvent, data:PostProcessData, postProcessParams:PostProcessParams)
+    + Cleanup() : void
+    + Dispose() : void
+    + Setup(baseDescriptor:RenderTextureDescriptor, source:RTHandle, resolveToScreen:bool, depth:RTHandle, internalLut:RTHandle, motionVectors:RTHandle, hasFinalPass:bool, enableColorEncoding:bool) : void
+    + Setup(baseDescriptor:RenderTextureDescriptor, source:RTHandle, destination:RTHandle, depth:RTHandle, internalLut:RTHandle, hasFinalPass:bool, enableColorEncoding:bool) : void
+    + SetupFinalPass(source:RTHandle, useSwapBuffer:bool, enableColorEncoding:bool) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    + CanRunOnTile() : bool
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - GetCompatibleDescriptor() : RenderTextureDescriptor
+    - GetCompatibleDescriptor(width:int, height:int, format:GraphicsFormat, depthBufferBits:DepthBits) : RenderTextureDescriptor
+    <<internal>> {static} GetCompatibleDescriptor(desc:RenderTextureDescriptor, width:int, height:int, format:GraphicsFormat, depthBufferBits:DepthBits) : RenderTextureDescriptor
+    - RequireSRGBConversionBlitToBackBuffer(cameraData:CameraData) : bool
+    - RequireHDROutput(cameraData:CameraData) : bool
+    - Render(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - DoSubpixelMorphologicalAntialiasing(cameraData:CameraData, cmd:CommandBuffer, source:RTHandle, destination:RTHandle) : void
+    - DoDepthOfField(camera:Camera, cmd:CommandBuffer, source:RTHandle, destination:RTHandle, pixelRect:Rect) : void
+    - DoGaussianDepthOfField(camera:Camera, cmd:CommandBuffer, source:RTHandle, destination:RTHandle, pixelRect:Rect) : void
+    - PrepareBokehKernel(maxRadius:float, rcpAspect:float) : void
+    {static} - GetMaxBokehRadiusInPixels(viewportHeight:float) : float
+    - DoBokehDepthOfField(cmd:CommandBuffer, source:RTHandle, destination:RTHandle, pixelRect:Rect) : void
+    {static} - GetLensFlareLightAttenuation(light:Light, cam:Camera, wo:Vector3) : float
+    - LensFlareDataDrivenComputeOcclusion(camera:Camera, cmd:CommandBuffer, source:RenderTargetIdentifier, usePanini:bool, paniniDistance:float, paniniCropToFit:float) : void
+    - LensFlareDataDriven(camera:Camera, cmd:CommandBuffer, source:RenderTargetIdentifier, usePanini:bool, paniniDistance:float, paniniCropToFit:float) : void
+    <<internal>> {static} <<readonly>> k_ShaderPropertyId_ViewProjM : int
+    <<internal>> {static} <<readonly>> k_ShaderPropertyId_PrevViewProjM : int
+    <<internal>> {static} <<readonly>> k_ShaderPropertyId_ViewProjMStereo : int
+    <<internal>> {static} <<readonly>> k_ShaderPropertyId_PrevViewProjMStereo : int
+    <<internal>> {static} UpdateMotionBlurMatrices(material:Material, camera:Camera, xr:XRPass) : void
+    - DoMotionBlur(cmd:CommandBuffer, source:RTHandle, destination:RTHandle, cameraData:CameraData) : void
+    - DoPaniniProjection(camera:Camera, cmd:CommandBuffer, source:RTHandle, destination:RTHandle) : void
+    - CalcViewExtents(camera:Camera) : Vector2
+    - CalcCropExtents(camera:Camera, d:float) : Vector2
+    - SetupBloom(cmd:CommandBuffer, source:RTHandle, uberMaterial:Material) : void
+    - SetupLensDistortion(material:Material, isSceneView:bool) : void
+    - SetupChromaticAberration(material:Material) : void
+    - SetupVignette(material:Material, xrPass:XRPass) : void
+    - SetupColorGrading(cmd:CommandBuffer, renderingData:RenderingData, material:Material) : void
+    - SetupGrain(cameraData:CameraData, material:Material) : void
+    - SetupDithering(cameraData:CameraData, material:Material) : void
+    - SetupHDROutput(hdrDisplayInformation:HDROutputUtils.HDRDisplayInformation, hdrDisplayColorGamut:ColorGamut, material:Material, hdrOperations:HDROutputUtils.Operation) : void
+    - RenderFinalPass(cmd:CommandBuffer, renderingData:RenderingData) : void
+}
+class MaterialLibrary {
+    + <<readonly>> stopNaN : Material
+    + <<readonly>> subpixelMorphologicalAntialiasing : Material
+    + <<readonly>> gaussianDepthOfField : Material
+    + <<readonly>> bokehDepthOfField : Material
+    + <<readonly>> cameraMotionBlur : Material
+    + <<readonly>> paniniProjection : Material
+    + <<readonly>> bloom : Material
+    + <<readonly>> temporalAntialiasing : Material
+    + <<readonly>> scalingSetup : Material
+    + <<readonly>> easu : Material
+    + <<readonly>> uber : Material
+    + <<readonly>> finalPass : Material
+    + <<readonly>> lensFlareDataDriven : Material
+    + MaterialLibrary(data:PostProcessData)
+    - Load(shader:Shader) : Material
+    <<internal>> Cleanup() : void
+}
+class ShaderConstants <<static>> {
+    + {static} <<readonly>> _TempTarget : int
+    + {static} <<readonly>> _TempTarget2 : int
+    + {static} <<readonly>> _StencilRef : int
+    + {static} <<readonly>> _StencilMask : int
+    + {static} <<readonly>> _FullCoCTexture : int
+    + {static} <<readonly>> _HalfCoCTexture : int
+    + {static} <<readonly>> _DofTexture : int
+    + {static} <<readonly>> _CoCParams : int
+    + {static} <<readonly>> _BokehKernel : int
+    + {static} <<readonly>> _BokehConstants : int
+    + {static} <<readonly>> _PongTexture : int
+    + {static} <<readonly>> _PingTexture : int
+    + {static} <<readonly>> _Metrics : int
+    + {static} <<readonly>> _AreaTexture : int
+    + {static} <<readonly>> _SearchTexture : int
+    + {static} <<readonly>> _EdgeTexture : int
+    + {static} <<readonly>> _BlendTexture : int
+    + {static} <<readonly>> _ColorTexture : int
+    + {static} <<readonly>> _Params : int
+    + {static} <<readonly>> _SourceTexLowMip : int
+    + {static} <<readonly>> _Bloom_Params : int
+    + {static} <<readonly>> _Bloom_RGBM : int
+    + {static} <<readonly>> _Bloom_Texture : int
+    + {static} <<readonly>> _LensDirt_Texture : int
+    + {static} <<readonly>> _LensDirt_Params : int
+    + {static} <<readonly>> _LensDirt_Intensity : int
+    + {static} <<readonly>> _Distortion_Params1 : int
+    + {static} <<readonly>> _Distortion_Params2 : int
+    + {static} <<readonly>> _Chroma_Params : int
+    + {static} <<readonly>> _Vignette_Params1 : int
+    + {static} <<readonly>> _Vignette_Params2 : int
+    + {static} <<readonly>> _Vignette_ParamsXR : int
+    + {static} <<readonly>> _Lut_Params : int
+    + {static} <<readonly>> _UserLut_Params : int
+    + {static} <<readonly>> _InternalLut : int
+    + {static} <<readonly>> _UserLut : int
+    + {static} <<readonly>> _DownSampleScaleFactor : int
+    + {static} <<readonly>> _FlareOcclusionRemapTex : int
+    + {static} <<readonly>> _FlareOcclusionTex : int
+    + {static} <<readonly>> _FlareOcclusionIndex : int
+    + {static} <<readonly>> _FlareTex : int
+    + {static} <<readonly>> _FlareColorValue : int
+    + {static} <<readonly>> _FlareData0 : int
+    + {static} <<readonly>> _FlareData1 : int
+    + {static} <<readonly>> _FlareData2 : int
+    + {static} <<readonly>> _FlareData3 : int
+    + {static} <<readonly>> _FlareData4 : int
+    + {static} <<readonly>> _FlareData5 : int
+    + {static} <<readonly>> _FullscreenProjMat : int
+    + {static} _BloomMipUp : int[]
+    + {static} _BloomMipDown : int[]
+}
+ScriptableRenderPass <|-- PostProcessPass
+PostProcessPass +-- MaterialLibrary
+PostProcessPass +-- ShaderConstants
+@enduml

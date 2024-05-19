@@ -1,0 +1,6 @@
+@startuml
+class CinemachineHardLookAtEditor <<sealed>> {
+    + <<override>> OnInspectorGUI() : void
+}
+"BaseEditor`1" "<CinemachineHardLookAt>" <|-- CinemachineHardLookAtEditor
+@enduml

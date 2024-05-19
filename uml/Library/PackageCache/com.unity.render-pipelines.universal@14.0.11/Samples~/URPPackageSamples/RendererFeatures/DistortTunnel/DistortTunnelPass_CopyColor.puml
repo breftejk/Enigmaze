@@ -1,0 +1,12 @@
+@startuml
+class DistortTunnelPass_CopyColor {
+    - m_ProfilingSampler : ProfilingSampler
+    - m_Source : RTHandle
+    - m_OutputHandle : RTHandle
+    + DistortTunnelPass_CopyColor(evt:RenderPassEvent)
+    + SetRTHandles(src:RTHandle, dest:RTHandle) : void
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescripor:RenderTextureDescriptor) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRenderPass <|-- DistortTunnelPass_CopyColor
+@enduml

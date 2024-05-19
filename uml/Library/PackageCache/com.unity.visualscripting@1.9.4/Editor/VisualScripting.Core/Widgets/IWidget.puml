@@ -1,0 +1,39 @@
+@startuml
+interface IWidget {
+    canvas : ICanvas <<get>>
+    subWidgets : IEnumerable<IWidget> <<get>>
+    item : IGraphItem <<get>>
+    metadata : Metadata <<get>>
+    CacheItem() : void
+    foregroundRequiresInput : bool <<get>>
+    backgroundRequiresInput : bool <<get>>
+    overlayRequiresInput : bool <<get>>
+    RegisterControl() : void
+    Update() : void
+    BeforeFrame() : void
+    HandleCapture() : void
+    HandleInput() : void
+    HandleRelease() : void
+    position : Rect <<get>> <<set>>
+    positionDependencies : IEnumerable<IWidget> <<get>>
+    positionDependers : IEnumerable<IWidget> <<get>>
+    isPositionValid : bool <<get>> <<set>>
+    Reposition() : void
+    CachePositionFirstPass() : void
+    CachePosition() : void
+    zIndex : float <<get>> <<set>>
+    BringToFront() : void
+    SendToBack() : void
+    canClip : bool <<get>>
+    clippingPosition : Rect <<get>>
+    OnViewportChange() : void
+    isVisible : bool <<get>> <<set>>
+    hotArea : Rect <<get>>
+    isMouseThrough : bool <<get>>
+    isMouseOver : bool <<get>>
+    DrawForeground() : void
+    DrawBackground() : void
+    DrawOverlay() : void
+}
+IDisposable <|-- IWidget
+@enduml

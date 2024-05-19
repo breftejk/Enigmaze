@@ -1,0 +1,13 @@
+@startuml
+class RawImageTestHook {
+    + isGeometryUpdated : bool
+    + isCacheUsed : bool
+    + isLayoutRebuild : bool
+    + isMaterialRebuild : bool
+    + ResetTest() : void
+    + <<override>> SetLayoutDirty() : void
+    + <<override>> SetMaterialDirty() : void
+    # <<override>> UpdateGeometry() : void
+}
+RawImage <|-- RawImageTestHook
+@enduml

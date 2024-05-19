@@ -1,0 +1,18 @@
+@startuml
+class ParametricToFreeformLightUpgrader <<sealed>> {
+    <<const>> - k_EnscribedSquareDiagonalLength : float = 0.70710678118654752440084436210485f
+    + <<override>> name : string <<get>>
+    + <<override>> info : string <<get>>
+    + <<override>> priority : int <<get>>
+    + <<override>> container : Type <<get>>
+    - m_AssetsToConvert : List<string>
+    - m_Light2DId : string
+    + {static} UpgradeParametricLight(light:Light2D) : void
+    - UpgradeGameObject(go:GameObject) : void
+    + <<override>> OnInitialize(context:InitializeConverterContext, callback:Action) : void
+    + <<override>> OnRun(context:RunItemContext) : void
+    + <<override>> OnClicked(index:int) : void
+    + <<override>> OnPostRun() : void
+}
+RenderPipelineConverter <|-- ParametricToFreeformLightUpgrader
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+class Warning {
+    + Warning(level:WarningLevel, message:string)
+    + Warning(exception:Exception)
+    + level : WarningLevel <<get>>
+    + message : string <<get>>
+    + exception : Exception <<get>>
+    + MessageType : MessageType <<get>>
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+    + {static} Info(message:string) : Warning
+    + {static} Caution(message:string) : Warning
+    + {static} Severe(message:string) : Warning
+    + {static} Error(message:string) : Warning
+    + {static} Exception(exception:Exception) : Warning
+    + {static} MostSevere(warnings:WarningLevel[]) : WarningLevel
+    + {static} MostSevere(warnings:IEnumerable<WarningLevel>) : WarningLevel
+    + {static} MostSevere(a:WarningLevel, b:WarningLevel) : WarningLevel
+    + {static} MostSevereLevel(warnings:List<Warning>) : WarningLevel
+    + <<virtual>> GetHeight(width:float) : float
+    + <<virtual>> OnGUI(position:Rect) : void
+}
+class ActionButtonWarning <<sealed>> {
+    <<internal>> ActionButtonWarning(level:WarningLevel, message:string, buttonTitle:string, onClick:Action)
+    <<readonly>> - m_ButtonTitle : string
+    <<readonly>> - m_OnClick : Action
+    <<const>> - k_ButtonHorizontalMargin : int = 10
+    <<const>> - k_ButtonVerticalMargin : int = 5
+    + <<override>> GetHeight(width:float) : float
+    + <<override>> OnGUI(position:Rect) : void
+}
+Warning <|-- ActionButtonWarning
+@enduml

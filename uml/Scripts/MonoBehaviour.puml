@@ -1,0 +1,55 @@
+@startuml
+class MonoBehaviour <<partial>> {
+    + MonoBehaviour()
+    + CancelInvoke() : void
+    + CancelInvoke(methodName:string) : void
+    + IsInvoking(methodName:string) : bool
+    + IsInvoking() : bool
+    + StopCoroutine(routine:IEnumerator) : void
+    + {static} print(message:object) : void
+    + useGUILayout : bool
+}
+class MonoBehaviour <<partial>> {
+    - m_DidAwake : bool
+    - _executionOrder : int
+    - _orderQueried : bool
+    <<internal>> executionOrder : int <<get>>
+    <<internal>> <<override>> AwakeFromLoad(awakeMode:AwakeFromLoadMode) : void
+    - DelayedStartCall(target:Object, userdata:System.Object) : void
+    <<internal>> <<override>> AddToManager() : void
+    <<internal>> <<override>> RemoveFromManager() : void
+    <<internal>> IsDestroying() : bool
+    - m_IsDestroying : bool
+    <<internal>> <<override>> WillDestroyComponent() : void
+    - m_DidStart : bool
+    - __Start() : void
+    <<internal>> <<override>> __Update() : void
+    <<internal>> <<override>> __LateUpdate() : void
+    - CallAwake() : void
+    - CallEnable() : void
+    - CallDisable() : void
+    - CallStart() : void
+    - CallUpdate() : void
+    - CallLateUpdate() : void
+    - CallOnDestroy() : void
+    - Internal_CancelInvokeAll() : void
+    - Internal_IsInvokingAll() : bool
+    + Invoke(methodName:string, time:float) : void
+    + InvokeRepeating(methodName:string, time:float, repeatRate:float) : void
+    - Internal_CancelInvoke(methodName:string) : void
+    - Internal_IsInvoking(methodName:string) : bool
+    + StopCoroutine(methodName:string) : void
+    <<internal>> <<override>> Deactivate() : void
+    <<internal>> StopCoroutineViaEnumerator_Auto(routine:IEnumerator) : void
+    - StopAllCoroutines() : void
+    - FirstCoroutine : Coroutine <<get>> <<set>>
+    - CurrentFrame : int <<get>> <<set>>
+    - CurrentTime : float <<get>> <<set>>
+    + StartCoroutine(routine:IEnumerator) : Coroutine
+    - AddCoroutine(coroutine:Coroutine) : void
+    - UpdateAllCoroutines(frame:int, time:float) : void
+    - UpdateCoroutine(coroutine:Coroutine) : void
+    - RemoveCoroutine(coroutine:Coroutine) : void
+}
+Behaviour <|-- MonoBehaviour
+@enduml

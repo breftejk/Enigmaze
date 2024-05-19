@@ -1,0 +1,16 @@
+@startuml
+class Benchmark01 {
+    + BenchmarkType : int = 0
+    + TMProFont : TMP_FontAsset
+    + TextMeshFont : Font
+    - m_textMeshPro : TextMeshPro
+    - m_textContainer : TextContainer
+    - m_textMesh : TextMesh
+    - <<const>> label01 : string = "The <#0050FF>count is: </color>{0&#125;"
+    - <<const>> label02 : string = "The <color=#0050FF>count is: </color>"
+    - m_material01 : Material
+    - m_material02 : Material
+    - Start() : IEnumerator
+}
+MonoBehaviour <|-- Benchmark01
+@enduml

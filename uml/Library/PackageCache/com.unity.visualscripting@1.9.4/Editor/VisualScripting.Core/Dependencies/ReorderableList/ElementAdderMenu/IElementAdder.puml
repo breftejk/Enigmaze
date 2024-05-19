@@ -1,0 +1,7 @@
+@startuml
+interface "IElementAdder`1"<TContext> {
+    Object : TContext <<get>>
+    CanAddElement(type:Type) : bool
+    AddElement(type:Type) : object
+}
+@enduml

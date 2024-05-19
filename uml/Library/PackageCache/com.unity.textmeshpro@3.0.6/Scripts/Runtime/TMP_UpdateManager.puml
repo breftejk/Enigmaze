@@ -1,0 +1,35 @@
+@startuml
+class TMP_UpdateManager {
+    - {static} s_Instance : TMP_UpdateManager
+    - <<readonly>> m_LayoutQueueLookup : HashSet<int>
+    - <<readonly>> m_LayoutRebuildQueue : List<TMP_Text>
+    - <<readonly>> m_GraphicQueueLookup : HashSet<int>
+    - <<readonly>> m_GraphicRebuildQueue : List<TMP_Text>
+    - <<readonly>> m_InternalUpdateLookup : HashSet<int>
+    - <<readonly>> m_InternalUpdateQueue : List<TMP_Text>
+    - <<readonly>> m_CullingUpdateLookup : HashSet<int>
+    - <<readonly>> m_CullingUpdateQueue : List<TMP_Text>
+    - {static} k_RegisterTextObjectForUpdateMarker : ProfilerMarker
+    - {static} k_RegisterTextElementForGraphicRebuildMarker : ProfilerMarker
+    - {static} k_RegisterTextElementForCullingUpdateMarker : ProfilerMarker
+    - {static} k_UnregisterTextObjectForUpdateMarker : ProfilerMarker
+    - {static} k_UnregisterTextElementForGraphicRebuildMarker : ProfilerMarker
+    {static} - instance : TMP_UpdateManager <<get>>
+    - TMP_UpdateManager()
+    <<internal>> {static} RegisterTextObjectForUpdate(textObject:TMP_Text) : void
+    - InternalRegisterTextObjectForUpdate(textObject:TMP_Text) : void
+    + {static} RegisterTextElementForLayoutRebuild(element:TMP_Text) : void
+    - InternalRegisterTextElementForLayoutRebuild(element:TMP_Text) : void
+    + {static} RegisterTextElementForGraphicRebuild(element:TMP_Text) : void
+    - InternalRegisterTextElementForGraphicRebuild(element:TMP_Text) : void
+    + {static} RegisterTextElementForCullingUpdate(element:TMP_Text) : void
+    - InternalRegisterTextElementForCullingUpdate(element:TMP_Text) : void
+    - OnCameraPreCull() : void
+    - DoRebuilds() : void
+    <<internal>> {static} UnRegisterTextObjectForUpdate(textObject:TMP_Text) : void
+    + {static} UnRegisterTextElementForRebuild(element:TMP_Text) : void
+    - InternalUnRegisterTextElementForGraphicRebuild(element:TMP_Text) : void
+    - InternalUnRegisterTextElementForLayoutRebuild(element:TMP_Text) : void
+    - InternalUnRegisterTextObjectForUpdate(textObject:TMP_Text) : void
+}
+@enduml

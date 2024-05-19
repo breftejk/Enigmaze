@@ -1,0 +1,48 @@
+@startuml
+class SamplesShowcase {
+    + headline : string = "Headline Goes Here"
+    + headlineLightColor : Color
+    + headlineDarkColor : Color
+    + openLightColor : Color
+    + openDarkColor : Color
+    + highlightLightColor : Color
+    + highlightDarkColor : Color
+    + codeLightColor : Color
+    + codeDarkColor : Color
+    + SamplesDescriptionsJson : TextAsset
+    + samplesPrefabs : GameObject[]
+    + PresentationMode : Mode
+    + enableSelectButton : bool = true
+    + currentIndex : int
+    + currentPrefab : GameObject
+    - prefabIndex : int
+    - cameraCoroutine : Coroutine
+    + {static} SanitizedIntroduction : string
+    + {static} SanitizedDescriptions : Dictionary<string, string>
+    + {static} SanitizedTitles : Dictionary<string, string>
+    + gameobjectSamplesName : TMP_Text
+    + gameobjectSamplesDescription : TMP_Text
+    + gameViewCamera : Camera
+    - needUpdate : bool
+    - savedPrefabPosition : Vector3
+    - OnEnable() : void
+    - OnValidate() : void
+    - Update() : void
+    - SwitchEffect(value:int) : void
+    - PresentSample(index:int) : void
+    - lerpTransform(transformA:Transform, transformB:Transform) : IEnumerator
+    - CleanChildren() : void
+    + {static} GetSanitizedDescription(prefabName:string) : string
+    + {static} GetSanitizedTitle(prefabName:string) : string
+    + {static} GetSanitizedIntroduction() : string
+    + {static} SanitizeText(text:string) : string
+    + {static} CleanupJson(jsonString:string) : string
+}
+enum Mode {
+    Instantiation,
+    Focus,
+    TextOnly,
+}
+MonoBehaviour <|-- SamplesShowcase
+SamplesShowcase +-- Mode
+@enduml

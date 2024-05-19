@@ -1,0 +1,56 @@
+@startuml
+class TMP_SpriteAssetEditor {
+    - {static} s_UiStateLabel : string[]
+    - m_moveToIndex : int
+    - m_selectedElement : int
+    - m_CurrentCharacterPage : int
+    - m_CurrentGlyphPage : int
+    <<const>> - k_UndoRedo : string = "UndoRedoPerformed"
+    - m_CharacterSearchPattern : string
+    - m_CharacterSearchList : List<int>
+    - m_IsCharacterSearchDirty : bool
+    - m_GlyphSearchPattern : string
+    - m_GlyphSearchList : List<int>
+    - m_IsGlyphSearchDirty : bool
+    - m_FaceInfoProperty : SerializedProperty
+    - m_PointSizeProperty : SerializedProperty
+    - m_ScaleProperty : SerializedProperty
+    - m_LineHeightProperty : SerializedProperty
+    - m_AscentLineProperty : SerializedProperty
+    - m_BaselineProperty : SerializedProperty
+    - m_DescentLineProperty : SerializedProperty
+    - m_spriteAtlas_prop : SerializedProperty
+    - m_material_prop : SerializedProperty
+    - m_SpriteCharacterTableProperty : SerializedProperty
+    - m_SpriteGlyphTableProperty : SerializedProperty
+    - m_fallbackSpriteAssetList : ReorderableList
+    - m_SpriteAsset : TMP_SpriteAsset
+    - isAssetDirty : bool
+    - m_xOffset : float
+    - m_yOffset : float
+    - m_xAdvance : float
+    - m_scale : float
+    + OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DisplayPageNavigation(currentPage:int, arraySize:int, itemsPerPage:int) : void
+    - UpdateGlobalProperty(property:string, value:float) : void
+    - DoSelectionCheck(selectionArea:Rect) : bool
+    - SwapCharacterElements(selectedIndex:int, newIndex:int) : void
+    - MoveCharacterToIndex(selectedIndex:int, newIndex:int) : void
+    - SwapGlyphElements(selectedIndex:int, newIndex:int) : void
+    - MoveGlyphToIndex(selectedIndex:int, newIndex:int) : void
+    - CopyCharacterSerializedProperty(source:SerializedProperty, target:SerializedProperty) : void
+    - CopyGlyphSerializedProperty(srcGlyph:SerializedProperty, dstGlyph:SerializedProperty) : void
+    - SearchCharacterTable(searchPattern:string, searchResults:List<int>) : void
+    - SearchGlyphTable(searchPattern:string, searchResults:List<int>) : void
+}
+struct UI_PanelState {
+    + {static} spriteAssetFaceInfoPanel : bool = true
+    + {static} spriteAtlasInfoPanel : bool = true
+    + {static} fallbackSpriteAssetPanel : bool = true
+    + {static} spriteCharacterTablePanel : bool
+    + {static} spriteGlyphTablePanel : bool
+}
+Editor <|-- TMP_SpriteAssetEditor
+TMP_SpriteAssetEditor +-- UI_PanelState
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class DebugUIDrawerAttribute {
+    <<internal>> <<readonly>> type : Type
+    + DebugUIDrawerAttribute(type:Type)
+}
+class DebugUIDrawer {
+    # Cast(o:object) : T
+    + <<virtual>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<virtual>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    + <<virtual>> End(widget:DebugUI.Widget, state:DebugState) : void
+    # Apply(widget:DebugUI.IValueField, state:DebugState, value:object) : void
+    # PrepareControlRect(height:float, fullWidth:bool) : Rect
+}
+abstract class "DebugUIFieldDrawer`3"<TValue,TField,TState> {
+    - value : TValue <<get>> <<set>>
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    # {abstract} DoGUI(rect:Rect, label:GUIContent, field:TField, state:TState) : TValue
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+abstract class "DebugUIWidgetDrawer`1"<TWidget> {
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    # {abstract} DoGUI(rect:Rect, label:GUIContent, w:TWidget) : void
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+Attribute <|-- DebugUIDrawerAttribute
+DebugUIDrawer <|-- "DebugUIFieldDrawer`3"
+DebugUIDrawer <|-- "DebugUIWidgetDrawer`1"
+@enduml

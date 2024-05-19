@@ -1,0 +1,8 @@
+@startuml
+struct HorizontalScope {
+    + <<readonly>> rect : Rect
+    + HorizontalScope(content:GUIContent, style:GUIStyle)
+    + Dispose() : void
+}
+IDisposable <|-- HorizontalScope
+@enduml

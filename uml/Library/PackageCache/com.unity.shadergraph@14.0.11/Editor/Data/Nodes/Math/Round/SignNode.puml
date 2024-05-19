@@ -1,0 +1,8 @@
+@startuml
+class SignNode {
+    + SignNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Sign(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SignNode
+@enduml

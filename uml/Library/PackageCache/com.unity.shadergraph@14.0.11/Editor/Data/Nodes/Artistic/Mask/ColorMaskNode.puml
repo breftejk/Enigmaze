@@ -1,0 +1,8 @@
+@startuml
+class ColorMaskNode {
+    + ColorMaskNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_ColorMask(In:Vector3, MaskColor:ColorRGB, Range:Vector1, Fuzziness:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- ColorMaskNode
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+enum RotationUnit {
+    Radians,
+    Degrees,
+}
+class RotateNode {
+    - m_Unit : RotationUnit
+    + unit : RotationUnit <<get>> <<set>>
+    + RotateNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Rotate_Radians(UV:Vector2, Center:Vector2, Rotation:Vector1, Out:Vector2) : string
+    {static} - Unity_Rotate_Degrees(UV:Vector2, Center:Vector2, Rotation:Vector1, Out:Vector2) : string
+}
+CodeFunctionNode <|-- RotateNode
+@enduml

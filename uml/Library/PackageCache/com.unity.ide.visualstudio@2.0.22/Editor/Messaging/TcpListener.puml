@@ -1,0 +1,13 @@
+@startuml
+class TcpListener {
+    - <<const>> ListenTimeoutMilliseconds : int = 5000
+    + {static} Queue(buffer:byte[]) : int
+    - {static} OnIncomingConnection(result:IAsyncResult) : void
+    - {static} Cleanup(state:State) : void
+}
+class State {
+    + TcpListener : System.Net.Sockets.TcpListener
+    + Buffer : byte[]
+}
+TcpListener +-- State
+@enduml

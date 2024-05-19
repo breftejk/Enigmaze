@@ -1,0 +1,15 @@
+@startuml
+class TestAdaptorContainer {
+    + TestAdaptors : TestAdaptor[]
+}
+class TestAdaptor {
+    + Id : string
+    + Name : string
+    + FullName : string
+    + Type : string
+    + Method : string
+    + Assembly : string
+    + Parent : int
+    + TestAdaptor(testAdaptor:ITestAdaptor, parent:int)
+}
+@enduml

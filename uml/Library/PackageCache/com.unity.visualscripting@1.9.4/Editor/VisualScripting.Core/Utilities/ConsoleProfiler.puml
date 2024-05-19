@@ -1,0 +1,8 @@
+@startuml
+class ConsoleProfiler <<static>> {
+    - {static} <<readonly>> levelColors : Color[]
+    + {static} Dump(threshold:TimeSpan) : void
+    + {static} Dump() : void
+    - {static} Append(sb:StringBuilder, indent:int, segmentParent:ProfiledSegment, threshold:TimeSpan) : void
+}
+@enduml

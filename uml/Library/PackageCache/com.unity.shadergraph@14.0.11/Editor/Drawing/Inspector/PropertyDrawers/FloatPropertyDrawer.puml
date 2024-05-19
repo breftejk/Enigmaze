@@ -1,0 +1,9 @@
+@startuml
+class FloatPropertyDrawer {
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:float, labelName:string, propertyFloatField:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- FloatPropertyDrawer
+@enduml

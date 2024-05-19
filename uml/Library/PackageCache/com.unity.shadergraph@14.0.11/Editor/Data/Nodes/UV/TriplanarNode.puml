@@ -1,0 +1,42 @@
+@startuml
+class TriplanarNode {
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> TextureInputId : int = 1
+    + <<const>> SamplerInputId : int = 2
+    + <<const>> PositionInputId : int = 3
+    + <<const>> NormalInputId : int = 4
+    + <<const>> TileInputId : int = 5
+    + <<const>> BlendInputId : int = 6
+    <<const>> - kOutputSlotName : string = "Out"
+    <<const>> - kTextureInputName : string = "Texture"
+    <<const>> - kSamplerInputName : string = "Sampler"
+    <<const>> - kPositionInputName : string = "Position"
+    <<const>> - kNormalInputName : string = "Normal"
+    <<const>> - kTileInputName : string = "Tile"
+    <<const>> - kBlendInputName : string = "Blend"
+    - positionSlot : PositionMaterialSlot <<get>>
+    - normalSlot : NormalMaterialSlot <<get>>
+    + <<override>> hasPreview : bool <<get>>
+    + TriplanarNode()
+    - m_TextureType : TextureType
+    + textureType : TextureType <<get>> <<set>>
+    - m_InputSpace : CoordinateSpace
+    + inputSpace : CoordinateSpace <<get>> <<set>>
+    - m_NormalOutputSpace : CoordinateSpace
+    + normalOutputSpace : CoordinateSpace <<get>> <<set>>
+    <<internal>> normalTransform : SpaceTransform <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> Setup() : void
+    + <<virtual>> GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresTangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+AbstractMaterialNode <|-- TriplanarNode
+IGeneratesBodyCode <|-- TriplanarNode
+IMayRequirePosition <|-- TriplanarNode
+IMayRequireNormal <|-- TriplanarNode
+IMayRequireTangent <|-- TriplanarNode
+IMayRequireBitangent <|-- TriplanarNode
+@enduml

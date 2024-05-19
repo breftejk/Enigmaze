@@ -1,0 +1,9 @@
+@startuml
+class TestListProvider {
+    - <<readonly>> m_AssemblyProvider : EditorLoadedTestAssemblyProvider
+    - <<readonly>> m_AssemblyBuilder : UnityTestAssemblyBuilder
+    + TestListProvider(assemblyProvider:EditorLoadedTestAssemblyProvider, assemblyBuilder:UnityTestAssemblyBuilder)
+    + GetTestListAsync(platform:TestPlatform) : IEnumerator<ITest>
+}
+ITestListProvider <|-- TestListProvider
+@enduml

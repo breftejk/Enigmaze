@@ -1,0 +1,5 @@
+@startuml
+interface IAttributeProvider {
+    GetCustomAttributes(inherit:bool) : Attribute[]
+}
+@enduml

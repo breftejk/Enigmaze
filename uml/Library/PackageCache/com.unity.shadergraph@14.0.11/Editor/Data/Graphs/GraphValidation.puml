@@ -1,0 +1,13 @@
+@startuml
+class GraphData <<sealed>> <<partial>> {
+}
+class GraphValidation <<static>> {
+    {static} - s_ActiveSubTarget : Dictionary<Type, FieldInfo>
+    {static} <<readonly>> - s_JsonData : PropertyInfo
+    {static} - GetActiveSubTarget(target:Target) : SubTarget
+    + {static} ValidateNode(node:AbstractMaterialNode) : void
+    + {static} ValidateGraph(graph:GraphData) : void
+}
+ISerializationCallbackReceiver <|-- GraphData
+GraphData +-- GraphValidation
+@enduml

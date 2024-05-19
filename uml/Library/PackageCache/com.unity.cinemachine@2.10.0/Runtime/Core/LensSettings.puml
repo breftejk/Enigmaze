@@ -1,0 +1,33 @@
+@startuml
+struct LensSettings {
+    + {static} Default : LensSettings
+    + FieldOfView : float
+    + OrthographicSize : float
+    + NearClipPlane : float
+    + FarClipPlane : float
+    + Dutch : float
+    + ModeOverride : OverrideModes
+    + Orthographic : bool <<get>> <<set>>
+    + SensorSize : Vector2 <<get>> <<set>>
+    + Aspect : float <<get>>
+    + IsPhysicalCamera : bool <<get>> <<set>>
+    + LensShift : Vector2
+    + GateFit : Camera.GateFitMode
+    - m_SensorSize : Vector2
+    - m_OrthoFromCamera : bool
+    - m_PhysicalFromCamera : bool
+    + {static} FromCamera(fromCamera:Camera) : LensSettings
+    + SnapshotCameraReadOnlyProperties(camera:Camera) : void
+    + SnapshotCameraReadOnlyProperties(lens:LensSettings) : void
+    + LensSettings(verticalFOV:float, orthographicSize:float, nearClip:float, farClip:float, dutch:float)
+    + {static} Lerp(lensA:LensSettings, lensB:LensSettings, t:float) : LensSettings
+    + Validate() : void
+}
+enum OverrideModes {
+    None= 0,
+    Orthographic,
+    Perspective,
+    Physical,
+}
+LensSettings +-- OverrideModes
+@enduml

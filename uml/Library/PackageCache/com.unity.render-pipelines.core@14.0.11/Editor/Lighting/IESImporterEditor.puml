@@ -1,0 +1,31 @@
+@startuml
+class IESImporterEditor {
+    - m_WordWrapStyle : GUIStyle
+    - m_FileFormatVersionProp : SerializedProperty
+    - m_IESPhotometricTypeProp : SerializedProperty
+    - m_IESMaximumIntensityProp : SerializedProperty
+    - m_IESMaximumIntensityUnitProp : SerializedProperty
+    - m_ManufacturerProp : SerializedProperty
+    - m_LuminaireCatalogNumberProp : SerializedProperty
+    - m_LuminaireDescriptionProp : SerializedProperty
+    - m_LampCatalogNumberProp : SerializedProperty
+    - m_LampDescriptionProp : SerializedProperty
+    - m_PrefabLightTypeProp : SerializedProperty
+    - m_SpotAngleProp : SerializedProperty
+    - m_IESSizeProp : SerializedProperty
+    - m_ApplyLightAttenuationProp : SerializedProperty
+    - m_UseIESMaximumIntensityProp : SerializedProperty
+    - m_CookieCompressionProp : SerializedProperty
+    # m_LightAimAxisRotationProp : SerializedProperty
+    - m_ShowLuminaireProductInformation : bool = true
+    - m_ShowLightProperties : bool = true
+    # m_PreviewRenderUtility : PreviewRenderUtility = null
+    + CommonOnEnable(serializedObject:SerializedProperty) : void
+    + CommonOnInspectorGUI(scriptedImporter:ScriptedImporterEditor) : void
+    + CommonApply() : void
+    + CommonHasPreviewGUI(setupRenderPipelinePreviewCamera:SetupRenderPipelinePreviewCamera, setupRenderPipelinePreviewLight:SetupRenderPipelinePreviewLight, setupRenderPipelinePreviewWallRenderer:SetupRenderPipelinePreviewWallRenderer, setupRenderPipelinePreviewFloorRenderer:SetupRenderPipelinePreviewFloorRenderer) : bool
+    + CommonGetPreviewTitle() : GUIContent
+    + CommonOnPreviewGUI(r:Rect, background:GUIStyle, target:ScriptedImporter, setupRenderPipelinePreviewLightIntensity:SetupRenderPipelinePreviewLightIntensity) : void
+    + CommonOnDisable() : void
+}
+@enduml

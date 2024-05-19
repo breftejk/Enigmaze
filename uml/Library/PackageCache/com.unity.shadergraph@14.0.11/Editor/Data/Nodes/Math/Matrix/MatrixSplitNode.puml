@@ -1,0 +1,28 @@
+@startuml
+enum MatrixAxis {
+    Row,
+    Column,
+}
+class MatrixSplitNode {
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotM0Name : string = "M0"
+    <<const>> - kOutputSlotM1Name : string = "M1"
+    <<const>> - kOutputSlotM2Name : string = "M2"
+    <<const>> - kOutputSlotM3Name : string = "M3"
+    + <<const>> InputSlotId : int = 0
+    + <<const>> OutputSlotRId : int = 1
+    + <<const>> OutputSlotGId : int = 2
+    + <<const>> OutputSlotBId : int = 3
+    + <<const>> OutputSlotAId : int = 4
+    + MatrixSplitNode()
+    - m_Axis : MatrixAxis
+    - axis : MatrixAxis <<get>> <<set>>
+    {static} - s_ComponentList : string[]
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    {static} - s_OutputSlots : int[]
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> EvaluateDynamicMaterialSlots(inputSlots:List<MaterialSlot>, outputSlots:List<MaterialSlot>) : void
+}
+AbstractMaterialNode <|-- MatrixSplitNode
+IGeneratesBodyCode <|-- MatrixSplitNode
+@enduml

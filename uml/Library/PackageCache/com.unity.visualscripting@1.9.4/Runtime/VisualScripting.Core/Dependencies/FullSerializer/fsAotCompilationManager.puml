@@ -1,0 +1,17 @@
+@startuml
+class fsAotCompilationManager {
+    - {static} _computedAotCompilations : Dictionary<Type, string>
+    - {static} _uncomputedAotCompilations : List<AotCompilation>
+    + {static} AvailableAotCompilations : Dictionary<Type, string> <<get>>
+    + {static} TryToPerformAotCompilation(config:fsConfig, type:Type, aotCompiledClassInCSharp:string) : bool
+    + {static} AddAotCompilation(type:Type, members:fsMetaProperty[], isConstructorPublic:bool) : void
+    - {static} GetConverterString(member:fsMetaProperty) : string
+    - {static} GenerateDirectConverterForTypeInCSharp(type:Type, members:fsMetaProperty[], isConstructorPublic:bool) : string
+}
+struct AotCompilation {
+    + Type : Type
+    + Members : fsMetaProperty[]
+    + IsConstructorPublic : bool
+}
+fsAotCompilationManager +-- AotCompilation
+@enduml

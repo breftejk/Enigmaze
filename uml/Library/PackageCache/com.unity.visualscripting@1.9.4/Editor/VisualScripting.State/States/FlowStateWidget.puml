@@ -1,0 +1,38 @@
+@startuml
+class FlowStateWidget <<sealed>> {
+    + FlowStateWidget(canvas:StateCanvas, state:FlowState)
+    + <<override>> Dispose() : void
+    - BeforeGraphChange() : void
+    - AfterGraphChange() : void
+    - eventLines : List<EventLine> <<get>>
+    - CacheEventLinesOnUnityThread() : void
+    - CacheEventLines() : void
+    # <<override>> CacheItemFirstTime() : void
+    + eventLinesPositions : Dictionary<EventLine, Rect> <<get>>
+    + <<override>> CachePosition() : void
+    # <<override>> GetContentHeight(width:float) : float
+    # <<override>> showContent : bool <<get>>
+    # <<override>> DrawContent() : void
+    + dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + AcceptsDragAndDrop() : bool
+    + PerformDragAndDrop() : void
+    + UpdateDragAndDrop() : void
+    + DrawDragAndDropPreview() : void
+    + ExitDragAndDrop() : void
+}
+class Styles <<new>> <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> eventLine : GUIStyle
+    + {static} <<readonly>> spaceAroundLineIcon : float = 5
+}
+class EventLine {
+    + EventLine(eventType:Type)
+    + content : GUIContent <<get>>
+    + GetHeight(width:float) : float
+    + Draw(position:Rect) : void
+}
+"NesterStateWidget`1" "<FlowState>" <|-- FlowStateWidget
+IDragAndDropHandler <|-- FlowStateWidget
+FlowStateWidget +-- Styles
+FlowStateWidget +-- EventLine
+@enduml

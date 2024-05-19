@@ -1,0 +1,9 @@
+@startuml
+class GetVariableOption {
+    + GetVariableOption()
+    + GetVariableOption(kind:VariableKind, defaultName:string)
+    # <<override>> NamedLabel(human:bool) : string
+    # <<override>> UnnamedLabel(human:bool) : string
+}
+"UnifiedVariableUnitOption`1" "<GetVariable>" <|-- GetVariableOption
+@enduml

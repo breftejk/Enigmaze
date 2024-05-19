@@ -1,0 +1,18 @@
+@startuml
+class ViewDirectionNode {
+    - <<const>> kOutputSlotId : int = 0
+    + <<const>> kOutputSlotName : string = "Out"
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> allowedNodeVersions : IEnumerable<int> <<get>>
+    + ViewDirectionNode()
+    + <<override>> ValidateNode() : void
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresViewDirection(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + GetCustomDeprecationMessage(deprecationString:string, buttonText:string, labelText:string, messageType:MessageType) : void
+    + GetCustomDeprecationLabel() : string
+}
+GeometryNode <|-- ViewDirectionNode
+IMayRequireViewDirection <|-- ViewDirectionNode
+IHasCustomDeprecationMessage <|-- ViewDirectionNode
+@enduml

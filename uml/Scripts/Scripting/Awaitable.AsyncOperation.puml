@@ -1,0 +1,9 @@
+@startuml
+class Awaitable <<partial>> {
+    + {static} FromAsyncOperation(op:AsyncOperation, cancellationToken:CancellationToken) : Awaitable
+    - {static} <<extern>> FromAsyncOperationInternal(asyncOperation:IntPtr) : IntPtr
+}
+class AsyncOperationAwaitableExtensions <<static>> {
+    + {static} GetAwaiter(op:AsyncOperation) : Awaitable.Awaiter
+}
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+class TargetPositionCache {
+    + {static} UseCache : bool
+    + <<const>> CacheStepSize : float
+    {static} - m_CacheMode : Mode
+    + {static} CacheMode : Mode <<get>> <<set>>
+    + {static} IsRecording : bool <<get>>
+    + {static} CurrentPlaybackTimeValid : bool <<get>>
+    + {static} IsEmpty : bool <<get>>
+    + {static} CurrentTime : float
+    + {static} CurrentFrame : int
+    + {static} IsCameraCut : bool
+    {static} - m_Cache : Dictionary<Transform, CacheEntry>
+    {static} - m_CacheTimeRange : TimeRange
+    + {static} CacheTimeRange : TimeRange <<get>>
+    + {static} HasCurrentTime : bool <<get>>
+    + {static} ClearCache() : void
+    {static} - CreatePlaybackCurves() : void
+    <<const>> - kWraparoundSlush : float = 0.1f
+    + {static} GetTargetPosition(target:Transform) : Vector3
+    + {static} GetTargetRotation(target:Transform) : Quaternion
+}
+enum Mode {
+    Disabled,
+    Record,
+    Playback,
+}
+class CacheCurve {
+    + StartTime : float
+    + StepSize : float
+    + Count : int <<get>>
+    - m_Cache : List<Item>
+    + CacheCurve(startTime:float, endTime:float, stepSize:float)
+    + Add(item:Item) : void
+    + AddUntil(item:Item, time:float, isCut:bool) : void
+    + Evaluate(time:float) : Item
+}
+class CacheEntry {
+    + Curve : CacheCurve
+    - RawItems : List<RecordingItem>
+    + AddRawItem(time:float, isCut:bool, target:Transform) : void
+    + CreateCurves() : void
+}
+struct TimeRange {
+    + Start : float
+    + End : float
+    + IsEmpty : bool <<get>>
+    + Contains(time:float) : bool
+    + {static} Empty : TimeRange <<get>>
+    + Include(time:float) : void
+}
+struct Item {
+    + Pos : Vector3
+    + Rot : Quaternion
+    + {static} Lerp(a:Item, b:Item, t:float) : Item
+    + {static} Empty : Item <<get>>
+}
+struct RecordingItem {
+    + Time : float
+    + IsCut : bool
+    + Item : CacheCurve.Item
+}
+TargetPositionCache +-- Mode
+TargetPositionCache +-- CacheCurve
+TargetPositionCache +-- CacheEntry
+TargetPositionCache +-- TimeRange
+CacheCurve +-- Item
+CacheEntry +-- RecordingItem
+@enduml

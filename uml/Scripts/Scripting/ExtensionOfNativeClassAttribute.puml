@@ -1,0 +1,5 @@
+@startuml
+class ExtensionOfNativeClassAttribute <<sealed>> {
+}
+Attribute <|-- ExtensionOfNativeClassAttribute
+@enduml

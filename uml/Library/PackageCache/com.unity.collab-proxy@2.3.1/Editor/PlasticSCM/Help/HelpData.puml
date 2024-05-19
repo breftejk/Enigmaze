@@ -1,0 +1,8 @@
+@startuml
+class HelpData {
+    <<internal>> FormattedBlocks : List<HelpFormat>
+    <<internal>> Links : List<HelpLink>
+    <<internal>> CleanText : string
+    <<internal>> ShouldShowAgain : bool
+}
+@enduml

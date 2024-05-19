@@ -1,0 +1,9 @@
+@startuml
+abstract class WaitUnit {
+    + enter : ControlInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    # {abstract} Await(flow:Flow) : IEnumerator
+}
+Unit <|-- WaitUnit
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class TMP_ColorGradientEditor {
+    - m_ColorMode : SerializedProperty
+    - m_TopLeftColor : SerializedProperty
+    - m_TopRightColor : SerializedProperty
+    - m_BottomLeftColor : SerializedProperty
+    - m_BottomRightColor : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- TMP_ColorGradientEditor
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class PrefabGeneration <<static>> {
+    + {static} Generate(ctx:AssetImportContext, output:TextureGenerationOutput, layers:List<Layer>, layerIdToGameObject:Dictionary<int, GameObject>, canvasSize:Vector2Int, importSettings:AsepriteImporterSettings, mainAsset:UnityEngine.Object, rootGameObject:GameObject) : void
+    {static} - CreateLayerHierarchy(layers:List<Layer>, layerIdToGameObject:Dictionary<int, GameObject>, root:GameObject) : void
+    {static} - SetupLayerGameObject(layer:Layer, layerIdToGameObject:Dictionary<int, GameObject>, sprites:Sprite[], importSettings:AsepriteImporterSettings, canvasSize:Vector2Int) : void
+}
+@enduml

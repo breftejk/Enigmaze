@@ -1,0 +1,9 @@
+@startuml
+class ControlInputWidget {
+    + ControlInputWidget(canvas:FlowCanvas, port:ControlInput)
+    # <<override>> handleTextureConnected : Texture <<get>>
+    # <<override>> handleTextureUnconnected : Texture <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+}
+"UnitInputPortWidget`1" "<ControlInput>" <|-- ControlInputWidget
+@enduml

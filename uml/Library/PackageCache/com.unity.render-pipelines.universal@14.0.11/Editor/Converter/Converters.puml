@@ -1,0 +1,29 @@
+@startuml
+enum ConverterFilter {
+    Inclusive,
+    Exclusive,
+}
+enum ConverterContainerId {
+    BuiltInToURP,
+    BuiltInToURP2D,
+    UpgradeURP2DAssets,
+}
+enum ConverterId {
+    Material,
+    RenderSettings,
+    AnimationClip,
+    ReadonlyMaterial,
+    PPv2,
+    ParametricToFreeformLight,
+}
+class Converters <<static>> {
+    {static} - GetContainerType(containerName:ConverterContainerId) : Type
+    {static} - GetConverterType(converterName:ConverterId) : Type
+    + {static} RunInBatchMode(containerName:ConverterContainerId) : void
+    + {static} RunInBatchMode(containerName:ConverterContainerId, converterList:List<ConverterId>, converterFilter:ConverterFilter) : void
+    <<internal>> {static} RunInBatchMode(containerName:Type, converterList:List<Type>, converterFilter:ConverterFilter) : void
+    <<internal>> {static} RunInBatchMode(containerName:Type) : void
+    <<internal>> {static} BatchConverters(converters:List<RenderPipelineConverter>) : void
+    <<internal>> {static} GetConvertersInContainer(container:RenderPipelineConverterContainer) : List<RenderPipelineConverter>
+}
+@enduml

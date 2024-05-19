@@ -1,0 +1,23 @@
+@startuml
+class HorizontalToggleTools {
+    - skinningCache : SkinningCache <<get>> <<set>>
+    - visibilityTool : VisibilityTool <<get>>
+    - switchmodeTool : SwitchModeTool <<get>>
+    - spriteSheetIcon : GUIContent <<get>>
+    <<internal>> onActivateTool : Action<BaseTool>
+    + collapseToolbar : bool <<get>> <<set>>
+    <<internal>> HorizontalToggleTools(s:SkinningCache)
+    <<internal>> DoGUI(drawArea:Rect, currentTool:BaseTool, isDisabled:bool) : void
+    - DoModeToggle() : void
+    - DoVisibilityToggle(currentTool:BaseTool) : void
+    - visbilityIcon : GUIContent <<get>>
+    <<internal>> ToggleVisibilityTool(currentTool:BaseTool) : void
+}
+class Styles <<static>> {
+    + {static} visibilityCollapseIcon : GUIContent
+    + {static} visibilityIcon : GUIContent
+    + {static} spriteSheetIcon : GUIContent
+    + {static} spriteSheetCollapseIcon : GUIContent
+}
+HorizontalToggleTools +-- Styles
+@enduml

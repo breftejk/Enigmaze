@@ -1,0 +1,81 @@
+@startuml
+struct TMP_Vertex {
+    + position : Vector3
+    + uv : Vector2
+    + uv2 : Vector2
+    + uv4 : Vector2
+    + color : Color32
+    + {static} zero : TMP_Vertex <<get>>
+    {static} <<readonly>> - k_Zero : TMP_Vertex
+}
+struct TMP_Offset {
+    + left : float <<get>> <<set>>
+    + right : float <<get>> <<set>>
+    + top : float <<get>> <<set>>
+    + bottom : float <<get>> <<set>>
+    + horizontal : float <<get>> <<set>>
+    + vertical : float <<get>> <<set>>
+    + {static} zero : TMP_Offset <<get>>
+    - m_Left : float
+    - m_Right : float
+    - m_Top : float
+    - m_Bottom : float
+    {static} <<readonly>> - k_ZeroOffset : TMP_Offset
+    + TMP_Offset(left:float, right:float, top:float, bottom:float)
+    + TMP_Offset(horizontal:float, vertical:float)
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:TMP_Offset) : bool
+}
+struct HighlightState {
+    + color : Color32
+    + padding : TMP_Offset
+    + HighlightState(color:Color32, padding:TMP_Offset)
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:HighlightState) : bool
+}
+struct TMP_CharacterInfo {
+    + character : char
+    + index : int
+    + stringLength : int
+    + elementType : TMP_TextElementType
+    + textElement : TMP_TextElement
+    + fontAsset : TMP_FontAsset
+    + spriteAsset : TMP_SpriteAsset
+    + spriteIndex : int
+    + material : Material
+    + materialReferenceIndex : int
+    + isUsingAlternateTypeface : bool
+    + pointSize : float
+    + lineNumber : int
+    + pageNumber : int
+    + vertexIndex : int
+    + vertex_BL : TMP_Vertex
+    + vertex_TL : TMP_Vertex
+    + vertex_TR : TMP_Vertex
+    + vertex_BR : TMP_Vertex
+    + topLeft : Vector3
+    + bottomLeft : Vector3
+    + topRight : Vector3
+    + bottomRight : Vector3
+    + origin : float
+    + xAdvance : float
+    + ascender : float
+    + baseLine : float
+    + descender : float
+    <<internal>> adjustedAscender : float
+    <<internal>> adjustedDescender : float
+    + aspectRatio : float
+    + scale : float
+    + color : Color32
+    + underlineColor : Color32
+    + underlineVertexIndex : int
+    + strikethroughColor : Color32
+    + strikethroughVertexIndex : int
+    + highlightColor : Color32
+    + highlightState : HighlightState
+    + style : FontStyles
+    + isVisible : bool
+}
+@enduml

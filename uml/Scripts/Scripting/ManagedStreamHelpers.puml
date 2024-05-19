@@ -1,0 +1,8 @@
+@startuml
+class ManagedStreamHelpers <<static>> {
+    <<internal>> {static} ValidateLoadFromStream(stream:System.IO.Stream) : void
+    <<unsafe>> <<internal>> {static} ManagedStreamRead(buffer:byte[], offset:int, count:int, stream:System.IO.Stream, returnValueAddress:IntPtr) : void
+    <<unsafe>> <<internal>> {static} ManagedStreamSeek(offset:long, origin:uint, stream:System.IO.Stream, returnValueAddress:IntPtr) : void
+    <<unsafe>> <<internal>> {static} ManagedStreamLength(stream:System.IO.Stream, returnValueAddress:IntPtr) : void
+}
+@enduml

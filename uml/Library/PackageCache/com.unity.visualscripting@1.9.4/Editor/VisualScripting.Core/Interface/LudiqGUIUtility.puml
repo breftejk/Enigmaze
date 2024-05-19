@@ -1,0 +1,123 @@
+@startuml
+class LudiqGUIUtility <<static>> {
+    {static} - LudiqGUIUtility()
+    - {static} <<readonly>> GUIClipType : Type
+    - {static} <<readonly>> GUIClip_Unclip_Vector2 : MethodInfo
+    - {static} <<readonly>> GUIClip_Unclip_Rect : MethodInfo
+    - {static} <<readonly>> GUIClip_Clip_Vector2 : MethodInfo
+    - {static} <<readonly>> GUIClip_Clip_Rect : MethodInfo
+    - {static} <<readonly>> GUIClip_topmostRect : PropertyInfo
+    - {static} <<readonly>> GUIClip_visibleRect : PropertyInfo
+    - {static} <<readonly>> GUIClip_GetTopRect : MethodInfo
+    - {static} <<readonly>> GUIClip_GetMatrix : MethodInfo
+    - {static} <<readonly>> GUIClip_SetMatrix : MethodInfo
+    - {static} <<readonly>> GUIStyle_CalcSizeWithConstraints : MethodInfo
+    - {static} <<readonly>> GUIClip_enabled : PropertyInfo
+    - {static} <<readonly>> GUIClip_GetCount : MethodInfo
+    - {static} <<readonly>> GUIUtility_guiDepth : PropertyInfo
+    - {static} <<readonly>> GUIUtility_Internal_GetGUIDepth : MethodInfo
+    + {static} newSkin : bool <<get>>
+    - {static} <<readonly>> corners1 : Vector2[]
+    - {static} <<readonly>> corners2 : Vector2[]
+    + {static} GUIToScreenRect(rect:Rect) : Rect
+    + {static} VerticalSection(rect:Rect, y:float, height:float) : Rect
+    + {static} Clone(rectOffset:RectOffset) : RectOffset
+    + {static} ExpandBy(rect:Rect, offset:RectOffset) : Rect
+    + {static} ShrinkBy(rect:Rect, offset:RectOffset) : Rect
+    + {static} ExpandByX(rect:Rect, offset:RectOffset) : Rect
+    + {static} ShrinkByX(rect:Rect, offset:RectOffset) : Rect
+    + {static} ExpandByY(rect:Rect, offset:RectOffset) : Rect
+    + {static} ShrinkByY(rect:Rect, offset:RectOffset) : Rect
+    + {static} Encompass(rect:Rect, point:Vector2) : Rect
+    + {static} Encompass(rect:Rect, other:Rect) : Rect
+    + {static} Encompasses(rect:Rect, other:Rect) : bool
+    + {static} ClosestPoints(rect1:Rect, rect2:Rect, point1:Vector2, point2:Vector2) : void
+    + {static} Abs(vector:Vector2) : Vector2
+    + {static} Perpendicular1(vector:Vector2) : Vector2
+    + {static} Perpendicular2(vector:Vector2) : Vector2
+    + {static} PixelPerfect(vector:Vector2) : Vector2
+    + {static} PixelPerfect(rect:Rect) : Rect
+    + {static} Normal(edge:Edge) : Vector2
+    + {static} Opposite(edge:Edge) : Edge
+    + {static} GetEdgeCenter(rect:Rect, edge:Edge) : Vector2
+    + {static} CtrlOrCmd(e:Event) : bool
+    + {static} IsRightMouseButton(e:Event) : bool
+    + {static} NineSlice(r:Rect, o:RectOffset, topLeft:Rect, topCenter:Rect, topRight:Rect, middleLeft:Rect, middleCenter:Rect, middleRight:Rect, bottomLeft:Rect, bottomCenter:Rect, bottomRight:Rect) : void
+    - {static} guiDepth : int <<get>>
+    + {static} BeginNotActuallyOnGUI() : void
+    + {static} EndNotActuallyOnGUI() : void
+    - {static} notOnGuiDepth : int = 0
+    + {static} isWithinGUI : bool <<get>>
+    + {static} EscapeRichText(s:string) : string
+    + {static} Size(texture:Texture2D) : Vector2
+    + {static} CalcSizeWithConstraints(style:GUIStyle, content:GUIContent, constraints:Vector2) : Vector2
+    + {static} DimString(s:string) : string
+    + {static} Unclip(pos:Vector2) : Vector2
+    + {static} Unclip(rect:Rect) : Rect
+    + {static} Clip(absolutePos:Vector2) : Vector2
+    + {static} Clip(absoluteRect:Rect) : Rect
+    + {static} topmostClipRect : Rect <<get>>
+    + {static} topClipRect : Rect <<get>>
+    + {static} visibleClipRect : Rect <<get>>
+    + {static} clipDepth : int <<get>>
+    + {static} clipEnabled : bool <<get>>
+    + {static} clipMatrix : Matrix4x4 <<get>> <<set>>
+    - {static} _oldClipMatrix : Matrix4x4
+    + {static} fixedClip : ClipFixContext <<get>>
+    + {static} BeginClipFix() : void
+    + {static} EndClipFix() : void
+    + <<const>> scrollBarWidth : float = 15f
+    + {static} currentInspectorHasScrollbar : bool <<get>> <<set>>
+    + {static} currentInspectorWidthWithoutScrollbar : float <<get>>
+    + {static} GetLayoutWidth(offset:RectOffset) : float
+    + {static} GetLayoutRect(height:float, offset:RectOffset) : Rect
+    - {static} windowOverdraw : RectOffset
+    + {static} BeginScrollablePanel(outerPosition:Rect, getInnerHeight:Func<float, float>, innerPosition:Rect, scroll:Vector2, overdraw:RectOffset) : void
+    + {static} EndScrollablePanel() : void
+    + {static} BeginScrollableWindow(windowPosition:Rect, getInnerHeight:Func<float, float>, innerPosition:Rect, scroll:Vector2) : void
+    + {static} EndScrollableWindow() : void
+    + {static} labelWidth : OverrideStack<float> <<get>>
+    + {static} iconSize : OverrideStack<int> <<get>>
+    + {static} TryUse(e:Event) : void
+    - {static} _currentInspectorWidthOverride : float?
+    + {static} currentInspectorWidth : OverrideStack<float> <<get>>
+    - {static} <<readonly>> EditorGUIUtility_s_LastControlID : FieldInfo
+    + {static} GetLastControlID() : int
+    - {static} <<readonly>> InspectorWindowType : Type
+    - {static} <<readonly>> InspectorWindow_RepaintAllInspectors : MethodInfo
+    + {static} RepaintAllInspectors() : void
+    + {static} FocusInspector() : void
+    - {static} <<readonly>> ContainerWindowType : Type
+    - {static} <<readonly>> ContainerWindow_m_ShowMode : FieldInfo
+    - {static} <<readonly>> ContainerWindow_position : PropertyInfo
+    - {static} <<readonly>> EditorWindow_ShowModal : MethodInfo
+    - {static} <<readonly>> EditorWindow_ShowAsDropDown : MethodInfo
+    - {static} <<readonly>> ShowModeType : Type
+    + {static} mainEditorWindowPosition : Rect <<get>>
+    + {static} Center(window:EditorWindow) : void
+    + {static} IsFocused(window:EditorWindow) : bool
+    + {static} ShowModal(window:EditorWindow) : void
+    + {static} ShowAsDropDownWithKeyboardFocus(window:EditorWindow, buttonRect:Rect, windowSize:Vector2) : void
+    - {static} <<readonly>> EditorGUIUtility_GetHelpIcon : MethodInfo
+    + <<const>> HelpBoxHeight : float = 40
+    + {static} GetHelpIcon(type:MessageType) : Texture2D
+    + {static} GetHelpBoxHeight(message:string, messageType:MessageType, width:float) : float
+    - {static} <<readonly>> EditorGUIUtility_GetBoldDefaultFont : MethodInfo
+    - {static} <<readonly>> EditorGUIUtility_SetBoldDefaultFont : MethodInfo
+    - {static} <<readonly>> boldedStyles : Dictionary<GUIStyle, GUIStyle>
+    + {static} editorHasBoldFont : bool <<get>> <<set>>
+    + {static} BoldedStyle(style:GUIStyle) : GUIStyle
+    + {static} GetMultilineHeight(widths:float[]) : float
+    + {static} GetMultilinePositions(totalPosition:Rect, widths:float[]) : Rect[]
+    + {static} GetMultilineHeightConfigurable(lineHeight:float, verticalSpacing:float, widths:float[]) : float
+    + {static} GetMultilinePositionsConfigurable(totalPosition:Rect, verticalSpacing:float, horizontalSpacing:float, widths:float[]) : Rect[]
+    + {static} ShouldSkip(e:Event) : bool
+    + {static} ShouldSkip(e:Event, position:Rect) : bool
+    + {static} createLinearTextures : bool <<get>>
+}
+struct ClipFixContext {
+    + Dispose() : void
+}
+LudiqGUIUtility +-- ClipFixContext
+IDisposable <|-- ClipFixContext
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+class BoltCoreConfiguration <<sealed>> {
+    - BoltCoreConfiguration(plugin:BoltCore)
+    + <<override>> header : string <<get>>
+    + <<override>> LateInitialize() : void
+    + dimInactiveNodes : bool <<get>> <<set>> = true
+    + dimIncompatibleNodes : bool <<get>> <<set>> = true
+    + showVariablesHelp : bool <<get>> <<set>> = true
+    + createSceneVariables : bool <<get>> <<set>> = true
+    + showGrid : bool <<get>> <<set>> = true
+    + snapToGrid : bool <<get>> <<set>> = false
+    + panSpeed : float <<get>> <<set>> = 5
+    + dragPanSpeed : float <<get>> <<set>> = 5
+    + zoomSpeed : float <<get>> <<set>> = 0.025f
+    + overviewSmoothing : float <<get>> <<set>> = 0.25f
+    + carryChildren : bool <<get>> <<set>> = false
+    + disablePlaymodeTint : bool <<get>> <<set>> = true
+    + debug : bool <<get>> <<set>> = false
+    - _controlScheme : CanvasControlScheme
+    +  <<event>> ControlSchemeChanged : Action 
+    + controlScheme : CanvasControlScheme <<get>> <<set>>
+    + clearGraphSelection : bool <<get>> <<set>> = false
+    - _humanNaming : bool = true
+    +  <<event>> namingSchemeChanged : Action 
+    + humanNaming : bool <<get>> <<set>>
+    + maxSearchResults : int <<get>> <<set>> = 100
+    + groupInheritedMembers : bool <<get>> <<set>> = true
+    + limitFuzzyFinderHeight : bool <<get>> <<set>> = true
+    + <<new>> developerMode : bool <<get>> <<set>> = false
+    + trackMetadataState : bool <<get>> <<set>> = false
+    + debugInspectorGUI : bool <<get>> <<set>> = false
+    - isEditorOSX : bool <<get>>
+    + aotSafeMode : bool <<get>> <<set>> = true
+    + favoriteMembers : HashSet<Member> <<get>> <<set>>
+    + LinkerPropertyProviderSettings : List<bool> <<get>>
+    + assemblyOptions : List<LooseAssemblyName> <<get>>
+    + typeOptions : List<Type> <<get>>
+}
+enum LinkerScanTarget {
+    GraphAssets= 0,
+    EmbeddedSceneGraphs= 1,
+    EmbeddedPrefabGraphs= 2,
+}
+PluginConfiguration <|-- BoltCoreConfiguration
+BoltCoreConfiguration +-- LinkerScanTarget
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+class PhysicalMaterial3DsMaxPreprocessor {
+    {static} <<readonly>> - k_Version : uint = 2
+    {static} <<readonly>> - k_Order : int
+    {static} <<readonly>> - k_ShaderPath : string = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/PhysicalMaterial3DsMax/PhysicalMaterial3DsMax.shadergraph"
+    {static} <<readonly>> - k_ShaderTransparentPath : string = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/PhysicalMaterial3DsMax/PhysicalMaterial3DsMaxTransparent.shadergraph"
+    + <<override>> GetVersion() : uint
+    + <<override>> GetPostprocessOrder() : int
+    {static} - Is3DsMaxPhysicalMaterial(description:MaterialDescription) : bool
+    {static} - Is3DsMaxSimplifiedPhysicalMaterial(description:MaterialDescription) : bool
+    + OnPreprocessMaterialDescription(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    - CreateFrom3DsSimplifiedPhysicalMaterial(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    - CreateFrom3DsPhysicalMaterial(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    {static} - SetMaterialTextureProperty(propertyName:string, material:Material, textureProperty:TexturePropertyDescription) : void
+    {static} - RemapPropertyFloat(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - RemapPropertyTexture(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - RemapPropertyTextureOrColor(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - RemapPropertyTextureOrFloat(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+}
+AssetPostprocessor <|-- PhysicalMaterial3DsMaxPreprocessor
+@enduml

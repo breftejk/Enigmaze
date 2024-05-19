@@ -1,0 +1,18 @@
+@startuml
+class TestButton {
+    + isStateNormal : bool <<get>>
+    + isStateHighlighted : bool <<get>>
+    + isStatePressed : bool <<get>>
+    + isStateDisabled : bool <<get>>
+    + isStateSelected : bool <<get>>
+    - IsTransitionTo(index:int, selectionState:SelectionState) : bool
+    + IsTransitionToNormal(index:int) : bool
+    + IsTransitionToHighlighted(index:int) : bool
+    + IsTransitionToPressed(index:int) : bool
+    + IsTransitionToDisabled(index:int) : bool
+    - <<readonly>> m_StateTransitions : List<SelectionState>
+    + StateTransitionCount : int <<get>>
+    # <<override>> DoStateTransition(state:SelectionState, instant:bool) : void
+}
+Button <|-- TestButton
+@enduml

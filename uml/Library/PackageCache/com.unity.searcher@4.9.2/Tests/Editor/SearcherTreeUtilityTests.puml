@@ -1,0 +1,8 @@
+@startuml
+class SearcherTreeUtilityTests {
+    - m_SearchTree : List<SearcherItem>
+    + Init() : void
+    + Cleanup() : void
+    + ValidateSearcherTreeUtilityTests() : void
+}
+@enduml

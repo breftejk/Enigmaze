@@ -1,0 +1,8 @@
+@startuml
+class LoadAsset <<static>> {
+    <<internal>> {static} FromChangeInfo(changeInfo:ChangeInfo) : UnityEngine.Object
+    {static} - FromFullPath(fullPath:string) : UnityEngine.Object
+    {static} - IsPathUnderProject(path:string) : bool
+    {static} - mProjectRelativePath : string
+}
+@enduml

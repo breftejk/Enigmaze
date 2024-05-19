@@ -1,0 +1,8 @@
+@startuml
+class "EventUnitDescriptor`1"<TEvent> {
+    + EventUnitDescriptor(@event:TEvent)
+    # <<override>> DefinedSubtitle() : string
+    # <<override>> DefinedIcons() : IEnumerable<EditorTexture>
+}
+"UnitDescriptor`1" "<TEvent>" <|-- "EventUnitDescriptor`1"
+@enduml

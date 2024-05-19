@@ -1,0 +1,92 @@
+@startuml
+class RenderGraphViewer {
+    <<const>> - kRenderPassWidth : float = 20.0f
+    <<const>> - kRenderPassHeight : float = 20.0f
+    <<const>> - kResourceHeight : float = 15.0f
+    {static} - Init() : void
+    - m_RegisteredGraphs : Dictionary<RenderGraph, HashSet<string>>
+    - m_CurrentDebugData : RenderGraphDebugData
+    - m_Root : VisualElement
+    - m_HeaderElement : VisualElement
+    - m_GraphViewerElement : VisualElement
+    <<readonly>> - m_ResourceColorRead : StyleColor
+    <<readonly>> - m_ResourceColorWrite : StyleColor
+    <<readonly>> - m_ImportedResourceColor : StyleColor
+    <<readonly>> - m_DependencyColor : StyleColor
+    <<readonly>> - m_AsyncPassColor : StyleColor
+    <<readonly>> - m_CulledPassColor : StyleColor
+    <<readonly>> - m_ResourceHighlightColor : StyleColor
+    <<readonly>> - m_ResourceLifeHighLightColor : StyleColor
+    - m_OriginalResourceLifeColor : StyleColor
+    - m_OriginalPassColor : StyleColor
+    - m_OriginalResourceColor : StyleColor
+    - m_ResourceElementsInfo : DynamicArray<ResourceElementInfo>[]
+    - m_PassElementsInfo : DynamicArray<PassElementInfo>
+    - m_Filter : Filter
+    - m_AsyncVisualization : bool = false
+    - RenderPassLabelChanged(evt:GeometryChangedEvent) : void
+    - LastRenderPassLabelChanged(evt:GeometryChangedEvent) : void
+    - UpdateResourceLifetimeColor(passIndex:int, colorRead:StyleColor, colorWrite:StyleColor) : void
+    - MouseEnterPassCallback(evt:MouseEnterEvent, index:int) : void
+    - MouseLeavePassCallback(evt:MouseLeaveEvent, index:int) : void
+    - UpdatePassColor(passIndex:int, color:StyleColor) : void
+    - UpdatePassDependenciesColor(passIndex:int, color:StyleColor) : void
+    - UpdatePassColor(resInfo:(int index, int resourceType), colorRead:StyleColor, colorWrite:StyleColor) : void
+    - UpdateResourceLabelColor(resInfo:(int index, int resourceType), color:StyleColor) : void
+    - MouseEnterResourceCallback(evt:MouseEnterEvent, info:(int index, int resourceType)) : void
+    - MouseLeaveResourceCallback(evt:MouseLeaveEvent, info:(int index, int resourceType)) : void
+    - CreateRenderPass(name:string, index:int, culled:bool, async:bool) : VisualElement
+    - ResourceNamesContainerChanged(evt:GeometryChangedEvent) : void
+    - CreateResourceLabel(name:string, imported:bool) : VisualElement
+    - CreateColorLegend(name:string, color:StyleColor) : VisualElement
+    - RenderGraphPopupCallback(rg:RenderGraph) : string
+    - EmptyRenderGraphPopupCallback(rg:RenderGraph) : string
+    - EmptExecutionListCallback(name:string) : string
+    - OnCaptureGraph() : void
+    - RebuildHeaderExecutionPopup() : void
+    - RebuildHeaderUI() : void
+    - GetCurrentRenderGraph() : RenderGraph
+    - GetCurrentDebugData() : RenderGraphDebugData
+    - CreateTopRowWithPasses(debugData:RenderGraphDebugData, finalPassCount:int) : VisualElement
+    - CreateResourceViewer(debugData:RenderGraphDebugData, resourceType:int, passCount:int) : VisualElement
+    - RebuildGraphViewerUI() : void
+    - RebuildUI() : void
+    - OnGraphRegistered(graph:RenderGraph) : void
+    - OnGraphUnregistered(graph:RenderGraph) : void
+    - OnExecutionRegistered(graph:RenderGraph, name:string) : void
+    - OnExecutionUnregistered(graph:RenderGraph, name:string) : void
+    - OnEnable() : void
+    - CreateGUI() : void
+    - OnDisable() : void
+}
+class Style <<static>> {
+    + {static} <<readonly>> title : GUIContent
+}
+class CellElement {
+    + CellElement(idxStart:int, idxEnd:int)
+    + SetColor(color:StyleColor) : void
+}
+enum Filter {
+    ImportedResources= 1 << 0,
+    CulledPasses= 1 << 1,
+    Textures= 1 << 2,
+    ComputeBuffers= 1 << 3,
+}
+struct ResourceElementInfo {
+    + lifetime : VisualElement
+    + resourceLabel : VisualElement
+    + Reset() : void
+}
+struct PassElementInfo {
+    + pass : VisualElement
+    + remap : int
+    + Reset() : void
+}
+EditorWindow <|-- RenderGraphViewer
+RenderGraphViewer +-- Style
+RenderGraphViewer +-- CellElement
+VisualElement <|-- CellElement
+RenderGraphViewer +-- Filter
+RenderGraphViewer +-- ResourceElementInfo
+RenderGraphViewer +-- PassElementInfo
+@enduml

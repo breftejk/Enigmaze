@@ -1,0 +1,43 @@
+@startuml
+struct MouseState {
+    + {static} Format : FourCC <<get>>
+    + position : Vector2
+    + delta : Vector2
+    + scroll : Vector2
+    + buttons : ushort
+    + displayIndex : ushort
+    + clickCount : ushort
+    + WithButton(button:MouseButton, state:bool) : MouseState
+    + format : FourCC <<get>>
+}
+enum MouseButton {
+    Left,
+    Right,
+    Middle,
+    Forward,
+    Back,
+}
+class Mouse {
+    + scroll : DeltaControl <<get>> <<protected set>>
+    + leftButton : ButtonControl <<get>> <<protected set>>
+    + middleButton : ButtonControl <<get>> <<protected set>>
+    + rightButton : ButtonControl <<get>> <<protected set>>
+    + backButton : ButtonControl <<get>> <<protected set>>
+    + forwardButton : ButtonControl <<get>> <<protected set>>
+    + clickCount : IntegerControl <<get>> <<protected set>>
+    + <<new>> {static} current : Mouse <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnAdded() : void
+    # <<override>> OnRemoved() : void
+    <<internal>> {static} s_PlatformMouseDevice : Mouse
+    + WarpCursorPosition(position:Vector2) : void
+    # <<override>> FinishSetup() : void
+    # <<new>> OnNextUpdate() : void
+    # <<new>> <<unsafe>> OnStateEvent(eventPtr:InputEventPtr) : void
+    - OnNextUpdate() : void
+    - OnStateEvent(eventPtr:InputEventPtr) : void
+}
+IInputStateTypeInfo <|-- MouseState
+Pointer <|-- Mouse
+IInputStateCallbackReceiver <|-- Mouse
+@enduml

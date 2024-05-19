@@ -1,0 +1,33 @@
+@startuml
+class CoreUnsafeUtilsTests <<unsafe>> {
+    {static} - s_CopyToList : object[][]
+    + CopyToList(datas:List<TestData>) : void
+    {static} - s_CopyToArray : object[][]
+    + CopyToArray(datas:TestData[]) : void
+    {static} - s_QuickSort : object[][]
+    + QuickSort(values:int[]) : void
+    {static} - s_QuickSortHash : object[][]
+    + QuickSortHash(l:Hash128[], r:Hash128[]) : void
+    {static} - s_UintSortData : object[][]
+    + InsertionSort(values:uint[]) : void
+    + MergeSort(values:uint[]) : void
+    + RadixSort(values:uint[]) : void
+    {static} - s_PartialSortData : object[][]
+    + PartialSortInsertionMergeRadix(values:uint[]) : void
+}
+struct TestData {
+    + intValue : int
+    + floatValue : float
+    + Equals(other:TestData) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+enum SortAlgorithm {
+    Insertion,
+    Merge,
+    Radix,
+}
+CoreUnsafeUtilsTests +-- TestData
+"IEquatable`1" "<TestData>" <|-- TestData
+CoreUnsafeUtilsTests +-- SortAlgorithm
+@enduml

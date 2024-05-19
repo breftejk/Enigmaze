@@ -1,0 +1,14 @@
+@startuml
+class DrawDirectoryResolutionPanel <<static>> {
+    <<internal>> {static} ForConflict(conflict:MergeChangeInfo, pendingConflictsCount:int, conflictUserInfo:DirectoryConflictUserInfo, actions:DirectoryConflictAction[], resolveConflictAction:Action<MergeChangeInfo>, state:ConflictResolutionState) : void
+    {static} - DoHeader(conflictName:string, conflict:MergeChangeInfo, resolveConflictAction:Action<MergeChangeInfo>, isResolveButtonEnabled:bool, state:ConflictResolutionState) : void
+    {static} - DoConflictExplanation(explanation:string) : void
+    {static} - DoSourceAndDestinationLabels(sourceOperation:string, destinationOperation:string) : void
+    {static} - DoResolutionOptions(actions:DirectoryConflictAction[], validationMessage:string, state:ConflictResolutionState) : void
+    {static} - DoApplyActionsForNextConflictsCheck(pendingConflictsCount:int, state:ConflictResolutionState) : void
+    {static} - IsValidName(name:string, conflict:DirectoryConflict, errorMessage:string) : bool
+    {static} - GetValidationData(conflict:MergeChangeInfo, state:ConflictResolutionState, isResolveButtonEnabled:bool, renameWarningMessage:string) : void
+    {static} - GetMaxWidth(label1:GUIContent, label2:GUIContent, style:GUIStyle) : float
+    {static} - GetApplyActionCheckButtonText(pendingConflictsCount:int) : string
+}
+@enduml

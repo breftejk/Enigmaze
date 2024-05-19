@@ -1,0 +1,11 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    + {static} Register_LayerMask_DirectConverter : LayerMask_DirectConverter
+}
+class LayerMask_DirectConverter {
+    # <<override>> DoSerialize(model:LayerMask, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:LayerMask) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<LayerMask>" <|-- LayerMask_DirectConverter
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+class AssemblyResolver {
+    - <<readonly>> _readingMode : ReadingMode
+    + AssemblyResolver(readingMode:ReadingMode)
+    + LoadDebugSymbols : bool <<get>> <<set>>
+    # ClearSearchDirectories() : void
+    + LoadFromFile(path:string) : AssemblyDefinition
+    + LoadFromStream(peStream:Stream, pdbStream:Stream, customSymbolReader:ISymbolReaderProvider) : AssemblyDefinition
+    + <<override>> Resolve(name:AssemblyNameReference) : AssemblyDefinition
+    + TryResolve(name:AssemblyNameReference, assembly:AssemblyDefinition) : bool
+    + <<new>> AddSearchDirectory(directory:string) : void
+    - CreateReaderParameters() : ReaderParameters
+    <<internal>> {static} NormalizeFilePath(path:string) : string
+}
+class CustomMetadataResolver {
+    + CustomMetadataResolver(assemblyResolver:IAssemblyResolver)
+    + <<override>> Resolve(method:MethodReference) : MethodDefinition
+}
+class CustomSymbolReaderProvider {
+    - <<readonly>> _logException : Action<string, Exception>
+    + CustomSymbolReaderProvider(logException:Action<string, Exception>)
+    + GetSymbolReader(module:ModuleDefinition, fileName:string) : ISymbolReader
+    - {static} ReadToMemoryStream(filename:string) : MemoryStream
+    + GetSymbolReader(module:ModuleDefinition, symbolStream:Stream) : ISymbolReader
+    - {static} GetPdbFileName(assemblyFileName:string) : string
+    - {static} IsPortablePdb(stream:Stream) : bool
+}
+class SafeDebugReaderProvider {
+    - <<readonly>> _reader : ISymbolReader
+    + SafeDebugReaderProvider(reader:ISymbolReader)
+    + Dispose() : void
+    + GetWriterProvider() : ISymbolWriterProvider
+    + ProcessDebugHeader(header:ImageDebugHeader) : bool
+    + Read(method:MethodDefinition) : MethodDebugInformation
+}
+BaseAssemblyResolver <|-- AssemblyResolver
+AssemblyResolver +-- CustomMetadataResolver
+MetadataResolver <|-- CustomMetadataResolver
+AssemblyResolver +-- CustomSymbolReaderProvider
+ISymbolReaderProvider <|-- CustomSymbolReaderProvider
+CustomSymbolReaderProvider +-- SafeDebugReaderProvider
+ISymbolReader <|-- SafeDebugReaderProvider
+@enduml

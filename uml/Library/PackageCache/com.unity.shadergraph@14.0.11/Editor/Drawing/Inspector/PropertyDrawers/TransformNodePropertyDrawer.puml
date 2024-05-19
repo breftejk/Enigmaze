@@ -1,0 +1,11 @@
+@startuml
+class TransformNodePropertyDrawer {
+    - node : TransformNode
+    - normalizePropRow : PropertyRow
+    - UpdateVisibility() : void
+    <<internal>> <<override>> AddCustomNodeProperties(parentElement:VisualElement, nodeBase:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    - OnNodeModified(node:AbstractMaterialNode, scope:ModificationScope) : void
+    <<internal>> <<override>> DisposePropertyDrawer() : void
+}
+AbstractMaterialNodePropertyDrawer <|-- TransformNodePropertyDrawer
+@enduml

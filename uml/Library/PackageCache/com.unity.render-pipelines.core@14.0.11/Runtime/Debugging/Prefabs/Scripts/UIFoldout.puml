@@ -1,0 +1,12 @@
+@startuml
+class UIFoldout {
+    + content : GameObject
+    + arrowOpened : GameObject
+    + arrowClosed : GameObject
+    # <<override>> Start() : void
+    - OnValidate() : void
+    + SetState(state:bool) : void
+    + SetState(state:bool, rebuildLayout:bool) : void
+}
+Toggle <|-- UIFoldout
+@enduml

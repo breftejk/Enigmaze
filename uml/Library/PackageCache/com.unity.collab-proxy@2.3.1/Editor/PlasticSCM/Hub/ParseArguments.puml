@@ -1,0 +1,41 @@
+@startuml
+class ParseArguments <<static>> {
+    <<internal>> {static} GetCommand(args:Dictionary<string, string>) : Command
+    <<internal>> {static} GetProjectPath(args:Dictionary<string, string>) : string
+    <<internal>> {static} GetOrganization(args:Dictionary<string, string>) : string
+    <<internal>> {static} GetRepository(args:Dictionary<string, string>) : string
+    {static} - GetOperation(args:Dictionary<string, string>) : Command.Operation
+    {static} - GetOrganizationNameFromData(data:string, plasticOrgPrefix:string) : string
+    {static} - IsCreateWorkspaceCommand(args:Dictionary<string, string>) : bool
+    {static} - IsDownloadRepositoryCommand(args:Dictionary<string, string>) : bool
+    <<const>> - CREATE_PROJECT : string = "-createProject"
+    <<const>> - OPEN_PROJECT : string = "-projectPath"
+}
+class Command {
+    <<internal>> <<readonly>> ProjectPath : string
+    <<internal>> <<readonly>> Organization : string
+    <<internal>> <<readonly>> Repository : string
+    <<internal>> <<readonly>> OperationType : Operation
+    <<internal>> Command(projectPath:string, organization:string, repository:string, operationType:Operation)
+    <<internal>> IsValid() : bool
+}
+class UVCSArguments <<static>> {
+    <<internal>> <<const>> ORGANIZATION_ARG : string = "-uvcsOrganization"
+    <<internal>> <<const>> REPOSITORY_ARG : string = "-uvcsRepository"
+    <<internal>> <<const>> CREATE_WORKSPACE_FLAG : string = "-uvcsCreateWorkspace"
+}
+class CloudArguments <<static>> {
+    <<internal>> <<const>> ORGANIZATION_ARG : string = "-cloudOrganization"
+    <<internal>> <<const>> PLASTIC_ORG_PREFIX_VALUE : string = "151d73c7-38cb-4eec-b11e-34764e707226-"
+    <<internal>> <<const>> PROJECT_ARG : string = "-cloudProject"
+}
+enum Operation {
+    None,
+    DownloadRepository,
+    CreateWorkspace,
+}
+ParseArguments +-- Command
+ParseArguments +-- UVCSArguments
+ParseArguments +-- CloudArguments
+Command +-- Operation
+@enduml

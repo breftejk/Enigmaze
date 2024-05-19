@@ -1,0 +1,5 @@
+@startuml
+class WaitForEndOfFrame <<sealed>> {
+}
+YieldInstruction <|-- WaitForEndOfFrame
+@enduml

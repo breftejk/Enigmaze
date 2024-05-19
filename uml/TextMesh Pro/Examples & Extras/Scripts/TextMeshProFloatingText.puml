@@ -1,0 +1,22 @@
+@startuml
+class TextMeshProFloatingText {
+    + TheFont : Font
+    - m_floatingText : GameObject
+    - m_textMeshPro : TextMeshPro
+    - m_textMesh : TextMesh
+    - m_transform : Transform
+    - m_floatingText_Transform : Transform
+    - m_cameraTransform : Transform
+    - lastPOS : Vector3
+    - lastRotation : Quaternion
+    + SpawnType : int
+    + IsTextObjectScaleStatic : bool
+    {static} - k_WaitForEndOfFrame : WaitForEndOfFrame
+    {static} - k_WaitForSecondsRandom : WaitForSeconds[]
+    - Awake() : void
+    - Start() : void
+    + DisplayTextMeshProFloatingText() : IEnumerator
+    + DisplayTextMeshFloatingText() : IEnumerator
+}
+MonoBehaviour <|-- TextMeshProFloatingText
+@enduml

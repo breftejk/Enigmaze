@@ -1,0 +1,11 @@
+@startuml
+struct UseWindowsGamingInputCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + enable : byte
+    + typeStatic : FourCC <<get>>
+    + {static} Create(enable:bool) : UseWindowsGamingInputCommand
+}
+IInputDeviceCommandInfo <|-- UseWindowsGamingInputCommand
+@enduml

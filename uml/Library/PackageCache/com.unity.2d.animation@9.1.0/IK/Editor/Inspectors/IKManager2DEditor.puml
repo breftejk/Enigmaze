@@ -1,0 +1,35 @@
+@startuml
+class IKManager2DEditor {
+    {static} - s_Contents : Contents
+    - m_ReorderableList : ReorderableList
+    - m_SelectedSolver : Solver2D
+    - m_SelectedSolverEditor : Editor
+    - m_SolversProperty : SerializedProperty
+    - m_SolverEditorDataProperty : SerializedProperty
+    - m_WeightProperty : SerializedProperty
+    - m_SolverTypes : List<Type>
+    - m_Manager : IKManager2D
+    - OnEnable() : void
+    - SetupReorderableList() : void
+    - OnSelectMenu(param:object) : void
+    + <<override>> OnInspectorGUI() : void
+    - DoRestoreDefaultPoseButton() : void
+    {static} - GetDerivedTypes() : List<Type>
+}
+class Contents {
+    + {static} <<readonly>> findAllSolversLabel : GUIContent
+    + {static} <<readonly>> weightLabel : GUIContent
+    + {static} <<readonly>> listHeaderLabel : string = "IK Solvers"
+    + {static} <<readonly>> createSolverString : string = "Create Solver"
+    + {static} <<readonly>> restoreDefaultPoseString : string = "Restore Default Pose"
+    + {static} <<readonly>> gizmoColorTooltip : GUIContent
+    + {static} showGizmoPropertyWidth : int = 20
+    + {static} solverPropertyWidth : int = 100
+    + {static} solverColorPropertyWidth : int = 40
+    + {static} <<readonly>> gizmoVisibilityToolTip : GUIContent
+    + <<readonly>> visibilityToggleStyle : GUIStyle
+    + Contents()
+}
+Editor <|-- IKManager2DEditor
+IKManager2DEditor +-- Contents
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+struct RunItemContext {
+    - m_Item : ConverterItemInfo
+    + item : ConverterItemInfo <<get>>
+    + didFail : bool <<get>> <<set>>
+    + info : string <<get>> <<set>>
+    <<internal>> hasConverted : bool <<get>> <<set>>
+    + isBatchMode : bool <<get>> <<internal set>>
+    + RunItemContext(item:ConverterItemInfo)
+}
+@enduml

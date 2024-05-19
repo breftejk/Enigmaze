@@ -1,0 +1,13 @@
+@startuml
+class TMP_SpriteCharacter {
+    + name : string <<get>> <<set>>
+    + hashCode : int <<get>>
+    - m_Name : string
+    - m_HashCode : int
+    + TMP_SpriteCharacter()
+    + TMP_SpriteCharacter(unicode:uint, glyph:TMP_SpriteGlyph)
+    + TMP_SpriteCharacter(unicode:uint, spriteAsset:TMP_SpriteAsset, glyph:TMP_SpriteGlyph)
+    <<internal>> TMP_SpriteCharacter(unicode:uint, glyphIndex:uint)
+}
+TMP_TextElement <|-- TMP_SpriteCharacter
+@enduml

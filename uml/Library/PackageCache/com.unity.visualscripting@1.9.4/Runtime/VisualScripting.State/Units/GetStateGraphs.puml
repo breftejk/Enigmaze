@@ -1,0 +1,5 @@
+@startuml
+class GetStateGraphs {
+}
+"GetGraphs`3" "<StateGraph,StateGraphAsset,StateMachine>" <|-- GetStateGraphs
+@enduml

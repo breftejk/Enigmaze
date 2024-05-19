@@ -1,0 +1,6 @@
+@startuml
+struct "CastHelper`1"<T> {
+    + t : T
+    + onePointerFurtherThanT : System.IntPtr
+}
+@enduml

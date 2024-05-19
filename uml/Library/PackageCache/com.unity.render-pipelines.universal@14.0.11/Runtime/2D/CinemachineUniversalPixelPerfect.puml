@@ -1,0 +1,6 @@
+@startuml
+class CinemachineUniversalPixelPerfect {
+    - OnEnable() : void
+}
+MonoBehaviour <|-- CinemachineUniversalPixelPerfect
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class CinemachineDebug {
+    {static} - mClients : HashSet<Object>
+    + {static} ReleaseScreenPos(client:Object) : void
+    + {static} GetScreenPos(client:Object, text:string, style:GUIStyle) : Rect
+    + {static} OnGUIHandlers : OnGUIDelegate
+    - {static} mAvailableStringBuilders : List<StringBuilder>
+    + {static} SBFromPool() : StringBuilder
+    + {static} ReturnToPool(sb:StringBuilder) : void
+}
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+class TextureImporterDataProviderFactory {
+    + CreateDataProvider(obj:Texture2D) : ISpriteEditorDataProvider
+    + CreateDataProvider(obj:Sprite) : ISpriteEditorDataProvider
+    + CreateDataProvider(obj:GameObject) : ISpriteEditorDataProvider
+    + CreateDataProvider(obj:TextureImporter) : ISpriteEditorDataProvider
+    {static} - GetAssetPathFromSpriteRenderer(obj:UnityEngine.Object) : string
+    {static} - GetSpriteObjectFromSpriteRenderer(obj:UnityEngine.Object) : Sprite
+}
+class TextureImporterDataProvider {
+    - m_TextureImporter : TextureImporter
+    - m_NameFileIdPairs : SpriteNameFileIdPairExt[]
+    - m_SpritesMultiple : List<SpriteDataExt>
+    - m_SpriteSingle : SpriteDataExt
+    - m_SpriteImportMode : SpriteImportMode
+    - m_SecondaryTextureDataTransfer : SecondarySpriteTexture[]
+    - m_CachedSerializedObject : SerializedObject
+    <<internal>> TextureImporterDataProvider(importer:TextureImporter)
+    - pixelsPerUnit : float <<get>>
+    - targetObject : UnityEngine.Object <<get>>
+    + spriteImportMode : SpriteImportMode <<get>>
+    - GetSpriteRects() : SpriteRect[]
+    + GetSerializedObject() : SerializedObject
+    + assetPath : string <<get>>
+    + GetWidthAndHeight(width:int, height:int) : void
+    - SetSpriteRects(spriteRects:SpriteRect[]) : void
+    - GetNameFileIdPairs() : IEnumerable<SpriteNameFileIdPair>
+    - SetNameFileIdPairs(pairs:IEnumerable<SpriteNameFileIdPair>) : void
+    <<internal>> GetSpriteData(guid:GUID) : SpriteRect
+    <<internal>> GetSpriteDataIndex(guid:GUID) : int
+    - Apply() : void
+    - InitSpriteEditorDataProvider() : void
+    - GetSerializedNameFileIdTable(so:SerializedObject) : SpriteNameFileIdPairExt[]
+    - GetDataProvider() : T
+    - HasDataProvider(type:Type) : bool
+    + <<override>> Equals(a:object) : bool
+    + <<override>> GetHashCode() : int
+    + secondaryTextures : SecondarySpriteTexture[] <<get>> <<set>>
+}
+"ISpriteDataProviderFactory`1" "<Texture2D>" <|-- TextureImporterDataProviderFactory
+"ISpriteDataProviderFactory`1" "<Sprite>" <|-- TextureImporterDataProviderFactory
+"ISpriteDataProviderFactory`1" "<TextureImporter>" <|-- TextureImporterDataProviderFactory
+"ISpriteDataProviderFactory`1" "<GameObject>" <|-- TextureImporterDataProviderFactory
+ISpriteEditorDataProvider <|-- TextureImporterDataProvider
+ISpriteNameFileIdDataProvider <|-- TextureImporterDataProvider
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+class MotionVectorRenderPass <<sealed>> {
+    <<const>> - kPreviousViewProjectionNoJitter : string = "_PrevViewProjMatrix"
+    <<const>> - kViewProjectionNoJitter : string = "_NonJitteredViewProjMatrix"
+    <<internal>> <<const>> k_TargetFormat : GraphicsFormat
+    {static} <<readonly>> - s_ShaderTags : string[]
+    - m_Color : RTHandle
+    - m_Depth : RTHandle
+    <<readonly>> - m_CameraMaterial : Material
+    <<readonly>> - m_ObjectMaterial : Material
+    - m_PassData : PassData
+    <<internal>> MotionVectorRenderPass(evt:RenderPassEvent, cameraMaterial:Material, objectMaterial:Material)
+    <<internal>> Setup(color:RTHandle, depth:RTHandle) : void
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescriptor:RenderTextureDescriptor) : void
+    - {static} ExecutePass(context:ScriptableRenderContext, passData:PassData, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - {static} GetDrawingSettings(renderingData:RenderingData, objectMaterial:Material) : DrawingSettings
+    - {static} DrawCameraMotionVectors(context:ScriptableRenderContext, cmd:CommandBuffer, renderingData:RenderingData, camera:Camera, cameraMaterial:Material) : void
+    - {static} DrawObjectMotionVectors(context:ScriptableRenderContext, renderingData:RenderingData, camera:Camera, objectMaterial:Material, cmd:CommandBuffer) : void
+    <<internal>> Render(renderGraph:RenderGraph, cameraDepthTexture:TextureHandle, motionVectorColor:TextureHandle, motionVectorDepth:TextureHandle, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> motionVectorColor : TextureHandle
+    <<internal>> motionVectorDepth : TextureHandle
+    <<internal>> cameraDepth : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> cameraMaterial : Material
+    <<internal>> objectMaterial : Material
+}
+ScriptableRenderPass <|-- MotionVectorRenderPass
+MotionVectorRenderPass +-- PassData
+@enduml

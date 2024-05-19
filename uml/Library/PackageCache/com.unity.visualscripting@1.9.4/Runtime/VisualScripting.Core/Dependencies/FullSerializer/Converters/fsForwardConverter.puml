@@ -1,0 +1,17 @@
+@startuml
+class fsForwardAttribute <<sealed>> {
+    + fsForwardAttribute(memberName:string)
+    + MemberName : string
+}
+class fsForwardConverter {
+    + fsForwardConverter(attribute:fsForwardAttribute)
+    - _memberName : string
+    + <<override>> CanProcess(type:Type) : bool
+    - GetProperty(instance:object, property:fsMetaProperty) : fsResult
+    + <<override>> TrySerialize(instance:object, serialized:fsData, storageType:Type) : fsResult
+    + <<override>> TryDeserialize(data:fsData, instance:object, storageType:Type) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+Attribute <|-- fsForwardAttribute
+fsConverter <|-- fsForwardConverter
+@enduml

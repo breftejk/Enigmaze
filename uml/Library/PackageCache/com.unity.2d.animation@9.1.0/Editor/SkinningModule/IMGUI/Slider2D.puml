@@ -1,0 +1,9 @@
+@startuml
+class Slider2D {
+    - {static} s_CurrentMousePosition : Vector2
+    - {static} s_DragStartScreenPosition : Vector2
+    - {static} s_DragScreenOffset : Vector2
+    - {static} s_Time : double
+    + {static} Do(controlID:int, position:Vector2, drawCapFunction:Handles.CapFunction) : Vector2
+}
+@enduml

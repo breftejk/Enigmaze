@@ -1,0 +1,18 @@
+@startuml
+class PhysicsRaycaster {
+    # <<const>> kNoEventMaskSet : int
+    # m_EventCamera : Camera
+    # m_EventMask : LayerMask
+    # m_MaxRayIntersections : int = 0
+    # m_LastMaxRayIntersections : int = 0
+    # PhysicsRaycaster()
+    + <<override>> eventCamera : Camera <<get>>
+    + <<virtual>> depth : int <<get>>
+    + finalEventMask : int <<get>>
+    + eventMask : LayerMask <<get>> <<set>>
+    + maxRayIntersections : int <<get>> <<set>>
+    # ComputeRayAndDistance(eventData:PointerEventData, ray:Ray, eventDisplayIndex:int, distanceToClipPlane:float) : bool
+    + <<override>> Raycast(eventData:PointerEventData, resultAppendList:List<RaycastResult>) : void
+}
+BaseRaycaster <|-- PhysicsRaycaster
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+struct EnableIMECompositionCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + imeEnabled : bool <<get>>
+    - m_ImeEnabled : byte
+    + typeStatic : FourCC <<get>>
+    + {static} Create(enabled:bool) : EnableIMECompositionCommand
+}
+IInputDeviceCommandInfo <|-- EnableIMECompositionCommand
+@enduml

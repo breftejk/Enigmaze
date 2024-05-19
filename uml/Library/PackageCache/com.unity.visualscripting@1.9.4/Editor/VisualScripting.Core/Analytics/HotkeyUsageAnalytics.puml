@@ -1,0 +1,49 @@
+@startuml
+class HotkeyUsageAnalytics <<static>> {
+    - <<const>> MaxEventsPerHour : int = 120
+    - <<const>> MaxNumberOfElements : int = 1000
+    - <<const>> VendorKey : string = "unity.visualscripting"
+    - <<const>> EventName : string = "VScriptHotkeyUsage"
+    - {static} _isRegistered : bool = false
+    - <<const>> HotkeyUseLimitBeforeSend : int = 10000
+    - {static} _interruptEventsRegistered : bool = false
+    - {static} _onControlSchemeEventRegistered : bool = false
+    - {static} _collectedData : Data = null
+    - <<const>> HotkeyFrameLimit : int = 2
+    - {static} _frameLimiters : Dictionary<Hotkey, FrameLimiterUtility>
+    <<internal>> {static} HotkeyUsed(key:Hotkey) : void
+    - {static} Send() : void
+    - {static} RegisterEvent() : bool
+    - {static} EnsureInterruptEventsRegistered() : void
+    - {static} EnsureOnControlSchemeChangedRegistered() : void
+    - {static} EnsureCollectedDataInitialized() : void
+    - {static} ResetCollectedData() : void
+}
+class Data {
+    <<internal>> canvasControlSchemeName : string
+    <<internal>> hotkeyUsageCount : List<HotkeyStringUsageCount>
+    <<internal>> HotkeyUsageCountDict : Dictionary<string, int>
+}
+struct HotkeyStringUsageCount {
+    <<internal>> hotkey : string
+    <<internal>> count : int
+}
+enum Hotkey {
+    Zoom,
+    Scroll,
+    PanMmb,
+    PanAltLmb,
+    Home,
+    RmbRemoveConnections,
+    Cut,
+    Copy,
+    Paste,
+    Duplicate,
+    Delete,
+    SelectAll,
+    Tab,
+}
+HotkeyUsageAnalytics +-- Data
+HotkeyUsageAnalytics +-- HotkeyStringUsageCount
+HotkeyUsageAnalytics +-- Hotkey
+@enduml

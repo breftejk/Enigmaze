@@ -1,0 +1,8 @@
+@startuml
+class EditorTimeUtility <<static>> {
+    - {static} _frameCount : int
+    - {static} frame : int <<get>>
+    - {static} time : float <<get>>
+    <<internal>> {static} Initialize() : void
+}
+@enduml

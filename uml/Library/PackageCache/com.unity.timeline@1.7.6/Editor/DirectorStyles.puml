@@ -1,0 +1,121 @@
+@startuml
+class DirectorStyles {
+    <<const>> - k_Elipsis : string = "…"
+    <<const>> - k_ImagePath : string = "Packages/com.unity.timeline/Editor/StyleSheets/Images/Icons/{0&#125;.png"
+    + <<const>> resourcesPath : string = "Packages/com.unity.timeline/Editor/StyleSheets/res/"
+    + <<const>> newTimelineDefaultNameSuffix : string = "Timeline"
+    + {static} <<readonly>> referenceTrackLabel : GUIContent
+    + {static} <<readonly>> recordingLabel : GUIContent
+    + {static} <<readonly>> noTimelineAssetSelected : GUIContent
+    + {static} <<readonly>> createTimelineOnSelection : GUIContent
+    + {static} <<readonly>> noTimelinesInScene : GUIContent
+    + {static} <<readonly>> createNewTimelineText : GUIContent
+    + {static} <<readonly>> previewContent : GUIContent
+    + {static} <<readonly>> previewDisabledContent : GUIContent
+    + {static} <<readonly>> mixOff : GUIContent
+    + {static} <<readonly>> mixOn : GUIContent
+    + {static} <<readonly>> rippleOff : GUIContent
+    + {static} <<readonly>> rippleOn : GUIContent
+    + {static} <<readonly>> replaceOff : GUIContent
+    + {static} <<readonly>> replaceOn : GUIContent
+    + {static} <<readonly>> showMarkersOn : GUIContent
+    + {static} <<readonly>> showMarkersOff : GUIContent
+    + {static} <<readonly>> showMarkersOnTimeline : GUIContent
+    + {static} <<readonly>> timelineMarkerTrackHeader : GUIContent
+    + {static} <<readonly>> signalTrackIcon : GUIContent
+    + {static} <<readonly>> playContent : GUIContent
+    + {static} <<readonly>> gotoBeginingContent : GUIContent
+    + {static} <<readonly>> gotoEndContent : GUIContent
+    + {static} <<readonly>> nextFrameContent : GUIContent
+    + {static} <<readonly>> previousFrameContent : GUIContent
+    + {static} <<readonly>> newContent : GUIContent
+    + {static} <<readonly>> optionsCogIcon : GUIContent
+    + {static} <<readonly>> animationTrackIcon : GUIContent
+    + {static} <<readonly>> audioTrackIcon : GUIContent
+    + {static} <<readonly>> playableTrackIcon : GUIContent
+    + {static} <<readonly>> timelineSelectorArrow : GUIContent
+    + playrangeContent : GUIContent
+    + {static} <<readonly>> kBaseIndent : float = 15.0f
+    + {static} <<readonly>> kDurationGuiThickness : float = 5.0f
+    + {static} <<readonly>> kClipErrorColor : Color
+    + {static} <<readonly>> kMixToolColor : Color
+    + {static} <<readonly>> kRippleToolColor : Color
+    + {static} <<readonly>> kReplaceToolColor : Color
+    + <<const>> markerDefaultStyle : string = "MarkerItem"
+    + groupBackground : GUIStyle
+    + displayBackground : GUIStyle
+    + fontClip : GUIStyle
+    + fontClipLoop : GUIStyle
+    + trackHeaderFont : GUIStyle
+    + trackGroupAddButton : GUIStyle
+    + groupFont : GUIStyle
+    + timeCursor : GUIStyle
+    + endmarker : GUIStyle
+    + tinyFont : GUIStyle
+    + foldout : GUIStyle
+    + trackMuteButton : GUIStyle
+    + trackLockButton : GUIStyle
+    + trackRecordButton : GUIStyle
+    + playTimeRangeStart : GUIStyle
+    + playTimeRangeEnd : GUIStyle
+    + selectedStyle : GUIStyle
+    + trackSwatchStyle : GUIStyle
+    + connector : GUIStyle
+    + keyframe : GUIStyle
+    + warning : GUIStyle
+    + extrapolationHold : GUIStyle
+    + extrapolationLoop : GUIStyle
+    + extrapolationPingPong : GUIStyle
+    + extrapolationContinue : GUIStyle
+    + trackMarkerButton : GUIStyle
+    + markerMultiOverlay : GUIStyle
+    + bottomShadow : GUIStyle
+    + trackOptions : GUIStyle
+    + infiniteTrack : GUIStyle
+    + clipOut : GUIStyle
+    + clipIn : GUIStyle
+    + trackCurvesButton : GUIStyle
+    + trackLockOverlay : GUIStyle
+    + activation : GUIStyle
+    + playrange : GUIStyle
+    + timelineLockButton : GUIStyle
+    + trackAvatarMaskButton : GUIStyle
+    + markerWarning : GUIStyle
+    + editModeBtn : GUIStyle
+    + showMarkersBtn : GUIStyle
+    + sequenceSwitcher : GUIStyle
+    + inlineCurveHandle : GUIStyle
+    + timeReferenceButton : GUIStyle
+    + trackButtonSuite : GUIStyle
+    + previewButtonDisabled : GUIStyle
+    {static} <<internal>> s_Instance : DirectorStyles
+    - m_DarkSkinColors : DirectorNamedColor
+    - m_LightSkinColors : DirectorNamedColor
+    - m_DefaultSkinColors : DirectorNamedColor
+    <<const>> - k_DarkSkinPath : string
+    <<const>> - k_LightSkinPath : string
+    {static} <<readonly>> - s_TempContent : GUIContent
+    + {static} IsInitialized : bool <<get>>
+    + {static} Instance : DirectorStyles <<get>>
+    + {static} ReloadStylesIfNeeded() : void
+    + customSkin : DirectorNamedColor <<get>> <<internal set>>
+    - LoadColorSkin(path:string) : DirectorNamedColor
+    {static} - CreateDefaultSkin() : DirectorNamedColor
+    + ExportSkinToFile() : void
+    + ReloadSkin() : void
+    + Initialize() : void
+    - DirectorStyles()
+    - ShouldLoadStyles() : bool
+    - LoadStyles() : void
+    + {static} GetGUIStyle(s:string) : GUIStyle
+    + {static} TrIconContent(iconName:string, tooltip:string) : GUIContent
+    + {static} IconContent(iconName:string) : GUIContent
+    + {static} TrTextContentWithIcon(text:string, tooltip:string, iconName:string) : GUIContent
+    + {static} TrTextContent(text:string, tooltip:string) : GUIContent
+    + {static} LoadIcon(iconName:string) : Texture2D
+    {static} - ResolveIcon(icon:string) : string
+    + {static} Elipsify(label:string, rect:Rect, style:GUIStyle) : string
+    + {static} Elipsify(label:string, destinationWidth:float, neededWidth:float) : string
+    + {static} GetBackgroundImage(style:GUIStyle, state:StyleState) : Texture2D
+}
+@enduml

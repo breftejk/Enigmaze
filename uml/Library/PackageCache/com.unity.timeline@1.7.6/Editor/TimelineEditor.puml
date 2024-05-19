@@ -1,0 +1,31 @@
+@startuml
+class TimelineEditor <<static>> {
+    + {static} GetWindow() : TimelineEditorWindow
+    + {static} GetOrCreateWindow() : TimelineEditorWindow
+    + {static} inspectedDirector : PlayableDirector <<get>>
+    + {static} masterDirector : PlayableDirector <<get>>
+    + {static} inspectedAsset : TimelineAsset <<get>>
+    + {static} masterAsset : TimelineAsset <<get>>
+    + {static} playableDirector : PlayableDirector <<get>>
+    + {static} timelineAsset : TimelineAsset <<get>>
+    + {static} Refresh(reason:RefreshReason) : void
+    <<internal>> {static} window : TimelineWindow <<get>>
+    <<internal>> {static} state : WindowState <<get>>
+    <<internal>> {static} <<readonly>> clipboard : Clipboard
+    + {static} selectedClips : TimelineClip[] <<get>> <<set>>
+    + {static} selectedClip : TimelineClip <<get>> <<set>>
+    <<internal>> {static} inspectedSequenceTime : double <<get>> <<set>>
+    <<internal>> {static} masterSequenceTime : double <<get>> <<set>>
+    <<internal>> {static} visibleTimeRange : Vector2 <<get>> <<set>>
+    <<internal>> {static} CurrentContext(mousePos:Vector2?) : ActionContext
+    + {static} GetInspectedTimeFromMasterTime(masterTime:double) : double
+    + {static} GetMasterTimeFromInspectedTime(inspectedTime:double) : double
+    <<internal>> {static} RefreshPreviewPlay() : void
+}
+enum RefreshReason {
+    WindowNeedsRedraw= 1 << 0,
+    SceneNeedsUpdate= 1 << 1,
+    ContentsModified= 1 << 2,
+    ContentsAddedOrRemoved= 1 << 3,
+}
+@enduml

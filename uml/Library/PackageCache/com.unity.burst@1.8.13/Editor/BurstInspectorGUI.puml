@@ -1,0 +1,146 @@
+@startuml
+class BurstInspectorGUI {
+    - {static} Initialized : bool
+    - {static} EnsureInitialized() : void
+    - <<const>> FontSizeIndexPref : string = "BurstInspectorFontSizeIndex"
+    - {static} <<readonly>> DisassemblyKindNames : string[]
+    <<internal>> _assemblyKind : AssemblyOptions? = null
+    - _assemblyKindPrior : AssemblyOptions? = null
+    - _oldAssemblyKind : AssemblyOptions
+    - SupportsEnhancedRendering : bool <<get>>
+    - {static} DisasmOptions : string[]
+    <<internal>> {static} GetDisasmOptions() : string[]
+    - {static} <<readonly>> TreeViewSplitterState : SplitterState
+    - {static} <<readonly>> TargetCpuNames : string[]
+    - {static} <<readonly>> SIMDSmellTest : string[]
+    - {static} <<readonly>> FontSizes : int[]
+    - {static} _fontSizesText : string[]
+    <<internal>> <<const>> _scrollbarThickness : int = 14
+    <<internal>> _buttonOverlapInspectorView : float = 0
+    - _buttonBarWidth : float
+    <<internal>> <<readonly>> _burstDisassembler : BurstDisassembler
+    - <<const>> BurstSettingText : string = "Inspector Settings/"
+    - _targetCpu : BurstTargetCpu
+    - _disasmKind : DisassemblyKind
+    - _oldDisasmKind : DisassemblyKind
+    <<internal>> fixedFontStyle : GUIStyle
+    <<internal>> fontSizeIndex : int
+    - _previousTargetIndex : int
+    - _safetyChecks : bool = false
+    - _showBranchMarkers : bool = true
+    - _enhancedDisassembly : bool = true
+    - _searchFilterJobs : string
+    - _showUnityNamespaceJobs : bool = false
+    - _showDOTSGeneratedJobs : bool = false
+    - _focusTargetJob : bool = true
+    - _searchFilterAssembly : string
+    - _sameTargetButDifferentAssemblyKind : bool = false
+    <<internal>> _scrollPos : Vector2
+    <<internal>> _searchFieldJobs : SearchField
+    <<internal>> _searchFieldAssembly : SearchField
+    - saveSearchFieldFromEvent : bool = false
+    - _searchBarVisible : bool = true
+    - _selectedItem : string
+    - _target : BurstCompileTarget
+    - _targets : List<BurstCompileTarget>
+    - targetNames : List<string>
+    <<internal>> _textArea : LongTextArea
+    <<internal>> _inspectorView : Rect
+    <<internal>> _font : Font
+    <<internal>> _treeView : BurstMethodTreeView
+    - treeViewState : TreeViewState
+    <<internal>> _initialized : bool
+    - _requiresRepaint : bool
+    - FontSize : int <<get>>
+    - {static} <<readonly>> _rx : Regex
+    - _leftClicked : bool = false
+    - _isCompileError : bool = false
+    - _prevWasCompileError : bool
+    - _smellTest : bool = false
+    - <<readonly>> _contentShowUnityNamespaceJobs : GUIContent
+    - <<readonly>> _contentShowDOTSGeneratedJobs : GUIContent
+    - <<readonly>> _contentDisasm : GUIContent
+    - <<readonly>> _contentCollapseToCode : GUIContent
+    - <<readonly>> _contentExpandAll : GUIContent
+    - <<readonly>> _contentBranchLines : GUIContent
+    - <<readonly>> _contentsTarget : GUIContent[]
+    - <<readonly>> _contentsFontSize : GUIContent[]
+    - <<readonly>> _contentsSmellTest : GUIContent[]
+    - <<readonly>> _ignoreCase : GUIContent
+    - <<readonly>> _matchWord : GUIContent
+    - <<readonly>> _regexSearch : GUIContent
+    - <<readonly>> _toolbarStyleOptions : GUILayoutOption[]
+    - <<readonly>> _branchMarkerOptions : string[]
+    - <<readonly>> _safetyCheckOptions : string[]
+    - _keyboardEvents : Dictionary<Event, KeyboardOperation>
+    - FillKeyboardEvent() : void
+    + BurstInspectorGUI()
+    - DisplayAssemblyKind(assemblyKind:Enum) : bool
+    + OnEnable() : void
+    - CleanupFont() : void
+    + OnDisable() : void
+    + Update() : void
+    - FlowToNewLine(remainingWidth:float, width:float, size:Vector2) : void
+    - IsRaw(kind:AssemblyOptions) : bool
+    - IsEnhanced(kind:AssemblyOptions) : bool
+    - IsColoured(kind:AssemblyOptions) : bool
+    - HandleButtonBars(target:BurstCompileTarget, targetChanged:bool, fontIndex:int, collapse:bool, focusCode:bool) : void
+    - RenderButtonBars(width:float, target:BurstCompileTarget, fontIndex:int, collapse:bool, focus:bool) : void
+    - HandleMouseEventForSelection(workingArea:Rect, controlID:int, showBranchMarkers:bool) : void
+    - AssemblyFocused() : bool
+    - HandleKeyboardEventAssemblyView(workingArea:Rect, op:KeyboardOperation, evt:Event, showBranchMarkers:bool) : void
+    - HandleKeyboardEventForSelection(workingArea:Rect, showBranchMarkers:bool) : void
+    - RenderCompileTargetsFilters(width:float) : void
+    - CompileNewTarget(target:BurstCompileTarget, targetOptions:BurstCompilerOptions) : void
+    - RenderBurstJobMenu() : void
+    - HandleHorizontalFocus(workingWidth:float, shouldSetupText:bool, isTextFormatted:bool) : void
+    - {static} RenderLoading() : void
+    + OnGUI() : void
+    + {static} IsBurstError(disassembly:string) : bool
+    - TryFocusJobInAssemblyView(workingArea:Rect, wasTextSetup:bool, target:BurstCompileTarget) : bool
+    - EnableDisableSearchBar() : void
+    - _doIgnoreCase : bool = false
+    - _doWholeWordMatch : bool = false
+    - _doRegex : bool = false
+    <<internal>> {static} GetDisassembly(method:MethodInfo, options:string) : string
+    <<internal>> {static} FetchAsmKind(cpu:BurstTargetCpu, kind:DisassemblyKind) : BurstDisassembler.AsmKind
+}
+class BurstMethodTreeView {
+    - <<readonly>> _getFilter : Func<string>
+    - <<readonly>> _getJobListFilterToggles : Func<(bool,bool)>
+    - _targets : List<BurstCompileTarget>
+    + BurstMethodTreeView(state:TreeViewState, getFilter:Func<string>, getJobListFilterToggles:Func<(bool,bool)>)
+    + Initialize(targets:List<BurstCompileTarget>, identicalTargets:bool) : void
+    <<internal>> {static} ExtractNameSpaces(str:string) : (List<StringSlice> ns, int nsEndIdx)
+    <<internal>> {static} ProcessNewItem(idN:int, idJ:int, newTarget:BurstCompileTarget, oldNameSpace:List<StringSlice>) : (int idN, List<TreeViewItem> added, List<StringSlice> nameSpace)
+    # <<override>> BuildRoot() : TreeViewItem
+    + <<new>> GetSelection() : IList<int>
+    <<internal>> TrySelectByDisplayName(name:string) : bool
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> SingleClickedItem(id:int) : void
+    # <<override>> CanMultiSelect(item:TreeViewItem) : bool
+}
+enum AssemblyOptions {
+    PlainWithoutDebugInformation= 0,
+    PlainWithDebugInformation= 1,
+    EnhancedWithMinimalDebugInformation= 2,
+    EnhancedWithFullDebugInformation= 3,
+    ColouredWithMinimalDebugInformation= 4,
+    ColouredWithFullDebugInformation= 5,
+}
+enum KeyboardOperation {
+    SelectAll,
+    Copy,
+    MoveLeft,
+    MoveRight,
+    MoveUp,
+    MoveDown,
+    Search,
+    Escape,
+    Enter,
+}
+EditorWindow <|-- BurstInspectorGUI
+TreeView <|-- BurstMethodTreeView
+BurstInspectorGUI +-- AssemblyOptions
+BurstInspectorGUI +-- KeyboardOperation
+@enduml

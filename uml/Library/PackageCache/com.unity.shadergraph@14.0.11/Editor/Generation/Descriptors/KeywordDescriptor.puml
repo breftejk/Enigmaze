@@ -1,0 +1,13 @@
+@startuml
+struct KeywordDescriptor {
+    + displayName : string
+    + referenceName : string
+    + type : KeywordType
+    + definition : KeywordDefinition
+    + scope : KeywordScope
+    + stages : KeywordShaderStage
+    + value : int
+    + entries : KeywordEntry[]
+    + AppendKeywordDeclarationStrings(builder:ShaderStringBuilder) : void
+}
+@enduml

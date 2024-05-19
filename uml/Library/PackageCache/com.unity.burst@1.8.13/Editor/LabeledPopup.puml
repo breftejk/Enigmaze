@@ -1,0 +1,22 @@
+@startuml
+class LabeledPopup <<static>> {
+    - <<const>> LabelControlName : string = "LabeledPopup"
+    + {static} Popup(index:int, display:GUIContent, options:string[]) : int
+}
+struct IntegerWrapper {
+    + Value : int <<get>>
+    + IntegerWrapper(v:int)
+}
+class PopperCallBack {
+    + {static} Instance : PopperCallBack = null
+    - <<const>> IndexChangeEventName : string = "PopperChangingIndex"
+    - <<readonly>> _controlID : int
+    - _selectedIdx : int
+    - <<readonly>> _view : GUIView
+    + PopperCallBack(controlID:int)
+    <<internal>> {static} GetSelectionValue(controlId:int, selectedIdx:int) : int
+    <<internal>> SetSelection(index:object) : void
+}
+LabeledPopup +-- IntegerWrapper
+LabeledPopup +-- PopperCallBack
+@enduml

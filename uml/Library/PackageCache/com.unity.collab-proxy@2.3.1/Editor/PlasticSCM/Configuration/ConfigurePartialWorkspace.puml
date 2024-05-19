@@ -1,0 +1,5 @@
+@startuml
+class ConfigurePartialWorkspace <<static>> {
+    <<internal>> {static} AsFullyChecked(wkInfo:WorkspaceInfo) : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequirePositionPredisplacement {
+    RequiresPositionPredisplacement(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+class MayRequirePositionPredisplacementExtensions <<static>> {
+    + {static} RequiresPositionPredisplacement(slot:MaterialSlot) : NeededCoordinateSpace
+}
+@enduml

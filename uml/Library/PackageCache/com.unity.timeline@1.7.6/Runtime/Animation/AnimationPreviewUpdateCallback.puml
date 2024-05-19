@@ -1,0 +1,11 @@
+@startuml
+class AnimationPreviewUpdateCallback {
+    - m_Output : AnimationPlayableOutput
+    - m_Graph : PlayableGraph
+    - m_PreviewComponents : List<IAnimationWindowPreview>
+    + AnimationPreviewUpdateCallback(output:AnimationPlayableOutput)
+    + Evaluate() : void
+    - FetchPreviewComponents() : void
+}
+ITimelineEvaluateCallback <|-- AnimationPreviewUpdateCallback
+@enduml

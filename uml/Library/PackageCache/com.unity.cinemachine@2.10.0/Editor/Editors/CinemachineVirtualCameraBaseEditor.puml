@@ -1,0 +1,63 @@
+@startuml
+class CameraExtensions <<static>> {
+    + {static} HorizontalToVerticalFieldOfView(f:float, aspect:float) : float
+    + {static} VerticalToHorizontalFieldOfView(f:float, aspect:float) : float
+    + {static} FieldOfViewToFocalLength(fov:float, sensorHeight:float) : float
+    + {static} FocalLengthToFieldOfView(focalLength:float, sensorHeight:float) : float
+}
+class "CinemachineVirtualCameraBaseEditor`1"<T> {
+    {static} - sExtensionTypes : Type[]
+    {static} - sExtensionNames : string[]
+    - IsPrefabBase : bool <<get>> <<set>>
+    # <<override>> GetExcludedPropertiesInInspector() : List<string>
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - UpdateCameraState() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    # DrawHeaderInInspector() : void
+    # DrawTargetsInInspector(followTarget:SerializedProperty, lookAtTarget:SerializedProperty) : void
+    # DrawExtensionsWidgetInInspector() : void
+    # DrawCameraStatusInInspector() : void
+    {static} - ShowInGameGuidesLabel : GUIContent
+    {static} - SaveDuringPlayLabel : GUIContent
+    # DrawGlobalControlsInInspector() : void
+    - m_LensSettingsInspectorHelper : LensSettingsInspectorHelper
+    <<internal>> IsHorizontalFOVUsed() : bool
+    # DrawLensSettingsInInspector(property:SerializedProperty) : void
+}
+class LensSettingsInspectorHelper {
+    - m_PresetOptions : GUIContent[]
+    - m_PhysicalPresetOptions : GUIContent[]
+    - m_LensSettingsDef : LensSettings
+    {static} <<readonly>> - EditPresetsLabel : GUIContent
+    {static} <<readonly>> - LensLabel : GUIContent
+    {static} <<readonly>> - HFOVLabel : GUIContent
+    {static} <<readonly>> - VFOVLabel : GUIContent
+    {static} <<readonly>> - FocalLengthLabel : GUIContent
+    {static} <<readonly>> - OrthoSizeLabel : GUIContent
+    {static} <<readonly>> - SensorSizeLabel : GUIContent
+    {static} <<readonly>> - AdvancedLabel : GUIContent
+    - IsOrtho : bool
+    - IsPhysical : bool
+    - SensorSize : Vector2
+    <<internal>> UseHorizontalFOV : bool
+    {static} - s_AdvancedExpanded : bool
+    - ModeOverrideProperty : SerializedProperty
+    + LensSettingsInspectorHelper()
+    + SnapshotCameraShadowValues(property:SerializedProperty, camera:Camera) : void
+    {static} - AccessProperty(type:Type, obj:object, memberName:string) : T
+    + DrawLensSettingsInInspector(property:SerializedProperty) : void
+    {static} - ExtraSpaceHackWTF() : float
+    - DrawSensorSizeInInspector(property:SerializedProperty) : void
+    - DrawLensFocusInInspector(rect:Rect, property:SerializedProperty) : void
+    - DrawFOVControl(rect:Rect, property:SerializedProperty) : void
+    - DrawFocalLengthControl(rect:Rect, property:SerializedProperty, label:GUIContent) : void
+}
+class Styles <<static>> {
+    + {static} addExtensionLabel : GUIContent
+    + {static} virtualCameraChildrenInfoMsg : GUIContent
+}
+"BaseEditor`1" "<T>" <|-- "CinemachineVirtualCameraBaseEditor`1"
+"CinemachineVirtualCameraBaseEditor`1" +-- Styles
+@enduml

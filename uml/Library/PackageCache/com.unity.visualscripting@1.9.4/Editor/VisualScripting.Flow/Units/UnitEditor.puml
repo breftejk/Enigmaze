@@ -1,0 +1,28 @@
+@startuml
+class UnitEditor {
+    + UnitEditor(metadata:Metadata)
+    # unit : IUnit <<get>>
+    # <<new>> description : UnitDescription <<get>>
+    # <<new>> analysis : UnitAnalysis <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - GetPortsInnerWidth(totalWidth:float) : float
+    - GetPortsHeight(totalWidth:float, label:GUIContent, ports:IEnumerable<IUnitPort>) : float
+    - OnPortsGUI(position:Rect, label:GUIContent, ports:IEnumerable<IUnitPort>) : void
+    - GetLabelContent(port:IUnitPort) : GUIContent
+    - GetPortHeight(paddedWidth:float, port:IUnitPort) : float
+    - OnPortGUI(portPosition:Rect, port:IUnitPort) : void
+}
+class Styles <<new>> <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> portsBackground : GUIStyle
+    + {static} <<readonly>> portsLabel : GUIStyle
+    + {static} <<readonly>> portLabel : GUIStyle
+    + {static} <<readonly>> portDescription : GUIStyle
+    + {static} <<readonly>> portIcon : GUIStyle
+    + {static} <<readonly>> spaceBetweenPorts : float = 5
+    + {static} <<readonly>> inspectorBackground : GUIStyle
+}
+"GraphElementEditor`1" "<FlowGraphContext>" <|-- UnitEditor
+UnitEditor +-- Styles
+@enduml

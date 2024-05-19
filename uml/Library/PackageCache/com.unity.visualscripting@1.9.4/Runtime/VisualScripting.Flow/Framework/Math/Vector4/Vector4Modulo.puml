@@ -1,0 +1,8 @@
+@startuml
+class Vector4Modulo <<sealed>> {
+    # <<override>> defaultDividend : Vector4 <<get>>
+    # <<override>> defaultDivisor : Vector4 <<get>>
+    + <<override>> Operation(a:Vector4, b:Vector4) : Vector4
+}
+"Modulo`1" "<Vector4>" <|-- Vector4Modulo
+@enduml

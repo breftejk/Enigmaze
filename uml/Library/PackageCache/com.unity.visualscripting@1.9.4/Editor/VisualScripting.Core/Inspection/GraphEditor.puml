@@ -1,0 +1,14 @@
+@startuml
+class GraphEditor {
+    + GraphEditor(metadata:Metadata)
+    - titleMetadata : Metadata <<get>>
+    - summaryMetadata : Metadata <<get>>
+    # <<virtual>> icon : EditorTexture <<get>>
+    # graph : IGraph <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # GetHeaderHeight(width:float) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # OnHeaderGUI(position:Rect) : void
+}
+Inspector <|-- GraphEditor
+@enduml

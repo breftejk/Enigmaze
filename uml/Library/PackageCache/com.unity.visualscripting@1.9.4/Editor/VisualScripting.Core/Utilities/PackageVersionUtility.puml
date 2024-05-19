@@ -1,0 +1,6 @@
+@startuml
+class PackageVersionUtility <<static>> {
+    - {static} _version : SemanticVersion
+    + {static} version : SemanticVersion <<get>>
+}
+@enduml

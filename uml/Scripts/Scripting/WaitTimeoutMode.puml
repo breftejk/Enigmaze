@@ -1,0 +1,6 @@
+@startuml
+enum WaitTimeoutMode {
+    Realtime,
+    InGameTime,
+}
+@enduml

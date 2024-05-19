@@ -1,0 +1,35 @@
+@startuml
+class MeshPreviewTool {
+    - m_Material : Material
+    - m_Sprites : List<SpriteCache>
+    - m_DefaultPreviewBehaviour : IMeshPreviewBehaviour
+    + previewBehaviourOverride : IMeshPreviewBehaviour <<get>> <<set>>
+    + <<override>> previewBehaviour : IMeshPreviewBehaviour <<get>>
+    <<internal>> <<override>> OnCreate() : void
+    <<internal>> <<override>> OnDestroy() : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    # <<override>> OnGUI() : void
+    + DrawOverlay() : void
+    + OverlayWireframe() : void
+    - CharacterPartChanged(characterPart:CharacterPartCache) : void
+    - MeshChanged(mesh:MeshCache) : void
+    - SkeletonChanged(skeleton:SkeletonCache) : void
+    - SkinningModuleModeChanged(mode:SkinningMode) : void
+    - BoneColorChanged(bone:BoneCache) : void
+    - DirtyColorsAll() : void
+    - DirtyMeshesAll() : void
+    - DirtySkinningAll() : void
+    - Prepare() : void
+    - DrawDefaultSpriteMeshes() : void
+    - DrawDefaultSpriteMesh(sprite:SpriteCache) : void
+    - DrawSpriteMeshes() : void
+    - DrawSpriteMesh(sprite:SpriteCache) : void
+    - DrawSpriteMesh(sprite:SpriteCache, weightMapOpacity:float) : void
+    - DrawSelectedSpriteWeightMap() : void
+    - GetWeightOpacityFromCurrentTool() : float
+    - IsWeightTool() : bool
+    - DrawWireframe(sprite:SpriteCache) : void
+}
+BaseTool <|-- MeshPreviewTool
+@enduml

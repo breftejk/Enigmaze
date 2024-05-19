@@ -1,0 +1,10 @@
+@startuml
+abstract class "DiscreteNumberInspector`1"<T> {
+    # DiscreteNumberInspector(metadata:Metadata)
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- "DiscreteNumberInspector`1"
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class ProbeVolumeEditor {
+    - m_SerializedProbeVolume : SerializedProbeVolume
+    <<internal>> <<const>> k_EditShape : EditMode.SceneViewEditMode
+    {static} - _ShapeBox : HierarchicalBox
+    {static} - s_ShapeBox : HierarchicalBox <<get>>
+    # OnEnable() : void
+    <<internal>> {static} APVDisabledHelpBox() : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - DrawGizmosSelected(probeVolume:ProbeVolume, gizmoType:GizmoType) : void
+    # OnSceneGUI() : void
+}
+Editor <|-- ProbeVolumeEditor
+@enduml

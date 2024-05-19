@@ -1,0 +1,36 @@
+@startuml
+class CopyColorPass {
+    - m_SampleOffsetShaderHandle : int
+    - m_SamplingMaterial : Material
+    - m_DownsamplingMethod : Downsampling
+    - m_CopyColorMaterial : Material
+    - source : RTHandle <<get>> <<set>>
+    - destination : RTHandle <<get>> <<set>>
+    - destinationID : int <<get>> <<set>>
+    - m_PassData : PassData
+    + CopyColorPass(evt:RenderPassEvent, samplingMaterial:Material, copyColorMaterial:Material)
+    + {static} ConfigureDescriptor(downsamplingMethod:Downsampling, descriptor:RenderTextureDescriptor, filterMode:FilterMode) : void
+    + Setup(source:RenderTargetIdentifier, destination:RenderTargetHandle, downsampling:Downsampling) : void
+    + Setup(source:RTHandle, destination:RTHandle, downsampling:Downsampling) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - {static} ExecutePass(passData:PassData, source:RTHandle, destination:RTHandle, cmd:CommandBuffer, useDrawProceduralBlit:bool, disableFoveatedRenderingForPass:bool) : void
+    <<internal>> Render(renderGraph:RenderGraph, destination:TextureHandle, source:TextureHandle, downsampling:Downsampling, renderingData:RenderingData) : TextureHandle
+    + <<override>> OnCameraCleanup(cmd:CommandBuffer) : void
+}
+class PassData {
+    <<internal>> source : TextureHandle
+    <<internal>> destination : TextureHandle
+    <<internal>> useProceduralBlit : bool
+    <<internal>> disableFoveatedRenderingForPass : bool
+    <<internal>> cmd : CommandBuffer
+    <<internal>> samplingMaterial : Material
+    <<internal>> copyColorMaterial : Material
+    <<internal>> downsamplingMethod : Downsampling
+    <<internal>> clearFlag : ClearFlag
+    <<internal>> clearColor : Color
+    <<internal>> sampleOffsetShaderHandle : int
+}
+ScriptableRenderPass <|-- CopyColorPass
+CopyColorPass +-- PassData
+@enduml

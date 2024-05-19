@@ -1,0 +1,11 @@
+@startuml
+class While {
+    + condition : ValueInput <<get>>
+    # <<override>> Definition() : void
+    - Start(flow:Flow) : int
+    - CanMoveNext(flow:Flow) : bool
+    # <<override>> Loop(flow:Flow) : ControlOutput
+    # <<override>> LoopCoroutine(flow:Flow) : IEnumerator
+}
+LoopUnit <|-- While
+@enduml

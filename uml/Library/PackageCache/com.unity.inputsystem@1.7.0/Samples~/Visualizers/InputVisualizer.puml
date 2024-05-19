@@ -1,0 +1,18 @@
+@startuml
+abstract class InputVisualizer {
+    # OnEnable() : void
+    # OnDisable() : void
+    # OnGUI() : void
+    # OnValidate() : void
+    # ResolveParent() : void
+    <<internal>> m_Label : string
+    <<internal>> m_HistorySamples : int = 500
+    <<internal>> m_TimeWindow : float = 3
+    <<internal>> m_Rect : Rect
+    <<internal>> m_LabelContent : GUIContent
+    <<internal>> m_Visualizer : VisualizationHelpers.Visualizer
+    <<internal>> m_Parent : InputVisualizer
+    - {static} s_LabelStyle : GUIStyle
+}
+MonoBehaviour <|-- InputVisualizer
+@enduml

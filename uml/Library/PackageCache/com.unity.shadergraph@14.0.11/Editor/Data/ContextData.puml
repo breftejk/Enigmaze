@@ -1,0 +1,11 @@
+@startuml
+class ContextData <<sealed>> {
+    - m_Position : Vector2
+    - m_Blocks : List<JsonRef<BlockNode>>
+    - m_ShaderStage : ShaderStage
+    + ContextData()
+    + blocks : List<JsonRef<BlockNode>> <<get>>
+    + position : Vector2 <<get>> <<set>>
+    + shaderStage : ShaderStage <<get>> <<set>>
+}
+@enduml

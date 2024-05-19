@@ -1,0 +1,8 @@
+@startuml
+class CinemachineHardLookAt {
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+}
+CinemachineComponentBase <|-- CinemachineHardLookAt
+@enduml

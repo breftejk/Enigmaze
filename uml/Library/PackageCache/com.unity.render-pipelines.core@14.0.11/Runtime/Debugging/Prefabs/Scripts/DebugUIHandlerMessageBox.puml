@@ -1,0 +1,13 @@
+@startuml
+class DebugUIHandlerMessageBox {
+    + nameLabel : Text
+    - m_Field : DebugUI.MessageBox
+    {static} - k_WarningBackgroundColor : Color32
+    {static} - k_WarningTextColor : Color32
+    {static} - k_ErrorBackgroundColor : Color32
+    {static} - k_ErrorTextColor : Color32
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerMessageBox
+@enduml

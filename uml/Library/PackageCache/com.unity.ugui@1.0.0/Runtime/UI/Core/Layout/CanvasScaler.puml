@@ -1,0 +1,61 @@
+@startuml
+class CanvasScaler {
+    - m_UiScaleMode : ScaleMode
+    + uiScaleMode : ScaleMode <<get>> <<set>>
+    # m_ReferencePixelsPerUnit : float = 100
+    + referencePixelsPerUnit : float <<get>> <<set>>
+    # m_ScaleFactor : float = 1
+    + scaleFactor : float <<get>> <<set>>
+    # m_ReferenceResolution : Vector2
+    + referenceResolution : Vector2 <<get>> <<set>>
+    # m_ScreenMatchMode : ScreenMatchMode
+    + screenMatchMode : ScreenMatchMode <<get>> <<set>>
+    # m_MatchWidthOrHeight : float = 0
+    + matchWidthOrHeight : float <<get>> <<set>>
+    - <<const>> kLogBase : float = 2
+    # m_PhysicalUnit : Unit
+    + physicalUnit : Unit <<get>> <<set>>
+    # m_FallbackScreenDPI : float = 96
+    + fallbackScreenDPI : float <<get>> <<set>>
+    # m_DefaultSpriteDPI : float = 96
+    + defaultSpriteDPI : float <<get>> <<set>>
+    # m_DynamicPixelsPerUnit : float = 1
+    + dynamicPixelsPerUnit : float <<get>> <<set>>
+    - m_Canvas : Canvas
+    - m_PrevScaleFactor : float = 1
+    - m_PrevReferencePixelsPerUnit : float = 100
+    # m_PresetInfoIsWorld : bool = false
+    # CanvasScaler()
+    # <<override>> OnEnable() : void
+    - Canvas_preWillRenderCanvases() : void
+    # <<override>> OnDisable() : void
+    # <<virtual>> Handle() : void
+    # <<virtual>> HandleWorldCanvas() : void
+    # <<virtual>> HandleConstantPixelSize() : void
+    # <<virtual>> HandleScaleWithScreenSize() : void
+    # <<virtual>> HandleConstantPhysicalSize() : void
+    # SetScaleFactor(scaleFactor:float) : void
+    # SetReferencePixelsPerUnit(referencePixelsPerUnit:float) : void
+}
+enum ScaleMode {
+    ConstantPixelSize,
+    ScaleWithScreenSize,
+    ConstantPhysicalSize,
+}
+enum ScreenMatchMode {
+    MatchWidthOrHeight= 0,
+    Expand= 1,
+    Shrink= 2,
+}
+enum Unit {
+    Centimeters,
+    Millimeters,
+    Inches,
+    Points,
+    Picas,
+}
+UIBehaviour <|-- CanvasScaler
+CanvasScaler +-- ScaleMode
+CanvasScaler +-- ScreenMatchMode
+CanvasScaler +-- Unit
+@enduml

@@ -1,0 +1,215 @@
+@startuml
+abstract class ScriptableRenderer <<partial>> {
+    + <<virtual>> SupportedCameraStackingTypes() : int
+    + SupportsCameraStackingType(cameraRenderType:CameraRenderType) : bool
+    # profilingExecute : ProfilingSampler <<get>> <<set>>
+    <<internal>> hasReleasedRTs : bool = true
+    <<internal>> DebugHandler : DebugHandler <<get>>
+    <<internal>> {static} current : ScriptableRenderer = null
+    + {static} SetCameraMatrices(cmd:CommandBuffer, cameraData:CameraData, setInverseMatrices:bool) : void
+    <<internal>> {static} SetCameraMatrices(cmd:CommandBuffer, cameraData:CameraData, setInverseMatrices:bool, isTargetFlipped:bool) : void
+    - SetPerCameraShaderVariables(cmd:CommandBuffer, cameraData:CameraData) : void
+    - SetPerCameraShaderVariables(cmd:CommandBuffer, cameraData:CameraData, isTargetFlipped:bool) : void
+    - SetPerCameraBillboardProperties(cmd:CommandBuffer, cameraData:CameraData) : void
+    - {static} CalculateBillboardProperties(worldToCameraMatrix:Matrix4x4, billboardTangent:Vector3, billboardNormal:Vector3, cameraXZAngle:float) : void
+    - SetPerCameraClippingPlaneProperties(cmd:CommandBuffer, cameraData:CameraData) : void
+    - SetPerCameraClippingPlaneProperties(cmd:CommandBuffer, cameraData:CameraData, isTargetFlipped:bool) : void
+    {static} - SetShaderTimeValues(cmd:CommandBuffer, time:float, deltaTime:float, smoothDeltaTime:float) : void
+    + cameraColorTarget : RenderTargetIdentifier <<get>>
+    + cameraColorTargetHandle : RTHandle <<get>>
+    <<virtual>> <<internal>> GetCameraColorFrontBuffer(cmd:CommandBuffer) : RTHandle
+    <<virtual>> <<internal>> GetCameraColorBackBuffer(cmd:CommandBuffer) : RTHandle
+    + cameraDepthTarget : RenderTargetIdentifier <<get>>
+    + cameraDepthTargetHandle : RTHandle <<get>>
+    # rendererFeatures : List<ScriptableRendererFeature> <<get>>
+    # activeRenderPassQueue : List<ScriptableRenderPass> <<get>>
+    + supportedRenderingFeatures : RenderingFeatures <<get>> <<set>>
+    + unsupportedGraphicsDeviceTypes : GraphicsDeviceType[] <<get>> <<set>>
+    - m_StoreActionsOptimizationSetting : StoreActionsOptimization
+    - {static} m_UseOptimizedStoreActions : bool = false
+    <<const>> - k_RenderPassBlockCount : int = 4
+    # {static} <<readonly>> k_CameraTarget : RTHandle
+    - m_ActiveRenderPassQueue : List<ScriptableRenderPass>
+    - m_RendererFeatures : List<ScriptableRendererFeature>
+    - m_CameraColorTarget : RTHandleRenderTargetIdentifierCompat
+    - m_CameraDepthTarget : RTHandleRenderTargetIdentifierCompat
+    - m_CameraResolveTarget : RTHandleRenderTargetIdentifierCompat
+    - m_FirstTimeCameraColorTargetIsBound : bool = true
+    - m_FirstTimeCameraDepthTargetIsBound : bool = true
+    - m_IsPipelineExecuting : bool = false
+    <<internal>> disableNativeRenderPassInFeatures : bool = false
+    <<internal>> useRenderPassEnabled : bool = false
+    {static} - m_ActiveColorAttachments : RenderTargetIdentifier[]
+    {static} - m_ActiveDepthAttachment : RenderTargetIdentifier
+    - {static} m_ActiveColorStoreActions : RenderBufferStoreAction[]
+    - {static} m_ActiveDepthStoreAction : RenderBufferStoreAction
+    {static} - m_TrimmedColorAttachmentCopies : RenderTargetIdentifier[][]
+    - {static} s_Planes : Plane[]
+    - {static} s_VectorPlanes : Vector4[]
+    <<internal>> {static} ConfigureActiveTarget(colorAttachment:RenderTargetIdentifier, depthAttachment:RenderTargetIdentifier) : void
+    <<internal>> useDepthPriming : bool <<get>> <<set>> = false
+    <<internal>> stripShadowsOffVariants : bool <<get>> <<set>> = false
+    <<internal>> stripAdditionalLightOffVariants : bool <<get>> <<set>> = false
+    + ScriptableRenderer(data:ScriptableRendererData)
+    + Dispose() : void
+    # <<virtual>> Dispose(disposing:bool) : void
+    <<internal>> <<virtual>> ReleaseRenderTargets() : void
+    + ConfigureCameraTarget(colorTarget:RenderTargetIdentifier, depthTarget:RenderTargetIdentifier) : void
+    + ConfigureCameraTarget(colorTarget:RTHandle, depthTarget:RTHandle) : void
+    <<internal>> ConfigureCameraTarget(colorTarget:RenderTargetIdentifier, depthTarget:RenderTargetIdentifier, resolveTarget:RenderTargetIdentifier) : void
+    <<internal>> ConfigureCameraTarget(colorTarget:RTHandle, depthTarget:RTHandle, resolveTarget:RTHandle) : void
+    <<internal>> ConfigureCameraColorTarget(colorTarget:RenderTargetIdentifier) : void
+    <<internal>> ConfigureCameraColorTarget(colorTarget:RTHandle) : void
+    + {abstract} Setup(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<virtual>> SetupLights(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<virtual>> SetupCullingParameters(cullingParameters:ScriptableCullingParameters, cameraData:CameraData) : void
+    + <<virtual>> FinishRendering(cmd:CommandBuffer) : void
+    <<internal>> <<virtual>> OnRecordRenderGraph(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - InitRenderGraphFrame(renderGraph:RenderGraph, renderingData:RenderingData) : void
+    <<internal>> ProcessVFXCameraCommand(renderGraph:RenderGraph, renderingData:RenderingData) : void
+    <<internal>> SetupRenderGraphCameraProperties(renderGraph:RenderGraph, renderingData:RenderingData, isTargetBackbuffer:bool) : void
+    <<internal>> DrawRenderGraphGizmos(renderGraph:RenderGraph, color:TextureHandle, depth:TextureHandle, gizmoSubset:GizmoSubset, renderingData:RenderingData) : void
+    - BeginRenderGraphXRRendering(renderGraph:RenderGraph, renderingData:RenderingData) : void
+    - EndRenderGraphXRRendering(renderGraph:RenderGraph, renderingData:RenderingData) : void
+    <<internal>> RecordRenderGraph(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> FinishRenderGraphRendering(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> <<virtual>> OnFinishRenderGraphRendering(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> RecordCustomRenderGraphPasses(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData, injectionPoint:RenderPassEvent) : void
+    <<internal>> SetPerCameraProperties(context:ScriptableRenderContext, cameraData:CameraData, camera:Camera, cmd:CommandBuffer) : void
+    + Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + EnqueuePass(pass:ScriptableRenderPass) : void
+    # {static} GetCameraClearFlag(cameraData:CameraData) : ClearFlag
+    <<internal>> OnPreCullRenderPasses(cameraData:CameraData) : void
+    <<internal>> AddRenderPasses(renderingData:RenderingData) : void
+    # SetupRenderPasses(renderingData:RenderingData) : void
+    {static} - ClearRenderingState(cmd:CommandBuffer) : void
+    <<internal>> Clear(cameraType:CameraRenderType) : void
+    - ExecuteBlock(blockIndex:int, renderBlocks:RenderBlocks, context:ScriptableRenderContext, renderingData:RenderingData, submit:bool) : void
+    - IsRenderPassEnabled(renderPass:ScriptableRenderPass) : bool
+    - ExecuteRenderPass(context:ScriptableRenderContext, renderPass:ScriptableRenderPass, renderingData:RenderingData) : void
+    - SetRenderPassAttachments(cmd:CommandBuffer, renderPass:ScriptableRenderPass, cameraData:CameraData) : void
+    - BeginXRRendering(cmd:CommandBuffer, context:ScriptableRenderContext, cameraData:CameraData) : void
+    - EndXRRendering(cmd:CommandBuffer, context:ScriptableRenderContext, cameraData:CameraData) : void
+    <<internal>> {static} SetRenderTarget(cmd:CommandBuffer, colorAttachment:RenderTargetIdentifier, depthAttachment:RenderTargetIdentifier, clearFlag:ClearFlag, clearColor:Color) : void
+    <<internal>> {static} SetRenderTarget(cmd:CommandBuffer, colorAttachment:RTHandle, depthAttachment:RTHandle, clearFlag:ClearFlag, clearColor:Color) : void
+    <<internal>> {static} SetRenderTarget(cmd:CommandBuffer, colorAttachment:RenderTargetIdentifier, depthAttachment:RenderTargetIdentifier, clearFlag:ClearFlag, clearColor:Color, colorStoreAction:RenderBufferStoreAction, depthStoreAction:RenderBufferStoreAction) : void
+    <<internal>> {static} SetRenderTarget(cmd:CommandBuffer, colorAttachment:RTHandle, depthAttachment:RTHandle, clearFlag:ClearFlag, clearColor:Color, colorStoreAction:RenderBufferStoreAction, depthStoreAction:RenderBufferStoreAction) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachment:RenderTargetIdentifier, colorLoadAction:RenderBufferLoadAction, colorStoreAction:RenderBufferStoreAction, clearFlags:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachment:RTHandle, colorLoadAction:RenderBufferLoadAction, colorStoreAction:RenderBufferStoreAction, clearFlags:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachment:RenderTargetIdentifier, colorLoadAction:RenderBufferLoadAction, colorStoreAction:RenderBufferStoreAction, depthAttachment:RenderTargetIdentifier, depthLoadAction:RenderBufferLoadAction, depthStoreAction:RenderBufferStoreAction, clearFlags:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachment:RTHandle, colorLoadAction:RenderBufferLoadAction, colorStoreAction:RenderBufferStoreAction, depthAttachment:RTHandle, depthLoadAction:RenderBufferLoadAction, depthStoreAction:RenderBufferStoreAction, clearFlags:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachments:RenderTargetIdentifier[], depthAttachment:RenderTargetIdentifier, clearFlag:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachments:RenderTargetIdentifier[], depthAttachment:RTHandle, clearFlag:ClearFlag, clearColor:Color) : void
+    {static} - SetRenderTarget(cmd:CommandBuffer, colorAttachments:RTHandle[], depthAttachment:RTHandle, clearFlag:ClearFlag, clearColor:Color) : void
+    <<internal>> <<virtual>> SwapColorBuffer(cmd:CommandBuffer) : void
+    <<internal>> <<virtual>> EnableSwapBufferMSAA(enable:bool) : void
+    - DrawGizmos(context:ScriptableRenderContext, camera:Camera, gizmoSubset:GizmoSubset, renderingData:RenderingData) : void
+    - DrawWireOverlay(context:ScriptableRenderContext, camera:Camera) : void
+    - InternalStartRendering(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - InternalFinishRendering(resolveFinalTarget:bool, renderingData:RenderingData) : void
+    - InternalFinishRendering(context:ScriptableRenderContext, resolveFinalTarget:bool, renderingData:RenderingData) : void
+    <<internal>> {static} SortStable(list:List<ScriptableRenderPass>) : void
+}
+class Profiling <<static>> <<partial>> {
+    - <<const>> k_Name : string
+    + {static} <<readonly>> setPerCameraShaderVariables : ProfilingSampler
+    + {static} <<readonly>> sortRenderPasses : ProfilingSampler
+    + {static} <<readonly>> setupLights : ProfilingSampler
+    + {static} <<readonly>> setupCamera : ProfilingSampler
+    + {static} <<readonly>> vfxProcessCamera : ProfilingSampler
+    + {static} <<readonly>> addRenderPasses : ProfilingSampler
+    + {static} <<readonly>> setupRenderPasses : ProfilingSampler
+    + {static} <<readonly>> clearRenderingState : ProfilingSampler
+    + {static} <<readonly>> internalStartRendering : ProfilingSampler
+    + {static} <<readonly>> internalFinishRendering : ProfilingSampler
+    + {static} <<readonly>> drawGizmos : ProfilingSampler
+    <<internal>> {static} <<readonly>> beginXRRendering : ProfilingSampler
+    <<internal>> {static} <<readonly>> endXRRendering : ProfilingSampler
+}
+class RenderingFeatures {
+    + cameraStacking : bool <<get>> <<set>> = false
+    + msaa : bool <<get>> <<set>> = true
+}
+class RenderPassBlock <<static>> {
+    + {static} <<readonly>> BeforeRendering : int = 0
+    + {static} <<readonly>> MainRenderingOpaque : int = 1
+    + {static} <<readonly>> MainRenderingTransparent : int = 2
+    + {static} <<readonly>> AfterRendering : int = 3
+}
+struct RTHandleRenderTargetIdentifierCompat {
+    + handle : RTHandle
+    + fallback : RenderTargetIdentifier
+    + useRTHandle : bool <<get>>
+    + nameID : RenderTargetIdentifier <<get>>
+}
+class VFXProcessCameraPassData {
+    <<internal>> cullResults : CullingResults
+    <<internal>> camera : Camera
+}
+class DrawGizmosPassData {
+    + renderingData : RenderingData
+    + renderer : ScriptableRenderer
+    + gizmoSubset : GizmoSubset
+}
+class BeginXRPassData {
+    + renderingData : RenderingData
+    + cameraData : CameraData
+}
+class EndXRPassData {
+    + renderingData : RenderingData
+    + cameraData : CameraData
+}
+class PassData {
+    <<internal>> renderingData : RenderingData
+    <<internal>> renderer : ScriptableRenderer
+    <<internal>> cameraData : CameraData
+    <<internal>> isTargetBackbuffer : bool
+}
+struct RenderBlocks {
+    - m_BlockEventLimits : NativeArray<RenderPassEvent>
+    - m_BlockRanges : NativeArray<int>
+    - m_BlockRangeLengths : NativeArray<int>
+    + RenderBlocks(activeRenderPassQueue:List<ScriptableRenderPass>)
+    + Dispose() : void
+    - FillBlockRanges(activeRenderPassQueue:List<ScriptableRenderPass>) : void
+    + GetLength(index:int) : int
+    + GetRange(index:int) : BlockRange
+}
+class RenderBlock <<static>> {
+    - <<const>> k_Name : string
+    + {static} <<readonly>> beforeRendering : ProfilingSampler
+    + {static} <<readonly>> mainRenderingOpaque : ProfilingSampler
+    + {static} <<readonly>> mainRenderingTransparent : ProfilingSampler
+    + {static} <<readonly>> afterRendering : ProfilingSampler
+}
+class RenderPass <<static>> {
+    - <<const>> k_Name : string
+    + {static} <<readonly>> configure : ProfilingSampler
+    + {static} <<readonly>> setRenderPassAttachments : ProfilingSampler
+}
+struct BlockRange {
+    - m_Current : int
+    - m_End : int
+    + BlockRange(begin:int, end:int)
+    + GetEnumerator() : BlockRange
+    + MoveNext() : bool
+    + Current : int <<get>>
+    + Dispose() : void
+}
+IDisposable <|-- ScriptableRenderer
+ScriptableRenderer +-- Profiling
+ScriptableRenderer +-- RenderingFeatures
+ScriptableRenderer +-- RenderPassBlock
+ScriptableRenderer +-- RTHandleRenderTargetIdentifierCompat
+ScriptableRenderer +-- VFXProcessCameraPassData
+ScriptableRenderer +-- DrawGizmosPassData
+ScriptableRenderer +-- BeginXRPassData
+ScriptableRenderer +-- EndXRPassData
+ScriptableRenderer +-- PassData
+ScriptableRenderer +-- RenderBlocks
+IDisposable <|-- RenderBlocks
+Profiling +-- RenderBlock
+Profiling +-- RenderPass
+RenderBlocks +-- BlockRange
+IDisposable <|-- BlockRange
+@enduml

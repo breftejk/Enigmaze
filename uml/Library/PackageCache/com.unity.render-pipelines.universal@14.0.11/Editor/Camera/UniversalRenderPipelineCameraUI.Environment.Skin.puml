@@ -1,0 +1,14 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Environment <<partial>> {
+}
+class Styles {
+    + {static} backgroundType : GUIContent
+    + {static} volumesSettingsText : GUIContent
+    + {static} volumeTrigger : GUIContent
+    + {static} volumeUpdates : GUIContent
+}
+UniversalRenderPipelineCameraUI +-- Environment
+Environment +-- Styles
+@enduml

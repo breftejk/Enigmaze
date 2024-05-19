@@ -1,0 +1,11 @@
+@startuml
+class CinemachineImpulseChannels {
+    {static} - sInstance : CinemachineImpulseChannels = null
+    - {static} alreadySearched : bool = false
+    + {static} InstanceIfExists : CinemachineImpulseChannels <<get>>
+    + {static} Instance : CinemachineImpulseChannels <<get>>
+    - EnsureDefaultLayer() : void
+    + ImpulseChannels : string[]
+}
+ScriptableObject <|-- CinemachineImpulseChannels
+@enduml

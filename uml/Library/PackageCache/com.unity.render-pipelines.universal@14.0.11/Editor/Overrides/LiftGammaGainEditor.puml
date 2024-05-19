@@ -1,0 +1,18 @@
+@startuml
+class LiftGammaGainEditor <<sealed>> {
+    - m_Lift : SerializedDataParameter
+    - m_Gamma : SerializedDataParameter
+    - m_Gain : SerializedDataParameter
+    <<readonly>> - m_TrackballUIDrawer : TrackballUIDrawer
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - GetLiftValue(x:Vector4) : Vector3
+}
+class Styles <<static>> {
+    + {static} <<readonly>> liftLabel : GUIContent
+    + {static} <<readonly>> gammaLabel : GUIContent
+    + {static} <<readonly>> gainLabel : GUIContent
+}
+VolumeComponentEditor <|-- LiftGammaGainEditor
+LiftGammaGainEditor +-- Styles
+@enduml

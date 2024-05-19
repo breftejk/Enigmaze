@@ -1,0 +1,14 @@
+@startuml
+class Vector4ShaderProperty <<sealed>> {
+    <<internal>> Vector4ShaderProperty()
+    <<internal>> <<override>> vectorDimension : int <<get>>
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+VectorShaderProperty <|-- Vector4ShaderProperty
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class Light2DLookupTexture <<static>> {
+    - {static} s_PointLightLookupTexture : Texture2D
+    + {static} GetLightLookupTexture() : Texture
+    - {static} CreatePointLightLookupTexture() : Texture2D
+}
+@enduml

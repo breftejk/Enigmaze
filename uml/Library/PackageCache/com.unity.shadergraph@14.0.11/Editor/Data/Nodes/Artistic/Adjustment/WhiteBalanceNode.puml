@@ -1,0 +1,8 @@
+@startuml
+class WhiteBalanceNode {
+    + WhiteBalanceNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_WhiteBalance(In:Vector3, Temperature:Vector1, Tint:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- WhiteBalanceNode
+@enduml

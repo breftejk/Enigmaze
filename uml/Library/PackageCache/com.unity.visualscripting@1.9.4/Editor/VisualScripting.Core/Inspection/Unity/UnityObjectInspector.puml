@@ -1,0 +1,17 @@
+@startuml
+class UnityObjectInspector <<sealed>> {
+    + UnityObjectInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - nullMeansSelf : bool
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> selfPatch : GUIStyle
+    + {static} <<readonly>> selfPatchTransparent : GUIStyle
+}
+Inspector <|-- UnityObjectInspector
+UnityObjectInspector +-- Styles
+@enduml

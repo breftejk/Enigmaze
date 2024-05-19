@@ -1,0 +1,27 @@
+@startuml
+class ProgressControlsForDialogs {
+    <<internal>> ProgressData : Data <<get>>
+    <<internal>> ForcedUpdateProgress(dialog:EditorWindow) : void
+    - HideProgress() : void
+    - ShowProgress(message:string) : void
+    - ShowError(message:string) : void
+    - ShowNotification(message:string) : void
+    - ShowSuccess(message:string) : void
+    - ShowWarning(message:string) : void
+    {static} - CleanStatusMessage(data:Data) : void
+    {static} - GetUpdateProgress(lastUpdateTime:double, lastProgressPercent:float, updateTime:double, progressPercent:float) : void
+    - mLastUpdateTime : double = 0.0
+    - mData : Data
+    <<const>> - PERCENT_PER_SECONDS : double = 0.06
+}
+class Data {
+    <<internal>> IsWaitingAsyncResult : bool
+    <<internal>> ProgressPercent : float
+    <<internal>> ProgressMessage : string
+    <<internal>> StatusType : MessageType
+    <<internal>> StatusMessage : string
+    <<internal>> CopyInto(other:Data) : void
+}
+IProgressControls <|-- ProgressControlsForDialogs
+ProgressControlsForDialogs +-- Data
+@enduml

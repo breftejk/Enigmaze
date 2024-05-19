@@ -1,0 +1,10 @@
+@startuml
+class FuzzyOptionTreeExtensionProvider {
+    {static} - FuzzyOptionTreeExtensionProvider()
+    + {static} instance : FuzzyOptionTreeExtensionProvider <<get>>
+}
+class XFuzzyOptionTreeExtensionProvider <<static>> {
+    + {static} Extensions(optionTree:IFuzzyOptionTree) : IEnumerable<IFuzzyOptionTree>
+}
+"MultiDecoratorProvider`3" "<IFuzzyOptionTree,IFuzzyOptionTree,FuzzyOptionTreeExtensionAttribute>" <|-- FuzzyOptionTreeExtensionProvider
+@enduml

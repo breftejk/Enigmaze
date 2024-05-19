@@ -1,0 +1,8 @@
+@startuml
+class WaitWhileUnit {
+    + condition : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> Await(flow:Flow) : IEnumerator
+}
+WaitUnit <|-- WaitWhileUnit
+@enduml

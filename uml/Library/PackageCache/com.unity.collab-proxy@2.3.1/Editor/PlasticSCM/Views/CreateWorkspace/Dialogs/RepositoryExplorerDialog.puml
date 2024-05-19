@@ -1,0 +1,39 @@
+@startuml
+class RepositoryExplorerDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} BrowseRepository(parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, defaultServer:string) : string
+    - OnDisable() : void
+    # <<override>> SaveSettings() : void
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    - Refresh() : void
+    - FillValues(values:List<string>) : void
+    - Get() : string
+    - OnServerSelected(server:object) : void
+    {static} - DoToolbarArea(searchField:SearchField, listView:RepositoriesListView, isEnabled:bool, refreshAction:Action, selectServerAction:GenericMenu.MenuFunction2, state:State) : void
+    {static} - DoListArea(listView:RepositoriesListView, isEnabled:bool) : void
+    {static} - DoDropDownTextField(text:string, options:List<string>, selectServerAction:GenericMenu.MenuFunction2, enterKeyAction:Action) : string
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    {static} - Create(plasticWebRestApi:IPlasticWebRestApi, progressControls:ProgressControlsForDialogs, defaultServer:string, guiMessage:GuiMessage.IGuiMessage) : RepositoryExplorerDialog
+    - BuildComponents(defaultServer:string, plasticWebRestApi:IPlasticWebRestApi) : void
+    - mSearchField : SearchField
+    - mRepositoriesListView : RepositoriesListView
+    - mProgressControls : ProgressControlsForDialogs
+    - mFillRepositoriesTable : FillRepositoriesTable
+    - mState : State
+    - mGuiMessage : GuiMessage.IGuiMessage
+    <<const>> - DROPDOWN_CONTROL_NAME : string = "RepositoryExplorerDialog.ServerDropdown"
+    <<const>> - DROPDOWN_WIDTH : float = 250
+    <<const>> - SEARCH_FIELD_WIDTH : float = 450
+}
+class State {
+    <<internal>> AvailableServers : List<string> <<get>> <<set>>
+    <<internal>> Server : string <<get>> <<set>>
+    <<internal>> ProgressData : ProgressControlsForDialogs.Data <<get>> <<set>>
+}
+PlasticDialog <|-- RepositoryExplorerDialog
+RepositoryExplorerDialog +-- State
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CreateDictionary <<sealed>> {
+    + dictionary : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Create(flow:Flow) : IDictionary
+}
+Unit <|-- CreateDictionary
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+interface IEventMachine {
+    TriggerUnityEvent(name:string) : void
+}
+IMachine <|-- IEventMachine
+@enduml

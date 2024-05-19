@@ -1,0 +1,10 @@
+@startuml
+class UnityThread <<static>> {
+    + {static} thread : Thread
+    + {static} editorAsync : Action<Action>
+    + {static} allowsAPI : bool <<get>>
+    + {static} pendingQueue : ConcurrentQueue<Action>
+    <<internal>> {static} RuntimeInitialize() : void
+    + {static} EditorAsync(action:Action) : void
+}
+@enduml

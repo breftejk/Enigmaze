@@ -1,0 +1,80 @@
+@startuml
+enum TemporalAAQuality {
+    VeryLow= 0,
+    Low,
+    Medium,
+    High,
+    VeryHigh,
+}
+class TaaPersistentData <<sealed>> {
+    - {static} formatList : GraphicsFormat[]
+    - m_RtDesc : RenderTextureDescriptor
+    - m_AccumulationTexture : RTHandle
+    - m_AccumulationTexture2 : RTHandle
+    - m_LastAccumUpdateFrameIndex : int
+    - m_LastAccumUpdateFrameIndex2 : int
+    + rtd : RenderTextureDescriptor <<get>>
+    + accumulationTexture(index:int) : RTHandle
+    + GetLastAccumFrameIndex(index:int) : int
+    + SetLastAccumFrameIndex(index:int, value:int) : void
+    + TaaPersistentData()
+    + Init(sizeX:int, sizeY:int, volumeDepth:int, format:GraphicsFormat, vrUsage:VRTextureUsage, texDim:TextureDimension) : void
+    + AllocateTargets(xrMultipassEnabled:bool) : bool
+    + DeallocateTargets() : void
+}
+class TemporalAA <<static>> {
+    {static} <<internal>> CalculateJitterMatrix(cameraData:CameraData) : Matrix4x4
+    {static} <<internal>> CalculateJitter(frameIndex:int) : Vector2
+    - {static} <<readonly>> taaFilterOffsets : Vector2[]
+    - {static} <<readonly>> taaFilterWeights : float[]
+    {static} <<internal>> CalculateFilterWeights(jitterScale:float) : float[]
+    {static} <<internal>> ValidateAndWarn(cameraData:CameraData) : string
+    <<internal>> {static} ExecutePass(cmd:CommandBuffer, taaMaterial:Material, cameraData:CameraData, source:RTHandle, destination:RTHandle, motionVectors:RenderTexture) : void
+    <<internal>> {static} Render(renderGraph:RenderGraph, taaMaterial:Material, cameraData:CameraData, srcColor:TextureHandle, srcDepth:TextureHandle, srcMotionVectors:TextureHandle, dstColor:TextureHandle) : void
+}
+class ShaderConstants <<static>> {
+    + {static} <<readonly>> _TaaAccumulationTex : int
+    + {static} <<readonly>> _TaaMotionVectorTex : int
+    + {static} <<readonly>> _TaaFilterWeights : int
+    + {static} <<readonly>> _TaaFrameInfluence : int
+    + {static} <<readonly>> _TaaVarianceClampScale : int
+    + {static} <<readonly>> _CameraDepthTexture : int
+}
+class ShaderKeywords <<static>> {
+    + {static} <<readonly>> TAA_LOW_PRECISION_SOURCE : string = "TAA_LOW_PRECISION_SOURCE"
+}
+struct Settings {
+    <<internal>> m_Quality : TemporalAAQuality
+    <<internal>> m_FrameInfluence : float
+    <<internal>> m_JitterScale : float
+    <<internal>> m_MipBias : float
+    <<internal>> m_VarianceClampScale : float
+    <<internal>> m_ContrastAdaptiveSharpening : float
+    <<internal>> resetHistoryFrames : int
+    <<internal>> jitterFrameCountOffset : int
+    + quality : TemporalAAQuality <<get>> <<set>>
+    + baseBlendFactor : float <<get>> <<set>>
+    + jitterScale : float <<get>> <<set>>
+    + mipBias : float <<get>> <<set>>
+    + varianceClampScale : float <<get>> <<set>>
+    + contrastAdaptiveSharpening : float <<get>> <<set>>
+    + {static} Create() : Settings
+}
+class TaaPassData {
+    <<internal>> dstTex : TextureHandle
+    <<internal>> srcColorTex : TextureHandle
+    <<internal>> srcDepthTex : TextureHandle
+    <<internal>> srcMotionVectorTex : TextureHandle
+    <<internal>> srcTaaAccumTex : TextureHandle
+    <<internal>> material : Material
+    <<internal>> passIndex : int
+    <<internal>> taaFrameInfluence : float
+    <<internal>> taaVarianceClampScale : float
+    <<internal>> taaFilterWeights : float[]
+    <<internal>> taaLowPrecisionSource : bool
+}
+TemporalAA +-- ShaderConstants
+TemporalAA +-- ShaderKeywords
+TemporalAA +-- Settings
+TemporalAA +-- TaaPassData
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+class LensFlareComponentSRPEditor {
+    - m_LensFlareData : SerializedProperty
+    - m_Intensity : SerializedProperty
+    - m_Scale : SerializedProperty
+    - m_MaxAttenuationDistance : SerializedProperty
+    - m_MaxAttenuationScale : SerializedProperty
+    - m_DistanceAttenuationCurve : SerializedProperty
+    - m_ScaleByDistanceCurve : SerializedProperty
+    - m_AttenuationByLightShape : SerializedProperty
+    - m_RadialScreenAttenuationCurve : SerializedProperty
+    - m_UseOcclusion : SerializedProperty
+    - m_BackgroundCloudOcclusion : SerializedProperty
+    - m_OcclusionRadius : SerializedProperty
+    - m_SamplesCount : SerializedProperty
+    - m_OcclusionOffset : SerializedProperty
+    - m_AllowOffScreen : SerializedProperty
+    - m_VolumetricCloudOcclusion : SerializedProperty
+    - m_OcclusionRemapTextureCurve : SerializedProperty
+    - m_OcclusionRemapCurve : SerializedProperty
+    - MakeTextureDirtyCallback() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles <<static>> {
+    {static} + <<readonly>> generalData : GUIContent
+    {static} + <<readonly>> occlusionData : GUIContent
+    {static} + <<readonly>> lensFlareData : GUIContent
+    {static} + <<readonly>> newButton : GUIContent
+    {static} + <<readonly>> cloneButton : GUIContent
+    {static} + <<readonly>> intensity : GUIContent
+    {static} + <<readonly>> scale : GUIContent
+    {static} + <<readonly>> maxAttenuationDistance : GUIContent
+    {static} + <<readonly>> distanceAttenuationCurve : GUIContent
+    {static} + <<readonly>> maxAttenuationScale : GUIContent
+    {static} + <<readonly>> scaleByDistanceCurve : GUIContent
+    {static} + <<readonly>> attenuationByLightShape : GUIContent
+    {static} + <<readonly>> radialScreenAttenuationCurve : GUIContent
+    {static} + <<readonly>> enableOcclusion : GUIContent
+    {static} + <<readonly>> backgroundCloudOcclusion : GUIContent
+    {static} + <<readonly>> occlusionRadius : GUIContent
+    {static} + <<readonly>> sampleCount : GUIContent
+    {static} + <<readonly>> occlusionOffset : GUIContent
+    {static} + <<readonly>> occlusionRemapCurve : GUIContent
+    {static} + <<readonly>> allowOffScreen : GUIContent
+    {static} + <<readonly>> volumetricCloudOcclusion : GUIContent
+}
+Editor <|-- LensFlareComponentSRPEditor
+LensFlareComponentSRPEditor +-- Styles
+@enduml

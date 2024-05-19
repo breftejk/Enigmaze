@@ -1,0 +1,5 @@
+@startuml
+class SwitchOnInteger {
+}
+"SwitchUnit`1" "<int>" <|-- SwitchOnInteger
+@enduml

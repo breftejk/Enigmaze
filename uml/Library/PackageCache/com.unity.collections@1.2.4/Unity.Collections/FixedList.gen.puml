@@ -1,0 +1,583 @@
+@startuml
+struct "FixedList`2"<T,U> {
+    <<internal>> length : ushort
+    <<internal>> buffer : U
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+}
+struct FixedList {
+    <<internal>> {static} PaddingBytes() : int
+    <<internal>> {static} StorageBytes() : int
+    <<internal>> {static} Capacity() : int
+    <<internal>> {static} CheckResize(newLength:int) : void
+}
+struct "FixedList32`1"<T> {
+}
+struct "FixedList32Bytes`1"<T> {
+    <<internal>> length : ushort
+    <<internal>> buffer : FixedBytes30
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + CompareTo(other:FixedList32Bytes<T>) : int
+    + Equals(other:FixedList32Bytes<T>) : bool
+    + CompareTo(other:FixedList64Bytes<T>) : int
+    + Equals(other:FixedList64Bytes<T>) : bool
+    + FixedList32Bytes(other:FixedList64Bytes<T>)
+    <<internal>> Initialize(other:FixedList64Bytes<T>) : int
+    + CompareTo(other:FixedList128Bytes<T>) : int
+    + Equals(other:FixedList128Bytes<T>) : bool
+    + FixedList32Bytes(other:FixedList128Bytes<T>)
+    <<internal>> Initialize(other:FixedList128Bytes<T>) : int
+    + CompareTo(other:FixedList512Bytes<T>) : int
+    + Equals(other:FixedList512Bytes<T>) : bool
+    + FixedList32Bytes(other:FixedList512Bytes<T>)
+    <<internal>> Initialize(other:FixedList512Bytes<T>) : int
+    + CompareTo(other:FixedList4096Bytes<T>) : int
+    + Equals(other:FixedList4096Bytes<T>) : bool
+    + FixedList32Bytes(other:FixedList4096Bytes<T>)
+    <<internal>> Initialize(other:FixedList4096Bytes<T>) : int
+    + <<override>> Equals(obj:object) : bool
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+}
+class FixedList32BytesExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:FixedList32Bytes<T>, value:U) : int
+    + {static} Contains(list:FixedList32Bytes<T>, value:U) : bool
+    + {static} Remove(list:FixedList32Bytes<T>, value:U) : bool
+    + {static} RemoveSwapBack(list:FixedList32Bytes<T>, value:U) : bool
+}
+class "FixedList32BytesDebugView`1"<T> <<sealed>> {
+    - m_List : FixedList32Bytes<T>
+    + FixedList32BytesDebugView(list:FixedList32Bytes<T>)
+    + Items : T[] <<get>>
+}
+struct "FixedList64`1"<T> {
+}
+struct "FixedList64Bytes`1"<T> {
+    <<internal>> length : ushort
+    <<internal>> buffer : FixedBytes62
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + CompareTo(other:FixedList32Bytes<T>) : int
+    + Equals(other:FixedList32Bytes<T>) : bool
+    + FixedList64Bytes(other:FixedList32Bytes<T>)
+    <<internal>> Initialize(other:FixedList32Bytes<T>) : int
+    + CompareTo(other:FixedList64Bytes<T>) : int
+    + Equals(other:FixedList64Bytes<T>) : bool
+    + CompareTo(other:FixedList128Bytes<T>) : int
+    + Equals(other:FixedList128Bytes<T>) : bool
+    + FixedList64Bytes(other:FixedList128Bytes<T>)
+    <<internal>> Initialize(other:FixedList128Bytes<T>) : int
+    + CompareTo(other:FixedList512Bytes<T>) : int
+    + Equals(other:FixedList512Bytes<T>) : bool
+    + FixedList64Bytes(other:FixedList512Bytes<T>)
+    <<internal>> Initialize(other:FixedList512Bytes<T>) : int
+    + CompareTo(other:FixedList4096Bytes<T>) : int
+    + Equals(other:FixedList4096Bytes<T>) : bool
+    + FixedList64Bytes(other:FixedList4096Bytes<T>)
+    <<internal>> Initialize(other:FixedList4096Bytes<T>) : int
+    + <<override>> Equals(obj:object) : bool
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+}
+class FixedList64BytesExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:FixedList64Bytes<T>, value:U) : int
+    + {static} Contains(list:FixedList64Bytes<T>, value:U) : bool
+    + {static} Remove(list:FixedList64Bytes<T>, value:U) : bool
+    + {static} RemoveSwapBack(list:FixedList64Bytes<T>, value:U) : bool
+}
+class "FixedList64BytesDebugView`1"<T> <<sealed>> {
+    - m_List : FixedList64Bytes<T>
+    + FixedList64BytesDebugView(list:FixedList64Bytes<T>)
+    + Items : T[] <<get>>
+}
+struct "FixedList128`1"<T> {
+}
+struct "FixedList128Bytes`1"<T> {
+    <<internal>> length : ushort
+    <<internal>> buffer : FixedBytes126
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + CompareTo(other:FixedList32Bytes<T>) : int
+    + Equals(other:FixedList32Bytes<T>) : bool
+    + FixedList128Bytes(other:FixedList32Bytes<T>)
+    <<internal>> Initialize(other:FixedList32Bytes<T>) : int
+    + CompareTo(other:FixedList64Bytes<T>) : int
+    + Equals(other:FixedList64Bytes<T>) : bool
+    + FixedList128Bytes(other:FixedList64Bytes<T>)
+    <<internal>> Initialize(other:FixedList64Bytes<T>) : int
+    + CompareTo(other:FixedList128Bytes<T>) : int
+    + Equals(other:FixedList128Bytes<T>) : bool
+    + CompareTo(other:FixedList512Bytes<T>) : int
+    + Equals(other:FixedList512Bytes<T>) : bool
+    + FixedList128Bytes(other:FixedList512Bytes<T>)
+    <<internal>> Initialize(other:FixedList512Bytes<T>) : int
+    + CompareTo(other:FixedList4096Bytes<T>) : int
+    + Equals(other:FixedList4096Bytes<T>) : bool
+    + FixedList128Bytes(other:FixedList4096Bytes<T>)
+    <<internal>> Initialize(other:FixedList4096Bytes<T>) : int
+    + <<override>> Equals(obj:object) : bool
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+}
+class FixedList128BytesExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:FixedList128Bytes<T>, value:U) : int
+    + {static} Contains(list:FixedList128Bytes<T>, value:U) : bool
+    + {static} Remove(list:FixedList128Bytes<T>, value:U) : bool
+    + {static} RemoveSwapBack(list:FixedList128Bytes<T>, value:U) : bool
+}
+class "FixedList128BytesDebugView`1"<T> <<sealed>> {
+    - m_List : FixedList128Bytes<T>
+    + FixedList128BytesDebugView(list:FixedList128Bytes<T>)
+    + Items : T[] <<get>>
+}
+struct "FixedList512`1"<T> {
+}
+struct "FixedList512Bytes`1"<T> {
+    <<internal>> length : ushort
+    <<internal>> buffer : FixedBytes510
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + CompareTo(other:FixedList32Bytes<T>) : int
+    + Equals(other:FixedList32Bytes<T>) : bool
+    + FixedList512Bytes(other:FixedList32Bytes<T>)
+    <<internal>> Initialize(other:FixedList32Bytes<T>) : int
+    + CompareTo(other:FixedList64Bytes<T>) : int
+    + Equals(other:FixedList64Bytes<T>) : bool
+    + FixedList512Bytes(other:FixedList64Bytes<T>)
+    <<internal>> Initialize(other:FixedList64Bytes<T>) : int
+    + CompareTo(other:FixedList128Bytes<T>) : int
+    + Equals(other:FixedList128Bytes<T>) : bool
+    + FixedList512Bytes(other:FixedList128Bytes<T>)
+    <<internal>> Initialize(other:FixedList128Bytes<T>) : int
+    + CompareTo(other:FixedList512Bytes<T>) : int
+    + Equals(other:FixedList512Bytes<T>) : bool
+    + CompareTo(other:FixedList4096Bytes<T>) : int
+    + Equals(other:FixedList4096Bytes<T>) : bool
+    + FixedList512Bytes(other:FixedList4096Bytes<T>)
+    <<internal>> Initialize(other:FixedList4096Bytes<T>) : int
+    + <<override>> Equals(obj:object) : bool
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+}
+class FixedList512BytesExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:FixedList512Bytes<T>, value:U) : int
+    + {static} Contains(list:FixedList512Bytes<T>, value:U) : bool
+    + {static} Remove(list:FixedList512Bytes<T>, value:U) : bool
+    + {static} RemoveSwapBack(list:FixedList512Bytes<T>, value:U) : bool
+}
+class "FixedList512BytesDebugView`1"<T> <<sealed>> {
+    - m_List : FixedList512Bytes<T>
+    + FixedList512BytesDebugView(list:FixedList512Bytes<T>)
+    + Items : T[] <<get>>
+}
+struct "FixedList4096`1"<T> {
+}
+struct "FixedList4096Bytes`1"<T> {
+    <<internal>> length : ushort
+    <<internal>> buffer : FixedBytes4094
+    + Length : int <<get>> <<set>>
+    - Elements : IEnumerable<T> <<get>>
+    + IsEmpty : bool <<get>>
+    <<internal>> LengthInBytes : int <<get>>
+    <<unsafe>> <<internal>> Buffer : byte* <<get>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + <<override>> GetHashCode() : int
+    + Add(item:T) : void
+    + <<unsafe>> AddRange(ptr:void*, length:int) : void
+    + AddNoResize(item:T) : void
+    + <<unsafe>> AddRangeNoResize(ptr:void*, length:int) : void
+    + Clear() : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + Insert(index:int, item:T) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + ToArray() : T[]
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + CompareTo(other:FixedList32Bytes<T>) : int
+    + Equals(other:FixedList32Bytes<T>) : bool
+    + FixedList4096Bytes(other:FixedList32Bytes<T>)
+    <<internal>> Initialize(other:FixedList32Bytes<T>) : int
+    + CompareTo(other:FixedList64Bytes<T>) : int
+    + Equals(other:FixedList64Bytes<T>) : bool
+    + FixedList4096Bytes(other:FixedList64Bytes<T>)
+    <<internal>> Initialize(other:FixedList64Bytes<T>) : int
+    + CompareTo(other:FixedList128Bytes<T>) : int
+    + Equals(other:FixedList128Bytes<T>) : bool
+    + FixedList4096Bytes(other:FixedList128Bytes<T>)
+    <<internal>> Initialize(other:FixedList128Bytes<T>) : int
+    + CompareTo(other:FixedList512Bytes<T>) : int
+    + Equals(other:FixedList512Bytes<T>) : bool
+    + FixedList4096Bytes(other:FixedList512Bytes<T>)
+    <<internal>> Initialize(other:FixedList512Bytes<T>) : int
+    + CompareTo(other:FixedList4096Bytes<T>) : int
+    + Equals(other:FixedList4096Bytes<T>) : bool
+    + <<override>> Equals(obj:object) : bool
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+}
+class FixedList4096BytesExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:FixedList4096Bytes<T>, value:U) : int
+    + {static} Contains(list:FixedList4096Bytes<T>, value:U) : bool
+    + {static} Remove(list:FixedList4096Bytes<T>, value:U) : bool
+    + {static} RemoveSwapBack(list:FixedList4096Bytes<T>, value:U) : bool
+}
+class "FixedList4096BytesDebugView`1"<T> <<sealed>> {
+    - m_List : FixedList4096Bytes<T>
+    + FixedList4096BytesDebugView(list:FixedList4096Bytes<T>)
+    + Items : T[] <<get>>
+}
+struct FixedListByte32 {
+}
+class FixedListByte32DebugView <<sealed>> {
+    - m_List : FixedList32Bytes<byte>
+    + FixedListByte32DebugView(list:FixedList32Bytes<byte>)
+    + Items : byte[] <<get>>
+}
+struct FixedListByte64 {
+}
+class FixedListByte64DebugView <<sealed>> {
+    - m_List : FixedList64Bytes<byte>
+    + FixedListByte64DebugView(list:FixedList64Bytes<byte>)
+    + Items : byte[] <<get>>
+}
+struct FixedListByte128 {
+}
+class FixedListByte128DebugView <<sealed>> {
+    - m_List : FixedList128Bytes<byte>
+    + FixedListByte128DebugView(list:FixedList128Bytes<byte>)
+    + Items : byte[] <<get>>
+}
+struct FixedListByte512 {
+}
+class FixedListByte512DebugView <<sealed>> {
+    - m_List : FixedList512Bytes<byte>
+    + FixedListByte512DebugView(list:FixedList512Bytes<byte>)
+    + Items : byte[] <<get>>
+}
+struct FixedListByte4096 {
+}
+class FixedListByte4096DebugView <<sealed>> {
+    - m_List : FixedList4096Bytes<byte>
+    + FixedListByte4096DebugView(list:FixedList4096Bytes<byte>)
+    + Items : byte[] <<get>>
+}
+struct FixedListInt32 {
+}
+class FixedListInt32DebugView <<sealed>> {
+    - m_List : FixedList32Bytes<int>
+    + FixedListInt32DebugView(list:FixedList32Bytes<int>)
+    + Items : int[] <<get>>
+}
+struct FixedListInt64 {
+}
+class FixedListInt64DebugView <<sealed>> {
+    - m_List : FixedList64Bytes<int>
+    + FixedListInt64DebugView(list:FixedList64Bytes<int>)
+    + Items : int[] <<get>>
+}
+struct FixedListInt128 {
+}
+class FixedListInt128DebugView <<sealed>> {
+    - m_List : FixedList128Bytes<int>
+    + FixedListInt128DebugView(list:FixedList128Bytes<int>)
+    + Items : int[] <<get>>
+}
+struct FixedListInt512 {
+}
+class FixedListInt512DebugView <<sealed>> {
+    - m_List : FixedList512Bytes<int>
+    + FixedListInt512DebugView(list:FixedList512Bytes<int>)
+    + Items : int[] <<get>>
+}
+struct FixedListInt4096 {
+}
+class FixedListInt4096DebugView <<sealed>> {
+    - m_List : FixedList4096Bytes<int>
+    + FixedListInt4096DebugView(list:FixedList4096Bytes<int>)
+    + Items : int[] <<get>>
+}
+struct FixedListFloat32 {
+}
+class FixedListFloat32DebugView <<sealed>> {
+    - m_List : FixedList32Bytes<float>
+    + FixedListFloat32DebugView(list:FixedList32Bytes<float>)
+    + Items : float[] <<get>>
+}
+struct FixedListFloat64 {
+}
+class FixedListFloat64DebugView <<sealed>> {
+    - m_List : FixedList64Bytes<float>
+    + FixedListFloat64DebugView(list:FixedList64Bytes<float>)
+    + Items : float[] <<get>>
+}
+struct FixedListFloat128 {
+}
+class FixedListFloat128DebugView <<sealed>> {
+    - m_List : FixedList128Bytes<float>
+    + FixedListFloat128DebugView(list:FixedList128Bytes<float>)
+    + Items : float[] <<get>>
+}
+struct FixedListFloat512 {
+}
+class FixedListFloat512DebugView <<sealed>> {
+    - m_List : FixedList512Bytes<float>
+    + FixedListFloat512DebugView(list:FixedList512Bytes<float>)
+    + Items : float[] <<get>>
+}
+struct FixedListFloat4096 {
+}
+class FixedListFloat4096DebugView <<sealed>> {
+    - m_List : FixedList4096Bytes<float>
+    + FixedListFloat4096DebugView(list:FixedList4096Bytes<float>)
+    + Items : float[] <<get>>
+}
+class FixedListExtensions <<static>> {
+    + {static} Sort(list:FixedList32Bytes<T>) : void
+    + {static} Sort(list:FixedList32Bytes<T>, comp:U) : void
+    + {static} Sort(list:FixedList64Bytes<T>) : void
+    + {static} Sort(list:FixedList64Bytes<T>, comp:U) : void
+    + {static} Sort(list:FixedList128Bytes<T>) : void
+    + {static} Sort(list:FixedList128Bytes<T>, comp:U) : void
+    + {static} Sort(list:FixedList512Bytes<T>) : void
+    + {static} Sort(list:FixedList512Bytes<T>, comp:U) : void
+    + {static} Sort(list:FixedList4096Bytes<T>) : void
+    + {static} Sort(list:FixedList4096Bytes<T>, comp:U) : void
+}
+struct Enumerator {
+    - m_List : FixedList32Bytes<T>
+    - m_Index : int
+    + Enumerator(list:FixedList32Bytes<T>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+struct Enumerator {
+    - m_List : FixedList64Bytes<T>
+    - m_Index : int
+    + Enumerator(list:FixedList64Bytes<T>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+struct Enumerator {
+    - m_List : FixedList128Bytes<T>
+    - m_Index : int
+    + Enumerator(list:FixedList128Bytes<T>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+struct Enumerator {
+    - m_List : FixedList512Bytes<T>
+    - m_Index : int
+    + Enumerator(list:FixedList512Bytes<T>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+struct Enumerator {
+    - m_List : FixedList4096Bytes<T>
+    - m_Index : int
+    + Enumerator(list:FixedList4096Bytes<T>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+"INativeList`1" "<T>" <|-- "FixedList`2"
+"INativeList`1" "<T>" <|-- "FixedList32Bytes`1"
+"IEnumerable`1" "<T>" <|-- "FixedList32Bytes`1"
+"IEquatable`1" "<FixedList32Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IComparable`1" "<FixedList32Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IEquatable`1" "<FixedList64Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IComparable`1" "<FixedList64Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IEquatable`1" "<FixedList128Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IComparable`1" "<FixedList128Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IEquatable`1" "<FixedList512Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IComparable`1" "<FixedList512Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IEquatable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList32Bytes`1"
+"IComparable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList32Bytes`1"
+"INativeList`1" "<T>" <|-- "FixedList64Bytes`1"
+"IEnumerable`1" "<T>" <|-- "FixedList64Bytes`1"
+"IEquatable`1" "<FixedList32Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IComparable`1" "<FixedList32Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IEquatable`1" "<FixedList64Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IComparable`1" "<FixedList64Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IEquatable`1" "<FixedList128Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IComparable`1" "<FixedList128Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IEquatable`1" "<FixedList512Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IComparable`1" "<FixedList512Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IEquatable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList64Bytes`1"
+"IComparable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList64Bytes`1"
+"INativeList`1" "<T>" <|-- "FixedList128Bytes`1"
+"IEnumerable`1" "<T>" <|-- "FixedList128Bytes`1"
+"IEquatable`1" "<FixedList32Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IComparable`1" "<FixedList32Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IEquatable`1" "<FixedList64Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IComparable`1" "<FixedList64Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IEquatable`1" "<FixedList128Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IComparable`1" "<FixedList128Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IEquatable`1" "<FixedList512Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IComparable`1" "<FixedList512Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IEquatable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList128Bytes`1"
+"IComparable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList128Bytes`1"
+"INativeList`1" "<T>" <|-- "FixedList512Bytes`1"
+"IEnumerable`1" "<T>" <|-- "FixedList512Bytes`1"
+"IEquatable`1" "<FixedList32Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IComparable`1" "<FixedList32Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IEquatable`1" "<FixedList64Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IComparable`1" "<FixedList64Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IEquatable`1" "<FixedList128Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IComparable`1" "<FixedList128Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IEquatable`1" "<FixedList512Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IComparable`1" "<FixedList512Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IEquatable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList512Bytes`1"
+"IComparable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList512Bytes`1"
+"INativeList`1" "<T>" <|-- "FixedList4096Bytes`1"
+"IEnumerable`1" "<T>" <|-- "FixedList4096Bytes`1"
+"IEquatable`1" "<FixedList32Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IComparable`1" "<FixedList32Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IEquatable`1" "<FixedList64Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IComparable`1" "<FixedList64Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IEquatable`1" "<FixedList128Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IComparable`1" "<FixedList128Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IEquatable`1" "<FixedList512Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IComparable`1" "<FixedList512Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IEquatable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"IComparable`1" "<FixedList4096Bytes<T>>" <|-- "FixedList4096Bytes`1"
+"FixedList32Bytes`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+"FixedList64Bytes`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+"FixedList128Bytes`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+"FixedList512Bytes`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+"FixedList4096Bytes`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+@enduml

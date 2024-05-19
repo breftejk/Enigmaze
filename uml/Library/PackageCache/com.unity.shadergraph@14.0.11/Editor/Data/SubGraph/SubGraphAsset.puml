@@ -1,0 +1,72 @@
+@startuml
+struct FunctionPair {
+    + key : string
+    + value : string
+    + graphPrecisionFlags : int
+    + FunctionPair(key:string, value:string, graphPrecisionFlags:int)
+}
+class SlotCapability {
+    + slotName : string
+    + capabilities : ShaderStageCapability
+}
+class SlotDependencyPair {
+    + inputSlotName : string
+    + outputSlotName : string
+}
+class SlotDependencyInfo {
+    <<internal>> slotName : string
+    <<internal>> capabilities : ShaderStageCapability
+    <<internal>> dependencies : HashSet<string>
+    <<internal>> AddDepencencySlotName(slotName:string) : void
+    <<internal>> ContainsSlot(slot:MaterialSlot) : bool
+}
+class SubGraphData {
+    + inputs : List<JsonData<AbstractShaderProperty>>
+    + keywords : List<JsonData<ShaderKeyword>>
+    + dropdowns : List<JsonData<ShaderDropdown>>
+    + nodeProperties : List<JsonData<AbstractShaderProperty>>
+    + outputs : List<JsonData<MaterialSlot>>
+    + unsupportedTargets : List<JsonData<Target>>
+}
+class SubGraphAsset {
+    + isValid : bool
+    + processedAt : long
+    + functionName : string
+    + inputStructName : string
+    + hlslName : string
+    + assetGuid : string
+    + requirements : ShaderGraphRequirements
+    + path : string
+    + functions : List<FunctionPair>
+    + includes : IncludeCollection
+    + vtFeedbackVariables : List<string>
+    - m_SubGraphData : SubGraphData
+    - m_SerializedSubGraphData : SerializationHelper.JSONSerializedElement
+    + inputs : DataValueEnumerable<AbstractShaderProperty> <<get>>
+    + keywords : DataValueEnumerable<ShaderKeyword> <<get>>
+    + dropdowns : DataValueEnumerable<ShaderDropdown> <<get>>
+    + nodeProperties : DataValueEnumerable<AbstractShaderProperty> <<get>>
+    + outputs : DataValueEnumerable<MaterialSlot> <<get>>
+    + unsupportedTargets : DataValueEnumerable<Target> <<get>>
+    + children : List<string>
+    + descendents : List<string>
+    + inputCapabilities : List<SlotCapability>
+    + outputCapabilities : List<SlotCapability>
+    + slotDependencies : List<SlotDependencyPair>
+    - m_InputDependencies : Dictionary<string, SlotDependencyInfo>
+    - m_OutputDependencies : Dictionary<string, SlotDependencyInfo>
+    + GetInputDependencies(slotName:string) : SlotDependencyInfo
+    + GetOutputDependencies(slotName:string) : SlotDependencyInfo
+    + subGraphGraphPrecision : GraphPrecision
+    + outputGraphPrecision : GraphPrecision
+    + previewMode : PreviewMode
+    + WriteData(inputs:IEnumerable<AbstractShaderProperty>, keywords:IEnumerable<ShaderKeyword>, dropdowns:IEnumerable<ShaderDropdown>, nodeProperties:IEnumerable<AbstractShaderProperty>, outputs:IEnumerable<MaterialSlot>, unsupportedTargets:IEnumerable<Target>) : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    + LoadGraphData() : void
+    <<internal>> LoadDependencyData() : void
+}
+JsonObject <|-- SubGraphData
+ScriptableObject <|-- SubGraphAsset
+ISerializationCallbackReceiver <|-- SubGraphAsset
+@enduml

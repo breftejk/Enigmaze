@@ -1,0 +1,22 @@
+@startuml
+class CallbacksDelegator {
+    - {static} s_instance : CallbacksDelegator
+    + {static} instance : CallbacksDelegator <<get>>
+    - <<readonly>> m_CallbacksProvider : Func<ICallbacks[]>
+    - <<readonly>> m_AdaptorFactory : ITestAdaptorFactory
+    + CallbacksDelegator(callbacksProvider:Func<ICallbacks[]>, adaptorFactory:ITestAdaptorFactory)
+    + RunStarted(testsToRun:ITest) : void
+    + RunStartedRemotely(testsToRunData:byte[]) : void
+    + RunFinished(testResults:ITestResult) : void
+    + RunFinishedRemotely(testResultsData:byte[]) : void
+    + RunFailed(failureMessage:string) : void
+    + TestStarted(test:ITest) : void
+    + TestStartedRemotely(testStartedData:byte[]) : void
+    + TestFinished(result:ITestResult) : void
+    + TestFinishedRemotely(testResultsData:byte[]) : void
+    + TestTreeRebuild(test:ITest) : void
+    - TryInvokeAllCallbacks(callbackAction:Action<ICallbacks>) : void
+    - {static} Deserialize(data:byte[]) : T
+}
+ICallbacksDelegator <|-- CallbacksDelegator
+@enduml

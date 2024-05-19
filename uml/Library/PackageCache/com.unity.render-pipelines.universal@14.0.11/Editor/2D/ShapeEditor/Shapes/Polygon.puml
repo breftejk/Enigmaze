@@ -1,0 +1,11 @@
+@startuml
+struct Polygon {
+    + isOpenEnded : bool
+    + points : Vector3[]
+    - type : ShapeType <<get>>
+    - isOpenEnded : bool <<get>>
+    - ToControlPoints() : ControlPoint[]
+    + {static} empty : Polygon
+}
+IShape <|-- Polygon
+@enduml

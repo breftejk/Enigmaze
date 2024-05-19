@@ -1,0 +1,12 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    + {static} Register_Gradient_DirectConverter : Gradient_DirectConverter
+}
+class Gradient_DirectConverter {
+    # <<override>> DoSerialize(model:Gradient, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:Gradient) : fsResult
+    {static} - LogWarning(phase:string) : void
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<Gradient>" <|-- Gradient_DirectConverter
+@enduml

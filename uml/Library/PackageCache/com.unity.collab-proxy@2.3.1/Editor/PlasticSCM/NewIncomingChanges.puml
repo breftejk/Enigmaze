@@ -1,0 +1,9 @@
+@startuml
+class NewIncomingChanges <<static>> {
+    <<internal>> {static} BuildUpdaterForDeveloper(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher, incomingChangesNotifier:IIncomingChangesNotifier, autoRefreshIncomingChangesView:CheckIncomingChanges.IAutoRefreshIncomingChangesView, updateIncomingChanges:CheckIncomingChanges.IUpdateIncomingChanges) : NewIncomingChangesUpdater
+    <<internal>> {static} BuildUpdaterForGluon(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher, incomingChangesNotifier:IIncomingChangesNotifier, autoRefreshIncomingChangesView:GluonCheckIncomingChanges.IAutoRefreshIncomingChangesView, updateIncomingChanges:GluonCheckIncomingChanges.IUpdateIncomingChanges, calculateIncomingChanges:GluonCheckIncomingChanges.ICalculateIncomingChanges) : GluonNewIncomingChangesUpdater
+    <<internal>> {static} LaunchUpdater(developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, gluonNewIncomingChangesUpdater:GluonNewIncomingChangesUpdater) : void
+    <<internal>> {static} StopUpdater(developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, gluonNewIncomingChangesUpdater:GluonNewIncomingChangesUpdater) : void
+    <<internal>> {static} DisposeUpdater(developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, gluonNewIncomingChangesUpdater:GluonNewIncomingChangesUpdater) : void
+}
+@enduml

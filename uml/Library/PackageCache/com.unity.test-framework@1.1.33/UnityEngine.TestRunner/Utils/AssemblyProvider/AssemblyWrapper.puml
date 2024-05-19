@@ -1,0 +1,10 @@
+@startuml
+class AssemblyWrapper {
+    + AssemblyWrapper(assembly:Assembly)
+    + Assembly : Assembly <<get>>
+    + Name : AssemblyName <<get>>
+    + <<virtual>> Location : string <<get>>
+    + <<virtual>> GetReferencedAssemblies() : AssemblyName[]
+}
+IAssemblyWrapper <|-- AssemblyWrapper
+@enduml

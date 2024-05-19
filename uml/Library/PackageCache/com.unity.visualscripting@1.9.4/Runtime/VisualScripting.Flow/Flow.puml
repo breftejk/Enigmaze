@@ -1,0 +1,77 @@
+@startuml
+class Flow <<sealed>> {
+    + stack : GraphStack <<get>>
+    - recursion : Recursion<RecursionNode>
+    - <<readonly>> locals : Dictionary<IUnitValuePort, object>
+    + <<readonly>> variables : VariableDeclarations
+    - <<readonly>> loops : Stack<int>
+    - <<readonly>> preservedStacks : HashSet<GraphStack>
+    + coroutineRunner : MonoBehaviour <<get>>
+    - activeCoroutinesRegistry : ICollection<Flow>
+    - coroutineStopRequested : bool
+    + isCoroutine : bool <<get>>
+    - coroutineEnumerator : IEnumerator
+    + isPrediction : bool <<get>>
+    - disposed : bool
+    + enableDebug : bool <<get>>
+    + {static} isInspectedBinding : Func<GraphPointer, bool> <<get>> <<set>>
+    + isInspected : bool <<get>>
+    - Flow()
+    + {static} New(reference:GraphReference) : Flow
+    - New() : void
+    + Dispose() : void
+    - Free() : void
+    + PreserveStack() : GraphStack
+    + RestoreStack(stack:GraphStack) : void
+    + DisposePreservedStack(stack:GraphStack) : void
+    + loopIdentifier : int
+    + currentLoop : int <<get>>
+    + LoopIsNotBroken(loop:int) : bool
+    + EnterLoop() : int
+    + BreakLoop() : void
+    + ExitLoop(loop:int) : void
+    + Run(port:ControlOutput) : void
+    + StartCoroutine(port:ControlOutput, registry:ICollection<Flow>) : void
+    + StopCoroutine(disposeInstantly:bool) : void
+    <<internal>> StopCoroutineImmediate() : void
+    - Coroutine(startPort:ControlOutput) : IEnumerator
+    + Invoke(output:ControlOutput) : void
+    - InvokeCoroutine(output:ControlOutput) : IEnumerable
+    - BeforeInvoke(output:ControlOutput, recursionNode:RecursionNode) : RecursionNode
+    - AfterInvoke(output:ControlOutput, recursionNode:RecursionNode) : void
+    - InvokeDelegate(input:ControlInput) : ControlOutput
+    - InvokeCoroutineDelegate(input:ControlInput) : IEnumerable
+    + IsLocal(port:IUnitValuePort) : bool
+    + SetValue(port:IUnitValuePort, value:object) : void
+    + GetValue(input:ValueInput) : object
+    - GetValue(output:ValueOutput) : object
+    + GetValue(input:ValueInput, type:Type) : object
+    + GetValue(input:ValueInput) : T
+    + GetConvertedValue(input:ValueInput) : object
+    - GetDefaultValue(input:ValueInput) : object
+    + TryGetDefaultValue(input:ValueInput, defaultValue:object) : bool
+    - GetValueDelegate(output:ValueOutput) : object
+    + {static} FetchValue(input:ValueInput, reference:GraphReference) : object
+    + {static} FetchValue(input:ValueInput, type:Type, reference:GraphReference) : object
+    + {static} FetchValue(input:ValueInput, reference:GraphReference) : T
+    + {static} CanPredict(port:IUnitValuePort, reference:GraphReference) : bool
+    - CanPredict(input:ValueInput) : bool
+    - CanPredict(output:ValueOutput) : bool
+    - CanPredictDelegate(output:ValueOutput) : bool
+    + {static} Predict(port:IUnitValuePort, reference:GraphReference) : object
+    + {static} Predict(port:IUnitValuePort, reference:GraphReference, type:Type) : object
+    + {static} Predict(port:IUnitValuePort, pointer:GraphReference) : T
+}
+struct RecursionNode {
+    + port : IUnitPort <<get>>
+    + context : IGraphParent <<get>>
+    + RecursionNode(port:IUnitPort, pointer:GraphPointer)
+    + Equals(other:RecursionNode) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+IPoolable <|-- Flow
+IDisposable <|-- Flow
+Flow +-- RecursionNode
+"IEquatable`1" "<RecursionNode>" <|-- RecursionNode
+@enduml

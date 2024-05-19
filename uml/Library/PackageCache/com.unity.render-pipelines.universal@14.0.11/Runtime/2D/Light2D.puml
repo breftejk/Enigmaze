@@ -1,0 +1,102 @@
+@startuml
+class Light2D <<sealed>> <<partial>> {
+    <<const>> - k_CurrentComponentVersion : ComponentVersions
+    - m_ComponentVersion : ComponentVersions
+    - m_LightType : LightType
+    - m_BlendStyleIndex : int = 0
+    - m_FalloffIntensity : float = 0.5f
+    - m_Color : Color
+    - m_Intensity : float = 1
+    - m_LightVolumeIntensity : float = 1.0f
+    - m_LightVolumeIntensityEnabled : bool = false
+    - m_ApplyToSortingLayers : int[]
+    - m_LightCookieSprite : Sprite
+    - m_DeprecatedPointLightCookieSprite : Sprite
+    - m_LightOrder : int = 0
+    - m_AlphaBlendOnOverlap : bool = false
+    - m_OverlapOperation : OverlapOperation
+    - m_NormalMapDistance : float = 3.0f
+    - m_NormalMapQuality : NormalMapQuality
+    - m_UseNormalMap : bool = false
+    - m_ShadowIntensityEnabled : bool = false
+    - m_ShadowIntensity : float = 0.75f
+    - m_ShadowVolumeIntensityEnabled : bool = false
+    - m_ShadowVolumeIntensity : float = 0.75f
+    - m_Mesh : Mesh
+    - m_Vertices : LightUtility.LightMeshVertex[]
+    - m_Triangles : ushort[]
+    <<internal>> vertices : LightUtility.LightMeshVertex[] <<get>> <<set>>
+    <<internal>> indices : ushort[] <<get>> <<set>>
+    - m_PreviousLightCookieSprite : int
+    <<internal>> m_CachedPosition : Vector3
+    <<internal>> affectedSortingLayers : int[] <<get>>
+    - lightCookieSpriteInstanceID : int <<get>>
+    - m_LocalBounds : Bounds
+    <<internal>> boundingSphere : BoundingSphere <<get>>
+    <<internal>> lightMesh : Mesh <<get>>
+    <<internal>> hasCachedMesh : bool <<get>>
+    <<internal>> forceUpdate : bool = false
+    + lightType : LightType <<get>> <<set>>
+    + blendStyleIndex : int <<get>> <<set>>
+    + shadowIntensity : float <<get>> <<set>>
+    + shadowsEnabled : bool <<get>> <<set>>
+    + shadowVolumeIntensity : float <<get>> <<set>>
+    + volumetricShadowsEnabled : bool <<get>> <<set>>
+    + color : Color <<get>> <<set>>
+    + intensity : float <<get>> <<set>>
+    + volumeOpacity : float <<get>>
+    + volumeIntensity : float <<get>> <<set>>
+    + volumeIntensityEnabled : bool <<get>> <<set>>
+    + lightCookieSprite : Sprite <<get>> <<set>>
+    + falloffIntensity : float <<get>> <<set>>
+    + alphaBlendOnOverlap : bool <<get>>
+    + overlapOperation : OverlapOperation <<get>> <<set>>
+    + lightOrder : int <<get>> <<set>>
+    + normalMapDistance : float <<get>>
+    + normalMapQuality : NormalMapQuality <<get>>
+    + renderVolumetricShadows : bool <<get>>
+    <<internal>> MarkForUpdate() : void
+    <<internal>> CacheValues() : void
+    <<internal>> GetTopMostLitLayer() : int
+    <<internal>> UpdateSpriteMesh() : Bounds
+    <<internal>> UpdateMesh(forceUpdate:bool) : void
+    <<internal>> UpdateBoundingSphere() : void
+    <<internal>> IsLitLayer(layer:int) : bool
+    - Awake() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - LateUpdate() : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+enum DeprecatedLightType {
+    Parametric= 0,
+}
+enum LightType {
+    Parametric= 0,
+    Freeform= 1,
+    Sprite= 2,
+    Point= 3,
+    Global= 4,
+}
+enum NormalMapQuality {
+    Disabled= 2,
+    Fast= 0,
+    Accurate= 1,
+}
+enum OverlapOperation {
+    Additive,
+    AlphaBlend,
+}
+enum ComponentVersions {
+    Version_Unserialized= 0,
+    Version_1= 1,
+}
+Light2DBase <|-- Light2D
+ISerializationCallbackReceiver <|-- Light2D
+Light2D +-- DeprecatedLightType
+Light2D +-- LightType
+Light2D +-- NormalMapQuality
+Light2D +-- OverlapOperation
+Light2D +-- ComponentVersions
+@enduml

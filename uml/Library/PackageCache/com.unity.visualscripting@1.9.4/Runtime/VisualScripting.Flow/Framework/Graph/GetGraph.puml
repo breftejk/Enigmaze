@@ -1,0 +1,9 @@
+@startuml
+abstract class "GetGraph`3"<TGraph,TGraphAsset,TMachine> {
+    + gameObject : ValueInput <<get>> <<protected set>>
+    + graphOutput : ValueOutput <<get>> <<protected set>>
+    # <<override>> Definition() : void
+    - Get(flow:Flow) : TGraphAsset
+}
+Unit <|-- "GetGraph`3"
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class PolarCoordinatesNode {
+    + PolarCoordinatesNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_PolarCoordinates(UV:Vector2, Center:Vector2, RadialScale:Vector1, LengthScale:Vector1, Out:Vector2) : string
+}
+CodeFunctionNode <|-- PolarCoordinatesNode
+@enduml

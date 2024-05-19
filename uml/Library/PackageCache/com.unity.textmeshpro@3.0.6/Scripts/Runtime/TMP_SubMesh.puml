@@ -1,0 +1,44 @@
+@startuml
+class TMP_SubMesh {
+    + fontAsset : TMP_FontAsset <<get>> <<set>>
+    - m_fontAsset : TMP_FontAsset
+    + spriteAsset : TMP_SpriteAsset <<get>> <<set>>
+    - m_spriteAsset : TMP_SpriteAsset
+    + material : Material <<get>> <<set>>
+    - m_material : Material
+    + sharedMaterial : Material <<get>> <<set>>
+    - m_sharedMaterial : Material
+    + fallbackMaterial : Material <<get>> <<set>>
+    - m_fallbackMaterial : Material
+    + fallbackSourceMaterial : Material <<get>> <<set>>
+    - m_fallbackSourceMaterial : Material
+    + isDefaultMaterial : bool <<get>> <<set>>
+    - m_isDefaultMaterial : bool
+    + padding : float <<get>> <<set>>
+    - m_padding : float
+    + <<new>> renderer : Renderer <<get>>
+    - m_renderer : Renderer
+    + meshFilter : MeshFilter <<get>>
+    - m_meshFilter : MeshFilter
+    + mesh : Mesh <<get>> <<set>>
+    - m_mesh : Mesh
+    + textComponent : TMP_Text <<get>>
+    - m_TextComponent : TextMeshPro
+    - m_isRegisteredForEvents : bool
+    + {static} AddSubTextObject(textComponent:TextMeshPro, materialReference:MaterialReference) : TMP_SubMesh
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnDestroy() : void
+    + DestroySelf() : void
+    - GetMaterial(mat:Material) : Material
+    - CreateMaterialInstance(source:Material) : Material
+    - GetSharedMaterial() : Material
+    - SetSharedMaterial(mat:Material) : void
+    + GetPaddingForMaterial() : float
+    + UpdateMeshPadding(isExtraPadding:bool, isUsingBold:bool) : void
+    + SetVerticesDirty() : void
+    + SetMaterialDirty() : void
+    # UpdateMaterial() : void
+}
+MonoBehaviour <|-- TMP_SubMesh
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+abstract class TMP_BaseShaderGUI {
+    {static} - s_TempLabel : GUIContent
+    # {static} s_DebugExtended : bool
+    {static} - s_UndoRedoCount : int
+    {static} - s_LastSeenUndoRedoCount : int
+    {static} - s_TempFloats : float[][]
+    # {static} s_XywhVectorLabels : GUIContent[]
+    # {static} s_LbrtVectorLabels : GUIContent[]
+    # {static} s_CullingTypeLabels : GUIContent[]
+    {static} - TMP_BaseShaderGUI()
+    - m_IsNewGUI : bool = true
+    - m_DragAndDropMinY : float
+    # m_Editor : MaterialEditor
+    # m_Material : Material
+    # m_Properties : MaterialProperty[]
+    - PrepareGUI() : void
+    + <<override>> OnGUI(materialEditor:MaterialEditor, properties:MaterialProperty[]) : void
+    # {abstract} DoGUI() : void
+    {static} - s_PanelStateLabel : string[]
+    # BeginPanel(panel:string, expanded:bool) : bool
+    # BeginPanel(panel:string, feature:ShaderFeature, expanded:bool, readState:bool) : bool
+    + EndPanel() : void
+    - BeginProperty(name:string) : MaterialProperty
+    - EndProperty() : bool
+    # DoPopup(name:string, label:string, options:GUIContent[]) : void
+    # DoCubeMap(name:string, label:string) : void
+    # DoTexture2D(name:string, label:string, withTilingOffset:bool, speedNames:string[]) : void
+    - DoTexture(name:string, label:string, type:System.Type, withTilingOffset:bool, speedNames:string[]) : void
+    - DoTilingOffset(rect:Rect, property:MaterialProperty) : void
+    # DoUVSpeed(rect:Rect, names:string[]) : void
+    # DoToggle(name:string, label:string) : void
+    # DoFloat(name:string, label:string) : void
+    # DoColor(name:string, label:string) : void
+    - DoFloat(rect:Rect, name:string, label:string) : void
+    - DoFloat2(rect:Rect, name:string) : void
+    # DoSlider(name:string, label:string) : void
+    # DoSlider(propertyName:string, propertyField:string, label:string) : void
+    # DoVector2(name:string, label:string) : void
+    # DoVector3(name:string, label:string) : void
+    # DoVector(name:string, label:string, subLabels:GUIContent[]) : void
+    - DoDragAndDropBegin() : void
+    - DoDragAndDropEnd() : void
+    - PerformDrop(droppedMaterial:Material) : void
+}
+class ShaderFeature {
+    + undoLabel : string
+    + label : GUIContent
+    + keywordLabels : GUIContent[]
+    + keywords : string[]
+    - m_State : int
+    + Active : bool <<get>>
+    + State : int <<get>>
+    + ReadState(material:Material) : void
+    + SetActive(active:bool, material:Material) : void
+    + DoPopup(editor:MaterialEditor, material:Material) : void
+    - SetStateKeywords(material:Material) : void
+}
+ShaderGUI <|-- TMP_BaseShaderGUI
+TMP_BaseShaderGUI +-- ShaderFeature
+@enduml

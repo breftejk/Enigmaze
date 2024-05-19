@@ -1,0 +1,126 @@
+@startuml
+class LensFlareDataSRPEditor {
+    {static} - FillPropertyContextMenu : Func<SerializedProperty, GenericMenu>
+    {static} - LensFlareDataSRPEditor()
+    - m_Elements : SerializedProperty
+    - m_List : ReorderableList
+    - m_ReservedListSizeRect : Rect?
+    {static} - s_ProceduralThumbnailShader : Shader
+    {static} <<readonly>> - k_PreviewSize : int = 128
+    {static} <<readonly>> - k_FlareColorValue : int
+    {static} <<readonly>> - k_FlareTex : int
+    {static} <<readonly>> - k_FlareData0 : int
+    {static} <<readonly>> - k_FlareData1 : int
+    {static} <<readonly>> - k_FlareData2 : int
+    {static} <<readonly>> - k_FlareData3 : int
+    {static} <<readonly>> - k_FlareData4 : int
+    {static} <<readonly>> - k_FlarePreviewData : int
+    - m_PreviewTexture : RTHandle
+    - m_PreviewTextureCache : List<TextureCacheElement>
+    - m_PreviewLensFlare : Material = null
+    - OnEnable() : void
+    - OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - OnAdd(list:ReorderableList) : void
+    - OnRemove(list:ReorderableList) : void
+    - DrawListHeader(rect:Rect) : void
+    - DrawListSize(rect:Rect) : void
+    - DrawListFooter(rect:Rect) : void
+    - ElementHeight(index:int) : float
+    - GetTypeCathegoryLines(type:SerializedProperty) : int
+    - GetColorCathegoryLines() : int
+    - GetTransformCathegoryLines() : int
+    - GetAxisTransformCathegoryLines() : int
+    - GetRadialDistortionCathegoryLines(enabled:SerializedProperty) : int
+    - GetMultipleElementsCathegoryLines(enabled:SerializedProperty, distribution:SerializedProperty) : int
+    - DrawElementBackground(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    {static} - SafeGradientValue(sp:SerializedProperty) : Gradient
+    - ComputeThumbnail(computedTexture:Texture2D, element:SerializedProperty, type:SRPLensFlareType, index:int) : void
+    - RenderToTexture2D(computedTexture:Texture2D, clear:bool) : void
+    - GetElementHash(element:SerializedProperty, type:SRPLensFlareType, index:int) : int
+    - GetCachedThumbnailProceduralTexture(element:SerializedProperty, type:SRPLensFlareType, index:int) : Texture2D
+    - DrawThumbnailProcedural(rect:Rect, element:SerializedProperty, type:SRPLensFlareType, index:int) : void
+    - DrawElement(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - DrawElementHeader(headerRect:Rect, isFoldOpened:SerializedProperty, selectedInList:bool, element:SerializedProperty) : bool
+    - DrawSummary(summaryRect:Rect, element:SerializedProperty, index:int) : void
+    - DrawFull(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawTypeCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawColorCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawTransformCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawAxisTransformCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawRadialDistortionCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - DrawMultipleElementsCathegory(remainingRect:Rect, element:SerializedProperty) : void
+    - ReserveFields(rect:Rect, fields:int) : IEnumerator<Rect>
+    - ReserveCathegory(remaining:Rect, fields:int) : IEnumerator<Rect>
+    - OffsetForThumbnail(remainingRect:Rect) : Rect
+    - GetEnum(property:SerializedProperty) : T
+    - SetEnum(property:SerializedProperty, value:T) : void
+}
+class Styles <<static>> {
+    + <<const>> sizeWidth : int = 47
+    + <<const>> sizeOffset : int = 5
+    + {static} <<readonly>> headerHeight : int
+    + {static} <<readonly>> cathegorySpacing : int = 5
+    + <<const>> footerSeparatorHeight : int = 5
+    + <<const>> thumbnailSize : int = 52
+    + <<const>> iconMargin : int = 6
+    + <<const>> horiwontalSpaceBetweenThumbnailAndInspector : int = 5
+    + <<const>> shrinkingLabel : int = 10
+    + {static} <<readonly>> elementBackgroundColor : Color
+    + {static} <<readonly>> mainHeader : GUIContent
+    + {static} <<readonly>> elementHeader : GUIContent
+    {static} + <<readonly>> typeCathegory : string
+    {static} + <<readonly>> colorCathegory : string
+    {static} + <<readonly>> transformCathegory : string
+    {static} + <<readonly>> axisTransformCathegory : string
+    {static} + <<readonly>> radialDistortionCathegory : string
+    {static} + <<readonly>> multipleElementsCathegory : string
+    {static} + <<readonly>> type : GUIContent
+    {static} + <<readonly>> flareTexture : GUIContent
+    {static} + <<readonly>> preserveAspectRatio : GUIContent
+    {static} + <<readonly>> gradient : GUIContent
+    {static} + <<readonly>> fallOff : GUIContent
+    {static} + <<readonly>> sideCount : GUIContent
+    {static} + <<readonly>> sdfRoundness : GUIContent
+    {static} + <<readonly>> inverseSDF : GUIContent
+    {static} + <<readonly>> tint : GUIContent
+    {static} + <<readonly>> modulateByLightColor : GUIContent
+    {static} + <<readonly>> intensity : GUIContent
+    {static} + <<readonly>> blendMode : GUIContent
+    {static} + <<readonly>> positionOffset : GUIContent
+    {static} + <<readonly>> autoRotate : GUIContent
+    {static} + <<readonly>> rotation : GUIContent
+    {static} + <<readonly>> sizeXY : GUIContent
+    {static} + <<readonly>> uniformScale : GUIContent
+    {static} + <<readonly>> position : GUIContent
+    {static} + <<readonly>> angularOffset : GUIContent
+    {static} + <<readonly>> translationScale : GUIContent
+    {static} + <<readonly>> enableDistortion : GUIContent
+    {static} + <<readonly>> targetSizeDistortion : GUIContent
+    {static} + <<readonly>> distortionCurve : GUIContent
+    {static} + <<readonly>> distortionRelativeToCenter : GUIContent
+    {static} + <<readonly>> allowMultipleElement : GUIContent
+    {static} + <<readonly>> count : GUIContent
+    {static} + <<readonly>> distribution : GUIContent
+    {static} + <<readonly>> lengthSpread : GUIContent
+    {static} + <<readonly>> seed : GUIContent
+    {static} + <<readonly>> intensityVariation : GUIContent
+    {static} + <<readonly>> colorGradient : GUIContent
+    {static} + <<readonly>> positionVariation : GUIContent
+    {static} + <<readonly>> rotationVariation : GUIContent
+    {static} + <<readonly>> scaleVariation : GUIContent
+    {static} + <<readonly>> positionCurve : GUIContent
+    {static} + <<readonly>> scaleCurve : GUIContent
+    {static} + <<readonly>> uniformAngleCurve : GUIContent
+    {static} + <<readonly>> uniformAngle : GUIContent
+    {static} - m_BlueFocusedBoldLabel : GUIStyle
+    + {static} blueFocusedBoldLabel : GUIStyle <<get>>
+}
+class TextureCacheElement {
+    + hash : int = 0
+    + computedTexture : Texture2D
+}
+Editor <|-- LensFlareDataSRPEditor
+LensFlareDataSRPEditor +-- Styles
+LensFlareDataSRPEditor +-- TextureCacheElement
+@enduml

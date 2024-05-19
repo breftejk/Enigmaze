@@ -1,0 +1,7 @@
+@startuml
+class SwitchOnStringDescriptor {
+    + SwitchOnStringDescriptor(unit:SwitchOnString)
+    # <<override>> GetLabelForOption(option:string) : string
+}
+"SwitchUnitDescriptor`1" "<string>" <|-- SwitchOnStringDescriptor
+@enduml

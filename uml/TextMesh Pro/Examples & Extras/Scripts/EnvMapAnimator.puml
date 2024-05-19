@@ -1,0 +1,10 @@
+@startuml
+class EnvMapAnimator {
+    + RotationSpeeds : Vector3
+    - m_textMeshPro : TMP_Text
+    - m_material : Material
+    - Awake() : void
+    - Start() : IEnumerator
+}
+MonoBehaviour <|-- EnvMapAnimator
+@enduml

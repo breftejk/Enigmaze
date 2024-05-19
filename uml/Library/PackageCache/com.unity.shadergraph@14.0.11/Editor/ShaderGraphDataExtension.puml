@@ -1,0 +1,9 @@
+@startuml
+abstract class AbstractShaderGraphDataExtension {
+    <<internal>> <<virtual>> paddingIdentationFactor : int <<get>>
+    <<internal>> {abstract} displayName : string <<get>>
+    <<internal>> {abstract} OnPropertiesGUI(context:VisualElement, onChange:Action, registerUndo:Action<string>, owner:GraphData) : void
+    <<internal>> {static} ValidExtensions() : List<AbstractShaderGraphDataExtension>
+}
+JsonObject <|-- AbstractShaderGraphDataExtension
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class Light2D <<sealed>> <<partial>> {
+    - m_PointLightInnerAngle : float = 360.0f
+    - m_PointLightOuterAngle : float = 360.0f
+    - m_PointLightInnerRadius : float = 0.0f
+    - m_PointLightOuterRadius : float = 1.0f
+    + pointLightInnerAngle : float <<get>> <<set>>
+    + pointLightOuterAngle : float <<get>> <<set>>
+    + pointLightInnerRadius : float <<get>> <<set>>
+    + pointLightOuterRadius : float <<get>> <<set>>
+    + pointLightDistance : float <<get>>
+    + pointLightQuality : NormalMapQuality <<get>>
+    <<internal>> isPointLight : bool <<get>>
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+abstract class "VolumeDebugSettings`1"<T> <<partial>> {
+    {static} - s_ComponentTypes : List<Type>
+    + {static} componentTypes : List<Type> <<get>>
+    + {static} ComponentDisplayName(component:Type) : string
+    # {static} additionalCameraDatas : List<T> <<get>>
+    + {static} RegisterCamera(additionalCamera:T) : void
+    + {static} UnRegisterCamera(additionalCamera:T) : void
+}
+class DebugManager <<sealed>> <<partial>> {
+    + ToggleEditorUI(open:bool) : void
+}
+@enduml

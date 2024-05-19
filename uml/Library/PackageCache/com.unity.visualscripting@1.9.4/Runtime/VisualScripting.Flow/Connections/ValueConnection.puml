@@ -1,0 +1,21 @@
+@startuml
+class ValueConnection <<sealed>> {
+    + <<override>> CreateDebugData() : IGraphElementDebugData
+    + ValueConnection()
+    + ValueConnection(source:ValueOutput, destination:ValueInput)
+    + <<override>> source : ValueOutput <<get>>
+    + <<override>> destination : ValueInput <<get>>
+    - source : IUnitOutputPort <<get>>
+    - destination : IUnitInputPort <<get>>
+    + <<override>> sourceExists : bool <<get>>
+    + <<override>> destinationExists : bool <<get>>
+}
+class DebugData {
+    + lastValue : object <<get>> <<set>>
+    + assignedLastValue : bool <<get>> <<set>>
+}
+"UnitConnection`2" "<ValueOutput,ValueInput>" <|-- ValueConnection
+IUnitConnection <|-- ValueConnection
+ValueConnection +-- DebugData
+UnitConnectionDebugData <|-- DebugData
+@enduml

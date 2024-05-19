@@ -1,0 +1,6 @@
+@startuml
+class BuildAssetBundle <<static>> {
+    {static} - BuildAssetBundle()
+    - {static} PlayModeStateChange(state:PlayModeStateChange) : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TargetActiveBlockContext {
+    + activeBlocks : List<BlockFieldDescriptor> <<get>>
+    + currentBlocks : List<BlockFieldDescriptor> <<get>>
+    + pass : PassDescriptor? <<get>>
+    + TargetActiveBlockContext(currentBlocks:List<BlockFieldDescriptor>, pass:PassDescriptor?)
+    + AddBlock(block:BlockFieldDescriptor, conditional:bool) : void
+}
+@enduml

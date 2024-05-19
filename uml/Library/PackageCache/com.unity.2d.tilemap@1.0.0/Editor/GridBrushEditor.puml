@@ -1,0 +1,85 @@
+@startuml
+class GridBrushEditor {
+    + brush : GridBrush <<get>>
+    - m_LastPreviewRefreshHash : int
+    - m_LastGrid : GridLayout
+    - m_LastBrushTarget : GameObject
+    - m_LastBounds : BoundsInt?
+    - m_LastTool : GridBrushBase.Tool?
+    - m_SelectionTiles : TileBase[]
+    - m_SelectionColors : Color[]
+    - m_SelectionMatrices : Matrix4x4[]
+    - m_SelectionFlagsArray : TileFlags[]
+    - m_SelectionSprites : Sprite[]
+    - m_SelectionColliderTypes : Tile.ColliderType[]
+    - selectionCellCount : int <<get>>
+    - m_CellCount : int = 1
+    - m_ModifyCells : ModifyCells
+    - m_Icon : Texture2D
+    - {static} s_GridSelectionTools : GridSelectionTool[]
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    - ClearLastPreview() : void
+    + <<override>> OnPaintSceneGUI(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, tool:GridBrushBase.Tool, executing:bool) : void
+    - UpdateSelection(tilemap:Tilemap) : void
+    + <<override>> OnSelectionInspectorGUI() : void
+    - DeleteSelection(tilemap:Tilemap, selection:BoundsInt) : void
+    + <<override>> OnMouseLeave() : void
+    + <<override>> OnToolDeactivated(tool:GridBrushBase.Tool) : void
+    + <<override>> tooltip : string <<get>>
+    + <<override>> icon : Texture2D <<get>>
+    + <<override>> canChangeZPosition : bool <<get>> <<set>>
+    + <<override>> RegisterUndo(brushTarget:GameObject, tool:GridBrushBase.Tool) : void
+    + <<override>> validTargets : GameObject[] <<get>>
+    + <<virtual>> PaintPreview(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<virtual>> BoxFillPreview(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt) : void
+    - CheckFloodFillPreview(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : bool
+    + <<virtual>> FloodFillPreview(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    <<internal>> {static} CreateSettingsProvider() : SettingsProvider
+    - {static} PreferencesGUI() : void
+    + <<virtual>> ClearPreview() : void
+    - RegisterUndoForTilemap(tilemap:Tilemap, undoMessage:string) : void
+    - {static} SetTilemapPreviewCell(map:Tilemap, location:Vector3Int, tile:TileBase, transformMatrix:Matrix4x4, color:Color) : void
+    - {static} ClearTilemapPreview(map:Tilemap, location:Vector3Int) : void
+    - {static} GetHash(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, tool:GridBrushBase.Tool, brush:GridBrush) : int
+}
+class Styles <<static>> {
+    + {static} <<readonly>> tileLabel : GUIContent
+    + {static} <<readonly>> spriteLabel : GUIContent
+    + {static} <<readonly>> colorLabel : GUIContent
+    + {static} <<readonly>> colliderTypeLabel : GUIContent
+    + {static} <<readonly>> lockColorLabel : GUIContent
+    + {static} <<readonly>> lockTransformLabel : GUIContent
+    + {static} <<readonly>> gridSelectionPropertiesLabel : GUIContent
+    + {static} <<readonly>> modifyTilemapLabel : GUIContent
+    + {static} <<readonly>> modifyLabel : GUIContent
+    + {static} <<readonly>> deleteSelectionLabel : GUIContent
+    + {static} <<readonly>> noTool : GUIContent
+    + {static} <<readonly>> moveTool : GUIContent
+    + {static} <<readonly>> rotateTool : GUIContent
+    + {static} <<readonly>> scaleTool : GUIContent
+    + {static} <<readonly>> transformTool : GUIContent
+    + {static} <<readonly>> selectionTools : GUIContent[]
+    + {static} <<readonly>> selectionTypes : Type[]
+    + {static} <<readonly>> tooltipText : string
+    + {static} <<readonly>> iconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.DefaultBrush.png"
+}
+enum ModifyCells {
+    InsertRow,
+    InsertColumn,
+    InsertRowBefore,
+    InsertColumnBefore,
+    DeleteRow,
+    DeleteColumn,
+    DeleteRowBefore,
+    DeleteColumnBefore,
+}
+class GridBrushProperties {
+    + {static} <<readonly>> floodFillPreviewLabel : GUIContent
+    + {static} <<readonly>> floodFillPreviewEditorPref : string = "GridBrush.EnableFloodFillPreview"
+}
+GridBrushEditorBase <|-- GridBrushEditor
+GridBrushEditor +-- Styles
+GridBrushEditor +-- ModifyCells
+GridBrushEditor +-- GridBrushProperties
+@enduml

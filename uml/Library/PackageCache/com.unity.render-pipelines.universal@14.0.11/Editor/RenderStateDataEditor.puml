@@ -1,0 +1,27 @@
+@startuml
+class StencilStateDataDrawer {
+    - <<const>> stencilBits : int = 4
+    - <<const>> minStencilValue : int = 0
+    - <<const>> maxStencilValue : int
+    - m_OverrideStencil : SerializedProperty
+    - m_StencilIndex : SerializedProperty
+    - m_StencilFunction : SerializedProperty
+    - m_StencilPass : SerializedProperty
+    - m_StencilFail : SerializedProperty
+    - m_StencilZFail : SerializedProperty
+    - m_properties : List<SerializedObject>
+    - Init(property:SerializedProperty) : void
+    + <<override>> OnGUI(rect:Rect, property:SerializedProperty, label:GUIContent) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+}
+class Styles {
+    + {static} <<readonly>> overrideStencil : GUIContent
+    + {static} <<readonly>> stencilValue : GUIContent
+    + {static} <<readonly>> stencilFunction : GUIContent
+    + {static} <<readonly>> stencilPass : GUIContent
+    + {static} <<readonly>> stencilFail : GUIContent
+    + {static} <<readonly>> stencilZFail : GUIContent
+}
+PropertyDrawer <|-- StencilStateDataDrawer
+StencilStateDataDrawer +-- Styles
+@enduml

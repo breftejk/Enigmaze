@@ -1,0 +1,24 @@
+@startuml
+class ChannelEnumControlAttribute {
+    - m_Label : string
+    - m_SlotId : int
+    + ChannelEnumControlAttribute(label:string, slotId:int)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class ChannelEnumControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_SlotId : int
+    - m_PopupField : PopupField<string>
+    - m_ValueNames : string[]
+    - m_PreviousChannelCount : int
+    + ChannelEnumControlView(label:string, slotId:int, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnValueChanged(evt:ChangeEvent<string>) : void
+    + OnNodeModified(scope:ModificationScope) : void
+    - CreatePopup() : void
+}
+Attribute <|-- ChannelEnumControlAttribute
+IControlAttribute <|-- ChannelEnumControlAttribute
+VisualElement <|-- ChannelEnumControlView
+AbstractMaterialNodeModificationListener <|-- ChannelEnumControlView
+@enduml

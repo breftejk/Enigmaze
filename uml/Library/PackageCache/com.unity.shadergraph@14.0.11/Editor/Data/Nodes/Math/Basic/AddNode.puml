@@ -1,0 +1,8 @@
+@startuml
+class AddNode {
+    + AddNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Add(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- AddNode
+@enduml

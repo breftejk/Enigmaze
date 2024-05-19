@@ -1,0 +1,112 @@
+@startuml
+class SpriteShapeControllerEditor {
+    - m_SpriteShapeProp : SerializedProperty
+    - m_SplineDetailProp : SerializedProperty
+    - m_IsOpenEndedProp : SerializedProperty
+    - m_AdaptiveUVProp : SerializedProperty
+    - m_StretchUVProp : SerializedProperty
+    - m_StretchTilingProp : SerializedProperty
+    - m_WorldSpaceUVProp : SerializedProperty
+    - m_FillPixelPerUnitProp : SerializedProperty
+    - m_CornerAngleThresholdProp : SerializedProperty
+    - m_ColliderAutoUpdate : SerializedProperty
+    - m_ColliderDetailProp : SerializedProperty
+    - m_ColliderOffsetProp : SerializedProperty
+    - m_EnableTangentsProp : SerializedProperty
+    - m_GeometryCachedProp : SerializedProperty
+    - m_UTess2DGeometryProp : SerializedProperty
+    - m_CreatorProp : SerializedProperty
+    - m_ModifierListProp : SerializedProperty
+    + {static} spriteshapeControllerEditor : SpriteShapeControllerEditor
+    - m_CollidersCount : int = 0
+    - m_QualityValues : int[]
+    <<readonly>> - m_ShowStretchOption : AnimBool
+    <<readonly>> - m_ShowNonStretchOption : AnimBool
+    - m_ButtonSize : int = 4
+    - m_SelectedPoint : int
+    - m_SelectedAngleRange : int
+    - m_SpriteShapeHashCode : int = 0
+    - m_SplineHashCode : int = 0
+    - m_ShapeSegments : List<ShapeSegment>
+    - spriteSelector : SpriteSelector
+    - m_SpriteShapeController : SpriteShapeController <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnCollidersAddedOrRemoved() : bool
+    + DrawHeader(content:GUIContent) : void
+    - ShouldShowStretchOption() : bool
+    {static} - WithinRange(angleRange:ShapeAngleRange, inputAngle:float) : bool
+    {static} - RangeFromAngle(angleRanges:List<ShapeAngleRange>, angle:float) : int
+    - GetAngleRangeSorted(ss:UnityEngine.U2D.SpriteShape) : List<ShapeAngleRange>
+    - GenerateSegments(sc:SpriteShapeController, angleRanges:List<ShapeAngleRange>) : void
+    - GetAngleRange(sc:SpriteShapeController, point:int, startPoint:int) : int
+    - UpdateSegments() : void
+    - ResolveSpriteIndex(spriteIndices:List<int>, selection:ISelection<int>, startPoints:List<int>) : int
+    + GetAngleRange(index:int) : int
+    + OnOverlayGUI() : void
+    + <<override>> OnInspectorGUI() : void
+    - BakeCollider() : void
+    - ShowMaterials(show:bool) : void
+    {static} - RenderSpline(m_SpriteShapeController:SpriteShapeController, gizmoType:GizmoType) : void
+}
+class SceneViewPathOverlay {
+    <<const>> - k_OverlayId : string = "Scene View/Path"
+    <<const>> - k_DisplayName : string = "Element Inspector"
+    + visible : bool <<get>>
+    + <<override>> OnGUI() : void
+}
+class SpriteShapeUpdateCache <<static>> {
+    <<internal>> {static} s_cacheGeometrySet : bool = false
+    {static} - SpriteShapeUpdateCache()
+    {static} - SaveSpriteShapesInScene(scene:Scene) : void
+    {static} - UpdateSpriteShapeCacheInOpenScenes() : void
+    <<internal>> {static} UpdateCache(targets:UnityEngine.Object[]) : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> splineLabel : GUIContent
+    + {static} <<readonly>> editSplineLabel : string = "Edit Spline"
+    + {static} <<readonly>> fillLabel : GUIContent
+    + {static} <<readonly>> colliderLabel : GUIContent
+    + {static} <<readonly>> fillPixelPerUnitLabel : GUIContent
+    + {static} <<readonly>> spriteShapeProfile : GUIContent
+    + {static} <<readonly>> materialLabel : GUIContent
+    + {static} <<readonly>> colorLabel : GUIContent
+    + {static} <<readonly>> metaDataLabel : GUIContent
+    + {static} <<readonly>> showComponentsLabel : GUIContent
+    + {static} <<readonly>> splineDetailOptions : GUIContent[]
+    + {static} <<readonly>> splineDetail : GUIContent
+    + {static} <<readonly>> openEndedLabel : GUIContent
+    + {static} <<readonly>> adaptiveUVLabel : GUIContent
+    + {static} <<readonly>> enableTangentsLabel : GUIContent
+    + {static} <<readonly>> worldUVLabel : GUIContent
+    + {static} <<readonly>> stretchUVLabel : GUIContent
+    + {static} <<readonly>> stretchTilingLabel : GUIContent
+    + {static} <<readonly>> colliderDetail : GUIContent
+    + {static} <<readonly>> cornerThresholdDetail : GUIContent
+    + {static} <<readonly>> colliderOffset : GUIContent
+    + {static} <<readonly>> updateColliderLabel : GUIContent
+    + {static} <<readonly>> optimizeColliderLabel : GUIContent
+    + {static} <<readonly>> optimizeGeometryLabel : GUIContent
+    + {static} <<readonly>> cacheGeometryLabel : GUIContent
+    + {static} <<readonly>> uTess2DLabel : GUIContent
+    + {static} <<readonly>> creatorLabel : GUIContent
+    + {static} <<readonly>> modifiersLabel : GUIContent
+}
+struct ShapeSegment {
+    + start : int
+    + end : int
+    + angleRange : int
+}
+struct ShapeAngleRange {
+    + start : float
+    + end : float
+    + order : int
+    + index : int
+}
+"PathComponentEditor`1" "<CustomPath>" <|-- SpriteShapeControllerEditor
+IMGUIOverlay <|-- SceneViewPathOverlay
+ITransientOverlay <|-- SceneViewPathOverlay
+SpriteShapeControllerEditor +-- Contents
+SpriteShapeControllerEditor +-- ShapeSegment
+SpriteShapeControllerEditor +-- ShapeAngleRange
+@enduml

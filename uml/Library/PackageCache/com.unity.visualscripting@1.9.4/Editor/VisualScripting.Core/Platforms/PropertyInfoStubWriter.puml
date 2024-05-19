@@ -1,0 +1,7 @@
+@startuml
+class PropertyInfoStubWriter {
+    + PropertyInfoStubWriter(propertyInfo:PropertyInfo)
+    # <<override>> GetOptimizedAccessor(propertyInfo:PropertyInfo) : IOptimizedAccessor
+}
+"AccessorInfoStubWriter`1" "<PropertyInfo>" <|-- PropertyInfoStubWriter
+@enduml

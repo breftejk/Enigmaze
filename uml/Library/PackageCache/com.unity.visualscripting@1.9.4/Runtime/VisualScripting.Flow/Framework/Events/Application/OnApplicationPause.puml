@@ -1,0 +1,6 @@
+@startuml
+class OnApplicationPause <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"GlobalEventUnit`1" "<EmptyEventArgs>" <|-- OnApplicationPause
+@enduml

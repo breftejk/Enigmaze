@@ -1,0 +1,25 @@
+@startuml
+class DropdownNode {
+    <<internal>> <<const>> k_MinEnumEntries : int = 2
+    + DropdownNode()
+    - m_Dropdown : JsonRef<ShaderDropdown>
+    + dropdown : ShaderDropdown <<get>> <<set>>
+    + <<override>> canSetPrecision : bool <<get>>
+    + <<override>> hasPreview : bool <<get>>
+    + <<const>> OutputSlotId : int = 0
+    + <<override>> allowedInMainGraph : bool <<get>>
+    + UpdateNodeDisplayName(newDisplayName:string) : void
+    + OnEnable() : void
+    + UpdateNode() : void
+    - UpdatePorts() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GetSlotIdForPermutation(permutation:KeyValuePair<ShaderDropdown, int>) : int
+    + GetSlotIdForActiveSelection() : int
+    # <<override>> CalculateNodeHasError() : void
+    + OnShaderInputUpdated(modificationScope:ModificationScope) : void
+}
+AbstractMaterialNode <|-- DropdownNode
+IOnAssetEnabled <|-- DropdownNode
+IGeneratesBodyCode <|-- DropdownNode
+IShaderInputObserver <|-- DropdownNode
+@enduml

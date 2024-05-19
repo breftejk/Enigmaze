@@ -1,0 +1,11 @@
+@startuml
+class PsdLoad <<static>> {
+    + {static} Load(input:System.IO.Stream, loadFlag:ELoadFlag) : PsdFile
+    + {static} Load(input:System.IO.Stream) : Document
+    <<internal>> {static} DecodeToPdnLayer(psdLayer:PhotoshopFile.Layer, inputDeps:JobHandle, pdnLayer:BitmapLayer) : JobHandle
+    - {static} CreateLayersFromChannels(psdFile:PsdFile) : void
+    - {static} ApplyLayerSections(layers:List<PhotoshopFile.Layer>) : void
+    - {static} SetPdnResolutionInfo(psdFile:PsdFile, document:Document) : void
+    <<internal>> {static} CheckSufficientMemory(psdFile:PsdFile) : void
+}
+@enduml

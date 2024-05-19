@@ -1,0 +1,28 @@
+@startuml
+class ToggleFlow <<sealed>> {
+    + startOn : bool <<get>> <<set>> = true
+    + enter : ControlInput <<get>>
+    + turnOn : ControlInput <<get>>
+    + turnOff : ControlInput <<get>>
+    + toggle : ControlInput <<get>>
+    + exitOn : ControlOutput <<get>>
+    + exitOff : ControlOutput <<get>>
+    + turnedOn : ControlOutput <<get>>
+    + turnedOff : ControlOutput <<get>>
+    + isOn : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + CreateData() : IGraphElementData
+    - IsOn(flow:Flow) : bool
+    - Enter(flow:Flow) : ControlOutput
+    - TurnOn(flow:Flow) : ControlOutput
+    - TurnOff(flow:Flow) : ControlOutput
+    - Toggle(flow:Flow) : ControlOutput
+}
+class Data {
+    + isOn : bool
+}
+Unit <|-- ToggleFlow
+IGraphElementWithData <|-- ToggleFlow
+ToggleFlow +-- Data
+IGraphElementData <|-- Data
+@enduml

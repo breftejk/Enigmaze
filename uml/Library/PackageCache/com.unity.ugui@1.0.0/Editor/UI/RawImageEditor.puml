@@ -1,0 +1,15 @@
+@startuml
+class RawImageEditor {
+    - m_Texture : SerializedProperty
+    - m_UVRect : SerializedProperty
+    - m_UVRectContent : GUIContent
+    # <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - SetShowNativeSize(instant:bool) : void
+    - {static} Outer(rawImage:RawImage) : Rect
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnPreviewGUI(rect:Rect, background:GUIStyle) : void
+    + <<override>> GetInfoString() : string
+}
+GraphicEditor <|-- RawImageEditor
+@enduml

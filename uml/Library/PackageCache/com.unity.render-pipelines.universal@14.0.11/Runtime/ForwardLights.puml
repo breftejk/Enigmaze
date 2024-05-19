@@ -1,0 +1,69 @@
+@startuml
+class ForwardLights {
+    - m_AdditionalLightsBufferId : int
+    - m_AdditionalLightsIndicesId : int
+    <<const>> - k_SetupLightConstants : string = "Setup Light Constants"
+    - {static} <<readonly>> m_ProfilingSampler : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerFPSetup : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerFPComplete : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerFPUpload : ProfilingSampler
+    - m_MixedLightingSetup : MixedLightingSetup
+    - m_AdditionalLightPositions : Vector4[]
+    - m_AdditionalLightColors : Vector4[]
+    - m_AdditionalLightAttenuations : Vector4[]
+    - m_AdditionalLightSpotDirections : Vector4[]
+    - m_AdditionalLightOcclusionProbeChannels : Vector4[]
+    - m_AdditionalLightsLayerMasks : float[]
+    - m_UseStructuredBuffer : bool
+    - m_UseForwardPlus : bool
+    - m_DirectionalLightCount : int
+    - m_ActualTileWidth : int
+    - m_TileResolution : int2
+    - m_CullingHandle : JobHandle
+    - m_ZBins : NativeArray<uint>
+    - m_ZBinsBuffer : GraphicsBuffer
+    - m_TileMasks : NativeArray<uint>
+    - m_TileMasksBuffer : GraphicsBuffer
+    - m_LightCookieManager : LightCookieManager
+    - m_ReflectionProbeManager : ReflectionProbeManager
+    - m_WordsPerTile : int
+    - m_ZBinScale : float
+    - m_ZBinOffset : float
+    - m_LightCount : int
+    - m_BinCount : int
+    + ForwardLights()
+    <<internal>> ForwardLights(initParams:InitParams)
+    - CreateForwardPlusBuffers() : void
+    <<internal>> reflectionProbeManager : ReflectionProbeManager <<get>>
+    {static} - AlignByteCount(count:int, align:int) : int
+    - GetViewParams(camera:Camera, viewToClip:float4x4, viewPlaneBot:float, viewPlaneTop:float, viewToViewportScaleBias:float4) : void
+    <<internal>> PreSetup(renderingData:RenderingData) : void
+    + Setup(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> Cleanup() : void
+    - InitializeLightConstants(lights:NativeArray<VisibleLight>, lightIndex:int, lightPos:Vector4, lightColor:Vector4, lightAttenuation:Vector4, lightSpotDir:Vector4, lightOcclusionProbeChannel:Vector4, lightLayerMask:uint, isSubtractive:bool) : void
+    - SetupShaderLightConstants(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - SetupMainLightConstants(cmd:CommandBuffer, lightData:LightData) : void
+    - SetupAdditionalLightConstants(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - SetupPerObjectLightIndices(cullResults:CullingResults, lightData:LightData) : int
+}
+class LightConstantBuffer <<static>> {
+    + {static} _MainLightPosition : int
+    + {static} _MainLightColor : int
+    + {static} _MainLightOcclusionProbesChannel : int
+    + {static} _MainLightLayerMask : int
+    + {static} _AdditionalLightsCount : int
+    + {static} _AdditionalLightsPosition : int
+    + {static} _AdditionalLightsColor : int
+    + {static} _AdditionalLightsAttenuation : int
+    + {static} _AdditionalLightsSpotDir : int
+    + {static} _AdditionalLightOcclusionProbeChannel : int
+    + {static} _AdditionalLightsLayerMasks : int
+}
+struct InitParams {
+    + lightCookieManager : LightCookieManager
+    + forwardPlus : bool
+    {static} <<internal>> Create() : InitParams
+}
+ForwardLights +-- LightConstantBuffer
+ForwardLights +-- InitParams
+@enduml

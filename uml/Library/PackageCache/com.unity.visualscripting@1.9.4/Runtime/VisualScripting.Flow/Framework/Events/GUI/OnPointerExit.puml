@@ -1,0 +1,7 @@
+@startuml
+class OnPointerExit <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+PointerEventUnit <|-- OnPointerExit
+@enduml

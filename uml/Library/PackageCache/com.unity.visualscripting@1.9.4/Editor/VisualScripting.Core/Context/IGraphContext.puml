@@ -1,0 +1,20 @@
+@startuml
+interface IGraphContext {
+    reference : GraphReference <<get>>
+    extensions : IEnumerable<IGraphContextExtension> <<get>>
+    graph : IGraph <<get>>
+    canvas : ICanvas <<get>>
+    selection : GraphSelection <<get>>
+    graphMetadata : Metadata <<get>>
+    selectionMetadata : Metadata <<get>>
+    ElementMetadata(element:IGraphElement) : Metadata
+    analyserProvider : AnalyserProvider <<get>>
+    windowTitle : string <<get>>
+    sidebarPanels : IEnumerable<ISidebarPanelContent> <<get>>
+    isPrefabInstance : bool <<get>>
+    BeginEdit(disablePrefabInstance:bool) : void
+    EndEdit() : void
+    DescribeAndAnalyze() : void
+}
+IDisposable <|-- IGraphContext
+@enduml

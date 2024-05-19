@@ -1,0 +1,18 @@
+@startuml
+class InputActionReference {
+    + asset : InputActionAsset <<get>>
+    + action : InputAction <<get>>
+    + Set(action:InputAction) : void
+    + Set(asset:InputActionAsset, mapName:string, actionName:string) : void
+    - SetInternal(asset:InputActionAsset, action:InputAction) : void
+    + <<override>> ToString() : string
+    - {static} GetDisplayName(action:InputAction) : string
+    <<internal>> ToDisplayName() : string
+    + {static} Create(action:InputAction) : InputActionReference
+    <<internal>> m_Asset : InputActionAsset
+    <<internal>> m_ActionId : string
+    - m_Action : InputAction
+    + ToInputAction() : InputAction
+}
+ScriptableObject <|-- InputActionReference
+@enduml

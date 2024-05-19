@@ -1,0 +1,29 @@
+@startuml
+class CameraUI <<static>> <<partial>> {
+}
+class PhysicalCamera <<static>> <<partial>> {
+}
+class Styles <<static>> {
+    + {static} <<readonly>> cameraBody : GUIContent
+    + {static} <<readonly>> sensorType : GUIContent
+    + {static} <<readonly>> apertureFormatNames : string[]
+    + {static} <<readonly>> apertureFormatValues : Vector2[]
+    + {static} <<readonly>> customPresetIndex : int
+    + {static} <<readonly>> sensorSize : GUIContent
+    + {static} <<readonly>> gateFit : GUIContent
+    + {static} <<readonly>> lens : GUIContent
+    + {static} <<readonly>> focalLength : GUIContent
+    + {static} <<readonly>> shift : GUIContent
+    + {static} <<readonly>> ISO : GUIContent
+    + {static} <<readonly>> shutterSpeed : GUIContent
+    + {static} <<readonly>> aperture : GUIContent
+    + {static} <<readonly>> focusDistance : GUIContent
+    + {static} <<readonly>> apertureShape : GUIContent
+    + {static} <<readonly>> bladeCount : GUIContent
+    + {static} <<readonly>> curvature : GUIContent
+    + {static} <<readonly>> barrelClipping : GUIContent
+    + {static} <<readonly>> anamorphism : GUIContent
+}
+CameraUI +-- PhysicalCamera
+PhysicalCamera +-- Styles
+@enduml

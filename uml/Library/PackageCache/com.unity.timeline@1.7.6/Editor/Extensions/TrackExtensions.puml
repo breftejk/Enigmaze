@@ -1,0 +1,34 @@
+@startuml
+class TrackExtensions <<static>> {
+    {static} <<readonly>> - kMinOverlapTime : double
+    + {static} IsCollapsed(track:TrackAsset) : bool
+    + {static} SetCollapsed(track:TrackAsset, collapsed:bool) : void
+    + {static} IsVisibleInHierarchy(track:TrackAsset) : bool
+    <<internal>> {static} GetOrCreateClip(track:AnimationTrack) : AnimationClip
+    <<internal>> {static} CreateClip(track:TrackAsset, time:double) : TimelineClip
+    {static} - Overlaps(blendOut:TimelineClip, blendIn:TimelineClip) : bool
+    <<internal>> {static} ComputeBlendsFromOverlaps(asset:TrackAsset) : void
+    <<internal>> {static} ComputeBlendsFromOverlaps(clips:TimelineClip[]) : void
+    {static} - UpdateClipIntersection(blendOutClip:TimelineClip, blendInClip:TimelineClip) : void
+    {static} - RecursiveSubtrackClone(source:TrackAsset, duplicate:TrackAsset, sourceTable:IExposedPropertyTable, destTable:IExposedPropertyTable, assetOwner:PlayableAsset) : void
+    <<internal>> {static} Duplicate(track:TrackAsset, sourceTable:IExposedPropertyTable, destTable:IExposedPropertyTable, destinationTimeline:TimelineAsset) : TrackAsset
+    <<internal>> {static} ReparentTracks(tracksToMove:List<TrackAsset>, targetParent:PlayableAsset, insertMarker:TrackAsset, insertBefore:bool) : bool
+    <<internal>> {static} FilterTracks(tracks:IEnumerable<TrackAsset>) : IEnumerable<TrackAsset>
+    <<internal>> {static} GetShowMarkers(track:TrackAsset) : bool
+    <<internal>> {static} SetShowMarkers(track:TrackAsset, collapsed:bool) : void
+    <<internal>> {static} GetShowInlineCurves(track:TrackAsset) : bool
+    <<internal>> {static} SetShowInlineCurves(track:TrackAsset, inlineOn:bool) : void
+    <<internal>> {static} ShouldShowInfiniteClipEditor(track:AnimationTrack) : bool
+    <<internal>> {static} RemoveBrokenTrack(parent:PlayableAsset, track:ScriptableObject) : bool
+    <<internal>> {static} GetGapAtTime(track:TrackAsset, time:double, startGap:double, endGap:double) : bool
+    <<internal>> {static} IsCompatibleWithClip(track:TrackAsset, clip:TimelineClip) : bool
+    {static} - GetFlattenedChildTracks(asset:TrackAsset, list:List<TrackAsset>) : void
+    <<internal>> {static} GetFlattenedChildTracks(asset:TrackAsset) : IEnumerable<TrackAsset>
+    <<internal>> {static} ArmForRecord(track:TrackAsset) : void
+    <<internal>> {static} UnarmForRecord(track:TrackAsset) : void
+    <<internal>> {static} SetShowTrackMarkers(track:TrackAsset, showMarkers:bool) : void
+    <<internal>> {static} RemoveTimelineMarkerTrackFromList(tracks:IEnumerable<TrackAsset>, asset:TimelineAsset) : IEnumerable<TrackAsset>
+    <<internal>> {static} ContainsTimelineMarkerTrack(tracks:IEnumerable<TrackAsset>, asset:TimelineAsset) : bool
+    <<internal>> {static} SetNameWithUndo(track:TrackAsset, newName:string) : void
+}
+@enduml

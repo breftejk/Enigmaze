@@ -1,0 +1,23 @@
+@startuml
+interface IGraphElementWidget {
+    element : IGraphElement <<get>>
+    canSelect : bool <<get>>
+    isSelected : bool <<get>>
+    canAlignAndDistribute : bool <<get>>
+    ExpandCopyGroup(group:HashSet<IGraphElement>) : void
+    canResizeHorizontal : bool <<get>>
+    canResizeVertical : bool <<get>>
+    isResizing : bool <<get>>
+    canDrag : bool <<get>>
+    isDragging : bool <<get>>
+    BeginDrag() : void
+    LockDragOrigin() : void
+    Drag(delta:Vector2, constraint:Vector2) : void
+    EndDrag() : void
+    ExpandDragGroup(group:HashSet<IGraphElement>) : void
+    canDelete : bool <<get>>
+    Delete() : void
+    ExpandDeleteGroup(group:HashSet<IGraphElement>) : void
+}
+IWidget <|-- IGraphElementWidget
+@enduml

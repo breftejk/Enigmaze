@@ -1,0 +1,8 @@
+@startuml
+class LengthNode {
+    + LengthNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Length(In:DynamicDimensionVector, Out:Vector1) : string
+}
+CodeFunctionNode <|-- LengthNode
+@enduml

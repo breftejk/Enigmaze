@@ -1,0 +1,8 @@
+@startuml
+class UnityMenuItem <<static>> {
+    <<internal>> {static} GetText(menuName:string, subMenuName:string) : string
+    <<internal>> {static} EscapedText(menuName:string) : string
+    <<const>> - SEPARATOR : string = "/"
+    <<const>> - ESCAPED_SEPARATOR : string = "\u200A\u2215\u200A"
+}
+@enduml

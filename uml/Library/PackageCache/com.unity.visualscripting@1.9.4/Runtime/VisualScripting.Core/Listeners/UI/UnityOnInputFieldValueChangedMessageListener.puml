@@ -1,0 +1,6 @@
+@startuml
+class UnityOnInputFieldValueChangedMessageListener <<sealed>> {
+    - Start() : void
+}
+MessageListener <|-- UnityOnInputFieldValueChangedMessageListener
+@enduml

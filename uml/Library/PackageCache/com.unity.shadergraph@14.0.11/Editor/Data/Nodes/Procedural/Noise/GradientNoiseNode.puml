@@ -1,0 +1,31 @@
+@startuml
+class GradientNoiseNode {
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> allowedNodeVersions : IEnumerable<int> <<get>>
+    + <<const>> UVSlotId : int = 0
+    + <<const>> ScaleSlotId : int = 1
+    + <<const>> OutSlotId : int = 2
+    <<const>> - kUVSlotName : string = "UV"
+    <<const>> - kScaleSlotName : string = "Scale"
+    <<const>> - kOutSlotName : string = "Out"
+    + GradientNoiseNode()
+    {static} <<readonly>> - kHashFunctionPrefix : string[]
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_HashType : HashType
+    + hashType : HashType <<get>> <<set>>
+    - GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+}
+enum HashType {
+    Deterministic,
+    LegacyMod,
+}
+AbstractMaterialNode <|-- GradientNoiseNode
+IGeneratesBodyCode <|-- GradientNoiseNode
+IGeneratesFunction <|-- GradientNoiseNode
+IMayRequireMeshUV <|-- GradientNoiseNode
+GradientNoiseNode +-- HashType
+@enduml

@@ -1,0 +1,76 @@
+@startuml
+class BurstString <<static>> <<partial>> {
+    - {static} <<readonly>> logTable : byte[]
+    - {static} LogBase2(val:uint) : uint
+    - {static} <<unsafe>> BigInt_Compare(lhs:tBigInt, rhs:tBigInt) : int
+    - {static} <<unsafe>> BigInt_Add(pResult:tBigInt, lhs:tBigInt, rhs:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Add_internal(pResult:tBigInt, pLarge:tBigInt, pSmall:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Multiply(pResult:tBigInt, lhs:tBigInt, rhs:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Multiply_internal(pResult:tBigInt, pLarge:tBigInt, pSmall:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Multiply(pResult:tBigInt, lhs:tBigInt, rhs:uint) : void
+    - {static} <<unsafe>> BigInt_Multiply2(pResult:tBigInt, input:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Multiply2(pResult:tBigInt) : void
+    - {static} <<unsafe>> BigInt_Multiply10(pResult:tBigInt) : void
+    - {static} <<readonly>> g_PowerOf10_U32 : uint[]
+    - {static} <<unsafe>> g_PowerOf10_Big(i:int) : tBigInt
+    - {static} BigInt_Pow10(pResult:tBigInt, exponent:uint) : void
+    - {static} <<unsafe>> BigInt_MultiplyPow10(pResult:tBigInt, input:tBigInt, exponent:uint) : void
+    - {static} <<unsafe>> BigInt_Pow2(pResult:tBigInt, exponent:uint) : void
+    - {static} <<unsafe>> BigInt_DivideWithRemainder_MaxQuotient9(pDividend:tBigInt, divisor:tBigInt) : uint
+    - {static} <<unsafe>> BigInt_ShiftLeft(pResult:tBigInt, shift:uint) : void
+    - {static} <<unsafe>> Dragon4(mantissa:ulong, exponent:int, mantissaHighBitIdx:uint, hasUnequalMargins:bool, cutoffMode:CutoffMode, cutoffNumber:uint, pOutBuffer:byte*, bufferSize:uint, pOutExponent:int) : uint
+    - {static} <<unsafe>> FormatPositional(pOutBuffer:byte*, bufferSize:uint, mantissa:ulong, exponent:int, mantissaHighBitIdx:uint, hasUnequalMargins:bool, precision:int) : int
+    - {static} <<unsafe>> FormatScientific(pOutBuffer:byte*, bufferSize:uint, mantissa:ulong, exponent:int, mantissaHighBitIdx:uint, hasUnequalMargins:bool, precision:int) : int
+    - {static} <<readonly>> InfinityString : byte[]
+    - {static} <<readonly>> NanString : byte[]
+    - {static} <<unsafe>> FormatInfinityNaN(dest:byte*, destIndex:int, destLength:int, mantissa:ulong, isNegative:bool, formatOptions:FormatOptions) : void
+    - <<const>> SinglePrecision : int = 9
+    - <<const>> DoublePrecision : int = 17
+    <<internal>> <<const>> SingleNumberBufferLength : int
+    <<internal>> <<const>> DoubleNumberBufferLength : int
+    - <<const>> SinglePrecisionCustomFormat : int = 7
+    - <<const>> DoublePrecisionCustomFormat : int = 15
+    - {static} <<unsafe>> ConvertFloatToString(dest:byte*, destIndex:int, destLength:int, value:float, formatOptions:FormatOptions) : void
+    - {static} <<unsafe>> ConvertDoubleToString(dest:byte*, destIndex:int, destLength:int, value:double, formatOptions:FormatOptions) : void
+}
+struct tBigInt {
+    <<const>> - c_BigInt_MaxBlocks : int = 35
+    + GetLength() : int
+    + GetBlock(idx:int) : uint
+    + SetZero() : void
+    + IsZero() : bool
+    + SetU64(val:ulong) : void
+    + SetU32(val:uint) : void
+    + GetU32() : uint
+    + m_length : int
+    + <<fixed>> m_blocks : uint
+}
+enum CutoffMode {
+    Unique,
+    TotalLength,
+    FractionLength,
+}
+enum PrintFloatFormat {
+    Positional,
+    Scientific,
+}
+struct tFloatUnion32 {
+    + IsNegative() : bool
+    + GetExponent() : uint
+    + GetMantissa() : uint
+    + m_floatingPoint : float
+    + m_integer : uint
+}
+struct tFloatUnion64 {
+    + IsNegative() : bool
+    + GetExponent() : uint
+    + GetMantissa() : ulong
+    + m_floatingPoint : double
+    + m_integer : ulong
+}
+BurstString +-- tBigInt
+BurstString +-- CutoffMode
+BurstString +-- PrintFloatFormat
+BurstString +-- tFloatUnion32
+BurstString +-- tFloatUnion64
+@enduml

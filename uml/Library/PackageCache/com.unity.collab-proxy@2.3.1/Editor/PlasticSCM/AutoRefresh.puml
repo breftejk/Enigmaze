@@ -1,0 +1,6 @@
+@startuml
+class AutoRefresh <<static>> {
+    <<internal>> {static} PendingChangesView(pendingChangesTab:PendingChangesTab) : void
+    <<internal>> {static} IncomingChangesView(incomingChangesTab:IIncomingChangesTab) : void
+}
+@enduml

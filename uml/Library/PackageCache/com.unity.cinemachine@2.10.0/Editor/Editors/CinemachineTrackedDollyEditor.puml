@@ -1,0 +1,8 @@
+@startuml
+class CinemachineTrackedDollyEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DrawTrackeDollyGizmos(target:CinemachineTrackedDolly, selectionType:GizmoType) : void
+}
+"BaseEditor`1" "<CinemachineTrackedDolly>" <|-- CinemachineTrackedDollyEditor
+@enduml

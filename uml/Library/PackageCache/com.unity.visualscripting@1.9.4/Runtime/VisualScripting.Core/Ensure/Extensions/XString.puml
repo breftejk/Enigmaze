@@ -1,0 +1,6 @@
+@startuml
+class XString <<static>> {
+    <<internal>> {static} Inject(format:string, formattingArgs:object[]) : string
+    <<internal>> {static} Inject(format:string, formattingArgs:string[]) : string
+}
+@enduml

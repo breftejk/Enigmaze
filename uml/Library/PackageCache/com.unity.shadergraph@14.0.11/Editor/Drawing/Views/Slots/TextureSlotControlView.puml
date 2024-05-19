@@ -1,0 +1,8 @@
+@startuml
+class TextureSlotControlView {
+    - m_Slot : Texture2DInputMaterialSlot
+    + TextureSlotControlView(slot:Texture2DInputMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Object>) : void
+}
+VisualElement <|-- TextureSlotControlView
+@enduml

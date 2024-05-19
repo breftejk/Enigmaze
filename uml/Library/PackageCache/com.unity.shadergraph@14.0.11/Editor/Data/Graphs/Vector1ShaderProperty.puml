@@ -1,0 +1,43 @@
+@startuml
+class Vector1ShaderProperty <<sealed>> {
+    <<internal>> Vector1ShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    + <<override>> value : float <<get>> <<set>>
+    - enumTagString : string <<get>>
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    - m_FloatType : FloatType
+    + floatType : FloatType <<get>> <<set>>
+    - m_RangeValues : Vector2
+    + rangeValues : Vector2 <<get>> <<set>>
+    - m_EnumType : EnumType
+    + enumType : EnumType <<get>> <<set>>
+    - m_CSharpEnumType : Type
+    + cSharpEnumType : Type <<get>> <<set>>
+    - m_EnumNames : List<string>
+    + enumNames : List<string> <<get>> <<set>>
+    - m_EnumValues : List<int>
+    + enumValues : List<int> <<get>> <<set>>
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+enum FloatType {
+    Default,
+    Slider,
+    Integer,
+    Enum,
+}
+enum EnumType {
+    Enum,
+    CSharpEnum,
+    KeywordEnum,
+}
+"AbstractShaderProperty`1" "<float>" <|-- Vector1ShaderProperty
+@enduml

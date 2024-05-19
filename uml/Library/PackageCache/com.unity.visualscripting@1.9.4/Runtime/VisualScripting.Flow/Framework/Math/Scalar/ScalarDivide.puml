@@ -1,0 +1,8 @@
+@startuml
+class ScalarDivide <<sealed>> {
+    # <<override>> defaultDividend : float <<get>>
+    # <<override>> defaultDivisor : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+}
+"Divide`1" "<float>" <|-- ScalarDivide
+@enduml

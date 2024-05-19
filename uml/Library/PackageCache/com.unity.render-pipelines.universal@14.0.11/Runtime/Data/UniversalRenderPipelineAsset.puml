@@ -1,0 +1,279 @@
+@startuml
+enum ShadowQuality {
+    Disabled,
+    HardShadows,
+    SoftShadows,
+}
+enum SoftShadowQuality {
+    UsePipelineSettings,
+    Low,
+    Medium,
+    High,
+}
+enum ShadowResolution {
+    _256= 256,
+    _512= 512,
+    _1024= 1024,
+    _2048= 2048,
+    _4096= 4096,
+}
+enum LightCookieResolution {
+    _256= 256,
+    _512= 512,
+    _1024= 1024,
+    _2048= 2048,
+    _4096= 4096,
+}
+enum LightCookieFormat {
+    GrayscaleLow,
+    GrayscaleHigh,
+    ColorLow,
+    ColorHigh,
+    ColorHDR,
+}
+enum HDRColorBufferPrecision {
+    _32Bits,
+    _64Bits,
+}
+enum MsaaQuality {
+    Disabled= 1,
+    _2x= 2,
+    _4x= 4,
+    _8x= 8,
+}
+enum Downsampling {
+    None,
+    _2xBilinear,
+    _4xBox,
+    _4xBilinear,
+}
+enum DefaultMaterialType {
+    Standard,
+    Particle,
+    Terrain,
+    Sprite,
+    UnityBuiltinDefault,
+    SpriteMask,
+    Decal,
+}
+enum LightRenderingMode {
+    Disabled= 0,
+    PerVertex= 2,
+    PerPixel= 1,
+}
+enum PipelineDebugLevel {
+    Disabled,
+    Profiling,
+}
+enum RendererType {
+    Custom,
+    UniversalRenderer,
+    _2DRenderer,
+    ForwardRenderer= UniversalRenderer,
+}
+enum ColorGradingMode {
+    LowDynamicRange,
+    HighDynamicRange,
+}
+enum StoreActionsOptimization {
+    Auto,
+    Discard,
+    Store,
+}
+enum VolumeFrameworkUpdateMode {
+    EveryFrame= 0,
+    ViaScripting= 1,
+    UsePipelineSettings= 2,
+}
+enum UpscalingFilterSelection {
+    Auto,
+    Linear,
+    Point,
+    FSR,
+}
+enum LODCrossFadeDitheringType {
+    BayerMatrix,
+    BlueNoise,
+}
+enum ShEvalMode {
+    Auto= 0,
+    PerVertex= 1,
+    Mixed= 2,
+    PerPixel= 3,
+}
+class UniversalRenderPipelineAsset <<partial>> {
+    - m_DefaultShader : Shader
+    - m_Renderers : ScriptableRenderer[]
+    - k_AssetVersion : int = 11
+    - k_AssetPreviousVersion : int = 11
+    - m_RendererType : RendererType
+    <<internal>> m_RendererData : ScriptableRendererData = null
+    <<internal>> m_RendererDataList : ScriptableRendererData[]
+    <<internal>> m_DefaultRendererIndex : int = 0
+    - m_RequireDepthTexture : bool = false
+    - m_RequireOpaqueTexture : bool = false
+    - m_OpaqueDownsampling : Downsampling
+    - m_SupportsTerrainHoles : bool = true
+    - m_SupportsHDR : bool = true
+    - m_HDRColorBufferPrecision : HDRColorBufferPrecision
+    - m_MSAA : MsaaQuality
+    - m_RenderScale : float = 1.0f
+    - m_UpscalingFilter : UpscalingFilterSelection
+    - m_FsrOverrideSharpness : bool = false
+    - m_FsrSharpness : float
+    - m_EnableLODCrossFade : bool = true
+    - m_LODCrossFadeDitheringType : LODCrossFadeDitheringType
+    - m_ShEvalMode : ShEvalMode
+    - m_MainLightRenderingMode : LightRenderingMode
+    - m_MainLightShadowsSupported : bool = true
+    - m_MainLightShadowmapResolution : ShadowResolution
+    - m_AdditionalLightsRenderingMode : LightRenderingMode
+    - m_AdditionalLightsPerObjectLimit : int = 4
+    - m_AdditionalLightShadowsSupported : bool = false
+    - m_AdditionalLightsShadowmapResolution : ShadowResolution
+    - m_AdditionalLightsShadowResolutionTierLow : int
+    - m_AdditionalLightsShadowResolutionTierMedium : int
+    - m_AdditionalLightsShadowResolutionTierHigh : int
+    - m_ReflectionProbeBlending : bool = false
+    - m_ReflectionProbeBoxProjection : bool = false
+    - m_ShadowDistance : float = 50.0f
+    - m_ShadowCascadeCount : int = 1
+    - m_Cascade2Split : float = 0.25f
+    - m_Cascade3Split : Vector2
+    - m_Cascade4Split : Vector3
+    - m_CascadeBorder : float = 0.2f
+    - m_ShadowDepthBias : float = 1.0f
+    - m_ShadowNormalBias : float = 1.0f
+    - m_SoftShadowsSupported : bool = false
+    - m_ConservativeEnclosingSphere : bool = false
+    - m_NumIterationsEnclosingSphere : int = 64
+    - m_SoftShadowQuality : SoftShadowQuality
+    - m_AdditionalLightsCookieResolution : LightCookieResolution
+    - m_AdditionalLightsCookieFormat : LightCookieFormat
+    - m_UseSRPBatcher : bool = true
+    - m_SupportsDynamicBatching : bool = false
+    - m_MixedLightingSupported : bool = true
+    - m_SupportsLightCookies : bool = true
+    - m_SupportsLightLayers : bool = false
+    - m_DebugLevel : PipelineDebugLevel
+    - m_StoreActionsOptimization : StoreActionsOptimization
+    - m_EnableRenderGraph : bool = false
+    - m_UseAdaptivePerformance : bool = true
+    - m_ColorGradingMode : ColorGradingMode
+    - m_ColorGradingLutSize : int = 32
+    - m_UseFastSRGBLinearConversion : bool = false
+    - m_SupportDataDrivenLensFlare : bool = true
+    - m_ShadowType : ShadowQuality
+    - m_LocalShadowsSupported : bool = false
+    - m_LocalShadowsAtlasResolution : ShadowResolution
+    - m_MaxPixelLights : int = 0
+    - m_ShadowAtlasResolution : ShadowResolution
+    - m_VolumeFrameworkUpdateMode : VolumeFrameworkUpdateMode
+    - m_Textures : TextureResources
+    + <<const>> k_MinLutSize : int = 16
+    + <<const>> k_MaxLutSize : int = 65
+    <<internal>> <<const>> k_ShadowCascadeMinCount : int = 1
+    <<internal>> <<const>> k_ShadowCascadeMaxCount : int = 4
+    + {static} <<readonly>> AdditionalLightsDefaultShadowResolutionTierLow : int = 256
+    + {static} <<readonly>> AdditionalLightsDefaultShadowResolutionTierMedium : int = 512
+    + {static} <<readonly>> AdditionalLightsDefaultShadowResolutionTierHigh : int = 1024
+    + LoadBuiltinRendererData(type:RendererType) : ScriptableRendererData
+    # <<override>> CreatePipeline() : RenderPipeline
+    <<internal>> DestroyRenderers() : void
+    - DestroyRenderer(renderer:ScriptableRenderer) : void
+    # <<override>> OnDisable() : void
+    - CreateRenderers() : void
+    - GetMaterial(materialType:DefaultMaterialType) : Material
+    + scriptableRenderer : ScriptableRenderer <<get>>
+    + GetRenderer(index:int) : ScriptableRenderer
+    <<internal>> scriptableRendererData : ScriptableRendererData <<get>>
+    - {static} s_LightCookieFormatList : GraphicsFormat[][]
+    <<internal>> additionalLightsCookieFormat : GraphicsFormat <<get>>
+    <<internal>> additionalLightsCookieResolution : Vector2Int <<get>>
+    <<internal>> rendererIndexList : int[] <<get>>
+    + supportsCameraDepthTexture : bool <<get>> <<set>>
+    + supportsCameraOpaqueTexture : bool <<get>> <<set>>
+    + opaqueDownsampling : Downsampling <<get>>
+    + supportsTerrainHoles : bool <<get>>
+    + storeActionsOptimization : StoreActionsOptimization <<get>> <<set>>
+    + supportsHDR : bool <<get>> <<set>>
+    + hdrColorBufferPrecision : HDRColorBufferPrecision <<get>> <<set>>
+    + msaaSampleCount : int <<get>> <<set>>
+    + renderScale : float <<get>> <<set>>
+    + enableLODCrossFade : bool <<get>>
+    + lodCrossFadeDitheringType : LODCrossFadeDitheringType <<get>>
+    + upscalingFilter : UpscalingFilterSelection <<get>> <<set>>
+    + fsrOverrideSharpness : bool <<get>> <<set>>
+    + fsrSharpness : float <<get>> <<set>>
+    + shEvalMode : ShEvalMode <<get>> <<internal set>>
+    + mainLightRenderingMode : LightRenderingMode <<get>> <<internal set>>
+    + supportsMainLightShadows : bool <<get>> <<internal set>>
+    + mainLightShadowmapResolution : int <<get>> <<internal set>>
+    + additionalLightsRenderingMode : LightRenderingMode <<get>> <<internal set>>
+    + maxAdditionalLightsCount : int <<get>> <<set>>
+    + supportsAdditionalLightShadows : bool <<get>> <<internal set>>
+    + additionalLightsShadowmapResolution : int <<get>> <<internal set>>
+    + additionalLightsShadowResolutionTierLow : int <<get>> <<internal set>>
+    + additionalLightsShadowResolutionTierMedium : int <<get>> <<internal set>>
+    + additionalLightsShadowResolutionTierHigh : int <<get>> <<internal set>>
+    <<internal>> GetAdditionalLightsShadowResolution(additionalLightsShadowResolutionTier:int) : int
+    + reflectionProbeBlending : bool <<get>> <<internal set>>
+    + reflectionProbeBoxProjection : bool <<get>> <<internal set>>
+    + shadowDistance : float <<get>> <<set>>
+    + shadowCascadeCount : int <<get>> <<set>>
+    + cascade2Split : float <<get>> <<internal set>>
+    + cascade3Split : Vector2 <<get>> <<internal set>>
+    + cascade4Split : Vector3 <<get>> <<internal set>>
+    + cascadeBorder : float <<get>> <<set>>
+    + shadowDepthBias : float <<get>> <<set>>
+    + shadowNormalBias : float <<get>> <<set>>
+    + supportsSoftShadows : bool <<get>> <<internal set>>
+    <<internal>> softShadowQuality : SoftShadowQuality <<get>> <<set>>
+    + supportsDynamicBatching : bool <<get>> <<set>>
+    + supportsMixedLighting : bool <<get>>
+    + supportsLightCookies : bool <<get>>
+    + supportsLightLayers : bool <<get>>
+    + useRenderingLayers : bool <<get>>
+    + volumeFrameworkUpdateMode : VolumeFrameworkUpdateMode <<get>>
+    + debugLevel : PipelineDebugLevel <<get>>
+    + useSRPBatcher : bool <<get>> <<set>>
+    <<internal>> enableRenderGraph : bool <<get>> <<set>>
+    + colorGradingMode : ColorGradingMode <<get>> <<set>>
+    + colorGradingLutSize : int <<get>> <<set>>
+    + useFastSRGBLinearConversion : bool <<get>>
+    + supportDataDrivenLensFlare : bool <<get>>
+    + useAdaptivePerformance : bool <<get>> <<set>>
+    + conservativeEnclosingSphere : bool <<get>> <<set>>
+    + numIterationsEnclosingSphere : int <<get>> <<set>>
+    + <<override>> defaultMaterial : Material <<get>>
+    + <<override>> defaultParticleMaterial : Material <<get>>
+    + <<override>> defaultLineMaterial : Material <<get>>
+    + <<override>> defaultTerrainMaterial : Material <<get>>
+    + <<override>> defaultUIMaterial : Material <<get>>
+    + <<override>> defaultUIOverdrawMaterial : Material <<get>>
+    + <<override>> defaultUIETC1SupportedMaterial : Material <<get>>
+    + <<override>> default2DMaterial : Material <<get>>
+    + <<override>> default2DMaskMaterial : Material <<get>>
+    + decalMaterial : Material <<get>>
+    + <<override>> defaultShader : Shader <<get>>
+    + <<override>> renderingLayerMaskNames : string[] <<get>>
+    + <<override>> prefixedRenderingLayerMaskNames : string[] <<get>>
+    + lightLayerMaskNames : string[] <<get>>
+    + textures : TextureResources <<get>>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    - ValidateShadowBias(value:float) : float
+    - ValidatePerObjectLights(value:int) : int
+    - ValidateRenderScale(value:float) : float
+    <<internal>> ValidateRendererDataList(partial:bool) : bool
+    <<internal>> ValidateRendererData(index:int) : bool
+}
+class TextureResources <<sealed>> {
+    + blueNoise64LTex : Texture2D
+    + bayerMatrixTex : Texture2D
+    + NeedsReload() : bool
+}
+RenderPipelineAsset <|-- UniversalRenderPipelineAsset
+ISerializationCallbackReceiver <|-- UniversalRenderPipelineAsset
+UniversalRenderPipelineAsset +-- TextureResources
+@enduml

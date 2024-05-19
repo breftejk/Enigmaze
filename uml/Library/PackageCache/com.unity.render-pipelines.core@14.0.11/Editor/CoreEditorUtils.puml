@@ -1,0 +1,89 @@
+@startuml
+class CoreEditorUtils <<static>> {
+    {static} - m_BuildTargets : GraphicsDeviceType[]
+    + {static} buildTargets : GraphicsDeviceType[] <<get>>
+    {static} - CoreEditorUtils()
+    + {static} FindProperty(expr:Expression<Func<T, TValue>>) : string
+    + {static} CreateColoredTexture2D(color:Color, textureName:string) : Texture2D
+    <<const>> - k_IndentMargin : float = 15.0f
+    <<const>> - k_HighlightDuration : float = 2.0f
+    {static} - s_HighlightStart : float
+    {static} - s_HighlightBackground : Texture2D
+    {static} - s_View : object
+    {static} <<readonly>> - k_ViewInfo : FieldInfo
+    {static} <<readonly>> - k_HighlightStyleInfo : FieldInfo
+    {static} <<readonly>> - k_WindowBackendInfo : FieldInfo
+    {static} <<readonly>> - k_GUIHandlerInfo : EventInfo
+    {static} <<readonly>> - k_Repaint : MethodInfo
+    {static} - HighlightTimeout() : void
+    {static} - ControlHighlightGUI() : void
+    + {static} Highlight(windowTitle:string, text:string, mode:HighlightSearchMode) : void
+    + {static} DrawFixMeBox(message:string, action:Action) : void
+    + {static} DrawFixMeBox(message:string, messageType:MessageType, action:Action) : void
+    + {static} DrawFixMeBox(message:string, messageType:MessageType, buttonLabel:string, action:Action) : void
+    + {static} DrawFixMeBox(message:GUIContent, action:Action) : void
+    + {static} DrawFixMeBox(message:GUIContent, buttonLabel:string, action:Action) : void
+    + {static} DrawMultipleFields(label:string, ppts:SerializedProperty[], labels:GUIContent[]) : void
+    - {static} GetLongestLabelWidth(labels:GUIContent[]) : float
+    + {static} DrawEnumPopup(rect:Rect, label:GUIContent, serializedProperty:SerializedProperty) : void
+    + {static} DrawMultipleFields(label:GUIContent, ppts:SerializedProperty[], labels:GUIContent[]) : void
+    + {static} DrawMultipleFields(label:GUIContent, labels:GUIContent[], values:T[]) : void
+    + {static} DrawSplitter(isBoxed:bool) : void
+    - {static} ToFullWidth(rect:Rect) : Rect
+    + {static} DrawHeader(title:string) : void
+    + {static} DrawHeader(title:GUIContent) : void
+    + {static} DrawHeaderFoldout(title:string, state:bool, isBoxed:bool, hasMoreOptions:Func<bool>, toggleMoreOption:Action) : bool
+    + {static} DrawHeaderFoldout(title:GUIContent, state:bool, isBoxed:bool, hasMoreOptions:Func<bool>, toggleMoreOptions:Action, documentationURL:string, contextAction:Action<Vector2>) : bool
+    + {static} DrawSubHeaderFoldout(title:string, state:bool, isBoxed:bool, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : bool
+    + {static} DrawSubHeaderFoldout(title:GUIContent, state:bool, isBoxed:bool, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : bool
+    + {static} DrawSubHeaderFoldout(title:string, state:bool, isBoxed:bool) : bool
+    + {static} DrawSubHeaderFoldout(title:GUIContent, state:bool, isBoxed:bool) : bool
+    + {static} DrawHeaderToggle(title:string, group:SerializedProperty, activeField:SerializedProperty, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : bool
+    + {static} DrawHeaderToggle(title:GUIContent, group:SerializedProperty, activeField:SerializedProperty, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : bool
+    + {static} DrawHeaderToggle(title:string, group:SerializedProperty, activeField:SerializedProperty, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action, documentationURL:string) : bool
+    - {static} GetHeaderToggleRects(labelRect:Rect, foldoutRect:Rect, toggleRect:Rect, backgroundRect:Rect) : void
+    + {static} DrawHeaderToggle(title:GUIContent, group:SerializedProperty, activeField:SerializedProperty, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action, documentationURL:string) : bool
+    - {static} DrawBackground(backgroundRect:Rect) : void
+    + {static} DrawHeaderToggleFoldout(title:GUIContent, foldoutExpanded:bool, toogleProperty:SerializedProperty, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action, documentationURL:string) : bool
+    - {static} HandleEvents(contextAction:Action<Vector2>, backgroundRect:Rect, expanded:bool) : bool
+    - {static} ContextMenu(title:GUIContent, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action, documentationURL:string, labelRect:Rect) : Action<Vector2>
+    + {static} DrawSectionHeader(title:GUIContent, documentationURL:string, contextAction:Action<Vector2>, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : void
+    {static} - ShowHelpButton(contextMenuRect:Rect, documentationURL:string, title:GUIContent) : void
+    {static} - OnContextClick(position:Vector2, hasMoreOptions:Func<bool>, toggleMoreOptions:Action) : void
+    {static} <<readonly>> - k_DrawVector6_Label : GUIContent[][]
+    <<const>> - k_DrawVector6Slider_LabelSize : int = 60
+    <<const>> - k_DrawVector6Slider_FieldSize : int = 80
+    + {static} DrawVector6(label:GUIContent, positive:SerializedProperty, negative:SerializedProperty, min:Vector3, max:Vector3, colors:Color[], multiplicator:SerializedProperty, allowIntersection:bool) : void
+    {static} - DrawVector3(rect:Rect, labels:GUIContent[], value:SerializedProperty, min:Vector3, max:Vector3, minusPrefix:bool, colors:Color[], multiplicator:SerializedProperty) : void
+    {static} - DrawVector3_(rect:Rect, labels:GUIContent[], value:SerializedProperty, min:Vector3, max:Vector3, addMinusPrefix:bool, colors:Color[], multiplicator:SerializedProperty) : void
+    + {static} DrawPopup(label:GUIContent, property:SerializedProperty, options:string[]) : void
+    + {static} DrawEnumPopup(property:SerializedProperty, type:System.Type, label:GUIContent) : void
+    + {static} RemoveMaterialKeywords(material:Material) : void
+    + {static} GetAdditionalData(targets:UnityEngine.Object[], initDefault:Action<T>) : T[]
+    + {static} AddAdditionalData(go:GameObject, initDefault:Action<AdditionalT>) : void
+    + {static} CreateGameObject(parent:GameObject, name:string, types:Type[]) : GameObject
+    + {static} CreateGameObject(name:string, context:UnityEngine.Object) : GameObject
+    {static} + GetCurrentProjectVersion() : string
+    {static} + CheckOutFile(VCSEnabled:bool, mat:UnityObject) : void
+    {static} - GetInternalSkinIndex : Func<int>
+    {static} - GetGUIStatePixelsPerPoint : Func<float>
+    {static} - GetTexturePixelPerPoint : Func<Texture2D, float>
+    {static} - SetTexturePixelPerPoint : Action<Texture2D, float>
+    {static} - LoadSkinAndIconMethods() : void
+    {static} - currentSkin : Skin <<get>>
+    + {static} LoadIcon(path:string, name:string, extention:string) : Texture2D
+    <<internal>> {static} LoadIcon(path:string, name:string, extention:string, forceLowRes:bool) : Texture2D
+    <<internal>> {static} FindTexture(name:string) : Texture2D
+    <<internal>> {static} TryToFixFilterMode(pixelsPerPoint:float, icon:Texture2D) : void
+    <<internal>> {static} BeginAdditionalPropertiesHighlight(animation:AnimFloat) : void
+    <<internal>> {static} EndAdditionalPropertiesHighlight() : void
+    <<internal>> {static} CreateAssetAt(scene:Scene, targetName:string) : T
+    <<internal>> {static} IsAssetInReadOnlyPackage(path:string) : bool
+}
+enum Skin {
+    Auto,
+    Personnal,
+    Professional,
+}
+CoreEditorUtils +-- Skin
+@enduml

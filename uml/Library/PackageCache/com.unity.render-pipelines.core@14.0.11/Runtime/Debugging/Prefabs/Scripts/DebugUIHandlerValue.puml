@@ -1,0 +1,15 @@
+@startuml
+class DebugUIHandlerValue {
+    + nameLabel : Text
+    + valueLabel : Text
+    - m_Field : DebugUI.Value
+    # <<internal>> m_Timer : float
+    {static} <<readonly>> - k_ZeroColor : Color
+    # <<override>> OnEnable() : void
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    - Update() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerValue
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class SliderRectRefernces {
+    - slider : Slider
+    - emptyGO : GameObject
+    - rootGO : GameObject
+    + TestSetup() : void
+    + TearDown() : void
+    + AssigningSelfResultsInNullReferenceField() : void
+    + AssigningOtherObjectResultsInCorrectReferenceField() : void
+}
+Behaviour <|-- SliderRectRefernces
+@enduml

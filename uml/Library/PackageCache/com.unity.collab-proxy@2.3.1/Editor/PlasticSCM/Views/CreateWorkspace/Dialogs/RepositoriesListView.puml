@@ -1,0 +1,29 @@
+@startuml
+class RepositoriesListView {
+    <<internal>> RepositoriesListView(headerState:RepositoriesListHeaderState, columnNames:List<string>, doubleClickAction:Action)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> DoubleClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> GetSelectedRepository() : string
+    - FillEntriesAndSelectRows(entries:IList<RepositoryInfo>, entriesToSelect:List<RepositoryInfo>, currentFilter:string) : void
+    - Refilter() : void
+    - Sort() : void
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - RegenerateRows(listView:RepositoriesListView, repositories:IList<RepositoryInfo>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - RepositoryListViewItemGUI(item:RepositoryListViewItem, args:RowGUIArgs, rowHeight:float) : void
+    {static} - RepositoryListViewItemCellGUI(rect:Rect, item:RepositoryListViewItem, column:RepositoriesListColumn, rowHeight:float, isSelected:bool, isFocused:bool) : void
+    - mRows : List<TreeViewItem>
+    - mUnfilteredRepositories : IList<RepositoryInfo>
+    - mRepositories : IList<RepositoryInfo>
+    <<readonly>> - mColumnComparers : Dictionary<string, IComparer<RepositoryInfo>>
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mDoubleClickAction : Action
+}
+TreeView <|-- RepositoriesListView
+"IPlasticTable`1" "<RepositoryInfo>" <|-- RepositoriesListView
+@enduml

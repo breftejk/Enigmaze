@@ -1,0 +1,15 @@
+@startuml
+class UniversalRenderPipelineDebugDisplaySettings {
+    - commonSettings : DebugDisplaySettingsCommon <<get>> <<set>>
+    + materialSettings : DebugDisplaySettingsMaterial <<get>>
+    + renderingSettings : DebugDisplaySettingsRendering <<get>>
+    + lightingSettings : DebugDisplaySettingsLighting <<get>>
+    + volumeSettings : DebugDisplaySettingsVolume <<get>>
+    <<internal>> displayStats : DebugDisplayStats <<get>>
+    + <<override>> IsPostProcessingAllowed : bool <<get>>
+    + UniversalRenderPipelineDebugDisplaySettings()
+    + <<override>> Reset() : void
+    <<internal>> UpdateFrameTiming() : void
+}
+"DebugDisplaySettings`1" "<UniversalRenderPipelineDebugDisplaySettings>" <|-- UniversalRenderPipelineDebugDisplaySettings
+@enduml

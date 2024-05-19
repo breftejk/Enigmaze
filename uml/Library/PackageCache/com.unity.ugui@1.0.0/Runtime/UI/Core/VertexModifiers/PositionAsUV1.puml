@@ -1,0 +1,7 @@
+@startuml
+class PositionAsUV1 {
+    # PositionAsUV1()
+    + <<override>> ModifyMesh(vh:VertexHelper) : void
+}
+BaseMeshEffect <|-- PositionAsUV1
+@enduml

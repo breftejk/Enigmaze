@@ -1,0 +1,18 @@
+@startuml
+class MergeLinksListView {
+    <<internal>> DesiredHeight : float <<get>>
+    <<internal>> MergeLinksListView()
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    <<internal>> BuildModel(pendingMergeLinks:IDictionary<MountPoint, IList<PendingMergeLink>>) : void
+    # <<override>> BeforeRowsGUI() : void
+    {static} - RegenerateRows(mergeLinks:List<MountPendingMergeLink>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - BuildMountPendingMergeLink(pendingMergeLinks:IDictionary<MountPoint, IList<PendingMergeLink>>) : List<MountPendingMergeLink>
+    {static} - BuildMountPendingMergeLinks(mount:MountPoint, links:IList<PendingMergeLink>) : List<MountPendingMergeLink>
+    - mRows : List<TreeViewItem>
+    - mMergeLinks : List<MountPendingMergeLink>
+}
+TreeView <|-- MergeLinksListView
+@enduml

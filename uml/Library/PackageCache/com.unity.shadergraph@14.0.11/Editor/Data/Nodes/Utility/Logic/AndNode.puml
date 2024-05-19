@@ -1,0 +1,9 @@
+@startuml
+class AndNode {
+    + AndNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_And(A:Boolean, B:Boolean, Out:Boolean) : string
+}
+CodeFunctionNode <|-- AndNode
+@enduml

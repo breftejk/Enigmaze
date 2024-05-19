@@ -1,0 +1,25 @@
+@startuml
+class CinemachinePath {
+    + m_Looped : bool
+    + m_Waypoints : Waypoint[]
+    + <<override>> MinPos : float <<get>>
+    + <<override>> MaxPos : float <<get>>
+    + <<override>> Looped : bool <<get>>
+    - Reset() : void
+    - OnValidate() : void
+    + <<override>> DistanceCacheSampleStepsPerSegment : int <<get>>
+    - GetBoundingIndices(pos:float, indexA:int, indexB:int) : float
+    + <<override>> EvaluateLocalPosition(pos:float) : Vector3
+    + <<override>> EvaluateLocalTangent(pos:float) : Vector3
+    + <<override>> EvaluateLocalOrientation(pos:float) : Quaternion
+    <<internal>> GetRoll(indexA:int, indexB:int, standardizedPos:float) : float
+    {static} - RollAroundForward(angle:float) : Quaternion
+}
+struct Waypoint {
+    + position : Vector3
+    + tangent : Vector3
+    + roll : float
+}
+CinemachinePathBase <|-- CinemachinePath
+CinemachinePath +-- Waypoint
+@enduml

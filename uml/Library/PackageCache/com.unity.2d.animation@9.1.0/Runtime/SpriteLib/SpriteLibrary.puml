@@ -1,0 +1,39 @@
+@startuml
+class SpriteLibrary {
+    - m_Library : List<SpriteLibCategory>
+    - m_SpriteLibraryAsset : SpriteLibraryAsset
+    - m_CategoryEntryHashCache : Dictionary<int, CategoryEntrySprite> = null
+    - m_CategoryEntryCache : Dictionary<string, HashSet<string>> = null
+    - m_PreviousSpriteLibraryAsset : int
+    - m_PreviousModificationHash : long
+    + spriteLibraryAsset : SpriteLibraryAsset <<set>> <<get>>
+    - OnEnable() : void
+    + OnPreviewUpdate() : void
+    + GetSprite(category:string, label:string) : Sprite
+    - GetSprite(hash:int) : Sprite
+    - UpdateCacheOverridesIfNeeded() : void
+    <<internal>> GetCategoryAndEntryNameFromHash(hash:int, category:string, entry:string) : bool
+    <<internal>> {static} GetHashForCategoryAndEntry(category:string, entry:string) : int
+    <<internal>> GetSpriteFromCategoryAndEntryHash(hash:int, validEntry:bool) : Sprite
+    - GetEntries(category:string, addIfNotExist:bool) : List<SpriteCategoryEntry>
+    {static} - GetEntry(entries:List<SpriteCategoryEntry>, entry:string, addIfNotExist:bool) : SpriteCategoryEntry
+    + AddOverride(spriteLib:SpriteLibraryAsset, category:string, label:string) : void
+    + AddOverride(spriteLib:SpriteLibraryAsset, category:string) : void
+    + AddOverride(sprite:Sprite, category:string, label:string) : void
+    + RemoveOverride(category:string) : void
+    + RemoveOverride(category:string, label:string) : void
+    + HasOverride(category:string, label:string) : bool
+    + RefreshSpriteResolvers() : void
+    <<internal>> categoryNames : IEnumerable<string> <<get>>
+    <<internal>> GetEntryNames(category:string) : IEnumerable<string>
+    <<internal>> CacheOverrides() : void
+}
+struct CategoryEntrySprite {
+    + category : string
+    + entry : string
+    + sprite : Sprite
+}
+MonoBehaviour <|-- SpriteLibrary
+IPreviewable <|-- SpriteLibrary
+SpriteLibrary +-- CategoryEntrySprite
+@enduml

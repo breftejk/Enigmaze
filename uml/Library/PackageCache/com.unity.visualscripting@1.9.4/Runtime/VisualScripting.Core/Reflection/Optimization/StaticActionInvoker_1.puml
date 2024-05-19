@@ -1,0 +1,13 @@
+@startuml
+class "StaticActionInvoker`1"<TParam0> <<sealed>> {
+    + StaticActionInvoker(methodInfo:MethodInfo)
+    - invoke : Action<TParam0>
+    + <<override>> Invoke(target:object, args:object[]) : object
+    + <<override>> Invoke(target:object, arg0:object) : object
+    - InvokeUnsafe(target:object, arg0:object) : object
+    # <<override>> GetParameterTypes() : Type[]
+    # <<override>> CompileExpression(callExpression:MethodCallExpression, parameterExpressions:ParameterExpression[]) : void
+    # <<override>> CreateDelegate() : void
+}
+StaticActionInvokerBase <|-- "StaticActionInvoker`1"
+@enduml

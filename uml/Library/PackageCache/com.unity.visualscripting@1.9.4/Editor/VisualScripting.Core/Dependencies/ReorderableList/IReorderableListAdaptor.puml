@@ -1,0 +1,18 @@
+@startuml
+interface IReorderableListAdaptor {
+    Count : int <<get>>
+    CanDrag(index:int) : bool
+    CanRemove(index:int) : bool
+    Add() : void
+    Insert(index:int) : void
+    Duplicate(index:int) : void
+    Remove(index:int) : void
+    Move(sourceIndex:int, destIndex:int) : void
+    Clear() : void
+    BeginGUI() : void
+    EndGUI() : void
+    DrawItemBackground(position:Rect, index:int) : void
+    DrawItem(position:Rect, index:int) : void
+    GetItemHeight(index:int) : float
+}
+@enduml

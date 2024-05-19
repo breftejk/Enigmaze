@@ -1,0 +1,12 @@
+@startuml
+class ScriptReferenceResolverSettings {
+    - <<const>> Title : string = "Script Reference Resolver"
+    - <<const>> ButtonLabel : string = "Fix Missing Scripts"
+    + OnGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> defaultsButton : GUIStyle
+}
+ScriptReferenceResolverSettings +-- Styles
+@enduml

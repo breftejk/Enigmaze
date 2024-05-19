@@ -1,0 +1,35 @@
+@startuml
+abstract class "UnitPort`3"<TValidOther,TInvalidOther,TExternalConnection> {
+    # UnitPort(key:string)
+    + unit : IUnit <<get>> <<set>>
+    + key : string <<get>>
+    + graph : IGraph <<get>>
+    + relations : IEnumerable<IUnitRelation> <<get>>
+    + {abstract} validConnections : IEnumerable<TExternalConnection> <<get>>
+    + {abstract} invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    + {abstract} validConnectedPorts : IEnumerable<TValidOther> <<get>>
+    + {abstract} invalidConnectedPorts : IEnumerable<TInvalidOther> <<get>>
+    - validConnections : IEnumerable<IUnitConnection> <<get>>
+    + connections : IEnumerable<IUnitConnection> <<get>>
+    + connectedPorts : IEnumerable<IUnitPort> <<get>>
+    + hasAnyConnection : bool <<get>>
+    + <<virtual>> hasValidConnection : bool <<get>>
+    + <<virtual>> hasInvalidConnection : bool <<get>>
+    - CanConnectTo(port:IUnitPort) : bool
+    + CanValidlyConnectTo(port:IUnitPort) : bool
+    + CanInvalidlyConnectTo(port:IUnitPort) : bool
+    + ValidlyConnectTo(port:IUnitPort) : void
+    + InvalidlyConnectTo(port:IUnitPort) : void
+    + Disconnect() : void
+    + {abstract} CanConnectToValid(port:TValidOther) : bool
+    + CanConnectToInvalid(port:TInvalidOther) : bool
+    + {abstract} ConnectToValid(port:TValidOther) : void
+    + {abstract} ConnectToInvalid(port:TInvalidOther) : void
+    + {abstract} DisconnectFromValid(port:TValidOther) : void
+    + {abstract} DisconnectFromInvalid(port:TInvalidOther) : void
+    + {abstract} CompatiblePort(unit:IUnit) : IUnitPort
+    # ConnectInvalid(source:IUnitOutputPort, destination:IUnitInputPort) : void
+    # DisconnectInvalid(source:IUnitOutputPort, destination:IUnitInputPort) : void
+}
+IUnitPort <|-- "UnitPort`3"
+@enduml

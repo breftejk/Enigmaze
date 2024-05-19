@@ -1,0 +1,10 @@
+@startuml
+class PlayerTestAssemblyProvider {
+    - m_AssemblyLoadProxy : IAssemblyLoadProxy
+    - <<readonly>> m_AssembliesToLoad : List<string>
+    - {static} m_LoadedAssemblies : List<IAssemblyWrapper>
+    <<internal>> PlayerTestAssemblyProvider(assemblyLoadProxy:IAssemblyLoadProxy, assembliesToLoad:List<string>)
+    + GetUserAssemblies() : List<IAssemblyWrapper>
+    - LoadAssemblies() : void
+}
+@enduml

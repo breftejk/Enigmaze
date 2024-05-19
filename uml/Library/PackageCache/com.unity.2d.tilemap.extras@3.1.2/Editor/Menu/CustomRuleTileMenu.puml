@@ -1,0 +1,28 @@
+@startuml
+class CustomRuleTileMenu <<static>> {
+    - {static} tempCustomRuleTilePath : string
+    - <<const>> customRuleTileScript : string = @"using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+[CreateAssetMenu]
+public class #SCRIPTNAME# : RuleTile<#SCRIPTNAME#.Neighbor> {
+    public bool customField;
+
+    public class Neighbor : RuleTile.TilingRule.Neighbor {
+        public const int Null = 3;
+        public const int NotNull = 4;
+    &#125;
+
+    public override bool RuleMatch(int neighbor, TileBase tile) {
+        switch (neighbor) {
+            case Neighbor.Null: return tile == null;
+            case Neighbor.NotNull: return tile != null;
+        &#125;
+        return base.RuleMatch(neighbor, tile);
+    &#125;
+}"
+    {static} - CreateCustomRuleTile() : void
+}
+@enduml

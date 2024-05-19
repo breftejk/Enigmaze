@@ -1,0 +1,62 @@
+@startuml
+class DirectorNamedColor {
+    + colorPlayhead : Color
+    + colorSelection : Color
+    + colorEndmarker : Color
+    + colorGroup : Color
+    + colorGroupTrackBackground : Color
+    + colorAnimation : Color
+    + colorAnimationRecorded : Color
+    + colorAudio : Color
+    + colorAudioWaveform : Color
+    + colorActivation : Color
+    + colorDropTarget : Color
+    + colorClipFont : Color
+    + colorInvalidClipOverlay : Color
+    + colorTrackBackground : Color
+    + colorTrackHeaderBackground : Color
+    + colorTrackDarken : Color
+    + colorTrackBackgroundRecording : Color
+    + colorInfiniteTrackBackgroundRecording : Color
+    + colorTrackBackgroundSelected : Color
+    + colorTrackFont : Color
+    + colorClipUnion : Color
+    + colorTopOutline3 : Color
+    + colorDurationLine : Color
+    + colorRange : Color
+    + colorSequenceBackground : Color
+    + colorTooltipBackground : Color
+    + colorInfiniteClipLine : Color
+    + colorDefaultTrackDrawer : Color
+    + colorDuration : Color
+    + colorRecordingClipOutline : Color
+    + colorAnimEditorBinding : Color
+    + colorTimelineBackground : Color
+    + colorLockTextBG : Color
+    + colorInlineCurveVerticalLines : Color
+    + colorInlineCurveOutOfRangeOverlay : Color
+    + colorInlineCurvesBackground : Color
+    + markerDrawerBackgroundColor : Color
+    + markerHeaderDrawerBackgroundColor : Color
+    + colorControl : Color
+    + colorSubSequenceBackground : Color
+    + colorTrackSubSequenceBackground : Color
+    + colorTrackSubSequenceBackgroundSelected : Color
+    + colorSubSequenceOverlay : Color
+    + colorSubSequenceDurationLine : Color
+    + clipBckg : Color
+    + clipSelectedBckg : Color
+    + clipBorderColor : Color
+    + clipEaseBckgColor : Color
+    + clipBlendIn : Color
+    + clipBlendInSelected : Color
+    + clipBlendOut : Color
+    + clipBlendOutSelected : Color
+    + SetDefault() : void
+    + ToText(path:string) : void
+    + FromText(text:string) : void
+    {static} - ParseFloat(str:string, f:float) : bool
+    + {static} CreateAndLoadFromText(text:string) : DirectorNamedColor
+}
+ScriptableObject <|-- DirectorNamedColor
+@enduml

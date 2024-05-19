@@ -1,0 +1,30 @@
+@startuml
+class NotificationBar {
+    <<internal>> HasNotification : bool <<get>>
+    <<internal>> IsVisible : bool <<get>>
+    <<internal>> NotificationBar()
+    <<internal>> SetVisibility(isVisible:bool) : void
+    <<internal>> OnGUI() : void
+    - SetActions(cloudServerInfo:CloudServerInfo, subscriptionAction:CloudOrganizationHelpActionsResponse.Action, contactAction:CloudOrganizationHelpActionsResponse.Action) : void
+    - CleanActions() : void
+    {static} - DrawCloseButton(notificationBar:NotificationBar) : void
+    - mSubscriptionPanel : ActionPanel
+    - mContactPanel : ActionPanel
+}
+class ActionPanel {
+    <<internal>> HasNotification : bool <<get>>
+    <<internal>> SetAction(cloudServerInfo:CloudServerInfo, action:CloudOrganizationHelpActionsResponse.Action, isContactSupportAction:bool) : void
+    <<internal>> OnGUI() : void
+    - SetButton(actionButton:CloudOrganizationHelpActionsResponse.ActionButton) : void
+    {static} - DrawLabel(text:string) : void
+    {static} - DrawButton(cloudServerInfo:CloudServerInfo, actionButtonUrl:string, isContactSupportAction:bool, buttonText:string) : void
+    - mIsButtonVisible : bool
+    - mButtonText : string
+    - mLabelText : string
+    - mIsContactSupportAction : bool
+    - mActionButton : CloudOrganizationHelpActionsResponse.ActionButton
+    - mCloudServerInfo : CloudServerInfo
+}
+INotificationBar <|-- NotificationBar
+NotificationBar +-- ActionPanel
+@enduml

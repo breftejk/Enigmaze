@@ -1,0 +1,84 @@
+@startuml
+class FilterWindow {
+    + {static} <<readonly>> DefaultWidth : float = 250f
+    + {static} <<readonly>> DefaultHeight : float = 300f
+    <<const>> - k_HeaderHeight : int = 30
+    <<const>> - k_WindowHeight : int
+    <<const>> - k_HelpHeight : int
+    <<const>> - k_ComponentSearch : string = "NodeSearchString"
+    {static} - s_Styles : Styles
+    {static} - s_FilterWindow : FilterWindow
+    {static} - s_LastClosedTime : long
+    {static} - s_DirtyList : bool
+    - m_Provider : IProvider
+    - m_Tree : Element[]
+    - m_SearchResultTree : Element[]
+    - m_Stack : List<GroupElement>
+    - m_Anim : float = 1
+    - m_AnimTarget : int = 1
+    - m_LastTime : long
+    - m_ScrollToSelected : bool
+    - m_DelayedSearch : string
+    - m_Search : string = ""
+    - m_HasSearch : bool <<get>>
+    - m_ActiveParent : GroupElement <<get>>
+    - m_ActiveTree : Element[] <<get>>
+    - m_ActiveElement : Element <<get>>
+    - m_IsAnimating : bool <<get>>
+    {static} - FilterWindow()
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnLostFocus() : void
+    <<internal>> {static} ValidateAddComponentMenuItem() : bool
+    + {static} Show(position:Vector2, provider:IProvider) : bool
+    {static} - Invoke(t:Type, inst:object, method:string, args:object[]) : object
+    - Init(position:Vector2, provider:IProvider) : void
+    - CreateComponentTree() : void
+    <<internal>> OnGUI() : void
+    - HandleKeyboard() : void
+    <<const>> - k_SearchHeader : string = "Search"
+    - RebuildSearch() : void
+    - GetElementRelative(rel:int) : GroupElement
+    - GoToParent() : void
+    - ListGUI(tree:Element[], anim:float, parent:GroupElement, grandParent:GroupElement) : void
+    - GoToChild(e:Element, addIfComponent:bool) : void
+    - ListGUI(tree:Element[], parent:GroupElement) : void
+    - GetChildren(tree:Element[], parent:Element) : List<Element>
+}
+interface IProvider {
+    position : Vector2 <<get>> <<set>>
+    CreateComponentTree(tree:List<Element>) : void
+    GoToChild(element:Element, addIfComponent:bool) : bool
+}
+class Element {
+    + level : int
+    + content : GUIContent
+    + name : string <<get>>
+    + CompareTo(o:object) : int
+}
+class GroupElement {
+    + scroll : Vector2
+    + selectedIndex : int
+    + WantsFocus : bool <<get>> <<protected set>>
+    + <<virtual>> ShouldDisable : bool <<get>>
+    + GroupElement(level:int, name:string)
+    + <<virtual>> HandleKeyboard(evt:Event, window:FilterWindow, goToParent:Action) : bool
+    + <<virtual>> OnGUI(sFilterWindow:FilterWindow) : bool
+}
+class Styles {
+    + header : GUIStyle
+    + componentButton : GUIStyle
+    + groupButton : GUIStyle
+    + background : GUIStyle = "grey_border"
+    + rightArrow : GUIStyle = "AC RightArrow"
+    + leftArrow : GUIStyle = "AC LeftArrow"
+    + Styles()
+}
+EditorWindow <|-- FilterWindow
+FilterWindow +-- IProvider
+FilterWindow +-- Element
+IComparable <|-- Element
+FilterWindow +-- GroupElement
+Element <|-- GroupElement
+FilterWindow +-- Styles
+@enduml

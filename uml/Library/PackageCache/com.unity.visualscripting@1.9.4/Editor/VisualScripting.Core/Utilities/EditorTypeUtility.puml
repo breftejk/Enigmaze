@@ -1,0 +1,15 @@
+@startuml
+class EditorTypeUtility <<static>> {
+    <<internal>> {static} Initialize() : void
+    - {static} lastBehaviorMode : EditorBehaviorMode
+    - {static} behaviorMode : EditorBehaviorMode <<get>>
+    + {static} commonTypes : IEnumerable<Type> <<get>>
+}
+struct BehaviourTypeAssociation {
+    + <<readonly>> typeFor3D : Type
+    + <<readonly>> typeFor2D : Type
+    + BehaviourTypeAssociation(typeFor3D:Type, typeFor2D:Type)
+    + For(mode:EditorBehaviorMode) : Type
+}
+EditorTypeUtility +-- BehaviourTypeAssociation
+@enduml

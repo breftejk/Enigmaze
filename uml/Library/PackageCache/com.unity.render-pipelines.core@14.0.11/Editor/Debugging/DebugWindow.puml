@@ -1,0 +1,70 @@
+@startuml
+class WidgetStateDictionary <<sealed>> {
+}
+class DebugWindowSettings <<sealed>> {
+    + currentStateHash : int
+    + selectedPanel : int <<get>> <<set>>
+    + selectedPanelDisplayName : string
+    - OnEnable() : void
+}
+class DebugWindow <<sealed>> {
+    {static} - s_Styles : Styles
+    {static} - s_SplitterLeft : GUIStyle
+    {static} - splitterPos : float = 150f
+    <<const>> - minSideBarWidth : float = 100
+    <<const>> - minContentWidth : float = 100
+    - dragging : bool = false
+    - m_WidgetStates : WidgetStateDictionary
+    - m_Settings : DebugWindowSettings
+    - m_DebugTreeState : int
+    - m_IsDirty : bool
+    - m_PanelScroll : Vector2
+    - m_ContentScroll : Vector2
+    {static} - s_TypeMapDirty : bool
+    {static} - s_WidgetStateMap : Dictionary<Type, Type>
+    {static} - s_WidgetDrawerMap : Dictionary<Type, DebugUIDrawer>
+    + {static} open : bool <<get>>
+    {static} - OnEditorReload() : void
+    {static} - RebuildTypeMaps() : void
+    {static} - Init() : void
+    {static} - ValidateMenuItem() : bool
+    - OnEnable() : void
+    - OnDestroy() : void
+    + DestroyWidgetStates() : void
+    + ReloadWidgetStates() : void
+    - AreWidgetStatesValid() : bool
+    - MarkDirty() : void
+    - UpdateWidgetStates() : void
+    - UpdateWidgetStates(container:DebugUI.IContainer) : void
+    + ApplyStates(forceApplyAll:bool) : void
+    - ApplyState(queryPath:string, state:DebugState) : void
+    - OnUndoRedoPerformed() : void
+    - ComputeStateHash() : int
+    - Update() : void
+    - OnGUI() : void
+    - OnWidgetGUI(widget:DebugUI.Widget) : void
+    - TraverseContainerGUI(container:DebugUI.IContainer) : void
+    + AddItemsToMenu(menu:GenericMenu) : void
+    - SetExpanded(value:bool) : void
+}
+class Styles {
+    + {static} s_DefaultLabelWidth : float = 0.5f
+    + {static} windowTitle : GUIContent <<get>>
+    + {static} resetButtonContent : GUIContent <<get>>
+    + {static} foldoutHeaderStyle : GUIStyle <<get>>
+    + <<readonly>> sectionScrollView : GUIStyle = "PreferencesSectionBox"
+    + <<readonly>> sectionElement : GUIStyle
+    + <<readonly>> selected : GUIStyle = "OL SelectedRow"
+    + <<readonly>> sectionHeader : GUIStyle
+    + <<readonly>> skinBackgroundColor : Color
+    + {static} centeredLeft : GUIStyle
+    + {static} singleRowHeight : float
+    + {static} foldoutColumnWidth : int = 70
+    + Styles()
+}
+"SerializedDictionary`2" "<string,DebugState>" <|-- WidgetStateDictionary
+ScriptableObject <|-- DebugWindowSettings
+EditorWindow <|-- DebugWindow
+IHasCustomMenu <|-- DebugWindow
+DebugWindow +-- Styles
+@enduml

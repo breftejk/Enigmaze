@@ -1,0 +1,20 @@
+@startuml
+interface IEnumConversion {
+    from : Enum <<get>> <<set>>
+    to : Enum <<get>> <<set>>
+}
+class EnumConversionControlAttribute {
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class EnumConversionControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - value : IEnumConversion <<get>> <<set>>
+    + EnumConversionControlView(node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnFromChanged(evt:ChangeEvent<Enum>) : void
+    - OnToChanged(evt:ChangeEvent<Enum>) : void
+}
+Attribute <|-- EnumConversionControlAttribute
+IControlAttribute <|-- EnumConversionControlAttribute
+VisualElement <|-- EnumConversionControlView
+@enduml

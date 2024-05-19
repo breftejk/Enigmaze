@@ -1,0 +1,5 @@
+@startuml
+class "UnitPortDefinitionCollection`1"<T> <<sealed>> {
+}
+"Collection`1" "<T>" <|-- "UnitPortDefinitionCollection`1"
+@enduml

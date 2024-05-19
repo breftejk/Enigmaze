@@ -1,0 +1,22 @@
+@startuml
+class FlattenImageTask <<static>> {
+    + {static} <<unsafe>> Execute(layer:PSDExtractLayerData[], output:NativeArray<Color32>, importHiddenLayer:bool, documentSize:Vector2Int) : void
+    {static} <<unsafe>> - GetLayerDataToMerge(layer:PSDExtractLayerData, layerData:List<LayerData>, importHiddenLayer:bool) : void
+}
+struct LayerData {
+    + layerBuffer : IntPtr
+    + layerRect : int4
+}
+struct FlattenImageInternalJob {
+    + inputTextures : NativeArray<IntPtr>
+    + inputTextureRects : NativeArray<int4>
+    + layersPerJob : int
+    + flipY : bool
+    + outputTextureSizes : NativeArray<int2>
+    + outputTextures : NativeArray<IntPtr>
+    + <<unsafe>> Execute(index:int) : void
+}
+FlattenImageTask +-- LayerData
+FlattenImageTask +-- FlattenImageInternalJob
+IJobParallelFor <|-- FlattenImageInternalJob
+@enduml

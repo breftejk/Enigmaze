@@ -1,0 +1,36 @@
+@startuml
+class "DebugDictionary`2"<TKey,TValue> {
+    - <<readonly>> dictionary : Dictionary<TKey, TValue>
+    + label : string <<get>> <<set>> = "Dictionary"
+    + debug : bool <<get>> <<set>> = false
+    + Count : int <<get>>
+    - SyncRoot : object <<get>>
+    - IsSynchronized : bool <<get>>
+    - Values : ICollection <<get>>
+    - IsReadOnly : bool <<get>>
+    - IsFixedSize : bool <<get>>
+    - IsReadOnly : bool <<get>>
+    + Keys : ICollection<TKey> <<get>>
+    - Keys : ICollection <<get>>
+    + Values : ICollection<TValue> <<get>>
+    - CopyTo(array:Array, index:int) : void
+    - Debug(message:string) : void
+    - GetEnumerator() : IEnumerator
+    - Remove(key:object) : void
+    - Contains(key:object) : bool
+    - Add(key:object, value:object) : void
+    + Clear() : void
+    - GetEnumerator() : IDictionaryEnumerator
+    + Contains(item:KeyValuePair<TKey, TValue>) : bool
+    - Add(item:KeyValuePair<TKey, TValue>) : void
+    - CopyTo(array:KeyValuePair<TKey, TValue>[], arrayIndex:int) : void
+    - Remove(item:KeyValuePair<TKey, TValue>) : bool
+    + GetEnumerator() : IEnumerator<KeyValuePair<TKey, TValue>>
+    + ContainsKey(key:TKey) : bool
+    + Add(key:TKey, value:TValue) : void
+    + Remove(key:TKey) : bool
+    + TryGetValue(key:TKey, value:TValue) : bool
+}
+"IDictionary`2" "<TKey,TValue>" <|-- "DebugDictionary`2"
+IDictionary <|-- "DebugDictionary`2"
+@enduml

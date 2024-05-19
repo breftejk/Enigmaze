@@ -1,0 +1,12 @@
+@startuml
+class VariablesSaver {
+    - Awake() : void
+    - OnDestroy() : void
+    - OnApplicationQuit() : void
+    - OnApplicationPause(isPaused:bool) : void
+    + {static} instance : VariablesSaver <<get>>
+    + {static} Instantiate() : void
+}
+MonoBehaviour <|-- VariablesSaver
+ISingleton <|-- VariablesSaver
+@enduml

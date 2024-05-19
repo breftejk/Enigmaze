@@ -1,0 +1,17 @@
+@startuml
+class BackgroundWorker <<static>> {
+    {static} - BackgroundWorker()
+    - {static} <<readonly>> @lock : object
+    - {static} clearProgress : bool
+    - {static} progressId : int
+    - {static} <<readonly>> queue : ConcurrentQueue<Action>
+    + {static} progressLabel : string <<get>>
+    + {static} progressProportion : float <<get>>
+    + {static} hasProgress : bool <<get>>
+    + {static} Schedule(action:Action) : void
+    - {static} Work() : void
+    + {static} ReportProgress(title:string, progress:float) : void
+    + {static} ClearProgress() : void
+    - {static} DisplayProgress() : void
+}
+@enduml

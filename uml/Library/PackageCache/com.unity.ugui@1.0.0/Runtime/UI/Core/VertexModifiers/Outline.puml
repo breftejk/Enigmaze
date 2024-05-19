@@ -1,0 +1,7 @@
+@startuml
+class Outline {
+    # Outline()
+    + <<override>> ModifyMesh(vh:VertexHelper) : void
+}
+Shadow <|-- Outline
+@enduml

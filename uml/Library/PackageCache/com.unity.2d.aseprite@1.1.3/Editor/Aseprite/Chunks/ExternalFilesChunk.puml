@@ -1,0 +1,8 @@
+@startuml
+class ExternalFilesChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    <<internal>> ExternalFilesChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- ExternalFilesChunk
+@enduml

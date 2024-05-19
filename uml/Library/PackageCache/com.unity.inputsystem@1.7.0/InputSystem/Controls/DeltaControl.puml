@@ -1,0 +1,10 @@
+@startuml
+class DeltaControl {
+    + up : AxisControl <<get>> <<set>>
+    + down : AxisControl <<get>> <<set>>
+    + left : AxisControl <<get>> <<set>>
+    + right : AxisControl <<get>> <<set>>
+    # <<override>> FinishSetup() : void
+}
+Vector2Control <|-- DeltaControl
+@enduml

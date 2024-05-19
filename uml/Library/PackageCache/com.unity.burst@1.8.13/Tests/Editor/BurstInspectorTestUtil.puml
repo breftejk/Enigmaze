@@ -1,0 +1,5 @@
+@startuml
+class BurstInspectorTestUtil <<static>> {
+    <<internal>> {static} GetDisassemblerAndText(compileTargetName:string, debugLvl:int, targetCpu:BurstTargetCpu, textToRender:string) : BurstDisassembler
+}
+@enduml

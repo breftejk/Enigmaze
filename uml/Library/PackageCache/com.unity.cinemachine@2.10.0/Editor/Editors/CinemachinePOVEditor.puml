@@ -1,0 +1,6 @@
+@startuml
+class CinemachinePOVEditor <<sealed>> {
+    - OnEnable() : void
+}
+"BaseEditor`1" "<CinemachinePOV>" <|-- CinemachinePOVEditor
+@enduml

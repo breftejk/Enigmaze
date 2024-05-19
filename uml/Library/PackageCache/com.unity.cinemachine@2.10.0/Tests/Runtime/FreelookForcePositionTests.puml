@@ -1,0 +1,12 @@
+@startuml
+class FreelookForcePositionTests {
+    - m_Freelook : CinemachineFreeLook
+    - m_OriginalPosition : Vector3
+    - m_OriginalOrientation : Quaternion
+    + <<override>> SetUp() : void
+    + <<override>> TearDown() : void
+    {static} - RigSetups : IEnumerable <<get>>
+    + Test_Freelook_ForcePosition_Precision(rigSetup:CinemachineFreeLook.Orbit[]) : IEnumerator
+}
+CinemachineFixtureBase <|-- FreelookForcePositionTests
+@enduml

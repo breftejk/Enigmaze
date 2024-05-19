@@ -1,0 +1,7 @@
+@startuml
+class SearcherExampleComponentEditor {
+    - m_ButtonRect : Rect
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- SearcherExampleComponentEditor
+@enduml

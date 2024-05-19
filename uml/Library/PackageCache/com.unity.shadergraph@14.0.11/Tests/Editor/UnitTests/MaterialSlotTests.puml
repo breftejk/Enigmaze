@@ -1,0 +1,25 @@
+@startuml
+class MaterialSlotTests {
+    - m_Graph : GraphData
+    - m_NodeA : TestNode
+    + RunBeforeAnyTests() : void
+    + TestSetUp() : void
+    + SlotDisplayNameIsCorrect() : void
+    + CanUpdateMaterialSlotDefaultValue() : void
+    + CanUpdateMaterialSlotCurrentValue() : void
+    + MaterialSlotReturnsValidDefaultValue() : void
+}
+class TestNode {
+    + <<const>> V1In : int = 1
+    + <<const>> V2In : int = 2
+    + <<const>> V3In : int = 3
+    + <<const>> V4In : int = 4
+    + <<readonly>> slot1 : Vector1MaterialSlot
+    + <<readonly>> slot2 : Vector2MaterialSlot
+    + <<readonly>> slot3 : Vector3MaterialSlot
+    + <<readonly>> slot4 : Vector4MaterialSlot
+    + TestNode()
+}
+MaterialSlotTests +-- TestNode
+AbstractMaterialNode <|-- TestNode
+@enduml

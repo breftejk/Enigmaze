@@ -1,0 +1,14 @@
+@startuml
+class ProbeVolume <<partial>> {
+    - version : Version
+    - Awake() : void
+    + globalVolume : bool = false
+}
+enum Version {
+    Initial,
+    LocalMode,
+    Count,
+}
+MonoBehaviour <|-- ProbeVolume
+ProbeVolume +-- Version
+@enduml

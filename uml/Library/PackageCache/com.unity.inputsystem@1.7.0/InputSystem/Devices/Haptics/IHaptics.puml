@@ -1,0 +1,7 @@
+@startuml
+interface IHaptics {
+    PauseHaptics() : void
+    ResumeHaptics() : void
+    ResetHaptics() : void
+}
+@enduml

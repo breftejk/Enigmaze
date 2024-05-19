@@ -1,0 +1,59 @@
+@startuml
+class MeshVisibilityTool {
+    - m_View : MeshVisibilityToolView
+    - m_Model : MeshVisibilityToolModel
+    + skinningCache : SkinningCache <<get>>
+    + MeshVisibilityTool(s:SkinningCache)
+    + Setup() : void
+    + Dispose() : void
+    + view : VisualElement <<get>>
+    + name : string <<get>>
+    + Activate() : void
+    + Deactivate() : void
+    + isAvailable : bool <<get>>
+    + SetAvailabilityChangeCallback(callback:Action) : void
+    - OnViewModeChanged(characterMode:SkinningMode) : void
+    - OnSelectionChange(sprite:SpriteCache) : void
+    - SetAllVisibility(visibility:bool) : void
+    - SetAllMeshVisibility() : void
+    - GetAllVisibility() : bool
+}
+class MeshVisibilityToolModel {
+    - m_AllVisibility : bool = true
+    + allVisibility : bool <<get>> <<set>>
+    + {static} SetMeshVisibility(sprite:SpriteCache, visibility:bool) : void
+    + {static} GetMeshVisibility(sprite:SpriteCache) : bool
+    + ShouldDisable(sprite:SpriteCache) : bool
+    + previousVisibility : bool <<get>> <<set>> = true
+}
+class MeshVisibilityToolView {
+    + getModel : Func<MeshVisibilityToolModel>
+    + setAllVisibility : Action<bool>
+    + getAllVisibility : Func<bool>
+    + skinningCache : SkinningCache <<get>> <<set>>
+    + MeshVisibilityToolView(s:SkinningCache)
+    - InternalGetModel() : MeshVisibilityToolModel
+    + Setup(sprites:SpriteCache[]) : void
+    - InternalGetAllVisibility() : bool
+    - InternalSetAllVisibility(visibility:bool) : void
+}
+class MeshTreeView {
+    - m_Sprites : List<SpriteCache>
+    + MeshTreeView(treeViewState:TreeViewState, header:MultiColumnHeader)
+    + GetModel : Func<MeshVisibilityToolModel>
+    + Setup(sprites:SpriteCache[]) : void
+    - {static} CreateTreeViewItem(part:SpriteCache) : TreeViewItem
+    - AddTreeViewItem(rows:IList<TreeViewItem>, part:SpriteCache) : void
+    - CellGUI(cellRect:Rect, item:TreeViewItem, column:int, args:RowGUIArgs) : void
+    - DrawVisibilityCell(cellRect:Rect, item:TreeViewItem) : void
+    - DrawNameCell(cellRect:Rect, item:TreeViewItem, args:RowGUIArgs) : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    + SetSelection(sprite:SpriteCache) : void
+    # <<override>> BuildRows(root:TreeViewItem) : IList<TreeViewItem>
+}
+IVisibilityTool <|-- MeshVisibilityTool
+SkinningObject <|-- MeshVisibilityToolModel
+VisibilityToolViewBase <|-- MeshVisibilityToolView
+VisibilityTreeViewBase <|-- MeshTreeView
+@enduml

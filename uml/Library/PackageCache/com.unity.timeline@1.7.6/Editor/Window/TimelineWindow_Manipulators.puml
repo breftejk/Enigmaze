@@ -1,0 +1,9 @@
+@startuml
+class TimelineWindow <<partial>> {
+    <<readonly>> - m_PreTreeViewControl : Control
+    <<readonly>> - m_PostTreeViewControl : Control
+    <<readonly>> - m_RectangleSelect : RectangleSelect
+    <<readonly>> - m_RectangleZoom : RectangleZoom
+    - InitializeManipulators() : void
+}
+@enduml

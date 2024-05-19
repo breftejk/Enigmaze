@@ -1,0 +1,35 @@
+@startuml
+class InlineCurveResize {
+    - m_Captured : bool
+    - m_CapturedHeight : float
+    - m_CaptureMouseYPos : float
+    - m_Target : InlineCurveResizeHandle
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    + <<override>> Overlay(evt:Event, state:WindowState) : void
+}
+class TrackResize {
+    - m_Captured : bool
+    - m_NumberOfContributingTracks : int
+    - m_Target : TrackResizeHandle
+    - m_TracksToResize : List<TimelineTrackGUI>
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    + <<override>> Overlay(evt:Event, state:WindowState) : void
+    {static} - CommitExtension(trackGUI:TimelineTrackGUI) : void
+}
+class TrackDoubleClick {
+    # <<override>> DoubleClick(evt:Event, state:WindowState) : bool
+}
+class TrackShortcutManipulator {
+    # <<override>> KeyDown(evt:Event, state:WindowState) : bool
+    # <<override>> ExecuteCommand(evt:Event, state:WindowState) : bool
+    {static} - InternalExecute(evt:Event, state:WindowState) : bool
+}
+Manipulator <|-- InlineCurveResize
+Manipulator <|-- TrackResize
+Manipulator <|-- TrackDoubleClick
+Manipulator <|-- TrackShortcutManipulator
+@enduml

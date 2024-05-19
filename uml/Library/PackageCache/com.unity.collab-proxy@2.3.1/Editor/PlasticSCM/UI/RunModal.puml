@@ -1,0 +1,29 @@
+@startuml
+class RunModal <<static>> {
+    {static} - RunModal()
+    <<internal>> {static} IsAvailable() : bool
+    <<internal>> {static} Dialog(window:EditorWindow) : void
+    {static} - MakeModal(window:EditorWindow) : void
+    {static} - ShowAsUtility(window:EditorWindow) : void
+    {static} - CreateSavedGUIState() : object
+    {static} - ApplySavedGUIState(savedGUIState:object) : void
+    {static} - PopDispatcherContext(window:EditorWindow) : void
+    {static} - PushDispatcherContext(window:EditorWindow) : void
+    {static} - GetDispatcher(window:EditorWindow) : object
+    {static} - MayHaveDispatcher() : bool
+    {static} - InitializeInfo() : void
+    {static} - BuildMakeModalMethodInfo(flags:BindingFlags) : MethodInfo
+    {static} - mParentField : FieldInfo
+    {static} - mParentWindowProp : PropertyInfo
+    {static} - mMakeModalMethod : MethodInfo
+    {static} - mShowWithModeMethod : MethodInfo
+    {static} - mCreateSavedGUIState : MethodInfo
+    {static} - mApplyAndForgetMethod : MethodInfo
+    {static} - mVisualTreeProp : PropertyInfo
+    {static} - mDispatcherType : Type
+    {static} - mPushContextMethod : MethodInfo
+    {static} - mPopContextMethod : MethodInfo
+    {static} - mPanelProp : PropertyInfo
+    {static} - mDispatcherProp : PropertyInfo
+}
+@enduml

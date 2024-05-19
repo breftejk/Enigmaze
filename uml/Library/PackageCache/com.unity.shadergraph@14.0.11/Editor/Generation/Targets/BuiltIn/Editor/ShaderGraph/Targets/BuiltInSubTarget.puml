@@ -1,0 +1,15 @@
+@startuml
+abstract class BuiltInSubTarget {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<override>> Setup(context:TargetSetupContext) : void
+    # {abstract} shaderID : ShaderID <<get>>
+    + <<virtual>> identifier : string <<get>>
+    + <<virtual>> GetMetadataObject(graph:GraphDataReadOnly) : ScriptableObject
+    + <<override>> saveContext : object <<get>>
+}
+class SubShaderUtils <<static>> {
+    <<internal>> {static} PassVariant(source:PassDescriptor, pragmas:PragmaCollection) : PassDescriptor
+}
+"SubTarget`1" "<BuiltInTarget>" <|-- BuiltInSubTarget
+IHasMetadata <|-- BuiltInSubTarget
+@enduml

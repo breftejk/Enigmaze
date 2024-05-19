@@ -1,0 +1,14 @@
+@startuml
+class WeightInspectorIMGUIPanel {
+    - m_WeightInspector : WeightInspector
+    + weightInspector : WeightInspector <<get>>
+    +  <<event>> weightsChanged : Action 
+    + WeightInspectorIMGUIPanel()
+    # OnGUI() : void
+}
+class CustomUXMLFactor {
+}
+VisualElement <|-- WeightInspectorIMGUIPanel
+WeightInspectorIMGUIPanel +-- CustomUXMLFactor
+"UxmlFactory`2" "<WeightInspectorIMGUIPanel,UxmlTraits>" <|-- CustomUXMLFactor
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+class BuildPathDictionary <<static>> {
+    <<internal>> {static} ForPlatform() : Dictionary<string, T>
+}
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class PerformUndoTask {
+    - <<const>> warningThreshold : double = 1000
+    <<internal>> RevertAllDownToGroup : Action<int>
+    <<internal>> LogWarning : Action<string>
+    <<internal>> DisplayProgressBar : Action<string, string, float>
+    <<internal>> ClearProgressBar : Action
+    <<internal>> TimeNow : Func<DateTime>
+    + <<override>> Execute(testJobData:TestJobData) : IEnumerator
+}
+TestTaskBase <|-- PerformUndoTask
+@enduml

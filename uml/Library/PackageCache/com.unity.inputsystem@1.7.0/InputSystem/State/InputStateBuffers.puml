@@ -1,0 +1,37 @@
+@startuml
+struct InputStateBuffers {
+    + sizePerBuffer : uint
+    + totalSize : uint
+    + defaultStateBuffer : void*
+    + noiseMaskBuffer : void*
+    + resetMaskBuffer : void*
+    - m_AllBuffers : void*
+    <<internal>> m_PlayerStateBuffers : DoubleBuffers
+    + GetDoubleBuffersFor(updateType:InputUpdateType) : DoubleBuffers
+    <<internal>> {static} s_DefaultStateBuffer : void*
+    <<internal>> {static} s_NoiseMaskBuffer : void*
+    <<internal>> {static} s_ResetMaskBuffer : void*
+    <<internal>> {static} s_CurrentBuffers : DoubleBuffers
+    + {static} GetFrontBufferForDevice(deviceIndex:int) : void*
+    + {static} GetBackBufferForDevice(deviceIndex:int) : void*
+    + {static} SwitchTo(buffers:InputStateBuffers, update:InputUpdateType) : void
+    + AllocateAll(devices:InputDevice[], deviceCount:int) : void
+    - {static} SetUpDeviceToBufferMappings(deviceCount:int, bufferPtr:byte*, sizePerBuffer:uint, mappingTableSizePerBuffer:uint) : DoubleBuffers
+    + FreeAll() : void
+    + MigrateAll(devices:InputDevice[], deviceCount:int, oldBuffers:InputStateBuffers) : void
+    - {static} MigrateDoubleBuffer(newBuffer:DoubleBuffers, devices:InputDevice[], deviceCount:int, oldBuffer:DoubleBuffers) : void
+    - {static} MigrateSingleBuffer(newBuffer:void*, devices:InputDevice[], deviceCount:int, oldBuffer:void*) : void
+    - {static} ComputeSizeOfSingleStateBuffer(devices:InputDevice[], deviceCount:int) : uint
+    - {static} NextDeviceOffset(currentOffset:uint, device:InputDevice) : uint
+}
+struct DoubleBuffers {
+    + deviceToBufferMapping : void**
+    + valid : bool <<get>>
+    + SetFrontBuffer(deviceIndex:int, ptr:void*) : void
+    + SetBackBuffer(deviceIndex:int, ptr:void*) : void
+    + GetFrontBuffer(deviceIndex:int) : void*
+    + GetBackBuffer(deviceIndex:int) : void*
+    + SwapBuffers(deviceIndex:int) : void
+}
+InputStateBuffers +-- DoubleBuffers
+@enduml

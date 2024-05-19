@@ -1,0 +1,16 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Output <<partial>> {
+    + {static} <<readonly>> Drawer : CED.IDrawer
+    {static} - DrawerOutputMultiDisplay(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerOutputAllowDynamicResolution(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerOutputNormalizedViewPort(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - UpdateStackCamerasOutput(p:UniversalRenderPipelineSerializedCamera, updateOutputProperty:Func<Camera, bool>) : void
+    {static} - DrawerOutputTargetTexture(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerOutputHDR(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerOutputHDROutput(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerOutputMSAA(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+}
+UniversalRenderPipelineCameraUI +-- Output
+@enduml

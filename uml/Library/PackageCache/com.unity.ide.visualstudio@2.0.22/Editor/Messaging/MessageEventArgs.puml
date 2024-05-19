@@ -1,0 +1,6 @@
+@startuml
+class MessageEventArgs {
+    + Message : Message <<get>>
+    + MessageEventArgs(message:Message)
+}
+@enduml

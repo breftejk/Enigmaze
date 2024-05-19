@@ -1,0 +1,15 @@
+@startuml
+struct NeededTransform {
+    {static} - s_TransformMap : Dictionary<UnityMatrixType, NeededTransform>
+    + {static} None : NeededTransform <<get>>
+    + {static} ObjectToWorld : NeededTransform <<get>>
+    + {static} WorldToObject : NeededTransform <<get>>
+    + NeededTransform(from:NeededCoordinateSpace, to:NeededCoordinateSpace)
+    <<internal>> NeededTransform(matrix:UnityMatrixType)
+    + from : NeededCoordinateSpace
+    + to : NeededCoordinateSpace
+}
+interface IMayRequireTransform {
+    RequiresTransform(stageCapability:ShaderStageCapability) : NeededTransform[]
+}
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class UniversalRenderPipelineGlobalSettingsUI <<partial>> {
+}
+class Styles {
+    + {static} <<readonly>> renderingLayersLabel : GUIContent
+    + {static} <<readonly>> stripDebugVariantsLabel : GUIContent
+    + {static} <<readonly>> stripUnusedPostProcessingVariantsLabel : GUIContent
+    + {static} <<readonly>> stripUnusedVariantsLabel : GUIContent
+    + {static} <<readonly>> stripScreenCoordOverrideVariants : GUIContent
+}
+UniversalRenderPipelineGlobalSettingsUI +-- Styles
+@enduml

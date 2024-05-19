@@ -1,0 +1,32 @@
+@startuml
+class CodebaseSubset <<sealed>> {
+    - CodebaseSubset(types:IEnumerable<Type>, memberFilter:MemberFilter, memberTypeFilter:TypeFilter)
+    - CodebaseSubset(typeSet:IEnumerable<Type>, typeFilter:TypeFilter, memberFilter:MemberFilter, memberTypeFilter:TypeFilter)
+    - <<readonly>> @lock : object
+    - ready : bool
+    + typeSet : IEnumerable<Type> <<get>>
+    + typeFilter : TypeFilter <<get>>
+    + memberFilter : MemberFilter <<get>>
+    + memberTypeFilter : TypeFilter <<get>>
+    + types : HashSet<Type> <<get>>
+    + members : HashSet<Member> <<get>>
+    + Cache() : void
+    + ValidateType(type:Type) : bool
+    + ValidateMember(member:Member) : bool
+    + FilterMembers(type:Type) : IEnumerable<Member>
+    - {static} <<readonly>> cache : Dictionary<Query, CodebaseSubset>
+    <<internal>> {static} Get(types:IEnumerable<Type>, memberFilter:MemberFilter, memberTypeFilter:TypeFilter) : CodebaseSubset
+    <<internal>> {static} Get(typeSet:IEnumerable<Type>, typeFilter:TypeFilter, memberFilter:MemberFilter, memberTypeFilter:TypeFilter) : CodebaseSubset
+}
+struct Query {
+    + types : IEnumerable<Type> <<get>>
+    + typeSet : IEnumerable<Type> <<get>>
+    + typeFilter : TypeFilter <<get>>
+    + memberFilter : MemberFilter <<get>>
+    + memberTypeFilter : TypeFilter <<get>>
+    + Query(typeSet:IEnumerable<Type>, typeFilter:TypeFilter, memberFilter:MemberFilter, memberTypeFilter:TypeFilter)
+    + Query(types:IEnumerable<Type>, memberFilter:MemberFilter, memberTypeFilter:TypeFilter)
+    + <<override>> GetHashCode() : int
+}
+CodebaseSubset +-- Query
+@enduml

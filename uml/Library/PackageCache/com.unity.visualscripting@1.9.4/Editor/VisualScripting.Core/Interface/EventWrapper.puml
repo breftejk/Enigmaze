@@ -1,0 +1,75 @@
+@startuml
+class EventWrapper <<sealed>> {
+    - {static} e : GUIEvent <<get>>
+    + controlHint : int <<get>>
+    + control : int <<get>>
+    + EventWrapper(controlHint:int)
+    + EventWrapper(controlHint:object)
+    + EventWrapper()
+    +  <<event>> mouseCaptured : Action 
+    +  <<event>> mouseReleased : Action 
+    +  <<event>> keyboardCaptured : Action 
+    +  <<event>> keyboardReleased : Action 
+    + supportsKeyboard : bool <<get>>
+    + RegisterControl(focusType:FocusType) : void
+    - shouldReleaseMouse : bool
+    - canCaptureMouse : bool
+    - canCaptureKeyboard : bool
+    + HandleCapture(canCaptureMouse:bool, canCaptureKeyboard:bool) : void
+    + HandleRelease() : void
+    + controlsMouse : bool <<get>>
+    + controlsKeyboard : bool <<get>>
+    + {static} couldControlMouse : bool <<get>>
+    + {static} couldControlKeyboard : bool <<get>>
+    + freeType : EventType <<get>>
+    + rawType : EventType <<get>>
+    + controlType : EventType <<get>>
+    + mouseType : EventType <<get>>
+    + keyboardType : EventType <<get>>
+    + CaptureMouse() : void
+    + ReleaseMouse() : void
+    + CaptureKeyboard() : void
+    + ReleaseKeyboard() : void
+    + IsUsed : bool <<get>>
+    + IsRepaint : bool <<get>>
+    + IsLayout : bool <<get>>
+    + IsAnyMouse : bool <<get>>
+    + IsAnyMouseDown : bool <<get>>
+    + IsAnyMouseUp : bool <<get>>
+    + IsAnyMouseDrag : bool <<get>>
+    + IsMouseMove : bool <<get>>
+    + IsMouseDown(button:MouseButton) : bool
+    + IsMouseDown(button:MouseButton, modifiers:EventModifiers) : bool
+    + IsMouseUp(button:MouseButton) : bool
+    + IsMouseUp(button:MouseButton, modifiers:EventModifiers) : bool
+    + IsMouseDrag(button:MouseButton) : bool
+    + IsMouseDrag(button:MouseButton, modifiers:EventModifiers) : bool
+    + IsAnyKeyboard : bool <<get>>
+    + IsAnyKeyDown : bool <<get>>
+    + IsAnyKeyUp : bool <<get>>
+    + IsKeyDown(key:KeyCode) : bool
+    + IsKeyDown(key:KeyCode, modifiers:EventModifiers) : bool
+    + IsKeyUp(key:KeyCode) : bool
+    + IsKeyUp(key:KeyCode, modifiers:EventModifiers) : bool
+    + IsContextClick : bool <<get>>
+    + IsValidateCommand(name:string) : bool
+    + IsExecuteCommand(name:string) : bool
+    + IsFree(type:EventType) : bool
+    + IsRaw(type:EventType) : bool
+    + Use() : void
+    + TryUse() : void
+    + ValidateCommand() : void
+    + mousePosition : Vector2 <<get>>
+    + mouseDelta : Vector2 <<get>>
+    + clickCount : int <<get>>
+    + keyCode : KeyCode <<get>>
+    + commandName : string <<get>>
+    + modifiers : EventModifiers <<get>>
+    + alt : bool <<get>>
+    + shift : bool <<get>>
+    + ctrl : bool <<get>>
+    + cmd : bool <<get>>
+    + ctrlOrCmd : bool <<get>>
+    + mouseButton : MouseButton <<get>>
+}
+@enduml

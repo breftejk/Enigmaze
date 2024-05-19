@@ -1,0 +1,10 @@
+@startuml
+class CreateList <<sealed>> {
+    # <<override>> minInputCount : int <<get>>
+    + <<override>> inputCount : int <<get>> <<set>>
+    + list : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Create(flow:Flow) : IList
+}
+"MultiInputUnit`1" "<object>" <|-- CreateList
+@enduml

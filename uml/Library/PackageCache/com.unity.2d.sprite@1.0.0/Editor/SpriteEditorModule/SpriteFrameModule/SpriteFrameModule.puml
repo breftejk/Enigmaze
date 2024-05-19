@@ -1,0 +1,51 @@
+@startuml
+class SpriteFrameModule <<partial>> {
+    - m_AlphaPixelCache : bool[]
+    - m_SpriteFrameModuleContext : SpriteFrameModuleContext
+    - <<const>> kOverlapTolerance : float = 0.00001f
+    - m_SpriteNameStringBuilder : StringBuilder
+    - m_PotentialRects : List<Rect>
+    + potentialRects : List<Rect> <<set>>
+    + SpriteFrameModule(sw:ISpriteEditor, es:IEventSystem, us:IUndoSystem, ad:IAssetDatabase)
+    {static} - ShortcutTrim(args:ShortcutArguments) : void
+    + <<override>> OnModuleActivate() : void
+    + <<override>> OnModuleDeactivate() : void
+    + {static} GetSpriteImportMode(dataProvider:ISpriteEditorDataProvider) : SpriteImportMode
+    + <<override>> CanBeActivated() : bool
+    - GenerateSpriteNameWithIndex(startIndex:int) : string
+    - SortRects(rects:List<Rect>) : List<Rect>
+    - RectSweep(rects:List<Rect>, sweepRect:Rect) : List<Rect>
+    - AddSprite(frame:Rect, alignment:int, pivot:Vector2, slicingMethod:AutoSlicingMethod, originalCount:int, nameIndex:int) : int
+    - GetExistingOverlappingSprite(rect:Rect, originalCount:int, bestFit:bool) : int
+    - PixelHasAlpha(x:int, y:int, texture:UnityTexture2D) : bool
+    - AddSprite(rect:Rect, alignment:int, pivot:Vector2, name:string, border:Vector4) : int
+    - GetSpriteNamePrefix() : string
+    + DoAutomaticSlicing(minimumSpriteSize:int, alignment:int, pivot:Vector2, slicingMethod:AutoSlicingMethod) : void
+    - GetTextureToSlice() : UnityTexture2D
+    + GetGridRects(size:Vector2, offset:Vector2, padding:Vector2, keepEmptyRects:bool) : IEnumerable<Rect>
+    + DoGridSlicing(size:Vector2, offset:Vector2, padding:Vector2, alignment:int, pivot:Vector2, slicingMethod:AutoSlicingMethod, keepEmptyRects:bool) : void
+    + GetIsometricRects(size:Vector2, offset:Vector2, isAlternate:bool, keepEmptyRects:bool) : IEnumerable<Rect>
+    + DoIsometricGridSlicing(size:Vector2, offset:Vector2, alignment:int, pivot:Vector2, slicingMethod:AutoSlicingMethod, keepEmptyRects:bool, isAlternate:bool) : void
+    + ScaleSpriteRect(r:Rect) : void
+    + TrimAlpha() : void
+    + DuplicateSprite() : void
+    + CreateSprite(rect:Rect) : void
+    + DeleteSprite() : void
+    + IsOnlyUsingDefaultNamedSpriteRects() : bool
+}
+enum AutoSlicingMethod {
+    DeleteAll= 0,
+    Smart= 1,
+    Safe= 2,
+}
+class SpriteFrameModuleContext {
+    - m_SpriteFrameModule : SpriteFrameModule
+    + SpriteFrameModuleContext(spriteFrame:SpriteFrameModule)
+    + active : bool <<get>>
+    + spriteFrameModule : SpriteFrameModule <<get>>
+}
+SpriteFrameModuleBase <|-- SpriteFrameModule
+SpriteFrameModule +-- AutoSlicingMethod
+SpriteFrameModule +-- SpriteFrameModuleContext
+IShortcutToolContext <|-- SpriteFrameModuleContext
+@enduml

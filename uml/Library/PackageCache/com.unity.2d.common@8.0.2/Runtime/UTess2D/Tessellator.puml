@@ -1,0 +1,74 @@
+@startuml
+struct Tessellator {
+    - m_Edges : NativeArray<int2>
+    - m_Stars : NativeArray<UStar>
+    - m_Cells : Array<int3>
+    - m_CellCount : int
+    - m_ILArray : NativeArray<int>
+    - m_IUArray : NativeArray<int>
+    - m_SPArray : NativeArray<int>
+    - m_NumEdges : int
+    - m_NumHulls : int
+    - m_NumPoints : int
+    - m_StarCount : int
+    - m_Flags : NativeArray<int>
+    - m_Neighbors : NativeArray<int>
+    - m_Constraints : NativeArray<int>
+    - m_Allocator : Allocator
+    {static} - FindSplit(hull:UHull, edge:UEvent) : float
+    - SetAllocator(allocator:Allocator) : void
+    - AddPoint(hulls:NativeArray<UHull>, hullCount:int, points:NativeArray<float2>, p:float2, idx:int) : bool
+    {static} - InsertHull(Hulls:NativeArray<UHull>, Pos:int, Count:int, Value:UHull) : void
+    {static} - EraseHull(Hulls:NativeArray<UHull>, Pos:int, Count:int) : void
+    - SplitHulls(hulls:NativeArray<UHull>, hullCount:int, points:NativeArray<float2>, evt:UEvent) : bool
+    - MergeHulls(hulls:NativeArray<UHull>, hullCount:int, points:NativeArray<float2>, evt:UEvent) : bool
+    {static} - InsertUniqueEdge(edges:NativeArray<int2>, e:int2, edgeCount:int) : void
+    - PrepareDelaunay(edges:NativeArray<int2>, edgeCount:int) : void
+    - OppositeOf(a:int, b:int) : int
+    - FindConstraint(a:int, b:int) : int
+    - AddTriangle(i:int, j:int, k:int) : void
+    - RemovePair(r:int, j:int, k:int) : void
+    - RemoveTriangle(i:int, j:int, k:int) : void
+    - EdgeFlip(i:int, j:int) : void
+    - Flip(points:NativeArray<float2>, stack:Array<int>, stackCount:int, a:int, b:int, x:int) : bool
+    - GetCells(count:int) : Array<int3>
+    <<internal>> ApplyDelaunay(points:NativeArray<float2>, edges:NativeArray<int2>) : bool
+    - FindNeighbor(cells:Array<int3>, count:int, a:int, b:int, c:int) : int
+    - Constrain(count:int) : Array<int3>
+    <<internal>> RemoveExterior(cellCount:int) : NativeArray<int3>
+    <<internal>> RemoveInterior(cellCount:int) : NativeArray<int3>
+    <<internal>> Triangulate(points:NativeArray<float2>, pointCount:int, edges:NativeArray<int2>, edgeCount:int) : bool
+    <<internal>> {static} Tessellate(allocator:Allocator, pgPoints:NativeArray<float2>, pgPointCount:int, pgEdges:NativeArray<int2>, pgEdgeCount:int, outputVertices:NativeArray<float2>, vertexCount:int, outputIndices:NativeArray<int>, indexCount:int) : bool
+    <<internal>> Cleanup() : void
+}
+struct TestHullPointL {
+    + Test(h:UHull, p:float2, t:float) : bool
+}
+struct TestHullPointU {
+    + Test(h:UHull, p:float2, t:float) : bool
+}
+struct TestHullEventLe {
+    + Test(h:UHull, p:UEvent, t:float) : bool
+}
+struct TestHullEventE {
+    + Test(h:UHull, p:UEvent, t:float) : bool
+}
+struct TestEdgePointE {
+    + Test(h:int2, p:int2, t:float) : bool
+}
+struct TestCellE {
+    + Test(h:int3, p:int3, t:float) : bool
+}
+Tessellator +-- TestHullPointL
+"ICondition2`2" "<UHull,float2>" <|-- TestHullPointL
+Tessellator +-- TestHullPointU
+"ICondition2`2" "<UHull,float2>" <|-- TestHullPointU
+Tessellator +-- TestHullEventLe
+"ICondition2`2" "<UHull,UEvent>" <|-- TestHullEventLe
+Tessellator +-- TestHullEventE
+"ICondition2`2" "<UHull,UEvent>" <|-- TestHullEventE
+Tessellator +-- TestEdgePointE
+"ICondition2`2" "<int2,int2>" <|-- TestEdgePointE
+Tessellator +-- TestCellE
+"ICondition2`2" "<int3,int3>" <|-- TestCellE
+@enduml

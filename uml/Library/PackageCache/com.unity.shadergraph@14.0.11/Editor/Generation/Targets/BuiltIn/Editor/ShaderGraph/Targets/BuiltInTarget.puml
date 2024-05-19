@@ -1,0 +1,215 @@
+@startuml
+enum MaterialType {
+    Lit,
+    UnLit,
+}
+enum WorkflowMode {
+    Specular,
+    Metallic,
+}
+enum SurfaceType {
+    Opaque,
+    Transparent,
+}
+enum ZWriteControl {
+    Auto= 0,
+    ForceEnabled= 1,
+    ForceDisabled= 2,
+}
+enum ZTestMode {
+    Never= 1,
+    Less= 2,
+    Equal= 3,
+    LEqual= 4,
+    Greater= 5,
+    NotEqual= 6,
+    GEqual= 7,
+    Always= 8,
+}
+enum AlphaMode {
+    Alpha,
+    Premultiply,
+    Additive,
+    Multiply,
+}
+enum RenderFace {
+    Front= 2,
+    Back= 1,
+    Both= 0,
+}
+class BuiltInTarget <<sealed>> {
+    + <<override>> latestVersion : int <<get>>
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<const>> kPipelineTag : string = "BuiltInPipeline"
+    + <<const>> kLitMaterialTypeTag : string = "\"BuiltInMaterialType\" = \"Lit\""
+    + <<const>> kUnlitMaterialTypeTag : string = "\"BuiltInMaterialType\" = \"Unlit\""
+    + {static} <<readonly>> kSharedTemplateDirectories : string[]
+    + <<const>> kTemplatePath : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Templates/ShaderPass.template"
+    - m_SubTargets : List<SubTarget>
+    - m_SubTargetNames : List<string>
+    - activeSubTargetIndex : int <<get>>
+    - m_SubTargetField : PopupField<string>
+    - m_CustomGUIField : TextField
+    - m_ActiveSubTarget : JsonData<SubTarget>
+    - m_AllowMaterialOverride : bool = false
+    - m_SurfaceType : SurfaceType
+    - m_ZWriteControl : ZWriteControl
+    - m_ZTestMode : ZTestMode
+    - m_AlphaMode : AlphaMode
+    - m_RenderFace : RenderFace
+    - m_AlphaClip : bool = false
+    - m_CustomEditorGUI : string
+    <<internal>> <<override>> ignoreCustomInterpolators : bool <<get>>
+    <<internal>> <<override>> padCustomInterpolatorLimit : int <<get>>
+    + BuiltInTarget()
+    + renderType : string <<get>>
+    + renderQueue : string <<get>>
+    + activeSubTarget : SubTarget <<get>> <<set>>
+    + allowMaterialOverride : bool <<get>> <<set>>
+    + surfaceType : SurfaceType <<get>> <<set>>
+    + zWriteControl : ZWriteControl <<get>> <<set>>
+    + zTestMode : ZTestMode <<get>> <<set>>
+    + alphaMode : AlphaMode <<get>> <<set>>
+    + renderFace : RenderFace <<get>> <<set>>
+    + alphaClip : bool <<get>> <<set>>
+    + customEditorGUI : string <<get>> <<set>>
+    + mayWriteDepth : bool <<get>>
+    + <<override>> IsActive() : bool
+    + <<override>> IsNodeAllowedByTarget(nodeType:Type) : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> ProcessPreviewMaterial(material:Material) : void
+    + <<override>> saveContext : object <<get>>
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + AddDefaultMaterialOverrideGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + GetDefaultSurfacePropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + TrySetActiveSubTarget(subTargetType:Type) : bool
+    + <<override>> WorksWithSRP(scriptableRenderPipeline:RenderPipelineAsset) : bool
+    + <<override>> OnAfterDeserialize(json:string) : void
+    - identifier : string <<get>>
+    - GetMetadataObject(graph:GraphDataReadOnly) : ScriptableObject
+}
+class CorePasses <<static>> {
+    <<internal>> {static} AddSurfaceTypeControlToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddAlphaPremultiplyControlToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddAlphaClipControlToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddTargetSurfaceControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddCommonPassSurfaceControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    + {static} DepthOnly(target:BuiltInTarget) : PassDescriptor
+    + {static} ShadowCaster(target:BuiltInTarget) : PassDescriptor
+    + {static} SceneSelection(target:BuiltInTarget) : PassDescriptor
+    + {static} ScenePicking(target:BuiltInTarget) : PassDescriptor
+}
+class CoreBlockMasks {
+    + {static} <<readonly>> Vertex : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentAlphaOnly : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentColorAlpha : BlockFieldDescriptor[]
+}
+class CoreStructCollections <<static>> {
+    + {static} <<readonly>> Default : StructCollection
+}
+class CoreRequiredFields <<static>> {
+    + {static} <<readonly>> ShadowCaster : FieldCollection
+}
+class CoreFieldDependencies <<static>> {
+    + {static} <<readonly>> Default : DependencyCollection
+}
+class CoreRenderStates <<static>> {
+    + {static} RenderFaceToCull(renderFace:RenderFace) : Cull
+    + {static} ZWriteControlToZWrite(zWriteControl:ZWriteControl, surfaceType:SurfaceType) : ZWrite
+    + {static} AddUberSwitchedZTest(target:BuiltInTarget, renderStates:RenderStateCollection) : void
+    + {static} AddUberSwitchedZWrite(target:BuiltInTarget, renderStates:RenderStateCollection) : void
+    + {static} AddUberSwitchedCull(target:BuiltInTarget, renderStates:RenderStateCollection) : void
+    + {static} AddUberSwitchedBlend(target:BuiltInTarget, renderStates:RenderStateCollection) : void
+    + {static} <<readonly>> MaterialControlledDefault : RenderStateCollection
+    + {static} Default(target:BuiltInTarget) : RenderStateCollection
+    + {static} ForwardAdd(target:BuiltInTarget) : RenderStateCollection
+    + {static} <<readonly>> Meta : RenderStateCollection
+    + {static} ShadowCaster(target:BuiltInTarget) : RenderStateCollection
+    + {static} DepthOnly(target:BuiltInTarget) : RenderStateCollection
+    + {static} SceneSelection(target:BuiltInTarget) : RenderStateCollection
+    + {static} ScenePicking(target:BuiltInTarget) : RenderStateCollection
+}
+class CorePragmas <<static>> {
+    + {static} <<readonly>> Default : PragmaCollection
+    + {static} <<readonly>> Instanced : PragmaCollection
+    + {static} <<readonly>> Forward : PragmaCollection
+    + {static} <<readonly>> ForwardAdd : PragmaCollection
+    + {static} <<readonly>> Deferred : PragmaCollection
+    + {static} <<readonly>> ShadowCaster : PragmaCollection
+}
+class CoreIncludes <<static>> {
+    <<const>> - kColor : string = "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+    <<const>> - kTexture : string = "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+    <<const>> - kCore : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/Core.hlsl"
+    <<const>> - kLighting : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/Lighting.hlsl"
+    <<const>> - kGraphFunctions : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/ShaderGraphFunctions.hlsl"
+    <<const>> - kVaryings : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/Varyings.hlsl"
+    <<const>> - kShaderPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+    <<const>> - kDepthOnlyPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/DepthOnlyPass.hlsl"
+    <<const>> - kShadowCasterPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/ShadowCasterPass.hlsl"
+    <<const>> - kShims : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/Shim/Shims.hlsl"
+    <<const>> - kLegacySurfaceVertex : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/LegacySurfaceVertex.hlsl"
+    + {static} <<readonly>> CorePregraph : IncludeCollection
+    + {static} <<readonly>> ShaderGraphPregraph : IncludeCollection
+    + {static} <<readonly>> CorePostgraph : IncludeCollection
+    + {static} <<readonly>> DepthOnly : IncludeCollection
+    + {static} <<readonly>> ShadowCaster : IncludeCollection
+    + {static} <<readonly>> SceneSelection : IncludeCollection
+    + {static} <<readonly>> ScenePicking : IncludeCollection
+}
+class CoreDefines <<static>> {
+    + {static} <<readonly>> UseLegacySpriteBlocks : DefineCollection
+    + {static} <<readonly>> BuiltInTargetAPI : DefineCollection
+    + {static} <<readonly>> SceneSelection : DefineCollection
+    + {static} <<readonly>> ScenePicking : DefineCollection
+}
+class CoreKeywordDescriptors <<static>> {
+    + {static} <<readonly>> Lightmap : KeywordDescriptor
+    + {static} <<readonly>> DirectionalLightmapCombined : KeywordDescriptor
+    + {static} <<readonly>> SampleGI : KeywordDescriptor
+    + {static} <<readonly>> AlphaTestOn : KeywordDescriptor
+    + {static} <<readonly>> AlphaClip : KeywordDescriptor
+    + {static} <<readonly>> SurfaceTypeTransparent : KeywordDescriptor
+    + {static} <<readonly>> AlphaPremultiplyOn : KeywordDescriptor
+    + {static} <<readonly>> MainLightShadows : KeywordDescriptor
+    + {static} <<readonly>> CastingPunctualLightShadow : KeywordDescriptor
+    + {static} <<readonly>> AdditionalLights : KeywordDescriptor
+    + {static} <<readonly>> AdditionalLightShadows : KeywordDescriptor
+    + {static} <<readonly>> ShadowsSoft : KeywordDescriptor
+    + {static} <<readonly>> MixedLightingSubtractive : KeywordDescriptor
+    + {static} <<readonly>> LightmapShadowMixing : KeywordDescriptor
+    + {static} <<readonly>> ShadowsShadowmask : KeywordDescriptor
+    + {static} <<readonly>> SmoothnessChannel : KeywordDescriptor
+    + {static} <<readonly>> ShapeLightType0 : KeywordDescriptor
+    + {static} <<readonly>> ShapeLightType1 : KeywordDescriptor
+    + {static} <<readonly>> ShapeLightType2 : KeywordDescriptor
+    + {static} <<readonly>> ShapeLightType3 : KeywordDescriptor
+    + {static} <<readonly>> UseLegacySpriteBlocks : KeywordDescriptor
+    + {static} <<readonly>> BuiltInTargetAPI : KeywordDescriptor
+    + {static} <<readonly>> SceneSelectionPass : KeywordDescriptor
+    + {static} <<readonly>> ScenePickingPass : KeywordDescriptor
+}
+class CoreKeywords <<static>> {
+    + {static} <<readonly>> ShadowCaster : KeywordCollection
+}
+class CoreFields <<static>> {
+    + {static} <<readonly>> UseLegacySpriteBlocks : FieldDescriptor
+}
+class CoreCustomInterpDescriptors <<static>> {
+    + {static} <<readonly>> Common : CustomInterpSubGen.Collection
+}
+class Uniforms <<static>> {
+    + {static} <<readonly>> srcBlend : string
+    + {static} <<readonly>> dstBlend : string
+    + {static} <<readonly>> cullMode : string
+    + {static} <<readonly>> zWrite : string
+    + {static} <<readonly>> zTest : string
+}
+Target <|-- BuiltInTarget
+IHasMetadata <|-- BuiltInTarget
+CoreRenderStates +-- Uniforms
+@enduml

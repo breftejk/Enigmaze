@@ -1,0 +1,9 @@
+@startuml
+class ContentSizeFitterEditor {
+    - m_HorizontalFit : SerializedProperty
+    - m_VerticalFit : SerializedProperty
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+SelfControllerEditor <|-- ContentSizeFitterEditor
+@enduml

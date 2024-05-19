@@ -1,0 +1,38 @@
+@startuml
+class TimelinePanManipulator {
+    <<const>> - k_MaxPanSpeed : float = 50.0f
+    - m_Active : bool
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    # <<override>> MouseWheel(evt:Event, state:WindowState) : bool
+    {static} - Pan(evt:Event, state:WindowState) : bool
+}
+class TimelineZoomManipulator {
+    - m_MouseDownPos : Vector2
+    - m_FocalTime : float
+    - m_LastMouseMoveX : float
+    - m_WheelUsedLast : bool
+    - TimelineZoomManipulator()
+    + {static} <<readonly>> Instance : TimelineZoomManipulator
+    <<internal>> DoZoom(zoomFactor:float) : void
+    {static} - DoZoom(zoomFactor:float, refRange:Vector2, focalTime:float) : void
+    <<internal>> {static} InvalidateWheelZoom() : void
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseWheel(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    {static} - PixelToZoom(x:float) : float
+}
+class TimelineShortcutManipulator {
+    # <<override>> ValidateCommand(evt:Event, state:WindowState) : bool
+    # <<override>> ExecuteCommand(evt:Event, state:WindowState) : bool
+}
+class InlineCurvesShortcutManipulator {
+    # <<override>> ExecuteCommand(evt:Event, state:WindowState) : bool
+    # <<override>> KeyDown(evt:Event, state:WindowState) : bool
+}
+Manipulator <|-- TimelinePanManipulator
+Manipulator <|-- TimelineZoomManipulator
+Manipulator <|-- TimelineShortcutManipulator
+Manipulator <|-- InlineCurvesShortcutManipulator
+@enduml

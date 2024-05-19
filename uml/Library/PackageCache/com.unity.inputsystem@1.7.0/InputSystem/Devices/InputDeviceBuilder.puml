@@ -1,0 +1,47 @@
+@startuml
+struct InputDeviceBuilder {
+    + Setup(layout:InternedString, variants:InternedString, deviceDescription:InputDeviceDescription) : void
+    + Finish() : InputDevice
+    + Dispose() : void
+    - m_Device : InputDevice
+    - m_LayoutCacheRef : InputControlLayout.CacheRefInstance
+    - m_ChildControlOverrides : Dictionary<string, InputControlLayout.ControlItem>
+    - m_StateOffsetToControlMap : List<uint>
+    - m_StringBuilder : StringBuilder
+    - Reset() : void
+    - InstantiateLayout(layout:InternedString, variants:InternedString, name:InternedString, parent:InputControl) : InputControl
+    - InstantiateLayout(layout:InputControlLayout, variants:InternedString, name:InternedString, parent:InputControl) : InputControl
+    - <<const>> kSizeForControlUsingStateFromOtherControl : uint
+    - AddChildControls(layout:InputControlLayout, variants:InternedString, parent:InputControl, haveChildrenUsingStateFromOtherControls:bool) : void
+    - AddChildControl(layout:InputControlLayout, variants:InternedString, parent:InputControl, haveChildrenUsingStateFromOtherControls:bool, controlItem:InputControlLayout.ControlItem, childIndex:int, nameOverride:string) : InputControl
+    - InsertChildControlOverride(parent:InputControl, controlItem:InputControlLayout.ControlItem) : void
+    - ChildControlOverridePath(parent:InputControl, controlName:InternedString) : string
+    - AddChildControlIfMissing(layout:InputControlLayout, variants:InternedString, parent:InputControl, haveChildrenUsingStateFromOtherControls:bool, controlItem:InputControlLayout.ControlItem) : void
+    - InsertChildControl(layout:InputControlLayout, variant:InternedString, parent:InputControl, haveChildrenUsingStateFromOtherControls:bool, controlItem:InputControlLayout.ControlItem) : InputControl
+    - {static} ApplyUseStateFrom(parent:InputControl, controlItem:InputControlLayout.ControlItem, layout:InputControlLayout) : void
+    - {static} ShiftChildIndicesInHierarchyOneUp(device:InputDevice, startIndex:int, exceptControl:InputControl) : void
+    - SetDisplayName(control:InputControl, longDisplayNameFromLayout:string, shortDisplayNameFromLayout:string, shortName:bool) : void
+    - {static} AddParentDisplayNameRecursive(control:InputControl, stringBuilder:StringBuilder, shortName:bool) : void
+    - {static} AddProcessors(control:InputControl, controlItem:InputControlLayout.ControlItem, layoutName:string) : void
+    - {static} SetFormat(control:InputControl, controlItem:InputControlLayout.ControlItem) : void
+    - {static} FindOrLoadLayout(name:string) : InputControlLayout
+    - {static} ComputeStateLayout(control:InputControl) : void
+    - FinalizeControlHierarchy() : void
+    - FinalizeControlHierarchyRecursive(control:InputControl, controlIndex:int, allControls:InputControl[], noisy:bool, dontReset:bool, controlIndiciesNextFreeIndex:int) : void
+    - InsertControlBitRangeNode(parent:InputDevice.ControlBitRangeNode, control:InputControl, controlIndiciesNextFreeIndex:int, startOffset:ushort) : void
+    - GetBestMidPoint(parent:InputDevice.ControlBitRangeNode, startOffset:ushort) : ushort
+    - AddControlToNode(control:InputControl, controlIndiciesNextFreeIndex:int, nodeIndex:int) : void
+    - AddChildren(parent:InputDevice.ControlBitRangeNode, left:InputDevice.ControlBitRangeNode, right:InputDevice.ControlBitRangeNode) : void
+    - GetControlIndex(control:InputControl) : ushort
+    - {static} s_Instance : InputDeviceBuilder
+    - {static} s_InstanceRef : int
+    <<internal>> {static} instance : ref InputDeviceBuilder <<get>>
+    <<internal>> {static} Ref() : RefInstance
+}
+struct RefInstance {
+    + Dispose() : void
+}
+IDisposable <|-- InputDeviceBuilder
+InputDeviceBuilder +-- RefInstance
+IDisposable <|-- RefInstance
+@enduml

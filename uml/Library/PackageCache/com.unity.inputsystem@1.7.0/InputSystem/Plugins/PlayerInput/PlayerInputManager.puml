@@ -1,0 +1,64 @@
+@startuml
+class PlayerInputManager {
+    + <<const>> PlayerJoinedMessage : string = "OnPlayerJoined"
+    + <<const>> PlayerLeftMessage : string = "OnPlayerLeft"
+    + splitScreen : bool <<get>> <<set>>
+    + maintainAspectRatioInSplitScreen : bool <<get>>
+    + fixedNumberOfSplitScreens : int <<get>>
+    + splitScreenArea : Rect <<get>>
+    + playerCount : int <<get>>
+    + maxPlayerCount : int <<get>>
+    + joiningEnabled : bool <<get>>
+    + joinBehavior : PlayerJoinBehavior <<get>> <<set>>
+    + joinAction : InputActionProperty <<get>> <<set>>
+    + notificationBehavior : PlayerNotifications <<get>> <<set>>
+    + playerJoinedEvent : PlayerJoinedEvent <<get>>
+    + playerLeftEvent : PlayerLeftEvent <<get>>
+    + playerPrefab : GameObject <<get>> <<set>>
+    + {static} instance : PlayerInputManager <<get>>
+    + EnableJoining() : void
+    + DisableJoining() : void
+    <<internal>> JoinPlayerFromUI() : void
+    + JoinPlayerFromAction(context:InputAction.CallbackContext) : void
+    + JoinPlayerFromActionIfNotAlreadyJoined(context:InputAction.CallbackContext) : void
+    + JoinPlayer(playerIndex:int, splitScreenIndex:int, controlScheme:string, pairWithDevice:InputDevice) : PlayerInput
+    + JoinPlayer(playerIndex:int, splitScreenIndex:int, controlScheme:string, pairWithDevices:InputDevice[]) : PlayerInput
+    <<internal>> m_NotificationBehavior : PlayerNotifications
+    <<internal>> m_MaxPlayerCount : int
+    <<internal>> m_AllowJoining : bool = true
+    <<internal>> m_JoinBehavior : PlayerJoinBehavior
+    <<internal>> m_PlayerJoinedEvent : PlayerJoinedEvent
+    <<internal>> m_PlayerLeftEvent : PlayerLeftEvent
+    <<internal>> m_JoinAction : InputActionProperty
+    <<internal>> m_PlayerPrefab : GameObject
+    <<internal>> m_SplitScreen : bool
+    <<internal>> m_MaintainAspectRatioInSplitScreen : bool
+    <<internal>> m_FixedNumberOfSplitScreens : int
+    <<internal>> m_SplitScreenRect : Rect
+    - m_JoinActionDelegateHooked : bool
+    - m_UnpairedDeviceUsedDelegateHooked : bool
+    - m_JoinActionDelegate : Action<InputAction.CallbackContext>
+    - m_UnpairedDeviceUsedDelegate : Action<InputControl, InputEventPtr>
+    - m_PlayerJoinedCallbacks : CallbackArray<Action<PlayerInput>>
+    - m_PlayerLeftCallbacks : CallbackArray<Action<PlayerInput>>
+    <<internal>> {static} messages : string[] <<get>>
+    - CheckIfPlayerCanJoin(playerIndex:int) : bool
+    - OnUnpairedDeviceUsed(control:InputControl, eventPtr:InputEventPtr) : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - UpdateSplitScreen() : void
+    - IsDeviceUsableWithPlayerActions(device:InputDevice) : bool
+    - ValidateInputActionAsset() : void
+    <<internal>> NotifyPlayerJoined(player:PlayerInput) : void
+    <<internal>> NotifyPlayerLeft(player:PlayerInput) : void
+}
+class PlayerJoinedEvent {
+}
+class PlayerLeftEvent {
+}
+MonoBehaviour <|-- PlayerInputManager
+PlayerInputManager +-- PlayerJoinedEvent
+"UnityEvent`1" "<PlayerInput>" <|-- PlayerJoinedEvent
+PlayerInputManager +-- PlayerLeftEvent
+"UnityEvent`1" "<PlayerInput>" <|-- PlayerLeftEvent
+@enduml

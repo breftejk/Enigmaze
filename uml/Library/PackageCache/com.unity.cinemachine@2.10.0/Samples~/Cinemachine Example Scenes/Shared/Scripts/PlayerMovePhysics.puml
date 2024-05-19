@@ -1,0 +1,14 @@
+@startuml
+class PlayerMovePhysics {
+    + speed : float = 5
+    + worldDirection : bool = true
+    + rotatePlayer : bool = true
+    + spaceAction : Action
+    + enterAction : Action
+    - rb : Rigidbody
+    - Start() : void
+    - OnEnable() : void
+    - FixedUpdate() : void
+}
+MonoBehaviour <|-- PlayerMovePhysics
+@enduml

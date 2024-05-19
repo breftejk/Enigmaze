@@ -1,0 +1,11 @@
+@startuml
+class ClearList <<sealed>> {
+    + enter : ControlInput <<get>>
+    + listInput : ValueInput <<get>>
+    + listOutput : ValueOutput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Clear(flow:Flow) : ControlOutput
+}
+Unit <|-- ClearList
+@enduml

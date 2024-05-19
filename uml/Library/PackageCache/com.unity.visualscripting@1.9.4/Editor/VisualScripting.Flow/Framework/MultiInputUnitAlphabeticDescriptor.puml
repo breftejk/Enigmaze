@@ -1,0 +1,13 @@
+@startuml
+class MultiInputUnitAlphabeticDescriptor {
+    + MultiInputUnitAlphabeticDescriptor(unit:IMultiInputUnit)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+class MultiInputUnitAlphabeticOption {
+    + MultiInputUnitAlphabeticOption()
+    + MultiInputUnitAlphabeticOption(unit:IMultiInputUnit)
+    # <<override>> ShowValueInputsInFooter() : bool
+}
+"UnitDescriptor`1" "<IMultiInputUnit>" <|-- MultiInputUnitAlphabeticDescriptor
+"UnitOption`1" "<IMultiInputUnit>" <|-- MultiInputUnitAlphabeticOption
+@enduml

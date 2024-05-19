@@ -1,0 +1,67 @@
+@startuml
+struct Bitwise {
+    <<internal>> {static} AlignDown(value:int, alignPow2:int) : int
+    <<internal>> {static} AlignUp(value:int, alignPow2:int) : int
+    <<internal>> {static} FromBool(value:bool) : int
+    <<internal>> {static} ExtractBits(input:uint, pos:int, mask:uint) : uint
+    <<internal>> {static} ReplaceBits(input:uint, pos:int, mask:uint, value:uint) : uint
+    <<internal>> {static} SetBits(input:uint, pos:int, mask:uint, value:bool) : uint
+    <<internal>> {static} ExtractBits(input:ulong, pos:int, mask:ulong) : ulong
+    <<internal>> {static} ReplaceBits(input:ulong, pos:int, mask:ulong, value:ulong) : ulong
+    <<internal>> {static} SetBits(input:ulong, pos:int, mask:ulong, value:bool) : ulong
+    <<internal>> {static} lzcnt(value:byte) : int
+    <<internal>> {static} tzcnt(value:byte) : int
+    <<internal>> {static} lzcnt(value:ushort) : int
+    <<internal>> {static} tzcnt(value:ushort) : int
+    {static} - FindUlong(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    {static} - FindUint(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    {static} - FindUshort(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    {static} - FindByte(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    {static} - FindUpto14bits(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    {static} - FindUpto6bits(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    <<internal>> {static} FindWithBeginEnd(ptr:ulong*, beginBit:int, endBit:int, numBits:int) : int
+    <<internal>> {static} Find(ptr:ulong*, pos:int, count:int, numBits:int) : int
+}
+struct BitField32 {
+    + Value : uint
+    + BitField32(initialValue:uint)
+    + Clear() : void
+    + SetBits(pos:int, value:bool) : void
+    + SetBits(pos:int, value:bool, numBits:int) : void
+    + GetBits(pos:int, numBits:int) : uint
+    + IsSet(pos:int) : bool
+    + TestNone(pos:int, numBits:int) : bool
+    + TestAny(pos:int, numBits:int) : bool
+    + TestAll(pos:int, numBits:int) : bool
+    + CountBits() : int
+    + CountLeadingZeros() : int
+    + CountTrailingZeros() : int
+    {static} - CheckArgs(pos:int, numBits:int) : void
+}
+class BitField32DebugView <<sealed>> {
+    - BitField : BitField32
+    + BitField32DebugView(bitfield:BitField32)
+    + Bits : bool[] <<get>>
+}
+struct BitField64 {
+    + Value : ulong
+    + BitField64(initialValue:ulong)
+    + Clear() : void
+    + SetBits(pos:int, value:bool) : void
+    + SetBits(pos:int, value:bool, numBits:int) : void
+    + GetBits(pos:int, numBits:int) : ulong
+    + IsSet(pos:int) : bool
+    + TestNone(pos:int, numBits:int) : bool
+    + TestAny(pos:int, numBits:int) : bool
+    + TestAll(pos:int, numBits:int) : bool
+    + CountBits() : int
+    + CountLeadingZeros() : int
+    + CountTrailingZeros() : int
+    {static} - CheckArgs(pos:int, numBits:int) : void
+}
+class BitField64DebugView <<sealed>> {
+    - Data : BitField64
+    + BitField64DebugView(data:BitField64)
+    + Bits : bool[] <<get>>
+}
+@enduml

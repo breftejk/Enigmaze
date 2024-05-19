@@ -1,0 +1,7 @@
+@startuml
+abstract class BaseUpgrader {
+    # m_Logger : Logger
+    <<internal>> {abstract} GetUpgradableAssets() : List<Object>
+    <<internal>> {abstract} UpgradeSelection(selection:List<ObjectIndexPair>) : UpgradeReport
+}
+@enduml

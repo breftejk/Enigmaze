@@ -1,0 +1,17 @@
+@startuml
+class ImagePacker <<static>> {
+    + {static} Pack(rects:RectInt[], padding:int, requireSquarePOT:bool, outPackedRects:RectInt[], outPackedWidth:int, outPackedHeight:int) : void
+    + {static} Pack(buffers:NativeArray<Color32>[], width:int[], height:int[], padding:int, spriteSizeExpand:uint, requireSquarePOT:bool, outPackedBuffer:NativeArray<Color32>, outPackedBufferWidth:int, outPackedBufferHeight:int, outPackedRect:RectInt[], outUVTransform:Vector2Int[]) : void
+    {static} - InternalPack(rects:RectInt[], padding:int, requireSquarePOT:bool) : ImagePackNode
+    + {static} Blit(buffer:NativeArray<Color32>, blitToArea:RectInt[], bufferBytesPerRow:int, originalBuffer:NativeArray<Color32>[], blitFromArea:RectInt[], bytesPerRow:int[], padding:int) : void
+    {static} <<unsafe>> - BurstedBlit(originalBuffer:Color32*, rectFrom:int4, rectTo:int4, bytesPerRow:int, bufferBytesPerRow:int, outputBuffer:Color32*) : void
+    <<internal>> {static} NextPowerOfTwo(v:ulong) : ulong
+}
+class ImagePackRect {
+    + rect : RectInt
+    + index : int
+    + CompareTo(obj:ImagePackRect) : int
+}
+ImagePacker +-- ImagePackRect
+"IComparable`1" "<ImagePackRect>" <|-- ImagePackRect
+@enduml

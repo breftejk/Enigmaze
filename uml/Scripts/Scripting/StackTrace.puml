@@ -1,0 +1,46 @@
+@startuml
+class StackTraceUtility <<static>> {
+    {static} - projectFolder : string = ""
+    {static} <<internal>> SetProjectFolder(folder:string) : void
+    {static} <<unsafe>> + ExtractStackTrace() : string
+    {static} + ExtractStringFromException(exception:System.Object) : string
+    {static} <<internal>> ExtractStringFromExceptionInternal(exceptiono:System.Object, message:string, stackTrace:string) : void
+    {static} <<internal>> ExtractFormattedStackTrace(stackTrace:StackTrace) : string
+}
+class UnityException {
+    <<const>> - Result : int
+    - unityStackTrace : string
+    + UnityException()
+    + UnityException(message:string)
+    + UnityException(message:string, innerException:Exception)
+    # UnityException(info:SerializationInfo, context:StreamingContext)
+}
+class MissingComponentException {
+    <<const>> - Result : int
+    - unityStackTrace : string
+    + MissingComponentException()
+    + MissingComponentException(message:string)
+    + MissingComponentException(message:string, innerException:Exception)
+    # MissingComponentException(info:SerializationInfo, context:StreamingContext)
+}
+class UnassignedReferenceException {
+    <<const>> - Result : int
+    - unityStackTrace : string
+    + UnassignedReferenceException()
+    + UnassignedReferenceException(message:string)
+    + UnassignedReferenceException(message:string, innerException:Exception)
+    # UnassignedReferenceException(info:SerializationInfo, context:StreamingContext)
+}
+class MissingReferenceException {
+    <<const>> - Result : int
+    - unityStackTrace : string
+    + MissingReferenceException()
+    + MissingReferenceException(message:string)
+    + MissingReferenceException(message:string, innerException:Exception)
+    # MissingReferenceException(info:SerializationInfo, context:StreamingContext)
+}
+SystemException <|-- UnityException
+SystemException <|-- MissingComponentException
+SystemException <|-- UnassignedReferenceException
+SystemException <|-- MissingReferenceException
+@enduml

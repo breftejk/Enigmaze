@@ -1,0 +1,71 @@
+@startuml
+class ConfinerOven {
+    - m_MinFrustumHeightWithBones : float
+    - m_OriginalPolygon : List<List<IntPoint>>
+    - m_MidPoint : IntPoint
+    - m_Skeleton : List<List<IntPoint>>
+    <<const>> - k_FloatToIntScaler : long = 100000
+    <<const>> - k_IntToFloatScaler : float
+    <<const>> - k_MinStepSize : float = 0.005f
+    - m_PolygonRect : Rect
+    - m_AspectStretcher : AspectStretcher
+    - m_MaxComputationTimeForFullSkeletonBakeInSeconds : float = 5f
+    + ConfinerOven(inputPath:List<List<Vector2>>, aspectRatio:float, maxFrustumHeight:float)
+    + GetBakedSolution(frustumHeight:float) : BakedSolution
+    + State : BakingState <<get>>
+    + bakeProgress : float
+    - m_Cache : BakingStateCache
+    - Initialize(inputPath:List<List<Vector2>>, aspectRatio:float, maxFrustumHeight:float) : void
+    + BakeConfiner(maxComputationTimePerFrameInSeconds:float) : void
+}
+class BakedSolution {
+    - m_FrustumSizeIntSpace : float
+    <<readonly>> - m_AspectStretcher : AspectStretcher
+    <<readonly>> - m_HasBones : bool
+    <<readonly>> - m_SqrPolygonDiagonal : double
+    - m_OriginalPolygon : List<List<IntPoint>>
+    - m_Solution : List<List<IntPoint>>
+    <<const>> - k_ClipperEpsilon : double
+    + BakedSolution(aspectRatio:float, frustumHeight:float, hasBones:bool, polygonBounds:Rect, originalPolygon:List<List<IntPoint>>, solution:List<List<IntPoint>>)
+    + IsValid() : bool
+    + ConfinePoint(pointToConfine:Vector2) : Vector2
+    {static} - FindIntersection(p1:IntPoint, p2:IntPoint, p3:IntPoint, p4:IntPoint) : int
+}
+struct AspectStretcher {
+    + Aspect : float <<get>>
+    <<readonly>> - m_InverseAspect : float
+    <<readonly>> - m_CenterX : float
+    + AspectStretcher(aspect:float, centerX:float)
+    + Stretch(p:Vector2) : Vector2
+    + Unstretch(p:Vector2) : Vector2
+}
+struct PolygonSolution {
+    + polygons : List<List<IntPoint>>
+    + frustumHeight : float
+    + StateChanged(paths:List<List<IntPoint>>) : bool
+    + IsNull : bool <<get>>
+}
+enum BakingState {
+    BAKING,
+    BAKED,
+    TIMEOUT,
+}
+struct BakingStateCache {
+    + offsetter : ClipperOffset
+    + solutions : List<PolygonSolution>
+    + rightCandidate : PolygonSolution
+    + leftCandidate : PolygonSolution
+    + maxCandidate : List<List<IntPoint>>
+    + stepSize : float
+    + maxFrustumHeight : float
+    + userSetMaxFrustumHeight : float
+    + theoriticalMaxFrustumHeight : float
+    + currentFrustumHeight : float
+    + bakeTime : float
+}
+ConfinerOven +-- BakedSolution
+ConfinerOven +-- AspectStretcher
+ConfinerOven +-- PolygonSolution
+ConfinerOven +-- BakingState
+ConfinerOven +-- BakingStateCache
+@enduml

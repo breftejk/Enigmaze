@@ -1,0 +1,9 @@
+@startuml
+class CinemachineTagFieldPropertyDrawer <<sealed>> {
+    <<const>> - hSpace : float = 2
+    - tagValue : string = ""
+    - clearText : GUIContent
+    + <<override>> OnGUI(rect:Rect, property:SerializedProperty, label:GUIContent) : void
+}
+PropertyDrawer <|-- CinemachineTagFieldPropertyDrawer
+@enduml

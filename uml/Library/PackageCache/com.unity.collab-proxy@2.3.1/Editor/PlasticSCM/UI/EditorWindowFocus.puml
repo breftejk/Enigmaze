@@ -1,0 +1,9 @@
+@startuml
+class EditorWindowFocus <<static>> {
+    <<internal>> {static}  <<event>> OnApplicationActivated : Action 
+    <<internal>> {static}  <<event>> OnApplicationDeactivated : Action 
+    {static} - EditorWindowFocus()
+    {static} - Update() : void
+    {static} - mLastIsApplicationFocused : bool
+}
+@enduml

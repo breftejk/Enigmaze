@@ -1,0 +1,22 @@
+@startuml
+class Mask {
+    - m_RectTransform : RectTransform
+    + rectTransform : RectTransform <<get>>
+    - m_ShowMaskGraphic : bool = true
+    + showMaskGraphic : bool <<get>> <<set>>
+    - m_Graphic : Graphic
+    + graphic : Graphic <<get>>
+    - m_MaskMaterial : Material
+    - m_UnmaskMaterial : Material
+    # Mask()
+    + <<virtual>> MaskEnabled() : bool
+    + <<virtual>> OnSiblingGraphicEnabledDisabled() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<virtual>> IsRaycastLocationValid(sp:Vector2, eventCamera:Camera) : bool
+    + <<virtual>> GetModifiedMaterial(baseMaterial:Material) : Material
+}
+UIBehaviour <|-- Mask
+ICanvasRaycastFilter <|-- Mask
+IMaterialModifier <|-- Mask
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class VertexColorNode {
+    - <<const>> kOutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    + VertexColorNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresVertexColor(stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- VertexColorNode
+IMayRequireVertexColor <|-- VertexColorNode
+@enduml

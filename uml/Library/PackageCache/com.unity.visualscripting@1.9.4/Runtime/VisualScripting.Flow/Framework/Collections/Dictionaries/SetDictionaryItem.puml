@@ -1,0 +1,12 @@
+@startuml
+class SetDictionaryItem <<sealed>> {
+    + enter : ControlInput <<get>>
+    + dictionary : ValueInput <<get>>
+    + key : ValueInput <<get>>
+    + value : ValueInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Set(flow:Flow) : ControlOutput
+}
+Unit <|-- SetDictionaryItem
+@enduml

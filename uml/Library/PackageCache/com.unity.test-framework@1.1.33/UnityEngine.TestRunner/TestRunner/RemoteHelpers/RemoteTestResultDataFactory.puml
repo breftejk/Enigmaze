@@ -1,0 +1,9 @@
+@startuml
+class RemoteTestResultDataFactory {
+    + CreateFromTestResult(result:ITestResult) : RemoteTestResultDataWithTestData
+    + CreateFromTest(test:ITest) : RemoteTestResultDataWithTestData
+    - CreateTestDataList(test:ITest) : RemoteTestData[]
+    - {static} CreateTestResultDataList(result:ITestResult) : RemoteTestResultData[]
+}
+IRemoteTestResultDataFactory <|-- RemoteTestResultDataFactory
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class CinemachineClearShotEditor <<sealed>> {
+    - m_BlendsEditor : EmbeddeAssetEditor<CinemachineBlenderSettings>
+    - m_ColliderState : ColliderState
+    - mChildList : UnityEditorInternal.ReorderableList
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - GetColliderState() : ColliderState
+    - ObjectHasCollider(obj:object) : bool
+    - SetupChildList() : void
+}
+enum ColliderState {
+    NoCollider,
+    ColliderOnAllChildren,
+    ColliderOnSomeChildren,
+    ColliderOnParent,
+    ColliderOnChildrenAndParent,
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineClearShot>" <|-- CinemachineClearShotEditor
+CinemachineClearShotEditor +-- ColliderState
+@enduml

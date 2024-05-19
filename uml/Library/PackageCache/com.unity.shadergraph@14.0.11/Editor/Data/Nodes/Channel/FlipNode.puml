@@ -1,0 +1,28 @@
+@startuml
+class FlipNode {
+    + FlipNode()
+    <<const>> - InputSlotId : int = 0
+    <<const>> - OutputSlotId : int = 1
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - channelCount : int <<get>>
+    - m_RedChannel : bool
+    + redChannel : ToggleData <<get>> <<set>>
+    - m_GreenChannel : bool
+    + greenChannel : ToggleData <<get>> <<set>>
+    - m_BlueChannel : bool
+    + blueChannel : ToggleData <<get>> <<set>>
+    - m_AlphaChannel : bool
+    + alphaChannel : ToggleData <<get>> <<set>>
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- FlipNode
+IGeneratesBodyCode <|-- FlipNode
+IGeneratesFunction <|-- FlipNode
+@enduml

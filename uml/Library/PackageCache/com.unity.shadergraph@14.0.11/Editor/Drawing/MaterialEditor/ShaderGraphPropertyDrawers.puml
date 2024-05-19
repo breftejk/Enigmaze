@@ -1,0 +1,30 @@
+@startuml
+class ShaderGraphPropertyDrawers <<static>> {
+    {static} - s_CompoundPropertyFoldoutStates : Dictionary<GraphInputData, bool>
+    + {static} DrawShaderGraphGUI(materialEditor:MaterialEditor, properties:IEnumerable<MaterialProperty>) : void
+    {static} - PropertiesDefaultGUI(materialEditor:MaterialEditor, properties:IEnumerable<MaterialProperty>) : void
+    {static} - GetRect(prop:MaterialProperty) : Rect
+    {static} - FindProperty(propertyName:string, properties:IEnumerable<MaterialProperty>) : MaterialProperty
+    + {static} DrawShaderGraphGUI(materialEditor:MaterialEditor, properties:IEnumerable<MaterialProperty>, categoryDatas:IEnumerable<MinimalCategoryData>) : void
+    {static} - DrawCategory(materialEditor:MaterialEditor, properties:IEnumerable<MaterialProperty>, minimalCategoryData:MinimalCategoryData) : void
+    {static} - DrawCompoundProperty(materialEditor:MaterialEditor, properties:IEnumerable<MaterialProperty>, compoundPropertyData:GraphInputData) : void
+    {static} - DrawMaterialProperty(materialEditor:MaterialEditor, property:MaterialProperty, propertyType:PropertyType, isKeyword:bool, keywordType:KeywordType) : void
+    {static} - DrawColorProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawEnumKeyword(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawBooleanKeyword(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawVirtualTextureProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawBooleanProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawFloatProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawVector2Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawVector3Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawVector4Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawCubemapProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawTexture3DProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawTexture2DArrayProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawTexture2DProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawMatrix2Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawMatrix3Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawMatrix4Property(materialEditor:MaterialEditor, property:MaterialProperty) : void
+    {static} - DrawSamplerStateProperty(materialEditor:MaterialEditor, property:MaterialProperty) : void
+}
+@enduml

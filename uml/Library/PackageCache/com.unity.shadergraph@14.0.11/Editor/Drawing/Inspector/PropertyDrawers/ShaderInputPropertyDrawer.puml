@@ -1,0 +1,118 @@
+@startuml
+class ShaderInputPropertyDrawer {
+    - m_KeywordReorderableList : ReorderableList
+    - m_KeywordSelectedIndex : int
+    - m_DropdownReorderableList : ReorderableList
+    - m_Dropdown : ShaderDropdown
+    - m_DropdownId : int
+    - m_DropdownSelectedIndex : int
+    - m_VTReorderableList : ReorderableList
+    - m_VTSelectedIndex : int
+    - {static} greyLabel : GUIStyle
+    - m_VTLayer_Name : TextField
+    - m_VTLayer_RefName : IdentifierField
+    - m_VTLayer_Texture : ObjectField
+    - m_VTLayer_TextureType : EnumField
+    - m_DisplayNameField : TextField
+    - m_CustomSlotLabelField : TextField
+    - m_ReferenceNameDrawer : TextPropertyDrawer
+    - m_ReferenceNameField : TextField
+    - shaderInput : ShaderInput
+    - exposedToggle : Toggle
+    - keywordScopeField : VisualElement
+    - m_ViewModel : ShaderInputViewModel
+    - ViewModel : ShaderInputViewModel <<get>>
+    <<const>> - m_DisplayNameDisallowedPattern : string = "[^\\w_ ]"
+    <<const>> - m_ReferenceNameDisallowedPattern : string = @"(?:[^A-Za-z_0-9_])"
+    + ShaderInputPropertyDrawer()
+    - graphData : GraphData
+    - isSubGraph : bool <<get>> <<set>>
+    - _exposedFieldChangedCallback : ChangeExposedFieldCallback
+    - _precisionChangedCallback : Action
+    - _keywordChangedCallback : Action
+    - _dropdownChangedCallback : Action
+    - _displayNameChangedCallback : Action<string>
+    - _referenceNameChangedCallback : Action<string>
+    - _changeValueCallback : ChangeValueCallback
+    - _preChangeValueCallback : PreChangeValueCallback
+    - _postChangeValueCallback : PostChangeValueCallback
+    <<internal>> GetViewModel(shaderInputViewModel:ShaderInputViewModel, inGraphData:GraphData, postChangeValueCallback:PostChangeValueCallback) : void
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+    - BuildPropertyNameLabel(propertySheet:PropertySheet) : void
+    - BuildExposedField(propertySheet:PropertySheet) : void
+    - BuildCustomBindingField(propertySheet:PropertySheet, property:ShaderInput) : void
+    - UpdateEnableState() : void
+    - BuildDisplayNameField(propertySheet:PropertySheet) : void
+    - BuildReferenceNameField(propertySheet:PropertySheet) : void
+    - AddShaderInputOptionsToContextMenu(shaderInput:ShaderInput, evt:ContextualMenuPopulateEvent) : void
+    + ResetReferenceName() : void
+    + UpgradeDefaultReferenceName() : void
+    - BuildPropertyFields(propertySheet:PropertySheet) : void
+    {static} - allHLSLDeclarationStrings : string[]
+    - BuildHLSLDeclarationOverrideFields(propertySheet:PropertySheet, property:AbstractShaderProperty) : void
+    - BuildPrecisionField(propertySheet:PropertySheet, property:AbstractShaderProperty) : void
+    - HandleVector1ShaderProperty(propertySheet:PropertySheet, vector1ShaderProperty:Vector1ShaderProperty) : void
+    - HandleVector2ShaderProperty(propertySheet:PropertySheet, vector2ShaderProperty:Vector2ShaderProperty) : void
+    - HandleVector3ShaderProperty(propertySheet:PropertySheet, vector3ShaderProperty:Vector3ShaderProperty) : void
+    - HandleVector4ShaderProperty(propertySheet:PropertySheet, vector4Property:Vector4ShaderProperty) : void
+    - HandleColorProperty(propertySheet:PropertySheet, colorProperty:ColorShaderProperty) : void
+    - HandleTexture2DProperty(propertySheet:PropertySheet, texture2DProperty:Texture2DShaderProperty) : void
+    - HandleTexture2DArrayProperty(propertySheet:PropertySheet, texture2DArrayProperty:Texture2DArrayShaderProperty) : void
+    - HandleVirtualTextureProperty(propertySheet:PropertySheet, virtualTextureProperty:VirtualTextureShaderProperty) : void
+    - OnVTGUIHandler(property:VirtualTextureShaderProperty) : void
+    <<internal>> VTRecreateList(property:VirtualTextureShaderProperty) : void
+    - VTAddCallbacks(property:VirtualTextureShaderProperty) : void
+    - VTSelectEntry(list:ReorderableList) : void
+    - VTAddEntry(list:ReorderableList, property:VirtualTextureShaderProperty) : void
+    - VTGetFirstUnusedID(property:VirtualTextureShaderProperty) : int
+    - VTRemoveEntry(list:ReorderableList, property:VirtualTextureShaderProperty) : void
+    - VTReorderEntries(list:ReorderableList) : void
+    - HandleTexture3DProperty(propertySheet:PropertySheet, texture3DShaderProperty:Texture3DShaderProperty) : void
+    - HandleCubemapProperty(propertySheet:PropertySheet, cubemapProperty:CubemapShaderProperty) : void
+    - HandleBooleanProperty(propertySheet:PropertySheet, booleanProperty:BooleanShaderProperty) : void
+    - HandleMatrix2PropertyField(propertySheet:PropertySheet, matrix2Property:Matrix2ShaderProperty) : void
+    - HandleMatrix3PropertyField(propertySheet:PropertySheet, matrix3Property:Matrix3ShaderProperty) : void
+    - HandleMatrix4PropertyField(propertySheet:PropertySheet, matrix4Property:Matrix4ShaderProperty) : void
+    - HandleSamplerStatePropertyField(propertySheet:PropertySheet, samplerStateShaderProperty:SamplerStateShaderProperty) : void
+    - HandleGradientPropertyField(propertySheet:PropertySheet, gradientShaderProperty:GradientShaderProperty) : void
+    - BuildKeywordFields(propertySheet:PropertySheet, shaderInput:ShaderInput) : void
+    - BuildBooleanKeywordField(propertySheet:PropertySheet, keyword:ShaderKeyword) : void
+    - BuildEnumKeywordField(propertySheet:PropertySheet, keyword:ShaderKeyword) : void
+    {static} - AddPropertyRowToSheet(propertySheet:PropertySheet, control:VisualElement, labelName:string) : void
+    - OnKeywordGUIHandler() : void
+    <<internal>> KeywordRecreateList() : void
+    - KeywordAddCallbacks() : void
+    - KeywordSelectEntry(list:ReorderableList) : void
+    - GetFirstUnusedKeywordID() : int
+    - KeywordAddEntry(list:ReorderableList) : void
+    - KeywordRemoveEntry(list:ReorderableList) : void
+    - KeywordReorderEntries(list:ReorderableList) : void
+    + GetDuplicateSafeEnumDisplayName(id:int, name:string) : string
+    - GetDuplicateSafeEnumNames(id:int, name:string, displayName:string, referenceName:string) : void
+    - GetSanitizedDisplayName(name:string) : string
+    + GetDuplicateSafeReferenceName(id:int, name:string) : string
+    - GetSanitizedReferenceName(name:string) : string
+    - FindDuplicateKeywordReferenceNameIndex(id:int, referenceName:string) : int
+    - BuildDropdownFields(propertySheet:PropertySheet, shaderInput:ShaderInput) : void
+    - BuildDropdownField(propertySheet:PropertySheet, dropdown:ShaderDropdown) : void
+    - OnDropdownGUIHandler() : void
+    <<internal>> DropdownRecreateList() : void
+    - DropdownAddCallbacks() : void
+    - DropdownSelectEntry(list:ReorderableList) : void
+    - GetFirstUnusedDropdownID() : int
+    - DropdownAddEntry(list:ReorderableList) : void
+    - DropdownRemoveEntry(list:ReorderableList) : void
+    - DropdownReorderEntries(list:ReorderableList) : void
+    + GetDuplicateSafeDropdownDisplayName(id:int, name:string) : string
+    - FindDuplicateDropdownDisplayNameIndex(id:int, displayName:string) : int
+}
+enum KeywordShaderStageDropdownUI {
+    All= KeywordShaderStage.All,
+    Vertex= KeywordShaderStage.Vertex,
+    Fragment= KeywordShaderStage.Fragment,
+}
+IPropertyDrawer <|-- ShaderInputPropertyDrawer
+ShaderInputPropertyDrawer +-- KeywordShaderStageDropdownUI
+@enduml

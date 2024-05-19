@@ -1,0 +1,7 @@
+@startuml
+class SequenceDescriptor {
+    + SequenceDescriptor(unit:Sequence)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<Sequence>" <|-- SequenceDescriptor
+@enduml

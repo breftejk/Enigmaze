@@ -1,0 +1,15 @@
+@startuml
+class SerializableMesh {
+    - m_SerializedMesh : string
+    - m_Guid : string
+    - m_Mesh : Mesh
+    + mesh : Mesh <<get>> <<set>>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+class MeshHelper {
+    + mesh : Mesh
+}
+ISerializationCallbackReceiver <|-- SerializableMesh
+SerializableMesh +-- MeshHelper
+@enduml

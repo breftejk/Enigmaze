@@ -1,0 +1,61 @@
+@startuml
+interface IUnityTestAssemblyRunnerFactory {
+    Create(testPlatform:TestPlatform, orderedTestNames:string[], factory:WorkItemFactory) : IUnityTestAssemblyRunner
+}
+class UnityTestAssemblyRunnerFactory {
+    + Create(testPlatform:TestPlatform, orderedTestNames:string[], factory:WorkItemFactory) : IUnityTestAssemblyRunner
+}
+class EditModeRunner {
+    - m_Filters : Filter[]
+    - m_CurrentPC : int
+    - m_ExecuteOnEnable : bool
+    - m_AlreadyStartedTests : List<string>
+    - m_ExecutedTests : List<TestResultSerializer>
+    - m_CallbackObjects : List<ScriptableObject>
+    - m_TestStartedEvent : TestStartedEvent
+    - m_TestFinishedEvent : TestFinishedEvent
+    - m_RunStartedEvent : RunStartedEvent
+    - m_RunFinishedEvent : RunFinishedEvent
+    - m_TestRunnerStateSerializer : TestRunnerStateSerializer
+    - m_RunningTests : bool
+    - m_TestPlatform : TestPlatform
+    - m_CurrentYieldObject : object
+    - m_SetUpTearDownState : BeforeAfterTestCommandState
+    - m_OuterUnityTestActionState : BeforeAfterTestCommandState
+    - m_EnumerableTestState : EnumerableTestState
+    - m_OrderedTestNames : string[]
+    + RunFinished : bool = false
+    + RunningSynchronously : bool <<get>>
+    <<internal>> m_Runner : IUnityTestAssemblyRunner
+    - m_ConstructDelegator : ConstructDelegator
+    - m_RunStep : IEnumerator
+    + UnityTestAssemblyRunnerFactory : IUnityTestAssemblyRunnerFactory <<get>> <<set>>
+    + Init(filters:Filter[], platform:TestPlatform, runningSynchronously:bool, orderedTestNames:string[]) : void
+    - InitRunner() : void
+    + OnEnable() : void
+    + TestStartedEvent(test:ITest) : void
+    + TestFinishedEvent(testResult:ITestResult) : void
+    + Run() : void
+    + CompleteSynchronously() : void
+    - OnBeforeAssemblyReload() : void
+    - RunningTests : bool
+    - StepStack : Stack<IEnumerator>
+    - MoveNextAndUpdateYieldObject() : bool
+    - TestConsumer() : void
+    - CompleteTestRun() : void
+    - OnRestoringTest() : void
+    - {static} IsCancelled() : bool
+    - InvokeDelegator() : void
+    - CompilationFailureWatch() : void
+    - PrepareForDomainReload() : void
+    + AddEventHandler() : T
+    - AddListeners(eventHandler:ITestRunnerListener) : void
+    + Dispose() : void
+    + OnRunCancel() : void
+    + GetLoadedTests() : ITest
+    + GetFilter() : ITestFilter
+}
+IUnityTestAssemblyRunnerFactory <|-- UnityTestAssemblyRunnerFactory
+ScriptableObject <|-- EditModeRunner
+IDisposable <|-- EditModeRunner
+@enduml

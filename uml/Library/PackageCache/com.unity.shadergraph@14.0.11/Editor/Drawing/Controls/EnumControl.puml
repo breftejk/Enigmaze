@@ -1,0 +1,16 @@
+@startuml
+class EnumControlAttribute {
+    - m_Label : string
+    + EnumControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class EnumControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    + EnumControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnValueChanged(evt:ChangeEvent<Enum>) : void
+}
+Attribute <|-- EnumControlAttribute
+IControlAttribute <|-- EnumControlAttribute
+VisualElement <|-- EnumControlView
+@enduml

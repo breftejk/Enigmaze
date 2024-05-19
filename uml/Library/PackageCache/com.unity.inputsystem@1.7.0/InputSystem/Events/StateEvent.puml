@@ -1,0 +1,22 @@
+@startuml
+struct StateEvent {
+    + <<const>> Type : int = 0x53544154
+    <<internal>> <<const>> kStateDataSizeToSubtract : int = 1
+    + baseEvent : InputEvent
+    + stateFormat : FourCC
+    <<internal>> <<fixed>> stateData : byte
+    + stateSizeInBytes : uint <<get>>
+    + state : void* <<get>>
+    + ToEventPtr() : InputEventPtr
+    + typeStatic : FourCC <<get>>
+    + GetState() : TState
+    + {static} GetState(ptr:InputEventPtr) : TState
+    + {static} GetEventSizeWithPayload() : int
+    + {static} From(ptr:InputEventPtr) : StateEvent*
+    <<internal>> {static} FromUnchecked(ptr:InputEventPtr) : StateEvent*
+    + {static} From(device:InputDevice, eventPtr:InputEventPtr, allocator:Allocator) : NativeArray<byte>
+    + {static} FromDefaultStateFor(device:InputDevice, eventPtr:InputEventPtr, allocator:Allocator) : NativeArray<byte>
+    - {static} From(device:InputDevice, eventPtr:InputEventPtr, allocator:Allocator, useDefaultState:bool) : NativeArray<byte>
+}
+IInputEventTypeInfo <|-- StateEvent
+@enduml

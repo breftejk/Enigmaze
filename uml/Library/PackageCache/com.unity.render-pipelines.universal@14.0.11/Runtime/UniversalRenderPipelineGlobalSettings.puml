@@ -1,0 +1,45 @@
+@startuml
+class UniversalRenderPipelineGlobalSettings <<partial>> {
+    - k_AssetVersion : int = 3
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    - {static} cachedInstance : UniversalRenderPipelineGlobalSettings = null
+    + {static} instance : UniversalRenderPipelineGlobalSettings <<get>>
+    {static} <<internal>> UpdateGraphicsSettings(newSettings:UniversalRenderPipelineGlobalSettings) : void
+    + {static} <<readonly>> defaultAssetName : string = "UniversalRenderPipelineGlobalSettings"
+    - Reset() : void
+    - m_RenderingLayerNames : string[]
+    - renderingLayerNames : string[] <<get>>
+    - m_PrefixedRenderingLayerNames : string[]
+    - prefixedRenderingLayerNames : string[] <<get>>
+    + renderingLayerMaskNames : string[] <<get>>
+    + prefixedRenderingLayerMaskNames : string[] <<get>>
+    - m_ValidRenderingLayers : uint
+    + validRenderingLayers : uint <<get>>
+    <<internal>> UpdateRenderingLayerNames() : void
+    + prefixedLightLayerNames : string[] <<get>>
+    + lightLayerName0 : string
+    + lightLayerName1 : string
+    + lightLayerName2 : string
+    + lightLayerName3 : string
+    + lightLayerName4 : string
+    + lightLayerName5 : string
+    + lightLayerName6 : string
+    + lightLayerName7 : string
+    + lightLayerNames : string[] <<get>>
+    <<internal>> ResetRenderingLayerNames() : void
+    - m_StripDebugVariants : bool = true
+    - m_StripUnusedPostProcessingVariants : bool = false
+    - m_StripUnusedVariants : bool = true
+    - m_StripUnusedLODCrossFadeVariants : bool = true
+    - m_StripScreenCoordOverrideVariants : bool = true
+    + supportRuntimeDebugDisplay : bool = false
+    + stripDebugVariants : bool <<get>> <<set>>
+    + stripUnusedPostProcessingVariants : bool <<get>> <<set>>
+    + stripUnusedVariants : bool <<get>> <<set>>
+    + stripUnusedLODCrossFadeVariants : bool <<get>> <<set>>
+    + stripScreenCoordOverrideVariants : bool <<get>> <<set>>
+}
+RenderPipelineGlobalSettings <|-- UniversalRenderPipelineGlobalSettings
+ISerializationCallbackReceiver <|-- UniversalRenderPipelineGlobalSettings
+@enduml

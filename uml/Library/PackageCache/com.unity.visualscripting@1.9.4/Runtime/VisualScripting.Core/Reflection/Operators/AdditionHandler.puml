@@ -1,0 +1,7 @@
+@startuml
+class AdditionHandler <<sealed>> {
+    + AdditionHandler()
+    # <<override>> CustomHandling(leftOperand:object, rightOperand:object) : object
+}
+BinaryOperatorHandler <|-- AdditionHandler
+@enduml

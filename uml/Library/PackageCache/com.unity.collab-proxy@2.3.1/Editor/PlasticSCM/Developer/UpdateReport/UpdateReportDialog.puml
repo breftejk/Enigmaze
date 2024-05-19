@@ -1,0 +1,32 @@
+@startuml
+class UpdateReportDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} ShowReportDialog(wkInfo:WorkspaceInfo, reportLines:IList, parentWindow:EditorWindow) : ResponseType
+    # <<override>> SaveSettings() : void
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - Reload() : void
+    - OnCheckedReportLineChanged() : void
+    - DoListArea(errorsListView:UpdateReportListView, splitterState:object) : void
+    {static} - DoErrorsListViewArea(errorsListView:UpdateReportListView) : void
+    - DoErrorDetailsTextArea(selectedReportLine:ReportLine) : void
+    - DoSelectAllArea() : void
+    - DoButtonsArea(areUpdateButtonsEneabled:bool) : void
+    - DoRetryUpdateButton(isEnabled:bool) : void
+    - DoUpdateForcedButton(isEnabled:bool) : void
+    - DoCloseButton() : void
+    {static} - Create(wkInfo:WorkspaceInfo, reportLines:IList, progressControls:ProgressControlsForDialogs) : UpdateReportDialog
+    - SetReportLines(reportLines:IList) : void
+    - BuildComponents(wkInfo:WorkspaceInfo) : void
+    - mIsAnyLineChecked : bool = false
+    - mAreAllLinesChecked : bool = false
+    - mPathsListView : UpdateReportListView
+    - mErrorDetailsSplitterState : object
+    - mErrorDetailsScrollPosition : Vector2
+    - mWkInfo : WorkspaceInfo
+    - mReportLines : IList
+    - mProgressControls : ProgressControlsForDialogs
+}
+PlasticDialog <|-- UpdateReportDialog
+IUpdateReportDialog <|-- UpdateReportDialog
+@enduml

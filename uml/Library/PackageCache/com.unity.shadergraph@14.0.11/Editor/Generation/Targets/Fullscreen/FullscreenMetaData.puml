@@ -1,0 +1,7 @@
+@startuml
+class FullscreenMetaData <<sealed>> {
+    - m_FullscreenMode : FullscreenMode
+    + fullscreenMode : FullscreenMode <<get>> <<set>>
+}
+ScriptableObject <|-- FullscreenMetaData
+@enduml

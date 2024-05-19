@@ -1,0 +1,52 @@
+@startuml
+class CinemachineComposer {
+    + m_TrackedObjectOffset : Vector3
+    + m_LookaheadTime : float = 0
+    + m_LookaheadSmoothing : float = 0
+    + m_LookaheadIgnoreY : bool
+    + m_HorizontalDamping : float = 0.5f
+    + m_VerticalDamping : float = 0.5f
+    + m_ScreenX : float = 0.5f
+    + m_ScreenY : float = 0.5f
+    + m_DeadZoneWidth : float = 0f
+    + m_DeadZoneHeight : float = 0f
+    + m_SoftZoneWidth : float = 0.8f
+    + m_SoftZoneHeight : float = 0.8f
+    + m_BiasX : float = 0f
+    + m_BiasY : float = 0f
+    + m_CenterOnActivate : bool = true
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + TrackedPoint : Vector3 <<get>>
+    # <<virtual>> GetLookAtPointAndSetTrackedPoint(lookAt:Vector3, up:Vector3, deltaTime:float) : Vector3
+    - m_CameraPosPrevFrame : Vector3
+    - m_LookAtPrevFrame : Vector3
+    - m_ScreenOffsetPrevFrame : Vector2
+    - m_CameraOrientationPrevFrame : Quaternion
+    <<internal>> m_Predictor : PositionPredictor
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<override>> GetMaxDampTime() : float
+    + <<override>> PrePipelineMutateCameraState(curState:CameraState, deltaTime:float) : void
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+    <<internal>> SoftGuideRect : Rect <<get>> <<set>>
+    <<internal>> HardGuideRect : Rect <<get>> <<set>>
+    - mCache : FovCache
+    - RotateToScreenBounds(state:CameraState, screenRect:Rect, trackedPoint:Vector3, rigOrientation:Quaternion, fov:float, fovH:float, deltaTime:float) : void
+    - ClampVerticalBounds(r:Rect, dir:Vector3, up:Vector3, fov:float) : bool
+}
+struct FovCache {
+    + mFovSoftGuideRect : Rect
+    + mFovHardGuideRect : Rect
+    + mFovH : float
+    + mFov : float
+    - mOrthoSizeOverDistance : float
+    - mAspect : float
+    - mSoftGuideRect : Rect
+    - mHardGuideRect : Rect
+    + UpdateCache(lens:LensSettings, softGuide:Rect, hardGuide:Rect, targetDistance:float) : void
+    - ScreenToFOV(rScreen:Rect, fov:float, fovH:float, aspect:float) : Rect
+}
+CinemachineComponentBase <|-- CinemachineComposer
+CinemachineComposer +-- FovCache
+@enduml

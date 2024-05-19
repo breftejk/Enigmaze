@@ -1,0 +1,7 @@
+@startuml
+class InspectorViewModel {
+    + parentView : VisualElement <<get>> <<set>>
+    + ResetViewModelData() : void
+}
+ISGViewModel <|-- InspectorViewModel
+@enduml

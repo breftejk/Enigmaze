@@ -1,0 +1,53 @@
+@startuml
+class StandaloneInputModule {
+    - m_PrevActionTime : float
+    - m_LastMoveVector : Vector2
+    - m_ConsecutiveMoveCount : int = 0
+    - m_LastMousePosition : Vector2
+    - m_MousePosition : Vector2
+    - m_CurrentFocusedGameObject : GameObject
+    - m_InputPointerEvent : PointerEventData
+    - <<const>> doubleClickTime : float = 0.3f
+    # StandaloneInputModule()
+    + inputMode : InputMode <<get>>
+    - m_HorizontalAxis : string = "Horizontal"
+    - m_VerticalAxis : string = "Vertical"
+    - m_SubmitButton : string = "Submit"
+    - m_CancelButton : string = "Cancel"
+    - m_InputActionsPerSecond : float = 10
+    - m_RepeatDelay : float = 0.5f
+    - m_ForceModuleActive : bool
+    + allowActivationOnMobileDevice : bool <<get>> <<set>>
+    + forceModuleActive : bool <<get>> <<set>>
+    + inputActionsPerSecond : float <<get>> <<set>>
+    + repeatDelay : float <<get>> <<set>>
+    + horizontalAxis : string <<get>> <<set>>
+    + verticalAxis : string <<get>> <<set>>
+    + submitButton : string <<get>> <<set>>
+    + cancelButton : string <<get>> <<set>>
+    - ShouldIgnoreEventsOnNoFocus() : bool
+    + <<override>> UpdateModule() : void
+    - ReleaseMouse(pointerEvent:PointerEventData, currentOverGo:GameObject) : void
+    + <<override>> ShouldActivateModule() : bool
+    + <<override>> ActivateModule() : void
+    + <<override>> DeactivateModule() : void
+    + <<override>> Process() : void
+    - ProcessTouchEvents() : bool
+    # ProcessTouchPress(pointerEvent:PointerEventData, pressed:bool, released:bool) : void
+    # SendSubmitEventToSelectedObject() : bool
+    - GetRawMoveVector() : Vector2
+    # SendMoveEventToSelectedObject() : bool
+    # ProcessMouseEvent() : void
+    # <<virtual>> ForceAutoSelect() : bool
+    # ProcessMouseEvent(id:int) : void
+    # SendUpdateEventToSelectedObject() : bool
+    # ProcessMousePress(data:MouseButtonEventData) : void
+    # GetCurrentFocusedGameObject() : GameObject
+}
+enum InputMode {
+    Mouse,
+    Buttons,
+}
+PointerInputModule <|-- StandaloneInputModule
+StandaloneInputModule +-- InputMode
+@enduml

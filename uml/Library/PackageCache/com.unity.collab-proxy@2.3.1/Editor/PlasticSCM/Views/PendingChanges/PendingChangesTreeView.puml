@@ -1,0 +1,69 @@
+@startuml
+class PendingChangesTreeView {
+    <<internal>> PendingChangesTreeView(wkInfo:WorkspaceInfo, isGluonMode:bool, headerState:PendingChangesTreeHeaderState, columnNames:List<string>, menu:PendingChangesViewMenu, assetStatusCache:IAssetStatusCache)
+    # <<override>> SingleClickedItem(id:int) : void
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    # SelectionChanged() : void
+    + <<override>> GetRows() : IList<TreeViewItem>
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> CanChangeExpandedState(item:TreeViewItem) : bool
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> CommandEventHandling() : void
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(changes:List<ChangeInfo>, checkedStateManager:PendingChangesViewCheckedStateManager) : void
+    <<internal>> GetChangedForMoved(moved:ChangeInfo) : ChangeInfo
+    <<internal>> Refilter() : void
+    <<internal>> Sort() : void
+    <<internal>> GetSelectedPathsToDelete(privateDirectories:List<string>, privateFiles:List<string>) : bool
+    <<internal>> GetCheckedChanges(selectedChangelists:List<ChangelistNode>, bExcludePrivates:bool, changes:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    <<internal>> GetAllChanges() : List<ChangeInfo>
+    <<internal>> GetMetaChange(change:ChangeInfo) : ChangeInfo
+    <<internal>> GetDependenciesCandidates(selectedChanges:List<ChangeInfo>, bExcludePrivates:bool) : List<ChangeInfo>
+    <<internal>> GetSelectedNodes() : List<IPlasticTreeNode>
+    <<internal>> GetSelectedChanges(includeMetaFiles:bool) : List<ChangeInfo>
+    <<internal>> GetSelectedPendingChangeInfos() : List<PendingChangeInfo>
+    <<internal>> GetSelectedChangelistNodes() : List<ChangelistNode>
+    <<internal>> SelectionHasMeta() : bool
+    <<internal>> GetSelectedRow() : ChangeInfo
+    <<internal>> GetNearestAddedChange() : ChangeInfo
+    <<internal>> SelectFirstPendingChangeOnTree() : void
+    <<internal>> SelectPreviouslySelectedPendingChanges(changesToSelect:List<ChangeInfo>) : void
+    <<internal>> GetCheckedItemCount() : int
+    <<internal>> GetTotalItemCount() : int
+    - GetNextExistingAddedItem(addedCategory:PendingChangeCategory, targetAddedItemIndex:int) : ChangeInfo
+    - GetPreviousExistingAddedItem(addedCategory:PendingChangeCategory, targetAddedItemIndex:int) : ChangeInfo
+    - GetExistingAddedItem(addedCategory:PendingChangeCategory, addedItemIndex:int) : ChangeInfo
+    - GetTreeIdFirstItem() : int
+    - GetTreeIdForItem(change:ChangeInfo) : int
+    - DelayedSearchChanged() : void
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - ChangelistTreeViewItemGUI(treeView:PendingChangesTreeView, rowRect:Rect, rowHeight:float, item:ChangelistTreeViewItem, isSelected:bool, isFocused:bool) : void
+    {static} - CategoryTreeViewItemGUI(treeView:PendingChangesTreeView, rowRect:Rect, rowHeight:float, item:ChangeCategoryTreeViewItem, isSelected:bool, isFocused:bool) : void
+    {static} - ChangeTreeViewItemGUI(wkPath:string, isGluonMode:bool, assetStatusCache:IAssetStatusCache, treeView:PendingChangesTreeView, pendingChangesTree:UnityPendingChangesTree, item:ChangeTreeViewItem, args:RowGUIArgs) : void
+    {static} - ChangeTreeViewItemCellGUI(isGluonMode:bool, assetStatusCache:IAssetStatusCache, rect:Rect, rowHeight:float, treeView:PendingChangesTreeView, pendingChangesTree:UnityPendingChangesTree, item:ChangeTreeViewItem, column:PendingChangesTreeColumn, isSelected:bool, isFocused:bool) : void
+    {static} - UpdateCheckStateForSelection(treeView:PendingChangesTreeView, senderTreeViewItem:ChangeTreeViewItem) : void
+    {static} - RegenerateRows(pendingChangesTree:UnityPendingChangesTree, treeViewItemIds:TreeViewItemIds<IPlasticTreeNode, PendingChangeInfo>, treeView:PendingChangesTreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool) : void
+    {static} - AddChangelistNode(changelist:ChangelistNode, treeViewItemIds:TreeViewItemIds<IPlasticTreeNode, PendingChangeInfo>, treeView:PendingChangesTreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool) : void
+    {static} - AddPendingChangeCategory(category:PendingChangeCategory, treeViewItemIds:TreeViewItemIds<IPlasticTreeNode, PendingChangeInfo>, treeView:PendingChangesTreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool, depth:int) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - GetIcon(change:PendingChangeInfo) : Texture
+    {static} - IsConflicted(isGluonMode:bool, assetStatusCache:IAssetStatusCache, fullPath:string) : bool
+    - mExpandCategories : bool
+    - mIsSelectionChangedEventDisabled : bool
+    - mTreeViewItemIds : TreeViewItemIds<IPlasticTreeNode, PendingChangeInfo>
+    - mRows : List<TreeViewItem>
+    - mPendingChangesTree : UnityPendingChangesTree
+    - mCooldownFilterAction : CooldownWindowDelayer
+    <<readonly>> - mHeaderState : PendingChangesTreeHeaderState
+    <<readonly>> - mMenu : PendingChangesViewMenu
+    <<readonly>> - mAssetStatusCache : IAssetStatusCache
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mWkInfo : WorkspaceInfo
+}
+TreeView <|-- PendingChangesTreeView
+@enduml

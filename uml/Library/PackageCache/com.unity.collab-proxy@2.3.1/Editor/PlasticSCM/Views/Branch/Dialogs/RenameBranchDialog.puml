@@ -1,0 +1,23 @@
+@startuml
+class RenameBranchDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} GetBranchRenameData(repSpec:RepositorySpec, branchInfo:BranchInfo, parentWindow:EditorWindow) : BranchRenameData
+    {static} - Create(repSpec:RepositorySpec, branchInfo:BranchInfo, progressControls:ProgressControlsForDialogs) : RenameBranchDialog
+    # <<override>> GetTitle() : string
+    # <<override>> OnModalGUI() : void
+    - DoInputArea() : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    - OkButtonWithValidationAction() : void
+    - BuildRenameData() : BranchRenameData
+    - mTitle : string
+    - mBranchName : string
+    - mTextAreaFocused : bool
+    - mRepSpec : RepositorySpec
+    - mBranchInfo : BranchInfo
+    - mProgressControls : ProgressControlsForDialogs
+    <<const>> - RENAME_BRANCH_TEXTAREA_NAME : string = "rename_branch_textarea"
+}
+PlasticDialog <|-- RenameBranchDialog
+@enduml

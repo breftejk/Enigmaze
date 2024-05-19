@@ -1,0 +1,27 @@
+@startuml
+class GetRestorePathDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} GetRestorePath(wkPath:string, restorePath:string, explanation:string, isDirectory:bool, showSkipButton:bool, parentWindow:EditorWindow) : GetRestorePathData
+    # <<override>> OnModalGUI() : void
+    - DoEntryArea() : void
+    # <<override>> GetTitle() : string
+    {static} - DoOpenFolderPanel(actualPath:string) : string
+    {static} - DoOpenFilePanel(actualPath:string) : string
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoSkipButton(showSkipButton:bool) : void
+    - DoCancelButton() : void
+    - OkButtonWithValidationAction() : void
+    - BuildGetRestorePathResult() : GetRestorePathData
+    {static} - GetRestorePathResultType(dialogResult:ResponseType) : GetRestorePathData.ResultType
+    {static} - Create(progressControls:ProgressControlsForDialogs, wkPath:string, restorePath:string, explanation:string, isDirectory:bool, showSkipButton:bool) : GetRestorePathDialog
+    - mIsDirectory : bool
+    - mShowSkipButton : bool
+    - mExplanation : string
+    - mRestorePath : string
+    - mWkPath : string
+    - mProgressControls : ProgressControlsForDialogs
+    <<const>> - TEXTBOX_WIDTH : float = 520
+}
+PlasticDialog <|-- GetRestorePathDialog
+@enduml

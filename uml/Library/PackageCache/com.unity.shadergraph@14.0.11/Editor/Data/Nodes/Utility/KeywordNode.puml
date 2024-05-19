@@ -1,0 +1,24 @@
+@startuml
+class KeywordNode {
+    <<internal>> <<const>> k_MinEnumEntries : int = 2
+    <<internal>> <<const>> k_MaxEnumEntries : int = 8
+    + KeywordNode()
+    - m_Keyword : JsonRef<ShaderKeyword>
+    + keyword : ShaderKeyword <<get>> <<set>>
+    + <<override>> canSetPrecision : bool <<get>>
+    + <<override>> hasPreview : bool <<get>>
+    + <<const>> OutputSlotId : int = 0
+    + UpdateNodeDisplayName(newDisplayName:string) : void
+    + OnEnable() : void
+    + UpdateNode() : void
+    - UpdatePorts() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GetSlotIdForPermutation(permutation:KeyValuePair<ShaderKeyword, int>) : int
+    # <<override>> CalculateNodeHasError() : void
+    + OnShaderInputUpdated(modificationScope:ModificationScope) : void
+}
+AbstractMaterialNode <|-- KeywordNode
+IOnAssetEnabled <|-- KeywordNode
+IGeneratesBodyCode <|-- KeywordNode
+IShaderInputObserver <|-- KeywordNode
+@enduml

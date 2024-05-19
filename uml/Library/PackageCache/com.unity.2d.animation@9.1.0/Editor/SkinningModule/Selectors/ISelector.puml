@@ -1,0 +1,6 @@
+@startuml
+interface "ISelector`1"<T> {
+    selection : ISelection<T> <<get>> <<set>>
+    Select() : void
+}
+@enduml

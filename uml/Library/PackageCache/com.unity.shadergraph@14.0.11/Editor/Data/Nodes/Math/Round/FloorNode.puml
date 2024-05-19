@@ -1,0 +1,8 @@
+@startuml
+class FloorNode {
+    + FloorNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Floor(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- FloorNode
+@enduml

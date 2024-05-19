@@ -1,0 +1,15 @@
+@startuml
+enum NormalBlendMode {
+    Default,
+    Reoriented,
+}
+class NormalBlendNode {
+    + NormalBlendNode()
+    - m_BlendMode : NormalBlendMode
+    + blendMode : NormalBlendMode <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_NormalBlend(A:Vector3, B:Vector3, Out:Vector3) : string
+    {static} - Unity_NormalBlend_Reoriented(A:Vector3, B:Vector3, Out:Vector3) : string
+}
+CodeFunctionNode <|-- NormalBlendNode
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class "Angle`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + angle : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : float
+    + {abstract} Operation(a:T, b:T) : float
+}
+Unit <|-- "Angle`1"
+@enduml

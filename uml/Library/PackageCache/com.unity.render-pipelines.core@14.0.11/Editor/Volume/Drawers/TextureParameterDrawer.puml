@@ -1,0 +1,34 @@
+@startuml
+class TextureParameterHelper <<static>> {
+    {static} <<readonly>> - k_ObjectFieldValidator : Type
+    <<internal>> {static} ValidateObjectFieldAssignment : Func<Object[], Type, SerializedProperty, int, Object>
+    {static} - k_DoObjectField : Func<Rect, Rect, int, Object, Object, Type, Type, SerializedProperty, Delegate, bool, GUIStyle, Object>
+    {static} - TextureParameterHelper()
+    <<internal>> {static} CastValidator(validator:ObjectFieldValidator) : Delegate
+    <<internal>> {static} DoObjectField(property:SerializedProperty, label:GUIContent, type1:Type, type2:Type, validator:Delegate) : void
+    <<internal>> {static} DoObjectField(r:Rect, property:SerializedProperty, label:GUIContent, type1:Type, type2:Type, validator:Delegate) : void
+}
+class TextureParameterDrawer <<sealed>> {
+    <<internal>> {static} HasGenuineNullSelection(references:Object[]) : bool
+    {static} - validator : Delegate
+    <<internal>> {static} TextureField(property:SerializedProperty, title:GUIContent, dimension:TextureDimension) : bool
+    + <<override>> OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+class Texture2DParameterDrawer <<sealed>> {
+    + <<override>> OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+class Texture3DParameterDrawer <<sealed>> {
+    + <<override>> OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+class CubemapParameterDrawer <<sealed>> {
+    + <<override>> OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+class NoInterpCubemapParameterDrawer <<sealed>> {
+    + <<override>> OnGUI(parameter:SerializedDataParameter, title:GUIContent) : bool
+}
+VolumeParameterDrawer <|-- TextureParameterDrawer
+VolumeParameterDrawer <|-- Texture2DParameterDrawer
+VolumeParameterDrawer <|-- Texture3DParameterDrawer
+VolumeParameterDrawer <|-- CubemapParameterDrawer
+VolumeParameterDrawer <|-- NoInterpCubemapParameterDrawer
+@enduml

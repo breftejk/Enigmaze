@@ -1,0 +1,22 @@
+@startuml
+class UnsafeHashMapTests {
+    + UnsafeHashMap_AddJob() : void
+    + UnsafeHashMap_ForEach(n:int) : void
+    + UnsafeHashSet_ToArray() : void
+    + UnsafeHashMap_CustomAllocatorTest() : void
+    + <<unsafe>> UnsafeHashMap_BurstedCustomAllocatorTest() : void
+}
+struct UnsafeHashMapAddJob {
+    + Writer : UnsafeHashMap<int, int>.ParallelWriter
+    + Execute() : void
+}
+struct BurstedCustomAllocatorJob {
+    + <<unsafe>> Allocator : CustomAllocatorTests.CountingAllocator*
+    + Execute() : void
+}
+CollectionsTestCommonBase <|-- UnsafeHashMapTests
+UnsafeHashMapTests +-- UnsafeHashMapAddJob
+IJob <|-- UnsafeHashMapAddJob
+UnsafeHashMapTests +-- BurstedCustomAllocatorJob
+IJob <|-- BurstedCustomAllocatorJob
+@enduml

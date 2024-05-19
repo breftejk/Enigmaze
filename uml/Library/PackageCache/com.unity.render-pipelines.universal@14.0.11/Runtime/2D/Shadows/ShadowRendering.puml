@@ -1,0 +1,40 @@
+@startuml
+class ShadowRendering <<static>> {
+    - {static} <<readonly>> k_LightPosID : int
+    - {static} <<readonly>> k_SelfShadowingID : int
+    - {static} <<readonly>> k_ShadowStencilGroupID : int
+    - {static} <<readonly>> k_ShadowIntensityID : int
+    - {static} <<readonly>> k_ShadowVolumeIntensityID : int
+    - {static} <<readonly>> k_ShadowRadiusID : int
+    - {static} <<readonly>> k_ShadowColorMaskID : int
+    - {static} <<readonly>> k_ShadowModelMatrixID : int
+    - {static} <<readonly>> k_ShadowModelInvMatrixID : int
+    - {static} <<readonly>> k_ShadowModelScaleID : int
+    - {static} <<readonly>> m_ProfilingSamplerShadows : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerShadowsA : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerShadowsR : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerShadowsG : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerShadowsB : ProfilingSampler
+    - {static} m_RenderTargets : RTHandle[] = null
+    - {static} m_RenderTargetIds : int[] = null
+    - {static} m_LightInputTextures : RenderTargetIdentifier[] = null
+    - {static} <<readonly>> k_ColorLookup : Color[]
+    - {static} <<readonly>> m_ProfilingSamplerShadowColorsLookup : ProfilingSampler[]
+    + {static} maxTextureCount : uint <<get>>
+    + {static} InitializeBudget(maxTextureCount:uint) : void
+    - {static} CreateMaterials(shader:Shader, pass:int) : Material[]
+    - {static} GetProjectedShadowMaterial(rendererData:Renderer2DData, colorIndex:int) : Material
+    - {static} GetStencilOnlyShadowMaterial(rendererData:Renderer2DData, colorIndex:int) : Material
+    - {static} GetSpriteSelfShadowMaterial(rendererData:Renderer2DData, colorIndex:int) : Material
+    - {static} GetSpriteUnshadowMaterial(rendererData:Renderer2DData, colorIndex:int) : Material
+    - {static} GetGeometryUnshadowMaterial(rendererData:Renderer2DData, colorIndex:int) : Material
+    + {static} CreateShadowRenderTexture(pass:IRenderPass2D, renderingData:RenderingData, cmdBuffer:CommandBuffer, shadowIndex:int) : void
+    + {static} PrerenderShadows(pass:IRenderPass2D, renderingData:RenderingData, cmdBuffer:CommandBuffer, layerToRender:int, light:Light2D, shadowIndex:int, shadowIntensity:float) : bool
+    + {static} SetGlobalShadowTexture(cmdBuffer:CommandBuffer, light:Light2D, shadowIndex:int) : void
+    + {static} DisableGlobalShadowTexture(cmdBuffer:CommandBuffer) : void
+    - {static} CreateShadowRenderTexture(pass:IRenderPass2D, handleId:int, renderingData:RenderingData, cmdBuffer:CommandBuffer) : void
+    + {static} ReleaseShadowRenderTexture(cmdBuffer:CommandBuffer, shadowIndex:int) : void
+    + {static} SetShadowProjectionGlobals(cmdBuffer:CommandBuffer, shadowCaster:ShadowCaster2D) : void
+    + {static} RenderShadows(pass:IRenderPass2D, renderingData:RenderingData, cmdBuffer:CommandBuffer, layerToRender:int, light:Light2D, shadowIntensity:float, renderTexture:RenderTargetIdentifier, colorBit:int) : bool
+}
+@enduml

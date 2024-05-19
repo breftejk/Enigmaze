@@ -1,0 +1,92 @@
+@startuml
+enum ViewIndex {
+    First,
+    Second,
+}
+enum ViewCompositionIndex {
+    First= ViewIndex.First,
+    Second= ViewIndex.Second,
+    Composite,
+}
+enum Layout {
+    FullFirstView,
+    FullSecondView,
+    HorizontalSplit,
+    VerticalSplit,
+    CustomSplit,
+}
+enum SidePanel {
+    None= -1,
+    Environment,
+    Debug,
+}
+enum TargetDebugView {
+    First,
+    Both,
+    Second,
+}
+class Context {
+    - m_EnvironmentLibraryGUID : string = ""
+    - m_CameraSynced : bool = true
+    - m_EnvironmentLibrary : EnvironmentLibrary
+    + environmentLibrary : EnvironmentLibrary <<get>>
+    + layout : LayoutContext <<get>>
+    + cameraSynced : bool <<get>> <<set>>
+    - m_Views : ViewContext[]
+    + viewContexts : ViewIterator <<get>>
+    + GetViewContent(index:ViewIndex) : ViewContext
+    <<internal>> Init() : void
+    + UpdateEnvironmentLibrary(library:EnvironmentLibrary) : void
+    - LoadEnvironmentLibraryFromGUID() : void
+    + SynchronizeCameraStates(baseCameraState:ViewIndex) : void
+    - SynchronizeCameraStates() : void
+    + SetFocusedCamera(index:ViewIndex) : void
+    - disposedValue : bool = false
+    - Dispose() : void
+    <<internal>> HasLibraryAssetChanged(environmentLibrary:EnvironmentLibrary) : bool
+    <<internal>> FullReimportEnvironmentLibrary() : void
+}
+class LayoutContext {
+    + viewLayout : Layout
+    + lastFocusedView : ViewIndex
+    + showedSidePanel : SidePanel
+    + debugPanelSource : TargetDebugView
+    <<internal>> gizmoState : ComparisonGizmoState
+    <<internal>> isSimpleView : bool <<get>>
+    <<internal>> isMultiView : bool <<get>>
+    <<internal>> isCombinedView : bool <<get>>
+}
+class ViewContext {
+    + camera : CameraState <<get>>
+    + debug : DebugContext <<get>>
+    - m_EnvironmentGUID : string = ""
+    + hasEnvironment : bool <<get>>
+    + environment : Environment <<get>>
+    - viewedObjectAssetGUID : string = ""
+    - viewedObjecHierarchytInstanceID : int
+    + hasViewedObject : bool <<get>>
+    + viewedObjectReference : GameObject <<get>>
+    + viewedInstanceInPreview : GameObject <<get>> <<internal set>>
+    + UpdateEnvironment(environmentOrCubemapAsset:UnityEngine.Object) : void
+    - LoadEnvironmentFromGUID() : void
+    + UpdateViewedObject(viewedObject:GameObject) : void
+    - LoadViewedObject() : void
+    <<internal>> LoadAll(reloadWithTemporaryID:bool) : void
+    <<internal>> CleanTemporaryObjectIndexes() : void
+    + ResetCameraState() : void
+}
+class DebugContext {
+    + shadow : bool = true
+    + viewMode : int
+}
+struct ViewIterator {
+    - m_Views : ViewContext[]
+    <<internal>> ViewIterator(views:ViewContext[])
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<ViewContext>
+}
+ScriptableObject <|-- Context
+IDisposable <|-- Context
+Context +-- ViewIterator
+"IEnumerable`1" "<ViewContext>" <|-- ViewIterator
+@enduml

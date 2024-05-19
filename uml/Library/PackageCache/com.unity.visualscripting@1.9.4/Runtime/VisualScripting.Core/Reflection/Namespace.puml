@@ -1,0 +1,27 @@
+@startuml
+class Namespace <<sealed>> {
+    - Namespace(fullName:string)
+    + Root : Namespace <<get>>
+    + Parent : Namespace <<get>>
+    + FullName : string <<get>>
+    + Name : string <<get>>
+    + IsRoot : bool <<get>>
+    + IsGlobal : bool <<get>>
+    + Ancestors : IEnumerable<Namespace> <<get>>
+    + AndAncestors() : IEnumerable<Namespace>
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    {static} - Namespace()
+    - {static} <<readonly>> collection : Collection
+    + {static} Global : Namespace <<get>>
+    + {static} FromFullName(fullName:string) : Namespace
+    + <<override>> Equals(obj:object) : bool
+}
+class Collection {
+    # <<override>> GetKeyForItem(item:Namespace) : string
+    + <<new>> TryGetValue(key:string, value:Namespace) : bool
+}
+Namespace +-- Collection
+"KeyedCollection`2" "<string,Namespace>" <|-- Collection
+"IKeyedCollection`2" "<string,Namespace>" <|-- Collection
+@enduml

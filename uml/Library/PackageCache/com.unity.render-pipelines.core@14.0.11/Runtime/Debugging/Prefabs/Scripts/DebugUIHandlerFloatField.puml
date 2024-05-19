@@ -1,0 +1,15 @@
+@startuml
+class DebugUIHandlerFloatField {
+    + nameLabel : Text
+    + valueLabel : Text
+    - m_Field : DebugUI.FloatField
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnIncrement(fast:bool) : void
+    + <<override>> OnDecrement(fast:bool) : void
+    - ChangeValue(fast:bool, multiplier:float) : void
+    - UpdateValueLabel() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerFloatField
+@enduml

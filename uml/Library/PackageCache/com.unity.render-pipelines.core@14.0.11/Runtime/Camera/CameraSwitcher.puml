@@ -1,0 +1,20 @@
+@startuml
+class CameraSwitcher {
+    + m_Cameras : Camera[]
+    - m_CurrentCameraIndex : int
+    - m_OriginalCamera : Camera = null
+    - m_OriginalCameraPosition : Vector3
+    - m_OriginalCameraRotation : Quaternion
+    - m_CurrentCamera : Camera = null
+    - m_CameraNames : GUIContent[] = null
+    - m_CameraIndices : int[] = null
+    - m_DebugEntry : DebugUI.EnumField
+    - m_DebugEntryEnumIndex : int
+    - OnEnable() : void
+    - OnDisable() : void
+    - GetCameraCount() : int
+    - GetNextCamera() : Camera
+    - SetCameraIndex(index:int) : void
+}
+MonoBehaviour <|-- CameraSwitcher
+@enduml

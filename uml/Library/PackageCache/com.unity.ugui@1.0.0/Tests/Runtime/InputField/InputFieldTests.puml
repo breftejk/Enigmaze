@@ -1,0 +1,6 @@
+@startuml
+class BaseInputFieldTests {
+    # m_PrefabRoot : GameObject
+    + CreateInputFieldAsset(prefabPath:string) : void
+}
+@enduml

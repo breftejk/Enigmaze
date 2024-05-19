@@ -1,0 +1,13 @@
+@startuml
+class UniversalGlobalSettingsTests {
+    - initialGlobalSettings : UniversalRenderPipelineGlobalSettings
+    - otherGlobalSettings : UniversalRenderPipelineGlobalSettings
+    + SetUp() : void
+    + TearDown() : void
+    - EnsureUniversalRPIsActivePipeline() : void
+    + URPFrameRendered_GlobalSettingsShouldBeAssigned() : void
+    + URPFrameRendered_EnsureGlobalSettingsIfNullAssigned() : void
+    + Undo_URPActive_ChangeGlobalSettings() : void
+    + Undo_UPActive_UnregisterGlobalSettings() : void
+}
+@enduml

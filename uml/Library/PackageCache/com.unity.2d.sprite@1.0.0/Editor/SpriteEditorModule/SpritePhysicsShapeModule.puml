@@ -1,0 +1,13 @@
+@startuml
+class SpritePhysicsShapeModule {
+    - <<readonly>> kDefaultPhysicsTessellationDetail : float = 0.25f
+    - <<readonly>> kDefaultPhysicsAlphaTolerance : byte = 200
+    + SpritePhysicsShapeModule(sem:ISpriteEditor, ege:IEventSystem, us:IUndoSystem, ad:IAssetDatabase, gu:IGUIUtility, sef:IShapeEditorFactory, outlineTexture:ITexture2D)
+    + <<override>> moduleName : string <<get>>
+    - spriteEditorWindow : ISpriteEditor <<get>> <<set>>
+    + <<override>> ApplyRevert(apply:bool) : bool
+    # <<override>> LoadOutline() : void
+    # <<override>> SetupShapeEditorOutline(spriteRect:SpriteRect) : void
+}
+SpriteOutlineModule <|-- SpritePhysicsShapeModule
+@enduml

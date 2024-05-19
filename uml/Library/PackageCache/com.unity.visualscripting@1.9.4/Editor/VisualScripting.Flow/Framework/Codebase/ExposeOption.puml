@@ -1,0 +1,14 @@
+@startuml
+class ExposeOption {
+    + ExposeOption()
+    + ExposeOption(unit:Expose)
+    + exposedType : Type <<get>>
+    # <<override>> FavoriteKey() : string
+    # <<override>> Label(human:bool) : string
+    # <<override>> ShowValueOutputsInFooter() : bool
+    # <<override>> FillFromUnit() : void
+    + <<override>> Deserialize(row:UnitOptionRow) : void
+    + <<override>> Serialize() : UnitOptionRow
+}
+"UnitOption`1" "<Expose>" <|-- ExposeOption
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class SolutionParser <<static>> {
+    - {static} <<readonly>> ProjectDeclaration : Regex
+    - {static} <<readonly>> PropertiesDeclaration : Regex
+    - {static} <<readonly>> PropertiesEntryDeclaration : Regex
+    + {static} ParseSolutionFile(filename:string, fileIO:IFileIO) : Solution
+    + {static} ParseSolutionContent(content:string) : Solution
+    - {static} ParseSolutionProjects(content:string) : SolutionProjectEntry[]
+    - {static} ParseSolutionProperties(content:string) : SolutionProperties[]
+}
+@enduml

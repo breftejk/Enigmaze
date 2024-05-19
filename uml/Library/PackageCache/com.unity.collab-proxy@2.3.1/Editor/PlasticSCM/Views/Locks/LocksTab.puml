@@ -1,0 +1,34 @@
+@startuml
+class LocksTab <<sealed>> {
+    <<internal>> Table : LocksListView <<get>>
+    <<internal>> Operations : ILockMenuOperations <<get>>
+    <<internal>> LocksTab(repSpec:RepositorySpec, refreshView:IRefreshView, parentWindow:EditorWindow)
+    <<internal>> DrawSearchFieldForLocksTab() : void
+    <<internal>> OnDisable() : void
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    - Refresh() : void
+    - GetSelectedLocksStatus() : List<LockInfo.LockStatus>
+    - ReleaseLocks() : void
+    - RemoveLocks() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    - OnSelectionChanged() : void
+    {static} - DoActionsToolbar(server:string, progressControls:ProgressControlsForViews, lockMenuOperations:ILockMenuOperations, isReleaseLocksButtonEnabled:bool, isRemoveLocksButtonEnabled:bool) : void
+    {static} - DoLocksArea(locksListView:LocksListView, isOperationRunning:bool) : void
+    {static} - DoReleaseLocksButton(lockMenuOperations:ILockMenuOperations, isEnabled:bool) : void
+    {static} - DoRemoveLocksButton(lockMenuOperations:ILockMenuOperations, isEnabled:bool) : void
+    {static} - DoConfigureLockRulesButton(server:string) : void
+    - BuildComponents(repSpec:RepositorySpec) : void
+    - mIsReleaseLocksButtonEnabled : bool
+    - mIsRemoveLocksButtonEnabled : bool
+    - mSearchField : SearchField
+    - mLocksListView : LocksListView
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mFillLocksTable : FillLocksTable
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mRefreshView : IRefreshView
+    <<readonly>> - mRepSpec : RepositorySpec
+}
+IRefreshableView <|-- LocksTab
+ILockMenuOperations <|-- LocksTab
+@enduml

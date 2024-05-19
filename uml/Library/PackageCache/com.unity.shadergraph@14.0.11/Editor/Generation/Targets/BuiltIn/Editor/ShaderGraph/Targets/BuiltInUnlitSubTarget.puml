@@ -1,0 +1,32 @@
+@startuml
+class BuiltInUnlitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + BuiltInUnlitSubTarget()
+    # <<override>> shaderID : ShaderID <<get>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> ProcessPreviewMaterial(material:Material) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+}
+class SubShaders <<static>> {
+    + {static} Unlit(target:BuiltInTarget, renderType:string, renderQueue:string) : SubShaderDescriptor
+}
+class UnlitPasses <<static>> {
+    + {static} Unlit(target:BuiltInTarget) : PassDescriptor
+}
+class UnlitKeywords <<static>> {
+    + {static} Unlit(target:BuiltInTarget) : KeywordCollection
+}
+class UnlitIncludes <<static>> {
+    <<const>> - kUnlitPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/UnlitPass.hlsl"
+    + {static} Unlit : IncludeCollection
+}
+BuiltInSubTarget <|-- BuiltInUnlitSubTarget
+BuiltInUnlitSubTarget +-- SubShaders
+BuiltInUnlitSubTarget +-- UnlitPasses
+BuiltInUnlitSubTarget +-- UnlitKeywords
+BuiltInUnlitSubTarget +-- UnlitIncludes
+@enduml

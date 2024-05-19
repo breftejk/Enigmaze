@@ -1,0 +1,36 @@
+@startuml
+class SignInWithEmailPanel {
+    <<internal>> SignInWithEmailPanel(parentWindow:CloudEditionWelcomeWindow, notify:IWelcomeWindowNotify, restApi:IPlasticWebRestApi)
+    <<internal>> Dispose() : void
+    - SuccessForConfigure(organizations:List<string>, canCreateAnOrganization:bool, userName:string, password:string) : void
+    - SuccessForSSO(organization:string) : void
+    - SuccessForProfile(userName:string) : void
+    - SuccessForCredentials(userName:string, password:string) : void
+    - SuccessForHomeView(userName:string) : void
+    - ValidationFailed(validationResult:Login.ValidationResult) : void
+    - SignUpNeeded(loginData:Login.Data) : void
+    - ShowSignUpNeeded() : void
+    - HideSignUpNeeded() : void
+    - Error(message:string) : void
+    - CleanNotificationLabels() : void
+    - SignInButton_Clicked() : void
+    - BackButton_Clicked() : void
+    - InitializeLayoutAndStyles() : void
+    - SignUpButton_Clicked() : void
+    - BuildComponents() : void
+    - mEmailField : TextField
+    - mPasswordField : TextField
+    - mEmailNotificationLabel : Label
+    - mPasswordNotificationLabel : Label
+    - mSignInButton : Button
+    - mBackButton : Button
+    - mSignUpButton : Button
+    - mProgressContainer : VisualElement
+    - mSignUpNeededNotificationContainer : VisualElement
+    - mProgressControls : IProgressControls
+    <<readonly>> - mParentWindow : CloudEditionWelcomeWindow
+    <<readonly>> - mNotify : IWelcomeWindowNotify
+    <<readonly>> - mRestApi : IPlasticWebRestApi
+}
+VisualElement <|-- SignInWithEmailPanel
+@enduml

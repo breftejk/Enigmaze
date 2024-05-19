@@ -1,0 +1,20 @@
+@startuml
+class DropdownOptionListDrawer {
+    <<const>> - kOptionsPath : string = "m_Options"
+    <<const>> - kTextPath : string = "m_Text"
+    <<const>> - kImagePath : string = "m_Image"
+    <<const>> - kHeader : string = "Options"
+    <<const>> - kListViewUssName : string = "unity-list-view__header"
+    <<const>> - kVisualElementName : string = "DropdownOptionDataList"
+    <<const>> - itemOffset : float = 4
+    - m_ReorderableList : ReorderableList
+    - Init(property:SerializedProperty) : void
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - DrawHeader(rect:Rect) : void
+    - DrawOptionData(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    + <<override>> CreatePropertyGUI(property:SerializedProperty) : VisualElement
+    - CreateListView(property:SerializedProperty) : ListView
+}
+PropertyDrawer <|-- DropdownOptionListDrawer
+@enduml

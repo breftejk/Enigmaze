@@ -1,0 +1,51 @@
+@startuml
+class ControlPointSettings {
+    <<const>> - kControlPointRKey : string
+    <<const>> - kControlPointGKey : string
+    <<const>> - kControlPointBKey : string
+    <<const>> - kControlPointAKey : string
+    {static} <<readonly>> - kControlPointKeyContent : GUIContent
+    <<const>> - kControlPointSRKey : string
+    <<const>> - kControlPointSGKey : string
+    <<const>> - kControlPointSBKey : string
+    <<const>> - kControlPointSAKey : string
+    {static} <<readonly>> - kControlPointSKeyContent : GUIContent
+    {static} - showHandle : bool = true
+    + {static} controlPointColor : Color <<get>> <<set>>
+    + {static} controlPointSelectedColor : Color <<get>> <<set>>
+    <<internal>> SetDefault() : void
+    + OnGUI() : void
+}
+class HandleSettings {
+    <<const>> - kSplineRKey : string
+    <<const>> - kSplineGKey : string
+    <<const>> - kSplineBKey : string
+    <<const>> - kSplineAKey : string
+    {static} <<readonly>> - kSplineKeyContent : GUIContent
+    <<const>> - kSplineHRKey : string
+    <<const>> - kSplineHGKey : string
+    <<const>> - kSplineHBKey : string
+    <<const>> - kSplineHAKey : string
+    {static} <<readonly>> - kSplineHKeyContent : GUIContent
+    <<const>> - kTangentRKey : string
+    <<const>> - kTangentGKey : string
+    <<const>> - kTangentBKey : string
+    <<const>> - kTangentAKey : string
+    {static} <<readonly>> - kTangentKeyContent : GUIContent
+    {static} - showHandle : bool = true
+    + {static} splineColor : Color <<get>> <<set>>
+    + {static} splineHoveredColor : Color <<get>> <<set>>
+    + {static} tangentColor : Color <<get>> <<set>>
+    <<internal>> SetDefault() : void
+    + OnGUI() : void
+}
+class UserSettings {
+    + <<const>> kSettingsUniqueKey : string = "UnityEditor.U2D.SpriteShape/"
+    - {static} s_ControlPointSettings : ControlPointSettings
+    - {static} s_HandleSettings : HandleSettings
+    + UserSettings()
+    - {static} CreateSettingsProvider() : SettingsProvider
+    - {static} SettingsGUI(searchContext:string) : void
+}
+SettingsProvider <|-- UserSettings
+@enduml

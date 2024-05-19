@@ -1,0 +1,6 @@
+@startuml
+interface ISGResizable {
+    CanResizePastParentBounds() : bool
+}
+IResizable <|-- ISGResizable
+@enduml

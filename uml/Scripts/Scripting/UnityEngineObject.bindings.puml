@@ -1,0 +1,121 @@
+@startuml
+enum HideFlags {
+    None= 0,
+    HideInHierarchy= 1,
+    HideInInspector= 2,
+    DontSaveInEditor= 4,
+    NotEditable= 8,
+    DontSaveInBuild= 16,
+    DontUnloadUnusedAsset= 32,
+    DontSave= DontSaveInEditor | DontSaveInBuild | DontUnloadUnusedAsset,
+    HideAndDontSave= HideInHierarchy | DontSaveInEditor | NotEditable | DontSaveInBuild | DontUnloadUnusedAsset,
+}
+enum FindObjectsSortMode {
+    None= 0,
+    InstanceID= 1,
+}
+enum FindObjectsInactive {
+    Exclude= 0,
+    Include= 1,
+}
+class Object <<partial>> {
+    - <<const>> kInstanceID_None : int = 0
+    - m_CachedPtr : IntPtr
+    - m_InstanceID : int
+    - m_UnityRuntimeErrorString : string
+    <<const>> - objectIsNullMessage : string = "The Object you want to instantiate is null."
+    <<const>> - cloneDestroyedMessage : string = "Instantiate failed because the clone was destroyed during creation. This can happen if DestroyImmediate is called in MonoBehaviour.Awake."
+    + <<unsafe>> GetInstanceID() : int
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(other:object) : bool
+    {static} - CompareBaseObjects(lhs:UnityEngine.Object, rhs:UnityEngine.Object) : bool
+    - EnsureRunningOnMainThread() : void
+    {static} - IsNativeObjectAlive(o:UnityEngine.Object) : bool
+    - GetCachedPtr() : System.IntPtr
+    + name : string <<get>> <<set>>
+    + {static} InstantiateAsync(original:T) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, parent:Transform) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, position:Vector3, rotation:Quaternion) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, parent:Transform, position:Vector3, rotation:Quaternion) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, parent:Transform) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, position:Vector3, rotation:Quaternion) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, positions:ReadOnlySpan<Vector3>, rotations:ReadOnlySpan<Quaternion>) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, parent:Transform, position:Vector3, rotation:Quaternion) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, parent:Transform, position:Vector3, rotation:Quaternion, cancellationToken:CancellationToken) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, parent:Transform, positions:ReadOnlySpan<Vector3>, rotations:ReadOnlySpan<Quaternion>) : AsyncInstantiateOperation<T>
+    + {static} InstantiateAsync(original:T, count:int, parent:Transform, positions:ReadOnlySpan<Vector3>, rotations:ReadOnlySpan<Quaternion>, cancellationToken:CancellationToken) : AsyncInstantiateOperation<T>
+    + {static} Instantiate(original:Object, position:Vector3, rotation:Quaternion) : Object
+    + {static} Instantiate(original:Object, position:Vector3, rotation:Quaternion, parent:Transform) : Object
+    + {static} Instantiate(original:Object) : Object
+    + {static} Instantiate(original:Object, scene:Scene) : Object
+    + {static} Instantiate(original:Object, parent:Transform) : Object
+    + {static} Instantiate(original:Object, parent:Transform, instantiateInWorldSpace:bool) : Object
+    + {static} Instantiate(original:T) : T
+    + {static} Instantiate(original:T, position:Vector3, rotation:Quaternion) : T
+    + {static} Instantiate(original:T, position:Vector3, rotation:Quaternion, parent:Transform) : T
+    + {static} Instantiate(original:T, parent:Transform) : T
+    + {static} Instantiate(original:T, parent:Transform, worldPositionStays:bool) : T
+    + <<extern>> {static} Destroy(obj:Object, t:float) : void
+    + {static} Destroy(obj:Object) : void
+    + <<extern>> {static} DestroyImmediate(obj:Object, allowDestroyingAssets:bool) : void
+    + {static} DestroyImmediate(obj:Object) : void
+    + {static} FindObjectsOfType(type:Type) : Object[]
+    + <<extern>> {static} FindObjectsOfType(type:Type, includeInactive:bool) : Object[]
+    + {static} FindObjectsByType(type:Type, sortMode:FindObjectsSortMode) : Object[]
+    + <<extern>> {static} FindObjectsByType(type:Type, findObjectsInactive:FindObjectsInactive, sortMode:FindObjectsSortMode) : Object[]
+    + <<extern>> {static} DontDestroyOnLoad(target:Object) : void
+    + <<extern>> hideFlags : HideFlags <<get>> <<set>>
+    + {static} DestroyObject(obj:Object, t:float) : void
+    + {static} DestroyObject(obj:Object) : void
+    + {static} FindSceneObjectsOfType(type:Type) : Object[]
+    + <<extern>> {static} FindObjectsOfTypeIncludingAssets(type:Type) : Object[]
+    + {static} FindObjectsOfType() : T[]
+    + {static} FindObjectsByType(sortMode:FindObjectsSortMode) : T[]
+    + {static} FindObjectsOfType(includeInactive:bool) : T[]
+    + {static} FindObjectsByType(findObjectsInactive:FindObjectsInactive, sortMode:FindObjectsSortMode) : T[]
+    + {static} FindObjectOfType() : T
+    + {static} FindObjectOfType(includeInactive:bool) : T
+    + {static} FindFirstObjectByType() : T
+    + {static} FindAnyObjectByType() : T
+    + {static} FindFirstObjectByType(findObjectsInactive:FindObjectsInactive) : T
+    + {static} FindAnyObjectByType(findObjectsInactive:FindObjectsInactive) : T
+    + {static} FindObjectsOfTypeAll(type:Type) : Object[]
+    {static} - CheckNullArgument(arg:object, message:string) : void
+    + {static} FindObjectOfType(type:System.Type) : Object
+    + {static} FindFirstObjectByType(type:System.Type) : Object
+    + {static} FindAnyObjectByType(type:System.Type) : Object
+    + {static} FindObjectOfType(type:System.Type, includeInactive:bool) : Object
+    + {static} FindFirstObjectByType(type:System.Type, findObjectsInactive:FindObjectsInactive) : Object
+    + {static} FindAnyObjectByType(type:System.Type, findObjectsInactive:FindObjectsInactive) : Object
+    + <<override>> ToString() : string
+    <<extern>> {static} - GetOffsetOfInstanceIDInCPlusPlusObject() : int
+    <<extern>> {static} - CurrentThreadIsMainThread() : bool
+    <<extern>> {static} - Internal_CloneSingle(data:Object) : Object
+    <<extern>> {static} - Internal_CloneSingleWithScene(data:Object, scene:Scene) : Object
+    <<extern>> {static} - Internal_CloneSingleWithParent(data:Object, parent:Transform, worldPositionStays:bool) : Object
+    <<extern>> {static} - Internal_InstantiateAsyncWithParent(original:Object, count:int, parent:Transform, positions:IntPtr, positionsCount:int, rotations:IntPtr, rotationsCount:int, hasManagedCancellationToken:bool) : IntPtr
+    <<extern>> {static} - Internal_InstantiateSingle(data:Object, pos:Vector3, rot:Quaternion) : Object
+    <<extern>> {static} - Internal_InstantiateSingleWithParent(data:Object, parent:Transform, pos:Vector3, rot:Quaternion) : Object
+    <<extern>> {static} - ToString(obj:Object) : string
+    <<extern>> - GetName() : string
+    <<internal>> <<extern>> {static} IsPersistent(obj:Object) : bool
+    <<extern>> - SetName(name:string) : void
+    <<internal>> <<extern>> {static} DoesObjectWithInstanceIDExist(instanceID:int) : bool
+    <<internal>> <<extern>> {static} FindObjectFromInstanceID(instanceID:int) : Object
+    - <<extern>> {static} GetPtrFromInstanceID(instanceID:int, objectType:Type, isMonoBehaviour:bool) : IntPtr
+    <<internal>> <<extern>> {static} ForceLoadFromInstanceID(instanceID:int) : Object
+    <<internal>> {static} CreateMissingReferenceObject(instanceID:int) : Object
+    <<internal>> <<extern>> MarkDirty() : void
+}
+class MarshalledUnityObject <<static>> {
+    + {static} Marshal(obj:T) : IntPtr
+    + {static} MarshalNotNull(obj:T) : IntPtr
+    - {static} MarshalFromInstanceId(obj:T) : IntPtr
+    {static} - IsMonoBehaviourOrScriptableObjectOrParentClass(obj:Object) : bool
+    - {static} <<readonly>> m_MonoBehaviorBaseClasses : Type[]
+    {static} - MarshalledUnityObject()
+    + {static} TryThrowEditorNullExceptionObject(unityObj:Object, parameterName:string) : void
+}
+Object +-- MarshalledUnityObject
+@enduml

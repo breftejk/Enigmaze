@@ -1,0 +1,6 @@
+@startuml
+interface IGraphElementWithData {
+    CreateData() : IGraphElementData
+}
+IGraphElement <|-- IGraphElementWithData
+@enduml

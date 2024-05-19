@@ -1,0 +1,17 @@
+@startuml
+class CustomTextureSelf {
+    - <<const>> kOutputSlotSelf2DName : string = "Self Texture 2D"
+    - <<const>> kOutputSlotSelfCubeName : string = "Self Texture Cube"
+    - <<const>> kOutputSlotSelf3DName : string = "Self Texture 3D"
+    + <<const>> OutputSlotSelf2DId : int = 5
+    + <<const>> OutputSlotSelfCubeId : int = 6
+    + <<const>> OutputSlotSelf3DId : int = 7
+    + CustomTextureSelf()
+    # validSlots : int[] <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- CustomTextureSelf
+IGeneratesFunction <|-- CustomTextureSelf
+@enduml

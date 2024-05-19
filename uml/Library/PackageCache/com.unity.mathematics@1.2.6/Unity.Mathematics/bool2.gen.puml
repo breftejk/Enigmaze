@@ -1,0 +1,59 @@
+@startuml
+struct bool2 {
+    + x : bool
+    + y : bool
+    + bool2(x:bool, y:bool)
+    + bool2(xy:bool2)
+    + bool2(v:bool)
+    + xxxx : bool4 <<get>>
+    + xxxy : bool4 <<get>>
+    + xxyx : bool4 <<get>>
+    + xxyy : bool4 <<get>>
+    + xyxx : bool4 <<get>>
+    + xyxy : bool4 <<get>>
+    + xyyx : bool4 <<get>>
+    + xyyy : bool4 <<get>>
+    + yxxx : bool4 <<get>>
+    + yxxy : bool4 <<get>>
+    + yxyx : bool4 <<get>>
+    + yxyy : bool4 <<get>>
+    + yyxx : bool4 <<get>>
+    + yyxy : bool4 <<get>>
+    + yyyx : bool4 <<get>>
+    + yyyy : bool4 <<get>>
+    + xxx : bool3 <<get>>
+    + xxy : bool3 <<get>>
+    + xyx : bool3 <<get>>
+    + xyy : bool3 <<get>>
+    + yxx : bool3 <<get>>
+    + yxy : bool3 <<get>>
+    + yyx : bool3 <<get>>
+    + yyy : bool3 <<get>>
+    + xx : bool2 <<get>>
+    + xy : bool2 <<get>> <<set>>
+    + yx : bool2 <<get>> <<set>>
+    + yy : bool2 <<get>>
+    + Equals(rhs:bool2) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+class math <<static>> <<partial>> {
+    + {static} bool2(x:bool, y:bool) : bool2
+    + {static} bool2(xy:bool2) : bool2
+    + {static} bool2(v:bool) : bool2
+    + {static} hash(v:bool2) : uint
+    + {static} hashwide(v:bool2) : uint2
+    + {static} shuffle(left:bool2, right:bool2, x:ShuffleComponent) : bool
+    + {static} shuffle(left:bool2, right:bool2, x:ShuffleComponent, y:ShuffleComponent) : bool2
+    + {static} shuffle(left:bool2, right:bool2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : bool3
+    + {static} shuffle(left:bool2, right:bool2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : bool4
+    <<internal>> {static} select_shuffle_component(a:bool2, b:bool2, component:ShuffleComponent) : bool
+}
+class DebuggerProxy <<sealed>> {
+    + x : bool
+    + y : bool
+    + DebuggerProxy(v:bool2)
+}
+bool2 +-- DebuggerProxy
+@enduml

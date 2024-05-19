@@ -1,0 +1,52 @@
+@startuml
+class UniversalSpriteLitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + UniversalSpriteLitSubTarget()
+    + <<override>> IsActive() : bool
+    # <<override>> shaderID : ShaderUtils.ShaderID <<get>>
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + TryUpgradeFromMasterNode(masterNode:IMasterNode1, blockMap:Dictionary<BlockFieldDescriptor, int>) : bool
+}
+class SubShaders <<static>> {
+    + {static} SpriteLit(target:UniversalTarget) : SubShaderDescriptor
+}
+class SpriteLitPasses <<static>> {
+    + {static} Lit(target:UniversalTarget) : PassDescriptor
+    + {static} Normal(target:UniversalTarget) : PassDescriptor
+    + {static} Forward : PassDescriptor
+}
+class SpriteLitBlockMasks <<static>> {
+    + {static} FragmentLit : BlockFieldDescriptor[]
+    + {static} FragmentForwardNormal : BlockFieldDescriptor[]
+}
+class SpriteLitRequiredFields <<static>> {
+    + {static} Lit : FieldCollection
+    + {static} Normal : FieldCollection
+    + {static} Forward : FieldCollection
+}
+class SpriteLitKeywords <<static>> {
+    + {static} Lit : KeywordCollection
+    + {static} Forward : KeywordCollection
+}
+class SpriteLitIncludes <<static>> {
+    <<const>> - k2DLightingUtil : string = "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/LightingUtility.hlsl"
+    <<const>> - k2DNormal : string = "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/NormalsRenderingShared.hlsl"
+    <<const>> - kSpriteLitPass : string = "Packages/com.unity.render-pipelines.universal/Editor/2D/ShaderGraph/Includes/SpriteLitPass.hlsl"
+    <<const>> - kSpriteNormalPass : string = "Packages/com.unity.render-pipelines.universal/Editor/2D/ShaderGraph/Includes/SpriteNormalPass.hlsl"
+    <<const>> - kSpriteForwardPass : string = "Packages/com.unity.render-pipelines.universal/Editor/2D/ShaderGraph/Includes/SpriteForwardPass.hlsl"
+    + {static} Lit : IncludeCollection
+    + {static} Normal : IncludeCollection
+    + {static} Forward : IncludeCollection
+}
+UniversalSubTarget <|-- UniversalSpriteLitSubTarget
+ILegacyTarget <|-- UniversalSpriteLitSubTarget
+UniversalSpriteLitSubTarget +-- SubShaders
+UniversalSpriteLitSubTarget +-- SpriteLitPasses
+UniversalSpriteLitSubTarget +-- SpriteLitBlockMasks
+UniversalSpriteLitSubTarget +-- SpriteLitRequiredFields
+UniversalSpriteLitSubTarget +-- SpriteLitKeywords
+UniversalSpriteLitSubTarget +-- SpriteLitIncludes
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class EditorEnumeratorTestWorkItem {
+    - m_Command : TestCommand
+    + EditorEnumeratorTestWorkItem(test:TestMethod, filter:ITestFilter)
+    - {static} FindFirstIEnumerableTestMethodCommand(command:TestCommand) : IEnumerableTestMethodCommand
+    # <<override>> PerformWork() : IEnumerable
+    - IsCancelledRun() : bool
+}
+UnityWorkItem <|-- EditorEnumeratorTestWorkItem
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class FindWorkspace <<static>> {
+    <<internal>> {static} HasWorkspace(path:string) : bool
+    <<internal>> {static} PathForApplicationPath(path:string) : string
+    <<internal>> {static} InfoForApplicationPath(path:string, plasticApi:IPlasticAPI) : WorkspaceInfo
+    {static} - FindWorkspacePath(path:string, wkConfigDir:string) : string
+}
+@enduml

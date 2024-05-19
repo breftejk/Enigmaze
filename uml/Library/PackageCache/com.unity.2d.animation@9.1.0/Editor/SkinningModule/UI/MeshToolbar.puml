@@ -1,0 +1,28 @@
+@startuml
+class MeshToolbar {
+    - <<const>> k_UxmlPath : string = "SkinningModule/MeshToolbar.uxml"
+    - <<const>> k_ToolbarId : string = "MeshToolbar"
+    - <<const>> k_SelectGeometryId : string = "SelectGeometry"
+    - <<const>> k_CreateVertexId : string = "CreateVertex"
+    - <<const>> k_CreateEdgeId : string = "CreateEdge"
+    - <<const>> k_SplitEdgeId : string = "SplitEdge"
+    - <<const>> k_GenerateGeometryId : string = "GenerateGeometry"
+    +  <<event>> SetMeshTool : Action<Tools> 
+    + skinningCache : SkinningCache <<get>> <<set>>
+    + {static} GenerateFromUXML() : MeshToolbar
+    + MeshToolbar()
+    - BindElements() : void
+    - SetupShortcutUtility() : void
+    + UpdateToggleState() : void
+    - AddShortcutsToToolTips() : void
+}
+class MeshToolbarFactory {
+}
+class MeshToolbarUxmlTraits {
+}
+Toolbar <|-- MeshToolbar
+MeshToolbar +-- MeshToolbarFactory
+"UxmlFactory`2" "<MeshToolbar,MeshToolbarUxmlTraits>" <|-- MeshToolbarFactory
+MeshToolbar +-- MeshToolbarUxmlTraits
+UxmlTraits <|-- MeshToolbarUxmlTraits
+@enduml

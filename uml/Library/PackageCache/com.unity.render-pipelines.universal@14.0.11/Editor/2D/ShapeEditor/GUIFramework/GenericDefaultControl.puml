@@ -1,0 +1,16 @@
+@startuml
+class GenericDefaultControl {
+    + position : Func<IGUIState, Vector3>
+    + forward : Func<IGUIState, Vector3>
+    + up : Func<IGUIState, Vector3>
+    + right : Func<IGUIState, Vector3>
+    + userData : Func<IGUIState, object> = null
+    + GenericDefaultControl(name:string)
+    # <<override>> GetPosition(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetForward(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetUp(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetRight(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetUserData(guiState:IGUIState, index:int) : object
+}
+DefaultControl <|-- GenericDefaultControl
+@enduml

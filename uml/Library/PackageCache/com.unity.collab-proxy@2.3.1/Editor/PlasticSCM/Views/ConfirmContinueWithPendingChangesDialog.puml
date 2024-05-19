@@ -1,0 +1,35 @@
+@startuml
+class ContinueWithPendingChangesQuestionerBuilder {
+    <<internal>> ContinueWithPendingChangesQuestionerBuilder(viewSwitcher:IViewSwitcher, parentWindow:EditorWindow)
+    + Get(title:string, explanation:string) : IContinueWithPendingChangesQuestioner
+    - mViewSwitcher : IViewSwitcher
+    - mParentWindow : EditorWindow
+}
+class ContinueWithPendingChangesQuestioner {
+    <<internal>> ContinueWithPendingChangesQuestioner(title:string, explanation:string, viewSwitcher:IViewSwitcher, parentWindow:EditorWindow)
+    + ContinueWithPendingChanges() : bool
+    - mTitle : string
+    - mExplanation : string
+    - mViewSwitcher : IViewSwitcher
+    - mParentWindow : EditorWindow
+}
+class ConfirmContinueWithPendingChangesDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} ConfirmContinue(title:string, explanation:string, viewSwitcher:IViewSwitcher, parentWindow:EditorWindow) : bool
+    {static} - Create(title:string, explanation:string, viewSwitcher:IViewSwitcher) : ConfirmContinueWithPendingChangesDialog
+    {static} - SavePreference() : void
+    # <<override>> GetTitle() : string
+    # <<override>> OnModalGUI() : void
+    - DoSwitchToConfirmationCheckButton() : void
+    - DoButtonsArea() : void
+    - DoContinueButton() : void
+    - DoCancelButton() : void
+    - DoCancelAndViewPendingChangesButton() : void
+    - mTitle : string
+    - mExplanation : string
+    - mViewSwitcher : IViewSwitcher
+    - mIsSwitchToConfirmationChecked : bool
+}
+IContinueWithPendingChangesQuestioner <|-- ContinueWithPendingChangesQuestioner
+PlasticDialog <|-- ConfirmContinueWithPendingChangesDialog
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class IESEngine {
+    <<const>> - k_HalfPi : float
+    <<const>> - k_TwoPi : float
+    <<internal>> m_iesReader : IESReader
+    <<internal>> FileFormatVersion : string <<get>>
+    <<internal>> m_TextureGenerationType : TextureImporterType
+    + TextureGenerationType : TextureImporterType <<set>>
+    + ReadFile(iesFilePath:string) : string
+    + GetKeywordValue(keyword:string) : string
+    + GetPhotometricType() : string
+    + GetMaximumIntensity() : (float, string)
+    + GenerateCubeCookie(compression:TextureImporterCompression, textureSize:int) : (string, Texture)
+    + Generate2DCookie(compression:TextureImporterCompression, coneAngle:float, textureSize:int, applyLightAttenuation:bool) : (string, Texture)
+    - GenerateCylindricalTexture(compression:TextureImporterCompression, textureSize:int) : (string, Texture)
+    - GenerateTexture(type:TextureImporterType, shape:TextureImporterShape, compression:TextureImporterCompression, width:int, height:int, colorBuffer:NativeArray<Color>) : (string, Texture)
+    - ComputePixelColor(horizontalAnglePosition:float, verticalAnglePosition:float, attenuation:float) : Color
+    - BuildTypeACylindricalTexture(width:int, height:int) : NativeArray<Color>
+    - BuildTypeBCylindricalTexture(width:int, height:int) : NativeArray<Color>
+    - BuildTypeCCylindricalTexture(width:int, height:int) : NativeArray<Color>
+    - BuildTypeAGnomonicTexture(coneAngle:float, size:int, applyLightAttenuation:bool) : NativeArray<Color>
+    - BuildTypeBGnomonicTexture(coneAngle:float, size:int, applyLightAttenuation:bool) : NativeArray<Color>
+    - BuildTypeCGnomonicTexture(coneAngle:float, size:int, applyLightAttenuation:bool) : NativeArray<Color>
+}
+@enduml

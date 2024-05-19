@@ -1,0 +1,59 @@
+@startuml
+interface ICopyToolStringStore {
+    stringStore : string <<get>> <<set>>
+}
+class SystemCopyBufferStringStore {
+    + stringStore : string <<get>> <<set>>
+}
+class BoneStorage {
+    + bones : BoneCache[]
+    + boneMapping : Dictionary<string, string>
+    + BoneStorage(bones:BoneCache[], boneMapping:Dictionary<string, string>)
+}
+class CopyTool {
+    - m_CopyToolStringStore : ICopyToolStringStore
+    - m_CopyToolView : CopyToolView
+    - m_HasValidCopyData : bool = false
+    - m_LastCopyDataHash : int
+    + pixelsPerUnit : float <<set>>
+    + hasValidCopiedData : bool <<get>>
+    + copyToolStringStore : ICopyToolStringStore <<set>>
+    <<internal>> <<override>> OnCreate() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - CopyMeshFromSpriteCache(sprite:SpriteCache, skinningSpriteData:SkinningCopySpriteData) : void
+    + OnCopyActivated() : void
+    - CopyAll() : SkinningCopyData
+    - CopySingle(sprite:SpriteCache) : SkinningCopyData
+    - GetDataForSprite(sprite:SpriteCache) : SkinningCopySpriteData
+    {static} - GetSpriteBoneDataRecursively(bones:IList<SpriteBoneCopyData>, rootBone:BoneCache, boneCache:List<BoneCache>) : void
+    {static} - AppendSpriteBoneDataRecursively(bones:IList<SpriteBoneCopyData>, currentBone:BoneCache, parentIndex:int, boneCache:List<BoneCache>) : void
+    + OnPasteActivated(shouldPasteBones:bool, shouldPasteMesh:bool, shouldFlipX:bool, shouldFlipY:bool) : void
+    {static} - IsValidCopyData(copyBuffer:string) : bool
+    {static} - GetFlippedBonePosition(bone:BoneCache, startPosition:Vector2, spriteRect:Rect, flipX:bool, flipY:bool) : Vector3
+    {static} - GetFlippedBoneRotation(bone:BoneCache, flipX:bool, flipY:bool) : Quaternion
+    {static} - SetBonePositionAndRotation(boneCache:BoneCache[], bone:TransformCache, position:Vector3[], rotation:Quaternion[]) : void
+    {static} - PasteBonesInCharacter(skinningCache:SkinningCache, spriteBones:SpriteBone[], shouldFlipX:bool, shouldFlipY:bool, scale:float) : BoneCache[]
+    {static} - PasteBonesInSprite(skinningCache:SkinningCache, sprite:SpriteCache, newBones:SpriteBone[], characterBones:BoneCache[], shouldFlipX:bool, shouldFlipY:bool, scale:float) : BoneStorage
+    {static} - AddBonesToSkeletonWithUniqueNames(characterBones:IList<BoneCache>, newBones:IList<BoneCache>, skeleton:SkeletonCache) : Dictionary<string, string>
+    {static} - PasteMeshInSprite(meshTool:MeshTool, sprite:SpriteCache, copySpriteData:SkinningCopySpriteData, shouldFlipX:bool, shouldFlipY:bool, scale:float, boneMapping:Dictionary<string, string>) : void
+    {static} - GetBonesFromGuids(copySpriteData:SkinningCopySpriteData, skeletonBones:IList<BoneCache>, boneMapping:Dictionary<string, string>) : BoneCache[]
+    {static} - GetBonesFromNames(copySpriteData:SkinningCopySpriteData, skeletonBones:IList<BoneCache>, boneMapping:Dictionary<string, string>) : BoneCache[]
+    {static} - GetBonesInCorrectOrder(spriteBones:IList<SpriteBoneCopyData>) : SpriteBone[]
+    {static} - FindSpriteWithName(sprites:IList<SpriteCache>, spriteName:string) : SpriteCache
+    {static} - FindBoneWithName(bones:IList<BoneCache>, boneName:string) : BoneCache
+    {static} - FindBoneWithGuid(bones:IList<BoneCache>, guid:string) : BoneCache
+}
+class CopyToolView {
+    - m_PastePanel : PastePanel
+    +  <<event>> onPasteActivated : Action<bool, bool, bool, bool> 
+    + Show(readonlyBone:bool) : void
+    + Hide() : void
+    + Initialize(layoutOverlay:LayoutOverlay) : void
+    - BindElements() : void
+    - OnPasteActivated(bone:bool, mesh:bool, flipX:bool, flipY:bool) : void
+}
+ICopyToolStringStore <|-- SystemCopyBufferStringStore
+MeshToolWrapper <|-- CopyTool
+@enduml

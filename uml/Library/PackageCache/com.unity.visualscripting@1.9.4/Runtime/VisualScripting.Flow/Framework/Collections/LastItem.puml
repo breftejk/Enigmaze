@@ -1,0 +1,9 @@
+@startuml
+class LastItem <<sealed>> {
+    + collection : ValueInput <<get>>
+    + lastItem : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + First(flow:Flow) : object
+}
+Unit <|-- LastItem
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class LiteralDescriptor {
+    + LiteralDescriptor(unit:Literal)
+    # <<override>> DefinedTitle() : string
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedSummary() : string
+    # <<override>> DefinedIcon() : EditorTexture
+}
+"UnitDescriptor`1" "<Literal>" <|-- LiteralDescriptor
+@enduml

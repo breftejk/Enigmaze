@@ -1,0 +1,36 @@
+@startuml
+class ProgressControlsForDialogs {
+    <<internal>> ProgressData : Data <<get>>
+    <<internal>> ForcedUpdateProgress() : void
+    <<internal>> UpdatePercent() : void
+    <<internal>> ProgressControlsForDialogs(actionControls:VisualElement[])
+    <<internal>> EnableActionControls(enable:bool) : void
+    - HideProgress() : void
+    - ShowProgress(message:string) : void
+    - ShowError(message:string) : void
+    - ShowNotification(message:string) : void
+    - ShowSuccess(message:string) : void
+    - ShowWarning(message:string) : void
+    - BuildComponents() : void
+    - InitializeLayoutAndStyles() : void
+    {static} - CleanStatusMessage(data:Data) : void
+    - mData : Data
+    - mUndefinedProgress : VisualElement
+    - mProgressLabel : Label
+    - mStatusLabel : Label
+    - mPercentageLabel : Label
+    - mActionControls : VisualElement[]
+    - mLoadingSpinner : LoadingSpinner
+}
+class Data {
+    <<internal>> IsWaitingAsyncResult : bool
+    <<internal>> ProgressPercent : float
+    <<internal>> ProgressMessage : string
+    <<internal>> StatusType : MessageType
+    <<internal>> StatusMessage : string
+    <<internal>> CopyInto(other:Data) : void
+}
+VisualElement <|-- ProgressControlsForDialogs
+IProgressControls <|-- ProgressControlsForDialogs
+ProgressControlsForDialogs +-- Data
+@enduml

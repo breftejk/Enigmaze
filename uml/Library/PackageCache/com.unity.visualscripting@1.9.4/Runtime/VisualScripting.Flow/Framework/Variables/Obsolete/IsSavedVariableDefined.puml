@@ -1,0 +1,9 @@
+@startuml
+class IsSavedVariableDefined <<sealed>> {
+    + IsSavedVariableDefined()
+    + IsSavedVariableDefined(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+IsVariableDefinedUnit <|-- IsSavedVariableDefined
+ISavedVariableUnit <|-- IsSavedVariableDefined
+@enduml

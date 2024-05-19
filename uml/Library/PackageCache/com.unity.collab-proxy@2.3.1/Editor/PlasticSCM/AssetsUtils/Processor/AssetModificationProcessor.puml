@@ -1,0 +1,15 @@
+@startuml
+class AssetModificationProcessor {
+    <<internal>> {static} ForceCheckout : bool <<get>>
+    <<internal>> {static} ModifiedAssets : string[] <<get>> <<set>>
+    {static} - AssetModificationProcessor()
+    <<internal>> {static} Enable(wkPath:string, assetStatusCache:IAssetStatusCache) : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} SetForceCheckoutOption(isEnabled:bool) : void
+    {static} - OnWillSaveAssets(paths:string[]) : string[]
+    {static} - IsOpenForEdit(assetPath:string, message:string) : bool
+    {static} - mIsEnabled : bool
+    {static} - mAssetStatusCache : IAssetStatusCache
+    {static} - mWkPath : string
+}
+@enduml

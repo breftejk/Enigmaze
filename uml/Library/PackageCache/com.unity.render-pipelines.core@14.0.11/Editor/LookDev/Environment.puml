@@ -1,0 +1,65 @@
+@startuml
+class Environment {
+    - m_CubemapGUID : string
+    - m_Cubemap : Cubemap
+    <<internal>> isCubemapOnly : bool <<get>> = false
+    + rotation : float = 0.0f
+    + exposure : float = 0f
+    - m_Latitude : float = 60.0f
+    - m_Longitude : float = 299.0f
+    + shadowColor : Color
+    + cubemap : Cubemap <<get>> <<set>>
+    + sunLatitude : float <<get>> <<set>>
+    + sunLongitude : float <<get>> <<set>>
+    <<internal>> {static} ClampLatitude(value:float) : float
+    <<internal>> {static} ClampLongitude(value:float) : float
+    <<internal>> UpdateSunPosition(sun:Light) : void
+    + ResetToBrightestSpot() : void
+    - LoadCubemap() : void
+    <<internal>> CopyTo(other:Environment) : void
+    + sky : UnityEngine.Rendering.LookDev.Sky <<get>>
+    <<internal>> {static} GetTemporaryEnvironmentForCubemap(cubemap:Cubemap) : Environment
+    <<internal>> HasCubemapAssetChanged(cubemap:Cubemap) : bool
+}
+class EnvironmentEditor {
+    + <<sealed>> <<override>> CreateInspectorGUI() : VisualElement
+    + <<sealed>> <<override>> OnInspectorGUI() : void
+    <<override>> + RenderStaticPreview(assetPath:string, subAssets:UnityEngine.Object[], width:int, height:int) : Texture2D
+}
+interface "IBendable`1"<T> {
+    Bind(data:T) : void
+}
+class EnvironmentElement {
+    <<internal>> <<const>> k_SkyThumbnailWidth : int = 200
+    <<internal>> <<const>> k_SkyThumbnailHeight : int = 100
+    {static} - s_cubeToLatlongMaterial : Material
+    {static} - cubeToLatlongMaterial : Material <<get>>
+    - environmentParams : VisualElement
+    - environment : Environment
+    - latlong : Image
+    - skyCubemapField : ObjectField
+    - skyRotationOffset : FloatField
+    - skyExposureField : FloatField
+    - sunPosition : Vector2Field
+    - shadowColor : ColorField
+    - environmentName : TextField
+    - OnChangeCallback : Action
+    + target : Environment <<get>>
+    + EnvironmentElement()
+    + EnvironmentElement(withPreview:bool, OnChangeCallback:Action)
+    + EnvironmentElement(environment:Environment)
+    - Create(withPreview:bool) : void
+    + Bind(environment:Environment) : void
+    + Bind(environment:Environment, deportedLatlong:Image) : void
+    {static} + PositionToLatLong(position:Vector2) : Vector2
+    + {static} ResetToBrightestSpot(environment:Environment) : void
+    + GetLatLongThumbnailTexture() : Texture2D
+    + {static} GetLatLongThumbnailTexture(environment:Environment, width:int) : Texture2D
+    + GetDefaultInspector() : VisualElement
+    - RegisterChange(reflectedVariable:TValueType, newValue:TValueType, resyncField:BaseField<TValueType>, updatePreview:bool, customResync:Action) : void
+}
+ScriptableObject <|-- Environment
+Editor <|-- EnvironmentEditor
+VisualElement <|-- EnvironmentElement
+"IBendable`1" "<Environment>" <|-- EnvironmentElement
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TypeOption {
+    + TypeOption(type:Type)
+    + TypeOption(type:Type, parentOnly:bool)
+    + {static} Haystack(type:Type) : string
+    + {static} SearchResultLabel(type:Type, query:string) : string
+}
+"DocumentedOption`1" "<Type>" <|-- TypeOption
+@enduml

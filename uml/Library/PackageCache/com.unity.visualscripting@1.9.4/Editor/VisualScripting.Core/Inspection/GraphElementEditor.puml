@@ -1,0 +1,33 @@
+@startuml
+class "GraphElementEditor`1"<TGraphContext> {
+    + GraphElementEditor(metadata:Metadata)
+    # element : IGraphElement <<get>>
+    # description : IGraphElementDescription <<get>>
+    # analysis : IGraphElementAnalysis <<get>>
+    # headerContent : GUIContent <<get>>
+    # <<virtual>> headerReference : GraphReference <<get>>
+    # headerContext : IGraphContext <<get>>
+    # <<virtual>> editableHeader : bool <<get>>
+    # <<virtual>> headerTitleMetadata : Metadata <<get>>
+    # <<virtual>> headerSummaryMetadata : Metadata <<get>>
+    # exception : Exception <<get>>
+    # exceptionMessage : string <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # GetHeaderHeight(width:float) : float
+    # GetWrappedInspectorHeight(totalWidth:float) : float
+    # <<virtual>> GetInspectorHeight(width:float) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # OnHeaderGUI(position:Rect) : void
+    # OnWrappedInspectorGUI(position:Rect) : void
+    # <<virtual>> OnInspectorGUI(position:Rect) : void
+    # GetInspectorInnerWidth(totalWidth:float) : float
+    # GetExceptionHeight(width:float) : float
+    # OnExceptionGUI(exceptionPosition:Rect) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> inspectorBackground : GUIStyle
+}
+"GraphInspector`1" "<TGraphContext>" <|-- "GraphElementEditor`1"
+"GraphElementEditor`1" +-- Styles
+@enduml

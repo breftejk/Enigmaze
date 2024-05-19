@@ -1,0 +1,63 @@
+@startuml
+class DecalProjectorEditor <<partial>> {
+    <<const>> - k_Limit : float = 100000f
+    <<const>> - k_LimitInv : float
+    {static} - fullColor : Color <<get>>
+    {static} - s_LastColor : Color
+    {static} - UpdateColorsInHandlesIfRequired() : void
+    - m_MaterialEditor : MaterialEditor = null
+    - m_MaterialProperty : SerializedProperty
+    - m_DrawDistanceProperty : SerializedProperty
+    - m_FadeScaleProperty : SerializedProperty
+    - m_StartAngleFadeProperty : SerializedProperty
+    - m_EndAngleFadeProperty : SerializedProperty
+    - m_UVScaleProperty : SerializedProperty
+    - m_UVBiasProperty : SerializedProperty
+    - m_ScaleMode : SerializedProperty
+    - m_Size : SerializedProperty
+    - m_SizeValues : SerializedProperty[]
+    - m_Offset : SerializedProperty
+    - m_OffsetValues : SerializedProperty[]
+    - m_FadeFactor : SerializedProperty
+    - m_RenderingLayerMask : SerializedProperty
+    - layerMask : int <<get>>
+    - layerMaskHasMultipleValues : bool <<get>>
+    {static} - s_BoxHandle : HierarchicalBox
+    {static} - boxHandle : HierarchicalBox <<get>>
+    {static} - s_uvHandles : DisplacableRectHandles
+    {static} - uvHandles : DisplacableRectHandles <<get>>
+    {static} <<readonly>> - s_AreaLightHandle : BoxBoundsHandle
+    <<const>> - k_EditShapeWithoutPreservingUV : SceneViewEditMode
+    <<const>> - k_EditShapePreservingUV : SceneViewEditMode
+    <<const>> - k_EditUVAndPivot : SceneViewEditMode
+    {static} <<readonly>> - k_EditVolumeModes : SceneViewEditMode[]
+    {static} - s_DrawPivotHandle : Func<Vector3, Quaternion, Vector3>
+    {static} - k_EditVolumeLabels : GUIContent[] = null
+    {static} - editVolumeLabels : GUIContent[] <<get>>
+    {static} - s_Instances : List<DecalProjectorEditor>
+    {static} - FindEditorFromSelection() : DecalProjectorEditor
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnDestroy() : void
+    + HasFrameBounds() : bool
+    + OnGetFrameBounds() : Bounds
+    + UpdateMaterialEditor() : void
+    - OnSceneGUI() : void
+    - DrawBoxTransformationHandles(decalProjector:DecalProjector) : void
+    - DrawPivotHandles(decalProjector:DecalProjector) : void
+    - DrawUVHandles(decalProjector:DecalProjector) : void
+    - DrawHandles() : void
+    {static} - DrawGizmosSelected(decalProjector:DecalProjector, gizmoType:GizmoType) : void
+    {static} - GetBoundsGetter(decalProjector:DecalProjector) : Func<Bounds>
+    - ratioSizePivotPositionSaved : Dictionary<DecalProjector, Vector3> = null
+    - ReinitSavedRatioSizePivotPosition() : void
+    - UpdateSize(axe:int, newSize:float) : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - EnterEditModeWithoutPreservingUV(args:ShortcutArguments) : void
+    {static} - EnterEditModePreservingUV(args:ShortcutArguments) : void
+    {static} - EnterEditModePivotPreservingUV(args:ShortcutArguments) : void
+    {static} - SwappingEditUVMode(args:ShortcutArguments) : void
+    {static} - ExitEditMode(args:ShortcutArguments) : void
+}
+Editor <|-- DecalProjectorEditor
+@enduml

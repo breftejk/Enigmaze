@@ -1,0 +1,14 @@
+@startuml
+class PickingTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string = "|Pick or marquee select new brush ({0&#125;)"
+    + {static} shortcutId : string = "Grid Painting/Picker"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- PickingTool
+PickingTool +-- Styles
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class "ManualPool`1"<T> <<static>> {
+    - {static} <<readonly>> @lock : object
+    - {static} <<readonly>> free : Stack<T>
+    - {static} <<readonly>> busy : HashSet<T>
+    + {static} New(constructor:Func<T>) : T
+    + {static} Free(item:T) : void
+}
+@enduml

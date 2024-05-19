@@ -1,0 +1,11 @@
+@startuml
+class Cache <<sealed>> {
+    + enter : ControlInput <<get>>
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    - Store(flow:Flow) : ControlOutput
+}
+Unit <|-- Cache
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+abstract class "NonNullableCollection`1"<T> {
+    # <<override>> InsertItem(index:int, item:T) : void
+    # <<override>> SetItem(index:int, item:T) : void
+    + AddRange(collection:IEnumerable<T>) : void
+}
+"Collection`1" "<T>" <|-- "NonNullableCollection`1"
+@enduml

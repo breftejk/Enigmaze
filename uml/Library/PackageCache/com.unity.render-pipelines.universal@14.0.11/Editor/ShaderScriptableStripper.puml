@@ -1,0 +1,183 @@
+@startuml
+class ShaderScriptableStripper {
+    + active : bool <<get>>
+    - m_BokehDepthOfField : Shader
+    - m_GaussianDepthOfField : Shader
+    - m_CameraMotionBlur : Shader
+    - m_PaniniProjection : Shader
+    - m_Bloom : Shader
+    - m_TerrainLit : Shader
+    - m_StencilDeferred : Shader
+    - m_UberPostShader : Shader
+    - m_HDROutputBlitShader : Shader
+    - m_DataDrivenLensFlareShader : Shader
+    + {static} <<readonly>> kPassNameUniversal2D : string = "Universal2D"
+    + {static} <<readonly>> kPassNameGBuffer : string = "GBuffer"
+    + {static} <<readonly>> kPassNameForwardLit : string = "ForwardLit"
+    + {static} <<readonly>> kPassNameDepthNormals : string = "DepthNormals"
+    - m_MainLightShadows : LocalKeyword
+    - m_MainLightShadowsCascades : LocalKeyword
+    - m_MainLightShadowsScreen : LocalKeyword
+    - m_AdditionalLightsVertex : LocalKeyword
+    - m_AdditionalLightsPixel : LocalKeyword
+    - m_AdditionalLightShadows : LocalKeyword
+    - m_ReflectionProbeBlending : LocalKeyword
+    - m_ReflectionProbeBoxProjection : LocalKeyword
+    - m_CastingPunctualLightShadow : LocalKeyword
+    - m_SoftShadows : LocalKeyword
+    - m_SoftShadowsLow : LocalKeyword
+    - m_SoftShadowsMedium : LocalKeyword
+    - m_SoftShadowsHigh : LocalKeyword
+    - m_MixedLightingSubtractive : LocalKeyword
+    - m_LightmapShadowMixing : LocalKeyword
+    - m_ShadowsShadowMask : LocalKeyword
+    - m_Lightmap : LocalKeyword
+    - m_DynamicLightmap : LocalKeyword
+    - m_DirectionalLightmap : LocalKeyword
+    - m_AlphaTestOn : LocalKeyword
+    - m_GbufferNormalsOct : LocalKeyword
+    - m_UseDrawProcedural : LocalKeyword
+    - m_ScreenSpaceOcclusion : LocalKeyword
+    - m_UseFastSRGBLinearConversion : LocalKeyword
+    - m_LightLayers : LocalKeyword
+    - m_DecalLayers : LocalKeyword
+    - m_WriteRenderingLayers : LocalKeyword
+    - m_RenderPassEnabled : LocalKeyword
+    - m_DebugDisplay : LocalKeyword
+    - m_DBufferMRT1 : LocalKeyword
+    - m_DBufferMRT2 : LocalKeyword
+    - m_DBufferMRT3 : LocalKeyword
+    - m_DecalNormalBlendLow : LocalKeyword
+    - m_DecalNormalBlendMedium : LocalKeyword
+    - m_DecalNormalBlendHigh : LocalKeyword
+    - m_ForwardPlus : LocalKeyword
+    - m_FoveatedRenderingNonUniformRaster : LocalKeyword
+    - m_EditorVisualization : LocalKeyword
+    - m_LODFadeCrossFade : LocalKeyword
+    - m_LightCookies : LocalKeyword
+    - m_LocalDetailMulx2 : LocalKeyword
+    - m_LocalDetailScaled : LocalKeyword
+    - m_LocalClearCoat : LocalKeyword
+    - m_LocalClearCoatMap : LocalKeyword
+    - m_LensDistortion : LocalKeyword
+    - m_ChromaticAberration : LocalKeyword
+    - m_BloomLQ : LocalKeyword
+    - m_BloomHQ : LocalKeyword
+    - m_BloomLQDirt : LocalKeyword
+    - m_BloomHQDirt : LocalKeyword
+    - m_HdrGrading : LocalKeyword
+    - m_ToneMapACES : LocalKeyword
+    - m_ToneMapNeutral : LocalKeyword
+    - m_FilmGrain : LocalKeyword
+    - m_ScreenCoordOverride : LocalKeyword
+    - m_EasuRcasAndHDRInput : LocalKeyword
+    - m_SHPerVertex : LocalKeyword
+    - m_SHMixed : LocalKeyword
+    - TryGetLocalKeyword(shader:Shader, name:string) : LocalKeyword
+    - InitializeLocalShaderKeywords(shader:Shader) : void
+    <<internal>> StripVolumeFeatures_UberPostShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures_BokehDepthOfFieldShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures_GaussianDepthOfFieldShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures_CameraMotionBlurShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures_PaniniProjectionShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures_BloomShader(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripVolumeFeatures(features:VolumeFeatures, strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_DebugDisplay(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_ScreenCoordOverride(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_PunctualLightShadows(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_FoveatedRendering(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_DeferredRendering(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_MainLightShadows(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_AdditionalLightShadows(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_MixedLighting(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures_SoftShadows(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_SoftShadowsQualityLevels(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_HDRGrading(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_UseFastSRGBLinearConversion(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_LightLayers(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_RenderPassEnabled(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_ReflectionProbes(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_ForwardPlus(stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_SHAuto(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_AdditionalLights(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_ScreenSpaceOcclusion(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_DecalsDbuffer(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_DecalsNormalBlend(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_DecalLayers(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_WriteRenderingLayers(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_AccurateGbufferNormals(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_LightCookies(strippingData:IShaderScriptableStrippingData, stripTool:ShaderStripTool<ShaderFeatures>) : bool
+    <<internal>> StripUnusedFeatures_DataDrivenLensFlare(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedFeatures(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnsupportedVariants_DirectionalLightmap(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnsupportedVariants_EditorVisualization(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnsupportedVariants_GLES2(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnsupportedVariants(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripInvalidVariants_HDR(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripInvalidVariants_TerrainHoles(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripInvalidVariants_Shadows(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripInvalidVariants(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedPass_2D(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedPass_Meta(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedPass_ShadowCaster(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedPass_Decals(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedPass(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedShaders_Deferred(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedShaders_HDROutput(strippingData:IShaderScriptableStrippingData) : bool
+    <<internal>> StripUnusedShaders(strippingData:IShaderScriptableStrippingData) : bool
+    + CanRemoveVariant(shader:Shader, passData:ShaderSnippetData, variantData:ShaderCompilerData) : bool
+    + BeforeShaderStripping(shader:Shader) : void
+    + AfterShaderStripping(shader:Shader) : void
+}
+interface IShaderScriptableStrippingData {
+    + shaderFeatures : ShaderFeatures <<get>> <<set>>
+    + volumeFeatures : VolumeFeatures <<get>> <<set>>
+    + isGLDevice : bool <<get>> <<set>>
+    + strip2DPasses : bool <<get>> <<set>>
+    + stripSoftShadowQualityLevels : bool <<get>> <<set>>
+    + stripDebugDisplayShaders : bool <<get>> <<set>>
+    + stripScreenCoordOverrideVariants : bool <<get>> <<set>>
+    + stripUnusedVariants : bool <<get>> <<set>>
+    + stripUnusedPostProcessingVariants : bool <<get>> <<set>>
+    + shader : Shader <<get>> <<set>>
+    + shaderType : ShaderType <<get>> <<set>>
+    + shaderCompilerPlatform : ShaderCompilerPlatform <<get>> <<set>>
+    + passName : string <<get>> <<set>>
+    + passType : PassType <<get>> <<set>>
+    + passIdentifier : PassIdentifier <<get>> <<set>>
+    + IsHDRShaderVariantValid : bool <<get>> <<set>>
+    + IsShaderFeatureEnabled(feature:ShaderFeatures) : bool
+    + IsVolumeFeatureEnabled(feature:VolumeFeatures) : bool
+    + IsKeywordEnabled(keyword:LocalKeyword) : bool
+    + PassHasKeyword(keyword:LocalKeyword) : bool
+}
+struct StrippingData {
+    + shaderFeatures : ShaderFeatures <<get>> <<set>>
+    + volumeFeatures : VolumeFeatures <<get>> <<set>>
+    + isGLDevice : bool <<get>> <<set>>
+    + stripSoftShadowQualityLevels : bool <<get>> <<set>>
+    + strip2DPasses : bool <<get>> <<set>>
+    + stripDebugDisplayShaders : bool <<get>> <<set>>
+    + stripScreenCoordOverrideVariants : bool <<get>> <<set>>
+    + stripUnusedVariants : bool <<get>> <<set>>
+    + stripUnusedPostProcessingVariants : bool <<get>> <<set>>
+    + shader : Shader <<get>> <<set>>
+    + shaderType : ShaderType <<get>> <<set>>
+    + shaderCompilerPlatform : ShaderCompilerPlatform <<get>> <<set>>
+    + passName : string <<get>> <<set>>
+    + passType : PassType <<get>> <<set>>
+    + passIdentifier : PassIdentifier <<get>> <<set>>
+    + IsHDRShaderVariantValid : bool <<get>> <<set>>
+    + IsKeywordEnabled(keyword:LocalKeyword) : bool
+    + IsShaderFeatureEnabled(feature:ShaderFeatures) : bool
+    + IsVolumeFeatureEnabled(feature:VolumeFeatures) : bool
+    + PassHasKeyword(keyword:LocalKeyword) : bool
+    + passData : ShaderSnippetData <<get>> <<set>>
+    + variantData : ShaderCompilerData <<get>> <<set>>
+}
+IShaderVariantStripper <|-- ShaderScriptableStripper
+IShaderVariantStripperScope <|-- ShaderScriptableStripper
+ShaderScriptableStripper +-- IShaderScriptableStrippingData
+ShaderScriptableStripper +-- StrippingData
+IShaderScriptableStrippingData <|-- StrippingData
+@enduml

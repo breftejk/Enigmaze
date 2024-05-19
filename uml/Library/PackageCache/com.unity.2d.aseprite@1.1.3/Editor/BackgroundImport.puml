@@ -1,0 +1,20 @@
+@startuml
+class BackgroundImport <<static>> {
+    {static} <<readonly>> - k_AssetsPath : string = "Assets/"
+    {static} <<readonly>> - s_AssetsFullPath : List<string>
+    {static} - s_HasChange : bool = false
+    {static} - s_LastSettingsValue : bool = false
+    {static} - s_WatcherAse : FileSystemWatcher = null
+    {static} - s_WatcherAseprite : FileSystemWatcher = null
+    {static} - Setup() : void
+    {static} - Cleanup() : void
+    {static} - OnUpdate() : void
+    {static} - CheckForSettingsUpdate() : void
+    {static} - SetupWatcher() : void
+    {static} - MonitorDirectory(obj:object) : void
+    {static} - SetupWatcher(path:string, filter:string) : FileSystemWatcher
+    {static} - OnChangeDetected(sender:object, e:FileSystemEventArgs) : void
+    {static} - StopWatchers() : void
+    {static} - CheckForChange() : void
+}
+@enduml

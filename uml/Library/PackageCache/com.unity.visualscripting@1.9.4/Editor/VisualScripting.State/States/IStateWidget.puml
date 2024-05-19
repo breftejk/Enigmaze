@@ -1,0 +1,6 @@
+@startuml
+interface IStateWidget {
+    state : IState <<get>>
+}
+IGraphElementWidget <|-- IStateWidget
+@enduml

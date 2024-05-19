@@ -1,0 +1,8 @@
+@startuml
+abstract class BoltCoreMigration {
+    # BoltCoreMigration(plugin:Plugin)
+    # AddDefaultTypeOption(typeOption:Type) : void
+    # AddDefaultAssemblyOption(assemblyOption:string) : void
+}
+PluginMigration <|-- BoltCoreMigration
+@enduml

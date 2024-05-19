@@ -1,0 +1,11 @@
+@startuml
+struct TypeTable {
+    + table : Dictionary<InternedString, Type>
+    + names : IEnumerable<string> <<get>>
+    + internedNames : IEnumerable<InternedString> <<get>>
+    + Initialize() : void
+    + FindNameForType(type:Type) : InternedString
+    + AddTypeRegistration(name:string, type:Type) : void
+    + LookupTypeRegistration(name:string) : Type
+}
+@enduml

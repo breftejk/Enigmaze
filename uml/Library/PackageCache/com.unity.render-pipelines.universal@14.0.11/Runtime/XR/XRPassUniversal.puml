@@ -1,0 +1,10 @@
+@startuml
+class XRPassUniversal {
+    + {static} Create(createInfo:XRPassCreateInfo) : XRPass
+    <<override>> + Release() : void
+    <<internal>> isLateLatchEnabled : bool <<get>> <<set>>
+    <<internal>> canMarkLateLatch : bool <<get>> <<set>>
+    <<internal>> hasMarkedLateLatch : bool <<get>> <<set>>
+}
+XRPass <|-- XRPassUniversal
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+class MeasureMaxWidth <<static>> {
+    <<internal>> {static} ForTexts(style:GUIStyle, texts:string[]) : float
+}
+@enduml

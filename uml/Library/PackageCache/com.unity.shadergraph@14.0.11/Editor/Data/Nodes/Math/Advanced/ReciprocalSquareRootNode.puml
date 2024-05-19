@@ -1,0 +1,8 @@
+@startuml
+class ReciprocalSquareRootNode {
+    + ReciprocalSquareRootNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Rsqrt(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ReciprocalSquareRootNode
+@enduml

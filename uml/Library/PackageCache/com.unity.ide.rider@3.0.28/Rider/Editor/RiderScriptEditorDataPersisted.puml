@@ -1,0 +1,9 @@
+@startuml
+class RiderScriptEditorPersistedState {
+    - lastWriteTicks : long
+    - manifestJsonLastWriteTicks : long
+    + LastWrite : DateTime? <<get>> <<set>>
+    + ManifestJsonLastWrite : DateTime? <<get>> <<set>>
+}
+"ScriptableSingleton`1" "<RiderScriptEditorPersistedState>" <|-- RiderScriptEditorPersistedState
+@enduml

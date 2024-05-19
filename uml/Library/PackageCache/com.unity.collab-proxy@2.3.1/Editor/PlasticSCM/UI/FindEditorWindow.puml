@@ -1,0 +1,7 @@
+@startuml
+class FindEditorWindow <<static>> {
+    <<internal>> {static} ProjectWindow() : EditorWindow
+    <<internal>> {static} ToDock() : EditorWindow
+    {static} - GetAvailableWindows() : List<EditorWindow>
+}
+@enduml

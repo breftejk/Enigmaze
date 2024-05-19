@@ -1,0 +1,7 @@
+@startuml
+class UniversalRenderPipelineGlobalSettingsPostprocessor {
+    <<const>> - k_GraphicsSettingsPath : string = "ProjectSettings/GraphicsSettings.asset"
+    {static} - OnPostprocessAllAssets(importedAssets:string[], __:string[], ___:string[], ____:string[], didDomainReload:bool) : void
+}
+AssetPostprocessor <|-- UniversalRenderPipelineGlobalSettingsPostprocessor
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class SliderTests {
+    - slider : Slider
+    - emptyGO : GameObject
+    - rootGO : GameObject
+    + Setup() : void
+    + TearDown() : void
+    + SetSliderValueWithoutNotifyWillNotNotify() : void
+}
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+struct MinMaxAABB {
+    + Min : float3
+    + Max : float3
+    + MinMaxAABB(min:float3, max:float3)
+    + {static} CreateFromCenterAndExtents(center:float3, extents:float3) : MinMaxAABB
+    + {static} CreateFromCenterAndHalfExtents(center:float3, halfExtents:float3) : MinMaxAABB
+    + Extents : float3 <<get>>
+    + HalfExtents : float3 <<get>>
+    + Center : float3 <<get>>
+    + IsValid : bool <<get>>
+    + SurfaceArea : float <<get>>
+    + Contains(point:float3) : bool
+    + Contains(aabb:MinMaxAABB) : bool
+    + Overlaps(aabb:MinMaxAABB) : bool
+    + Expand(signedDistance:float) : void
+    + Encapsulate(aabb:MinMaxAABB) : void
+    + Encapsulate(point:float3) : void
+    + Equals(other:MinMaxAABB) : bool
+    + <<override>> ToString() : string
+}
+class Math <<static>> <<partial>> {
+    + {static} Transform(transform:RigidTransform, aabb:MinMaxAABB) : MinMaxAABB
+    + {static} Transform(transform:float4x4, aabb:MinMaxAABB) : MinMaxAABB
+    + {static} Transform(transform:float3x3, aabb:MinMaxAABB) : MinMaxAABB
+}
+"IEquatable`1" "<MinMaxAABB>" <|-- MinMaxAABB
+@enduml

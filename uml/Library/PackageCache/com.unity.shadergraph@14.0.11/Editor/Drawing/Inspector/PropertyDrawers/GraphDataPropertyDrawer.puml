@@ -1,0 +1,26 @@
+@startuml
+class GraphDataPropertyDrawer {
+    - m_postChangeTargetSettingsCallback : PostTargetSettingsChangedCallback
+    - m_changeGraphDefaultPrecisionCallback : ChangeGraphDefaultPrecisionCallback
+    - m_TargetFoldouts : Dictionary<Target, bool>
+    - m_SubDataFoldouts : Dictionary<AbstractShaderGraphDataExtension, bool>
+    + GetPropertyData(postChangeValueCallback:PostTargetSettingsChangedCallback, changeGraphDefaultPrecisionCallback:ChangeGraphDefaultPrecisionCallback) : void
+    - GetSettings(graphData:GraphData, onChange:Action) : VisualElement
+    <<internal>> CreateGUI(graphData:GraphData) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+enum UI_GraphPrecision {
+    Single= GraphPrecision.Single,
+    Half= GraphPrecision.Half,
+}
+enum UI_SubGraphPrecision {
+    Single= GraphPrecision.Single,
+    Half= GraphPrecision.Half,
+    Switchable= GraphPrecision.Graph,
+}
+IPropertyDrawer <|-- GraphDataPropertyDrawer
+GraphDataPropertyDrawer +-- UI_GraphPrecision
+GraphDataPropertyDrawer +-- UI_SubGraphPrecision
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class LanguageIconSet {
+    + LanguageIconSet(name:string)
+    + @public : EditorTexture <<get>>
+    + @private : EditorTexture <<get>>
+    + @protected : EditorTexture <<get>>
+    + @internal : EditorTexture <<get>>
+    + {static} Load(name:string) : LanguageIconSet
+    - {static} LoadAccessibility(name:string, required:bool) : EditorTexture
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class ReorderableListStyles <<static>> {
+    {static} - ReorderableListStyles()
+    + {static} Title : GUIStyle <<get>>
+    + {static} Container : GUIStyle <<get>>
+    + {static} Container2 : GUIStyle <<get>>
+    + {static} FooterButton : GUIStyle <<get>>
+    + {static} FooterButton2 : GUIStyle <<get>>
+    + {static} ItemButton : GUIStyle <<get>>
+    + {static} SelectedItem : GUIStyle <<get>>
+    + {static} HorizontalLineColor : Color <<get>>
+    + {static} SelectionBackgroundColor : Color <<get>>
+}
+@enduml

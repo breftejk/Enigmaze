@@ -1,0 +1,11 @@
+@startuml
+class InfoLayers {
+    + <<override>> Signature : string <<get>>
+    - key : string
+    + <<override>> Key : string <<get>>
+    + PsdFile : PsdFile <<get>> <<set>>
+    + InfoLayers(psdFile:PsdFile, key:string)
+    + InfoLayers(reader:PsdBinaryReader, psdFile:PsdFile, key:string, dataLength:long)
+}
+LayerInfo <|-- InfoLayers
+@enduml

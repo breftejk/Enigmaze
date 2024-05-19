@@ -1,0 +1,9 @@
+@startuml
+class KeyControl {
+    + keyCode : Key <<get>> <<set>>
+    + scanCode : int <<get>>
+    # <<override>> RefreshConfiguration() : void
+    - m_ScanCode : int
+}
+ButtonControl <|-- KeyControl
+@enduml

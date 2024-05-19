@@ -1,0 +1,50 @@
+@startuml
+struct ShadowSliceData {
+    + viewMatrix : Matrix4x4
+    + projectionMatrix : Matrix4x4
+    + shadowTransform : Matrix4x4
+    + offsetX : int
+    + offsetY : int
+    + resolution : int
+    + splitData : ShadowSplitData
+    + Clear() : void
+}
+class ShadowUtils <<static>> {
+    <<internal>> {static} <<readonly>> m_ForceShadowPointSampling : bool
+    {static} - ShadowUtils()
+    + {static} ExtractDirectionalLightMatrix(cullResults:CullingResults, shadowData:ShadowData, shadowLightIndex:int, cascadeIndex:int, shadowmapWidth:int, shadowmapHeight:int, shadowResolution:int, shadowNearPlane:float, cascadeSplitDistance:Vector4, shadowSliceData:ShadowSliceData, viewMatrix:Matrix4x4, projMatrix:Matrix4x4) : bool
+    + {static} ExtractDirectionalLightMatrix(cullResults:CullingResults, shadowData:ShadowData, shadowLightIndex:int, cascadeIndex:int, shadowmapWidth:int, shadowmapHeight:int, shadowResolution:int, shadowNearPlane:float, cascadeSplitDistance:Vector4, shadowSliceData:ShadowSliceData) : bool
+    + {static} ExtractSpotLightMatrix(cullResults:CullingResults, shadowData:ShadowData, shadowLightIndex:int, shadowMatrix:Matrix4x4, viewMatrix:Matrix4x4, projMatrix:Matrix4x4, splitData:ShadowSplitData) : bool
+    + {static} ExtractPointLightMatrix(cullResults:CullingResults, shadowData:ShadowData, shadowLightIndex:int, cubemapFace:CubemapFace, fovBias:float, shadowMatrix:Matrix4x4, viewMatrix:Matrix4x4, projMatrix:Matrix4x4, splitData:ShadowSplitData) : bool
+    + {static} RenderShadowSlice(cmd:CommandBuffer, context:ScriptableRenderContext, shadowSliceData:ShadowSliceData, settings:ShadowDrawingSettings, proj:Matrix4x4, view:Matrix4x4) : void
+    + {static} RenderShadowSlice(cmd:CommandBuffer, context:ScriptableRenderContext, shadowSliceData:ShadowSliceData, settings:ShadowDrawingSettings) : void
+    + {static} GetMaxTileResolutionInAtlas(atlasWidth:int, atlasHeight:int, tileCount:int) : int
+    + {static} ApplySliceTransform(shadowSliceData:ShadowSliceData, atlasWidth:int, atlasHeight:int) : void
+    + {static} GetShadowBias(shadowLight:VisibleLight, shadowLightIndex:int, shadowData:ShadowData, lightProjectionMatrix:Matrix4x4, shadowResolution:float) : Vector4
+    <<internal>> {static} GetScaleAndBiasForLinearDistanceFade(fadeDistance:float, border:float, scale:float, bias:float) : void
+    - {static} _ShadowBias : int
+    - {static} _LightDirection : int
+    - {static} _LightPosition : int
+    + {static} SetupShadowCasterConstantBuffer(cmd:CommandBuffer, shadowLight:VisibleLight, shadowBias:Vector4) : void
+    <<internal>> {static} SetShadowBias(cmd:CommandBuffer, shadowBias:Vector4) : void
+    <<internal>> {static} SetLightDirection(cmd:CommandBuffer, lightDirection:Vector3) : void
+    <<internal>> {static} SetLightPosition(cmd:CommandBuffer, lightPosition:Vector3) : void
+    <<internal>> {static} SetCameraPosition(cmd:CommandBuffer, worldSpaceCameraPos:Vector3) : void
+    <<internal>> {static} SetWorldToCameraMatrix(cmd:CommandBuffer, viewMatrix:Matrix4x4) : void
+    - {static} GetTemporaryShadowTextureDescriptor(width:int, height:int, bits:int) : RenderTextureDescriptor
+    + {static} GetTemporaryShadowTexture(width:int, height:int, bits:int) : RenderTexture
+    + {static} ShadowRTNeedsReAlloc(handle:RTHandle, width:int, height:int, bits:int, anisoLevel:int, mipMapBias:float, name:string) : bool
+    + {static} AllocShadowRT(width:int, height:int, bits:int, anisoLevel:int, mipMapBias:float, name:string) : RTHandle
+    + {static} ShadowRTReAllocateIfNeeded(handle:RTHandle, width:int, height:int, bits:int, anisoLevel:int, mipMapBias:float, name:string) : bool
+    {static} - GetShadowTransform(proj:Matrix4x4, view:Matrix4x4) : Matrix4x4
+    <<internal>> {static} SoftShadowQualityToShaderProperty(light:Light, softShadowsEnabled:bool) : float
+    <<internal>> {static} SupportsPerLightSoftShadowQuality() : bool
+    <<internal>> {static} SetPerLightSoftShadowKeyword(cmd:CommandBuffer, hasSoftShadows:bool) : void
+    <<internal>> {static} SetSoftShadowQualityShaderKeywords(cmd:CommandBuffer, shadowData:ShadowData) : void
+    <<internal>> {static} IsValidShadowCastingLight(lightData:LightData, i:int) : bool
+    <<internal>> {static} GetPunctualLightShadowSlicesCount(lightType:LightType) : int
+    <<internal>> <<const>> kMinimumPunctualLightHardShadowResolution : int = 8
+    <<internal>> <<const>> kMinimumPunctualLightSoftShadowResolution : int = 16
+    <<internal>> {static} MinimalPunctualLightShadowResolution(softShadow:bool) : int
+}
+@enduml

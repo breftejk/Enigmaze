@@ -1,0 +1,14 @@
+@startuml
+class CamerasBlendingTests {
+    <<const>> - k_BlendingTime : float = 1
+    - m_Brain : CinemachineBrain
+    - m_Source : CinemachineVirtualCameraBase
+    - m_Target : CinemachineVirtualCameraBase
+    + <<override>> SetUp() : void
+    + BlendFromSourceToTarget() : IEnumerator
+    + BlendBetweenSourceAndTarget() : IEnumerator
+    + DoesInterruptedBlendingBetweenCamerasTakesDoubleTime() : IEnumerator
+    + SetActiveBlend() : IEnumerator
+}
+CinemachineFixtureBase <|-- CamerasBlendingTests
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class CanvasSizeCorrectInAwakeAndStart {
+    <<const>> - k_SceneName : string = "CanvasSizeCorrectInAwakeAndStartScene"
+    - m_CanvasGameObject : GameObject
+    - m_InitScene : Scene
+    + Setup() : void
+    + TestSetup() : void
+    + CanvasSizeIsCorrectInAwakeAndStart() : IEnumerator
+    + TearDown() : void
+}
+IPrebuildSetup <|-- CanvasSizeCorrectInAwakeAndStart
+@enduml

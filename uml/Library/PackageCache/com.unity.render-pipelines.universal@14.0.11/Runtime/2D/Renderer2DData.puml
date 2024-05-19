@@ -1,0 +1,81 @@
+@startuml
+class Renderer2DData <<partial>> {
+    - m_TransparencySortMode : TransparencySortMode
+    - m_TransparencySortAxis : Vector3
+    - m_HDREmulationScale : float = 1
+    - m_LightRenderTextureScale : float = 0.5f
+    - m_LightBlendStyles : Light2DBlendStyle[] = null
+    - m_UseDepthStencilBuffer : bool = true
+    - m_UseCameraSortingLayersTexture : bool = false
+    - m_CameraSortingLayersTextureBound : int = 0
+    - m_CameraSortingLayerDownsamplingMethod : Downsampling
+    - m_MaxLightRenderTextureCount : uint = 16
+    - m_MaxShadowRenderTextureCount : uint = 1
+    - m_ShapeLightShader : Shader = null
+    - m_ShapeLightVolumeShader : Shader = null
+    - m_PointLightShader : Shader = null
+    - m_PointLightVolumeShader : Shader = null
+    - m_CoreBlitShader : Shader = null
+    - m_BlitHDROverlay : Shader
+    - m_CoreBlitColorAndDepthPS : Shader = null
+    - m_SamplingShader : Shader = null
+    - m_ProjectedShadowShader : Shader = null
+    - m_SpriteShadowShader : Shader = null
+    - m_SpriteUnshadowShader : Shader = null
+    - m_GeometryUnshadowShader : Shader = null
+    - m_FallbackErrorShader : Shader
+    - m_PostProcessData : PostProcessData = null
+    - m_FallOffLookup : Texture2D = null
+    + hdrEmulationScale : float <<get>>
+    <<internal>> lightRenderTextureScale : float <<get>>
+    + lightBlendStyles : Light2DBlendStyle[] <<get>>
+    <<internal>> useDepthStencilBuffer : bool <<get>>
+    <<internal>> fallOffLookup : Texture2D <<get>>
+    <<internal>> shapeLightShader : Shader <<get>>
+    <<internal>> shapeLightVolumeShader : Shader <<get>>
+    <<internal>> pointLightShader : Shader <<get>>
+    <<internal>> pointLightVolumeShader : Shader <<get>>
+    <<internal>> blitShader : Shader <<get>>
+    <<internal>> blitHDROverlay : Shader <<get>>
+    <<internal>> coreBlitPS : Shader <<get>>
+    <<internal>> coreBlitColorAndDepthPS : Shader <<get>>
+    <<internal>> samplingShader : Shader <<get>>
+    <<internal>> postProcessData : PostProcessData <<get>> <<set>>
+    <<internal>> spriteShadowShader : Shader <<get>>
+    <<internal>> spriteUnshadowShader : Shader <<get>>
+    <<internal>> geometryUnshadowShader : Shader <<get>>
+    <<internal>> projectedShadowShader : Shader <<get>>
+    <<internal>> transparencySortMode : TransparencySortMode <<get>>
+    <<internal>> transparencySortAxis : Vector3 <<get>>
+    <<internal>> lightRenderTextureMemoryBudget : uint <<get>>
+    <<internal>> shadowRenderTextureMemoryBudget : uint <<get>>
+    <<internal>> useCameraSortingLayerTexture : bool <<get>>
+    <<internal>> cameraSortingLayerTextureBound : int <<get>>
+    <<internal>> cameraSortingLayerDownsamplingMethod : Downsampling <<get>>
+    # <<override>> Create() : ScriptableRenderer
+    <<internal>> Dispose() : void
+    # <<override>> OnEnable() : void
+    <<internal>> lightMaterials : Dictionary<uint, Material> <<get>>
+    <<internal>> spriteSelfShadowMaterial : Material[] <<get>> <<set>>
+    <<internal>> spriteUnshadowMaterial : Material[] <<get>> <<set>>
+    <<internal>> geometryUnshadowMaterial : Material[] <<get>> <<set>>
+    <<internal>> projectedShadowMaterial : Material[] <<get>> <<set>>
+    <<internal>> stencilOnlyShadowMaterial : Material[] <<get>> <<set>>
+    <<internal>> isNormalsRenderTargetValid : bool <<get>> <<set>>
+    <<internal>> normalsRenderTargetScale : float <<get>> <<set>>
+    <<internal>> normalsRenderTarget : RTHandle
+    <<internal>> normalsRenderTargetId : int
+    <<internal>> shadowsRenderTarget : RTHandle
+    <<internal>> shadowsRenderTargetId : int
+    <<internal>> cameraSortingLayerRenderTarget : RTHandle
+    <<internal>> cameraSortingLayerRenderTargetId : int
+    <<internal>> lightCullResult : ILight2DCullResult <<get>> <<set>>
+}
+enum Renderer2DDefaultMaterialType {
+    Lit,
+    Unlit,
+    Custom,
+}
+ScriptableRendererData <|-- Renderer2DData
+Renderer2DData +-- Renderer2DDefaultMaterialType
+@enduml

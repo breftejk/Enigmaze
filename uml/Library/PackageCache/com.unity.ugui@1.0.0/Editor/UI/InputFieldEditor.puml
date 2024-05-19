@@ -1,0 +1,30 @@
+@startuml
+class InputFieldEditor {
+    - m_TextComponent : SerializedProperty
+    - m_Text : SerializedProperty
+    - m_ContentType : SerializedProperty
+    - m_LineType : SerializedProperty
+    - m_InputType : SerializedProperty
+    - m_CharacterValidation : SerializedProperty
+    - m_KeyboardType : SerializedProperty
+    - m_CharacterLimit : SerializedProperty
+    - m_CaretBlinkRate : SerializedProperty
+    - m_CaretWidth : SerializedProperty
+    - m_CaretColor : SerializedProperty
+    - m_CustomCaretColor : SerializedProperty
+    - m_SelectionColor : SerializedProperty
+    - m_HideMobileInput : SerializedProperty
+    - m_Placeholder : SerializedProperty
+    - m_OnValueChanged : SerializedProperty
+    - m_OnSubmit : SerializedProperty
+    - m_OnDidEndEdit : SerializedProperty
+    - m_ReadOnly : SerializedProperty
+    - m_ShouldActivateOnSelect : SerializedProperty
+    - m_CustomColor : AnimBool
+    - m_EndEditContent : GUIContent
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+SelectableEditor <|-- InputFieldEditor
+@enduml

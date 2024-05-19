@@ -1,0 +1,35 @@
+@startuml
+class AddOverrideTrackAction {
+    + <<override>> Execute(tracks:IEnumerable<TrackAsset>) : bool
+    + <<override>> Validate(tracks:IEnumerable<TrackAsset>) : ActionValidity
+}
+class ConvertToClipModeAction {
+    + <<override>> Execute(tracks:IEnumerable<TrackAsset>) : bool
+    + <<override>> Validate(tracks:IEnumerable<TrackAsset>) : ActionValidity
+}
+class ConvertFromClipTrackAction {
+    + <<override>> Execute(tracks:IEnumerable<TrackAsset>) : bool
+    + <<override>> Validate(tracks:IEnumerable<TrackAsset>) : ActionValidity
+}
+abstract class TrackOffsetBaseAction {
+    + {abstract} trackOffset : TrackOffset <<get>>
+    + <<override>> Validate(tracks:IEnumerable<TrackAsset>) : ActionValidity
+    + <<override>> Execute(tracks:IEnumerable<TrackAsset>) : bool
+}
+class ApplyTransformOffsetAction {
+    + <<override>> trackOffset : TrackOffset <<get>>
+}
+class ApplySceneOffsetAction {
+    + <<override>> trackOffset : TrackOffset <<get>>
+}
+class ApplyAutoAction {
+    + <<override>> trackOffset : TrackOffset <<get>>
+}
+TrackAction <|-- AddOverrideTrackAction
+TrackAction <|-- ConvertToClipModeAction
+TrackAction <|-- ConvertFromClipTrackAction
+TrackAction <|-- TrackOffsetBaseAction
+TrackOffsetBaseAction <|-- ApplyTransformOffsetAction
+TrackOffsetBaseAction <|-- ApplySceneOffsetAction
+TrackOffsetBaseAction <|-- ApplyAutoAction
+@enduml

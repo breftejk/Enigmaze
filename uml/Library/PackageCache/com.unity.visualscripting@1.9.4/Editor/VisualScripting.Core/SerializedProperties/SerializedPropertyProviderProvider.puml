@@ -1,0 +1,15 @@
+@startuml
+class SerializedPropertyProviderProvider {
+    # <<override>> CreateDecorator(providerType:Type, type:Type) : ISerializedPropertyProvider
+    # <<override>> typeset : IEnumerable<Type> <<get>>
+    # <<override>> cache : bool <<get>>
+    # <<override>> GetDecoratedType(decorated:Type) : Type
+    + <<override>> IsValid(decorated:Type) : bool
+    {static} - SerializedPropertyProviderProvider()
+    + {static} instance : SerializedPropertyProviderProvider <<get>>
+    + GenerateProviderScripts() : void
+    - {static} GetProviderScriptName(type:Type) : string
+    - {static} GenerateProviderSource(type:Type) : string
+}
+"SingleDecoratorProvider`3" "<Type,ISerializedPropertyProvider,SerializedPropertyProviderAttribute>" <|-- SerializedPropertyProviderProvider
+@enduml

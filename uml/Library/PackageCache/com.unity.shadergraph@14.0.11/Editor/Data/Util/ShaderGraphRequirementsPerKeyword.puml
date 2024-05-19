@@ -1,0 +1,61 @@
+@startuml
+class ShaderGraphRequirementsPerKeyword <<sealed>> {
+    + UnionWith(other:ShaderGraphRequirementsPerKeyword) : void
+    # <<override>> CreateAllSmartPointer() : All
+    # <<override>> CreateAllPermutationsSmartPointer() : AllPermutations
+    # <<override>> CreateForPermutationSmartPointer(index:int) : ForPermutationIndex
+    # <<override>> CreateBaseSmartPointer() : Base
+}
+interface IRequirements {
+    SetRequirements(value:ShaderGraphRequirements) : void
+    requirements : ShaderGraphRequirements <<get>> <<set>>
+}
+interface IRequirementsSet {
+}
+struct ForPermutationIndex {
+    - m_Source : ShaderGraphRequirementsPerKeyword
+    - m_PermutationIndex : int
+    + type : KeywordDependentCollection.KeywordPermutationInstanceType <<get>>
+    + instances : IEnumerable<IRequirements> <<get>>
+    + instanceCount : int <<get>>
+    + permutationIndex : int <<get>>
+    + requirements : ShaderGraphRequirements <<get>> <<set>>
+    + SetRequirements(value:ShaderGraphRequirements) : void
+    <<internal>> ForPermutationIndex(source:ShaderGraphRequirementsPerKeyword, index:int)
+}
+struct Base {
+    - m_Source : ShaderGraphRequirementsPerKeyword
+    + instanceCount : int <<get>>
+    + permutationIndex : int <<get>>
+    + type : KeywordDependentCollection.KeywordPermutationInstanceType <<get>>
+    + instances : IEnumerable<IRequirements> <<get>>
+    + requirements : ShaderGraphRequirements <<get>> <<set>>
+    + SetRequirements(value:ShaderGraphRequirements) : void
+    <<internal>> Base(source:ShaderGraphRequirementsPerKeyword)
+}
+struct All {
+    - m_Source : ShaderGraphRequirementsPerKeyword
+    + instanceCount : int <<get>>
+    <<internal>> All(source:ShaderGraphRequirementsPerKeyword)
+    + instances : IEnumerable<IRequirements> <<get>>
+}
+struct AllPermutations {
+    - m_Source : ShaderGraphRequirementsPerKeyword
+    + instanceCount : int <<get>>
+    <<internal>> AllPermutations(source:ShaderGraphRequirementsPerKeyword)
+    + instances : IEnumerable<IRequirements> <<get>>
+}
+"KeywordDependentCollection`7" "<ShaderGraphRequirements,ShaderGraphRequirementsPerKeyword.All,ShaderGraphRequirementsPerKeyword.AllPermutations,ShaderGraphRequirementsPerKeyword.ForPermutationIndex,ShaderGraphRequirementsPerKeyword.Base,ShaderGraphRequirementsPerKeyword.IRequirements,ShaderGraphRequirementsPerKeyword.IRequirementsSet>" <|-- ShaderGraphRequirementsPerKeyword
+ShaderGraphRequirementsPerKeyword +-- IRequirements
+ShaderGraphRequirementsPerKeyword +-- IRequirementsSet
+ShaderGraphRequirementsPerKeyword +-- ForPermutationIndex
+IRequirements <|-- ForPermutationIndex
+IRequirementsSet <|-- ForPermutationIndex
+ShaderGraphRequirementsPerKeyword +-- Base
+IRequirements <|-- Base
+IRequirementsSet <|-- Base
+ShaderGraphRequirementsPerKeyword +-- All
+IRequirementsSet <|-- All
+ShaderGraphRequirementsPerKeyword +-- AllPermutations
+IRequirementsSet <|-- AllPermutations
+@enduml

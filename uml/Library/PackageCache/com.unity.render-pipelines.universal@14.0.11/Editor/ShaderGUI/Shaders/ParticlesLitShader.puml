@@ -1,0 +1,15 @@
+@startuml
+class ParticlesLitShader {
+    - litProperties : LitGUI.LitProperties
+    - particleProps : ParticleGUI.ParticleProperties
+    - m_RenderersUsingThisMaterial : List<ParticleSystemRenderer>
+    + <<override>> FindProperties(properties:MaterialProperty[]) : void
+    + <<override>> ValidateMaterial(material:Material) : void
+    + <<override>> DrawSurfaceOptions(material:Material) : void
+    + <<override>> DrawSurfaceInputs(material:Material) : void
+    + <<override>> DrawAdvancedOptions(material:Material) : void
+    + <<override>> OnOpenGUI(material:Material, materialEditor:MaterialEditor) : void
+    - CacheRenderersUsingThisMaterial(material:Material) : void
+}
+BaseShaderGUI <|-- ParticlesLitShader
+@enduml

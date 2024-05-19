@@ -1,0 +1,17 @@
+@startuml
+class OnPreprocessBuildAnalytics <<static>> {
+    - <<const>> MaxEventsPerHour : int = 120
+    - <<const>> MaxNumberOfElements : int = 1000
+    - <<const>> VendorKey : string = "unity.visualscripting"
+    - <<const>> EventName : string = "VScriptOnPreprocessBuild"
+    - {static} _isRegistered : bool = false
+    <<internal>> {static} Send(data:Data) : void
+    - {static} RegisterEvent() : bool
+}
+struct Data {
+    <<internal>> guid : string
+    <<internal>> buildTarget : BuildTarget
+    <<internal>> buildTargetGroup : BuildTargetGroup
+}
+OnPreprocessBuildAnalytics +-- Data
+@enduml

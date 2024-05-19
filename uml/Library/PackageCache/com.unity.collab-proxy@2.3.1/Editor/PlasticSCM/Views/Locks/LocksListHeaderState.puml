@@ -1,0 +1,23 @@
+@startuml
+enum LocksListColumn {
+    ItemPath,
+    LockType,
+    ModificationDate,
+    Owner,
+    Branch,
+    DestinationBranch,
+}
+class LocksListHeaderState <<sealed>> {
+    <<internal>> {static} GetDefault() : LocksListHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:LocksListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - LocksListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumnsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- LocksListHeaderState
+ISerializationCallbackReceiver <|-- LocksListHeaderState
+@enduml

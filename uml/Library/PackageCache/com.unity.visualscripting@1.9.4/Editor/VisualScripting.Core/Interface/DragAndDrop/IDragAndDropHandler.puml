@@ -1,0 +1,10 @@
+@startuml
+interface IDragAndDropHandler {
+    dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    AcceptsDragAndDrop() : bool
+    PerformDragAndDrop() : void
+    UpdateDragAndDrop() : void
+    DrawDragAndDropPreview() : void
+    ExitDragAndDrop() : void
+}
+@enduml

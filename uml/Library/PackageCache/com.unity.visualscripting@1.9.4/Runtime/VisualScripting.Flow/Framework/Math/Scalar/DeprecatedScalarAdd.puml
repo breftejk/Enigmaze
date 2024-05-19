@@ -1,0 +1,7 @@
+@startuml
+class DeprecatedScalarAdd <<sealed>> {
+    # <<override>> defaultB : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+}
+"Add`1" "<float>" <|-- DeprecatedScalarAdd
+@enduml

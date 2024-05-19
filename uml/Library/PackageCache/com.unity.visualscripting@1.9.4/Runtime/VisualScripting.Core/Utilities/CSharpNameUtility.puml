@@ -1,0 +1,13 @@
+@startuml
+class CSharpNameUtility <<static>> {
+    - {static} <<readonly>> primitives : Dictionary<Type, string>
+    + {static} <<readonly>> operators : Dictionary<string, string>
+    - {static} <<readonly>> illegalTypeFileNameCharacters : HashSet<char>
+    + {static} CSharpName(member:MemberInfo, direction:ActionDirection) : string
+    + {static} CSharpName(type:Type, includeGenericParameters:bool) : string
+    + {static} CSharpFullName(type:Type, includeGenericParameters:bool) : string
+    + {static} CSharpUniqueName(type:Type, includeGenericParameters:bool) : string
+    + {static} CSharpFileName(type:Type, includeNamespace:bool, includeGenericParameters:bool) : string
+    - {static} CSharpName(type:Type, qualifier:TypeQualifier, includeGenericParameters:bool) : string
+}
+@enduml

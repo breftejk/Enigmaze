@@ -1,0 +1,50 @@
+@startuml
+enum RenderQueueType {
+    Opaque,
+    Transparent,
+}
+class RenderObjects {
+    + settings : RenderObjectsSettings
+    - renderObjectsPass : RenderObjectsPass
+    + <<override>> Create() : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    <<internal>> <<override>> SupportsNativeRenderPass() : bool
+}
+class RenderObjectsSettings {
+    + passTag : string = "RenderObjectsFeature"
+    + Event : RenderPassEvent
+    + filterSettings : FilterSettings
+    + overrideMaterial : Material = null
+    + overrideMaterialPassIndex : int = 0
+    + overrideShader : Shader = null
+    + overrideShaderPassIndex : int = 0
+    + overrideMode : OverrideMaterialMode
+    + overrideDepthState : bool = false
+    + depthCompareFunction : CompareFunction
+    + enableWrite : bool = true
+    + stencilSettings : StencilStateData
+    + cameraSettings : CustomCameraSettings
+}
+class FilterSettings {
+    + RenderQueueType : RenderQueueType
+    + LayerMask : LayerMask
+    + PassNames : string[]
+    + FilterSettings()
+}
+class CustomCameraSettings {
+    + overrideCamera : bool = false
+    + restoreCamera : bool = true
+    + offset : Vector4
+    + cameraFieldOfView : float = 60.0f
+}
+enum OverrideMaterialMode {
+    None,
+    Material,
+    Shader,
+}
+ScriptableRendererFeature <|-- RenderObjects
+RenderObjects +-- RenderObjectsSettings
+RenderObjects +-- FilterSettings
+RenderObjects +-- CustomCameraSettings
+RenderObjectsSettings +-- OverrideMaterialMode
+@enduml

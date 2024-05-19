@@ -1,0 +1,21 @@
+@startuml
+class ListPage {
+    + ListPage()
+    - listScroll : Vector2
+    - _currentPage : Page
+    + pages : List<Page> <<get>>
+    + currentPage : Page <<get>> <<set>>
+    - pageOptions : List<ListOption> <<get>>
+    + UpdateOptions() : void
+    # <<override>> OnShow() : void
+    + <<override>> Update() : void
+    # <<virtual>> OnEmptyGUI() : void
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> emptyBackground : GUIStyle
+}
+Page <|-- ListPage
+ListPage +-- Styles
+@enduml

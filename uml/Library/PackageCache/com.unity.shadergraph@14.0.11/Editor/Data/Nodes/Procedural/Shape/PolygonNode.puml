@@ -1,0 +1,8 @@
+@startuml
+class PolygonNode {
+    + PolygonNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Polygon(UV:Vector2, Sides:Vector1, Width:Vector1, Height:Vector1, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- PolygonNode
+@enduml

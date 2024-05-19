@@ -1,0 +1,8 @@
+@startuml
+abstract class OperatorException {
+    # OperatorException()
+    # OperatorException(message:string)
+    # OperatorException(message:string, innerException:Exception)
+}
+InvalidCastException <|-- OperatorException
+@enduml

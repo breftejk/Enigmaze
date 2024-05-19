@@ -1,0 +1,8 @@
+@startuml
+class EditModePcHelper {
+    + <<override>> SetEnumeratorPC(enumerator:IEnumerator, pc:int) : void
+    + <<override>> GetEnumeratorPC(enumerator:IEnumerator) : int
+    - GetPCFieldInfo(enumerator:IEnumerator) : FieldInfo
+}
+TestCommandPcHelper <|-- EditModePcHelper
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class UniversalRenderPipeline <<sealed>> <<partial>> {
+    {static} - RecordRenderGraph(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    {static} - RecordAndExecuteRenderGraph(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+@enduml

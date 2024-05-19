@@ -1,0 +1,32 @@
+@startuml
+struct FullScreenBlocks {
+    + {static} colorBlock : BlockFieldDescriptor
+}
+class CustomRenderTextureTarget <<sealed>> {
+    <<const>> - kAssetGuid : string = "a0bae34258e39cd4899b63278c24c086"
+    - m_SubTargets : List<SubTarget>
+    - m_SubTargetNames : List<string>
+    - activeSubTargetIndex : int <<get>>
+    - m_SubTargetField : PopupField<string>
+    - m_CustomGUIField : TextField
+    - m_ActiveSubTarget : JsonData<SubTarget>
+    - m_CustomEditorGUI : string
+    + CustomRenderTextureTarget()
+    + {static} ProcessSubTargetList(activeSubTarget:JsonData<SubTarget>, subTargets:List<SubTarget>) : void
+    + {static} GetSubTargets(target:T) : List<SubTarget>
+    + activeSubTarget : SubTarget <<get>> <<set>>
+    + customEditorGUI : string <<get>> <<set>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + TrySetActiveSubTarget(subTargetType:Type) : bool
+    + <<override>> WorksWithSRP(scriptableRenderPipeline:RenderPipelineAsset) : bool
+    + <<override>> IsNodeAllowedByTarget(nodeType:System.Type) : bool
+}
+class FullscreePasses <<static>> {
+    + {static} CustomRenderTexture : PassDescriptor
+}
+Target <|-- CustomRenderTextureTarget
+@enduml

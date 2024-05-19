@@ -1,0 +1,14 @@
+@startuml
+abstract class "Lerp`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + t : ValueInput <<get>>
+    + interpolation : ValueOutput <<get>>
+    # <<virtual>> defaultA : T <<get>>
+    # <<virtual>> defaultB : T <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : T
+    + {abstract} Operation(a:T, b:T, t:float) : T
+}
+Unit <|-- "Lerp`1"
+@enduml

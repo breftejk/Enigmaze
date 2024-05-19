@@ -1,0 +1,16 @@
+@startuml
+class CooldownWindowDelayer {
+    <<internal>> {static} IsUnitTesting : bool <<get>> <<set>>
+    + CooldownWindowDelayer(action:Action, cooldownSeconds:double)
+    + Ping() : void
+    - RefreshCooldown() : void
+    - StartCooldown() : void
+    - EndCooldown() : void
+    - OnUpdate() : void
+    <<readonly>> - mAction : Action
+    <<readonly>> - mCooldownSeconds : double
+    - mLastUpdateTime : double
+    - mIsOnCooldown : bool
+    - mSecondsOnCooldown : double
+}
+@enduml

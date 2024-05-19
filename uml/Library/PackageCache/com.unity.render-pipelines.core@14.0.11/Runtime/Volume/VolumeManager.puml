@@ -1,0 +1,46 @@
+@startuml
+class VolumeManager <<sealed>> {
+    {static} <<readonly>> - s_Instance : Lazy<VolumeManager>
+    + {static} instance : VolumeManager <<get>>
+    + stack : VolumeStack <<get>> <<set>>
+    + baseComponentTypes : IEnumerable<Type> <<get>>
+    {static} <<readonly>> - s_SupportedVolumeComponentsForRenderPipeline : Dictionary<Type, List<(string, Type)>>
+    <<internal>> {static} GetSupportedVolumeComponents(currentPipelineType:Type) : List<(string, Type)>
+    {static} - FilterVolumeComponentTypes(types:Type[], currentPipelineType:Type) : List<(string, Type)>
+    + baseComponentTypeArray : Type[] <<get>>
+    <<const>> - k_MaxLayerCount : int = 32
+    <<readonly>> - m_SortedVolumes : Dictionary<int, List<Volume>>
+    <<readonly>> - m_Volumes : List<Volume>
+    <<readonly>> - m_SortNeeded : Dictionary<int, bool>
+    <<readonly>> - m_ComponentsDefaultState : List<VolumeComponent>
+    <<internal>> GetDefaultVolumeComponent(volumeComponentType:Type) : VolumeComponent
+    <<readonly>> - m_TempColliders : List<Collider>
+    - m_DefaultStack : VolumeStack = null
+    - VolumeManager()
+    + CreateStack() : VolumeStack
+    + ResetMainStack() : void
+    + DestroyStack(stack:VolumeStack) : void
+    - ReloadBaseTypes() : void
+    + Register(volume:Volume, layer:int) : void
+    + Unregister(volume:Volume, layer:int) : void
+    + IsComponentActiveInMask(layerMask:LayerMask) : bool
+    <<internal>> SetLayerDirty(layer:int) : void
+    <<internal>> UpdateVolumeLayer(volume:Volume, prevLayer:int, newLayer:int) : void
+    - OverrideData(stack:VolumeStack, components:List<VolumeComponent>, interpFactor:float) : void
+    <<internal>> ReplaceData(stack:VolumeStack) : void
+    + CheckBaseTypes() : void
+    + CheckStack(stack:VolumeStack) : void
+    - CheckUpdateRequired(stack:VolumeStack) : bool
+    + Update(trigger:Transform, layerMask:LayerMask) : void
+    + Update(stack:VolumeStack, trigger:Transform, layerMask:LayerMask) : void
+    + GetVolumes(layerMask:LayerMask) : Volume[]
+    - GrabVolumes(mask:LayerMask) : List<Volume>
+    {static} - SortByPriority(volumes:List<Volume>) : void
+    {static} - IsVolumeRenderedByCamera(volume:Volume, camera:Camera) : bool
+}
+struct VolumeIsolationScope {
+    + VolumeIsolationScope(unused:bool)
+    - Dispose() : void
+}
+IDisposable <|-- VolumeIsolationScope
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+struct GraphCode {
+    + code : string <<get>> <<internal set>>
+    + requirements : ShaderGraphRequirements <<get>> <<internal set>>
+    + properties : IEnumerable<AbstractShaderProperty>
+}
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+enum LogBase {
+    BaseE,
+    Base2,
+    Base10,
+}
+class LogNode {
+    + LogNode()
+    - m_LogBase : LogBase
+    + logBase : LogBase <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Log(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+    {static} - Unity_Log2(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+    {static} - Unity_Log10(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- LogNode
+@enduml

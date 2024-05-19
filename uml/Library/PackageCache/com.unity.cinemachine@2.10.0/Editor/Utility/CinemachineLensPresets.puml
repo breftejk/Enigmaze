@@ -1,0 +1,24 @@
+@startuml
+class CinemachineLensPresets <<sealed>> {
+    - {static} sInstance : CinemachineLensPresets = null
+    - {static} alreadySearched : bool = false
+    + {static} InstanceIfExists : CinemachineLensPresets <<get>>
+    + {static} Instance : CinemachineLensPresets <<get>>
+    + m_Presets : Preset[]
+    + m_PhysicalPresets : PhysicalPreset[]
+    + GetMatchingPreset(verticalFOV:float) : int
+    + GetMatchingPhysicalPreset(focalLength:float) : int
+}
+struct Preset {
+    + m_Name : string
+    + m_FieldOfView : float
+}
+struct PhysicalPreset {
+    + m_Name : string
+    + m_FocalLength : float
+    + LensShift : Vector2
+}
+ScriptableObject <|-- CinemachineLensPresets
+CinemachineLensPresets +-- Preset
+CinemachineLensPresets +-- PhysicalPreset
+@enduml

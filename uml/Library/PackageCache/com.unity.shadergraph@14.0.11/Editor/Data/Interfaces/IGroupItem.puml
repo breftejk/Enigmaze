@@ -1,0 +1,5 @@
+@startuml
+interface IGroupItem {
+    group : GroupData <<get>> <<set>>
+}
+@enduml

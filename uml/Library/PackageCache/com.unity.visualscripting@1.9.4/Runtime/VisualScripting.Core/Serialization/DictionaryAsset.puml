@@ -1,0 +1,25 @@
+@startuml
+class DictionaryAsset <<sealed>> {
+    + dictionary : Dictionary<string, object> <<get>>
+    + Count : int <<get>>
+    + Keys : ICollection<string> <<get>>
+    + Values : ICollection<object> <<get>>
+    - IsReadOnly : bool <<get>>
+    # <<override>> OnAfterDeserialize() : void
+    + Clear() : void
+    + ContainsKey(key:string) : bool
+    + Add(key:string, value:object) : void
+    + Merge(other:DictionaryAsset, overwriteExisting:bool) : void
+    + Remove(key:string) : bool
+    + TryGetValue(key:string, value:object) : bool
+    + GetEnumerator() : IEnumerator<KeyValuePair<string, object>>
+    - GetEnumerator() : IEnumerator
+    - Add(item:KeyValuePair<string, object>) : void
+    - Contains(item:KeyValuePair<string, object>) : bool
+    - CopyTo(array:KeyValuePair<string, object>[], arrayIndex:int) : void
+    - Remove(item:KeyValuePair<string, object>) : bool
+    # <<override>> ShowData() : void
+}
+LudiqScriptableObject <|-- DictionaryAsset
+"IDictionary`2" "<string,object>" <|-- DictionaryAsset
+@enduml

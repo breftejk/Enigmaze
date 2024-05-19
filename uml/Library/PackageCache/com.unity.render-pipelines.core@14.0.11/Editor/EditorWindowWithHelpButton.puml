@@ -1,0 +1,9 @@
+@startuml
+class EditorWindowWithHelpButton {
+    {static} - m_IconHelpGUIContent : Lazy<GUIContent>
+    - iconHelpGUIContent : GUIContent <<get>>
+    {static} - EditorWindowWithHelpButton()
+    # <<virtual>> ShowButton(r:Rect) : void
+}
+EditorWindow <|-- EditorWindowWithHelpButton
+@enduml

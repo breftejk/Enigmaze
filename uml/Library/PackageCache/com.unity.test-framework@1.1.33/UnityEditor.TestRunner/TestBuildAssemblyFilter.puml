@@ -1,0 +1,9 @@
+@startuml
+class TestBuildAssemblyFilter {
+    - <<const>> nunitAssemblyName : string = "nunit.framework"
+    - <<const>> unityTestRunnerAssemblyName : string = "UnityEngine.TestRunner"
+    + callbackOrder : int <<get>>
+    + OnFilterAssemblies(buildOptions:BuildOptions, assemblies:string[]) : string[]
+}
+IFilterBuildAssemblies <|-- TestBuildAssemblyFilter
+@enduml

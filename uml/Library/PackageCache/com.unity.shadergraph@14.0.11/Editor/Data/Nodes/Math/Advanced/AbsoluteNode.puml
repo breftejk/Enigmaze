@@ -1,0 +1,8 @@
+@startuml
+class AbsoluteNode {
+    + AbsoluteNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Absolute(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- AbsoluteNode
+@enduml

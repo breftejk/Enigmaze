@@ -1,0 +1,12 @@
+@startuml
+struct CreateTextureOptions {
+    + alphaIsTransparency : bool <<get>> <<set>>
+    + mipmaps : bool <<get>> <<set>>
+    + textureFormat : TextureFormat <<get>> <<set>>
+    + filterMode : FilterMode <<get>> <<set>>
+    + hideFlags : HideFlags <<get>> <<set>>
+    + linear : bool? <<get>> <<set>>
+    + {static} <<readonly>> PixelPerfect : CreateTextureOptions
+    + {static} <<readonly>> Scalable : CreateTextureOptions
+}
+@enduml

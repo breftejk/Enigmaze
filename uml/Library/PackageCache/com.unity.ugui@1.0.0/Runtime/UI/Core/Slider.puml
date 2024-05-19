@@ -1,0 +1,77 @@
+@startuml
+class Slider {
+    - m_FillRect : RectTransform
+    + fillRect : RectTransform <<get>> <<set>>
+    - m_HandleRect : RectTransform
+    + handleRect : RectTransform <<get>> <<set>>
+    - m_Direction : Direction
+    + direction : Direction <<get>> <<set>>
+    - m_MinValue : float = 0
+    + minValue : float <<get>> <<set>>
+    - m_MaxValue : float = 1
+    + maxValue : float <<get>> <<set>>
+    - m_WholeNumbers : bool = false
+    + wholeNumbers : bool <<get>> <<set>>
+    # m_Value : float
+    + <<virtual>> value : float <<get>> <<set>>
+    + <<virtual>> SetValueWithoutNotify(input:float) : void
+    + normalizedValue : float <<get>> <<set>>
+    - m_OnValueChanged : SliderEvent
+    + onValueChanged : SliderEvent <<get>> <<set>>
+    - m_FillImage : Image
+    - m_FillTransform : Transform
+    - m_FillContainerRect : RectTransform
+    - m_HandleTransform : Transform
+    - m_HandleContainerRect : RectTransform
+    - m_Offset : Vector2
+    - m_Tracker : DrivenRectTransformTracker
+    - m_DelayedUpdateVisuals : bool = false
+    - stepSize : float <<get>>
+    # Slider()
+    + <<virtual>> Rebuild(executing:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<virtual>> Update() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    - UpdateCachedReferences() : void
+    - ClampValue(input:float) : float
+    # <<virtual>> Set(input:float, sendCallback:bool) : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    - axis : Axis <<get>>
+    - reverseValue : bool <<get>>
+    - UpdateVisuals() : void
+    - UpdateDrag(eventData:PointerEventData, cam:Camera) : void
+    - MayDrag(eventData:PointerEventData) : bool
+    + <<override>> OnPointerDown(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    + <<override>> OnMove(eventData:AxisEventData) : void
+    + <<override>> FindSelectableOnLeft() : Selectable
+    + <<override>> FindSelectableOnRight() : Selectable
+    + <<override>> FindSelectableOnUp() : Selectable
+    + <<override>> FindSelectableOnDown() : Selectable
+    + <<virtual>> OnInitializePotentialDrag(eventData:PointerEventData) : void
+    + SetDirection(direction:Direction, includeRectLayouts:bool) : void
+}
+enum Direction {
+    LeftToRight,
+    RightToLeft,
+    BottomToTop,
+    TopToBottom,
+}
+class SliderEvent {
+}
+enum Axis {
+    Horizontal= 0,
+    Vertical= 1,
+}
+Selectable <|-- Slider
+IDragHandler <|-- Slider
+IInitializePotentialDragHandler <|-- Slider
+ICanvasElement <|-- Slider
+Slider +-- Direction
+Slider +-- SliderEvent
+"UnityEvent`1" "<float>" <|-- SliderEvent
+Slider +-- Axis
+@enduml

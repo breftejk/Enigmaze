@@ -1,0 +1,27 @@
+@startuml
+abstract class Page {
+    # Page()
+    - contentScroll : Vector2
+    + title : string <<get>> <<set>>
+    + shortTitle : string <<get>> <<set>>
+    + subtitle : string <<get>> <<set>>
+    + icon : EditorTexture <<get>> <<set>>
+    + onComplete : Action <<set>>
+    + completeLabel : string <<get>> <<set>>
+    - shouldComplete : bool
+    # <<virtual>> OnShow() : void
+    + <<virtual>> Update() : void
+    + CompleteSwitch() : bool
+    # <<virtual>> OnHeaderGUI() : void
+    # {abstract} OnContentGUI() : void
+    # <<virtual>> OnClose() : void
+    + Show() : void
+    + Close() : void
+    + DrawHeader() : void
+    + DrawContent() : void
+    # <<virtual>> Complete() : void
+    + <<virtual>> OnFocus() : void
+    + <<virtual>> OnLostFocus() : void
+    # {static} e : GUIEvent <<get>>
+}
+@enduml

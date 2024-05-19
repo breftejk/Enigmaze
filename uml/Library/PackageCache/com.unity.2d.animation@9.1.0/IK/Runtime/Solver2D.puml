@@ -1,0 +1,38 @@
+@startuml
+abstract class Solver2D {
+    - m_ConstrainRotation : bool = true
+    - m_SolveFromDefaultPose : bool = true
+    - m_Weight : float = 1f
+    - m_Plane : Plane
+    - m_TargetPositions : List<Vector3>
+    - m_LastFinalWeight : float
+    + chainCount : int <<get>>
+    + constrainRotation : bool <<get>> <<set>>
+    + solveFromDefaultPose : bool <<get>> <<set>>
+    + isValid : bool <<get>>
+    + allChainsHaveTargets : bool <<get>>
+    + weight : float <<get>> <<set>>
+    # <<virtual>> OnValidate() : void
+    - Validate() : bool
+    - HasTargets() : bool
+    + Initialize() : void
+    - Prepare() : void
+    - PrepareEffectorPositions() : void
+    + UpdateIK(globalWeight:float) : void
+    + UpdateIK(targetPositions:List<Vector3>, globalWeight:float) : void
+    - StoreLocalRotations() : void
+    - BlendFkToIk(finalWeight:float) : void
+    + {abstract} GetChain(index:int) : IKChain2D
+    # {abstract} GetChainCount() : int
+    # {abstract} DoUpdateIK(targetPositions:List<Vector3>) : void
+    # <<virtual>> DoValidate() : bool
+    # <<virtual>> DoInitialize() : void
+    # <<virtual>> DoPrepare() : void
+    # <<virtual>> GetPlaneRootTransform() : Transform
+    # GetPointOnSolverPlane(worldPosition:Vector3) : Vector3
+    # GetWorldPositionFromSolverPlanePoint(planePoint:Vector2) : Vector3
+    + OnPreviewUpdate() : void
+}
+MonoBehaviour <|-- Solver2D
+IPreviewable <|-- Solver2D
+@enduml

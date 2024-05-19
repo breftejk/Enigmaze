@@ -1,0 +1,53 @@
+@startuml
+struct CameraState {
+    + Lens : LensSettings
+    + ReferenceUp : Vector3
+    + ReferenceLookAt : Vector3
+    + HasLookAt : bool <<get>>
+    + {static} kNoPoint : Vector3
+    + RawPosition : Vector3
+    + RawOrientation : Quaternion
+    + PositionDampingBypass : Vector3
+    + ShotQuality : float
+    + PositionCorrection : Vector3
+    + OrientationCorrection : Quaternion
+    + CorrectedPosition : Vector3 <<get>>
+    + CorrectedOrientation : Quaternion <<get>>
+    + FinalPosition : Vector3 <<get>>
+    + FinalOrientation : Quaternion <<get>>
+    + BlendHint : BlendHintValue
+    + {static} Default : CameraState <<get>>
+    - mCustom0 : CustomBlendable
+    - mCustom1 : CustomBlendable
+    - mCustom2 : CustomBlendable
+    - mCustom3 : CustomBlendable
+    - m_CustomOverflow : List<CustomBlendable>
+    + NumCustomBlendables : int <<get>>
+    + GetCustomBlendable(index:int) : CustomBlendable
+    - FindCustomBlendable(custom:Object) : int
+    + AddCustomBlendable(b:CustomBlendable) : void
+    + {static} Lerp(stateA:CameraState, stateB:CameraState, t:float) : CameraState
+    {static} - InterpolateFOV(fovA:float, fovB:float, dA:float, dB:float, t:float) : float
+    {static} - ApplyPosBlendHint(posA:Vector3, hintA:BlendHintValue, posB:Vector3, hintB:BlendHintValue, original:Vector3, blended:Vector3) : Vector3
+    {static} - ApplyRotBlendHint(rotA:Quaternion, hintA:BlendHintValue, rotB:Quaternion, hintB:BlendHintValue, original:Quaternion, blended:Quaternion) : Quaternion
+    - InterpolatePosition(posA:Vector3, pivotA:Vector3, posB:Vector3, pivotB:Vector3, t:float) : Vector3
+}
+enum BlendHintValue {
+    Nothing= 0,
+    NoPosition= 1,
+    NoOrientation= 2,
+    NoTransform= NoPosition | NoOrientation,
+    SphericalPositionBlend= 4,
+    CylindricalPositionBlend= 8,
+    RadialAimBlend= 16,
+    IgnoreLookAtTarget= 32,
+    NoLens= 64,
+}
+struct CustomBlendable {
+    + m_Custom : Object
+    + m_Weight : float
+    + CustomBlendable(custom:Object, weight:float)
+}
+CameraState +-- BlendHintValue
+CameraState +-- CustomBlendable
+@enduml

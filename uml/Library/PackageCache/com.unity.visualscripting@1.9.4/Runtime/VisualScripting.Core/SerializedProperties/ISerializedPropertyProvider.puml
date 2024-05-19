@@ -1,0 +1,5 @@
+@startuml
+interface ISerializedPropertyProvider {
+    item : object <<get>> <<set>>
+}
+@enduml

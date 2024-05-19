@@ -1,0 +1,35 @@
+@startuml
+enum Channel {
+    Red= 0,
+    Green= 1,
+    Blue= 2,
+    Alpha= 3,
+}
+class ParallaxMappingNode {
+    + ParallaxMappingNode()
+    - <<const>> kHeightmapSlotId : int = 1
+    - <<const>> kHeightmapSlotName : string = "Heightmap"
+    - <<const>> kHeightmapSamplerSlotId : int = 2
+    - <<const>> kHeightmapSamplerSlotName : string = "HeightmapSampler"
+    - <<const>> kAmplitudeSlotId : int = 3
+    - <<const>> kAmplitudeSlotName : string = "Amplitude"
+    - <<const>> kUVsSlotId : int = 4
+    - <<const>> kUVsSlotName : string = "UVs"
+    - <<const>> kParallaxUVsOutputSlotId : int = 0
+    - <<const>> kParallaxUVsOutputSlotName : string = "ParallaxUVs"
+    + <<override>> hasPreview : bool <<get>>
+    - m_Channel : Channel
+    + channel : Channel <<get>> <<set>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> Setup() : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresViewDirection(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- ParallaxMappingNode
+IGeneratesBodyCode <|-- ParallaxMappingNode
+IGeneratesFunction <|-- ParallaxMappingNode
+IMayRequireViewDirection <|-- ParallaxMappingNode
+IMayRequireMeshUV <|-- ParallaxMappingNode
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+abstract class "SwitchUnit`1"<T> {
+    + branches : List<KeyValuePair<T, ControlOutput>> <<get>>
+    + options : List<T> <<get>> <<set>>
+    + enter : ControlInput <<get>>
+    + selector : ValueInput <<get>>
+    + @default : ControlOutput <<get>>
+    + <<override>> canDefine : bool <<get>>
+    # <<override>> Definition() : void
+    # <<virtual>> Matches(a:T, b:T) : bool
+    + Enter(flow:Flow) : ControlOutput
+}
+Unit <|-- "SwitchUnit`1"
+IBranchUnit <|-- "SwitchUnit`1"
+@enduml

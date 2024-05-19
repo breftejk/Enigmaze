@@ -1,0 +1,5 @@
+@startuml
+class DrawLocksListViewItem <<static>> {
+    <<internal>> {static} ForCell(mRepSpec:RepositorySpec, rect:Rect, rowHeight:float, lockInfo:LockInfo, column:LocksListColumn, avatarLoadedAction:Action, isSelected:bool, isFocused:bool) : void
+}
+@enduml

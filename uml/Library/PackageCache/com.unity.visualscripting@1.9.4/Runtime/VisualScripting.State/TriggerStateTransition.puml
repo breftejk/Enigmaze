@@ -1,0 +1,8 @@
+@startuml
+class TriggerStateTransition <<sealed>> {
+    + trigger : ControlInput <<get>>
+    # <<override>> Definition() : void
+    - Trigger(flow:Flow) : ControlOutput
+}
+Unit <|-- TriggerStateTransition
+@enduml

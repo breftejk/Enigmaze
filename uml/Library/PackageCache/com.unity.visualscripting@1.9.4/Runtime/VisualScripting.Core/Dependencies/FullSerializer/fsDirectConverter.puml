@@ -1,0 +1,14 @@
+@startuml
+abstract class fsDirectConverter {
+    + {abstract} ModelType : Type <<get>>
+}
+abstract class "fsDirectConverter`1"<TModel> {
+    + <<override>> ModelType : Type <<get>>
+    + <<sealed>> <<override>> TrySerialize(instance:object, serialized:fsData, storageType:Type) : fsResult
+    + <<sealed>> <<override>> TryDeserialize(data:fsData, instance:object, storageType:Type) : fsResult
+    # {abstract} DoSerialize(model:TModel, serialized:Dictionary<string, fsData>) : fsResult
+    # {abstract} DoDeserialize(data:Dictionary<string, fsData>, model:TModel) : fsResult
+}
+fsBaseConverter <|-- fsDirectConverter
+fsDirectConverter <|-- "fsDirectConverter`1"
+@enduml

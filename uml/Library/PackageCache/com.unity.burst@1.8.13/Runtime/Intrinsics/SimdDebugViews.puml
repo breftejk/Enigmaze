@@ -1,0 +1,44 @@
+@startuml
+class V64DebugView <<unsafe>> {
+    - m_Value : v64
+    + V64DebugView(value:v64)
+    + <<unsafe>> Byte : byte[] <<get>>
+    + <<unsafe>> SByte : sbyte[] <<get>>
+    + <<unsafe>> UShort : ushort[] <<get>>
+    + <<unsafe>> SShort : short[] <<get>>
+    + <<unsafe>> UInt : uint[] <<get>>
+    + <<unsafe>> SInt : int[] <<get>>
+    + <<unsafe>> Float : float[] <<get>>
+    + <<unsafe>> SLong : long[] <<get>>
+    + <<unsafe>> ULong : ulong[] <<get>>
+    + <<unsafe>> Double : double[] <<get>>
+}
+class V128DebugView <<unsafe>> {
+    - m_Value : v128
+    + V128DebugView(value:v128)
+    + <<unsafe>> Byte : byte[] <<get>>
+    + <<unsafe>> SByte : sbyte[] <<get>>
+    + <<unsafe>> UShort : ushort[] <<get>>
+    + <<unsafe>> SShort : short[] <<get>>
+    + <<unsafe>> UInt : uint[] <<get>>
+    + <<unsafe>> SInt : int[] <<get>>
+    + <<unsafe>> Float : float[] <<get>>
+    + <<unsafe>> SLong : long[] <<get>>
+    + <<unsafe>> ULong : ulong[] <<get>>
+    + <<unsafe>> Double : double[] <<get>>
+}
+class V256DebugView <<unsafe>> {
+    - m_Value : v256
+    + V256DebugView(value:v256)
+    + <<unsafe>> Byte : byte[] <<get>>
+    + <<unsafe>> SByte : sbyte[] <<get>>
+    + <<unsafe>> UShort : ushort[] <<get>>
+    + <<unsafe>> SShort : short[] <<get>>
+    + <<unsafe>> UInt : uint[] <<get>>
+    + <<unsafe>> SInt : int[] <<get>>
+    + <<unsafe>> Float : float[] <<get>>
+    + <<unsafe>> SLong : long[] <<get>>
+    + <<unsafe>> ULong : ulong[] <<get>>
+    + <<unsafe>> Double : double[] <<get>>
+}
+@enduml

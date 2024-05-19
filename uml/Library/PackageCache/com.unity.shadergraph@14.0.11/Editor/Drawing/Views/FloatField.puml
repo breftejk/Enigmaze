@@ -1,0 +1,5 @@
+@startuml
+class FloatField {
+    # <<override>> ValueToString(v:double) : string
+}
+@enduml

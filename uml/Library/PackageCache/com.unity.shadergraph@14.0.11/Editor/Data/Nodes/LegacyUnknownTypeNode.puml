@@ -1,0 +1,12 @@
+@startuml
+class LegacyUnknownTypeNode {
+    + serializedType : string
+    + serializedData : string
+    + foundType : Type = null
+    + LegacyUnknownTypeNode()
+    + LegacyUnknownTypeNode(typeData:string, serializedNodeData:string)
+    + <<override>> OnAfterDeserialize(json:string) : void
+    + <<override>> ValidateNode() : void
+}
+AbstractMaterialNode <|-- LegacyUnknownTypeNode
+@enduml

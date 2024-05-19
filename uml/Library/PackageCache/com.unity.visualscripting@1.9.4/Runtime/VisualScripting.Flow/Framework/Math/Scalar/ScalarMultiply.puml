@@ -1,0 +1,7 @@
+@startuml
+class ScalarMultiply <<sealed>> {
+    # <<override>> defaultB : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+}
+"Multiply`1" "<float>" <|-- ScalarMultiply
+@enduml

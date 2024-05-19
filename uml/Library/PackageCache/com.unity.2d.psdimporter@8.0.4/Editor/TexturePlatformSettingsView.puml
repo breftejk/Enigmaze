@@ -1,0 +1,32 @@
+@startuml
+class TexturePlatformSettingsView {
+    - {static} s_Styles : Styles
+    + buildPlatformTitle : string <<get>> <<set>>
+    <<internal>> TexturePlatformSettingsView()
+    + <<virtual>> DrawResizeAlgorithm(defaultValue:TextureResizeAlgorithm, isMixedValue:bool, isDisabled:bool, changed:bool) : TextureResizeAlgorithm
+    + <<virtual>> DrawCompression(defaultValue:TextureImporterCompression, isMixedValue:bool, changed:bool) : TextureImporterCompression
+    + <<virtual>> DrawUseCrunchedCompression(defaultValue:bool, isMixedValue:bool, changed:bool) : bool
+    + <<virtual>> DrawOverride(defaultValue:bool, isMixedValue:bool, changed:bool) : bool
+    + <<virtual>> DrawMaxSize(defaultValue:int, isMixedValue:bool, isDisabled:bool, changed:bool) : int
+    + <<virtual>> DrawFormat(defaultValue:TextureImporterFormat, displayValues:int[], displayStrings:string[], isMixedValue:bool, isDisabled:bool, changed:bool) : TextureImporterFormat
+    + <<virtual>> DrawCompressionQualityPopup(defaultValue:int, isMixedValue:bool, changed:bool) : int
+    + <<virtual>> DrawCompressionQualitySlider(defaultValue:int, isMixedValue:bool, changed:bool) : int
+}
+class Styles {
+    + <<readonly>> textureFormatLabel : GUIContent
+    + <<readonly>> maxTextureSizeLabel : GUIContent
+    + <<readonly>> compressionLabel : GUIContent
+    + <<readonly>> resizeAlgorithmLabel : GUIContent
+    + <<readonly>> useCrunchedCompressionLabel : GUIContent
+    + <<readonly>> compressionQualityLabel : GUIContent
+    + <<readonly>> compressionQualitySliderLabel : GUIContent
+    + <<readonly>> kMaxTextureSizeValues : int[]
+    + <<readonly>> kMaxTextureSizeStrings : GUIContent[]
+    + <<readonly>> kTextureCompressionOptions : GUIContent[]
+    + <<readonly>> kResizeAlgoritmOptions : GUIContent[]
+    + <<readonly>> kTextureCompressionValues : int[]
+    + <<readonly>> kMobileCompressionQualityOptions : GUIContent[]
+    + Styles()
+}
+TexturePlatformSettingsView +-- Styles
+@enduml

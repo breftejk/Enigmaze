@@ -1,0 +1,19 @@
+@startuml
+class LocksViewMenu {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> LocksViewMenu(lockMenuOperations:ILockMenuOperations)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    <<internal>> UpdateMenuItems(menu:GenericMenu) : void
+    {static} - AddLockMenuItem(menuItemContent:GUIContent, menu:GenericMenu, operations:LockMenuOperations, operationsToCheck:LockMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - ProcessMenuOperation(operationToExecute:LockMenuOperations, lockMenuOperations:ILockMenuOperations) : void
+    {static} - GetMenuOperations(e:Event) : LockMenuOperations
+    - GetNoActionMenuItemContent() : GUIContent
+    - BuildComponents() : void
+    - mMenu : GenericMenu
+    - mNoActionMenuItemContent : GUIContent
+    - mReleaseLockMenuItemContent : GUIContent
+    - mRemoveLockMenuItemContent : GUIContent
+    <<readonly>> - mLockMenuOperations : ILockMenuOperations
+}
+@enduml

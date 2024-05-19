@@ -1,0 +1,9 @@
+@startuml
+class MatrixDeterminantNode {
+    + MatrixDeterminantNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_MatrixDeterminant(In:DynamicDimensionMatrix, Out:Vector1) : string
+}
+CodeFunctionNode <|-- MatrixDeterminantNode
+@enduml

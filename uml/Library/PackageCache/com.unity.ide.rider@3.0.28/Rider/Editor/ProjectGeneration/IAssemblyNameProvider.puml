@@ -1,0 +1,18 @@
+@startuml
+interface IAssemblyNameProvider {
+    ProjectSupportedExtensions : string[] <<get>>
+    ProjectGenerationRootNamespace : string <<get>>
+    ProjectGenerationFlag : ProjectGenerationFlag <<get>>
+    GetAssemblyNameFromScriptPath(path:string) : string
+    GetProjectName(name:string, defines:string[]) : string
+    IsInternalizedPackagePath(path:string) : bool
+    GetAllAssemblies() : Assembly[]
+    GetNamedAssembly(name:string) : Assembly
+    GetAllAssetPaths() : IEnumerable<string>
+    GetPackageInfoForAssetPath(assetPath:string) : UnityEditor.PackageManager.PackageInfo
+    ParseResponseFile(responseFilePath:string, projectDirectory:string, systemReferenceDirectories:ApiCompatibilityLevel) : ResponseFileData
+    GetRoslynAnalyzerPaths() : IEnumerable<string>
+    ToggleProjectGeneration(preference:ProjectGenerationFlag) : void
+    ResetCaches() : void
+}
+@enduml

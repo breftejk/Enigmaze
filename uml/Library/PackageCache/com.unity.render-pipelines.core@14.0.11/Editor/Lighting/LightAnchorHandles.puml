@@ -1,0 +1,9 @@
+@startuml
+class LightAnchorHandles {
+    + lightPosition : Vector3 <<get>> <<set>>
+    + anchorPosition : Vector3 <<get>> <<set>>
+    - target : LightAnchor
+    + LightAnchorHandles(target:LightAnchor)
+    + OnGUI() : void
+}
+@enduml

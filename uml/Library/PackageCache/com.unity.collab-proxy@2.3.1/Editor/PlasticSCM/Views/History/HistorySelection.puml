@@ -1,0 +1,8 @@
+@startuml
+class HistorySelection <<static>> {
+    <<internal>> {static} SelectRevisions(listView:HistoryListView, revisionsToSelect:List<RepObjectInfo>) : void
+    <<internal>> {static} GetSelectedRepObjectInfos(listView:HistoryListView) : List<RepObjectInfo>
+    <<internal>> {static} GetSelectedHistoryRevisions(listView:HistoryListView) : List<HistoryRevision>
+    <<internal>> {static} GetSelectedHistoryRevision(listView:HistoryListView) : HistoryRevision
+}
+@enduml

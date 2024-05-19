@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireDepthTexture {
+    RequiresDepthTexture(stageCapability:ShaderStageCapability) : bool
+}
+class MayRequireDepthTextureExtensions <<static>> {
+    + {static} RequiresDepthTexture(slot:MaterialSlot) : bool
+}
+@enduml

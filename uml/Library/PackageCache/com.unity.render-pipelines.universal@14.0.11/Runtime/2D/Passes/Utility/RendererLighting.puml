@@ -1,0 +1,61 @@
+@startuml
+class RendererLighting <<static>> {
+    - {static} <<readonly>> m_ProfilingSampler : ProfilingSampler
+    - {static} <<readonly>> k_NormalsRenderingPassName : ShaderTagId
+    - {static} <<readonly>> k_NormalClearColor : Color
+    - {static} <<readonly>> k_SpriteLightKeyword : string = "SPRITE_LIGHT"
+    - {static} <<readonly>> k_UsePointLightCookiesKeyword : string = "USE_POINT_LIGHT_COOKIES"
+    - {static} <<readonly>> k_LightQualityFastKeyword : string = "LIGHT_QUALITY_FAST"
+    - {static} <<readonly>> k_UseNormalMap : string = "USE_NORMAL_MAP"
+    - {static} <<readonly>> k_UseAdditiveBlendingKeyword : string = "USE_ADDITIVE_BLENDING"
+    - {static} <<readonly>> k_UseBlendStyleKeywords : string[]
+    - {static} <<readonly>> k_BlendFactorsPropIDs : int[]
+    - {static} <<readonly>> k_MaskFilterPropIDs : int[]
+    - {static} <<readonly>> k_InvertedFilterPropIDs : int[]
+    - {static} s_RenderTextureFormatToUse : GraphicsFormat
+    - {static} s_HasSetupRenderTextureFormatToUse : bool
+    - {static} <<readonly>> k_SrcBlendID : int
+    - {static} <<readonly>> k_DstBlendID : int
+    - {static} <<readonly>> k_FalloffIntensityID : int
+    - {static} <<readonly>> k_FalloffDistanceID : int
+    - {static} <<readonly>> k_LightColorID : int
+    - {static} <<readonly>> k_VolumeOpacityID : int
+    - {static} <<readonly>> k_CookieTexID : int
+    - {static} <<readonly>> k_FalloffLookupID : int
+    - {static} <<readonly>> k_LightPositionID : int
+    - {static} <<readonly>> k_LightInvMatrixID : int
+    - {static} <<readonly>> k_InnerRadiusMultID : int
+    - {static} <<readonly>> k_OuterAngleID : int
+    - {static} <<readonly>> k_InnerAngleMultID : int
+    - {static} <<readonly>> k_LightLookupID : int
+    - {static} <<readonly>> k_IsFullSpotlightID : int
+    - {static} <<readonly>> k_LightZDistanceID : int
+    - {static} <<readonly>> k_PointLightCookieTexID : int
+    - {static} GetRenderTextureFormat() : GraphicsFormat
+    + {static} CreateNormalMapRenderTexture(pass:IRenderPass2D, renderingData:RenderingData, cmd:CommandBuffer, renderScale:float) : void
+    + {static} GetBlendStyleRenderTextureDesc(pass:IRenderPass2D, renderingData:RenderingData) : RenderTextureDescriptor
+    + {static} CreateCameraSortingLayerRenderTexture(pass:IRenderPass2D, renderingData:RenderingData, cmd:CommandBuffer, downsamplingMethod:Downsampling) : void
+    + {static} EnableBlendStyle(cmd:CommandBuffer, blendStyleIndex:int, enabled:bool) : void
+    + {static} DisableAllKeywords(pass:IRenderPass2D, cmd:CommandBuffer) : void
+    + {static} ReleaseRenderTextures(pass:IRenderPass2D, cmd:CommandBuffer) : void
+    + {static} DrawPointLight(cmd:CommandBuffer, light:Light2D, lightMesh:Mesh, material:Material) : void
+    - {static} CanCastShadows(light:Light2D, layerToRender:int) : bool
+    - {static} CanCastVolumetricShadows(light:Light2D, endLayerValue:int) : bool
+    - {static} ShouldRenderLight(light:Light2D, blendStyleIndex:int, layerToRender:int) : bool
+    - {static} RenderLightSet(pass:IRenderPass2D, renderingData:RenderingData, blendStyleIndex:int, cmd:CommandBuffer, layerToRender:int, renderTexture:RenderTargetIdentifier, lights:List<Light2D>) : void
+    + {static} RenderLightVolumes(pass:IRenderPass2D, renderingData:RenderingData, cmd:CommandBuffer, layerToRender:int, endLayerValue:int, renderTexture:RenderTargetIdentifier, depthTexture:RenderTargetIdentifier, intermediateStoreAction:RenderBufferStoreAction, finalStoreAction:RenderBufferStoreAction, requiresRTInit:bool, lights:List<Light2D>) : void
+    + {static} SetShapeLightShaderGlobals(pass:IRenderPass2D, cmd:CommandBuffer) : void
+    - {static} GetNormalizedInnerRadius(light:Light2D) : float
+    - {static} GetNormalizedAngle(angle:float) : float
+    - {static} GetScaledLightInvMatrix(light:Light2D, retMatrix:Matrix4x4) : void
+    - {static} SetGeneralLightShaderGlobals(pass:IRenderPass2D, cmd:CommandBuffer, light:Light2D) : void
+    - {static} SetPointLightShaderGlobals(pass:IRenderPass2D, cmd:CommandBuffer, light:Light2D) : void
+    + {static} ClearDirtyLighting(pass:IRenderPass2D, cmd:CommandBuffer, blendStylesUsed:uint) : void
+    <<internal>> {static} RenderNormals(pass:IRenderPass2D, context:ScriptableRenderContext, renderingData:RenderingData, drawSettings:DrawingSettings, filterSettings:FilteringSettings, depthTarget:RenderTargetIdentifier, bFirstClear:bool) : void
+    + {static} RenderLights(pass:IRenderPass2D, renderingData:RenderingData, cmd:CommandBuffer, layerToRender:int, layerBatch:LayerBatch, rtDesc:RenderTextureDescriptor) : void
+    - {static} SetBlendModes(material:Material, src:BlendMode, dst:BlendMode) : void
+    - {static} GetLightMaterialIndex(light:Light2D, isVolume:bool) : uint
+    - {static} CreateLightMaterial(rendererData:Renderer2DData, light:Light2D, isVolume:bool) : Material
+    - {static} GetLightMaterial(rendererData:Renderer2DData, light:Light2D, isVolume:bool) : Material
+}
+@enduml

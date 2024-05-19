@@ -1,0 +1,7 @@
+@startuml
+class OnButtonClick <<sealed>> {
+    # <<override>> hookName : string <<get>>
+    + <<override>> MessageListenerType : Type <<get>>
+}
+"GameObjectEventUnit`1" "<EmptyEventArgs>" <|-- OnButtonClick
+@enduml

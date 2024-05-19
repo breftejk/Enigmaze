@@ -1,0 +1,38 @@
+@startuml
+class "NonNullableDictionary`2"<TKey,TValue> {
+    + NonNullableDictionary()
+    + NonNullableDictionary(capacity:int)
+    + NonNullableDictionary(comparer:IEqualityComparer<TKey>)
+    + NonNullableDictionary(dictionary:IDictionary<TKey, TValue>)
+    + NonNullableDictionary(capacity:int, comparer:IEqualityComparer<TKey>)
+    + NonNullableDictionary(dictionary:IDictionary<TKey, TValue>, comparer:IEqualityComparer<TKey>)
+    - <<readonly>> dictionary : Dictionary<TKey, TValue>
+    + Count : int <<get>>
+    + IsSynchronized : bool <<get>>
+    + SyncRoot : object <<get>>
+    + IsReadOnly : bool <<get>>
+    + Keys : ICollection<TKey> <<get>>
+    - Values : ICollection <<get>>
+    - Keys : ICollection <<get>>
+    + Values : ICollection<TValue> <<get>>
+    + IsFixedSize : bool <<get>>
+    + CopyTo(array:Array, index:int) : void
+    - Add(item:KeyValuePair<TKey, TValue>) : void
+    + Add(key:TKey, value:TValue) : void
+    + Add(key:object, value:object) : void
+    + Clear() : void
+    + Contains(key:object) : bool
+    - GetEnumerator() : IDictionaryEnumerator
+    + Remove(key:object) : void
+    - Contains(item:KeyValuePair<TKey, TValue>) : bool
+    + ContainsKey(key:TKey) : bool
+    - CopyTo(array:KeyValuePair<TKey, TValue>[], arrayIndex:int) : void
+    + GetEnumerator() : IEnumerator<KeyValuePair<TKey, TValue>>
+    - Remove(item:KeyValuePair<TKey, TValue>) : bool
+    + Remove(key:TKey) : bool
+    + TryGetValue(key:TKey, value:TValue) : bool
+    - GetEnumerator() : IEnumerator
+}
+"IDictionary`2" "<TKey,TValue>" <|-- "NonNullableDictionary`2"
+IDictionary <|-- "NonNullableDictionary`2"
+@enduml

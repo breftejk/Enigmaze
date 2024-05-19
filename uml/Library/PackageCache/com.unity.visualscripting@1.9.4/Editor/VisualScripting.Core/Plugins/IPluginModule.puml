@@ -1,0 +1,7 @@
+@startuml
+interface IPluginModule {
+    Initialize() : void
+    LateInitialize() : void
+}
+IPluginLinked <|-- IPluginModule
+@enduml

@@ -1,0 +1,80 @@
+@startuml
+struct Touch {
+    + valid : bool <<get>>
+    + finger : Finger <<get>>
+    + phase : TouchPhase <<get>>
+    + began : bool <<get>>
+    + inProgress : bool <<get>>
+    + ended : bool <<get>>
+    + touchId : int <<get>>
+    + pressure : float <<get>>
+    + radius : Vector2 <<get>>
+    + startTime : double <<get>>
+    + time : double <<get>>
+    + screen : Touchscreen <<get>>
+    + screenPosition : Vector2 <<get>>
+    + startScreenPosition : Vector2 <<get>>
+    + delta : Vector2 <<get>>
+    + tapCount : int <<get>>
+    + isTap : bool <<get>>
+    + displayIndex : int <<get>>
+    + isInProgress : bool <<get>>
+    <<internal>> updateStepCount : uint <<get>>
+    <<internal>> uniqueId : uint <<get>>
+    - <<unsafe>> state : ref TouchState <<get>>
+    - <<unsafe>> extraData : ref ExtraDataPerTouchState <<get>>
+    + history : TouchHistory <<get>>
+    + {static} activeTouches : ReadOnlyArray<Touch> <<get>>
+    + {static} fingers : ReadOnlyArray<Finger> <<get>>
+    + {static} activeFingers : ReadOnlyArray<Finger> <<get>>
+    + {static} screens : IEnumerable<Touchscreen> <<get>>
+    + {static} maxHistoryLengthPerFinger : int <<get>>
+    <<internal>> Touch(finger:Finger, touchRecord:InputStateHistory<TouchState>.Record)
+    + <<override>> ToString() : string
+    + Equals(other:Touch) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    <<internal>> {static} AddTouchscreen(screen:Touchscreen) : void
+    <<internal>> {static} RemoveTouchscreen(screen:Touchscreen) : void
+    <<internal>> {static} BeginUpdate() : void
+    - <<readonly>> m_Finger : Finger
+    <<internal>> m_TouchRecord : InputStateHistory<TouchState>.Record
+    - {static} CreateGlobalState() : GlobalState
+    <<internal>> {static} s_GlobalState : GlobalState
+    <<internal>> {static} SaveAndResetState() : ISavedState
+}
+struct GlobalState {
+    <<internal>> touchscreens : InlinedArray<Touchscreen>
+    <<internal>> historyLengthPerFinger : int
+    <<internal>> onFingerDown : CallbackArray<Action<Finger>>
+    <<internal>> onFingerMove : CallbackArray<Action<Finger>>
+    <<internal>> onFingerUp : CallbackArray<Action<Finger>>
+    <<internal>> playerState : FingerAndTouchState
+}
+struct FingerAndTouchState {
+    + updateMask : InputUpdateType
+    + fingers : Finger[]
+    + activeFingers : Finger[]
+    + activeTouches : Touch[]
+    + activeFingerCount : int
+    + activeTouchCount : int
+    + totalFingerCount : int
+    + lastId : uint
+    + haveBuiltActiveTouches : bool
+    + haveActiveTouchesNeedingRefreshNextUpdate : bool
+    + activeTouchState : InputStateHistory<TouchState>
+    + AddFingers(screen:Touchscreen) : void
+    + RemoveFingers(screen:Touchscreen) : void
+    + Destroy() : void
+    + UpdateActiveFingers() : void
+    + <<unsafe>> UpdateActiveTouches() : void
+}
+struct ExtraDataPerTouchState {
+    + accumulatedDelta : Vector2
+    + uniqueId : uint
+}
+"IEquatable`1" "<Touch>" <|-- Touch
+Touch +-- GlobalState
+Touch +-- FingerAndTouchState
+Touch +-- ExtraDataPerTouchState
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+class FullScreenPassRendererFeatureEditor {
+    - m_InjectionPointProperty : SerializedProperty
+    - m_RequirementsProperty : SerializedProperty
+    - m_FetchColorBufferProperty : SerializedProperty
+    - m_BindDepthStencilAttachmentProperty : SerializedProperty
+    - m_PassMaterialProperty : SerializedProperty
+    - m_PassIndexProperty : SerializedProperty
+    - {static} <<readonly>> k_InjectionPointGuiContent : GUIContent
+    - {static} <<readonly>> k_RequirementsGuiContent : GUIContent
+    - {static} <<readonly>> k_FetchColorBufferGuiContent : GUIContent
+    - {static} <<readonly>> k_BindDepthStencilAttachmentGuiContent : GUIContent
+    - {static} <<readonly>> k_PassMaterialGuiContent : GUIContent
+    - {static} <<readonly>> k_PassGuiContent : GUIContent
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawMaterialPassProperty(feature:FullScreenPassRendererFeature) : void
+    - {static} GetPassIndexStringEntries(component:FullScreenPassRendererFeature) : List<string>
+}
+Editor <|-- FullScreenPassRendererFeatureEditor
+@enduml

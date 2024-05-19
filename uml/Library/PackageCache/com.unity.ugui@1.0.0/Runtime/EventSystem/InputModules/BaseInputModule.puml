@@ -1,0 +1,33 @@
+@startuml
+abstract class BaseInputModule {
+    # m_RaycastResultCache : List<RaycastResult>
+    - m_SendPointerHoverToParent : bool = true
+    <<internal>> sendPointerHoverToParent : bool <<get>> <<set>>
+    - m_AxisEventData : AxisEventData
+    - m_EventSystem : EventSystem
+    - m_BaseEventData : BaseEventData
+    # m_InputOverride : BaseInput
+    - m_DefaultInput : BaseInput
+    + input : BaseInput <<get>>
+    + inputOverride : BaseInput <<get>> <<set>>
+    # eventSystem : EventSystem <<get>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + {abstract} Process() : void
+    # {static} FindFirstRaycast(candidates:List<RaycastResult>) : RaycastResult
+    # {static} DetermineMoveDirection(x:float, y:float) : MoveDirection
+    # {static} DetermineMoveDirection(x:float, y:float, deadZone:float) : MoveDirection
+    # {static} FindCommonRoot(g1:GameObject, g2:GameObject) : GameObject
+    # HandlePointerExitAndEnter(currentPointerData:PointerEventData, newEnterTarget:GameObject) : void
+    # <<virtual>> GetAxisEventData(x:float, y:float, moveDeadZone:float) : AxisEventData
+    # <<virtual>> GetBaseEventData() : BaseEventData
+    + <<virtual>> IsPointerOverGameObject(pointerId:int) : bool
+    + <<virtual>> ShouldActivateModule() : bool
+    + <<virtual>> DeactivateModule() : void
+    + <<virtual>> ActivateModule() : void
+    + <<virtual>> UpdateModule() : void
+    + <<virtual>> IsModuleSupported() : bool
+    + <<virtual>> ConvertUIToolkitPointerId(sourcePointerData:PointerEventData) : int
+}
+UIBehaviour <|-- BaseInputModule
+@enduml

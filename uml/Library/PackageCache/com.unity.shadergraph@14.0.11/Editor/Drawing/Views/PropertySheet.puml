@@ -1,0 +1,13 @@
+@startuml
+class PropertySheet {
+    - m_ContentContainer : VisualElement
+    - m_HeaderContainer : VisualElement
+    - m_WarningContainer : VisualElement
+    - m_Header : Label
+    + <<override>> contentContainer : VisualElement <<get>>
+    + warningContainer : VisualElement <<get>>
+    + headerContainer : VisualElement <<get>> <<set>>
+    + PropertySheet(header:Label)
+}
+VisualElement <|-- PropertySheet
+@enduml

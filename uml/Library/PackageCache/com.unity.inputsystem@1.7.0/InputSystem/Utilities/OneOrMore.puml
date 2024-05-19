@@ -1,0 +1,24 @@
+@startuml
+struct "OneOrMore`2"<TValue,TList> {
+    - <<readonly>> m_IsSingle : bool
+    - <<readonly>> m_Single : TValue
+    - <<readonly>> m_Multiple : TList
+    + Count : int <<get>>
+    + OneOrMore(single:TValue)
+    + OneOrMore(multiple:TList)
+    + GetEnumerator() : IEnumerator<TValue>
+    - GetEnumerator() : IEnumerator
+}
+class Enumerator {
+    <<internal>> m_Index : int
+    <<internal>> m_List : OneOrMore<TValue, TList>
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : TValue <<get>>
+    - Current : object <<get>>
+    + Dispose() : void
+}
+"IReadOnlyList`1" "<TValue>" <|-- "OneOrMore`2"
+"OneOrMore`2" +-- Enumerator
+"IEnumerator`1" "<TValue>" <|-- Enumerator
+@enduml

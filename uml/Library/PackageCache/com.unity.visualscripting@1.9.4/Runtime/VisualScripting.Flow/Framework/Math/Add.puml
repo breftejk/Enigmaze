@@ -1,0 +1,12 @@
+@startuml
+abstract class "Add`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + sum : ValueOutput <<get>>
+    # <<virtual>> defaultB : T <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : T
+    + {abstract} Operation(a:T, b:T) : T
+}
+Unit <|-- "Add`1"
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class SliderAction {
+    - m_SliderData : SliderData
+    + onSliderBegin : Action<IGUIState, Control, Vector3>
+    + onSliderChanged : Action<IGUIState, Control, Vector3>
+    + onSliderEnd : Action<IGUIState, Control, Vector3>
+    + SliderAction(control:Control)
+    # <<override>> GetFinishContidtion(guiState:IGUIState) : bool
+    # <<override>> OnTrigger(guiState:IGUIState) : void
+    # <<override>> OnFinish(guiState:IGUIState) : void
+    # <<override>> OnPerform(guiState:IGUIState) : void
+}
+ClickAction <|-- SliderAction
+@enduml

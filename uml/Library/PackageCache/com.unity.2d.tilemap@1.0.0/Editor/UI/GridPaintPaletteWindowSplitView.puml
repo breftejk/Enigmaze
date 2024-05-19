@@ -1,0 +1,23 @@
+@startuml
+class GridPaintPaletteWindowSplitView {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-splitview"
+    - {static} <<readonly>> brushesUssClassName : string = "unity-tilepalette-splitview-brushes"
+    - {static} <<readonly>> splitViewDataKey : string = "unity-tilepalette-splitview-data"
+    - <<const>> kMinSplitRatio : float = 0.3f
+    - m_SplitView : TwoPaneSplitView
+    - m_PaletteElement : TilePaletteElement
+    - m_BrushElementToggle : TilePaletteBrushElementToggle
+    - m_LastSplitRatio : float
+    + paletteElement : TilePaletteElement <<get>>
+    + isVerticalOrientation : bool <<get>> <<set>>
+    - fullLength : float <<get>>
+    - isMinSplit : bool <<get>>
+    - minTopSplitDimension : float <<get>>
+    - minBottomSplitDimension : float <<get>>
+    + ChangeSplitDimensions(dimension:float) : void
+    + GridPaintPaletteWindowSplitView(editorWindow:EditorWindow, isVerticalOrientation:bool)
+    - BrushElementToggleChanged(show:bool) : void
+    - OnGeometryChanged(evt:GeometryChangedEvent) : void
+}
+VisualElement <|-- GridPaintPaletteWindowSplitView
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class "GenericScriptablePath`1"<T> {
+    - m_Data : List<T>
+    + data : T[] <<get>> <<set>>
+    + <<override>> Clear() : void
+    + <<override>> AddPoint(controlPoint:ControlPoint) : void
+    + <<override>> InsertPoint(index:int, controlPoint:ControlPoint) : void
+    + <<override>> RemovePoint(index:int) : void
+    + GetData(index:int) : T
+    + SetData(index:int, data:T) : void
+    # <<virtual>> Create() : T
+    # <<virtual>> Destroy(data:T) : void
+}
+ScriptablePath <|-- "GenericScriptablePath`1"
+@enduml

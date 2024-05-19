@@ -1,0 +1,7 @@
+@startuml
+class SearcherTreeUtility <<static>> {
+    + {static} CreateFromFlatList(items:List<SearcherItem>) : List<SearcherItem>
+    - {static} AddItem(root:SearcherItem, item:SearcherItem, pathParts:string[]) : void
+    - {static} FindNodeByName(searchList:IList<SearcherItem>, name:string) : SearcherItem
+}
+@enduml

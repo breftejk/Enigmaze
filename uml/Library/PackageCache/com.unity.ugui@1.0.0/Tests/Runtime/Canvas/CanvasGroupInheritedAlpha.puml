@@ -1,0 +1,26 @@
+@startuml
+class CanvasGroupTests {
+    - m_CanvasObject : GameObject
+    - m_CanvasGroup : CanvasGroup
+    - m_ChildCanvasRenderer : CanvasRenderer
+    - m_ChildCanvasGroup : CanvasGroup
+    - m_GrandChildCanvasRenderer : CanvasRenderer
+    - m_GrandChildCanvasGroup : CanvasGroup
+    - m_CanvasTwoObject : GameObject
+    - m_CanvasTwoGroup : CanvasGroup
+    - m_ChildCanvasTwoRenderer : CanvasRenderer
+    <<const>> - m_CanvasAlpha : float = 0.25f
+    <<const>> - m_ChildAlpha : float = 0.5f
+    <<const>> - m_GrandChildAlpha : float = 0.8f
+    + TestSetup() : void
+    + TearDown() : void
+    - SetUpCanvasGroupState() : void
+    + EnabledCanvasGroupEffectSelfAndChildrenAlpha() : void
+    + EnabledCanvasGroupOnACanvasEffectAllChildrenAlpha() : void
+    + EnabledCanvasGroupOnLeafChildEffectOnlyThatChild() : void
+    + EnabledCanvasGroupOnCanvasAndChildMultipleAlphaValuesCorrectly() : void
+    + EnabledCanvasGroupOnCanvasAndChildWithChildIgnoringParentGroupMultipleAlphaValuesCorrectly() : void
+    + EnabledCanvasGroupOnCanvasAndChildrenWithAllChildrenIgnoringParentGroupMultipleAlphaValuesCorrectly() : void
+    + EnabledCanvasGroupOnNestedCanvasIgnoringParentGroupMultipleAlphaValuesCorrectly() : void
+}
+@enduml

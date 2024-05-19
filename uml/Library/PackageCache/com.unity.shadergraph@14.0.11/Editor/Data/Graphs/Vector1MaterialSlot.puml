@@ -1,0 +1,24 @@
+@startuml
+class Vector1MaterialSlot {
+    - m_Value : float
+    - m_DefaultValue : float
+    - m_Labels : string[]
+    {static} <<readonly>> - k_LabelDefaults : string[]
+    - labels : string[] <<get>>
+    + Vector1MaterialSlot()
+    + Vector1MaterialSlot(slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, value:float, stageCapability:ShaderStageCapability, label1:string, hidden:bool)
+    + defaultValue : float <<get>>
+    + value : float <<get>> <<set>>
+    + <<override>> isDefaultValue : bool <<get>>
+    + <<override>> InstantiateControl() : VisualElement
+    # <<override>> ConcreteSlotValueAsVariable() : string
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + <<override>> GetPreviewProperties(properties:List<PreviewProperty>, name:string) : void
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + <<override>> CopyDefaultValue(other:MaterialSlot) : void
+}
+MaterialSlot <|-- Vector1MaterialSlot
+"IMaterialSlotHasValue`1" "<float>" <|-- Vector1MaterialSlot
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class ReorderableSlotListView {
+    - m_SelectedIndex : int
+    - m_SlotType : SlotType
+    - m_LabelStyle : GUIStyle
+    - m_Container : IMGUIContainer
+    - m_Node : AbstractMaterialNode
+    - m_ReorderableList : ReorderableList
+    - m_AllowBareResources : bool
+    - m_OnListRecreatedCallback : ListRecreatedDelegate
+    - label : string <<get>>
+    + OnAddCallback : ReorderableList.AddCallbackDelegate <<get>> <<set>>
+    + OnRemoveCallback : ReorderableList.RemoveCallbackDelegate <<get>> <<set>>
+    + OnListRecreatedCallback : ListRecreatedDelegate <<get>> <<set>>
+    + AllowedTypeCallback : Func<ConcreteSlotValueTypePopupName, bool>
+    <<internal>> ReorderableSlotListView(node:AbstractMaterialNode, slotType:SlotType, allowBareResources:bool)
+    <<internal>> RecreateList() : void
+    - OnGUIHandler() : void
+    - AddCallbacks() : void
+    - SelectEntry(list:ReorderableList) : void
+    - AddEntry(list:ReorderableList) : void
+    - RemoveEntry(list:ReorderableList) : void
+    - ReorderEntries(list:ReorderableList) : void
+}
+VisualElement <|-- ReorderableSlotListView
+@enduml

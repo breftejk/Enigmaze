@@ -1,0 +1,11 @@
+@startuml
+class VSUsageUtility <<static>> {
+    {static} - VSUsageUtility()
+    - {static} CheckAndSetIsVisualScriptingUsed() : void
+    - {static} DoInitializeOnLoadCalls() : void
+    - {static} IsOlderVersionOfVSUsed() : bool
+    + {static} isVisualScriptingUsed : bool <<get>> <<set>>
+    - {static} _isVisualScriptingUsed : bool = false
+    - {static} _initializeOnLoadExecuted : bool = false
+}
+@enduml

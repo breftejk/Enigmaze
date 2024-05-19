@@ -1,0 +1,21 @@
+@startuml
+class GameObject <<partial>> {
+    + SampleAnimation(clip:UnityEngine.Object, time:float) : void
+    + AddComponent(className:string) : Component
+    + rigidbody : Component <<get>>
+    + rigidbody2D : Component <<get>>
+    + camera : Component <<get>>
+    + light : Component <<get>>
+    + animation : Component <<get>>
+    + constantForce : Component <<get>>
+    + renderer : Component <<get>>
+    + audio : Component <<get>>
+    + networkView : Component <<get>>
+    + collider : Component <<get>>
+    + collider2D : Component <<get>>
+    + hingeJoint : Component <<get>>
+    + particleSystem : Component <<get>>
+    + PlayAnimation(animation:UnityEngine.Object) : void
+    + StopAnimation() : void
+}
+@enduml

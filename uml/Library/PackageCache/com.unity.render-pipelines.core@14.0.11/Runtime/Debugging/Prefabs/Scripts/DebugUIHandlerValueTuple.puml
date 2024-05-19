@@ -1,0 +1,18 @@
+@startuml
+class DebugUIHandlerValueTuple {
+    + nameLabel : Text
+    + valueLabel : Text
+    # <<internal>> m_Field : DebugUI.ValueTuple
+    # <<internal>> valueElements : Text[]
+    <<const>> - k_XOffset : float = 230f
+    - m_Timer : float
+    {static} <<readonly>> - k_ZeroColor : Color
+    # <<override>> OnEnable() : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    <<internal>> <<virtual>> UpdateValueLabels() : void
+    - Update() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerValueTuple
+@enduml

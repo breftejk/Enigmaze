@@ -1,0 +1,10 @@
+@startuml
+class OnInputFieldValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, value:string) : void
+}
+"GameObjectEventUnit`1" "<string>" <|-- OnInputFieldValueChanged
+@enduml

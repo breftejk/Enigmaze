@@ -1,0 +1,100 @@
+@startuml
+class TMPro_FontAssetCreatorWindow {
+    + {static} ShowFontAtlasCreatorWindow() : void
+    + {static} ShowFontAtlasCreatorWindow(sourceFontFile:Font) : void
+    + {static} ShowFontAtlasCreatorWindow(fontAsset:TMP_FontAsset) : void
+    - m_FontAssetCreationSettingsContainer : FontAssetCreationSettingsContainer
+    - m_FontAssetCreationSettingsCurrentIndex : int = 0
+    <<const>> - k_FontAssetCreationSettingsContainerKey : string = "TextMeshPro.FontAssetCreator.RecentFontAssetCreationSettings.Container"
+    <<const>> - k_FontAssetCreationSettingsCurrentIndexKey : string = "TextMeshPro.FontAssetCreator.RecentFontAssetCreationSettings.CurrentIndex"
+    <<const>> - k_TwoColumnControlsWidth : float = 335f
+    - m_StopWatch : System.Diagnostics.Stopwatch
+    - m_GlyphPackingGenerationTime : double
+    - m_GlyphRenderingGenerationTime : double
+    - m_FontSizingOptions : string[]
+    - m_PointSizeSamplingMode : int
+    - m_FontResolutionLabels : string[]
+    - m_FontAtlasResolutions : int[]
+    - m_FontCharacterSets : string[]
+    - m_PackingMode : FontPackingModes
+    - m_CharacterSetSelectionMode : int
+    - m_CharacterSequence : string = ""
+    - m_OutputFeedback : string = ""
+    - m_WarningMessage : string
+    - m_CharacterCount : int
+    - m_ScrollPosition : Vector2
+    - m_OutputScrollPosition : Vector2
+    - m_IsRepaintNeeded : bool
+    - m_AtlasGenerationProgress : float
+    - m_AtlasGenerationProgressLabel : string
+    - m_RenderingProgress : float
+    - m_IsGlyphPackingDone : bool
+    - m_IsGlyphRenderingDone : bool
+    - m_IsRenderingDone : bool
+    - m_IsProcessing : bool
+    - m_IsGenerationDisabled : bool
+    - m_IsGenerationCancelled : bool
+    - m_IsFontAtlasInvalid : bool
+    - m_SourceFontFile : Object
+    - m_SelectedFontAsset : TMP_FontAsset
+    - m_LegacyFontAsset : TMP_FontAsset
+    - m_ReferencedFontAsset : TMP_FontAsset
+    - m_CharactersFromFile : TextAsset
+    - m_PointSize : int
+    - m_Padding : int = 5
+    - m_GlyphRenderMode : GlyphRenderMode
+    - m_AtlasWidth : int = 512
+    - m_AtlasHeight : int = 512
+    - m_AtlasTextureBuffer : byte[]
+    - m_FontAtlasTexture : Texture2D
+    - m_GlyphRectPreviewTexture : Texture2D
+    - m_SavedFontAtlas : Texture2D
+    - m_FontGlyphTable : List<Glyph>
+    - m_FontCharacterTable : List<TMP_Character>
+    - m_CharacterLookupMap : Dictionary<uint, uint>
+    - m_GlyphLookupMap : Dictionary<uint, List<uint>>
+    - m_GlyphsToPack : List<Glyph>
+    - m_GlyphsPacked : List<Glyph>
+    - m_FreeGlyphRects : List<GlyphRect>
+    - m_UsedGlyphRects : List<GlyphRect>
+    - m_GlyphsToRender : List<Glyph>
+    - m_AvailableGlyphsToAdd : List<uint>
+    - m_MissingCharacters : List<uint>
+    - m_ExcludedCharacters : List<uint>
+    - m_FaceInfo : FaceInfo
+    - m_IncludeFontFeatures : bool
+    + OnEnable() : void
+    + OnDisable() : void
+    - ON_RESOURCES_LOADED() : void
+    - CheckEssentialResources() : void
+    + OnGUI() : void
+    + Update() : void
+    {static} - ParseNumberSequence(sequence:string) : uint[]
+    {static} - ParseHexNumberSequence(sequence:string) : uint[]
+    - DrawControls() : void
+    - ClearGeneratedData() : void
+    - UpdateRenderFeedbackWindow() : void
+    - DrawGlyphRectPreviewTexture() : void
+    - CreateFontAtlasTexture() : void
+    - SaveNewFontAsset(sourceObject:Object) : void
+    - SaveNewFontAssetWithSameName(sourceObject:Object) : void
+    - Save_Bitmap_FontAsset(filePath:string) : void
+    - Save_SDF_FontAsset(filePath:string) : void
+    - SaveFontCreationSettings() : FontAssetCreationSettings
+    - LoadFontCreationSettings(settings:FontAssetCreationSettings) : void
+    - SaveCreationSettingsToEditorPrefs(settings:FontAssetCreationSettings) : void
+    - DrawPreview() : void
+    - CheckForLegacyGlyphRenderMode() : void
+    + GetKerningTable() : TMP_FontFeatureTable
+}
+class FontAssetCreationSettingsContainer {
+    + fontAssetCreationSettings : List<FontAssetCreationSettings>
+}
+enum FontPackingModes {
+    Fast= 0,
+    Optimum= 4,
+}
+EditorWindow <|-- TMPro_FontAssetCreatorWindow
+TMPro_FontAssetCreatorWindow +-- FontAssetCreationSettingsContainer
+TMPro_FontAssetCreatorWindow +-- FontPackingModes
+@enduml

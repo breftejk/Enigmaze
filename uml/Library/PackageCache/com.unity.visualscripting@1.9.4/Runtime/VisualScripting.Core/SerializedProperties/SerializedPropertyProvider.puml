@@ -1,0 +1,8 @@
+@startuml
+abstract class "SerializedPropertyProvider`1"<T> {
+    # item : T
+    - item : object <<get>> <<set>>
+}
+ScriptableObject <|-- "SerializedPropertyProvider`1"
+ISerializedPropertyProvider <|-- "SerializedPropertyProvider`1"
+@enduml

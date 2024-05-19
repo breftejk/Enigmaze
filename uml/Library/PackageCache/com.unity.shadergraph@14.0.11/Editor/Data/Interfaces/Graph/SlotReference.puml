@@ -1,0 +1,16 @@
+@startuml
+struct SlotReference {
+    - m_Node : JsonRef<AbstractMaterialNode>
+    - m_SlotId : int
+    + SlotReference(node:AbstractMaterialNode, slotId:int)
+    + node : AbstractMaterialNode <<get>>
+    + slotId : int <<get>>
+    + slot : MaterialSlot <<get>>
+    + Equals(other:SlotReference) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + CompareTo(other:SlotReference) : int
+}
+"IEquatable`1" "<SlotReference>" <|-- SlotReference
+"IComparable`1" "<SlotReference>" <|-- SlotReference
+@enduml

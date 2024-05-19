@@ -1,0 +1,9 @@
+@startuml
+class DrawCommentTextArea <<static>> {
+    <<internal>> {static} For(pendingChangesTab:PendingChangesTab, width:float, isOperationRunning:bool) : void
+    {static} - OnTextAreaChanged(pendingChangesTab:PendingChangesTab) : void
+    {static} - DoTextArea(text:string, forceToShowText:bool, textAreaRect:Rect) : string
+    {static} - DoPlaceholderIfNeeded(placeholder:string, textAreaRect:Rect) : void
+    {static} - BuildTextAreaRect(text:string, width:float) : Rect
+}
+@enduml

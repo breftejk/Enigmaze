@@ -1,0 +1,27 @@
+@startuml
+class LayoutRebuilder {
+    - m_ToRebuild : RectTransform
+    - m_CachedHashFromTransform : int
+    {static} - s_Rebuilders : ObjectPool<LayoutRebuilder>
+    - Initialize(controller:RectTransform) : void
+    - Clear() : void
+    {static} - LayoutRebuilder()
+    {static} - ReapplyDrivenProperties(driven:RectTransform) : void
+    + transform : Transform <<get>>
+    + IsDestroyed() : bool
+    {static} - StripDisabledBehavioursFromList(components:List<Component>) : void
+    + {static} ForceRebuildLayoutImmediate(layoutRoot:RectTransform) : void
+    + Rebuild(executing:CanvasUpdate) : void
+    - PerformLayoutControl(rect:RectTransform, action:UnityAction<Component>) : void
+    - PerformLayoutCalculation(rect:RectTransform, action:UnityAction<Component>) : void
+    + {static} MarkLayoutForRebuild(rect:RectTransform) : void
+    - {static} ValidController(layoutRoot:RectTransform, comps:List<Component>) : bool
+    - {static} MarkLayoutRootForRebuild(controller:RectTransform) : void
+    + LayoutComplete() : void
+    + GraphicUpdateComplete() : void
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> ToString() : string
+}
+ICanvasElement <|-- LayoutRebuilder
+@enduml

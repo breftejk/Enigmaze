@@ -1,0 +1,18 @@
+@startuml
+struct ExamplesCollections {
+    + foo() : void
+    + foo2() : void
+}
+struct MyParallelJob {
+    + NumsWriter : NativeList<int>.ParallelWriter
+    + Execute(i:int) : void
+}
+struct MyJob {
+    + nums : NativeArray<int>
+    + Execute() : void
+}
+ExamplesCollections +-- MyParallelJob
+IJobParallelFor <|-- MyParallelJob
+ExamplesCollections +-- MyJob
+IJob <|-- MyJob
+@enduml

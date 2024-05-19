@@ -1,0 +1,44 @@
+@startuml
+struct BuddyAllocation {
+    + level : int
+    + index : int
+    + BuddyAllocation(level:int, index:int)
+    + index2D : uint2 <<get>>
+}
+struct BuddyAllocator {
+    - m_Data : void*
+    - header : ref Header <<get>>
+    - m_ActiveFreeMaskCounts : (int, int)
+    - freeMaskCounts : NativeArray<int> <<get>>
+    - m_FreeMasksStorage : (int, int)
+    - freeMasksStorage : NativeArray<ulong> <<get>>
+    - FreeMasks(level:int) : NativeArray<ulong>
+    - m_FreeMaskIndicesStorage : (int, int)
+    - freeMaskIndicesStorage : NativeArray<int> <<get>>
+    - FreeMaskIndices(level:int) : NativeArray<int>
+    - m_Allocator : Allocator
+    + levelCount : int <<get>>
+    + BuddyAllocator(levelCount:int, branchingOrder:int, allocator:Allocator)
+    + TryAllocate(requestedLevel:int, allocation:BuddyAllocation) : bool
+    + Free(allocation:BuddyAllocation) : void
+    + Dispose() : void
+    - GetNativeArray(offset:int, length:int) : NativeArray<T>
+    {static} - LevelOffset(level:int, branchingOrder:int) : int
+    {static} - LevelLength(level:int, branchingOrder:int) : int
+    {static} - LevelOffset64(level:int, branchingOrder:int) : int
+    {static} - LevelLength64(level:int, branchingOrder:int) : int
+    {static} - AllocateRange(length:int, dataSize:int) : (int, int)
+    {static} - AlignForward(offset:int, alignment:int) : int
+    {static} - PtrAdd(ptr:void*, bytes:int) : void*
+    {static} - Pow2(n:int) : int
+    {static} - Pow2N(x:int, n:int) : int
+}
+struct Header {
+    + branchingOrder : int
+    + levelCount : int
+    + allocationCount : int
+    + freeAllocationIdsCount : int
+}
+IDisposable <|-- BuddyAllocator
+BuddyAllocator +-- Header
+@enduml

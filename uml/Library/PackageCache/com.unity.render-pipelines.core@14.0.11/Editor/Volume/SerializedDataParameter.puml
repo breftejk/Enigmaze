@@ -1,0 +1,14 @@
+@startuml
+class SerializedDataParameter <<sealed>> {
+    + overrideState : SerializedProperty <<get>>
+    + value : SerializedProperty <<get>>
+    + attributes : Attribute[] <<get>>
+    + referenceType : Type <<get>>
+    - m_BaseProperty : SerializedProperty
+    - m_ReferenceValue : object
+    + displayName : string <<get>>
+    <<internal>> SerializedDataParameter(property:SerializedProperty)
+    + GetAttribute() : T
+    + GetObjectRef() : T
+}
+@enduml

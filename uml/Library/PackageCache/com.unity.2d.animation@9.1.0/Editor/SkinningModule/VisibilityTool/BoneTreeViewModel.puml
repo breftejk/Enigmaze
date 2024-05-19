@@ -1,0 +1,58 @@
+@startuml
+class BoneVisibilityToolData {
+    - m_AllVisibility : bool = true
+    - m_PreviousVisibility : bool = true
+    + allVisibility : bool <<get>> <<set>>
+    + previousVisiblity : bool <<get>> <<set>>
+}
+class BoneTreeWidgetModel {
+    # m_SkinningCache : SkinningCache
+    # m_View : IBoneVisibilityToolView
+    # m_Data : BoneVisibilityToolData
+    + skinningCache : SkinningCache <<get>>
+    + view : IBoneVisibilityToolView <<get>>
+    + <<virtual>> GetAllVisibility() : bool
+    + GetBoneSelection() : SkeletonSelection
+    + GetExpandedBones() : BoneCache[]
+    + GetDepth(bone:BoneCache) : int
+    + GetBoneColor(bone:BoneCache) : Color
+    + GetSelectedSkeleton() : SkeletonCache
+    + GetVisibility(bone:BoneCache) : bool
+    + SelectBones(bones:BoneCache[]) : void
+    + SetExpandedBones(bones:BoneCache[]) : void
+    + <<virtual>> SetAllVisibility(skeleton:SkeletonCache, visibility:bool) : void
+    + {static} SetAllBoneVisibility(skeleton:SkeletonCache, visibility:bool) : void
+    + SetBoneParent(newParent:BoneCache, bone:BoneCache, insertAtIndex:int) : void
+    + SetDepth(bone:BoneCache, depth:int) : void
+    + SetBoneColor(bone:BoneCache, color:Color) : void
+    + SetName(bone:BoneCache, name:string) : void
+    + SetVisibility(bone:BoneCache, visibility:bool) : void
+    + UndoScope(value:string) : UndoScope
+    - UpdateVisibilityFromPersistentState() : void
+    + hasCharacter : bool <<get>>
+    + mode : SkinningMode <<get>>
+}
+interface IBoneTreeViewModel {
+    SetVisibility(bone:BoneCache, visibility:bool) : void
+    GetVisibility(bone:BoneCache) : bool
+    SetName(bone:BoneCache, name:string) : void
+    SetBoneParent(newParent:BoneCache, bone:BoneCache, insertAtIndex:int) : void
+    GetDepth(bone:BoneCache) : int
+    SetDepth(bone:BoneCache, depth:int) : void
+    GetBoneColor(bone:BoneCache) : Color
+    SetBoneColor(bone:BoneCache, color:Color) : void
+    SetAllVisibility(skeleton:SkeletonCache, visibility:bool) : void
+    GetAllVisibility() : bool
+    SelectBones(bones:BoneCache[]) : void
+    SetExpandedBones(bones:BoneCache[]) : void
+    view : IBoneVisibilityToolView <<get>>
+    GetBoneSelection() : SkeletonSelection
+    GetExpandedBones() : BoneCache[]
+    GetSelectedSkeleton() : SkeletonCache
+    hasCharacter : bool <<get>>
+    mode : SkinningMode <<get>>
+    UndoScope(value:string) : UndoScope
+}
+CacheObject <|-- BoneVisibilityToolData
+IBoneTreeViewModel <|-- BoneTreeWidgetModel
+@enduml

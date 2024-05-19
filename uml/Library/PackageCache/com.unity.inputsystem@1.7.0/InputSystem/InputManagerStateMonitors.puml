@@ -1,0 +1,47 @@
+@startuml
+class InputManager <<partial>> {
+    <<internal>> m_StateChangeMonitors : StateChangeMonitorsForDevice[]
+    - m_StateChangeMonitorTimeouts : InlinedArray<StateChangeMonitorTimeout>
+    + AddStateChangeMonitor(control:InputControl, monitor:IInputStateChangeMonitor, monitorIndex:long, groupIndex:uint) : void
+    - RemoveStateChangeMonitors(device:InputDevice) : void
+    + RemoveStateChangeMonitor(control:InputControl, monitor:IInputStateChangeMonitor, monitorIndex:long) : void
+    + AddStateChangeMonitorTimeout(control:InputControl, monitor:IInputStateChangeMonitor, time:double, monitorIndex:long, timerIndex:int) : void
+    + RemoveStateChangeMonitorTimeout(monitor:IInputStateChangeMonitor, monitorIndex:long, timerIndex:int) : void
+    - SortStateChangeMonitorsIfNecessary(deviceIndex:int) : void
+    + SignalStateChangeMonitor(control:InputControl, monitor:IInputStateChangeMonitor) : void
+    + <<unsafe>> FireStateChangeNotifications() : void
+    - <<unsafe>> ProcessStateChangeMonitors(deviceIndex:int, newStateFromEvent:void*, oldStateOfDevice:void*, newStateSizeInBytes:uint, newStateOffsetInBytes:uint) : bool
+    <<internal>> <<unsafe>> FireStateChangeNotifications(deviceIndex:int, internalTime:double, eventPtr:InputEvent*) : void
+    - ProcessStateChangeMonitorTimeouts() : void
+}
+struct StateChangeMonitorTimeout {
+    + control : InputControl
+    + time : double
+    + monitor : IInputStateChangeMonitor
+    + monitorIndex : long
+    + timerIndex : int
+}
+struct StateChangeMonitorListener {
+    + control : InputControl
+    + monitor : IInputStateChangeMonitor
+    + monitorIndex : long
+    + groupIndex : uint
+}
+struct StateChangeMonitorsForDevice {
+    + memoryRegions : MemoryHelpers.BitRegion[]
+    + listeners : StateChangeMonitorListener[]
+    + signalled : DynamicBitfield
+    + needToUpdateOrderingOfMonitors : bool
+    + needToCompactArrays : bool
+    + count : int <<get>>
+    + Add(control:InputControl, monitor:IInputStateChangeMonitor, monitorIndex:long, groupIndex:uint) : void
+    + Remove(monitor:IInputStateChangeMonitor, monitorIndex:long, deferRemoval:bool) : void
+    + Clear() : void
+    + CompactArrays() : void
+    - RemoveAt(i:int) : void
+    + SortMonitorsByIndex() : void
+}
+InputManager +-- StateChangeMonitorTimeout
+InputManager +-- StateChangeMonitorListener
+InputManager +-- StateChangeMonitorsForDevice
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class ValueInputDefinition <<sealed>> {
+    - _defaultvalue : object
+    + <<override>> type : Type <<get>> <<set>>
+    + hasDefaultValue : bool <<get>> <<set>>
+    + defaultValue : object <<get>> <<set>>
+}
+ValuePortDefinition <|-- ValueInputDefinition
+IUnitInputPortDefinition <|-- ValueInputDefinition
+@enduml

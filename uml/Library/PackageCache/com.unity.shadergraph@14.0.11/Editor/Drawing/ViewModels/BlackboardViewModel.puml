@@ -1,0 +1,20 @@
+@startuml
+class BlackboardViewModel {
+    + model : GraphData <<get>> <<set>>
+    + parentView : VisualElement <<get>> <<set>>
+    + title : string <<get>> <<set>>
+    + subtitle : string <<get>> <<set>>
+    + propertyNameToAddActionMap : Dictionary<string, IGraphDataAction> <<get>> <<set>>
+    + defaultKeywordNameToAddActionMap : Dictionary<string, IGraphDataAction> <<get>> <<set>>
+    + builtInKeywordNameToAddActionMap : Dictionary<string, IGraphDataAction> <<get>> <<set>>
+    + defaultDropdownNameToAdd : Tuple<string, IGraphDataAction> <<get>> <<set>>
+    + addCategoryAction : IGraphDataAction <<get>> <<set>>
+    + requestModelChangeAction : Action<IGraphDataAction> <<get>> <<set>>
+    + categoryInfoList : List<CategoryData> <<get>> <<set>>
+    + disabledKeywordNameList : List<string> <<get>> <<set>>
+    + disabledDropdownNameList : List<string> <<get>> <<set>>
+    + BlackboardViewModel()
+    + ResetViewModelData() : void
+}
+ISGViewModel <|-- BlackboardViewModel
+@enduml

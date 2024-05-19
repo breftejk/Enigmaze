@@ -1,0 +1,23 @@
+@startuml
+class CustomInterpolatorNode {
+    <<internal>> customBlockNodeName : string = "K_INVALID"
+    - serializedType : BlockNode.CustomBlockType
+    + <<override>> hasPreview : bool <<get>>
+    <<internal>> <<override>> ExposeToSearcher : bool <<get>>
+    + <<override>> allowedInSubGraph : bool <<get>>
+    <<internal>> e_targetBlockNode : BlockNode <<get>>
+    + CustomInterpolatorNode()
+    <<internal>> ConnectToCustomBlock(node:BlockNode) : void
+    <<internal>> ConnectToCustomBlockByName(customBlockName:string) : void
+    - OnCustomBlockModified(node:AbstractMaterialNode, scope:Graphing.ModificationScope) : void
+    + <<override>> ValidateNode() : void
+    + <<override>> UpdateNodeAfterDeserialization() : void
+    - BuildSlot() : void
+    + <<override>> GetVariableNameForSlot(slotid:int) : string
+    # <<internal>> <<override>> GetOutputForSlot(fromSocketRef:SlotReference, valueType:ConcreteSlotValueType, generationMode:GenerationMode) : string
+    - FindSourceSlot(found:bool) : SlotReference
+    - {static} SlotTypeToWidth(valueType:ConcreteSlotValueType) : int
+    - {static} ConvertVector(name:string, fromLen:int, toLen:int) : string
+}
+AbstractMaterialNode <|-- CustomInterpolatorNode
+@enduml

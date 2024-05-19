@@ -1,0 +1,66 @@
+@startuml
+interface IWindowStateProvider {
+    windowState : IWindowState <<get>>
+}
+class TimelineWindow <<partial>> {
+    - m_Preferences : TimelineWindowPreferences
+    + preferences : TimelineWindowPreferences <<get>>
+    - m_LockTracker : EditorGUIUtility.EditorLockTracker
+    <<readonly>> - m_PreviewResizer : PreviewResizer
+    - m_LastFrameHadSequence : bool
+    - m_ForceRefreshLastSelection : bool
+    - m_CurrentSceneHashCode : int
+    - m_HasBeenInitialized : bool
+    - m_SequenceHierarchy : SequenceHierarchy
+    {static} - s_LastHierarchy : SequenceHierarchy
+    + {static} instance : TimelineWindow <<get>>
+    + clientArea : Rect <<get>> <<set>>
+    + isDragging : bool <<get>> <<set>>
+    + {static} styles : DirectorStyles <<get>>
+    + allTracks : List<TimelineTrackBaseGUI> <<get>>
+    + state : WindowState <<get>>
+    - windowState : IWindowState <<get>>
+    + <<override>> locked : bool <<get>> <<set>>
+    + hierarchyChangedThisFrame : bool <<get>>
+    + TimelineWindow()
+    - OnLockStateChanged(locked:bool) : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnDestroy() : void
+    - OnLostFocus() : void
+    - OnHierarchyChange() : void
+    - OnStateChange() : void
+    - OnGUI() : void
+    - UpdateTitle() : void
+    {static} - DetectStylesChange() : void
+    - DetectActiveSceneChanges() : void
+    - DetectStateChanges() : void
+    - Initialize() : void
+    - RefreshLastSelectionIfRequired() : void
+    - InitializeGUIIfRequired() : void
+    - UpdateGUIConstants() : void
+    - UpdateViewStateHash() : void
+    {static} - PerformUndo() : bool
+    + RebuildGraphIfNecessary(evaluate:bool) : void
+    + <<new>> RepaintImmediately() : void
+    <<internal>> {static} IsEditingTimelineAsset(timelineAsset:TimelineAsset) : bool
+    <<internal>> {static} RepaintIfEditingTimelineAsset(timelineAsset:TimelineAsset) : void
+    + {static} CreateNewTimeline() : void
+    + {static} ShowWindow() : void
+    + {static} OnDoubleClick(instanceID:int, line:int) : bool
+    + <<virtual>> AddItemsToMenu(menu:GenericMenu) : void
+    # <<virtual>> ShowButton(r:Rect) : void
+}
+class TimelineWindowPreferences {
+    + editType : EditMode.EditType
+    + timeReferenceMode : TimeReferenceMode
+}
+class DoCreateTimeline {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+TimelineEditorWindow <|-- TimelineWindow
+IHasCustomMenu <|-- TimelineWindow
+IWindowStateProvider <|-- TimelineWindow
+TimelineWindow +-- TimelineWindowPreferences
+TimelineWindow +-- DoCreateTimeline
+@enduml

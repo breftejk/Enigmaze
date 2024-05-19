@@ -1,0 +1,5 @@
+@startuml
+interface "IRequiresData`1"<T> {
+    data : T <<get>> <<set>>
+}
+@enduml

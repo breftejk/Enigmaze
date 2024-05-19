@@ -1,0 +1,6 @@
+@startuml
+class FlowMachineDescriptor <<sealed>> {
+    + FlowMachineDescriptor(target:ScriptMachine)
+}
+"MachineDescriptor`2" "<ScriptMachine,MachineDescription>" <|-- FlowMachineDescriptor
+@enduml

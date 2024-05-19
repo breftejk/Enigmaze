@@ -1,0 +1,9 @@
+@startuml
+class FakeSerializationCloner <<sealed>> {
+    + config : fsConfig <<get>> <<set>>
+    + <<override>> BeforeClone(type:Type, original:object) : void
+    + <<override>> AfterClone(type:Type, clone:object) : void
+    # <<override>> GetMembers(type:Type) : IEnumerable<MemberInfo>
+}
+ReflectedCloner <|-- FakeSerializationCloner
+@enduml

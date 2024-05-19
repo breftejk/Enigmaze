@@ -1,0 +1,19 @@
+@startuml
+class ShaderData {
+    {static} - m_Instance : ShaderData = null
+    - m_LightDataBuffer : ComputeBuffer = null
+    - m_LightIndicesBuffer : ComputeBuffer = null
+    - m_AdditionalLightShadowParamsStructuredBuffer : ComputeBuffer = null
+    - m_AdditionalLightShadowSliceMatricesStructuredBuffer : ComputeBuffer = null
+    - ShaderData()
+    <<internal>> {static} instance : ShaderData <<get>>
+    + Dispose() : void
+    <<internal>> GetLightDataBuffer(size:int) : ComputeBuffer
+    <<internal>> GetLightIndicesBuffer(size:int) : ComputeBuffer
+    <<internal>> GetAdditionalLightShadowParamsStructuredBuffer(size:int) : ComputeBuffer
+    <<internal>> GetAdditionalLightShadowSliceMatricesStructuredBuffer(size:int) : ComputeBuffer
+    - GetOrUpdateBuffer(buffer:ComputeBuffer, size:int) : ComputeBuffer
+    - DisposeBuffer(buffer:ComputeBuffer) : void
+}
+IDisposable <|-- ShaderData
+@enduml

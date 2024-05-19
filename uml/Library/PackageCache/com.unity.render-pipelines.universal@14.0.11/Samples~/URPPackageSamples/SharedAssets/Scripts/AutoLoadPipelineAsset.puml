@@ -1,0 +1,12 @@
+@startuml
+class AutoLoadPipelineAsset {
+    - m_PipelineAsset : UniversalRenderPipelineAsset
+    - m_PreviousPipelineAsset : RenderPipelineAsset
+    - m_overrodeQualitySettings : bool
+    - OnEnable() : void
+    - OnDisable() : void
+    - UpdatePipeline() : void
+    - ResetPipeline() : void
+}
+MonoBehaviour <|-- AutoLoadPipelineAsset
+@enduml

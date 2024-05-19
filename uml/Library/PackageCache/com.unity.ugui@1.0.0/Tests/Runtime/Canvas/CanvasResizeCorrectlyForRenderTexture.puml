@@ -1,0 +1,9 @@
+@startuml
+class CanvasResizeCorrectlyForRenderTexture {
+    - m_Canvas : Canvas
+    - m_Camera : Camera
+    - m_RenderTexture : RenderTexture
+    + CanvasResizeCorrectly() : void
+    + TearDown() : void
+}
+@enduml

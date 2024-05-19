@@ -1,0 +1,13 @@
+@startuml
+class SkewTextExample {
+    - m_TextComponent : TMP_Text
+    + VertexCurve : AnimationCurve
+    + CurveScale : float = 1.0f
+    + ShearAmount : float = 1.0f
+    - Awake() : void
+    - Start() : void
+    - CopyAnimationCurve(curve:AnimationCurve) : AnimationCurve
+    - WarpText() : IEnumerator
+}
+MonoBehaviour <|-- SkewTextExample
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class "CrossProduct`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + crossProduct : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : T
+    + {abstract} Operation(a:T, b:T) : T
+}
+Unit <|-- "CrossProduct`1"
+@enduml

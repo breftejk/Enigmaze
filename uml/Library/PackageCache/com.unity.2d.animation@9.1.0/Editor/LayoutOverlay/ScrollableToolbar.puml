@@ -1,0 +1,28 @@
+@startuml
+class ScrollableToolbar {
+    - m_ScrollView : ScrollView
+    - m_IsHorizontal : bool
+    + isHorizontal : bool <<get>> <<set>>
+    + verticalScrollerVisibility : ScrollerVisibility <<set>>
+    + horizontalScrollerVisibility : ScrollerVisibility <<set>>
+    + ScrollableToolbar()
+    + ScrollableToolbar(isHorizontal:bool)
+    + AddToContainer(element:VisualElement) : void
+    + Collapse(collapse:bool) : void
+    - SetupScrolling() : void
+    - OnScrollWheel(evt:WheelEvent) : void
+}
+class ScrollableToolbarFactory {
+}
+class ScrollableToolbarUxmlTraits {
+    - m_IsHorizontal : UxmlBoolAttributeDescription
+    + ScrollableToolbarUxmlTraits()
+    + <<override>> uxmlChildElementsDescription : IEnumerable<UxmlChildElementDescription> <<get>>
+    + <<override>> Init(ve:VisualElement, bag:IUxmlAttributes, cc:CreationContext) : void
+}
+VisualElement <|-- ScrollableToolbar
+ScrollableToolbar +-- ScrollableToolbarFactory
+"UxmlFactory`2" "<ScrollableToolbar,ScrollableToolbarUxmlTraits>" <|-- ScrollableToolbarFactory
+ScrollableToolbar +-- ScrollableToolbarUxmlTraits
+UxmlTraits <|-- ScrollableToolbarUxmlTraits
+@enduml

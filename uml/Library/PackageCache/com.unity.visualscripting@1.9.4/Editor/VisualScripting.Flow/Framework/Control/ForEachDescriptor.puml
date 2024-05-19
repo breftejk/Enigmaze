@@ -1,0 +1,7 @@
+@startuml
+class ForEachDescriptor {
+    + ForEachDescriptor(unit:ForEach)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<ForEach>" <|-- ForEachDescriptor
+@enduml

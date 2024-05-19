@@ -1,0 +1,6 @@
+@startuml
+class Vector3Absolute <<sealed>> {
+    # <<override>> Operation(input:Vector3) : Vector3
+}
+"Absolute`1" "<Vector3>" <|-- Vector3Absolute
+@enduml

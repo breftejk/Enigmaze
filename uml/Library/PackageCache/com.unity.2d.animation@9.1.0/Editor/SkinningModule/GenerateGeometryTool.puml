@@ -1,0 +1,25 @@
+@startuml
+class GenerateGeometryTool {
+    - <<const>> kWeightTolerance : float = 0.1f
+    - m_SpriteMeshDataController : SpriteMeshDataController
+    - m_Triangulator : ITriangulator
+    - m_OutlineGenerator : IOutlineGenerator
+    - m_WeightGenerator : IWeightsGenerator
+    - m_GenerateGeometryPanel : GenerateGeometryPanel
+    <<internal>> <<override>> OnCreate() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    - BindElements() : void
+    - GenerateGeometryForSprites(sprites:SpriteCache[], detail:float, alpha:byte, subdivide:float) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - Show() : void
+    - Hide() : void
+    - UpdateButton() : void
+    - OnSelectedSpriteChanged(sprite:SpriteCache) : void
+    - GenerateWeights(sprite:SpriteCache, sd:SpriteJobData) : JobHandle
+    - NeedsAssociateBones(characterPart:CharacterPartCache) : bool
+    - GenerateWeights(mesh:MeshCache, sd:SpriteJobData) : JobHandle
+    # <<override>> OnGUI() : void
+}
+MeshToolWrapper <|-- GenerateGeometryTool
+@enduml

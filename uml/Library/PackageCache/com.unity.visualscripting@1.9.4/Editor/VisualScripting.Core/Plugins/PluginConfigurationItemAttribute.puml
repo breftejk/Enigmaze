@@ -1,0 +1,14 @@
+@startuml
+abstract class PluginConfigurationItemAttribute {
+    # PluginConfigurationItemAttribute()
+    # PluginConfigurationItemAttribute(key:string)
+    + key : string <<get>>
+    + visible : bool <<get>> <<set>> = true
+    + enabled : bool <<get>> <<set>> = true
+    + resettable : bool <<get>> <<set>> = true
+    + visibleCondition : string <<get>> <<set>> = null
+    + enabledCondition : string <<get>> <<set>> = null
+    + resettableCondition : string <<get>> <<set>> = null
+}
+Attribute <|-- PluginConfigurationItemAttribute
+@enduml

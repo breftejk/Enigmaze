@@ -1,0 +1,25 @@
+@startuml
+abstract class StateTransition {
+    # StateTransition()
+    # StateTransition(source:IState, destination:IState)
+    + CreateDebugData() : IGraphElementDebugData
+    + <<override>> dependencyOrder : int <<get>>
+    + source : IState <<get>> <<internal set>>
+    + destination : IState <<get>> <<internal set>>
+    + <<override>> Instantiate(instance:GraphReference) : void
+    + <<override>> Uninstantiate(instance:GraphReference) : void
+    + Branch(flow:Flow) : void
+    + {abstract} OnEnter(flow:Flow) : void
+    + {abstract} OnExit(flow:Flow) : void
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+class DebugData {
+    + runtimeException : Exception <<get>> <<set>>
+    + lastBranchFrame : int <<get>> <<set>>
+    + lastBranchTime : float <<get>> <<set>>
+}
+"GraphElement`1" "<StateGraph>" <|-- StateTransition
+IStateTransition <|-- StateTransition
+StateTransition +-- DebugData
+IStateTransitionDebugData <|-- DebugData
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class fsDateConverter {
+    - DateTimeFormatString : string <<get>>
+    + <<override>> CanProcess(type:Type) : bool
+    + <<override>> TrySerialize(instance:object, serialized:fsData, storageType:Type) : fsResult
+    + <<override>> TryDeserialize(data:fsData, instance:object, storageType:Type) : fsResult
+    - <<const>> DefaultDateTimeFormatString : string = @"o"
+    - <<const>> DateTimeOffsetFormatString : string = @"o"
+}
+fsConverter <|-- fsDateConverter
+@enduml

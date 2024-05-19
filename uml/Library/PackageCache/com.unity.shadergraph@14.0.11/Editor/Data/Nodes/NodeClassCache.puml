@@ -1,0 +1,21 @@
+@startuml
+class NodeClassCache <<static>> {
+    - {static} m_KnownTypeLookupTable : Dictionary<Type, List<ContextFilterableAttribute>>
+    - {static} KnownTypeLookupTable : Dictionary<Type, List<ContextFilterableAttribute>> <<get>>
+    + {static} knownNodeTypes : IEnumerable<Type> <<get>>
+    - {static} m_KnownSubGraphLookupTable : Dictionary<string, SubGraphAsset>
+    - {static} KnownSubGraphLookupTable : Dictionary<string, SubGraphAsset> <<get>>
+    + {static} knownSubGraphAssets : IEnumerable<SubGraphAsset> <<get>>
+    + {static} UpdateSubGraphEntry(path:string) : void
+    + {static} GetFilterableAttributesOnNodeType(nodeType:Type) : IEnumerable<ContextFilterableAttribute>
+    + {static} GetAttributeOnNodeType(nodeType:Type) : T
+    - {static} EnsureKnownTypeLookupTable() : void
+    - {static} EnsureKnownSubGraphLookupTable() : void
+    - {static} DebugPrintKnownNodes() : void
+}
+class PostProcessor {
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+}
+NodeClassCache +-- PostProcessor
+AssetPostprocessor <|-- PostProcessor
+@enduml

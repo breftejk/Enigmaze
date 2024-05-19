@@ -1,0 +1,15 @@
+@startuml
+abstract class DecalChunk {
+    + count : int <<get>> <<protected set>>
+    + capacity : int <<get>> <<protected set>>
+    + currentJobHandle : JobHandle <<get>> <<set>>
+    + <<virtual>> Push() : void
+    + {abstract} RemoveAtSwapBack(index:int) : void
+    + {abstract} SetCapacity(capacity:int) : void
+    + <<virtual>> Dispose() : void
+    # ResizeNativeArray(array:TransformAccessArray, decalProjectors:DecalProjector[], capacity:int) : void
+    # RemoveAtSwapBack(array:NativeArray<T>, index:int, count:int) : void
+    # RemoveAtSwapBack(array:T[], index:int, count:int) : void
+}
+IDisposable <|-- DecalChunk
+@enduml

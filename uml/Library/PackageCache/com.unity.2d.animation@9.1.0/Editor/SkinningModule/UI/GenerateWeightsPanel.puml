@@ -1,0 +1,28 @@
+@startuml
+class GenerateWeightsPanel {
+    +  <<event>> onGenerateWeights : Action 
+    +  <<event>> onNormalizeWeights : Action 
+    +  <<event>> onClearWeights : Action 
+    - m_AssociateBoneControl : VisualElement
+    - m_AssociateBonesToggle : Toggle
+    - m_GenerateWeightsButton : Button
+    + associateBones : bool <<get>> <<set>>
+    + GenerateWeightsPanel()
+    + BindElements() : void
+    + generateButtonText : string <<set>>
+    + Update(enableAssociateBones:bool) : void
+    + OnGenerateWeights() : void
+    + OnNormalizeWeights() : void
+    + OnClearWeights() : void
+    + {static} GenerateFromUXML() : GenerateWeightsPanel
+}
+class GenerateWeightsPanelFactory {
+}
+class GenerateWeightsPanelUxmlTraits {
+}
+VisualElement <|-- GenerateWeightsPanel
+GenerateWeightsPanel +-- GenerateWeightsPanelFactory
+"UxmlFactory`2" "<GenerateWeightsPanel,GenerateWeightsPanelUxmlTraits>" <|-- GenerateWeightsPanelFactory
+GenerateWeightsPanel +-- GenerateWeightsPanelUxmlTraits
+UxmlTraits <|-- GenerateWeightsPanelUxmlTraits
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class AxisDeadzoneProcessor {
+    + min : float
+    + max : float
+    - minOrDefault : float <<get>>
+    - maxOrDefault : float <<get>>
+    + <<override>> Process(value:float, control:InputControl) : float
+    + <<override>> ToString() : string
+}
+"InputProcessor`1" "<float>" <|-- AxisDeadzoneProcessor
+@enduml

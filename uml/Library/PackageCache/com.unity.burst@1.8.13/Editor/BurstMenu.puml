@@ -1,0 +1,29 @@
+@startuml
+class BurstMenu <<static>> {
+    - <<const>> EnableBurstCompilationText : string = "Jobs/Burst/Enable Compilation"
+    - <<const>> EnableSafetyChecksTextOff : string = "Jobs/Burst/Safety Checks/Off"
+    - <<const>> EnableSafetyChecksTextOn : string = "Jobs/Burst/Safety Checks/On"
+    - <<const>> EnableSafetyChecksTextForceOn : string = "Jobs/Burst/Safety Checks/Force On"
+    - <<const>> ForceSynchronousCompilesText : string = "Jobs/Burst/Synchronous Compilation"
+    - <<const>> EnableDebugCompilationText : string = "Jobs/Burst/Native Debug Mode Compilation"
+    - <<const>> ShowBurstTimingsText : string = "Jobs/Burst/Show Timings"
+    - <<const>> BurstInspectorText : string = "Jobs/Burst/Open Inspector..."
+    - {static} EnableBurstCompilation() : void
+    - {static} EnableBurstCompilationValidate() : bool
+    - {static} EnableBurstSafetyChecksOff() : void
+    - {static} EnableBurstSafetyChecksOffValidate() : bool
+    - {static} EnableBurstSafetyChecksOn() : void
+    - {static} EnableBurstSafetyChecksOnValidate() : bool
+    - {static} EnableBurstSafetyChecksForceOn() : void
+    - {static} EnableBurstSafetyChecksForceOnValidate() : bool
+    - {static} ForceSynchronousCompiles() : void
+    - {static} ForceSynchronousCompilesValidate() : bool
+    - {static} EnableDebugMode() : void
+    - {static} EnableDebugModeValidate() : bool
+    - {static} ShowBurstTimings() : void
+    - {static} ShowBurstTimingsValidate() : bool
+    - {static} BurstInspector() : void
+    - {static} BurstInspectorValidate() : bool
+    - {static} ChangeOptionSafely(callback:Action) : void
+}
+@enduml

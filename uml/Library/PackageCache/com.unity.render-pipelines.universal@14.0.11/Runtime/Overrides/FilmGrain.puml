@@ -1,0 +1,29 @@
+@startuml
+enum FilmGrainLookup {
+    Thin1,
+    Thin2,
+    Medium1,
+    Medium2,
+    Medium3,
+    Medium4,
+    Medium5,
+    Medium6,
+    Large01,
+    Large02,
+    Custom,
+}
+class FilmGrain <<sealed>> {
+    + type : FilmGrainLookupParameter
+    + intensity : ClampedFloatParameter
+    + response : ClampedFloatParameter
+    + texture : NoInterpTextureParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+class FilmGrainLookupParameter <<sealed>> {
+    + FilmGrainLookupParameter(value:FilmGrainLookup, overrideState:bool)
+}
+VolumeComponent <|-- FilmGrain
+IPostProcessComponent <|-- FilmGrain
+"VolumeParameter`1" "<FilmGrainLookup>" <|-- FilmGrainLookupParameter
+@enduml

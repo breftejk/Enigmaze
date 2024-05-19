@@ -1,0 +1,53 @@
+@startuml
+class NoiseSettingsEditor <<sealed>> {
+    - <<const>> vSpace : float = 2
+    - <<const>> hSpace : float = 3
+    - tpDef : NoiseSettings.TransformNoiseParams
+    - npDef : NoiseSettings.NoiseParams
+    - {static} mPreviewTime : float = 2
+    - {static} mPreviewHeight : float = 5
+    - mNoiseOffsetBase : float = 0
+    - mNoiseOffset : float = 0
+    - mAnimatedPreview : bool = false
+    - mAnimatedLabel : GUIContent
+    - mPosChannels : ReorderableList[]
+    - mRotChannels : ReorderableList[]
+    - {static} mPoslabels : GUIContent[]
+    - {static} mRotlabels : GUIContent[]
+    - {static} mPosExpanded : bool[]
+    - {static} mRotExpanded : bool[]
+    - OnEnable() : void
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - mSampleCachePos : SampleCache
+    - mSampleCacheRot : SampleCache
+    - SetupReorderableLists(property:SerializedProperty, titles:GUIContent[]) : ReorderableList[]
+    - SetupReorderableList(property:SerializedProperty, channel:int, title:GUIContent) : ReorderableList
+    - steadyLabel : GUIContent
+    - freqLabel : GUIContent
+    - freqLabelWidth : float
+    - ampLabel : GUIContent
+    - ampLabelWidth : float
+    - InitializeLabels(property:SerializedProperty) : void
+    - DrawNoiseChannel(rect:Rect, property:SerializedProperty) : void
+    - ClearComponent(p:SerializedProperty) : void
+    - IsClearComponent(p:SerializedProperty) : bool
+}
+class SampleCache {
+    - mSampleCurveX : List<Vector3>
+    - mSampleCurveY : List<Vector3>
+    - mSampleCurveZ : List<Vector3>
+    - mSampleNoise : List<Vector3>
+    + SnapshotSample(areaSize:Vector2, signal:NoiseSettings.TransformNoiseParams[], noiseOffset:float, animated:bool) : void
+    + DrawSamplePreview(r:Rect, channelMask:int) : void
+}
+class ChannelList {
+    + mChannel : int
+    + mTitle : GUIContent
+    + ChannelList(serializedObject:SerializedObject, elements:SerializedProperty, channel:int, title:GUIContent)
+}
+"BaseEditor`1" "<NoiseSettings>" <|-- NoiseSettingsEditor
+NoiseSettingsEditor +-- SampleCache
+NoiseSettingsEditor +-- ChannelList
+ReorderableList <|-- ChannelList
+@enduml

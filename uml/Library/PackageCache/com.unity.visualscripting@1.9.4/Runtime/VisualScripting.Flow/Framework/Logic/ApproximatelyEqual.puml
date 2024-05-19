@@ -1,0 +1,10 @@
+@startuml
+class ApproximatelyEqual <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + equal : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Comparison(flow:Flow) : bool
+}
+Unit <|-- ApproximatelyEqual
+@enduml

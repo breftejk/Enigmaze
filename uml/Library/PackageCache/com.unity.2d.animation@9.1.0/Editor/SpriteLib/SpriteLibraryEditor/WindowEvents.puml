@@ -1,0 +1,38 @@
+@startuml
+class ControllerEvents {
+    + onModifiedCategories : UnityEvent<List<CategoryData>, bool> <<get>>
+    + onModifiedLabels : UnityEvent<List<LabelData>, bool> <<get>>
+    + onSelectedLibrary : UnityEvent<SpriteLibraryAsset> <<get>>
+    + onSelectedCategories : UnityEvent<List<string>> <<get>>
+    + onSelectedLabels : UnityEvent<List<string>> <<get>>
+    + onViewChanged : UnityEvent<ViewData> <<get>>
+    + onMainLibraryChanged : UnityEvent<SpriteLibraryAsset> <<get>>
+    + onLibraryDataChanged : UnityEvent<bool> <<get>>
+}
+class ViewEvents {
+    + onCreateNewSpriteLibraryAsset : UnityEvent<string> <<get>>
+    + onMainUISplitPaneSizeChanged : UnityEvent<float> <<get>>
+    + onSave : UnityEvent <<get>>
+    + onRevert : UnityEvent <<get>>
+    + onToggleAutoSave : UnityEvent<bool> <<get>>
+    + onViewSizeUpdate : UnityEvent<float> <<get>>
+    + onViewTypeUpdate : UnityEvent<ViewType> <<get>>
+    + onSelectedFilter : UnityEvent<string> <<get>>
+    + onSelectedFilterType : UnityEvent<SearchType> <<get>>
+    + onSetMainAsset : UnityEvent<SpriteLibraryAsset> <<get>>
+    + onSelectCategories : UnityEvent<IList<string>> <<get>>
+    + onSelectLabels : UnityEvent<IList<string>> <<get>>
+    + onCreateNewCategory : UnityEvent<string, IList<Sprite>> <<get>>
+    + onRenameCategory : UnityEvent<string> <<get>>
+    + onReorderCategories : UnityEvent<IList<string>> <<get>>
+    + onDeleteCategories : UnityEvent <<get>>
+    + onCreateNewLabel : UnityEvent<string> <<get>>
+    + onRenameLabel : UnityEvent<string> <<get>>
+    + onReorderLabels : UnityEvent<IList<string>> <<get>>
+    + onDeleteLabels : UnityEvent <<get>>
+    + onSetLabelSprite : UnityEvent<string, Sprite> <<get>>
+    + onAddDataToCategories : UnityEvent<IList<DragAndDropData>, bool, string> <<get>>
+    + onAddDataToLabels : UnityEvent<IList<DragAndDropData>, bool, string> <<get>>
+    + onRevertOverridenLabels : UnityEvent<IList<string>> <<get>>
+}
+@enduml

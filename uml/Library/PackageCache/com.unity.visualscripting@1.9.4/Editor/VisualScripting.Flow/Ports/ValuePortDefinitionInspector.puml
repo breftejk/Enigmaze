@@ -1,0 +1,11 @@
+@startuml
+class ValuePortDefinitionInspector {
+    + ValuePortDefinitionInspector(metadata:Metadata)
+    # typeMetadata : Metadata <<get>>
+    # GetTypeHeight(width:float) : float
+    - OnTypeGUI(position:Rect) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnFieldsGUI(position:Rect) : void
+}
+UnitPortDefinitionInspector <|-- ValuePortDefinitionInspector
+@enduml

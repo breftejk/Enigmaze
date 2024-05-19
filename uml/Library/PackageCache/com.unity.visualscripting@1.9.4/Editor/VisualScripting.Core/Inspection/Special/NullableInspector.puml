@@ -1,0 +1,13 @@
+@startuml
+class NullableInspector {
+    + NullableInspector(metadata:Metadata)
+    - <<readonly>> underlyingMetadata : Metadata
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> toggleSpacing : int = 3
+}
+Inspector <|-- NullableInspector
+NullableInspector +-- Styles
+@enduml

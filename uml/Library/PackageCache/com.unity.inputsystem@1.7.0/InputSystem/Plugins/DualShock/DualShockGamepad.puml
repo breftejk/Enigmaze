@@ -1,0 +1,20 @@
+@startuml
+class DualShockGamepad {
+    + touchpadButton : ButtonControl <<get>> <<protected set>>
+    + optionsButton : ButtonControl <<get>> <<protected set>>
+    + shareButton : ButtonControl <<get>> <<protected set>>
+    + L1 : ButtonControl <<get>> <<protected set>>
+    + R1 : ButtonControl <<get>> <<protected set>>
+    + L2 : ButtonControl <<get>> <<protected set>>
+    + R2 : ButtonControl <<get>> <<protected set>>
+    + L3 : ButtonControl <<get>> <<protected set>>
+    + R3 : ButtonControl <<get>> <<protected set>>
+    + <<new>> {static} current : DualShockGamepad <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+    + <<virtual>> SetLightBarColor(color:Color) : void
+}
+Gamepad <|-- DualShockGamepad
+IDualShockHaptics <|-- DualShockGamepad
+@enduml

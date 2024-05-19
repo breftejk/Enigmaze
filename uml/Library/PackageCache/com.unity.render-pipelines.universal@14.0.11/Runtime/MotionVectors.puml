@@ -1,0 +1,18 @@
+@startuml
+class MotionVectorsPersistentData <<sealed>> {
+    - <<const>> k_EyeCount : int = 2
+    <<readonly>> - m_ViewProjection : Matrix4x4[]
+    <<readonly>> - m_PreviousViewProjection : Matrix4x4[]
+    <<readonly>> - m_LastFrameIndex : int[]
+    <<readonly>> - m_PrevAspectRatio : float[]
+    <<internal>> MotionVectorsPersistentData()
+    <<internal>> lastFrameIndex : int <<get>>
+    <<internal>> viewProjection : Matrix4x4 <<get>>
+    <<internal>> previousViewProjection : Matrix4x4 <<get>>
+    <<internal>> viewProjectionStereo : Matrix4x4[] <<get>>
+    <<internal>> previousViewProjectionStereo : Matrix4x4[] <<get>>
+    + Reset() : void
+    <<internal>> GetXRMultiPassId(cameraData:CameraData) : int
+    + Update(cameraData:CameraData) : void
+}
+@enduml

@@ -1,0 +1,244 @@
+@startuml
+enum JSONNodeType {
+    Array= 1,
+    Object= 2,
+    String= 3,
+    Number= 4,
+    NullValue= 5,
+    Boolean= 6,
+    None= 7,
+    Custom= 0xFF,
+}
+enum JSONTextMode {
+    Compact,
+    Indent,
+}
+abstract class JSONNode <<partial>> {
+    + {static} forceASCII : bool = false
+    + {static} longAsString : bool = false
+    + {static} allowLineComments : bool = true
+    + {abstract} Tag : JSONNodeType <<get>>
+    + <<virtual>> Value : string <<get>> <<set>>
+    + <<virtual>> Count : int <<get>>
+    + <<virtual>> IsNumber : bool <<get>>
+    + <<virtual>> IsString : bool <<get>>
+    + <<virtual>> IsBoolean : bool <<get>>
+    + <<virtual>> IsNull : bool <<get>>
+    + <<virtual>> IsArray : bool <<get>>
+    + <<virtual>> IsObject : bool <<get>>
+    + <<virtual>> Inline : bool <<get>> <<set>>
+    + <<virtual>> Add(aKey:string, aItem:JSONNode) : void
+    + <<virtual>> Add(aItem:JSONNode) : void
+    + <<virtual>> Remove(aKey:string) : JSONNode
+    + <<virtual>> Remove(aIndex:int) : JSONNode
+    + <<virtual>> Remove(aNode:JSONNode) : JSONNode
+    + <<virtual>> Clear() : void
+    + <<virtual>> Clone() : JSONNode
+    + <<virtual>> Children : IEnumerable<JSONNode> <<get>>
+    + DeepChildren : IEnumerable<JSONNode> <<get>>
+    + <<virtual>> HasKey(aKey:string) : bool
+    + <<virtual>> GetValueOrDefault(aKey:string, aDefault:JSONNode) : JSONNode
+    + <<override>> ToString() : string
+    + <<virtual>> ToString(aIndent:int) : string
+    <<internal>> {abstract} WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+    + {abstract} GetEnumerator() : Enumerator
+    + Linq : IEnumerable<KeyValuePair<string, JSONNode>> <<get>>
+    + Keys : KeyEnumerator <<get>>
+    + Values : ValueEnumerator <<get>>
+    + <<virtual>> AsDouble : double <<get>> <<set>>
+    + <<virtual>> AsInt : int <<get>> <<set>>
+    + <<virtual>> AsFloat : float <<get>> <<set>>
+    + <<virtual>> AsBool : bool <<get>> <<set>>
+    + <<virtual>> AsLong : long <<get>> <<set>>
+    + <<virtual>> AsULong : ulong <<get>> <<set>>
+    + <<virtual>> AsArray : JSONArray <<get>>
+    + <<virtual>> AsObject : JSONObject <<get>>
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    - {static} m_EscapeBuilder : StringBuilder
+    <<internal>> {static} EscapeBuilder : StringBuilder <<get>>
+    <<internal>> {static} Escape(aText:string) : string
+    - {static} ParseElement(token:string, quoted:bool) : JSONNode
+    + {static} Parse(aJSON:string) : JSONNode
+}
+class JSONArray <<partial>> {
+    - m_List : List<JSONNode>
+    - inline : bool = false
+    + <<override>> Inline : bool <<get>> <<set>>
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsArray : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Count : int <<get>>
+    + <<override>> Add(aKey:string, aItem:JSONNode) : void
+    + <<override>> Remove(aIndex:int) : JSONNode
+    + <<override>> Remove(aNode:JSONNode) : JSONNode
+    + <<override>> Clear() : void
+    + <<override>> Clone() : JSONNode
+    + <<override>> Children : IEnumerable<JSONNode> <<get>>
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+}
+class JSONObject <<partial>> {
+    - m_Dict : Dictionary<string, JSONNode>
+    - inline : bool = false
+    + <<override>> Inline : bool <<get>> <<set>>
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsObject : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Count : int <<get>>
+    + <<override>> Add(aKey:string, aItem:JSONNode) : void
+    + <<override>> Remove(aKey:string) : JSONNode
+    + <<override>> Remove(aIndex:int) : JSONNode
+    + <<override>> Remove(aNode:JSONNode) : JSONNode
+    + <<override>> Clear() : void
+    + <<override>> Clone() : JSONNode
+    + <<override>> HasKey(aKey:string) : bool
+    + <<override>> GetValueOrDefault(aKey:string, aDefault:JSONNode) : JSONNode
+    + <<override>> Children : IEnumerable<JSONNode> <<get>>
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+}
+class JSONString <<partial>> {
+    - m_Data : string
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsString : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Value : string <<get>> <<set>>
+    + JSONString(aData:string)
+    + <<override>> Clone() : JSONNode
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> Clear() : void
+}
+class JSONNumber <<partial>> {
+    - m_Data : double
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsNumber : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Value : string <<get>> <<set>>
+    + <<override>> AsDouble : double <<get>> <<set>>
+    + <<override>> AsLong : long <<get>> <<set>>
+    + <<override>> AsULong : ulong <<get>> <<set>>
+    + JSONNumber(aData:double)
+    + JSONNumber(aData:string)
+    + <<override>> Clone() : JSONNode
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+    - {static} IsNumeric(value:object) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> Clear() : void
+}
+class JSONBool <<partial>> {
+    - m_Data : bool
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsBoolean : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Value : string <<get>> <<set>>
+    + <<override>> AsBool : bool <<get>> <<set>>
+    + JSONBool(aData:bool)
+    + JSONBool(aData:string)
+    + <<override>> Clone() : JSONNode
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> Clear() : void
+}
+class JSONNull <<partial>> {
+    {static} - m_StaticInstance : JSONNull
+    + {static} reuseSameInstance : bool = true
+    + {static} CreateOrGet() : JSONNull
+    - JSONNull()
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> IsNull : bool <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + <<override>> Value : string <<get>> <<set>>
+    + <<override>> AsBool : bool <<get>> <<set>>
+    + <<override>> Clone() : JSONNode
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+}
+class JSONLazyCreator <<partial>> {
+    - m_Node : JSONNode = null
+    - m_Key : string = null
+    + <<override>> Tag : JSONNodeType <<get>>
+    + <<override>> GetEnumerator() : Enumerator
+    + JSONLazyCreator(aNode:JSONNode)
+    + JSONLazyCreator(aNode:JSONNode, aKey:string)
+    - Set(aVal:T) : T
+    + <<override>> Add(aItem:JSONNode) : void
+    + <<override>> Add(aKey:string, aItem:JSONNode) : void
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> AsInt : int <<get>> <<set>>
+    + <<override>> AsFloat : float <<get>> <<set>>
+    + <<override>> AsDouble : double <<get>> <<set>>
+    + <<override>> AsLong : long <<get>> <<set>>
+    + <<override>> AsULong : ulong <<get>> <<set>>
+    + <<override>> AsBool : bool <<get>> <<set>>
+    + <<override>> AsArray : JSONArray <<get>>
+    + <<override>> AsObject : JSONObject <<get>>
+    <<internal>> <<override>> WriteToStringBuilder(aSB:StringBuilder, aIndent:int, aIndentInc:int, aMode:JSONTextMode) : void
+}
+class JSON <<static>> {
+    + {static} Parse(aJSON:string) : JSONNode
+}
+struct Enumerator {
+    - type : Type
+    - m_Object : Dictionary<string, JSONNode>.Enumerator
+    - m_Array : List<JSONNode>.Enumerator
+    + IsValid : bool <<get>>
+    + Enumerator(aArrayEnum:List<JSONNode>.Enumerator)
+    + Enumerator(aDictEnum:Dictionary<string, JSONNode>.Enumerator)
+    + Current : KeyValuePair<string, JSONNode> <<get>>
+    + MoveNext() : bool
+}
+struct ValueEnumerator {
+    - m_Enumerator : Enumerator
+    + ValueEnumerator(aArrayEnum:List<JSONNode>.Enumerator)
+    + ValueEnumerator(aDictEnum:Dictionary<string, JSONNode>.Enumerator)
+    + ValueEnumerator(aEnumerator:Enumerator)
+    + Current : JSONNode <<get>>
+    + MoveNext() : bool
+    + GetEnumerator() : ValueEnumerator
+}
+struct KeyEnumerator {
+    - m_Enumerator : Enumerator
+    + KeyEnumerator(aArrayEnum:List<JSONNode>.Enumerator)
+    + KeyEnumerator(aDictEnum:Dictionary<string, JSONNode>.Enumerator)
+    + KeyEnumerator(aEnumerator:Enumerator)
+    + Current : string <<get>>
+    + MoveNext() : bool
+    + GetEnumerator() : KeyEnumerator
+}
+class LinqEnumerator {
+    - m_Node : JSONNode
+    - m_Enumerator : Enumerator
+    <<internal>> LinqEnumerator(aNode:JSONNode)
+    + Current : KeyValuePair<string, JSONNode> <<get>>
+    - Current : object <<get>>
+    + MoveNext() : bool
+    + Dispose() : void
+    + GetEnumerator() : IEnumerator<KeyValuePair<string, JSONNode>>
+    + Reset() : void
+    - GetEnumerator() : IEnumerator
+}
+enum Type {
+    None,
+    Array,
+    Object,
+}
+JSONNode <|-- JSONArray
+JSONNode <|-- JSONObject
+JSONNode <|-- JSONString
+JSONNode <|-- JSONNumber
+JSONNode <|-- JSONBool
+JSONNode <|-- JSONNull
+JSONNode <|-- JSONLazyCreator
+JSONNode +-- Enumerator
+JSONNode +-- ValueEnumerator
+JSONNode +-- KeyEnumerator
+JSONNode +-- LinqEnumerator
+"IEnumerator`1" "<KeyValuePair<string, JSONNode>>" <|-- LinqEnumerator
+"IEnumerable`1" "<KeyValuePair<string, JSONNode>>" <|-- LinqEnumerator
+Enumerator +-- Type
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class HistoryListViewItem {
+    <<internal>> Revision : RepObjectInfo <<get>>
+    <<internal>> HistoryListViewItem(id:int, revision:RepObjectInfo)
+}
+TreeViewItem <|-- HistoryListViewItem
+@enduml

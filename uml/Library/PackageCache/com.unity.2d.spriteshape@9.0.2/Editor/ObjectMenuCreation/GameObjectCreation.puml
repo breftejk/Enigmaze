@@ -1,0 +1,10 @@
+@startuml
+class GameObjectCreation {
+    <<const>> - k_MenuPriority : int = 4
+    {static} - MenuItem_GameObject2DObjectSpriteShapeOpenShape(menuCommand:MenuCommand) : void
+    {static} - MenuItem_GameObject2DObjectSpriteShapeClosedShape(menuCommand:MenuCommand) : void
+    <<internal>> {static} CreateGameObject(name:string, menuCommand:MenuCommand, components:Type[]) : GameObject
+    <<internal>> {static} Place(go:GameObject, parentTransform:GameObject) : void
+    <<internal>> {static} PlaceGameObjectInFrontOfSceneView(go:GameObject) : void
+}
+@enduml

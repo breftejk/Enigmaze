@@ -1,0 +1,67 @@
+@startuml
+abstract class GraphPointer {
+    # {static} IsValidRoot(root:IGraphRoot) : bool
+    # {static} IsValidRoot(rootObject:UnityObject) : bool
+    <<internal>> GraphPointer()
+    # Initialize(root:IGraphRoot) : void
+    # Initialize(root:IGraphRoot, parentElements:IEnumerable<IGraphParentElement>, ensureValid:bool) : void
+    # Initialize(rootObject:UnityObject, parentElementGuids:IEnumerable<Guid>, ensureValid:bool) : void
+    + {abstract} AsReference() : GraphReference
+    + <<virtual>> CopyFrom(other:GraphPointer) : void
+    + root : IGraphRoot <<get>> <<protected set>>
+    + rootObject : UnityObject <<get>>
+    + machine : IMachine <<get>>
+    + macro : IMacro <<get>>
+    + component : MonoBehaviour <<get>>
+    + gameObject : GameObject <<get>>
+    + self : GameObject <<get>>
+    + scriptableObject : ScriptableObject <<get>>
+    + scene : Scene? <<get>>
+    + serializedObject : UnityObject <<get>>
+    # <<readonly>> parentStack : List<IGraphParent>
+    # <<readonly>> parentElementStack : List<IGraphParentElement>
+    # <<readonly>> graphStack : List<IGraph>
+    # <<readonly>> dataStack : List<IGraphData>
+    # <<readonly>> debugDataStack : List<IGraphDebugData>
+    + parentElementGuids : IEnumerable<Guid> <<get>>
+    + depth : int <<get>>
+    + isRoot : bool <<get>>
+    + isChild : bool <<get>>
+    + EnsureDepthValid(depth:int) : void
+    + EnsureChild() : void
+    + IsWithin() : bool
+    + EnsureWithin() : void
+    + parent : IGraphParent <<get>>
+    + GetParent() : T
+    + parentElement : IGraphParentElement <<get>>
+    + rootGraph : IGraph <<get>>
+    + graph : IGraph <<get>>
+    # _data : IGraphData <<get>> <<set>>
+    + data : IGraphData <<get>>
+    # _parentData : IGraphData <<get>>
+    + hasData : bool <<get>>
+    + EnsureDataAvailable() : void
+    + GetGraphData() : T
+    + GetElementData(element:IGraphElementWithData) : T
+    + {static} fetchRootDebugDataBinding : Func<IGraphRoot, IGraphDebugData> <<get>> <<set>>
+    <<internal>> {static} releaseDebugDataBinding : Action<IGraphRoot>
+    + hasDebugData : bool <<get>>
+    + EnsureDebugDataAvailable() : void
+    # _debugData : IGraphDebugData <<get>> <<set>>
+    + debugData : IGraphDebugData <<get>>
+    + GetGraphDebugData() : T
+    + GetElementDebugData(element:IGraphElementWithDebugData) : T
+    # TryEnterParentElement(parentElementGuid:Guid, error:string, maxRecursionDepth:int?) : bool
+    # TryEnterParentElement(parentElement:IGraphParentElement, error:string, maxRecursionDepth:int?, skipContainsCheck:bool) : bool
+    # EnterParentElement(parentElement:IGraphParentElement) : void
+    # EnterParentElement(parentElementGuid:Guid) : void
+    - EnterValidParentElement(parentElement:IGraphParentElement) : void
+    # ExitParentElement() : void
+    + isValid : bool <<get>>
+    + EnsureValid() : void
+    + InstanceEquals(other:GraphPointer) : bool
+    + DefinitionEquals(other:GraphPointer) : bool
+    + ComputeHashCode() : int
+    + <<override>> ToString() : string
+}
+@enduml

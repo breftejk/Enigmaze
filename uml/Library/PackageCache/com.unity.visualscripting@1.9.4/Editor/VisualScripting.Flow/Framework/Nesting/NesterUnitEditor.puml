@@ -1,0 +1,13 @@
+@startuml
+class NesterUnitEditor {
+    + NesterUnitEditor(metadata:Metadata)
+    - nestMetadata : Metadata <<get>>
+    - graphMetadata : Metadata <<get>>
+    # <<override>> headerReference : GraphReference <<get>>
+    # <<override>> headerTitleMetadata : Metadata <<get>>
+    # <<override>> headerSummaryMetadata : Metadata <<get>>
+    # <<override>> GetInspectorHeight(width:float) : float
+    # <<override>> OnInspectorGUI(position:Rect) : void
+}
+UnitEditor <|-- NesterUnitEditor
+@enduml

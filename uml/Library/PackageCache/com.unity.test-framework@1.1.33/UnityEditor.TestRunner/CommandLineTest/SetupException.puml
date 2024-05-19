@@ -1,0 +1,15 @@
+@startuml
+class SetupException {
+    + Type : ExceptionType <<get>>
+    + Details : object[] <<get>>
+    + SetupException(type:ExceptionType, details:object[])
+}
+enum ExceptionType {
+    ScriptCompilationFailed,
+    PlatformNotFound,
+    TestSettingsFileNotFound,
+    OrderedTestListFileNotFound,
+}
+Exception <|-- SetupException
+SetupException +-- ExceptionType
+@enduml

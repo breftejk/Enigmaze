@@ -1,0 +1,101 @@
+@startuml
+class Dropdown {
+    - m_Template : RectTransform
+    + template : RectTransform <<get>> <<set>>
+    - m_CaptionText : Text
+    + captionText : Text <<get>> <<set>>
+    - m_CaptionImage : Image
+    + captionImage : Image <<get>> <<set>>
+    - m_ItemText : Text
+    + itemText : Text <<get>> <<set>>
+    - m_ItemImage : Image
+    + itemImage : Image <<get>> <<set>>
+    - m_Value : int
+    - m_Options : OptionDataList
+    + options : List<OptionData> <<get>> <<set>>
+    - m_OnValueChanged : DropdownEvent
+    + onValueChanged : DropdownEvent <<get>> <<set>>
+    - m_AlphaFadeSpeed : float = 0.15f
+    + alphaFadeSpeed : float <<get>> <<set>>
+    - m_Dropdown : GameObject
+    - m_Blocker : GameObject
+    - m_Items : List<DropdownItem>
+    - m_AlphaTweenRunner : TweenRunner<FloatTween>
+    - validTemplate : bool = false
+    - <<const>> kHighSortingLayer : int = 30000
+    - {static} s_NoOptionData : OptionData
+    + value : int <<get>> <<set>>
+    + SetValueWithoutNotify(input:int) : void
+    - Set(value:int, sendCallback:bool) : void
+    # Dropdown()
+    # <<override>> Awake() : void
+    # <<override>> Start() : void
+    # <<override>> OnDisable() : void
+    + RefreshShownValue() : void
+    + AddOptions(options:List<OptionData>) : void
+    + AddOptions(options:List<string>) : void
+    + AddOptions(options:List<Sprite>) : void
+    + ClearOptions() : void
+    - SetupTemplate(rootCanvas:Canvas) : void
+    - {static} GetOrAddComponent(go:GameObject) : T
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+    + <<virtual>> OnCancel(eventData:BaseEventData) : void
+    + Show() : void
+    # <<virtual>> CreateBlocker(rootCanvas:Canvas) : GameObject
+    # <<virtual>> DestroyBlocker(blocker:GameObject) : void
+    # <<virtual>> CreateDropdownList(template:GameObject) : GameObject
+    # <<virtual>> DestroyDropdownList(dropdownList:GameObject) : void
+    # <<virtual>> CreateItem(itemTemplate:DropdownItem) : DropdownItem
+    # <<virtual>> DestroyItem(item:DropdownItem) : void
+    - AddItem(data:OptionData, selected:bool, itemTemplate:DropdownItem, items:List<DropdownItem>) : DropdownItem
+    - AlphaFadeList(duration:float, alpha:float) : void
+    - AlphaFadeList(duration:float, start:float, end:float) : void
+    - SetAlpha(alpha:float) : void
+    + Hide() : void
+    - DelayedDestroyDropdownList(delay:float) : IEnumerator
+    - ImmediateDestroyDropdownList() : void
+    - OnSelectItem(toggle:Toggle) : void
+}
+class DropdownItem {
+    - m_Text : Text
+    - m_Image : Image
+    - m_RectTransform : RectTransform
+    - m_Toggle : Toggle
+    + text : Text <<get>> <<set>>
+    + image : Image <<get>> <<set>>
+    + rectTransform : RectTransform <<get>> <<set>>
+    + toggle : Toggle <<get>> <<set>>
+    + <<virtual>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<virtual>> OnCancel(eventData:BaseEventData) : void
+}
+class OptionData {
+    - m_Text : string
+    - m_Image : Sprite
+    + text : string <<get>> <<set>>
+    + image : Sprite <<get>> <<set>>
+    + OptionData()
+    + OptionData(text:string)
+    + OptionData(image:Sprite)
+    + OptionData(text:string, image:Sprite)
+}
+class OptionDataList {
+    - m_Options : List<OptionData>
+    + options : List<OptionData> <<get>> <<set>>
+    + OptionDataList()
+}
+class DropdownEvent {
+}
+Selectable <|-- Dropdown
+IPointerClickHandler <|-- Dropdown
+ISubmitHandler <|-- Dropdown
+ICancelHandler <|-- Dropdown
+Dropdown +-- DropdownItem
+MonoBehaviour <|-- DropdownItem
+IPointerEnterHandler <|-- DropdownItem
+ICancelHandler <|-- DropdownItem
+Dropdown +-- OptionData
+Dropdown +-- OptionDataList
+Dropdown +-- DropdownEvent
+"UnityEvent`1" "<int>" <|-- DropdownEvent
+@enduml

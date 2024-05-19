@@ -1,0 +1,32 @@
+@startuml
+class MoveItemModeRipple {
+    <<const>> - k_SnapToEdgeDistance : float = 30.0f
+    <<readonly>> - m_NextItems : Dictionary<Object, List<ITimelineItem>>
+    <<readonly>> - m_PreviousItem : Dictionary<Object, PrevItemInfo>
+    - m_PreviousEnd : double
+    - m_TrackLocked : bool
+    - m_Detached : bool
+    + OnTrackDetach(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + HandleTrackSwitch(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + AllowTrackSwitch() : bool
+    + AdjustStartTime(state:WindowState, itemsGroup:ItemsPerTrack, time:double) : double
+    - StartDetachMode(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + OnModeClutchEnter(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + OnModeClutchExit(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + BeginMove(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + UpdateMove(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    {static} - CalculatePrevItemInfo(orderedSelection:List<ITimelineItem>, orderedSiblings:List<ITimelineItem>, itemTypes:IEnumerable<Type>) : PrevItemInfo
+    + ValidateMove(itemsGroup:ItemsPerTrack) : bool
+    + FinishMove(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+    + DrawGUI(state:WindowState, movingItems:IEnumerable<MovingItems>, color:Color) : void
+}
+class PrevItemInfo {
+    + item : ITimelineItem
+    + firstSelectedItem : ITimelineItem
+    + blending : bool
+    + PrevItemInfo(item:ITimelineItem, firstSelectedItem:ITimelineItem)
+}
+IMoveItemMode <|-- MoveItemModeRipple
+IMoveItemDrawer <|-- MoveItemModeRipple
+MoveItemModeRipple +-- PrevItemInfo
+@enduml

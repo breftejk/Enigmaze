@@ -1,0 +1,11 @@
+@startuml
+class DelayedCallback {
+    - m_Callback : System.Action
+    - m_CallbackTime : double
+    - m_Delay : double
+    + DelayedCallback(function:System.Action, timeFromNow:double)
+    + Clear() : void
+    - Update() : void
+    + Reset() : void
+}
+@enduml

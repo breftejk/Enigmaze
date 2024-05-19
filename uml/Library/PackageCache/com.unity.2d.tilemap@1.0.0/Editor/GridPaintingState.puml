@@ -1,0 +1,86 @@
+@startuml
+class GridPaintingState {
+    - m_EditModeScenePaintTarget : GameObject
+    - m_ScenePaintTarget : GameObject
+    - m_BrushTools : EditorTool[]
+    - m_Brush : GridBrushBase
+    - m_ActiveGrid : PaintableGrid
+    - m_LastActiveGrid : PaintableGrid
+    - m_InterestedPainters : HashSet<System.Object>
+    - m_Palette : GameObject
+    - m_DrawGridGizmo : bool = true
+    - m_DrawGizmos : bool
+    - m_IsEditing : bool
+    - m_CachedPaintTargets : GameObject[]
+    - m_FlushPaintTargetCache : bool
+    - m_CachedEditor : Editor
+    - m_SavingPalette : bool
+    - m_BrushToolbarSize : float
+    - m_PreviousToolActivatedEditor : GridBrushEditorBase
+    - m_PreviousToolActivated : GridBrushBase.Tool
+    - m_PaintableSceneViewGrid : PaintableSceneViewGrid
+    + {static}  <<event>> scenePaintTargetChanged : Action<GameObject> 
+    + {static}  <<event>> brushChanged : Action<GridBrushBase> 
+    + {static}  <<event>> brushToolsChanged : Action 
+    + {static}  <<event>> beforePaletteChanged : Action 
+    + {static}  <<event>> paletteChanged : Action<GameObject> 
+    + {static}  <<event>> palettesChanged : Action 
+    + {static}  <<event>> validTargetsChanged : Action 
+    + {static}  <<event>> editModeChanged : Action 
+    - {static} <<readonly>> k_TilemapLastPaletteEditorPref : string = "TilemapLastPalette"
+    - lastTilemapPalette : string <<get>> <<set>>
+    <<readonly>> - m_ShortcutContext : TilemapEditorTool.ShortcutContext
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnEditEnable() : void
+    - PaletteChanged(obj:GameObject) : void
+    - PalettesChanged() : void
+    - OnEditDisable() : void
+    - ActiveToolChanged() : void
+    - ActiveToolChanging() : void
+    - CallOnToolDeactivated() : void
+    - OnSelectionChange() : void
+    - OnSelectionUndoRedoPerformed(undo:Undo.UndoRedoType) : void
+    - PlayModeStateChanged(state:PlayModeStateChange) : void
+    - HierarchyChanged() : void
+    - GetValidTargets() : GameObject[]
+    - {static} UpdateTooltips(obj:IShortcutProfileManager, identifier:Identifier, oldBinding:ShortcutBinding, newBinding:ShortcutBinding) : void
+    <<internal>> {static} RegisterShortcutContext() : void
+    <<internal>> {static} AutoSelectPaintTarget() : void
+    + {static} scenePaintTarget : GameObject <<get>> <<set>>
+    + {static} gridBrush : GridBrushBase <<get>> <<set>>
+    + {static} brushes : IList<GridBrushBase> <<get>>
+    <<internal>> {static} defaultBrush : GridBrush <<get>> <<set>>
+    + {static} palette : GameObject <<get>> <<set>>
+    + {static} IsPartOfActivePalette(target:GameObject) : bool
+    + {static} palettes : IList<GameObject> <<get>>
+    + {static} activeBrushEditor : GridBrushEditorBase <<get>>
+    <<internal>> {static} fallbackEditor : Editor <<get>>
+    <<internal>> {static} activeGrid : PaintableGrid <<get>> <<set>>
+    <<internal>> {static} lastActiveGrid : PaintableGrid <<get>>
+    <<internal>> {static} paintableSceneViewGrid : PaintableSceneViewGrid <<get>>
+    + {static} lastSceneViewMousePosition : Vector2 <<get>>
+    + {static} lastSceneViewGridPosition : Vector3Int <<get>>
+    <<internal>> {static} activeBrushTools : EditorTool[] <<get>> <<set>>
+    <<internal>> {static} activeBrushToolbarSize : float <<get>> <<set>>
+    <<internal>> {static} drawGridGizmo : bool <<get>> <<set>>
+    <<internal>> {static} drawGizmos : bool <<get>> <<set>>
+    + {static} isEditing : bool <<get>> <<internal set>>
+    - {static} CalculateToolbarSize() : void
+    <<internal>> {static} SetBrushTools(editorTools:EditorTool[]) : void
+    - {static} ValidatePaintTarget(candidate:GameObject) : bool
+    <<internal>> {static} FlushCache() : void
+    + {static} validTargets : GameObject[] <<get>>
+    <<internal>> {static} savingPalette : bool <<get>> <<set>>
+    <<internal>> {static} OnBeforePaletteChanged() : void
+    <<internal>> {static} OnPaletteChanged(changedPalette:GameObject) : void
+    <<internal>> {static} UpdateBrushToolbar() : void
+    <<internal>> {static} UpdateActiveGridPalette() : void
+    <<internal>> {static} RepaintGridPaintPaletteWindow() : void
+    <<internal>> {static} UnlockGridPaintPaletteClipboardForEditing() : void
+    <<internal>> {static} RegisterPainterInterest(painter:System.Object) : void
+    <<internal>> {static} UnregisterPainterInterest(painter:System.Object) : void
+    <<internal>> {static} hasInterestedPainters : bool <<get>>
+}
+"ScriptableSingleton`1" "<GridPaintingState>" <|-- GridPaintingState
+@enduml

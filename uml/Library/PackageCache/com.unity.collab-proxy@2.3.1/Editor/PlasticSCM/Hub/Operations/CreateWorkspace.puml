@@ -1,0 +1,27 @@
+@startuml
+class CreateWorkspace {
+    <<internal>> {static} LaunchOperation(parameters:OperationParams) : void
+    <<internal>> {static} CreateWorkspaceForRepSpec(repositorySpec:RepositorySpec, projectPath:string, log:ILog) : WorkspaceInfo
+    - CreateWorkspaceOperation(parameters:OperationParams) : void
+    - CreateWorkspaceIfNeeded(state:object) : void
+    {static} - PerformInitialCheckinIfRepositoryIsEmpty(wkInfo:WorkspaceInfo, repositorySpec:RepositorySpec, plasticApi:IPlasticAPI, log:ILog) : void
+    {static} - DisplayProgress(status:Status, repository:string) : void
+    {static} - LogTokenExchangeErrorInConsole(error:ErrorResponse.ErrorFields) : void
+    {static} - LogExceptionErrorInConsole(ex:Exception) : void
+    {static} - LogException(ex:Exception) : void
+    {static} - GetProgressString(status:Status) : string
+    - CreateWorkspace()
+    <<volatile>> - mStatus : Status
+    <<volatile>> - mOperationFailed : bool = false
+    <<volatile>> - mDisplayProgress : bool
+    {static} <<readonly>> - mLog : ILog
+}
+enum Status {
+    Starting= 1,
+    ConfiguringCredentials= 2,
+    CreatingWorkspace= 3,
+    PerformingInitialCheckin= 4,
+    Finished= 5,
+}
+CreateWorkspace +-- Status
+@enduml

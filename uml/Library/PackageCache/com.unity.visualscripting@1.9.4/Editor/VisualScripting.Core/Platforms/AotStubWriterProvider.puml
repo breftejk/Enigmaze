@@ -1,0 +1,9 @@
+@startuml
+class AotStubWriterProvider {
+    {static} - AotStubWriterProvider()
+    + {static} instance : AotStubWriterProvider <<get>>
+    # <<override>> cache : bool <<get>>
+    + <<override>> IsValid(decorated:object) : bool
+}
+"SingleDecoratorProvider`3" "<object,AotStubWriter,AotStubWriterAttribute>" <|-- AotStubWriterProvider
+@enduml

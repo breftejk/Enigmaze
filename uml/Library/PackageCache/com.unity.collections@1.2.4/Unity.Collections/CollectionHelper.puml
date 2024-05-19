@@ -1,0 +1,37 @@
+@startuml
+interface INativeDisposable {
+    Dispose(inputDeps:JobHandle) : JobHandle
+}
+class CollectionHelper <<static>> {
+    <<internal>> {static} CheckAllocator(allocator:AllocatorManager.AllocatorHandle) : void
+    + <<const>> CacheLineSize : int
+    + {static} Log2Floor(value:int) : int
+    + {static} Log2Ceil(value:int) : int
+    + {static} Align(size:int, alignmentPowerOfTwo:int) : int
+    + {static} Align(size:ulong, alignmentPowerOfTwo:ulong) : ulong
+    + {static} <<unsafe>> IsAligned(p:void*, alignmentPowerOfTwo:int) : bool
+    + {static} IsAligned(offset:ulong, alignmentPowerOfTwo:int) : bool
+    + {static} IsPowerOfTwo(value:int) : bool
+    + {static} <<unsafe>> Hash(ptr:void*, bytes:int) : uint
+    <<internal>> {static} WriteLayout(type:Type) : void
+    <<internal>> {static} ShouldDeallocate(allocator:AllocatorManager.AllocatorHandle) : bool
+    <<internal>> {static} AssumePositive(value:int) : int
+    <<internal>> {static} CheckIsUnmanaged() : void
+    <<internal>> {static} CheckIntPositivePowerOfTwo(value:int) : void
+    <<internal>> {static} CheckUlongPositivePowerOfTwo(value:ulong) : void
+    <<internal>> {static} CheckIndexInRange(index:int, length:int) : void
+    <<internal>> {static} CheckCapacityInRange(capacity:int, length:int) : void
+    + {static} CreateNativeArray(length:int, allocator:U, options:NativeArrayOptions) : NativeArray<T>
+    + {static} CreateNativeArray(length:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions) : NativeArray<T>
+    + {static} CreateNativeArray(array:NativeArray<T>, allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + {static} CreateNativeArray(array:T[], allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + {static} CreateNativeArray(array:T[], allocator:U) : NativeArray<T>
+    + {static} CreateNativeMultiHashMap(length:int, allocator:U) : NativeMultiHashMap<TKey, TValue>
+}
+struct LongDoubleUnion {
+    <<internal>> longValue : long
+    <<internal>> doubleValue : double
+}
+IDisposable <|-- INativeDisposable
+CollectionHelper +-- LongDoubleUnion
+@enduml

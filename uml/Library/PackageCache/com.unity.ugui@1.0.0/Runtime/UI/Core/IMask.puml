@@ -1,0 +1,6 @@
+@startuml
+interface IMask {
+    Enabled() : bool
+    rectTransform : RectTransform <<get>>
+}
+@enduml

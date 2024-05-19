@@ -1,0 +1,21 @@
+@startuml
+class MoveAimTarget {
+    + Brain : CinemachineBrain
+    + ReticleImage : RectTransform
+    + AimDistance : float
+    + CollideAgainst : LayerMask
+    + IgnoreTag : string
+    + VerticalAxis : AxisState
+    + HorizontalAxis : AxisState
+    - OnValidate() : void
+    - Reset() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    - PlaceTarget() : void
+    - GetProjectedAimTarget(pos:Vector3, camPos:Vector3) : Vector3
+    - RaycastIgnoreTag(ray:Ray, hitInfo:RaycastHit, rayLength:float, layerMask:int) : bool
+    - PlaceReticle(brain:CinemachineBrain) : void
+}
+MonoBehaviour <|-- MoveAimTarget
+@enduml

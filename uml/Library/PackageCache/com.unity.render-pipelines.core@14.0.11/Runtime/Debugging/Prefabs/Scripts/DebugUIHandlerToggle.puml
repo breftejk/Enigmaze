@@ -1,0 +1,15 @@
+@startuml
+class DebugUIHandlerToggle {
+    + nameLabel : Text
+    + valueToggle : Toggle
+    + checkmarkImage : Image
+    <<internal>> # m_Field : DebugUI.BoolField
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    - OnToggleValueChanged(value:bool) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnAction() : void
+    <<internal>> # <<virtual>> UpdateValueLabel() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerToggle
+@enduml

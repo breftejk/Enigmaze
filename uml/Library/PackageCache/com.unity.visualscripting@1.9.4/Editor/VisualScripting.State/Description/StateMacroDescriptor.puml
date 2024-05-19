@@ -1,0 +1,6 @@
+@startuml
+class StateMacroDescriptor <<sealed>> {
+    + StateMacroDescriptor(target:StateGraphAsset)
+}
+"MacroDescriptor`2" "<StateGraphAsset,MacroDescription>" <|-- StateMacroDescriptor
+@enduml

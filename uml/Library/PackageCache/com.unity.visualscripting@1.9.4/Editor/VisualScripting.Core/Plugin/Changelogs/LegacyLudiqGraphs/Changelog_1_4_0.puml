@@ -1,0 +1,59 @@
+@startuml
+class LudiqGraphsChangelog_1_4_0 {
+    + LudiqGraphsChangelog_1_4_0(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> description : string <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f2 {
+    + LudiqGraphsChangelog_1_4_0f2(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f5 {
+    + LudiqGraphsChangelog_1_4_0f5(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f6 {
+    + LudiqGraphsChangelog_1_4_0f6(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f7 {
+    + LudiqGraphsChangelog_1_4_0f7(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f8 {
+    + LudiqGraphsChangelog_1_4_0f8(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f9 {
+    + LudiqGraphsChangelog_1_4_0f9(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqGraphsChangelog_1_4_0f10 {
+    + LudiqGraphsChangelog_1_4_0f10(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f2
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f5
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f6
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f7
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f8
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f9
+PluginChangelog <|-- LudiqGraphsChangelog_1_4_0f10
+@enduml

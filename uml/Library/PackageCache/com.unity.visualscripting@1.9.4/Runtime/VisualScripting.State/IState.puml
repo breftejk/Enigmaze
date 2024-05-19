@@ -1,0 +1,18 @@
+@startuml
+interface IState {
+    <<new>> graph : StateGraph <<get>>
+    isStart : bool <<get>> <<set>>
+    canBeSource : bool <<get>>
+    canBeDestination : bool <<get>>
+    OnBranchTo(flow:Flow, destination:IState) : void
+    outgoingTransitions : IEnumerable<IStateTransition> <<get>>
+    incomingTransitions : IEnumerable<IStateTransition> <<get>>
+    transitions : IEnumerable<IStateTransition> <<get>>
+    OnEnter(flow:Flow, reason:StateEnterReason) : void
+    OnExit(flow:Flow, reason:StateExitReason) : void
+    position : Vector2 <<get>> <<set>>
+    width : float <<get>> <<set>>
+}
+IGraphElementWithDebugData <|-- IState
+IGraphElementWithData <|-- IState
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+class CinemachineConfiner2D {
+    + m_BoundingShape2D : Collider2D
+    + m_Damping : float
+    + m_MaxWindowSize : float
+    - m_MaxComputationTimePerFrameInSeconds : float
+    + InvalidateCache() : void
+    + ValidateCache(cameraAspectRatio:float) : bool
+    <<const>> - k_cornerAngleTreshold : float = 10f
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+    - CalculateHalfFrustumHeight(state:CameraState, cameraPosLocalZ:float) : float
+    - m_shapeCache : ShapeCache
+    - OnValidate() : void
+    - Reset() : void
+}
+class VcamExtraState {
+    + m_PreviousDisplacement : Vector3
+    + m_DampedDisplacement : Vector3
+    + m_BakedSolution : ConfinerOven.BakedSolution
+    + m_vcam : CinemachineVirtualCameraBase
+}
+struct ShapeCache {
+    + m_confinerOven : ConfinerOven
+    + m_OriginalPath : List<List<Vector2>>
+    + m_DeltaWorldToBaked : Matrix4x4
+    + m_DeltaBakedToWorld : Matrix4x4
+    - m_aspectRatio : float
+    - m_maxWindowSize : float
+    <<internal>> m_maxComputationTimePerFrameInSeconds : float
+    - m_bakedToWorld : Matrix4x4
+    - m_boundingShape2D : Collider2D
+    + Invalidate() : void
+    + ValidateCache(boundingShape2D:Collider2D, maxWindowSize:float, aspectRatio:float, confinerStateChanged:bool) : bool
+    - IsValid(boundingShape2D:Collider2D, aspectRatio:float, maxOrthoSize:float) : bool
+    - CalculateDeltaTransformationMatrix() : void
+}
+CinemachineExtension <|-- CinemachineConfiner2D
+CinemachineConfiner2D +-- VcamExtraState
+CinemachineConfiner2D +-- ShapeCache
+@enduml

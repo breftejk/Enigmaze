@@ -1,0 +1,18 @@
+@startuml
+class MaskTests {
+    - m_PrefabRoot : GameObject
+    <<const>> - kPrefabPath : string = "Assets/Resources/MaskTestsPrefab.prefab"
+    - m_mask : Mask
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    + GetModifiedMaterialReturnsOriginalMaterialWhenNoGraphicComponentIsAttached() : IEnumerator
+    - CreateMaskHierarchy(suffix:string, hierarchyDepth:int, root:GameObject) : Dictionary<string, GameObject>
+    + GetModifiedMaterialReturnsOriginalMaterialWhenDepthIsEightOrMore() : void
+    + GetModifiedMaterialReturnsDesiredMaterialWithSingleMask() : void
+    + GetModifiedMaterialReturnsDesiredMaterialWithMultipleMasks() : void
+    + GraphicComponentWithMaskIsMarkedAsIsMaskingGraphicWhenEnabled() : void
+}
+IPrebuildSetup <|-- MaskTests
+@enduml

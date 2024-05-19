@@ -1,0 +1,14 @@
+@startuml
+class WrappedEditorWindow {
+    + wrapper : EditorWindowWrapper <<get>> <<set>>
+    - Awake() : void
+    - OnDestroy() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    - OnGUI() : void
+    - OnFocus() : void
+    - OnLostFocus() : void
+}
+EditorWindow <|-- WrappedEditorWindow
+@enduml

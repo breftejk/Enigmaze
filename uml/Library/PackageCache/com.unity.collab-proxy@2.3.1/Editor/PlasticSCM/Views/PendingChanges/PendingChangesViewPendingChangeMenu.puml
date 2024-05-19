@@ -1,0 +1,62 @@
+@startuml
+class PendingChangesViewPendingChangeMenu {
+    <<internal>> PendingChangesViewPendingChangeMenu(wkInfo:WorkspaceInfo, pendingChangesMenuOperations:IPendingChangesMenuOperations, changelistMenuOperations:IChangelistMenuOperations, openMenuOperations:IOpenMenuOperations, metaMenuOperations:IMetaMenuOperations, filterMenuOperations:IFilesFilterPatternsMenuOperations)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - OpenMenuItem_Click() : void
+    - OpenWithMenuItem_Click() : void
+    - OpenInExplorerMenuItem_Click() : void
+    - OpenMetaMenuItem_Click() : void
+    - OpenMetaWithMenuItem_Click() : void
+    - OpenMetaInExplorerMenuItem_Click() : void
+    - DiffMenuItem_Click() : void
+    - DiffMetaMenuItem_Click() : void
+    - UndoChangesMenuItem_Click() : void
+    - CheckoutMenuItem_Click() : void
+    - DeleteMenuItem_Click() : void
+    - HistoryMenuItem_Click() : void
+    - HistoryMetaMenuItem_Click() : void
+    - UpdateMenuItems(menu:GenericMenu) : void
+    - UpdateOpenMenuItems(menu:GenericMenu, operations:OpenMenuOperations) : void
+    - GetNoActionMenuItemContent() : GUIContent
+    - BuildComponents() : void
+    {static} - ProcessKeyActionForPendingChangesMenu(operationToExecute:PendingChangesMenuOperations, pendingChangesMenuOperations:IPendingChangesMenuOperations, info:SelectedChangesGroupInfo) : bool
+    {static} - ProcessKeyActionForOpenMenu(openOperationToExecute:OpenMenuOperations, openMenuOperations:IOpenMenuOperations, info:SelectedChangesGroupInfo) : bool
+    {static} - ProcessPendingChangesMenuOperation(operationToExecute:PendingChangesMenuOperations, pendingChangesMenuOperations:IPendingChangesMenuOperations) : void
+    {static} - ProcessOpenMenuOperation(openOperationToExecute:OpenMenuOperations, openMenuOperations:IOpenMenuOperations) : void
+    {static} - GetPendingChangesMenuOperation(e:Event) : PendingChangesMenuOperations
+    {static} - GetOpenMenuOperation(e:Event) : OpenMenuOperations
+    - mNoActionMenuItemContent : GUIContent
+    - mOpenSubmenuItemContent : GUIContent
+    - mOpenMenuItemContent : GUIContent
+    - mOpenWithMenuItemContent : GUIContent
+    - mOpenInExplorerMenuItemContent : GUIContent
+    - mOpenMetaMenuItemContent : GUIContent
+    - mOpenMetaWithMenuItemContent : GUIContent
+    - mOpenMetaInExplorerMenuItemContent : GUIContent
+    - mDiffMenuItemContent : GUIContent
+    - mDiffMetaMenuItemContent : GUIContent
+    - mUndoChangesMenuItemContent : GUIContent
+    - mCheckoutMenuItemContent : GUIContent
+    - mDeleteMenuItemContent : GUIContent
+    - mViewHistoryMenuItemContent : GUIContent
+    - mViewHistoryMetaMenuItemContent : GUIContent
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mMetaMenuOperations : IMetaMenuOperations
+    <<readonly>> - mOpenMenuOperations : IOpenMenuOperations
+    <<readonly>> - mChangelistMenuOperations : IChangelistMenuOperations
+    <<readonly>> - mPendingChangesMenuOperations : IPendingChangesMenuOperations
+    <<readonly>> - mFilterMenuBuilder : FilesFilterPatternsMenuBuilder
+    <<readonly>> - mMoveToChangelistMenuBuilder : MoveToChangelistMenuBuilder
+    <<readonly>> - mIsGluonMode : bool
+}
+interface IMetaMenuOperations {
+    DiffMeta() : void
+    OpenMeta() : void
+    OpenMetaWith() : void
+    OpenMetaInExplorer() : void
+    HistoryMeta() : void
+    SelectionHasMeta() : bool
+}
+PendingChangesViewPendingChangeMenu +-- IMetaMenuOperations
+@enduml

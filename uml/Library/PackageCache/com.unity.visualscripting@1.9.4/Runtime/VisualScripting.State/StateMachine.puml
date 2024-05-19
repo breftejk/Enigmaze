@@ -1,0 +1,11 @@
+@startuml
+class StateMachine <<sealed>> {
+    # <<override>> OnEnable() : void
+    # <<override>> OnInstantiateWhileEnabled() : void
+    # <<override>> OnUninstantiateWhileEnabled() : void
+    # <<override>> OnDisable() : void
+    # <<override>> ShowData() : void
+    + <<override>> DefaultGraph() : StateGraph
+}
+"EventMachine`2" "<StateGraph,StateGraphAsset>" <|-- StateMachine
+@enduml

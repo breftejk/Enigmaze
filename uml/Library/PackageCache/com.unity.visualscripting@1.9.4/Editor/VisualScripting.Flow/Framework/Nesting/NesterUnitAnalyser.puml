@@ -1,0 +1,7 @@
+@startuml
+class "NesterUnitAnalyser`1"<TNesterUnit> {
+    + NesterUnitAnalyser(reference:GraphReference, unit:TNesterUnit)
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"UnitAnalyser`1" "<TNesterUnit>" <|-- "NesterUnitAnalyser`1"
+@enduml

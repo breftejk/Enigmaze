@@ -1,0 +1,6 @@
+@startuml
+class TMPro_TexturePostProcessor {
+    - {static} OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+}
+AssetPostprocessor <|-- TMPro_TexturePostProcessor
+@enduml

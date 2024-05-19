@@ -1,0 +1,14 @@
+@startuml
+class MaterialReferenceBuilder <<static>> {
+    + {static} <<readonly>> MaterialReferenceLookup : Dictionary<Type, List<MethodInfo>>
+    {static} - MaterialReferenceBuilder()
+    - {static} GetMaterialReferenceLookup() : Dictionary<Type, List<MethodInfo>>
+    - {static} HasMaterialProperty(prop:PropertyInfo) : bool
+    - {static} GetMaterials(obj:Object) : List<Material>
+    + {static} GetComponentTypes() : List<Type>
+    + {static} GetMaterialsFromObject(obj:Object) : List<Material>
+    + {static} GetMaterialFromMethod(method:MethodInfo, obj:Object, generateErrorString:Func<string, string, string>) : object
+    + {static} GetMaterialPropertiesWithoutLeaking(property:Type) : IEnumerable<PropertyInfo>
+    + {static} GetIsReadonlyMaterial(material:Material) : bool
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class DebugUIHandlerToggleHistory {
+    - historyToggles : Toggle[]
+    <<const>> - k_XOffset : float = 230f
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    <<internal>> # <<override>> UpdateValueLabel() : void
+    - RefreshAfterSanitization() : IEnumerator
+}
+DebugUIHandlerToggle <|-- DebugUIHandlerToggleHistory
+@enduml

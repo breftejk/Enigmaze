@@ -1,0 +1,11 @@
+@startuml
+class SkyboxCamera {
+    - m_MainCamera : Camera
+    - m_SkyboxScale : float = 1f
+    - mainCamStartPos : Vector3
+    - skyboxCamStartPos : Vector3
+    - Start() : void
+    - Update() : void
+}
+MonoBehaviour <|-- SkyboxCamera
+@enduml

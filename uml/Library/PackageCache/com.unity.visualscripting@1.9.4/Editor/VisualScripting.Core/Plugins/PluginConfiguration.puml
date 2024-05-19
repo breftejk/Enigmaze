@@ -1,0 +1,38 @@
+@startuml
+class PluginConfiguration {
+    # PluginConfiguration(plugin:Plugin)
+    + <<virtual>> Initialize() : void
+    + <<virtual>> LateInitialize() : void
+    + plugin : Plugin <<get>>
+    + <<virtual>> header : string <<get>>
+    + deprecatedSavedVersionLoaders : ReadOnlyCollection<PluginDeprecatedSavedVersionLoader> <<get>>
+    - Load() : void
+    <<internal>> SetDirty() : void
+    + Reset() : void
+    + Save() : void
+    - allItems : IEnumerable<PluginConfigurationItemMetadata> <<get>>
+    + GetEnumerator() : IEnumerator<PluginConfigurationItemMetadata>
+    - GetEnumerator() : IEnumerator
+    + GetMetadata(memberName:string) : PluginConfigurationItemMetadata
+    <<internal>> editorPrefs : List<EditorPrefMetadata>
+    - LoadEditorPrefs() : void
+    + projectSettings : List<ProjectSettingMetadata>
+    - projectSettingsStoragePath : string <<get>>
+    - projectSettingsAssetDirty : bool = false
+    <<internal>> projectSettingsAsset : DictionaryAsset <<get>> <<set>>
+    <<internal>> LoadProjectSettings() : void
+    <<internal>> ResetProjectSettingsMetadata() : void
+    <<internal>> LoadOrCreateProjectSettingsAsset() : void
+    + SaveProjectSettingsAsset(immediately:bool) : void
+    - SerializeProjectSettingsAssetToDisk() : void
+    + projectSetupCompleted : bool <<get>> <<internal set>>
+    + editorSetupCompleted : bool <<get>> <<internal set>>
+    + savedVersion : SemanticVersion <<get>> <<internal set>>
+    # developerMode : bool <<get>>
+    + {static} DeleteAllProjectSettings() : void
+    + {static} DeleteAllEditorPrefs() : void
+    + {static} DeleteAllPlayerPrefs() : void
+}
+IPluginModule <|-- PluginConfiguration
+"IEnumerable`1" "<PluginConfigurationItemMetadata>" <|-- PluginConfiguration
+@enduml

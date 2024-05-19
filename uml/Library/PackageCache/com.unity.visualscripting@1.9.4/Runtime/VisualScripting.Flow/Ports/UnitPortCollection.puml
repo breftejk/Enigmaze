@@ -1,0 +1,19 @@
+@startuml
+class "UnitPortCollection`1"<TPort> <<sealed>> {
+    + unit : IUnit <<get>>
+    + UnitPortCollection(unit:IUnit)
+    - BeforeAdd(port:TPort) : void
+    - AfterAdd(port:TPort) : void
+    - BeforeRemove(port:TPort) : void
+    - AfterRemove(port:TPort) : void
+    + Single() : TPort
+    # <<override>> GetKeyForItem(item:TPort) : string
+    + <<new>> TryGetValue(key:string, value:TPort) : bool
+    # <<override>> InsertItem(index:int, item:TPort) : void
+    # <<override>> RemoveItem(index:int) : void
+    # <<override>> SetItem(index:int, item:TPort) : void
+    # <<override>> ClearItems() : void
+}
+"KeyedCollection`2" "<string,TPort>" <|-- "UnitPortCollection`1"
+"IUnitPortCollection`1" "<TPort>" <|-- "UnitPortCollection`1"
+@enduml

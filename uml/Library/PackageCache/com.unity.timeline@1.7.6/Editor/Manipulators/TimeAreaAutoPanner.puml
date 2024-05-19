@@ -1,0 +1,12 @@
+@startuml
+class TimeAreaAutoPanner {
+    <<readonly>> - m_State : WindowState
+    <<readonly>> - m_Window : TimelineWindow
+    <<readonly>> - m_ViewRect : Rect
+    <<const>> - k_PixelDistanceToMaxSpeed : float = 100.0f
+    <<const>> - k_MaxPanSpeed : float = 30.0f
+    + TimeAreaAutoPanner(state:WindowState)
+    + OnGUI(evt:Event) : void
+    {static} - GetPanFactor(v:float, min:float, max:float, factor:float) : bool
+}
+@enduml

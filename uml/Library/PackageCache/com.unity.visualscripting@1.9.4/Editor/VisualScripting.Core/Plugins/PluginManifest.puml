@@ -1,0 +1,24 @@
+@startuml
+abstract class PluginManifest {
+    # PluginManifest(plugin:Plugin)
+    + <<virtual>> Initialize() : void
+    + <<virtual>> LateInitialize() : void
+    + plugin : Plugin <<get>>
+    + {abstract} name : string <<get>>
+    + {abstract} author : string <<get>>
+    + logo : Texture2D <<get>>
+    + {abstract} description : string <<get>>
+    + {abstract} version : SemanticVersion <<get>>
+    + <<virtual>> url : string <<get>>
+    + <<virtual>> authorLabel : string <<get>>
+    + authorLogo : Texture2D <<get>>
+    + <<virtual>> copyrightHolder : string <<get>>
+    + <<virtual>> copyrightYear : int <<get>>
+    + <<virtual>> authorUrl : string <<get>>
+    + currentVersion : SemanticVersion <<get>>
+    + savedVersion : SemanticVersion <<get>> <<set>>
+    + versionMismatch : bool <<get>>
+}
+IPluginModule <|-- PluginManifest
+IAboutable <|-- PluginManifest
+@enduml

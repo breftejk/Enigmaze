@@ -1,0 +1,27 @@
+@startuml
+abstract class "RectSelector`1"<T> {
+    + onSelectionBegin : Action<ISelector<T>, bool>
+    + onSelectionChanged : Action<ISelector<T>>
+    + onSelectionEnd : Action<ISelector<T>>
+    - m_GUISystem : GUISystem
+    - m_RectSelectorControl : Control
+    - m_RectSelectAction : GUIAction
+    - m_GUIRect : Rect
+    - m_Styles : Styles
+    + guiRect : Rect <<get>>
+    - styles : Styles <<get>>
+    + RectSelector()
+    + RectSelector(guiSystem:GUISystem)
+    - IsAltDown(guiState:IGUIState) : bool
+    - FromToRect(start:Vector2, end:Vector2) : Rect
+    + OnGUI() : void
+    - Select(element:T) : bool
+    # {abstract} Select(element:T) : bool
+}
+class Styles {
+    + <<readonly>> selectionRectStyle : GUIStyle
+    + Styles()
+}
+"ISelector`1" "<T>" <|-- "RectSelector`1"
+"RectSelector`1" +-- Styles
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+class DiffPanel {
+    <<internal>> DiffPanel(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, refreshView:IRefreshView, viewSwitcher:IViewSwitcher, historyViewLauncher:IHistoryViewLauncher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, parentWindow:EditorWindow, isGluonMode:bool)
+    <<internal>> ClearInfo() : void
+    <<internal>> UpdateInfo(mountWithPath:MountPointWithPath, csetInfo:ChangesetInfo) : void
+    <<internal>> OnDisable() : void
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    - SaveRevisionAs() : void
+    - GetSelectedDiffsGroupInfo() : SelectedDiffsGroupInfo
+    - Diff() : void
+    - History() : void
+    - RevertChanges() : void
+    - Undelete() : void
+    - UndeleteToSpecifiedPaths() : void
+    - SelectionHasMeta() : bool
+    - DiffMeta() : void
+    - GetRestorePath(wkPath:string, restorePath:string, explanation:string, isDirectory:bool, showSkipButton:bool) : GetRestorePathData
+    - HistoryMeta() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    - AfterRevertOrUndeleteOperation() : void
+    - ClearData() : void
+    - FillData(mountWithPath:MountPointWithPath, csetInfo:ChangesetInfo) : void
+    - ClearDiffs() : void
+    {static} - ClearDiffTreeView(diffTreeView:DiffTreeView) : void
+    {static} - UpdateDiffTreeView(wkInfo:WorkspaceInfo, diffs:List<ClientDiff>, brResolver:BranchResolver, skipMergeTracking:bool, diffTreeView:DiffTreeView) : void
+    - DoActionsToolbar(diffs:List<ClientDiff>, brResolver:BranchResolver, progressControls:ProgressControlsForViews, isSkipMergeTrackingButtonVisible:bool, isSkipMergeTrackingButtonChecked:bool, searchField:SearchField, diffTreeView:DiffTreeView) : void
+    - VerifyIfSearchFieldIsRecentlyFocused(searchField:SearchField) : void
+    - DoSkipMergeTrackingButton(diffs:List<ClientDiff>, brResolver:BranchResolver, isSkipMergeTrackingButtonChecked:bool, diffTreeView:DiffTreeView) : void
+    {static} - DoDiffTreeViewArea(diffTreeView:DiffTreeView, isOperationRunning:bool) : void
+    - BuildComponents() : void
+    <<volatile>> - mDiffs : List<ClientDiff>
+    <<volatile>> - mDiffsBranchResolver : BranchResolver
+    - mIsSkipMergeTrackingButtonVisible : bool
+    - mIsSkipMergeTrackingButtonChecked : bool
+    - mSearchField : SearchField
+    - mIsSearchFieldFocused : bool = false
+    - mDiffTreeView : DiffTreeView
+    - mSelectedChangesetInfo : ChangesetInfo
+    - mSelectedMountWithPath : MountPointWithPath
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mRefreshView : IRefreshView
+    <<readonly>> - mWorkspaceWindow : IWorkspaceWindow
+    <<readonly>> - mHistoryViewLauncher : IHistoryViewLauncher
+    <<readonly>> - mViewSwitcher : IViewSwitcher
+    <<readonly>> - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mIsGluonMode : bool
+}
+IDiffTreeViewMenuOperations <|-- DiffPanel
+@enduml

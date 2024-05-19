@@ -1,0 +1,11 @@
+@startuml
+class FunctionArgs {
+    - _result : object
+    - _parameters : Expression[]
+    + Result : object <<get>> <<set>>
+    + HasResult : bool <<get>> <<set>>
+    + Parameters : Expression[] <<get>> <<set>>
+    + EvaluateParameters(flow:Flow) : object[]
+}
+EventArgs <|-- FunctionArgs
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class ApplicationVariables <<static>> {
+    + <<const>> assetPath : string = "ApplicationVariables"
+    - {static} _asset : VariablesAsset
+    + {static} asset : VariablesAsset <<get>>
+    + {static} Load() : void
+    + {static} runtime : VariableDeclarations <<get>>
+    + {static} initial : VariableDeclarations <<get>>
+    + {static} current : VariableDeclarations <<get>>
+    + {static} OnEnterEditMode() : void
+    + {static} OnExitEditMode() : void
+    <<internal>> {static} OnEnterPlayMode() : void
+    <<internal>> {static} OnExitPlayMode() : void
+    - {static} CreateRuntimeDeclarations() : void
+    - {static} DestroyRuntimeDeclarations() : void
+}
+@enduml

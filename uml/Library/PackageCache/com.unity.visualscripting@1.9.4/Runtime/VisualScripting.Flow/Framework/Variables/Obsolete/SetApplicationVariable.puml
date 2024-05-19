@@ -1,0 +1,9 @@
+@startuml
+class SetApplicationVariable <<sealed>> {
+    + SetApplicationVariable()
+    + SetApplicationVariable(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+SetVariableUnit <|-- SetApplicationVariable
+IApplicationVariableUnit <|-- SetApplicationVariable
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ReplaceColorNode {
+    + ReplaceColorNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_ReplaceColor(In:Vector3, From:ColorRGB, To:ColorRGB, Range:Vector1, Fuzziness:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- ReplaceColorNode
+@enduml

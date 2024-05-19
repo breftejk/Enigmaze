@@ -1,0 +1,6 @@
+@startuml
+class GetAvatar <<static>> {
+    <<internal>> {static} ForEmail(email:string, avatarLoadedAction:Action) : Texture2D
+    {static} - AfterDownloadSucceed(email:string, result:GravatarImagesProvider.Result, avatarLoadedAction:Action) : void
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+struct QueryKeyboardLayoutCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kMaxNameLength : int = 256
+    + baseCommand : InputDeviceCommand
+    + <<fixed>> nameBuffer : byte
+    + ReadLayoutName() : string
+    + WriteLayoutName(name:string) : void
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : QueryKeyboardLayoutCommand
+}
+IInputDeviceCommandInfo <|-- QueryKeyboardLayoutCommand
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+class GraphSelection <<sealed>> {
+    + GraphSelection()
+    +  <<event>> changed : Action 
+    - <<readonly>> set : HashSet<IGraphElement>
+    + Count : int <<get>>
+    + IsReadOnly : bool <<get>>
+    - OnChange() : void
+    - GetEnumerator() : IEnumerator<IGraphElement>
+    + GetEnumerator() : HashSet<IGraphElement>.Enumerator
+    + Select(item:IGraphElement) : void
+    + Select(items:IEnumerable<IGraphElement>) : void
+    + Contains(item:IGraphElement) : bool
+    + Add(item:IGraphElement) : bool
+    + Remove(item:IGraphElement) : bool
+    + Clear() : void
+    + ExceptWith(other:IEnumerable<IGraphElement>) : void
+    + IntersectWith(other:IEnumerable<IGraphElement>) : void
+    + SymmetricExceptWith(other:IEnumerable<IGraphElement>) : void
+    + UnionWith(other:IEnumerable<IGraphElement>) : void
+    + IsProperSubsetOf(other:IEnumerable<IGraphElement>) : bool
+    + IsProperSupersetOf(other:IEnumerable<IGraphElement>) : bool
+    + IsSubsetOf(other:IEnumerable<IGraphElement>) : bool
+    + IsSupersetOf(other:IEnumerable<IGraphElement>) : bool
+    + Overlaps(other:IEnumerable<IGraphElement>) : bool
+    + SetEquals(other:IEnumerable<IGraphElement>) : bool
+    + RemoveWhere(match:Predicate<IGraphElement>) : int
+    - Add(item:IGraphElement) : void
+    - GetEnumerator() : IEnumerator
+    + CopyTo(array:IGraphElement[], arrayIndex:int) : void
+}
+"ISet`1" "<IGraphElement>" <|-- GraphSelection
+@enduml

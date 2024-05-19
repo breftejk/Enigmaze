@@ -1,0 +1,15 @@
+@startuml
+class LimbSolver2DEditor {
+    - m_ChainProperty : SerializedProperty
+    - m_FlipProperty : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> effectorLabel : GUIContent
+    + {static} <<readonly>> targetLabel : GUIContent
+    + {static} <<readonly>> flipLabel : GUIContent
+}
+Solver2DEditor <|-- LimbSolver2DEditor
+LimbSolver2DEditor +-- Contents
+@enduml

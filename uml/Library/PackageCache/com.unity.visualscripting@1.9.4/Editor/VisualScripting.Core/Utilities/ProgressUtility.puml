@@ -1,0 +1,9 @@
+@startuml
+class ProgressUtility <<static>> {
+    - {static} _progressBarTitleOverride : string = null
+    <<internal>> {static} SetTitleOverride(title:string) : void
+    <<internal>> {static} ClearTitleOverride() : void
+    + {static} DisplayProgressBar(title:string, info:string, progress:float) : void
+    + {static} ClearProgressBar() : void
+}
+@enduml

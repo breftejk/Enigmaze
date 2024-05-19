@@ -1,0 +1,21 @@
+@startuml
+class HierarchicalSphere {
+    <<const>> - k_HandleSizeCoef : float = 0.05f
+    {static} - k_Material_Cache : Material
+    {static} - k_Material : Material <<get>>
+    {static} - k_MeshSphere_Cache : Mesh
+    {static} - k_MeshSphere : Mesh <<get>>
+    - m_Material : Material
+    <<readonly>> - m_Parent : HierarchicalSphere
+    - m_HandleColor : Color
+    - m_WireframeColor : Color
+    - m_WireframeColorBehind : Color
+    - material : Material <<get>>
+    + center : Vector3 <<get>> <<set>>
+    + radius : float <<get>> <<set>>
+    + baseColor : Color <<get>> <<set>>
+    + HierarchicalSphere(baseColor:Color, parent:HierarchicalSphere)
+    + DrawHull(filled:bool) : void
+    + DrawHandle() : void
+}
+@enduml

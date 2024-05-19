@@ -1,0 +1,33 @@
+@startuml
+class UniversalSampleBufferNode <<sealed>> {
+    <<const>> - k_ScreenPositionSlotName : string = "UV"
+    <<const>> - k_OutputSlotName : string = "Output"
+    <<const>> - k_ScreenPositionSlotId : int = 0
+    <<const>> - k_OutputSlotId : int = 2
+    - m_BufferType : BufferType
+    + bufferType : BufferType <<get>> <<set>>
+    + <<override>> documentationURL : string <<get>>
+    + UniversalSampleBufferNode()
+    + <<override>> hasPreview : bool <<get>>
+    + <<override>> previewMode : PreviewMode <<get>>
+    - channelCount : int
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    - GetFunctionName() : string
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresNDCPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresScreenPosition(stageCapability:ShaderStageCapability) : bool
+}
+enum BufferType {
+    NormalWorldSpace,
+    MotionVectors,
+    BlitSource,
+}
+AbstractMaterialNode <|-- UniversalSampleBufferNode
+IGeneratesBodyCode <|-- UniversalSampleBufferNode
+IGeneratesFunction <|-- UniversalSampleBufferNode
+IMayRequireScreenPosition <|-- UniversalSampleBufferNode
+IMayRequireNDCPosition <|-- UniversalSampleBufferNode
+UniversalSampleBufferNode +-- BufferType
+@enduml

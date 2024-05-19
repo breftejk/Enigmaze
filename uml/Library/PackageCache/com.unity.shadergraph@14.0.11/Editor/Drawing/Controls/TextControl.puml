@@ -1,0 +1,20 @@
+@startuml
+class TextControlAttribute {
+    - m_Label : string
+    + TextControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class TextControlView {
+    + {static} validTypes : Type[]
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_Value : string
+    - m_UndoGroup : int
+    + TextControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - GetValue() : string
+    - Repaint(evt:MouseEventBase<T>) : void
+}
+Attribute <|-- TextControlAttribute
+IControlAttribute <|-- TextControlAttribute
+VisualElement <|-- TextControlView
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class "RectSelectionTool`1"<T> {
+    - m_HashCode : int
+    - m_ControlID : int
+    - m_Moved : bool = false
+    - m_RectSlider : RectSlider
+    + controlID : int <<get>>
+    + rectSelector : IRectSelector<T> <<get>> <<set>>
+    + cacheUndo : ICacheUndo <<get>> <<set>>
+    + onSelectionStart : Action
+    + onSelectionUpdate : Action
+    + onSelectionEnd : Action
+    + OnGUI() : void
+}
+@enduml

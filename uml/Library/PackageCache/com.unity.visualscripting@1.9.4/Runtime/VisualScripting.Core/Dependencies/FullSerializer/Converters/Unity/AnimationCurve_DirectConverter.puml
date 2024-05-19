@@ -1,0 +1,11 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    + {static} Register_AnimationCurve_DirectConverter : AnimationCurve_DirectConverter
+}
+class AnimationCurve_DirectConverter {
+    # <<override>> DoSerialize(model:AnimationCurve, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:AnimationCurve) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<AnimationCurve>" <|-- AnimationCurve_DirectConverter
+@enduml

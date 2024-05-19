@@ -1,0 +1,17 @@
+@startuml
+class AnalyticsReporter <<static>> {
+    - <<const>> VendorKey : string = "unity.test-framework"
+    - <<const>> RunFinishedEventName : string = "runFinished"
+    - <<const>> AnalyzeTestTreeName : string = "analyzeTestTree"
+    - {static} isSetUp : bool
+    - {static} methodsAnalyzed : IDictionary<string, bool>
+    - {static} typesAnalyzed : IDictionary<string, bool>
+    - {static} SetUpIfNeeded() : void
+    - {static} RegisterCallbacks() : void
+    - {static} ReportRunFinished(testResult:ITestResultAdaptor) : void
+    - {static} IsCommandLineArgSet(command:string) : bool
+    <<internal>> {static} AnalyzeTestTreeAndReport(testTree:ITest) : void
+    - {static} AnalyzeTestTreeNode(node:ITest, data:TestTreeData) : void
+    - {static} GetAttributes(node:ITest) : IEnumerable<NUnitAttribute>
+}
+@enduml

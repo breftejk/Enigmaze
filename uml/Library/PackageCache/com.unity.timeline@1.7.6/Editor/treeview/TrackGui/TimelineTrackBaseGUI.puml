@@ -1,0 +1,46 @@
+@startuml
+abstract class TimelineTrackBaseGUI {
+    # m_IsRoot : bool = false
+    <<readonly>> - m_TreeViewGUI : TimelineTreeViewGUI
+    <<readonly>> - m_Drawer : TrackDrawer
+    + treeViewToWindowTransformation : Vector2 <<get>> <<set>>
+    + isExpanded : bool <<get>> <<set>>
+    + isDropTarget : bool <<protected get>> <<set>>
+    + track : TrackAsset <<get>>
+    - treeView : TreeViewController <<get>>
+    + TimelineWindow : TimelineWindow <<get>>
+    + drawer : TrackDrawer <<get>>
+    + <<virtual>> GetVerticalSpacingBetweenTracks() : float
+    + visibleRow : bool <<get>> <<set>>
+    + visibleExpanded : bool <<get>> <<set>>
+    + drawInsertionMarkerBefore : bool <<get>> <<set>>
+    + drawInsertionMarkerAfter : bool <<get>> <<set>>
+    + {abstract} boundingRect : Rect <<get>>
+    + {abstract} expandable : bool <<get>>
+    + {abstract} Draw(headerRect:Rect, contentRect:Rect, state:WindowState) : void
+    + {abstract} OnGraphRebuilt() : void
+    # TimelineTrackBaseGUI(id:int, depth:int, parent:TreeViewItem, displayName:string, trackAsset:TrackAsset, tv:TreeViewController, tvgui:TimelineTreeViewGUI)
+    + {static} FindGUITrack(track:TrackAsset) : TimelineTrackBaseGUI
+    # DrawTrackState(trackRect:Rect, expandedRect:Rect, track:TrackAsset) : void
+    {static} - DrawTrackStateBox(trackRect:Rect, track:TrackAsset) : void
+    # DrawMuteButton(rect:Rect, state:WindowState) : void
+    # DrawLockButton(rect:Rect, state:WindowState) : void
+    + DrawInsertionMarkers(rowRectWithIndent:Rect) : void
+    + ClearDrawFlags() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> s_LockedAndMuted : GUIContent
+    + {static} <<readonly>> s_LockedAndPartiallyMuted : GUIContent
+    + {static} <<readonly>> s_Locked : GUIContent
+    + {static} <<readonly>> s_Muted : GUIContent
+    + {static} <<readonly>> s_PartiallyMuted : GUIContent
+    + {static} <<readonly>> trackMuteBtnOnTooltip : GUIContent
+    + {static} <<readonly>> trackMuteBtnOffTooltip : GUIContent
+    + {static} <<readonly>> trackLockBtnOnTooltip : GUIContent
+    + {static} <<readonly>> trackLockBtnOffTooltip : GUIContent
+    + {static} <<readonly>> lockBg : Texture2D
+}
+TreeViewItem <|-- TimelineTrackBaseGUI
+IBounds <|-- TimelineTrackBaseGUI
+TimelineTrackBaseGUI +-- Styles
+@enduml

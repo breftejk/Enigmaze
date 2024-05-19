@@ -1,0 +1,8 @@
+@startuml
+class XRGraphicsAutomatedTests <<static>> {
+    {static} - activatedFromCommandLine : bool <<get>>
+    + {static} enabled : bool <<get>>
+    + {static} running : bool = false
+    <<internal>> {static} OverrideLayout(layout:XRLayout, camera:Camera) : void
+}
+@enduml

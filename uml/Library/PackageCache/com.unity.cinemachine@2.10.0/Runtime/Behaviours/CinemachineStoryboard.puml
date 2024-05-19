@@ -1,0 +1,50 @@
+@startuml
+class CinemachineStoryboard {
+    + {static} s_StoryboardGlobalMute : bool
+    + m_ShowImage : bool = true
+    + m_Image : Texture
+    + m_Aspect : FillStrategy
+    + m_Alpha : float = 1
+    + m_Center : Vector2
+    + m_Rotation : Vector3
+    + m_Scale : Vector2
+    + m_SyncScale : bool = true
+    + m_MuteCamera : bool
+    + m_SplitView : float = 0f
+    + m_RenderMode : StoryboardRenderMode
+    + m_SortingOrder : int
+    + m_PlaneDistance : float = 100
+    - mCanvasInfo : List<CanvasInfo>
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+    - UpdateRenderCanvas() : void
+    # <<override>> ConnectToVcam(connect:bool) : void
+    - CanvasName : string <<get>>
+    - CameraUpdatedCallback(brain:CinemachineBrain) : void
+    - LocateMyCanvas(parent:CinemachineBrain, createIfNotFound:bool) : CanvasInfo
+    - CreateCanvas(ci:CanvasInfo) : void
+    - DestroyCanvas() : void
+    - PlaceImage(ci:CanvasInfo, alpha:float) : void
+    {static} - StaticBlendingHandler(brain:CinemachineBrain) : void
+    {static} - InitializeModule() : void
+}
+enum FillStrategy {
+    BestFit,
+    CropImageToFit,
+    StretchToFit,
+}
+class CanvasInfo {
+    + mCanvas : GameObject
+    + mCanvasComponent : Canvas
+    + mCanvasParent : CinemachineBrain
+    + mViewport : RectTransform
+    + mRawImage : UnityEngine.UI.RawImage
+}
+enum StoryboardRenderMode {
+    ScreenSpaceOverlay= RenderMode.ScreenSpaceOverlay,
+    ScreenSpaceCamera= RenderMode.ScreenSpaceCamera,
+}
+CinemachineExtension <|-- CinemachineStoryboard
+CinemachineStoryboard +-- FillStrategy
+CinemachineStoryboard +-- CanvasInfo
+CinemachineStoryboard +-- StoryboardRenderMode
+@enduml

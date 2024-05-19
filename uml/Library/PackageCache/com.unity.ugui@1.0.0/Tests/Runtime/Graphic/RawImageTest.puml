@@ -1,0 +1,15 @@
+@startuml
+class RawImageTest {
+    - <<const>> Width : int = 32
+    - <<const>> Height : int = 32
+    - m_PrefabRoot : GameObject
+    - m_image : RawImageTestHook
+    - m_defaultTexture : Texture2D
+    <<const>> - kPrefabPath : string = "Assets/Resources/RawImageUpdatePrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + Sprite_Material() : IEnumerator
+    + TearDown() : void
+}
+IPrebuildSetup <|-- RawImageTest
+@enduml

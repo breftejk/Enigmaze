@@ -1,0 +1,38 @@
+@startuml
+abstract class "UnitConnectionWidget`1"<TConnection> {
+    # UnitConnectionWidget(canvas:FlowCanvas, connection:TConnection)
+    # connection : TConnection <<get>>
+    # ConnectionDebugData : IUnitConnectionDebugData <<get>>
+    + <<override>> BeforeFrame() : void
+    + <<override>> positionDependencies : IEnumerable<IWidget> <<get>>
+    # <<override>> snapToGrid : bool <<get>>
+    + sourceHandlePosition : Rect <<get>>
+    + destinationHandlePosition : Rect <<get>>
+    + sourceHandleEdgeCenter : Vector2 <<get>>
+    + destinationHandleEdgeCenter : Vector2 <<get>>
+    + middlePosition : Vector2
+    - _position : Rect
+    - _clippingPosition : Rect
+    + <<override>> position : Rect <<get>> <<set>>
+    + <<override>> clippingPosition : Rect <<get>>
+    + <<override>> CachePosition() : void
+    # <<virtual>> colorIfActive : bool <<get>>
+    + {abstract} color : Color <<get>>
+    # <<override>> dim : bool <<get>>
+    + <<override>> DrawBackground() : void
+    # <<virtual>> DrawConnection() : void
+    + <<override>> canSelect : bool <<get>>
+    + <<override>> canDrag : bool <<get>>
+    + <<override>> canDelete : bool <<get>>
+    - <<readonly>> droplets : List<float>
+    - dropTime : float
+    - lastInvokeTime : float
+    - <<const>> handleAlignmentMargin : float = 0.1f
+    # <<virtual>> showDroplets : bool <<get>>
+    # {abstract} GetDropletSize() : Vector2
+    # {abstract} DrawDroplet(position:Rect) : void
+    # <<virtual>> DrawDroplets() : void
+}
+"GraphElementWidget`2" "<FlowCanvas,TConnection>" <|-- "UnitConnectionWidget`1"
+IUnitConnectionWidget <|-- "UnitConnectionWidget`1"
+@enduml

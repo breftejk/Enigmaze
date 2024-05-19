@@ -1,0 +1,25 @@
+@startuml
+class RemoteTestResultSender {
+    - <<const>> k_aliveMessageFrequency : int = 120
+    - m_NextliveMessage : float
+    - <<readonly>> m_SendQueue : Queue<QueueData>
+    - <<readonly>> m_LockQueue : object
+    - <<readonly>> m_TestResultDataFactory : IRemoteTestResultDataFactory
+    + Start() : void
+    - SerializeObject(objectToSerialize:object) : byte[]
+    + RunStarted(testsToRun:ITest) : void
+    + RunFinished(testResults:ITestResult) : void
+    + TestStarted(test:ITest) : void
+    + TestFinished(result:ITestResult) : void
+    + SendDataRoutine() : IEnumerator
+    - SendAliveMessageIfNeeded() : void
+    - ResetNextPlayerAliveMessageTime() : void
+}
+class QueueData {
+    + id : Guid <<get>> <<set>>
+    + data : byte[] <<get>> <<set>>
+}
+MonoBehaviour <|-- RemoteTestResultSender
+ITestRunnerListener <|-- RemoteTestResultSender
+RemoteTestResultSender +-- QueueData
+@enduml

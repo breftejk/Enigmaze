@@ -1,0 +1,13 @@
+@startuml
+abstract class BaseDelegator {
+    # m_Signal : ManualResetEvent
+    # m_Result : object
+    # m_Exception : Exception
+    # m_Context : ITestExecutionContext
+    # m_Aborted : bool
+    # HandleResult() : object
+    # WaitForSignal() : void
+    + Abort() : void
+    # SetCurrentTestContext() : void
+}
+@enduml

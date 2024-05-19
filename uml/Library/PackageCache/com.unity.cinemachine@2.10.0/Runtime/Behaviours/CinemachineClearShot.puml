@@ -1,0 +1,50 @@
+@startuml
+class CinemachineClearShot {
+    + m_LookAt : Transform = null
+    + m_Follow : Transform = null
+    + m_ShowDebugText : bool = false
+    <<internal>> m_ChildCameras : CinemachineVirtualCameraBase[] = null
+    + m_ActivateAfter : float
+    + m_MinDuration : float
+    + m_RandomizeChoice : bool = false
+    + m_DefaultBlend : CinemachineBlendDefinition
+    + m_CustomBlends : CinemachineBlenderSettings = null
+    + <<override>> Description : string <<get>>
+    + LiveChild : ICinemachineCamera <<get>> <<set>>
+    + <<override>> State : CameraState <<get>>
+    + <<override>> IsLiveChild(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    <<override>> + LookAt : Transform <<get>> <<set>>
+    <<override>> + Follow : Transform <<get>> <<set>>
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<override>> InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + OnTransformChildrenChanged() : void
+    - OnGuiHandler() : void
+    + IsBlending : bool <<get>>
+    + ActiveBlend : CinemachineBlend <<get>>
+    - m_State : CameraState
+    + ChildCameras : CinemachineVirtualCameraBase[] <<get>>
+    - mActivationTime : float = 0
+    - mPendingActivationTime : float = 0
+    - mPendingCamera : ICinemachineCamera
+    - mActiveBlend : CinemachineBlend = null
+    - InvalidateListOfChildren() : void
+    + ResetRandomization() : void
+    - UpdateListOfChildren() : void
+    - mRandomizeNow : bool = false
+    - m_RandomizedChilden : CinemachineVirtualCameraBase[] = null
+    - ChooseCurrentCamera(worldUp:Vector3) : ICinemachineCamera
+    - Randomize(src:CinemachineVirtualCameraBase[]) : CinemachineVirtualCameraBase[]
+    - LookupBlend(fromKey:ICinemachineCamera, toKey:ICinemachineCamera) : CinemachineBlendDefinition
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    - m_TransitioningFrom : ICinemachineCamera
+}
+struct Pair {
+    + a : int
+    + b : float
+}
+CinemachineVirtualCameraBase <|-- CinemachineClearShot
+CinemachineClearShot +-- Pair
+@enduml

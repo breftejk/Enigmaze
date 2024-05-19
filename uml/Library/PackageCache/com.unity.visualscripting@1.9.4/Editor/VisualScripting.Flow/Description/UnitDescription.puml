@@ -1,0 +1,9 @@
+@startuml
+class UnitDescription <<sealed>> {
+    + shortTitle : string <<get>> <<set>>
+    + surtitle : string <<get>> <<set>>
+    + subtitle : string <<get>> <<set>>
+    + icons : EditorTexture[] <<get>> <<set>>
+}
+GraphElementDescription <|-- UnitDescription
+@enduml

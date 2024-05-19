@@ -1,0 +1,30 @@
+@startuml
+class FlowCanvas <<sealed>> {
+    + FlowCanvas(graph:FlowGraph)
+    + <<override>> ShrinkCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    + <<override>> OnToolbarGUI() : void
+    # <<override>> shouldEdgePan : bool <<get>>
+    + <<const>> inspectorZoomThreshold : float = 0.7f
+    + <<override>> Close() : void
+    # <<override>> HandleHighPriorityInput() : void
+    - CompleteContextualConnection(source:IUnitPort, destination:IUnitPort) : void
+    + NewUnitContextual() : void
+    # <<override>> OnContext() : void
+    # <<override>> GetContextOptions() : IEnumerable<DropdownOption>
+    + AddUnit(unit:IUnit, position:Vector2) : void
+    - GetNewUnitOptions(filter:UnitOptionFilter) : UnitOptionTree
+    - NewSticky(position:Vector2) : void
+    - NewUnit(position:Vector2) : void
+    - NewUnit(unitPosition:Vector2, options:UnitOptionTree, then:Action<IUnit>) : void
+    - CanDetermineDraggedInput(uo:UnityObject) : bool
+    + <<override>> AcceptsDragAndDrop() : bool
+    + <<override>> PerformDragAndDrop() : void
+    + <<override>> DrawDragAndDropPreview() : void
+    + showRelations : bool <<get>> <<set>>
+    + connectionSource : IUnitPort <<get>> <<set>>
+    + connectionEnd : Vector2 <<get>> <<set>>
+    + isCreatingConnection : bool <<get>>
+    + CancelConnection() : void
+}
+"VisualScriptingCanvas`1" "<FlowGraph>" <|-- FlowCanvas
+@enduml

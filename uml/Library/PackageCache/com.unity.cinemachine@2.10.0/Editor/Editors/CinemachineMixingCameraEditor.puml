@@ -1,0 +1,9 @@
+@startuml
+class CinemachineMixingCameraEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    {static} - WeightPropertyName(i:int) : string
+    + <<override>> OnInspectorGUI() : void
+    - DrawProportionIndicator(children:CinemachineVirtualCameraBase[], numCameras:int, totalWeight:float) : void
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineMixingCamera>" <|-- CinemachineMixingCameraEditor
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+class InputActionAsset {
+    + <<const>> Extension : string = "inputactions"
+    + enabled : bool <<get>>
+    + actionMaps : ReadOnlyArray<InputActionMap> <<get>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + bindings : IEnumerable<InputBinding> <<get>>
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + ToJson() : string
+    + LoadFromJson(json:string) : void
+    + {static} FromJson(json:string) : InputActionAsset
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindBinding(mask:InputBinding, action:InputAction) : int
+    + FindActionMap(nameOrId:string, throwIfNotFound:bool) : InputActionMap
+    + FindActionMap(id:Guid) : InputActionMap
+    + FindAction(guid:Guid) : InputAction
+    + FindControlSchemeIndex(name:string) : int
+    + FindControlScheme(name:string) : InputControlScheme?
+    + IsUsableWithDevice(device:InputDevice) : bool
+    + Enable() : void
+    + Disable() : void
+    + Contains(action:InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    <<internal>> MarkAsDirty() : void
+    <<internal>> OnWantToChangeSetup() : void
+    <<internal>> OnSetupChanged() : void
+    - ReResolveIfNecessary(fullResolve:bool) : void
+    <<internal>> ResolveBindingsIfNecessary() : void
+    - OnDestroy() : void
+    <<internal>> m_ActionMaps : InputActionMap[]
+    <<internal>> m_ControlSchemes : InputControlScheme[]
+    <<internal>> m_SharedStateForAllMaps : InputActionState
+    <<internal>> m_BindingMask : InputBinding?
+    <<internal>> m_ParameterOverridesCount : int
+    <<internal>> m_ParameterOverrides : InputActionRebindingExtensions.ParameterOverride[]
+    <<internal>> m_Devices : InputActionMap.DeviceArray
+}
+struct WriteFileJson {
+    + name : string
+    + maps : InputActionMap.WriteMapJson[]
+    + controlSchemes : InputControlScheme.SchemeJson[]
+}
+struct ReadFileJson {
+    + name : string
+    + maps : InputActionMap.ReadMapJson[]
+    + controlSchemes : InputControlScheme.SchemeJson[]
+    + ToAsset(asset:InputActionAsset) : void
+}
+ScriptableObject <|-- InputActionAsset
+IInputActionCollection2 <|-- InputActionAsset
+InputActionAsset +-- WriteFileJson
+InputActionAsset +-- ReadFileJson
+@enduml

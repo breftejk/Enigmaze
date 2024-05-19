@@ -1,0 +1,6 @@
+@startuml
+class UnityOnMouseDownMessageListener <<sealed>> {
+    - OnMouseDown() : void
+}
+MessageListener <|-- UnityOnMouseDownMessageListener
+@enduml

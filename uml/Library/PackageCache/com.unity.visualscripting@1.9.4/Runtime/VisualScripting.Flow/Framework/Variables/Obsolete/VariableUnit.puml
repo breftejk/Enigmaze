@@ -1,0 +1,12 @@
+@startuml
+abstract class VariableUnit {
+    # VariableUnit()
+    # VariableUnit(defaultName:string)
+    + defaultName : string <<get>>
+    + name : ValueInput <<get>>
+    # {abstract} GetDeclarations(flow:Flow) : VariableDeclarations
+    # <<override>> Definition() : void
+}
+Unit <|-- VariableUnit
+IVariableUnit <|-- VariableUnit
+@enduml

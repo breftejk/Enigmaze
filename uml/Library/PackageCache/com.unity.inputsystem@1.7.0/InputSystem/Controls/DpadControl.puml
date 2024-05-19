@@ -1,0 +1,29 @@
+@startuml
+class DpadControl {
+    + up : ButtonControl <<get>> <<set>>
+    + down : ButtonControl <<get>> <<set>>
+    + left : ButtonControl <<get>> <<set>>
+    + right : ButtonControl <<get>> <<set>>
+    + DpadControl()
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : Vector2
+    + <<override>> <<unsafe>> WriteValueIntoState(value:Vector2, statePtr:void*) : void
+    + {static} MakeDpadVector(up:bool, down:bool, left:bool, right:bool, normalize:bool) : Vector2
+    + {static} MakeDpadVector(up:float, down:float, left:float, right:float) : Vector2
+}
+class DpadAxisControl {
+    + component : int <<get>> <<set>>
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : float
+}
+enum ButtonBits {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+Vector2Control <|-- DpadControl
+DpadControl +-- DpadAxisControl
+AxisControl <|-- DpadAxisControl
+DpadControl +-- ButtonBits
+@enduml

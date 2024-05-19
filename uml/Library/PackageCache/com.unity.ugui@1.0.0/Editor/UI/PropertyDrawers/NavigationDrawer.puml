@@ -1,0 +1,24 @@
+@startuml
+class NavigationDrawer {
+    <<const>> - kNavigation : string = "Navigation"
+    <<const>> - kModeProp : string = "m_Mode"
+    <<const>> - kWrapAroundProp : string = "m_WrapAround"
+    <<const>> - kSelectOnUpProp : string = "m_SelectOnUp"
+    <<const>> - kSelectOnDownProp : string = "m_SelectOnDown"
+    <<const>> - kSelectOnLeftProp : string = "m_SelectOnLeft"
+    <<const>> - kSelectOnRightProp : string = "m_SelectOnRight"
+    <<const>> - kHiddenClass : string = "unity-ui-navigation-hidden"
+    - {static} s_Styles : Styles = null
+    + <<override>> OnGUI(pos:Rect, prop:SerializedProperty, label:GUIContent) : void
+    {static} - GetNavigationMode(navigation:SerializedProperty) : Navigation.Mode
+    + <<override>> GetPropertyHeight(prop:SerializedProperty, label:GUIContent) : float
+    - PrepareField(parent:VisualElement, propertyPath:string, hideable:bool, label:string) : PropertyField
+    + <<override>> CreatePropertyGUI(property:SerializedProperty) : VisualElement
+}
+class Styles {
+    <<readonly>> + navigationContent : GUIContent
+    + Styles()
+}
+PropertyDrawer <|-- NavigationDrawer
+NavigationDrawer +-- Styles
+@enduml

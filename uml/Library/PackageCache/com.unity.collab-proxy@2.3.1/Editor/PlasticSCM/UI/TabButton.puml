@@ -1,0 +1,19 @@
+@startuml
+class TabButton {
+    <<internal>> DrawTabButton(buttonText:string, wasActive:bool, width:float) : bool
+    <<internal>> DrawClosableTabButton(buttonText:string, wasActive:bool, isClosable:bool, width:float, repaintAction:Action, isCloseButtonClicked:bool) : bool
+    {static} - DrawCloseButton(toggleRect:Rect, state:CloseButtonState) : Rect
+    {static} - DrawUnderline(toggleRect:Rect) : void
+    {static} - IsTabClickWithMiddleButton(toggleRect:Rect, currentEvent:Event) : bool
+    {static} - GetCloseImage(state:CloseButtonState) : Texture
+    - SetCloseButtonState(newState:CloseButtonState, repaintAction:Action) : void
+    - mCloseButtonRect : Rect
+    - mCloseButtonState : CloseButtonState
+}
+enum CloseButtonState {
+    Normal,
+    Clicked,
+    Hovered,
+}
+TabButton +-- CloseButtonState
+@enduml

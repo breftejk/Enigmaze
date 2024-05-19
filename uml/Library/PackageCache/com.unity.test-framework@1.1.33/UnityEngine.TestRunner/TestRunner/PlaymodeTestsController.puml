@@ -1,0 +1,22 @@
+@startuml
+class PlaymodeTestsController {
+    - m_TestSteps : IEnumerator
+    - m_AssembliesWithTests : List<string>
+    + AssembliesWithTests : List<string> <<get>> <<set>>
+    <<internal>> testStartedEvent : TestStartedEvent
+    <<internal>> testFinishedEvent : TestFinishedEvent
+    <<internal>> runStartedEvent : RunStartedEvent
+    <<internal>> runFinishedEvent : RunFinishedEvent
+    <<internal>> <<const>> kPlaymodeTestControllerName : string = "Code-based tests runner"
+    + settings : PlaymodeTestsControllerSettings
+    <<internal>> m_Runner : UnityTestAssemblyRunner
+    + Start() : IEnumerator
+    <<internal>> {static} IsControllerOnScene() : bool
+    <<internal>> {static} GetController() : PlaymodeTestsController
+    + TestRunnerCoroutine() : IEnumerator
+    + Run() : IEnumerator
+    + Cleanup() : void
+    + {static} TryCleanup() : void
+}
+MonoBehaviour <|-- PlaymodeTestsController
+@enduml

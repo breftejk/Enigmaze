@@ -1,0 +1,15 @@
+@startuml
+class ProductContainer <<sealed>> {
+    - {static} productsById : Dictionary<string, Product>
+    - {static} productTypesById : Dictionary<string, Type>
+    + {static} initialized : bool <<get>>
+    + {static} initializing : bool <<get>>
+    + {static} products : IEnumerable<Product> <<get>>
+    <<internal>> {static} Initialize() : void
+    - {static} EnsureInitialized() : void
+    + {static} GetProductID(productType:Type) : string
+    + {static} GetProductType(productId:string) : Type
+    + {static} GetProduct(productId:string) : Product
+    + {static} HasProduct(productId:string) : bool
+}
+@enduml

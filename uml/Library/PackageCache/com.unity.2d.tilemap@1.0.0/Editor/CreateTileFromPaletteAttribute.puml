@@ -1,0 +1,9 @@
+@startuml
+class CreateTileFromPaletteAttribute {
+    - {static} m_CreateTileFromPaletteMethods : List<MethodInfo>
+    <<internal>> {static} createTileFromPaletteMethods : List<MethodInfo> <<get>>
+    - {static} CreateTile(sprite:Sprite) : TileBase
+    - {static} GetCreateTileFromPaletteAttributeMethods() : void
+}
+Attribute <|-- CreateTileFromPaletteAttribute
+@enduml

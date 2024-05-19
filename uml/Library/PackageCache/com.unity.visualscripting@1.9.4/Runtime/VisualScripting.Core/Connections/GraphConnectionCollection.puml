@@ -1,0 +1,14 @@
+@startuml
+class "GraphConnectionCollection`3"<TConnection,TSource,TDestination> {
+    + GraphConnectionCollection(graph:IGraph)
+    + TryGetValue(key:Guid, value:TConnection) : bool
+    + Contains(key:Guid) : bool
+    + Remove(key:Guid) : bool
+    # <<override>> BeforeAdd(item:TConnection) : void
+    # <<override>> AfterAdd(item:TConnection) : void
+    # <<override>> BeforeRemove(item:TConnection) : void
+    # <<override>> AfterRemove(item:TConnection) : void
+}
+"ConnectionCollectionBase`4" "<TConnection,TSource,TDestination,GraphElementCollection<TConnection>>" <|-- "GraphConnectionCollection`3"
+"IGraphElementCollection`1" "<TConnection>" <|-- "GraphConnectionCollection`3"
+@enduml

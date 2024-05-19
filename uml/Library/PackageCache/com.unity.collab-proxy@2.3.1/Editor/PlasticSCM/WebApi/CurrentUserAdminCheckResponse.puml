@@ -1,0 +1,7 @@
+@startuml
+class CurrentUserAdminCheckResponse {
+    + Error : ErrorResponse.ErrorFields <<get>> <<set>>
+    + IsCurrentUserAdmin : bool <<get>> <<set>>
+    + OrganizationName : string <<get>> <<set>>
+}
+@enduml

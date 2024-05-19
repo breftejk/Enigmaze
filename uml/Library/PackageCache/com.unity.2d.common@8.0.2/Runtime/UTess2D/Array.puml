@@ -1,0 +1,22 @@
+@startuml
+struct "Array`1"<T> {
+    <<internal>> m_Array : NativeArray<T>
+    <<internal>> m_MaxSize : int
+    <<internal>> m_AllocLabel : Allocator
+    <<internal>> m_Options : NativeArrayOptions
+    + Array(length:int, maxSize:int, allocMode:Allocator, options:NativeArrayOptions)
+    - ResizeIfRequired(index:int) : void
+    + IsCreated : bool <<get>>
+    + Length : int <<get>>
+    + Dispose() : void
+    + UnsafePtr : void* <<get>>
+    + UnsafeReadOnlyPtr : void* <<get>>
+    + CopyTo(array:T[]) : void
+}
+class "ArrayDebugView`1"<T> <<sealed>> {
+    - array : Array<T>
+    + ArrayDebugView(array:Array<T>)
+    + Items : T[] <<get>>
+}
+IDisposable <|-- "Array`1"
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class PreviewTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + PreviewTarget()
+    + <<override>> IsActive() : bool
+    <<internal>> <<override>> ignoreCustomInterpolators : bool <<get>>
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + <<override>> WorksWithSRP(scriptableRenderPipeline:RenderPipelineAsset) : bool
+}
+class SubShaders <<static>> {
+    + {static} Preview : SubShaderDescriptor
+}
+class Passes <<static>> {
+    + {static} Preview : PassDescriptor
+}
+class StructDescriptors <<static>> {
+    + {static} PreviewVaryings : StructDescriptor
+}
+class KeywordDescriptors <<static>> {
+    + {static} PreviewKeyword : KeywordDescriptor
+}
+Target <|-- PreviewTarget
+PreviewTarget +-- SubShaders
+PreviewTarget +-- Passes
+PreviewTarget +-- StructDescriptors
+PreviewTarget +-- KeywordDescriptors
+@enduml

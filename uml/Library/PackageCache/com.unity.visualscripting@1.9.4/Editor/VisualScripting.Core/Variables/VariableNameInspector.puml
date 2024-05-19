@@ -1,0 +1,21 @@
+@startuml
+class VariableNameInspector <<sealed>> {
+    + VariableNameInspector(metadata:Metadata, getSuggestions:Func<IEnumerable<string>>)
+    + getSuggestions : Func<IEnumerable<string>> <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    - GetFieldHeight(width:float, label:GUIContent) : float
+    - mouseInRect : bool
+    - shouldRecalculateSuggestions : bool
+    - suggestions : string[]
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - CalculateVariableNameSuggestions(position:Rect) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> textField : GUIStyle
+    + {static} <<readonly>> popup : GUIStyle
+}
+Inspector <|-- VariableNameInspector
+VariableNameInspector +-- Styles
+@enduml

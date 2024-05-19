@@ -1,0 +1,8 @@
+@startuml
+class ClampNode {
+    + ClampNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Clamp(In:DynamicDimensionVector, Min:DynamicDimensionVector, Max:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ClampNode
+@enduml

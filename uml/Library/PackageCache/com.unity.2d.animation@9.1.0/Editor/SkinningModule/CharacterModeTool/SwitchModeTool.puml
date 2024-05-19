@@ -1,0 +1,7 @@
+@startuml
+class SwitchModeTool {
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+}
+BaseTool <|-- SwitchModeTool
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+interface "IConnectionCollection`3"<TConnection,TSource,TDestination> {
+    WithSource(source:TSource) : IEnumerable<TConnection>
+    WithDestination(destination:TDestination) : IEnumerable<TConnection>
+}
+"ICollection`1" "<TConnection>" <|-- "IConnectionCollection`3"
+@enduml

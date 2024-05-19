@@ -1,0 +1,13 @@
+@startuml
+class Vignette <<sealed>> {
+    + color : ColorParameter
+    + center : Vector2Parameter
+    + intensity : ClampedFloatParameter
+    + smoothness : ClampedFloatParameter
+    + rounded : BoolParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+VolumeComponent <|-- Vignette
+IPostProcessComponent <|-- Vignette
+@enduml

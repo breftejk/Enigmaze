@@ -1,0 +1,10 @@
+@startuml
+class InvalidConnectionWidget <<sealed>> {
+    + InvalidConnectionWidget(canvas:FlowCanvas, connection:InvalidConnection)
+    + <<override>> color : Color <<get>>
+    # <<override>> showDroplets : bool <<get>>
+    # <<override>> GetDropletSize() : Vector2
+    # <<override>> DrawDroplet(position:Rect) : void
+}
+"UnitConnectionWidget`1" "<InvalidConnection>" <|-- InvalidConnectionWidget
+@enduml

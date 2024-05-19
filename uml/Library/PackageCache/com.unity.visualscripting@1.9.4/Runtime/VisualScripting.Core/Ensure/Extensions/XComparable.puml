@@ -1,0 +1,7 @@
+@startuml
+class XComparable <<static>> {
+    <<internal>> {static} IsLt(x:IComparable<T>, y:T) : bool
+    <<internal>> {static} IsEq(x:IComparable<T>, y:T) : bool
+    <<internal>> {static} IsGt(x:IComparable<T>, y:T) : bool
+}
+@enduml

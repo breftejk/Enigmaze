@@ -1,0 +1,71 @@
+@startuml
+class RenderObjectsPassFeatureEditor {
+    - m_FiltersFoldout : HeaderBool
+    - m_FilterLines : int = 3
+    - m_RenderFoldout : HeaderBool
+    - m_MaterialLines : int = 2
+    - m_DepthLines : int = 3
+    - m_CameraLines : int = 4
+    - m_Callback : SerializedProperty
+    - m_PassTag : SerializedProperty
+    - m_FilterSettings : SerializedProperty
+    - m_RenderQueue : SerializedProperty
+    - m_LayerMask : SerializedProperty
+    - m_ShaderPasses : SerializedProperty
+    - m_OverrideMaterial : SerializedProperty
+    - m_OverrideMaterialPass : SerializedProperty
+    - m_OverrideShader : SerializedProperty
+    - m_OverrideShaderPass : SerializedProperty
+    - m_OverrideMode : SerializedProperty
+    - m_OverrideDepth : SerializedProperty
+    - m_WriteDepth : SerializedProperty
+    - m_DepthState : SerializedProperty
+    - m_StencilSettings : SerializedProperty
+    - m_CameraSettings : SerializedProperty
+    - m_OverrideCamera : SerializedProperty
+    - m_FOV : SerializedProperty
+    - m_CameraOffset : SerializedProperty
+    - m_RestoreCamera : SerializedProperty
+    - m_properties : List<SerializedObject>
+    {static} - FilterRenderPassEvent(evt:int) : bool
+    - m_EventOptionNames : GUIContent[]
+    - m_EventOptionValues : int[]
+    - Init(property:SerializedProperty) : void
+    + <<override>> OnGUI(rect:Rect, property:SerializedProperty, label:GUIContent) : void
+    - DoFilters(rect:Rect) : void
+    - DoMaterialOverride(rect:Rect) : void
+    - DoDepthOverride(rect:Rect) : void
+    - DoCameraOverride(rect:Rect) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    - SaveHeaderBool(boolObj:HeaderBool) : void
+}
+class Styles {
+    + {static} defaultLineSpace : float
+    + {static} callback : GUIContent
+    + {static} filtersHeader : GUIContent
+    + {static} renderHeader : GUIContent
+    + {static} renderQueueFilter : GUIContent
+    + {static} layerMask : GUIContent
+    + {static} shaderPassFilter : GUIContent
+    + {static} overrideMaterial : GUIContent
+    + {static} overrideMaterialPass : GUIContent
+    + {static} overrideShader : GUIContent
+    + {static} overrideShaderPass : GUIContent
+    + {static} overrideMode : GUIContent
+    + {static} overrideDepth : GUIContent
+    + {static} writeDepth : GUIContent
+    + {static} depthState : GUIContent
+    + {static} overrideCamera : GUIContent
+    + {static} cameraFOV : GUIContent
+    + {static} positionOffset : GUIContent
+    + {static} restoreCamera : GUIContent
+}
+class HeaderBool {
+    + key : string
+    + value : bool
+    + HeaderBool(_key:string, _default:bool)
+}
+PropertyDrawer <|-- RenderObjectsPassFeatureEditor
+RenderObjectsPassFeatureEditor +-- Styles
+RenderObjectsPassFeatureEditor +-- HeaderBool
+@enduml

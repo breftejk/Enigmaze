@@ -1,0 +1,18 @@
+@startuml
+class DebugManagerWindowLifetimeAnalytic {
+    <<const>> - k_MaxEventsPerHour : int = 10
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.srp"
+    - {static} timeStamps : DateTime?[]
+    {static} - SubscribeToDebugManagerOpenCloseWindows() : void
+    - {static} OnBeforeAssemblyReload() : void
+    - {static} OnWindowStateChanged(windowMode:DebugManager.UIMode, open:bool) : void
+    {static} - Send(windowMode:DebugManager.UIMode, start:DateTime) : void
+}
+class Data {
+    <<internal>> <<const>> k_EventName : string = "uDebugManagerWindowLifetimeAnalytic"
+    + window_mode : string
+    + seconds_opened : int
+}
+DebugManagerWindowLifetimeAnalytic +-- Data
+@enduml

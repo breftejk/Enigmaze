@@ -1,0 +1,39 @@
+@startuml
+enum Compute_DistanceTransform_EventTypes {
+    Processing,
+    Completed,
+}
+class TMPro_EventManager <<static>> {
+    + {static} <<readonly>> COMPUTE_DT_EVENT : FastAction<object, Compute_DT_EventArgs>
+    + {static} <<readonly>> MATERIAL_PROPERTY_EVENT : FastAction<bool, Material>
+    + {static} <<readonly>> FONT_PROPERTY_EVENT : FastAction<bool, Object>
+    + {static} <<readonly>> SPRITE_ASSET_PROPERTY_EVENT : FastAction<bool, Object>
+    + {static} <<readonly>> TEXTMESHPRO_PROPERTY_EVENT : FastAction<bool, Object>
+    + {static} <<readonly>> DRAG_AND_DROP_MATERIAL_EVENT : FastAction<GameObject, Material, Material>
+    + {static} <<readonly>> TEXT_STYLE_PROPERTY_EVENT : FastAction<bool>
+    + {static} <<readonly>> COLOR_GRADIENT_PROPERTY_EVENT : FastAction<Object>
+    + {static} <<readonly>> TMP_SETTINGS_PROPERTY_EVENT : FastAction
+    + {static} <<readonly>> RESOURCE_LOAD_EVENT : FastAction
+    + {static} <<readonly>> TEXTMESHPRO_UGUI_PROPERTY_EVENT : FastAction<bool, Object>
+    + {static} <<readonly>> TEXT_CHANGED_EVENT : FastAction<Object>
+    + {static} ON_MATERIAL_PROPERTY_CHANGED(isChanged:bool, mat:Material) : void
+    + {static} ON_FONT_PROPERTY_CHANGED(isChanged:bool, obj:Object) : void
+    + {static} ON_SPRITE_ASSET_PROPERTY_CHANGED(isChanged:bool, obj:Object) : void
+    + {static} ON_TEXTMESHPRO_PROPERTY_CHANGED(isChanged:bool, obj:Object) : void
+    + {static} ON_DRAG_AND_DROP_MATERIAL_CHANGED(sender:GameObject, currentMaterial:Material, newMaterial:Material) : void
+    + {static} ON_TEXT_STYLE_PROPERTY_CHANGED(isChanged:bool) : void
+    + {static} ON_COLOR_GRADIENT_PROPERTY_CHANGED(obj:Object) : void
+    + {static} ON_TEXT_CHANGED(obj:Object) : void
+    + {static} ON_TMP_SETTINGS_CHANGED() : void
+    + {static} ON_RESOURCES_LOADED() : void
+    + {static} ON_TEXTMESHPRO_UGUI_PROPERTY_CHANGED(isChanged:bool, obj:Object) : void
+    + {static} ON_COMPUTE_DT_EVENT(Sender:object, e:Compute_DT_EventArgs) : void
+}
+class Compute_DT_EventArgs {
+    + EventType : Compute_DistanceTransform_EventTypes
+    + ProgressPercentage : float
+    + Colors : Color[]
+    + Compute_DT_EventArgs(type:Compute_DistanceTransform_EventTypes, progress:float)
+    + Compute_DT_EventArgs(type:Compute_DistanceTransform_EventTypes, colors:Color[])
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class "NestrerUnitWidget`1"<TNesterUnit> {
+    + NestrerUnitWidget(canvas:FlowCanvas, unit:TNesterUnit)
+    # <<override>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    # <<override>> OnDoubleClick() : void
+}
+"UnitWidget`1" "<TNesterUnit>" <|-- "NestrerUnitWidget`1"
+@enduml

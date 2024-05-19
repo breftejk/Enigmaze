@@ -1,0 +1,7 @@
+@startuml
+interface IEdge {
+    outputSlot : SlotReference <<get>>
+    inputSlot : SlotReference <<get>>
+}
+"IEquatable`1" "<IEdge>" <|-- IEdge
+@enduml

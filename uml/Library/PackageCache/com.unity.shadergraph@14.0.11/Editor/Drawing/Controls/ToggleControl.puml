@@ -1,0 +1,26 @@
+@startuml
+struct ToggleData {
+    + isOn : bool
+    + isEnabled : bool
+    + ToggleData(on:bool, enabled:bool)
+    + ToggleData(on:bool)
+}
+class ToggleControlAttribute {
+    - m_Label : string
+    + ToggleControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class ToggleControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_Label : Label
+    - m_Toggle : Toggle
+    + ToggleControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    + OnNodeModified(scope:ModificationScope) : void
+    - OnChangeToggle(evt:ChangeEvent<bool>) : void
+}
+Attribute <|-- ToggleControlAttribute
+IControlAttribute <|-- ToggleControlAttribute
+VisualElement <|-- ToggleControlView
+AbstractMaterialNodeModificationListener <|-- ToggleControlView
+@enduml

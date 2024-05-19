@@ -1,0 +1,5 @@
+@startuml
+class ParentWindow {
+    <<internal>> {static} Get() : EditorWindow
+}
+@enduml

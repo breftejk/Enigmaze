@@ -1,0 +1,8 @@
+@startuml
+class FlowStateTransitionAnalyser {
+    + FlowStateTransitionAnalyser(reference:GraphReference, transition:FlowStateTransition)
+    # <<override>> IsTraversed() : bool
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"NesterStateTransitionAnalyser`1" "<FlowStateTransition>" <|-- FlowStateTransitionAnalyser
+@enduml

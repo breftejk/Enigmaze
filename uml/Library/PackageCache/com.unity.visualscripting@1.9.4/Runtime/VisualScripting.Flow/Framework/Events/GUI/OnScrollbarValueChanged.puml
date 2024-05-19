@@ -1,0 +1,10 @@
+@startuml
+class OnScrollbarValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, value:float) : void
+}
+"GameObjectEventUnit`1" "<float>" <|-- OnScrollbarValueChanged
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class CinemachineGroupComposerEditor {
+    - MyTarget : CinemachineGroupComposer <<get>>
+    # FieldPath(expr:Expression<Func<CinemachineGroupComposer, TValue>>) : string
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DrawGroupComposerGizmos(target:CinemachineGroupComposer, selectionType:GizmoType) : void
+}
+CinemachineComposerEditor <|-- CinemachineGroupComposerEditor
+@enduml

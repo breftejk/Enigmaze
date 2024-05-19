@@ -1,0 +1,10 @@
+@startuml
+class ScriptingUtility {
+    {static} - IsManagedCodeWorking() : bool
+    {static} <<unsafe>> - SetupCallbacks(p:IntPtr) : void
+}
+struct TestClass {
+    + value : int
+}
+ScriptingUtility +-- TestClass
+@enduml

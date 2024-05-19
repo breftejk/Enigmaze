@@ -1,0 +1,11 @@
+@startuml
+class Is {
+    + {static} SearcherItemCollectionEquivalent(expected:IEnumerable<SearcherItem>) : SearcherItemCollectionEquivalentConstraint
+}
+class SearcherItemCollectionEquivalentConstraint {
+    <<readonly>> - m_Expected : List<SearcherItem>
+    + SearcherItemCollectionEquivalentConstraint(expected:IEnumerable<SearcherItem>)
+    # <<override>> Matches(actual:IEnumerable) : bool
+}
+CollectionItemsEqualConstraint <|-- SearcherItemCollectionEquivalentConstraint
+@enduml

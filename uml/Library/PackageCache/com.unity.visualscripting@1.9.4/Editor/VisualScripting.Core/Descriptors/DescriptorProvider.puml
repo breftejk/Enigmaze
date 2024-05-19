@@ -1,0 +1,31 @@
+@startuml
+class DescriptorProvider <<sealed>> {
+    - <<readonly>> listeners : Dictionary<object, HashSet<Action>>
+    # <<override>> cache : bool <<get>>
+    - DescriptorProvider()
+    + <<override>> IsValid(described:object) : bool
+    + Dispose() : void
+    + AddListener(describable:object, onDescriptionChange:Action) : void
+    + RemoveListener(describable:object, onDescriptionChange:Action) : void
+    + ClearListeners() : void
+    + TriggerDescriptionChange(describable:object) : void
+    + Describe(describable:object) : void
+    + DescribeAll() : void
+    + Descriptor(target:object) : IDescriptor
+    + Descriptor(target:object) : TDescriptor
+    + Description(target:object) : IDescription
+    + Description(target:object) : TDescription
+    {static} - DescriptorProvider()
+    + {static} instance : DescriptorProvider <<get>>
+}
+class XDescriptorProvider <<static>> {
+    + {static} Describe(target:object) : void
+    + {static} HasDescriptor(target:object) : bool
+    + {static} Descriptor(target:object) : IDescriptor
+    + {static} Descriptor(target:object) : TDescriptor
+    + {static} Description(target:object) : IDescription
+    + {static} Description(target:object) : TDescription
+}
+"SingleDecoratorProvider`3" "<object,IDescriptor,DescriptorAttribute>" <|-- DescriptorProvider
+IDisposable <|-- DescriptorProvider
+@enduml

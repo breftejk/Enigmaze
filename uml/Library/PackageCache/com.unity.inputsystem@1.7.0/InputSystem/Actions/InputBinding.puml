@@ -1,0 +1,67 @@
+@startuml
+struct InputBinding {
+    + <<const>> Separator : char = ';'
+    <<internal>> <<const>> kSeparatorString : string = ";"
+    + name : string <<get>> <<set>>
+    + id : Guid <<get>> <<set>>
+    + path : string <<get>> <<set>>
+    + overridePath : string <<get>> <<set>>
+    + interactions : string <<get>> <<set>>
+    + overrideInteractions : string <<get>> <<set>>
+    + processors : string <<get>> <<set>>
+    + overrideProcessors : string <<get>> <<set>>
+    + groups : string <<get>> <<set>>
+    + action : string <<get>> <<set>>
+    + isComposite : bool <<get>> <<set>>
+    + isPartOfComposite : bool <<get>> <<set>>
+    + hasOverrides : bool <<get>>
+    + InputBinding(path:string, action:string, groups:string, processors:string, interactions:string, name:string)
+    + GetNameOfComposite() : string
+    <<internal>> GenerateId() : void
+    <<internal>> RemoveOverrides() : void
+    + {static} MaskByGroup(group:string) : InputBinding
+    + {static} MaskByGroups(groups:string[]) : InputBinding
+    - m_Name : string
+    <<internal>> m_Id : string
+    - m_Path : string
+    - m_Interactions : string
+    - m_Processors : string
+    <<internal>> m_Groups : string
+    - m_Action : string
+    <<internal>> m_Flags : Flags
+    - m_OverridePath : string
+    - m_OverrideInteractions : string
+    - m_OverrideProcessors : string
+    + effectivePath : string <<get>>
+    + effectiveInteractions : string <<get>>
+    + effectiveProcessors : string <<get>>
+    <<internal>> isEmpty : bool <<get>>
+    + Equals(other:InputBinding) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToDisplayString(options:DisplayStringOptions, control:InputControl) : string
+    + ToDisplayString(deviceLayoutName:string, controlPath:string, options:DisplayStringOptions, control:InputControl) : string
+    <<internal>> TriggersAction(action:InputAction) : bool
+    + Matches(binding:InputBinding) : bool
+    <<internal>> Matches(binding:InputBinding, options:MatchOptions) : bool
+}
+enum DisplayStringOptions {
+    DontUseShortDisplayNames= 1 << 0,
+    DontOmitDevice= 1 << 1,
+    DontIncludeInteractions= 1 << 2,
+    IgnoreBindingOverrides= 1 << 3,
+}
+enum MatchOptions {
+    EmptyGroupMatchesAny= 1 << 0,
+}
+enum Flags {
+    None= 0,
+    Composite= 1 << 2,
+    PartOfComposite= 1 << 3,
+}
+"IEquatable`1" "<InputBinding>" <|-- InputBinding
+InputBinding +-- DisplayStringOptions
+InputBinding +-- MatchOptions
+InputBinding +-- Flags
+@enduml

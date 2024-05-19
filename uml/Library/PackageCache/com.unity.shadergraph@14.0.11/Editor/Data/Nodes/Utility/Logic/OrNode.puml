@@ -1,0 +1,9 @@
+@startuml
+class OrNode {
+    + OrNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Or(A:Boolean, B:Boolean, Out:Boolean) : string
+}
+CodeFunctionNode <|-- OrNode
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+interface ITestListCacheData {
+    platforms : List<TestPlatform> <<get>>
+    cachedData : List<ITest> <<get>>
+}
+@enduml

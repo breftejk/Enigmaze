@@ -1,0 +1,37 @@
+@startuml
+class ControlPlayableInspector {
+    - m_SourceObject : SerializedProperty
+    - m_PrefabObject : SerializedProperty
+    - m_UpdateParticle : SerializedProperty
+    - m_UpdateDirector : SerializedProperty
+    - m_UpdateITimeControl : SerializedProperty
+    - m_SearchHierarchy : SerializedProperty
+    - m_UseActivation : SerializedProperty
+    - m_PostPlayback : SerializedProperty
+    - m_RandomSeed : SerializedProperty
+    - m_CycleReference : bool
+    - m_SourceObjectLabel : GUIContent
+    - contextDirector : PlayableDirector <<get>>
+    + OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    + DisablePlayOnAwake(sourceObject:GameObject) : void
+    + DisablePlayOnAwake(director:PlayableDirector) : void
+    - CheckForCyclicReference() : void
+}
+class Styles <<static>> {
+    {static} - s_DisabledBecauseOfSelfControlTooltip : string = "Must be disabled when the Source Game Object references the same PlayableDirector component that is being controlled"
+    + {static} <<readonly>> activationContent : GUIContent
+    + {static} <<readonly>> activationDisabledContent : GUIContent
+    + {static} <<readonly>> prefabContent : GUIContent
+    + {static} <<readonly>> advancedContent : GUIContent
+    + {static} <<readonly>> updateParticleSystemsContent : GUIContent
+    + {static} <<readonly>> updatePlayableDirectorContent : GUIContent
+    + {static} <<readonly>> updatePlayableDirectorDisabledContent : GUIContent
+    + {static} <<readonly>> updateITimeControlContent : GUIContent
+    + {static} <<readonly>> updateHierarchy : GUIContent
+    + {static} <<readonly>> randomSeedContent : GUIContent
+    + {static} <<readonly>> postPlayableContent : GUIContent
+}
+Editor <|-- ControlPlayableInspector
+ControlPlayableInspector +-- Styles
+@enduml

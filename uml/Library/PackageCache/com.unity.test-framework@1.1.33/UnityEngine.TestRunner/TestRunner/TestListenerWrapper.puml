@@ -1,0 +1,11 @@
+@startuml
+class TestListenerWrapper {
+    - <<readonly>> m_TestFinishedEvent : TestFinishedEvent
+    - <<readonly>> m_TestStartedEvent : TestStartedEvent
+    + TestListenerWrapper(testStartedEvent:TestStartedEvent, testFinishedEvent:TestFinishedEvent)
+    + TestStarted(test:ITest) : void
+    + TestFinished(result:ITestResult) : void
+    + TestOutput(output:TestOutput) : void
+}
+ITestListener <|-- TestListenerWrapper
+@enduml

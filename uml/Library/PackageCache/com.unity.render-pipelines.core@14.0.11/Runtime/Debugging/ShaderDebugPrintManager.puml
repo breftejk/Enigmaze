@@ -1,0 +1,59 @@
+@startuml
+class ShaderDebugPrintManager <<sealed>> {
+    - {static} <<readonly>> s_Instance : ShaderDebugPrintManager
+    - <<const>> k_DebugUAVSlot : int = 7
+    - <<const>> k_FramesInFlight : int = 4
+    - <<const>> k_MaxBufferElements : int
+    - m_OutputBuffers : List<GraphicsBuffer>
+    - m_ReadbackRequests : List<Rendering.AsyncGPUReadbackRequest>
+    - m_BufferReadCompleteAction : Action<AsyncGPUReadbackRequest>
+    - m_FrameCounter : int = 0
+    - m_FrameCleared : bool = false
+    - m_OutputLine : string = ""
+    - m_OutputAction : Action<string>
+    - {static} <<readonly>> m_ShaderPropertyIDInputMouse : int
+    - {static} <<readonly>> m_ShaderPropertyIDInputFrame : int
+    - <<const>> k_TypeHasTag : uint = 128
+    - DebugValueTypeToElemSize(type:DebugValueType) : int
+    - ShaderDebugPrintManager()
+    + {static} instance : ShaderDebugPrintManager <<get>>
+    + SetShaderDebugPrintInputConstants(cmd:CommandBuffer, input:ShaderDebugPrintInput) : void
+    + SetShaderDebugPrintBindings(cmd:CommandBuffer) : void
+    - ClearShaderDebugPrintBuffer() : void
+    - BufferReadComplete(request:Rendering.AsyncGPUReadbackRequest) : void
+    + EndFrame() : void
+    + outputLine : string <<get>>
+    + outputAction : Action<string> <<set>>
+    + DefaultOutput(line:string) : void
+}
+struct ShaderDebugPrintInput {
+    + pos : Vector2 <<get>> <<set>>
+    + leftDown : bool <<get>> <<set>>
+    + rightDown : bool <<get>> <<set>>
+    + middleDown : bool <<get>> <<set>>
+    + String() : string
+}
+class ShaderDebugPrintInputProducer <<static>> {
+    {static} + Get() : ShaderDebugPrintInput
+}
+class Profiling <<static>> {
+    + {static} <<readonly>> BufferReadComplete : ProfilingSampler
+}
+enum DebugValueType {
+    TypeUint= 1,
+    TypeInt= 2,
+    TypeFloat= 3,
+    TypeUint2= 4,
+    TypeInt2= 5,
+    TypeFloat2= 6,
+    TypeUint3= 7,
+    TypeInt3= 8,
+    TypeFloat3= 9,
+    TypeUint4= 10,
+    TypeInt4= 11,
+    TypeFloat4= 12,
+    TypeBool= 13,
+}
+ShaderDebugPrintManager +-- Profiling
+ShaderDebugPrintManager +-- DebugValueType
+@enduml

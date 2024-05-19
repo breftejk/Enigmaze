@@ -1,0 +1,26 @@
+@startuml
+class TestSettingsDeserializer {
+    - {static} <<readonly>> s_SettingsMapping : SettingsMap[]
+    - <<readonly>> m_TestSettingsFactory : Func<ITestSettings>
+    + TestSettingsDeserializer(testSettingsFactory:Func<ITestSettings>)
+    + GetSettingsFromJsonFile(jsonFilePath:string) : ITestSettings
+    - {static} SetEnumValue(key:string, value:object, type:Type, setter:Action<object>) : void
+    - {static} TryGetEnum(value:string, type:Type, enumValue:object) : bool
+    - {static} SetValue(key:string, value:object, type:Type, setter:Action<object>) : void
+}
+abstract class SettingsMap {
+    + Key : string <<get>>
+    + Type : Type <<get>>
+    # SettingsMap(key:string, type:Type)
+    + {abstract} ApplyToSettings(settings:ITestSettings, value:object) : void
+}
+class "SettingsMap`1"<T> {
+    - m_Setter : Action<ITestSettings, T>
+    + SettingsMap(key:string, setter:Action<ITestSettings, T>)
+    + <<override>> ApplyToSettings(settings:ITestSettings, value:object) : void
+}
+ITestSettingsDeserializer <|-- TestSettingsDeserializer
+TestSettingsDeserializer +-- SettingsMap
+TestSettingsDeserializer +-- "SettingsMap`1"
+SettingsMap <|-- "SettingsMap`1"
+@enduml

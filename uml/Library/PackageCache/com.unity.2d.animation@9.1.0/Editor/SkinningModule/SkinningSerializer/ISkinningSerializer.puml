@@ -1,0 +1,27 @@
+@startuml
+interface ISkinningSerializer {
+    CanDeserialize(data:string) : bool
+    Deserialize(data:string) : SkinningCopyData
+    Serialize(skinningData:SkinningCopyData) : string
+}
+class SpriteBoneCopyData {
+    + spriteBone : UnityEngine.U2D.SpriteBone
+    + order : int
+}
+class SkinningCopySpriteData {
+    + spriteName : string
+    + spriteBones : List<SpriteBoneCopyData>
+    + vertices : Vector2[]
+    + vertexWeights : EditableBoneWeight[]
+    + indices : int[]
+    + edges : int2[]
+    + boneWeightGuids : List<string>
+    + boneWeightNames : List<string>
+}
+class SkinningCopyData {
+    + pixelsPerUnit : float
+    + copyData : List<SkinningCopySpriteData>
+    + characterBones : UnityEngine.U2D.SpriteBone[]
+    + isCharacterData : bool = false
+}
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+class FullScreenPassRendererFeature <<partial>> {
+    + injectionPoint : InjectionPoint
+    + fetchColorBuffer : bool = true
+    + requirements : ScriptableRenderPassInput
+    + passMaterial : Material
+    <<internal>> showAdditionalProperties : bool = false
+    + passIndex : int = 0
+    + bindDepthStencilAttachment : bool = false
+    - m_FullScreenPass : FullScreenRenderPass
+    + <<override>> Create() : void
+    <<internal>> <<override>> RequireRenderingLayers(isDeferred:bool, needsGBufferAccurateNormals:bool, atEvent:RenderingLayerUtils.Event, maskSize:RenderingLayerUtils.MaskSize) : bool
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+}
+enum InjectionPoint {
+    BeforeRenderingTransparents= RenderPassEvent.BeforeRenderingTransparents,
+    BeforeRenderingPostProcessing= RenderPassEvent.BeforeRenderingPostProcessing,
+    AfterRenderingPostProcessing= RenderPassEvent.AfterRenderingPostProcessing,
+}
+class FullScreenRenderPass {
+    - m_Material : Material
+    - m_PassIndex : int
+    - m_CopyActiveColor : bool
+    - m_BindDepthStencilAttachment : bool
+    - m_CopiedColor : RTHandle
+    - {static} s_SharedPropertyBlock : MaterialPropertyBlock
+    + FullScreenRenderPass(passName:string)
+    + SetupMembers(material:Material, passIndex:int, copyActiveColor:bool, bindDepthStencilAttachment:bool) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    <<internal>> ReAllocate(desc:RenderTextureDescriptor) : void
+    + Dispose() : void
+    - {static} ExecuteCopyColorPass(cmd:CommandBuffer, sourceTexture:RTHandle) : void
+    - {static} ExecuteMainPass(cmd:CommandBuffer, sourceTexture:RTHandle, material:Material, passIndex:int) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRendererFeature <|-- FullScreenPassRendererFeature
+FullScreenPassRendererFeature +-- InjectionPoint
+FullScreenPassRendererFeature +-- FullScreenRenderPass
+ScriptableRenderPass <|-- FullScreenRenderPass
+@enduml

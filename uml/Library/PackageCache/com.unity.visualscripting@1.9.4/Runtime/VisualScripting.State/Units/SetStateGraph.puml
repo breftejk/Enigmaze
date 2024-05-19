@@ -1,0 +1,7 @@
+@startuml
+class SetStateGraph {
+    + containerType : StateGraphContainerType <<get>> <<set>>
+    # <<override>> isGameObject : bool <<get>>
+}
+"SetGraph`3" "<StateGraph,StateGraphAsset,StateMachine>" <|-- SetStateGraph
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class BakedGINode {
+    + <<override>> hasPreview : bool <<get>>
+    + BakedGINode()
+    - m_ApplyScaling : bool = true
+    + applyScaling : ToggleData <<get>> <<set>>
+    <<const>> - kNormalWSInputSlotId : int = 0
+    <<const>> - kNormalWSInputSlotName : string = "NormalWS"
+    <<const>> - kOutputSlotId : int = 1
+    <<const>> - kOutputSlotName : string = "Out"
+    <<const>> - kPositionWSInputSlotId : int = 2
+    <<const>> - kPositionWSInputSlotName : string = "PositionWS"
+    <<const>> - kStaticUVInputSlotId : int = 3
+    <<const>> - kStaticUVInputSlotName : string = "StaticUV"
+    <<const>> - kDynamicUVInputSlotId : int = 4
+    <<const>> - kDynamicUVInputSlotName : string = "DynamicUV"
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresPixelPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- BakedGINode
+IGeneratesBodyCode <|-- BakedGINode
+IMayRequirePixelPosition <|-- BakedGINode
+IMayRequirePosition <|-- BakedGINode
+IMayRequireNormal <|-- BakedGINode
+IMayRequireMeshUV <|-- BakedGINode
+@enduml

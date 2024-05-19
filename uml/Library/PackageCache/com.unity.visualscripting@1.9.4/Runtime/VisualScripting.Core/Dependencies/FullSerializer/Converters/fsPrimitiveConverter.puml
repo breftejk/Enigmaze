@@ -1,0 +1,14 @@
+@startuml
+class fsPrimitiveConverter {
+    + <<override>> CanProcess(type:Type) : bool
+    + <<override>> RequestCycleSupport(storageType:Type) : bool
+    + <<override>> RequestInheritanceSupport(storageType:Type) : bool
+    + <<override>> TrySerialize(instance:object, serialized:fsData, storageType:Type) : fsResult
+    + <<override>> TryDeserialize(storage:fsData, instance:object, storageType:Type) : fsResult
+    - {static} UseBool(type:Type) : bool
+    - {static} UseInt64(type:Type) : bool
+    - {static} UseDouble(type:Type) : bool
+    - {static} UseString(type:Type) : bool
+}
+fsConverter <|-- fsPrimitiveConverter
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class SerializedProbeVolume {
+    <<internal>> mode : SerializedProperty
+    <<internal>> size : SerializedProperty
+    <<internal>> fillEmptySpaces : SerializedProperty
+    <<internal>> overridesSubdivision : SerializedProperty
+    <<internal>> highestSubdivisionLevelOverride : SerializedProperty
+    <<internal>> lowestSubdivisionLevelOverride : SerializedProperty
+    <<internal>> objectLayerMask : SerializedProperty
+    <<internal>> minRendererVolumeSize : SerializedProperty
+    <<internal>> overrideRendererFilters : SerializedProperty
+    <<internal>> serializedObject : SerializedObject
+    <<internal>> SerializedProbeVolume(obj:SerializedObject)
+    <<internal>> Apply() : void
+}
+@enduml

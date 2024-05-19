@@ -1,0 +1,6 @@
+@startuml
+class Rotate {
+    - Update() : void
+}
+MonoBehaviour <|-- Rotate
+@enduml

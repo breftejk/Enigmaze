@@ -1,0 +1,8 @@
+@startuml
+class TransformCacheExtensions <<static>> {
+    <<internal>> {static} IsDescendant(transform:T, ancestor:T) : bool
+    {static} - IsDescendant(transform:T, ancestors:T[]) : bool
+    <<internal>> {static} FindRoots(transforms:T[]) : T[]
+    <<internal>> {static} FindRoot(transform:T, transforms:T[]) : T
+}
+@enduml

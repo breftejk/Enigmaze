@@ -1,0 +1,6 @@
+@startuml
+interface IGraphRoot {
+    GetReference() : GraphPointer
+}
+IGraphParent <|-- IGraphRoot
+@enduml

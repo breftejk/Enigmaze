@@ -1,0 +1,6 @@
+@startuml
+class UnityOnBecameVisibleMessageListener <<sealed>> {
+    - OnBecameVisible() : void
+}
+MessageListener <|-- UnityOnBecameVisibleMessageListener
+@enduml

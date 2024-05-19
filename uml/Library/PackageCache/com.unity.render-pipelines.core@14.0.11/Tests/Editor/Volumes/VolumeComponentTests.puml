@@ -1,0 +1,53 @@
+@startuml
+class VolumeComponentAnimCurveTests {
+    {static} - TestAnimationCurveInterp(lhsCurve:AnimationCurve, rhsCurve:AnimationCurve, t:float, startTime:float, endTime:float, numSteps:int, eps:float, debugPrint:bool) : bool
+    {static} - CreateTestCurve(index:int) : AnimationCurve
+    {static} - s_AnimationCurveTestDatas : TestCaseData[]
+    + RenderInterpolateAnimationCurve(lhsCurve:AnimationCurve, rhsCurve:AnimationCurve, t:float) : void
+    {static} - s_AnimationCurveKeysNotSharedTestDatas : TestCaseData[]
+    - m_DefaultComponent : TestAnimationCurveVolumeComponent
+    + Setup() : void
+    + TearDown() : void
+    + AnimationCurveParameterKeysAreNotShared(actionToPerform:ActionTest) : (int, int, int)
+}
+class VolumeComponentEditorTests {
+    - CreateEditorAndComponent(volumeComponentType:Type, component:VolumeComponent, editor:VolumeComponentEditor) : void
+    + TestOverridesChanges() : void
+    {static} - s_AdditionalAttributesTestCaseDatas : TestCaseData[]
+    + AdditionalProperties(volumeComponentType:Type) : string[]
+    <<readonly>> - k_ExpectedResults : (string displayName, string tooltip)[]
+    + TestHandleParameterDecorators() : void
+    + TestSupportedOnAvoidedIfHideInInspector() : void
+}
+class TestAnimationCurveVolumeComponent {
+    + testParameter : AnimationCurveParameter
+}
+class VolumeComponentNoAdditionalAttributes {
+    + parameter : MinFloatParameter
+}
+class VolumeComponentAllAdditionalAttributes {
+    + parameter1 : MinFloatParameter
+    + parameter2 : FloatParameter
+}
+class VolumeComponentMixedAdditionalAttributes {
+    + parameter1 : MinFloatParameter
+    + parameter2 : FloatParameter
+    + parameter3 : MinFloatParameter
+    + parameter4 : FloatParameter
+}
+class VolumeComponentDecorators {
+    + _NoiseTileSize : FloatParameter
+    + _FogColor : ColorParameter
+    + _HighNoiseSpaceFreq : ClampedFloatParameter
+}
+VolumeComponentAnimCurveTests +-- TestAnimationCurveVolumeComponent
+VolumeComponent <|-- TestAnimationCurveVolumeComponent
+VolumeComponentEditorTests +-- VolumeComponentNoAdditionalAttributes
+VolumeComponent <|-- VolumeComponentNoAdditionalAttributes
+VolumeComponentEditorTests +-- VolumeComponentAllAdditionalAttributes
+VolumeComponent <|-- VolumeComponentAllAdditionalAttributes
+VolumeComponentEditorTests +-- VolumeComponentMixedAdditionalAttributes
+VolumeComponent <|-- VolumeComponentMixedAdditionalAttributes
+VolumeComponentEditorTests +-- VolumeComponentDecorators
+VolumeComponent <|-- VolumeComponentDecorators
+@enduml

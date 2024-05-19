@@ -1,0 +1,23 @@
+@startuml
+class SceneViewOpenTilePaletteHelper {
+    - m_RegisteredEventHandlers : bool
+    - m_IsSelectionValid : bool
+    - {static} Initialize() : void
+    - OnEnable() : void
+    - RegisterEventHandlers() : void
+    - OnDisable() : void
+    <<internal>> {static} OpenTilePalette() : void
+    <<internal>> {static} IsActive() : bool
+    <<internal>> {static} IsSelectionValid() : bool
+    - SelectionChanged() : void
+    <<internal>> {static} showInSceneViewActive : bool <<get>> <<set>>
+    <<internal>> {static} PreferencesGUI() : void
+}
+class SceneViewOpenTilePaletteProperties {
+    + {static} <<readonly>> showInSceneViewEditorPref : string = "OpenTilePalette.ShowInSceneView"
+    + {static} <<readonly>> showInSceneViewLookup : string = "Show Open Tile Palette in Scene View"
+    + {static} <<readonly>> showInSceneViewLabel : GUIContent
+}
+"ScriptableSingleton`1" "<SceneViewOpenTilePaletteHelper>" <|-- SceneViewOpenTilePaletteHelper
+SceneViewOpenTilePaletteHelper +-- SceneViewOpenTilePaletteProperties
+@enduml

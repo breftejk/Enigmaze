@@ -1,0 +1,83 @@
+@startuml
+abstract class SpriteFrameModuleBase <<partial>> {
+    - {static} s_Styles : Styles
+    # {static} styles : Styles <<get>>
+    - <<const>> kInspectorWidth : float = 330f
+    - <<const>> kInspectorHeight : float = 170
+    - <<const>> kPivotFieldPrecision : float = 0.0001f
+    - m_Zoom : float = 1.0f
+    - m_GizmoMode : GizmoMode
+    - m_NameElement : VisualElement
+    - m_NameField : TextField
+    - m_PositionElement : VisualElement
+    - m_PositionFieldX : IntegerField
+    - m_PositionFieldY : IntegerField
+    - m_PositionFieldW : IntegerField
+    - m_PositionFieldH : IntegerField
+    - m_BorderFieldL : IntegerField
+    - m_BorderFieldT : IntegerField
+    - m_BorderFieldR : IntegerField
+    - m_BorderFieldB : IntegerField
+    - m_PivotField : EnumField
+    - m_PivotUnitModeField : EnumField
+    - m_CustomPivotElement : VisualElement
+    - m_CustomPivotFieldX : FloatField
+    - m_CustomPivotFieldY : FloatField
+    - m_SelectedFrameInspector : VisualElement
+    - ShouldShowRectScaling() : bool
+    - {static} inspectorRect : Rect <<get>>
+    - RemoveMainUI(mainView:VisualElement) : void
+    # UpdatePositionField(evt:FocusOutEvent) : void
+    - UpdateBorderField(evt:FocusOutEvent) : void
+    - SetupIntegerField(field:IntegerField, onFocusOutEvent:EventCallback<FocusOutEvent>, onChangeEvent:EventCallback<ChangeEvent<int>>) : void
+    - SetDragFieldLimit(field:IntegerField, value:int) : void
+    - OnPositionIntXChange(evt:ChangeEvent<int>) : void
+    - OnPositionIntYChange(evt:ChangeEvent<int>) : void
+    - OnPositionIntWChange(evt:ChangeEvent<int>) : void
+    - OnPositionIntHChange(evt:ChangeEvent<int>) : void
+    - OnBorderIntLChange(evt:ChangeEvent<int>) : void
+    - OnBorderIntBChange(evt:ChangeEvent<int>) : void
+    - OnBorderIntRChange(evt:ChangeEvent<int>) : void
+    - OnBorderIntTChange(evt:ChangeEvent<int>) : void
+    - AddMainUI(mainView:VisualElement) : void
+    - SelectionChange(evt:SpriteSelectionChangeEvent) : void
+    - UIUndoCallback() : void
+    # PopulateSpriteFrameInspectorField() : void
+    - {static} ApplySpriteAlignmentToPivot(pivot:Vector2, rect:Rect, alignment:SpriteAlignment) : Vector2
+    - {static} ConvertFromTextureToNormalizedSpace(texturePos:Vector2, rect:Rect) : Vector2
+    - {static} ConvertFromNormalizedToRectSpace(normalizedPos:Vector2, rect:Rect) : Vector2
+    - {static} ConvertFromRectToNormalizedSpace(rectPos:Vector2, rect:Rect) : Vector2
+    - {static} GetSnapPointsArray(rect:Rect) : Vector2[]
+    # Repaint() : void
+    # HandleGizmoMode() : void
+    # MouseOnTopOfInspector() : bool
+    # HandlePivotHandle() : void
+    # HandleBorderSidePointScalingSliders() : void
+    # HandleBorderCornerScalingHandles() : void
+    # HandleBorderSideScalingHandles() : void
+    # HandleBorderPointSlider(x:float, y:float, mouseCursor:MouseCursor, isHidden:bool, dragDot:GUIStyle, dragDotActive:GUIStyle, color:Color) : void
+    # HandleBorderScaleSlider(x:float, y:float, width:float, height:float, isHorizontal:bool) : float
+    # DrawSpriteRectGizmos() : void
+    # DrawRectGizmos(rects:IEnumerable<Rect>, color:Color) : void
+    + <<override>> DoMainGUI() : void
+    + <<override>> DoPostGUI() : void
+}
+enum GizmoMode {
+    BorderEditing,
+    RectEditing,
+}
+class Styles {
+    + <<readonly>> dragdot : GUIStyle = "U2D.dragDot"
+    + <<readonly>> dragdotactive : GUIStyle = "U2D.dragDotActive"
+    + <<readonly>> createRect : GUIStyle = "U2D.createRect"
+    + <<readonly>> pivotdotactive : GUIStyle = "U2D.pivotDotActive"
+    + <<readonly>> pivotdot : GUIStyle = "U2D.pivotDot"
+    + <<readonly>> dragBorderdot : GUIStyle
+    + <<readonly>> dragBorderDotActive : GUIStyle
+    + <<readonly>> toolbar : GUIStyle
+    + Styles()
+}
+SpriteEditorModuleBase <|-- SpriteFrameModuleBase
+SpriteFrameModuleBase +-- GizmoMode
+SpriteFrameModuleBase +-- Styles
+@enduml

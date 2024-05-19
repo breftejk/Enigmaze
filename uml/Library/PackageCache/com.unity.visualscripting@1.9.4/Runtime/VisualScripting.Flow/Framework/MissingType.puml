@@ -1,0 +1,8 @@
+@startuml
+class MissingType <<sealed>> {
+    + formerType : string <<get>>
+    + formerValue : string <<get>>
+    # <<override>> Definition() : void
+}
+Unit <|-- MissingType
+@enduml

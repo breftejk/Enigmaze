@@ -1,0 +1,6 @@
+@startuml
+class ConversionIndexers <<static>> {
+    - <<const>> k_Version : int = 8
+    <<internal>> {static} ConversionIndexer(context:CustomObjectIndexerTarget, indexer:ObjectIndexer) : void
+}
+@enduml

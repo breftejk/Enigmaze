@@ -1,0 +1,10 @@
+@startuml
+class DockEditorWindow <<static>> {
+    {static} - DockEditorWindow()
+    <<internal>> {static} IsAvailable() : bool
+    <<internal>> {static} To(dockWindow:EditorWindow, window:EditorWindow) : void
+    {static} - InitializeInfo() : void
+    {static} - mAddTabMethod : MethodInfo
+    {static} - mParentField : FieldInfo
+}
+@enduml

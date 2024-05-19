@@ -1,0 +1,35 @@
+@startuml
+class Awaitable <<partial>> {
+    + {static} NextFrameAsync(cancellationToken:CancellationToken) : Awaitable
+    + {static} WaitForSecondsAsync(seconds:float, cancellationToken:CancellationToken) : Awaitable
+    + {static} FixedUpdateAsync(cancellationToken:CancellationToken) : Awaitable
+    + {static} EndOfFrameAsync(cancellationToken:CancellationToken) : Awaitable
+    - {static} _nextFrameAndEndOfFrameWiredUp : bool = false
+    {static} - _nextFrameAndEndOfFrameWiredUpCTRegistration : CancellationTokenRegistration = default
+    {static} - EnsureDelayedCallWiredUp() : void
+    {static} - OnDelayedCallManagerCleared() : void
+    - {static} <<readonly>> _nextFrameAwaitables : DoubleBufferedAwaitableList
+    - {static} <<readonly>> _endOfFrameAwaitables : DoubleBufferedAwaitableList
+    - {static} OnUpdate() : void
+    - {static} OnEndOfFrame() : void
+    - {static} <<extern>> NextFrameInternal() : IntPtr
+    - {static} <<extern>> WaitForScondsInternal(seconds:float) : IntPtr
+    - {static} <<extern>> FixedUpdateInternal() : IntPtr
+    - {static} <<extern>> EndOfFrameInternal() : IntPtr
+    - {static} <<extern>> WireupNextFrameAndEndOfFrameCallbacks() : void
+}
+struct AwaitableAndFrameIndex {
+    + Awaitable : Awaitable <<get>>
+    + FrameIndex : int <<get>>
+    + AwaitableAndFrameIndex(awaitable:Awaitable, frameIndex:int)
+}
+class DoubleBufferedAwaitableList {
+    - _awaitables : List<AwaitableAndFrameIndex>
+    - _scratch : List<AwaitableAndFrameIndex>
+    + SwapAndComplete() : void
+    + Add(item:Awaitable, frameIndex:int) : void
+    + Clear() : void
+}
+Awaitable +-- AwaitableAndFrameIndex
+Awaitable +-- DoubleBufferedAwaitableList
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class ImportColumnHeaderToggle {
+    <<internal>> {static} <<readonly>> ussClassName : string = "unity-dropdown-toggle"
+    <<internal>> {static} <<readonly>> dropdownClassName : string
+    <<readonly>> - m_Checkmark : Toggle
+    <<readonly>> - m_DropdownButton : Button
+    - m_ImportToggleChangeCallback : Action<bool>
+    + ImportColumnHeaderToggle(dropdownClickEvent:Action, importToggleChange:Action<bool>)
+    - OnHeaderImportToggleChange(b:ChangeEvent<bool>) : void
+    + SetHeaderImportToggleValue(b:bool) : void
+}
+VisualElement <|-- ImportColumnHeaderToggle
+@enduml

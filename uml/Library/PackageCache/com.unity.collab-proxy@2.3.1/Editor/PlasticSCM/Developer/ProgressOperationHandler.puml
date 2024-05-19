@@ -1,0 +1,25 @@
+@startuml
+class ProgressOperationHandler {
+    <<internal>> ProgressOperationHandler(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow)
+    <<internal>> Update(elapsedSeconds:double) : void
+    <<internal>> CheckOperationInProgress() : bool
+    <<internal>> IsOperationInProgress() : bool
+    <<internal>> ShowProgress() : void
+    <<internal>> RefreshProgress(progressData:ProgressData) : void
+    <<internal>> EndProgress() : void
+    <<internal>> ShowUpdateProgress(title:string, notifier:UpdateNotifier) : void
+    <<internal>> ShowCheckinProgress() : void
+    <<internal>> RefreshCheckinProgress(checkinStatus:CheckinStatus, progressData:BuildProgressSpeedAndRemainingTime.ProgressData) : void
+    <<internal>> CancelCheckinProgress() : void
+    <<internal>> EndUpdateProgress() : void
+    <<internal>> EndCheckinProgress() : void
+    <<internal>> HasCheckinCancelled() : bool
+    - mSecondsSinceLastProgressUpdate : double = 0
+    - mProgress : GenericProgress
+    - mUpdateProgress : UpdateProgress
+    - mCheckinProgress : CheckinProgress
+    - mWkInfo : WorkspaceInfo
+    - mWorkspaceWindow : WorkspaceWindow
+    <<const>> - UPDATE_INTERVAL_SECONDS : double = 0.5
+}
+@enduml

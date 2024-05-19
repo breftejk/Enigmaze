@@ -1,0 +1,26 @@
+@startuml
+abstract class "BeforeAfterTestCommandBase`1"<T> {
+    - m_BeforeErrorPrefix : string
+    - m_AfterErrorPrefix : string
+    - m_SkipYieldAfterActions : bool
+    # BeforeAfterTestCommandBase(innerCommand:TestCommand, beforeErrorPrefix:string, afterErrorPrefix:string, skipYieldAfterActions:bool)
+    <<internal>> GetUtcNow : Func<long>
+    # BeforeActions : T[]
+    # AfterActions : T[]
+    # {static} GetActions(cacheStorage:IDictionary<Type, List<MethodInfo>>, fixtureType:Type, attributeType:Type, returnType:Type) : MethodInfo[]
+    # {static} GetTestActions(cacheStorage:IDictionary<MethodInfo,  List<T>>, methodInfo:MethodInfo) : T[]
+    - {static} GetMethodsWithAttributeFromFixture(fixtureType:Type, setUpType:Type, returnType:Type) : List<MethodInfo>
+    # {abstract} InvokeBefore(action:T, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # {abstract} InvokeAfter(action:T, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<virtual>> MoveBeforeEnumerator(enumerator:IEnumerator, test:Test) : bool
+    # <<virtual>> MoveAfterEnumerator(enumerator:IEnumerator, test:Test) : bool
+    # {abstract} GetState(context:UnityTestExecutionContext) : BeforeAfterTestCommandState
+    + ExecuteEnumerable(context:ITestExecutionContext) : IEnumerable
+    + <<override>> Execute(context:ITestExecutionContext) : TestResult
+    - {static} pcHelper : TestCommandPcHelper
+    - {static} CoroutineTimedOut(unityContext:ITestExecutionContext) : bool
+    <<internal>> {static} ActivePcHelper : TestCommandPcHelper <<get>> <<set>>
+}
+DelegatingTestCommand <|-- "BeforeAfterTestCommandBase`1"
+IEnumerableTestMethodCommand <|-- "BeforeAfterTestCommandBase`1"
+@enduml

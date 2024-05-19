@@ -1,0 +1,6 @@
+@startuml
+class ShaderExtensionsTests {
+    {static} - s_TestCaseDatas : TestCaseData[]
+    + TryGetRenderPipelineTag(shader:Shader) : (bool, string)
+}
+@enduml

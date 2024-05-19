@@ -1,0 +1,7 @@
+@startuml
+class "NesterStateTransitionAnalyser`1"<TGraphNesterStateTransition> {
+    + NesterStateTransitionAnalyser(reference:GraphReference, transition:TGraphNesterStateTransition)
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"StateTransitionAnalyser`1" "<TGraphNesterStateTransition>" <|-- "NesterStateTransitionAnalyser`1"
+@enduml

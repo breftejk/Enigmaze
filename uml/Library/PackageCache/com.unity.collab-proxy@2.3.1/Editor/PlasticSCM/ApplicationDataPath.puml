@@ -1,0 +1,8 @@
+@startuml
+class ApplicationDataPath <<static>> {
+    <<internal>> {static} Get() : string
+    <<internal>> {static} InitializeForTesting(applicationDataPath:string) : void
+    <<internal>> {static} Reset() : void
+    {static} - mApplicationDataPath : string
+}
+@enduml

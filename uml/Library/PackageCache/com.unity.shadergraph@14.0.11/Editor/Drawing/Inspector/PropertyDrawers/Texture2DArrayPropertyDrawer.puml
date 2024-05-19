@@ -1,0 +1,9 @@
+@startuml
+class Texture2DArrayPropertyDrawer {
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:Texture2DArray, labelName:string, propertyColorField:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- Texture2DArrayPropertyDrawer
+@enduml

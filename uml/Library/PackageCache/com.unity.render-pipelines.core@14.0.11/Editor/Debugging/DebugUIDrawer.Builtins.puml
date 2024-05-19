@@ -1,0 +1,112 @@
+@startuml
+class DebugUIDrawerValue <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.Value) : void
+}
+class DebugUIDrawerValueTuple <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.ValueTuple) : void
+}
+class DebugUIDrawerProgressBarValue <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.ProgressBarValue) : void
+}
+class DebugUIDrawerButton <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.Button) : void
+}
+class DebugUIDrawerBoolField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.BoolField, state:DebugStateBool) : bool
+}
+class DebugUIDrawerHistoryBoolField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.HistoryBoolField, state:DebugStateBool) : bool
+}
+class DebugUIDrawerIntField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.IntField, state:DebugStateInt) : int
+}
+class DebugUIDrawerUIntField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.UIntField, state:DebugStateUInt) : uint
+}
+class DebugUIDrawerFloatField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.FloatField, state:DebugStateFloat) : float
+}
+class DebugUIDrawerEnumField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.EnumField, state:DebugStateEnum) : int
+}
+class DebugUIDrawerObjectPopupField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.ObjectPopupField, state:DebugStateObject) : UnityEngine.Object
+}
+class DebugUIDrawerHistoryEnumField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.HistoryEnumField, state:DebugStateEnum) : int
+}
+class DebugUIDrawerBitField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.BitField, state:DebugStateFlags) : Enum
+}
+class DebugUIDrawerFoldout <<sealed>> {
+    <<const>> - k_HeaderVerticalMargin : int = 2
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+class DebugUIDrawerColorField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.ColorField, state:DebugStateColor) : Color
+}
+class DebugUIDrawerVector2Field <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.Vector2Field, state:DebugStateVector2) : Vector2
+}
+class DebugUIDrawerVector3Field <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.Vector3Field, state:DebugStateVector3) : Vector3
+}
+class DebugUIDrawerVector4Field <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.Vector4Field, state:DebugStateVector4) : Vector4
+}
+class DebugUIDrawerObjectField <<sealed>> {
+    # <<override>> DoGUI(rect:Rect, label:GUIContent, field:DebugUI.ObjectField, state:DebugStateObject) : UnityEngine.Object
+}
+class DebugUIDrawerObjectListField <<sealed>> {
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    <<internal>> {static} DoObjectList(rect:Rect, widget:DebugUI.ObjectListField, objects:UnityEngine.Object[]) : void
+}
+class DebugUIDrawerMessageBox <<sealed>> {
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+}
+class DebugUIDrawerContainer <<sealed>> {
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+class DebugUIDrawerHBox <<sealed>> {
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+class DebugUIDrawerVBox <<sealed>> {
+    + <<override>> Begin(widget:DebugUI.Widget, state:DebugState) : void
+    + <<override>> End(widget:DebugUI.Widget, state:DebugState) : void
+}
+class DebugUIDrawerTable <<sealed>> {
+    + <<override>> OnGUI(widget:DebugUI.Widget, state:DebugState) : bool
+    <<internal>> GetRowHeight(row:DebugUI.Table.Row, visibleColumns:int[]) : float
+    <<internal>> DrawOutline(rect:Rect) : Rect
+    <<internal>> DisplayChild(rect:Rect, child:DebugUI.Widget) : void
+}
+"DebugUIWidgetDrawer`1" "<DebugUI.Value>" <|-- DebugUIDrawerValue
+"DebugUIWidgetDrawer`1" "<DebugUI.ValueTuple>" <|-- DebugUIDrawerValueTuple
+"DebugUIWidgetDrawer`1" "<DebugUI.ProgressBarValue>" <|-- DebugUIDrawerProgressBarValue
+"DebugUIWidgetDrawer`1" "<DebugUI.Button>" <|-- DebugUIDrawerButton
+"DebugUIFieldDrawer`3" "<bool,DebugUI.BoolField,DebugStateBool>" <|-- DebugUIDrawerBoolField
+"DebugUIFieldDrawer`3" "<bool,DebugUI.HistoryBoolField,DebugStateBool>" <|-- DebugUIDrawerHistoryBoolField
+"DebugUIFieldDrawer`3" "<int,DebugUI.IntField,DebugStateInt>" <|-- DebugUIDrawerIntField
+"DebugUIFieldDrawer`3" "<uint,DebugUI.UIntField,DebugStateUInt>" <|-- DebugUIDrawerUIntField
+"DebugUIFieldDrawer`3" "<float,DebugUI.FloatField,DebugStateFloat>" <|-- DebugUIDrawerFloatField
+"DebugUIFieldDrawer`3" "<int,DebugUI.EnumField,DebugStateEnum>" <|-- DebugUIDrawerEnumField
+"DebugUIFieldDrawer`3" "<UnityEngine.Object,DebugUI.ObjectPopupField,DebugStateObject>" <|-- DebugUIDrawerObjectPopupField
+"DebugUIFieldDrawer`3" "<int,DebugUI.HistoryEnumField,DebugStateEnum>" <|-- DebugUIDrawerHistoryEnumField
+"DebugUIFieldDrawer`3" "<Enum,DebugUI.BitField,DebugStateFlags>" <|-- DebugUIDrawerBitField
+DebugUIDrawer <|-- DebugUIDrawerFoldout
+"DebugUIFieldDrawer`3" "<Color,DebugUI.ColorField,DebugStateColor>" <|-- DebugUIDrawerColorField
+"DebugUIFieldDrawer`3" "<Vector2,DebugUI.Vector2Field,DebugStateVector2>" <|-- DebugUIDrawerVector2Field
+"DebugUIFieldDrawer`3" "<Vector3,DebugUI.Vector3Field,DebugStateVector3>" <|-- DebugUIDrawerVector3Field
+"DebugUIFieldDrawer`3" "<Vector4,DebugUI.Vector4Field,DebugStateVector4>" <|-- DebugUIDrawerVector4Field
+"DebugUIFieldDrawer`3" "<UnityEngine.Object,DebugUI.ObjectField,DebugStateObject>" <|-- DebugUIDrawerObjectField
+DebugUIDrawer <|-- DebugUIDrawerObjectListField
+DebugUIDrawer <|-- DebugUIDrawerMessageBox
+DebugUIDrawer <|-- DebugUIDrawerContainer
+DebugUIDrawer <|-- DebugUIDrawerHBox
+DebugUIDrawer <|-- DebugUIDrawerVBox
+DebugUIDrawer <|-- DebugUIDrawerTable
+@enduml

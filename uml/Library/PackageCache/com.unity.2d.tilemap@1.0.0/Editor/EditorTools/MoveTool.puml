@@ -1,0 +1,14 @@
+@startuml
+class MoveTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string = "|Move selection with active brush ({0&#125;)"
+    + {static} shortcutId : string = "Grid Painting/Move"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- MoveTool
+MoveTool +-- Styles
+@enduml

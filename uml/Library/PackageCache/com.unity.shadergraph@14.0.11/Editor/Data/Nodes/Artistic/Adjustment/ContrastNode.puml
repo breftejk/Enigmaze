@@ -1,0 +1,8 @@
+@startuml
+class ContrastNode {
+    + ContrastNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Contrast(In:Vector3, Contrast:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- ContrastNode
+@enduml

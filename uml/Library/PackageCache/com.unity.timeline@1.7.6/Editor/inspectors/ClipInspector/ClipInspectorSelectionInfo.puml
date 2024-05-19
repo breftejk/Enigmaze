@@ -1,0 +1,35 @@
+@startuml
+class ClipInspectorSelectionInfo {
+    + start : double
+    + end : double
+    + duration : double
+    + multipleClipStart : double
+    + multipleClipEnd : double
+    + smallestDuration : double
+    + hasMultipleStartValues : bool
+    + hasMultipleEndValues : bool
+    + hasMultipleDurationValues : bool
+    + supportsExtrapolation : bool
+    + supportsClipIn : bool
+    + supportsSpeedMultiplier : bool
+    + supportsBlending : bool
+    + hasBlendIn : bool
+    + hasBlendOut : bool
+    + maxMixIn : double
+    + maxMixOut : double
+    + selectedAssetTypesAreHomogeneous : bool
+    + containsAtLeastTwoClipsOnTheSameTrack : bool
+    + uniqueParentTracks : HashSet<TrackAsset>
+    + clips : ICollection<TimelineClip> <<get>>
+    + ClipInspectorSelectionInfo(selectedClips:ICollection<TimelineClip>)
+    - Build() : void
+    + Update() : void
+    - InitSelectionBounds(clip:TimelineClip) : void
+    - InitMultipleClipBounds(firstSelectedClip:TimelineClip) : void
+    - UpdateSmallestDuration(clip:TimelineClip) : void
+    - UpdateClipCaps(clip:TimelineClip) : void
+    - UpdateMultipleValues(clip:TimelineClip) : void
+    - UpdateBlends(clip:TimelineClip) : void
+    - UpdateMixMaximums(clip:TimelineClip) : void
+}
+@enduml

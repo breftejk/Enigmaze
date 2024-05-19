@@ -1,0 +1,19 @@
+@startuml
+class GridLayoutGroupTests {
+    <<const>> - kPrefabPath : string = "Assets/Resources/GridLayoutGroupTests.prefab"
+    - m_PrefabRoot : GameObject
+    - m_LayoutGroup : GridLayoutGroup
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    + TestFlexibleCalculateLayout() : void
+    + TestHorizontallyContrainedCalculateLayoutHorizontal() : void
+    + TestVerticallyContrainedCalculateLayoutHorizontal() : void
+    + TestHorizontallyContrainedCalculateLayoutVertical() : void
+    + TestVerticallyContrainedCalculateLayoutVertical() : void
+    + TestHorizontallyContrainedCalculateLayoutHorizontal_WithChildrenToMove() : void
+    + TestVerticallyContrainedCalculateLayoutVertical_WithChildrenToMove() : void
+}
+IPrebuildSetup <|-- GridLayoutGroupTests
+@enduml

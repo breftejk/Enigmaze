@@ -1,0 +1,12 @@
+@startuml
+class DefaultPoseScope {
+    - m_Disposed : bool
+    - m_Skeleton : SkeletonCache
+    - m_Pose : BonePose[]
+    - m_DoRestorePose : bool = false
+    - m_UseLocalPose : bool
+    + DefaultPoseScope(skeleton:SkeletonCache, useLocalPose:bool)
+    + Dispose() : void
+}
+IDisposable <|-- DefaultPoseScope
+@enduml

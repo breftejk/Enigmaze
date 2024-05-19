@@ -1,0 +1,5 @@
+@startuml
+interface IAssemblyLoadProxy {
+    Load(assemblyString:string) : IAssemblyWrapper
+}
+@enduml

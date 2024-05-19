@@ -1,0 +1,61 @@
+@startuml
+struct PDNDecoderData {
+    + Rect : PDNWrapper.Rectangle
+    + SurfaceWidth : int
+    + SurfaceByteDepth : int
+    + DecoderType : DecodeType
+    + ColorChannel0 : NativeArray<byte>
+    + ColorChannel1 : NativeArray<byte>
+    + ColorChannel2 : NativeArray<byte>
+    + ColorChannel3 : NativeArray<byte>
+    + ColorModeData : NativeArray<byte>
+    + DecodedImage : NativeArray<Color32>
+}
+struct PDNDecoderJob {
+    + data : PDNDecoderData
+    + Execute(index:int) : void
+    - SetPDNRowRgb32(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowGrayscale32(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowRgb(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowCmyk(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowBitmap(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowGrayscale(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowIndexed(dstStart:int, dstStops:int, idxSrc:int) : void
+    - SetPDNRowLab(dstStart:int, dstStops:int, idxSrc:int) : void
+}
+struct PDNAlphaMaskData {
+    + Rect : PDNWrapper.Rectangle
+    + SurfaceWidth : int
+    + SurfaceByteDepth : int
+    + HasAlphaChannel : int
+    + HasUserAlphaMask : int
+    + UserMaskInvertOnBlend : int
+    + UserMaskRect : PDNWrapper.Rectangle
+    + UserMaskContextRect : PDNWrapper.Rectangle
+    + HasLayerAlphaMask : int
+    + LayerMaskInvertOnBlend : int
+    + LayerMaskRect : PDNWrapper.Rectangle
+    + LayerMaskContextRect : PDNWrapper.Rectangle
+    + AlphaChannel0 : NativeArray<byte>
+    + UserMask : NativeArray<byte>
+    + UserAlphaMask : NativeArray<byte>
+    + UserAlphaMaskEmpty : NativeArray<byte>
+    + LayerMask : NativeArray<byte>
+    + LayerAlphaMask : NativeArray<byte>
+    + LayerAlphaMaskEmpty : NativeArray<byte>
+    + DecodedImage : NativeArray<Color32>
+    + UserMaskBackgroundColor : byte
+    + LayerMaskBackgroundColor : byte
+}
+struct PDNAlphaMaskJob {
+    + data : PDNAlphaMaskData
+    + Execute() : void
+    - SetPDNAlphaRow(dstStart:int, dstStops:int, idxSrc:int) : void
+    - ApplyPDNMask(dstStart:int, dstStops:int) : void
+    - DecodeMaskAlphaRow32(Alpha:NativeArray<byte>, dstStart:int, dstStops:int, Mask:NativeArray<byte>, maskStart:int) : void
+    - DecodeMaskAlphaRow(Alpha:NativeArray<byte>, dstStart:int, dstStops:int, Mask:NativeArray<byte>, maskStart:int, byteDepth:int) : void
+    - <<unsafe>> GetMaskAlphaRow(idxSrc:int, alphaBuffer:NativeArray<byte>, alphaBufferEmpty:NativeArray<byte>, maskChannel:NativeArray<byte>, MaskInvertOnBlend:int, MaskBackgroundColor:byte, MaskContextRect:PDNWrapper.Rectangle, MaskRect:PDNWrapper.Rectangle) : void
+}
+IJobParallelFor <|-- PDNDecoderJob
+IJob <|-- PDNAlphaMaskJob
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class GeometryNode {
+    + GeometryNode()
+    + <<virtual>> validSpaces : List<CoordinateSpace> <<get>>
+    - m_Space : CoordinateSpace
+    + spacePopup : PopupList <<get>> <<set>>
+    + space : CoordinateSpace <<get>>
+    + <<override>> hasPreview : bool <<get>>
+}
+AbstractMaterialNode <|-- GeometryNode
+@enduml

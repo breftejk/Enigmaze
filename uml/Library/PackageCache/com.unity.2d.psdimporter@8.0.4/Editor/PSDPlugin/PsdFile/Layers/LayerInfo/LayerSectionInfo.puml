@@ -1,0 +1,24 @@
+@startuml
+enum LayerSectionType {
+    Layer= 0,
+    OpenFolder= 1,
+    ClosedFolder= 2,
+    SectionDivider= 3,
+}
+enum LayerSectionSubtype {
+    Normal= 0,
+    SceneGroup= 1,
+}
+class LayerSectionInfo {
+    + <<override>> Signature : string <<get>>
+    - key : string
+    + <<override>> Key : string <<get>>
+    + SectionType : LayerSectionType <<get>> <<set>>
+    - subtype : LayerSectionSubtype?
+    + Subtype : LayerSectionSubtype <<get>> <<set>>
+    - blendModeKey : string
+    + BlendModeKey : string <<get>> <<set>>
+    + LayerSectionInfo(reader:PsdBinaryReader, key:string, dataLength:int)
+}
+LayerInfo <|-- LayerSectionInfo
+@enduml

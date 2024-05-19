@@ -1,0 +1,162 @@
+@startuml
+abstract class TMP_BaseEditorPanel {
+    {static} <<readonly>> - k_RtlToggleLabel : GUIContent
+    {static} <<readonly>> - k_FontAssetLabel : GUIContent
+    {static} <<readonly>> - k_MaterialPresetLabel : GUIContent
+    {static} <<readonly>> - k_StyleLabel : GUIContent
+    {static} <<readonly>> - k_AutoSizeLabel : GUIContent
+    {static} <<readonly>> - k_FontSizeLabel : GUIContent
+    {static} <<readonly>> - k_AutoSizeOptionsLabel : GUIContent
+    {static} <<readonly>> - k_MinLabel : GUIContent
+    {static} <<readonly>> - k_MaxLabel : GUIContent
+    {static} <<readonly>> - k_WdLabel : GUIContent
+    {static} <<readonly>> - k_LineLabel : GUIContent
+    {static} <<readonly>> - k_FontStyleLabel : GUIContent
+    {static} <<readonly>> - k_BoldLabel : GUIContent
+    {static} <<readonly>> - k_ItalicLabel : GUIContent
+    {static} <<readonly>> - k_UnderlineLabel : GUIContent
+    {static} <<readonly>> - k_StrikethroughLabel : GUIContent
+    {static} <<readonly>> - k_LowercaseLabel : GUIContent
+    {static} <<readonly>> - k_UppercaseLabel : GUIContent
+    {static} <<readonly>> - k_SmallcapsLabel : GUIContent
+    {static} <<readonly>> - k_ColorModeLabel : GUIContent
+    {static} <<readonly>> - k_BaseColorLabel : GUIContent
+    {static} <<readonly>> - k_ColorPresetLabel : GUIContent
+    {static} <<readonly>> - k_ColorGradientLabel : GUIContent
+    {static} <<readonly>> - k_CorenerColorsLabel : GUIContent
+    {static} <<readonly>> - k_OverrideTagsLabel : GUIContent
+    {static} <<readonly>> - k_SpacingOptionsLabel : GUIContent
+    {static} <<readonly>> - k_CharacterSpacingLabel : GUIContent
+    {static} <<readonly>> - k_WordSpacingLabel : GUIContent
+    {static} <<readonly>> - k_LineSpacingLabel : GUIContent
+    {static} <<readonly>> - k_ParagraphSpacingLabel : GUIContent
+    {static} <<readonly>> - k_AlignmentLabel : GUIContent
+    {static} <<readonly>> - k_WrapMixLabel : GUIContent
+    {static} <<readonly>> - k_WrappingLabel : GUIContent
+    {static} <<readonly>> - k_WrappingOptions : GUIContent[]
+    {static} <<readonly>> - k_OverflowLabel : GUIContent
+    {static} <<readonly>> - k_MarginsLabel : GUIContent
+    {static} <<readonly>> - k_GeometrySortingLabel : GUIContent
+    {static} <<readonly>> - k_IsTextObjectScaleStatic : GUIContent
+    {static} <<readonly>> - k_RichTextLabel : GUIContent
+    {static} <<readonly>> - k_EscapeCharactersLabel : GUIContent
+    {static} <<readonly>> - k_VisibleDescenderLabel : GUIContent
+    {static} <<readonly>> - k_SpriteAssetLabel : GUIContent
+    {static} <<readonly>> - k_StyleSheetAssetLabel : GUIContent
+    {static} <<readonly>> - k_HorizontalMappingLabel : GUIContent
+    {static} <<readonly>> - k_VerticalMappingLabel : GUIContent
+    {static} <<readonly>> - k_LineOffsetLabel : GUIContent
+    {static} <<readonly>> - k_KerningLabel : GUIContent
+    {static} <<readonly>> - k_PaddingLabel : GUIContent
+    {static} <<readonly>> - k_LeftLabel : GUIContent
+    {static} <<readonly>> - k_TopLabel : GUIContent
+    {static} <<readonly>> - k_RightLabel : GUIContent
+    {static} <<readonly>> - k_BottomLabel : GUIContent
+    # {static} <<readonly>> k_ExtraSettingsLabel : GUIContent
+    # {static} k_UiStateLabel : string[]
+    {static} - k_AvailableStyles : Dictionary<int, TMP_Style>
+    # m_TextStyleIndexLookup : Dictionary<int, int>
+    # {static} s_EventId : int
+    + selAlignGridA : int
+    + selAlignGridB : int
+    # m_TextProp : SerializedProperty
+    # m_IsRightToLeftProp : SerializedProperty
+    # m_RtlText : string
+    # m_FontAssetProp : SerializedProperty
+    # m_FontSharedMaterialProp : SerializedProperty
+    # m_MaterialPresets : Material[]
+    # m_MaterialPresetNames : GUIContent[]
+    # m_MaterialPresetIndexLookup : Dictionary<int, int>
+    # m_MaterialPresetSelectionIndex : int
+    # m_IsPresetListDirty : bool
+    # m_Styles : List<TMP_Style>
+    # m_StyleNames : GUIContent[]
+    # m_StyleSelectionIndex : int
+    # m_FontStyleProp : SerializedProperty
+    # m_FontColorProp : SerializedProperty
+    # m_EnableVertexGradientProp : SerializedProperty
+    # m_FontColorGradientProp : SerializedProperty
+    # m_FontColorGradientPresetProp : SerializedProperty
+    # m_OverrideHtmlColorProp : SerializedProperty
+    # m_FontSizeProp : SerializedProperty
+    # m_FontSizeBaseProp : SerializedProperty
+    # m_AutoSizingProp : SerializedProperty
+    # m_FontSizeMinProp : SerializedProperty
+    # m_FontSizeMaxProp : SerializedProperty
+    # m_LineSpacingMaxProp : SerializedProperty
+    # m_CharWidthMaxAdjProp : SerializedProperty
+    # m_CharacterSpacingProp : SerializedProperty
+    # m_WordSpacingProp : SerializedProperty
+    # m_LineSpacingProp : SerializedProperty
+    # m_ParagraphSpacingProp : SerializedProperty
+    # m_TextAlignmentProp : SerializedProperty
+    # m_HorizontalAlignmentProp : SerializedProperty
+    # m_VerticalAlignmentProp : SerializedProperty
+    # m_HorizontalMappingProp : SerializedProperty
+    # m_VerticalMappingProp : SerializedProperty
+    # m_UvLineOffsetProp : SerializedProperty
+    # m_EnableWordWrappingProp : SerializedProperty
+    # m_WordWrappingRatiosProp : SerializedProperty
+    # m_TextOverflowModeProp : SerializedProperty
+    # m_PageToDisplayProp : SerializedProperty
+    # m_LinkedTextComponentProp : SerializedProperty
+    # m_ParentLinkedTextComponentProp : SerializedProperty
+    # m_EnableKerningProp : SerializedProperty
+    # m_IsRichTextProp : SerializedProperty
+    # m_HasFontAssetChangedProp : SerializedProperty
+    # m_EnableExtraPaddingProp : SerializedProperty
+    # m_CheckPaddingRequiredProp : SerializedProperty
+    # m_EnableEscapeCharacterParsingProp : SerializedProperty
+    # m_UseMaxVisibleDescenderProp : SerializedProperty
+    # m_GeometrySortingOrderProp : SerializedProperty
+    # m_IsTextObjectScaleStaticProp : SerializedProperty
+    # m_SpriteAssetProp : SerializedProperty
+    # m_StyleSheetAssetProp : SerializedProperty
+    # m_TextStyleHashCodeProp : SerializedProperty
+    # m_MarginProp : SerializedProperty
+    # m_ColorModeProp : SerializedProperty
+    # m_HavePropertiesChanged : bool
+    # m_TextComponent : TMP_Text
+    # m_PreviousLinkedTextComponent : TMP_Text
+    # m_RectTransform : RectTransform
+    # m_TargetMaterial : Material
+    # m_RectCorners : Vector3[]
+    # m_HandlePoints : Vector3[]
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    - ON_TEXT_STYLE_CHANGED(isChanged:bool) : void
+    + <<override>> OnInspectorGUI() : void
+    + OnSceneGUI() : void
+    # DrawTextInput() : void
+    # DrawMainSettings() : void
+    - DrawFont() : void
+    - DrawColor() : void
+    - DrawSpacing() : void
+    - DrawAlignment() : void
+    - DrawWrappingOverflow() : void
+    # {abstract} DrawExtraSettings() : void
+    # DrawMargins() : void
+    # DrawGeometrySorting() : void
+    # DrawIsTextObjectScaleStatic() : void
+    # DrawRichText() : void
+    # DrawParsing() : void
+    # DrawSpriteAsset() : void
+    # DrawStyleSheet() : void
+    # DrawTextureMapping() : void
+    # DrawKerning() : void
+    # DrawPadding() : void
+    # GetMaterialPresets() : GUIContent[]
+    # GetStyleNames() : GUIContent[]
+    # DrawMarginProperty(property:SerializedProperty, label:GUIContent) : void
+    - DrawMarginField(position:Rect, label:string, value:float) : float
+    # DrawPropertySlider(label:GUIContent, property:SerializedProperty) : void
+    # {abstract} IsMixSelectionTypes() : bool
+    # {abstract} OnUndoRedo() : void
+}
+struct Foldout {
+    + {static} extraSettings : bool = false
+    + {static} materialInspector : bool = true
+}
+Editor <|-- TMP_BaseEditorPanel
+TMP_BaseEditorPanel +-- Foldout
+@enduml

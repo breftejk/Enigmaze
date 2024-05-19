@@ -1,0 +1,14 @@
+@startuml
+class CreateWorkspaceViewState {
+    <<internal>> RepositoryName : string <<get>> <<set>>
+    <<internal>> WorkspaceName : string <<get>> <<set>>
+    <<internal>> WorkspaceMode : WorkspaceModes <<get>> <<set>>
+    <<internal>> ProgressData : ProgressControlsForViews.Data <<get>> <<set>>
+    <<internal>> {static} BuildForProjectDefaults() : CreateWorkspaceViewState
+}
+enum WorkspaceModes {
+    Developer,
+    Gluon,
+}
+CreateWorkspaceViewState +-- WorkspaceModes
+@enduml

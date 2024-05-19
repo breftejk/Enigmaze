@@ -1,0 +1,31 @@
+@startuml
+class fsJsonParser {
+    - fsJsonParser(input:string)
+    - <<readonly>> _cachedStringBuilder : StringBuilder
+    - _start : int
+    - _input : string
+    - MakeFailure(message:string) : fsResult
+    - TryMoveNext() : bool
+    - HasValue() : bool
+    - HasValue(offset:int) : bool
+    - Character() : char
+    - Character(offset:int) : char
+    - SkipSpace() : void
+    - TryParseExact(content:string) : fsResult
+    - TryParseTrue(data:fsData) : fsResult
+    - TryParseFalse(data:fsData) : fsResult
+    - TryParseNull(data:fsData) : fsResult
+    - IsSeparator(c:char) : bool
+    - TryParseNumber(data:fsData) : fsResult
+    - TryParseString(str:string) : fsResult
+    - TryParseArray(arr:fsData) : fsResult
+    - TryParseObject(obj:fsData) : fsResult
+    - RunParse(data:fsData) : fsResult
+    + {static} Parse(input:string, data:fsData) : fsResult
+    + {static} Parse(input:string) : fsData
+    - IsHex(c:char) : bool
+    - ParseSingleChar(c1:char, multipliyer:uint) : uint
+    - ParseUnicode(c1:char, c2:char, c3:char, c4:char) : uint
+    - TryUnescapeChar(escaped:char) : fsResult
+}
+@enduml

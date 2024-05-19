@@ -1,0 +1,75 @@
+@startuml
+class TextMeshProUGUI <<partial>> {
+    - m_hasFontAssetChanged : bool = false
+    # m_subTextObjects : TMP_SubMeshUI[]
+    - m_previousLossyScaleY : float
+    - m_RectTransformCorners : Vector3[]
+    - m_canvasRenderer : CanvasRenderer
+    - m_canvas : Canvas
+    - m_CanvasScaleFactor : float
+    - m_isFirstAllocation : bool
+    - m_max_characters : int = 8
+    - m_baseMaterial : Material
+    - m_isScrollRegionSet : bool
+    - m_maskOffset : Vector4
+    - m_EnvMapMatrix : Matrix4x4
+    - m_isRegisteredForEvents : bool
+    - {static} k_GenerateTextMarker : ProfilerMarker
+    - {static} k_SetArraySizesMarker : ProfilerMarker
+    - {static} k_GenerateTextPhaseIMarker : ProfilerMarker
+    - {static} k_ParseMarkupTextMarker : ProfilerMarker
+    - {static} k_CharacterLookupMarker : ProfilerMarker
+    - {static} k_HandleGPOSFeaturesMarker : ProfilerMarker
+    - {static} k_CalculateVerticesPositionMarker : ProfilerMarker
+    - {static} k_ComputeTextMetricsMarker : ProfilerMarker
+    - {static} k_HandleVisibleCharacterMarker : ProfilerMarker
+    - {static} k_HandleWhiteSpacesMarker : ProfilerMarker
+    - {static} k_HandleHorizontalLineBreakingMarker : ProfilerMarker
+    - {static} k_HandleVerticalLineBreakingMarker : ProfilerMarker
+    - {static} k_SaveGlyphVertexDataMarker : ProfilerMarker
+    - {static} k_ComputeCharacterAdvanceMarker : ProfilerMarker
+    - {static} k_HandleCarriageReturnMarker : ProfilerMarker
+    - {static} k_HandleLineTerminationMarker : ProfilerMarker
+    - {static} k_SavePageInfoMarker : ProfilerMarker
+    - {static} k_SaveProcessingStatesMarker : ProfilerMarker
+    - {static} k_GenerateTextPhaseIIMarker : ProfilerMarker
+    - {static} k_GenerateTextPhaseIIIMarker : ProfilerMarker
+    # <<override>> Awake() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> LoadFontAsset() : void
+    - GetCanvas() : Canvas
+    - UpdateEnvMapMatrix() : void
+    - EnableMasking() : void
+    - DisableMasking() : void
+    - UpdateMask() : void
+    # <<override>> GetMaterial(mat:Material) : Material
+    # <<override>> GetMaterials(mats:Material[]) : Material[]
+    # <<override>> SetSharedMaterial(mat:Material) : void
+    # <<override>> GetSharedMaterials() : Material[]
+    # <<override>> SetSharedMaterials(materials:Material[]) : void
+    # <<override>> SetOutlineThickness(thickness:float) : void
+    # <<override>> SetFaceColor(color:Color32) : void
+    # <<override>> SetOutlineColor(color:Color32) : void
+    # <<override>> SetShaderDepth() : void
+    # <<override>> SetCulling() : void
+    - SetPerspectiveCorrection() : void
+    - SetMeshArrays(size:int) : void
+    <<internal>> <<override>> SetArraySizes(unicodeChars:UnicodeChar[]) : int
+    + <<override>> ComputeMarginSize() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+    # <<override>> OnTransformParentChanged() : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    <<internal>> <<override>> InternalUpdate() : void
+    - OnPreRenderCanvas() : void
+    # <<virtual>> GenerateTextMesh() : void
+    # <<override>> GetTextContainerLocalCorners() : Vector3[]
+    # <<override>> SetActiveSubMeshes(state:bool) : void
+    # <<override>> DestroySubMeshObjects() : void
+    # <<override>> GetCompoundBounds() : Bounds
+    <<internal>> <<override>> GetCanvasSpaceClippingRect() : Rect
+    - UpdateSDFScale(scaleDelta:float) : void
+}
+@enduml

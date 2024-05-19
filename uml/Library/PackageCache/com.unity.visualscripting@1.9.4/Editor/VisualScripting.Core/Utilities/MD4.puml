@@ -1,0 +1,37 @@
+@startuml
+class MD4 <<sealed>> {
+    - state : uint[]
+    - buffer : byte[]
+    - count : uint[]
+    - x : uint[]
+    - <<const>> S11 : int = 3
+    - <<const>> S12 : int = 7
+    - <<const>> S13 : int = 11
+    - <<const>> S14 : int = 19
+    - <<const>> S21 : int = 3
+    - <<const>> S22 : int = 5
+    - <<const>> S23 : int = 9
+    - <<const>> S24 : int = 13
+    - <<const>> S31 : int = 3
+    - <<const>> S32 : int = 9
+    - <<const>> S33 : int = 11
+    - <<const>> S34 : int = 15
+    - digest : byte[]
+    + MD4()
+    + <<override>> Initialize() : void
+    # <<override>> HashCore(array:byte[], ibStart:int, cbSize:int) : void
+    # <<override>> HashFinal() : byte[]
+    - Padding(nLength:int) : byte[]
+    - F(x:uint, y:uint, z:uint) : uint
+    - G(x:uint, y:uint, z:uint) : uint
+    - H(x:uint, y:uint, z:uint) : uint
+    - ROL(x:uint, n:byte) : uint
+    - FF(a:uint, b:uint, c:uint, d:uint, x:uint, s:byte) : void
+    - GG(a:uint, b:uint, c:uint, d:uint, x:uint, s:byte) : void
+    - HH(a:uint, b:uint, c:uint, d:uint, x:uint, s:byte) : void
+    - Encode(output:byte[], input:uint[]) : void
+    - Decode(output:uint[], input:byte[], index:int) : void
+    - MD4Transform(state:uint[], block:byte[], index:int) : void
+}
+HashAlgorithm <|-- MD4
+@enduml

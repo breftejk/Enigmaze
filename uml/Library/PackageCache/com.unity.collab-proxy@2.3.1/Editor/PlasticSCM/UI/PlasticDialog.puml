@@ -1,0 +1,55 @@
+@startuml
+abstract class PlasticDialog {
+    # <<virtual>> DefaultRect : Rect <<get>>
+    # <<virtual>> IsResizable : bool <<get>> <<set>>
+    <<internal>> OkButtonAction() : void
+    <<internal>> CancelButtonAction() : void
+    <<internal>> CloseButtonAction() : void
+    <<internal>> ApplyButtonAction() : void
+    <<internal>> RunModal(parentWindow:EditorWindow) : ResponseType
+    # OnGUI() : void
+    - OnDestroy() : void
+    # <<virtual>> SaveSettings() : void
+    # {abstract} OnModalGUI() : void
+    # {abstract} GetTitle() : string
+    # Paragraph(text:string) : void
+    # TextBlockWithEndLink(url:string, formattedExplanation:string, textblockStyle:GUIStyle) : void
+    # {static} Title(text:string) : void
+    # {static} TitleToggle(text:string, isOn:bool) : bool
+    # {static} TitleToggle(text:string, isOn:bool, style:GUIStyle) : bool
+    # {static} TextEntry(label:string, value:string, width:float, x:float) : string
+    # {static} TextEntry(label:string, value:string, controlName:string, width:float, x:float) : string
+    # {static} ComboBox(label:string, value:string, controlName:string, dropDownOptions:List<string>, optionSelected:GenericMenu.MenuFunction2, width:float, x:float) : string
+    # {static} PasswordEntry(label:string, value:string, width:float, x:float) : string
+    # {static} ToggleEntry(label:string, value:bool, width:float, x:float) : bool
+    # {static} NormalButton(text:string) : bool
+    - CloseDialog() : void
+    - ProcessKeyActions() : void
+    # {static} AcceptButton(text:string, extraWidth:int) : bool
+    - CompleteModal(answer:ResponseType) : void
+    - InitializeVars(parentWindow:EditorWindow) : void
+    - MakeNonResizable() : void
+    {static} - EntryLabel(labelText:string) : void
+    {static} - GetEditorSkin() : GUISkin
+    - mIsConfigured : bool
+    - mIsCompleted : bool
+    - mIsClosed : bool
+    - mAnswer : ResponseType
+    # mEnterKeyAction : Action = null
+    # mEscapeKeyAction : Action = null
+    - mFocusedOnce : bool
+    - mWrappedTextLines : Dictionary<string, string[]>
+    - mParentWindow : EditorWindow
+    # <<const>> DEFAULT_LINE_SPACING : float
+    <<const>> - DEFAULT_WIDTH : float = 500f
+    <<const>> - DEFAULT_HEIGHT : float = 180f
+    <<const>> - DEFAULT_PARAGRAPH_SPACING : float = 10f
+}
+class BuildLine <<static>> {
+    <<internal>> {static} ForIndex(text:string, index:int) : string
+    <<internal>> {static} ForIndexAndLenght(text:string, index:int, lenght:int) : string
+}
+EditorWindow <|-- PlasticDialog
+IPlasticDialogCloser <|-- PlasticDialog
+PlasticDialog +-- BuildLine
+@enduml

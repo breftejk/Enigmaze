@@ -1,0 +1,6 @@
+@startuml
+class AssetsProcessors <<static>> {
+    <<internal>> {static} Enable(wkPath:string, plasticAssetsProcessor:PlasticAssetsProcessor, assetStatusCache:IAssetStatusCache) : void
+    <<internal>> {static} Disable() : void
+}
+@enduml

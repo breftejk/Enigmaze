@@ -1,0 +1,33 @@
+@startuml
+class ConcurrentMaskTests {
+    + AllocatesOneBitFromLong() : void
+    + FailsToAllocateOneBitFromLong() : void
+    + AllocatesMultipleBitsFromLong() : void
+    + FailsToAllocateMultipleBitsFromLong() : void
+    + FreesOneBitFromLong() : void
+    + FreesMultipleBitsFromLong() : void
+    + AllocatesOneBitFromArray() : void
+    + AllocatesMultipleBitsFromArray() : void
+    + FreesOneBitFromArray() : void
+    + FreesMultipleBitsFromArray() : void
+    + AllocatesFromJob() : void
+}
+struct Test {
+    <<internal>> value : long
+    <<internal>> bits : int
+    <<internal>> expectedModified : long
+    <<internal>> offset : int
+    <<internal>> expectedWorked : bool
+    <<internal>> Test(uValue:ulong, uExpectedModified:ulong, w:bool)
+    <<internal>> Test(uValue:ulong, bits:int, uExpectedModified:ulong, w:bool)
+    <<internal>> Test(uValue:ulong, uExpectedModified:ulong, offset:int, w:bool)
+    <<internal>> Test(uValue:ulong, bits:int, uExpectedModified:ulong, offset:int, w:bool)
+}
+struct AllocateJob {
+    + m_storage : NativeList<long>
+    + Execute(index:int) : void
+}
+ConcurrentMaskTests +-- Test
+ConcurrentMaskTests +-- AllocateJob
+IJobParallelFor <|-- AllocateJob
+@enduml

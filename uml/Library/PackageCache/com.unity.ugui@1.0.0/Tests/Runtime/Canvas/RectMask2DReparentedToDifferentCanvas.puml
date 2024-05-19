@@ -1,0 +1,12 @@
+@startuml
+class RectMask2DReparentedToDifferentCanvas {
+    - m_GameObjectA : GameObject
+    - m_GameObjectB : GameObject
+    - m_CanvasA : Canvas
+    - m_CanvasB : Canvas
+    - m_Mask : RectMask2D
+    + TestSetup() : void
+    + TearDown() : void
+    + ReparentingRectMask2D_UpdatesCanvas() : void
+}
+@enduml

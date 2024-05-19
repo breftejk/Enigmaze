@@ -1,0 +1,8 @@
+@startuml
+class RectangleZoom {
+    # <<override>> enableAutoPan : bool <<get>>
+    # <<override>> CanStartRectangle(evt:Event) : bool
+    # <<override>> OnFinish(evt:Event, state:WindowState, rect:Rect) : bool
+}
+RectangleTool <|-- RectangleZoom
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class EditorProvider {
+    # <<override>> cache : bool <<get>>
+    # <<override>> CreateDecorator(decoratorType:Type, metadata:Metadata) : Inspector
+    # <<override>> GetDecoratedType(metadata:Metadata) : Type
+    + <<override>> IsValid(decorated:Metadata) : bool
+    # <<override>> ResolveDecoratorType(decoratedType:Type) : Type
+    + HasPanel(type:Type) : bool
+    {static} - EditorProvider()
+    + {static} instance : EditorProvider <<get>>
+}
+class XEditorProvider <<static>> {
+    + {static} Editor(metadata:Metadata) : Inspector
+    + {static} Editor(metadata:Metadata) : TInspector
+    + {static} HasEditor(type:Type) : bool
+    + {static} HasEditor(metadata:Metadata) : bool
+}
+"SingleDecoratorProvider`3" "<Metadata,Inspector,EditorAttribute>" <|-- EditorProvider
+@enduml

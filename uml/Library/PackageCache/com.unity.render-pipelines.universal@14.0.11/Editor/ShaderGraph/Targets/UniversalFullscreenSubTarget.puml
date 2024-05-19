@@ -1,0 +1,14 @@
+@startuml
+class UniversalFullscreenSubTarget {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> saveContext : object <<get>>
+    # <<override>> pipelineTag : string <<get>>
+    <<const>> - kURPInput : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
+    # <<override>> pregraphIncludes : IncludeCollection <<get>>
+    + UniversalFullscreenSubTarget()
+}
+"FullscreenSubTarget`1" "<UniversalTarget>" <|-- UniversalFullscreenSubTarget
+"IRequiresData`1" "<FullscreenData>" <|-- UniversalFullscreenSubTarget
+IHasMetadata <|-- UniversalFullscreenSubTarget
+@enduml

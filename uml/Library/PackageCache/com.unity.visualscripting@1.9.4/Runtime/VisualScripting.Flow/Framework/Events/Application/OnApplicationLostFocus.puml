@@ -1,0 +1,6 @@
+@startuml
+class OnApplicationLostFocus <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"GlobalEventUnit`1" "<EmptyEventArgs>" <|-- OnApplicationLostFocus
+@enduml

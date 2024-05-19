@@ -1,0 +1,13 @@
+@startuml
+class MouseScrollZoom2D {
+    + ZoomMultiplier : float = 1f
+    + MinZoom : float = 1f
+    + MaxZoom : float = 50f
+    - m_VirtualCamera : CinemachineVirtualCamera
+    - m_OriginalOrthoSize : float
+    - Awake() : void
+    - OnValidate() : void
+    - Update() : void
+}
+MonoBehaviour <|-- MouseScrollZoom2D
+@enduml

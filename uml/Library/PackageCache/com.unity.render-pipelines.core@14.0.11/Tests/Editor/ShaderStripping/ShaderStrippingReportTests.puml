@@ -1,0 +1,17 @@
+@startuml
+class BuildReportTestScope {
+    - m_Scope : ShaderStrippingReportScope
+    + BuildReportTestScope()
+    - Dispose() : void
+}
+class ShaderStrippingReportTest {
+    + GlobalSetUp() : void
+    {static} - k_ShaderResultsDirectory : string = "Packages/com.unity.render-pipelines.core/Tests/Editor/ShaderStripping/Results"
+    {static} - k_UpdateShaderStrippingResult : bool = false
+    - CheckForceUpdate(path:string, loggedStrippedResult:string) : void
+    {static} - s_StrippedShaderInputs : TestCaseData[]
+    - PerformFakeReport(shaders:Shader[], steps:uint, variantsOutMultiplier:float) : void
+    + JSONOutput(shaders:Shader[], steps:uint, variantsOutMultiplier:float) : void
+}
+IDisposable <|-- BuildReportTestScope
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class BlackboardCategoryViewModel {
+    + parentView : VisualElement <<get>> <<set>>
+    <<internal>> name : string <<get>> <<set>>
+    <<internal>> associatedCategoryGuid : string <<get>> <<set>>
+    <<internal>> isExpanded : bool <<get>> <<set>>
+    <<internal>> requestModelChangeAction : Action<IGraphDataAction> <<get>> <<set>>
+    + ResetViewModelData() : void
+}
+ISGViewModel <|-- BlackboardCategoryViewModel
+@enduml

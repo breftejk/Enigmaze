@@ -1,0 +1,350 @@
+@startuml
+class TMP_InputField {
+    # m_SoftKeyboard : TouchScreenKeyboard
+    {static} - <<readonly>> kSeparators : char[]
+    # m_RectTransform : RectTransform
+    # m_TextViewport : RectTransform
+    # m_TextComponentRectMask : RectMask2D
+    # m_TextViewportRectMask : RectMask2D
+    - m_CachedViewportRect : Rect
+    # m_TextComponent : TMP_Text
+    # m_TextComponentRectTransform : RectTransform
+    # m_Placeholder : Graphic
+    # m_VerticalScrollbar : Scrollbar
+    # m_VerticalScrollbarEventHandler : TMP_ScrollbarEventHandler
+    - m_IsDrivenByLayoutComponents : bool = false
+    - m_LayoutGroup : LayoutGroup
+    - m_IScrollHandlerParent : IScrollHandler
+    - m_ScrollPosition : float
+    # m_ScrollSensitivity : float = 1.0f
+    - m_ContentType : ContentType
+    - m_InputType : InputType
+    - m_AsteriskChar : char = '*'
+    - m_KeyboardType : TouchScreenKeyboardType
+    - m_LineType : LineType
+    - m_HideMobileInput : bool = false
+    - m_HideSoftKeyboard : bool = false
+    - m_CharacterValidation : CharacterValidation
+    - m_RegexValue : string
+    - m_GlobalPointSize : float = 14
+    - m_CharacterLimit : int = 0
+    - m_OnEndEdit : SubmitEvent
+    - m_OnSubmit : SubmitEvent
+    - m_OnSelect : SelectionEvent
+    - m_OnDeselect : SelectionEvent
+    - m_OnTextSelection : TextSelectionEvent
+    - m_OnEndTextSelection : TextSelectionEvent
+    - m_OnValueChanged : OnChangeEvent
+    - m_OnTouchScreenKeyboardStatusChanged : TouchScreenKeyboardEvent
+    - m_OnValidateInput : OnValidateInput
+    - m_CaretColor : Color
+    - m_CustomCaretColor : bool = false
+    - m_SelectionColor : Color
+    # m_Text : string
+    - m_CaretBlinkRate : float = 0.85f
+    - m_CaretWidth : int = 1
+    - m_ReadOnly : bool = false
+    - m_RichText : bool = true
+    # m_StringPosition : int = 0
+    # m_StringSelectPosition : int = 0
+    # m_CaretPosition : int = 0
+    # m_CaretSelectPosition : int = 0
+    - caretRectTrans : RectTransform = null
+    # m_CursorVerts : UIVertex[] = null
+    - m_CachedInputRenderer : CanvasRenderer
+    - m_LastPosition : Vector2
+    # m_Mesh : Mesh
+    - m_AllowInput : bool = false
+    - m_ShouldActivateNextUpdate : bool = false
+    - m_UpdateDrag : bool = false
+    - m_DragPositionOutOfBounds : bool = false
+    - <<const>> kHScrollSpeed : float = 0.05f
+    - <<const>> kVScrollSpeed : float = 0.10f
+    # m_CaretVisible : bool
+    - m_BlinkCoroutine : Coroutine = null
+    - m_BlinkStartTime : float = 0.0f
+    - m_DragCoroutine : Coroutine = null
+    - m_OriginalText : string = ""
+    - m_WasCanceled : bool = false
+    - m_HasDoneFocusTransition : bool = false
+    - m_WaitForSecondsRealtime : WaitForSecondsRealtime
+    - m_PreventCallback : bool = false
+    - m_TouchKeyboardAllowsInPlaceEditing : bool = false
+    - m_IsTextComponentUpdateRequired : bool = false
+    - m_isLastKeyBackspace : bool = false
+    - m_PointerDownClickStartTime : float
+    - m_KeyDownStartTime : float
+    - m_DoubleClickDelay : float = 0.5f
+    <<const>> - kEmailSpecialCharacters : string = "!#$%&'*+-/=?^_`{|&#125;~"
+    - inputSystem : BaseInput <<get>>
+    - compositionString : string <<get>>
+    - m_IsCompositionActive : bool = false
+    - m_ShouldUpdateIMEWindowPosition : bool = false
+    - m_PreviousIMEInsertionLine : int = 0
+    - compositionLength : int <<get>>
+    # TMP_InputField()
+    # mesh : Mesh <<get>>
+    + shouldHideMobileInput : bool <<get>> <<set>>
+    + shouldHideSoftKeyboard : bool <<get>> <<set>>
+    - isKeyboardUsingEvents() : bool
+    + text : string <<get>> <<set>>
+    + SetTextWithoutNotify(input:string) : void
+    - SetText(value:string, sendCallback:bool) : void
+    + isFocused : bool <<get>>
+    + caretBlinkRate : float <<get>> <<set>>
+    + caretWidth : int <<get>> <<set>>
+    + textViewport : RectTransform <<get>> <<set>>
+    + textComponent : TMP_Text <<get>> <<set>>
+    + placeholder : Graphic <<get>> <<set>>
+    + verticalScrollbar : Scrollbar <<get>> <<set>>
+    + scrollSensitivity : float <<get>> <<set>>
+    + caretColor : Color <<get>> <<set>>
+    + customCaretColor : bool <<get>> <<set>>
+    + selectionColor : Color <<get>> <<set>>
+    + onEndEdit : SubmitEvent <<get>> <<set>>
+    + onSubmit : SubmitEvent <<get>> <<set>>
+    + onSelect : SelectionEvent <<get>> <<set>>
+    + onDeselect : SelectionEvent <<get>> <<set>>
+    + onTextSelection : TextSelectionEvent <<get>> <<set>>
+    + onEndTextSelection : TextSelectionEvent <<get>> <<set>>
+    + onValueChanged : OnChangeEvent <<get>> <<set>>
+    + onTouchScreenKeyboardStatusChanged : TouchScreenKeyboardEvent <<get>> <<set>>
+    + onValidateInput : OnValidateInput <<get>> <<set>>
+    + characterLimit : int <<get>> <<set>>
+    + pointSize : float <<get>> <<set>>
+    + fontAsset : TMP_FontAsset <<get>> <<set>>
+    # m_GlobalFontAsset : TMP_FontAsset
+    + onFocusSelectAll : bool <<get>> <<set>>
+    # m_OnFocusSelectAll : bool = true
+    # m_isSelectAll : bool
+    + resetOnDeActivation : bool <<get>> <<set>>
+    # m_ResetOnDeActivation : bool = true
+    - m_SelectionStillActive : bool = false
+    - m_ReleaseSelection : bool = false
+    - m_PreviouslySelectedObject : GameObject
+    + restoreOriginalTextOnEscape : bool <<get>> <<set>>
+    - m_RestoreOriginalTextOnEscape : bool = true
+    + isRichTextEditingAllowed : bool <<get>> <<set>>
+    # m_isRichTextEditingAllowed : bool = false
+    + contentType : ContentType <<get>> <<set>>
+    + lineType : LineType <<get>> <<set>>
+    + lineLimit : int <<get>> <<set>>
+    # m_LineLimit : int = 0
+    + inputType : InputType <<get>> <<set>>
+    + keyboardType : TouchScreenKeyboardType <<get>> <<set>>
+    + characterValidation : CharacterValidation <<get>> <<set>>
+    + inputValidator : TMP_InputValidator <<get>> <<set>>
+    # m_InputValidator : TMP_InputValidator = null
+    + readOnly : bool <<get>> <<set>>
+    + richText : bool <<get>> <<set>>
+    + multiLine : bool <<get>>
+    + asteriskChar : char <<get>> <<set>>
+    + wasCanceled : bool <<get>>
+    # ClampStringPos(pos:int) : void
+    # ClampCaretPos(pos:int) : void
+    # caretPositionInternal : int <<get>> <<set>>
+    # stringPositionInternal : int <<get>> <<set>>
+    # caretSelectPositionInternal : int <<get>> <<set>>
+    # stringSelectPositionInternal : int <<get>> <<set>>
+    - hasSelection : bool <<get>>
+    - m_isSelected : bool
+    - m_IsStringPositionDirty : bool
+    - m_IsCaretPositionDirty : bool
+    - m_forceRectTransformAdjustment : bool
+    + caretPosition : int <<get>> <<set>>
+    + selectionAnchorPosition : int <<get>> <<set>>
+    + selectionFocusPosition : int <<get>> <<set>>
+    + stringPosition : int <<get>> <<set>>
+    + selectionStringAnchorPosition : int <<get>> <<set>>
+    + selectionStringFocusPosition : int <<get>> <<set>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    - ON_TEXT_CHANGED(obj:UnityEngine.Object) : void
+    - CaretBlink() : IEnumerator
+    - SetCaretVisible() : void
+    - SetCaretActive() : void
+    # OnFocus() : void
+    # SelectAll() : void
+    + MoveTextEnd(shift:bool) : void
+    + MoveTextStart(shift:bool) : void
+    + MoveToEndOfLine(shift:bool, ctrl:bool) : void
+    + MoveToStartOfLine(shift:bool, ctrl:bool) : void
+    {static} - clipboard : string <<get>> <<set>>
+    - InPlaceEditing() : bool
+    - UpdateStringPositionFromKeyboard() : void
+    # <<virtual>> LateUpdate() : void
+    - MayDrag(eventData:PointerEventData) : bool
+    + <<virtual>> OnBeginDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    - MouseDragOutsideRect(eventData:PointerEventData) : IEnumerator
+    + <<virtual>> OnEndDrag(eventData:PointerEventData) : void
+    + <<override>> OnPointerDown(eventData:PointerEventData) : void
+    # KeyPressed(evt:Event) : EditState
+    # <<virtual>> IsValidChar(c:char) : bool
+    - m_ProcessingEvent : Event
+    + ProcessEvent(e:Event) : void
+    + <<virtual>> OnUpdateSelected(eventData:BaseEventData) : void
+    + <<virtual>> OnScroll(eventData:PointerEventData) : void
+    - GetScrollPositionRelativeToViewport() : float
+    - GetSelectedString() : string
+    - FindNextWordBegin() : int
+    - MoveRight(shift:bool, ctrl:bool) : void
+    - FindPrevWordBegin() : int
+    - MoveLeft(shift:bool, ctrl:bool) : void
+    - LineUpCharacterPosition(originalPos:int, goToFirstChar:bool) : int
+    - LineDownCharacterPosition(originalPos:int, goToLastChar:bool) : int
+    - PageUpCharacterPosition(originalPos:int, goToFirstChar:bool) : int
+    - PageDownCharacterPosition(originalPos:int, goToLastChar:bool) : int
+    - MoveDown(shift:bool) : void
+    - MoveDown(shift:bool, goToLastChar:bool) : void
+    - MoveUp(shift:bool) : void
+    - MoveUp(shift:bool, goToFirstChar:bool) : void
+    - MovePageUp(shift:bool) : void
+    - MovePageUp(shift:bool, goToFirstChar:bool) : void
+    - MovePageDown(shift:bool) : void
+    - MovePageDown(shift:bool, goToLastChar:bool) : void
+    - Delete() : void
+    - DeleteKey() : void
+    - Backspace() : void
+    # <<virtual>> Append(input:string) : void
+    # <<virtual>> Append(input:char) : void
+    - Insert(c:char) : void
+    - UpdateTouchKeyboardFromEditChanges() : void
+    - SendOnValueChangedAndUpdateLabel() : void
+    - SendOnValueChanged() : void
+    # SendOnEndEdit() : void
+    # SendOnSubmit() : void
+    # SendOnFocus() : void
+    # SendOnFocusLost() : void
+    # SendOnTextSelection() : void
+    # SendOnEndTextSelection() : void
+    # SendTouchScreenKeyboardStatusChanged() : void
+    # UpdateLabel() : void
+    - UpdateScrollbar() : void
+    - OnScrollbarValueChange(value:float) : void
+    - UpdateMaskRegions() : void
+    - AdjustTextPositionRelativeToViewport(relativePosition:float) : void
+    - GetCaretPositionFromStringIndex(stringIndex:int) : int
+    - GetMinCaretPositionFromStringIndex(stringIndex:int) : int
+    - GetMaxCaretPositionFromStringIndex(stringIndex:int) : int
+    - GetStringIndexFromCaretPosition(caretPosition:int) : int
+    + ForceLabelUpdate() : void
+    - MarkGeometryAsDirty() : void
+    + <<virtual>> Rebuild(update:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    - UpdateGeometry() : void
+    - AssignPositioningIfNeeded() : void
+    - OnFillVBO(vbo:Mesh) : void
+    - GenerateCaret(vbo:VertexHelper, roundingOffset:Vector2) : void
+    - CreateCursorVerts() : void
+    - GenerateHightlight(vbo:VertexHelper, roundingOffset:Vector2) : void
+    - AdjustRectTransformRelativeToViewport(startPosition:Vector2, height:float, isCharVisible:bool) : void
+    # Validate(text:string, pos:int, ch:char) : char
+    + ActivateInputField() : void
+    - ActivateInputFieldInternal() : void
+    + <<override>> OnSelect(eventData:BaseEventData) : void
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + OnControlClick() : void
+    + ReleaseSelection() : void
+    + DeactivateInputField(clearSelection:bool) : void
+    + <<override>> OnDeselect(eventData:BaseEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+    - EnforceContentType() : void
+    - SetTextComponentWrapMode() : void
+    - SetTextComponentRichTextMode() : void
+    - SetToCustomIfContentTypeIsNot(allowedContentTypes:ContentType[]) : void
+    - SetToCustom() : void
+    - SetToCustom(characterValidation:CharacterValidation) : void
+    # <<override>> DoStateTransition(state:SelectionState, instant:bool) : void
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+    + SetGlobalPointSize(pointSize:float) : void
+    + SetGlobalFontAsset(fontAsset:TMP_FontAsset) : void
+}
+class SetPropertyUtility <<static>> {
+    + {static} SetColor(currentValue:Color, newValue:Color) : bool
+    + {static} SetEquatableStruct(currentValue:T, newValue:T) : bool
+    + {static} SetStruct(currentValue:T, newValue:T) : bool
+    + {static} SetClass(currentValue:T, newValue:T) : bool
+}
+enum ContentType {
+    Standard,
+    Autocorrected,
+    IntegerNumber,
+    DecimalNumber,
+    Alphanumeric,
+    Name,
+    EmailAddress,
+    Password,
+    Pin,
+    Custom,
+}
+enum InputType {
+    Standard,
+    AutoCorrect,
+    Password,
+}
+enum CharacterValidation {
+    None,
+    Digit,
+    Integer,
+    Decimal,
+    Alphanumeric,
+    Name,
+    Regex,
+    EmailAddress,
+    CustomValidator,
+}
+enum LineType {
+    SingleLine,
+    MultiLineSubmit,
+    MultiLineNewline,
+}
+class SubmitEvent {
+}
+class OnChangeEvent {
+}
+class SelectionEvent {
+}
+class TextSelectionEvent {
+}
+class TouchScreenKeyboardEvent {
+}
+enum EditState {
+    Continue,
+    Finish,
+}
+Selectable <|-- TMP_InputField
+IUpdateSelectedHandler <|-- TMP_InputField
+IBeginDragHandler <|-- TMP_InputField
+IDragHandler <|-- TMP_InputField
+IEndDragHandler <|-- TMP_InputField
+IPointerClickHandler <|-- TMP_InputField
+ISubmitHandler <|-- TMP_InputField
+ICanvasElement <|-- TMP_InputField
+ILayoutElement <|-- TMP_InputField
+IScrollHandler <|-- TMP_InputField
+TMP_InputField +-- ContentType
+TMP_InputField +-- InputType
+TMP_InputField +-- CharacterValidation
+TMP_InputField +-- LineType
+TMP_InputField +-- SubmitEvent
+"UnityEvent`1" "<string>" <|-- SubmitEvent
+TMP_InputField +-- OnChangeEvent
+"UnityEvent`1" "<string>" <|-- OnChangeEvent
+TMP_InputField +-- SelectionEvent
+"UnityEvent`1" "<string>" <|-- SelectionEvent
+TMP_InputField +-- TextSelectionEvent
+"UnityEvent`3" "<string,int,int>" <|-- TextSelectionEvent
+TMP_InputField +-- TouchScreenKeyboardEvent
+"UnityEvent`1" "<TouchScreenKeyboard.Status>" <|-- TouchScreenKeyboardEvent
+TMP_InputField +-- EditState
+@enduml

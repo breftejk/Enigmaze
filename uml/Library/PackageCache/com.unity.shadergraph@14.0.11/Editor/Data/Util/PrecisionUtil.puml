@@ -1,0 +1,11 @@
+@startuml
+class PrecisionUtil <<static>> {
+    <<internal>> <<const>> Token : string = "$precision"
+    <<internal>> {static} ToShaderString(precision:ConcretePrecision) : string
+    <<internal>> {static} ToGenericString(precision:GraphPrecision) : string
+    <<internal>> {static} ToConcrete(precision:Precision, InheritPrecision:ConcretePrecision, GraphPrecision:ConcretePrecision) : ConcretePrecision
+    <<internal>> {static} ToGraphPrecision(precision:Precision, inheritPrecision:GraphPrecision) : GraphPrecision
+    <<internal>> {static} ToConcrete(precision:GraphPrecision, graphPrecision:ConcretePrecision) : ConcretePrecision
+    <<internal>> {static} GraphFallback(precision:GraphPrecision, graphFallback:GraphPrecision) : GraphPrecision
+}
+@enduml

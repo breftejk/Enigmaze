@@ -1,0 +1,43 @@
+@startuml
+class CheckinDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    # <<override>> GetTitle() : string
+    <<internal>> {static} CheckinPaths(wkInfo:WorkspaceInfo, paths:List<string>, assetStatusCache:IAssetStatusCache, isGluonMode:bool, parentWindow:EditorWindow, workspaceWindow:IWorkspaceWindow, viewHost:ViewHost, workspaceOperationsMonitor:WorkspaceOperationsMonitor, guiMessage:GuiMessage.IGuiMessage, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:IGluonViewSwitcher) : bool
+    # <<override>> OnModalGUI() : void
+    - DoFileList(wkInfo:WorkspaceInfo, paths:List<string>, assetStatusCache:IAssetStatusCache, metaCache:MetaCache) : void
+    - DoListViewItem(itemRect:Rect, fileIcon:Texture, label:string, statusToDraw:AssetsOverlays.AssetStatus) : void
+    - DoButtonsArea() : void
+    - DoCheckinButton() : void
+    - DoCancelButton() : void
+    - OkButtonWithCheckinAction() : void
+    {static} - Create(wkInfo:WorkspaceInfo, paths:List<string>, assetStatusCache:IAssetStatusCache, metaCache:MetaCache, isGluonMode:bool, progressControls:ProgressControlsForDialogs, workspaceWindow:IWorkspaceWindow, viewHost:ViewHost, workspaceOperationsMonitor:WorkspaceOperationsMonitor, guiMessage:GuiMessage.IGuiMessage, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:IGluonViewSwitcher) : CheckinDialog
+    - mWkInfo : WorkspaceInfo
+    - mPaths : List<string>
+    - mAssetStatusCache : IAssetStatusCache
+    - mMetaCache : MetaCache
+    - mIsGluonMode : bool
+    - mTextAreaFocused : bool
+    - mComment : string
+    - mIsRunningCheckin : bool
+    - mFileListScrollPosition : Vector2
+    - mSentCheckinTrackEvent : bool = false
+    - mSentCancelTrackEvent : bool = false
+    - mProgressControls : ProgressControlsForDialogs
+    - mWorkspaceWindow : IWorkspaceWindow
+    - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    - mViewHost : ViewHost
+    - mMergeViewLauncher : IMergeViewLauncher
+    - mGluonViewSwitcher : IGluonViewSwitcher
+    - mGuiMessage : GuiMessage.IGuiMessage
+    <<const>> - CHECKIN_TEXTAREA_NAME : string = "checkin_textarea"
+}
+class MetaCache {
+    <<internal>> HasMeta(path:string) : bool
+    <<internal>> GetExistingMeta(paths:List<string>) : List<string>
+    <<internal>> Build(paths:List<string>) : void
+    {static} - BuildIndexedKeys(paths:List<string>) : HashSet<string>
+    - mCache : HashSet<string>
+}
+PlasticDialog <|-- CheckinDialog
+CheckinDialog +-- MetaCache
+@enduml

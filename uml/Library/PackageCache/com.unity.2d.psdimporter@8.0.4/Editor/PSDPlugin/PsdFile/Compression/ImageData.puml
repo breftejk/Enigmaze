@@ -1,0 +1,12 @@
+@startuml
+abstract class ImageData {
+    + BitDepth : int <<get>>
+    + BytesPerRow : int <<get>>
+    + Size : Size <<get>>
+    # {abstract} AltersWrittenData : bool <<get>>
+    # ImageData(size:Size, bitDepth:int)
+    + <<virtual>> Read() : byte[]
+    <<internal>> {abstract} Read(buffer:byte[]) : void
+    + {abstract} ReadCompressed() : byte[]
+}
+@enduml

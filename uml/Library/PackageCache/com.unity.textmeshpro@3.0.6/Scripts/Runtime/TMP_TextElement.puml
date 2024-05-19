@@ -1,0 +1,20 @@
+@startuml
+enum TextElementType {
+    Character= 0x1,
+    Sprite= 0x2,
+}
+class TMP_TextElement {
+    + elementType : TextElementType <<get>>
+    + unicode : uint <<get>> <<set>>
+    + textAsset : TMP_Asset <<get>> <<set>>
+    + glyph : Glyph <<get>> <<set>>
+    + glyphIndex : uint <<get>> <<set>>
+    + scale : float <<get>> <<set>>
+    # m_ElementType : TextElementType
+    <<internal>> m_Unicode : uint
+    <<internal>> m_TextAsset : TMP_Asset
+    <<internal>> m_Glyph : Glyph
+    <<internal>> m_GlyphIndex : uint
+    <<internal>> m_Scale : float
+}
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+class BoneInspectorPanel {
+    +  <<event>> onBoneDepthChanged : Action<BoneCache, int> 
+    +  <<event>> onBonePositionChanged : Action<BoneCache, Vector2> 
+    +  <<event>> onBoneRotationChanged : Action<BoneCache, float> 
+    +  <<event>> onBoneNameChanged : Action<BoneCache, string> 
+    +  <<event>> onBoneColorChanged : Action<BoneCache, Color32> 
+    - m_BoneNameField : TextField
+    - m_BoneDepthField : IntegerField
+    - m_BoneRotationField : FloatField
+    - m_BonePositionField : Vector2Field
+    - m_BoneColorField : ColorField
+    + boneName : string <<get>> <<set>>
+    + target : BoneCache <<get>> <<set>>
+    + boneDepth : int <<get>> <<set>>
+    + bonePosition : Vector2 <<get>> <<set>>
+    + boneRotation : float <<get>> <<set>>
+    + boneColor : Color32 <<get>> <<set>>
+    + BoneInspectorPanel()
+    + BindElements() : void
+    - BoneNameFocusChanged(evt:FocusOutEvent) : void
+    - BoneDepthFocusChanged(evt:FocusOutEvent) : void
+    + HidePanel() : void
+    + {static} GenerateFromUXML() : BoneInspectorPanel
+    + SetReadOnly(property:PropertyReadOnly) : void
+}
+enum PropertyReadOnly {
+    None,
+    Name= 1,
+    Depth= 1 << 2,
+    Position= 1 << 3,
+    Rotation= 1 << 4,
+    Color= 1 << 5,
+}
+class BoneInspectorPanelFactory {
+}
+class BoneInspectorPanelUxmlTraits {
+}
+VisualElement <|-- BoneInspectorPanel
+BoneInspectorPanel +-- PropertyReadOnly
+BoneInspectorPanel +-- BoneInspectorPanelFactory
+"UxmlFactory`2" "<BoneInspectorPanel,BoneInspectorPanelUxmlTraits>" <|-- BoneInspectorPanelFactory
+BoneInspectorPanel +-- BoneInspectorPanelUxmlTraits
+UxmlTraits <|-- BoneInspectorPanelUxmlTraits
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TimelineWindow <<partial>> {
+    - m_TimelineDuration : TimeAreaItem
+    - DurationGUI(area:TimelineItemArea, duration:double) : void
+    - DrawDuration(drawhead:bool, drawline:bool, duration:double) : void
+    - HighlightTimeAreaRange(range:Range, lineColor:Color) : void
+    - OnTrackDurationDrag(newTime:double) : void
+}
+@enduml

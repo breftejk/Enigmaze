@@ -1,0 +1,34 @@
+@startuml
+class ScriptableRendererDataEditor {
+    - m_RendererFeatures : SerializedProperty
+    - m_RendererFeaturesMap : SerializedProperty
+    - m_FalseBool : SerializedProperty
+    - falseBool : bool = false
+    - m_Editors : List<Editor>
+    - OnEnable() : void
+    - OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawRendererFeatureList() : void
+    <<internal>> GetCustomTitle(type:Type, title:string) : bool
+    - GetTooltip(type:Type, tooltip:string) : bool
+    - DrawRendererFeature(index:int, renderFeatureProperty:SerializedProperty) : void
+    - OnContextClick(rendererFeatureObject:Object, position:Vector2, id:int) : void
+    - AddShowAdditionalPropertiesMenuItem(fullScreenFeature:FullScreenPassRendererFeature, menu:GenericMenu, id:int) : void
+    <<internal>> AddComponent(type:string) : void
+    - RemoveComponent(id:int) : void
+    - MoveComponent(id:int, offset:int) : void
+    - ValidateName(name:string) : string
+    - UpdateEditorList() : void
+    - ClearEditorsList() : void
+    - ForceSave() : void
+}
+class Styles {
+    + {static} <<readonly>> RenderFeatures : GUIContent
+    + {static} <<readonly>> PassNameField : GUIContent
+    + {static} <<readonly>> MissingFeature : GUIContent
+    + {static} BoldLabelSimple : GUIStyle
+    {static} - Styles()
+}
+Editor <|-- ScriptableRendererDataEditor
+ScriptableRendererDataEditor +-- Styles
+@enduml

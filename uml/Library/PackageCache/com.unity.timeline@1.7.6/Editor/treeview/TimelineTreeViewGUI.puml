@@ -1,0 +1,28 @@
+@startuml
+class TimelineTreeViewGUI {
+    <<readonly>> - m_Timeline : TimelineAsset
+    <<readonly>> - m_TreeView : TreeViewController
+    <<readonly>> - m_TimelineTreeView : TimelineTreeView
+    <<readonly>> - m_Window : TimelineWindow
+    <<readonly>> - m_DataSource : TimelineDataSource
+    - root : TreeViewItem <<get>>
+    - visibleTrackGuis : TimelineTrackBaseGUI[] <<get>>
+    + visibleTracks : TrackAsset[] <<get>>
+    + allClipGuis : List<TimelineClipGUI> <<get>>
+    + allTrackGuis : List<TimelineTrackBaseGUI> <<get>>
+    + contentSize : Vector2 <<get>>
+    + scrollPosition : Vector2 <<get>> <<set>>
+    + showingVerticalScrollBar : bool <<get>>
+    + FrameItem(item:TreeViewItem) : void
+    + timelineDragging : TimelineDragging <<get>>
+    + TimelineTreeViewGUI(sequencerWindow:TimelineWindow, timeline:TimelineAsset, rect:Rect)
+    + gui : ITreeViewGUI <<get>>
+    + data : ITreeViewDataSource <<get>>
+    + TimelineWindow : TimelineWindow <<get>>
+    + CalculateRowRects() : void
+    + Reload() : void
+    + OnGUI(rect:Rect) : void
+    + GetRowRect(row:int) : Rect
+    {static} - AddVisibleTrackRecursive(list:List<TimelineTrackBaseGUI>, track:TimelineTrackBaseGUI) : void
+}
+@enduml

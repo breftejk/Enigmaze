@@ -1,0 +1,17 @@
+@startuml
+struct DeltaStateEvent {
+    + <<const>> Type : int = 0x444C5441
+    + baseEvent : InputEvent
+    + stateFormat : FourCC
+    + stateOffset : uint
+    <<internal>> <<fixed>> stateData : byte
+    + deltaStateSizeInBytes : uint <<get>>
+    + deltaState : void* <<get>>
+    + typeStatic : FourCC <<get>>
+    + ToEventPtr() : InputEventPtr
+    + {static} From(ptr:InputEventPtr) : DeltaStateEvent*
+    <<internal>> {static} FromUnchecked(ptr:InputEventPtr) : DeltaStateEvent*
+    + {static} From(control:InputControl, eventPtr:InputEventPtr, allocator:Allocator) : NativeArray<byte>
+}
+IInputEventTypeInfo <|-- DeltaStateEvent
+@enduml

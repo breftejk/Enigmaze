@@ -1,0 +1,48 @@
+@startuml
+class IncomingChangesTreeView {
+    <<internal>> IncomingChangesTreeView(wkInfo:WorkspaceInfo, headerState:IncomingChangesTreeHeaderState, columnNames:List<string>, menu:IncomingChangesViewMenu, onCheckedNodeChanged:Action)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> CanChangeExpandedState(item:TreeViewItem) : bool
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> CommandEventHandling() : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(tree:UnityIncomingChangesTree) : void
+    <<internal>> UpdateSolvedFileConflicts(solvedConflicts:List<IncomingChangeInfo>, currentConflict:IncomingChangeInfo) : void
+    <<internal>> Sort() : void
+    <<internal>> GetMetaChange(change:IncomingChangeInfo) : IncomingChangeInfo
+    <<internal>> FillWithMeta(changes:List<IncomingChangeInfo>) : void
+    <<internal>> SelectionHasMeta() : bool
+    <<internal>> GetSelectedIncomingChange() : IncomingChangeInfo
+    <<internal>> GetSelectedIncomingChanges() : List<IncomingChangeInfo>
+    <<internal>> GetSelectedFileConflicts() : List<IncomingChangeInfo>
+    <<internal>> GetCheckedItemCount() : int
+    <<internal>> GetTotalItemCount() : int
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - IsCurrentConflict(changeInfo:IncomingChangeInfo, metaChangeInfo:IncomingChangeInfo, currentConflict:IncomingChangeInfo) : bool
+    {static} - IsSolvedConflict(changeInfo:IncomingChangeInfo, metaChangeInfo:IncomingChangeInfo, solvedConflicts:List<IncomingChangeInfo>) : bool
+    {static} - RegenerateRows(incomingChangesTree:UnityIncomingChangesTree, treeViewItemIds:TreeViewItemIds<IncomingChangeCategory, IncomingChangeInfo>, treeView:IncomingChangesTreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - UpdateCheckStateForSelection(treeView:IncomingChangesTreeView, senderTreeViewItem:ChangeTreeViewItem) : void
+    {static} - CategoryTreeViewItemGUI(rowRect:Rect, rowHeight:float, item:ChangeCategoryTreeViewItem, onCheckedNodeChanged:Action, solvedConflictsCount:int, isSelected:bool, isFocused:bool) : void
+    {static} - IncomingChangeTreeViewItemGUI(wkPath:string, incomingChangesTree:UnityIncomingChangesTree, treeView:IncomingChangesTreeView, item:ChangeTreeViewItem, onCheckedNodeChanged:Action, args:RowGUIArgs, isCurrentConflict:bool, isSolvedConflict:bool) : void
+    {static} - IncomingChangeTreeViewItemCellGUI(wkPath:string, rect:Rect, rowHeight:float, incomingChangesTree:UnityIncomingChangesTree, treeView:IncomingChangesTreeView, item:ChangeTreeViewItem, onCheckedNodeChanged:Action, column:IncomingChangesTreeColumn, isSelected:bool, isFocused:bool, isCurrentConflict:bool, isSolvedConflict:bool) : void
+    {static} - GetIcon(wkPath:string, incomingChange:IncomingChangeInfo) : Texture
+    {static} - GetCategoryStyle(category:IncomingChangeCategory, solvedConflictsCount:int, isSelected:bool) : GUIStyle
+    {static} - ShouldExpandCategory(treeView:IncomingChangesTreeView, categoryTreeViewItem:ChangeCategoryTreeViewItem, categoriesCount:int, expandCategories:bool) : bool
+    - mExpandCategories : bool
+    - mTreeViewItemIds : TreeViewItemIds<IncomingChangeCategory, IncomingChangeInfo>
+    - mRows : List<TreeViewItem>
+    - mCurrentConflict : IncomingChangeInfo
+    - mSolvedConflicts : List<IncomingChangeInfo>
+    - mIncomingChangesTree : UnityIncomingChangesTree
+    <<readonly>> - mOnCheckedNodeChanged : Action
+    <<readonly>> - mMenu : IncomingChangesViewMenu
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<const>> - NODES_TO_EXPAND_CATEGORY : int = 10
+}
+TreeView <|-- IncomingChangesTreeView
+@enduml

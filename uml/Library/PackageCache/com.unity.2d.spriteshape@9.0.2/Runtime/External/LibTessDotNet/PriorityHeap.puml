@@ -1,0 +1,29 @@
+@startuml
+struct PQHandle {
+    + {static} <<readonly>> Invalid : int = 0x0fffffff
+    <<internal>> _handle : int
+}
+class "PriorityHeap`1"<TValue> {
+    - _leq : LessOrEqual
+    - _nodes : int[]
+    - _handles : HandleElem[]
+    - _size : int
+    - _max : int
+    - _freeList : int
+    - _initialized : bool
+    + Empty : bool <<get>>
+    + PriorityHeap(initialSize:int, leq:LessOrEqual)
+    - FloatDown(curr:int) : void
+    - FloatUp(curr:int) : void
+    + Init() : void
+    + Insert(value:TValue) : PQHandle
+    + ExtractMin() : TValue
+    + Minimum() : TValue
+    + Remove(handle:PQHandle) : void
+}
+class HandleElem {
+    <<internal>> _key : TValue
+    <<internal>> _node : int
+}
+"PriorityHeap`1" +-- HandleElem
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class CompositeShadowCaster2D {
+    # OnEnable() : void
+    # OnDisable() : void
+}
+ShadowCasterGroup2D <|-- CompositeShadowCaster2D
+@enduml

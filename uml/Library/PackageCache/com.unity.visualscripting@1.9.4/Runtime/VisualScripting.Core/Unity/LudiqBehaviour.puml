@@ -1,0 +1,15 @@
+@startuml
+abstract class LudiqBehaviour {
+    # _data : SerializationData
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    # <<virtual>> OnBeforeSerialize() : void
+    # <<virtual>> OnAfterSerialize() : void
+    # <<virtual>> OnBeforeDeserialize() : void
+    # <<virtual>> OnAfterDeserialize() : void
+    # <<virtual>> ShowData() : void
+    + <<override>> ToString() : string
+}
+MonoBehaviour <|-- LudiqBehaviour
+ISerializationCallbackReceiver <|-- LudiqBehaviour
+@enduml

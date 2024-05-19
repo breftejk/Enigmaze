@@ -1,0 +1,30 @@
+@startuml
+class UnitySynchronizationContext <<sealed>> {
+    - <<const>> kAwqInitialCapacity : int = 20
+    - <<readonly>> m_AsyncWorkQueue : List<WorkRequest>
+    - <<readonly>> m_CurrentFrameWork : List<WorkRequest>
+    - <<readonly>> m_MainThreadID : int
+    - m_TrackedCount : int = 0
+    - UnitySynchronizationContext(mainThreadID:int)
+    - UnitySynchronizationContext(queue:List<WorkRequest>, mainThreadID:int)
+    + <<override>> Send(callback:SendOrPostCallback, state:object) : void
+    + <<override>> OperationStarted() : void
+    + <<override>> OperationCompleted() : void
+    + <<override>> Post(callback:SendOrPostCallback, state:object) : void
+    + <<override>> CreateCopy() : SynchronizationContext
+    + Exec() : void
+    - HasPendingTasks() : bool
+    - {static} InitializeSynchronizationContext() : void
+    - {static} ExecuteTasks() : void
+    - {static} ExecutePendingTasks(millisecondsTimeout:long) : bool
+}
+struct WorkRequest {
+    - <<readonly>> m_DelagateCallback : SendOrPostCallback
+    - <<readonly>> m_DelagateState : object
+    - <<readonly>> m_WaitHandle : ManualResetEvent
+    + WorkRequest(callback:SendOrPostCallback, state:object, waitHandle:ManualResetEvent)
+    + Invoke() : void
+}
+SynchronizationContext <|-- UnitySynchronizationContext
+UnitySynchronizationContext +-- WorkRequest
+@enduml

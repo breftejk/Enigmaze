@@ -1,0 +1,29 @@
+@startuml
+class ProgressControlsForViews {
+    <<internal>> ProgressData : Data <<get>>
+    <<internal>> IsOperationRunning() : bool
+    <<internal>> HasNotification() : bool
+    <<internal>> UpdateDeterminateProgress(parentWindow:EditorWindow) : void
+    <<internal>> UpdateProgress(parentWindow:EditorWindow) : void
+    - HideProgress() : void
+    - ShowProgress(message:string) : void
+    - ShowError(message:string) : void
+    - ShowNotification(message:string) : void
+    - ShowSuccess(message:string) : void
+    - ShowWarning(message:string) : void
+    - HideNotification() : void
+    - UpdateIndeterminateProgress() : void
+    - mData : Data
+    - mRequestedRepaint : bool
+}
+class Data {
+    <<internal>> IsOperationRunning : bool
+    <<internal>> ProgressPercent : float
+    <<internal>> ProgressMessage : string
+    <<internal>> NotificationType : MessageType
+    <<internal>> NotificationMessage : string
+    <<internal>> CopyInto(other:Data) : void
+}
+IProgressControls <|-- ProgressControlsForViews
+ProgressControlsForViews +-- Data
+@enduml

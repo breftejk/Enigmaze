@@ -1,0 +1,53 @@
+@startuml
+interface ITexturePlatformSettingsDataProvider {
+    textureTypeHasMultipleDifferentValues : bool <<get>>
+    textureType : TextureImporterType <<get>>
+    spriteImportMode : SpriteImportMode <<get>>
+    GetTargetCount() : int
+    GetPlatformTextureSettings(i:int, name:string) : TextureImporterPlatformSettings
+    ShowPresetSettings() : bool
+    DoesSourceTextureHaveAlpha(v:int) : bool
+    IsSourceTextureHDR(v:int) : bool
+    SetPlatformTextureSettings(i:int, platformSettings:TextureImporterPlatformSettings) : void
+    GetImporterSettings(i:int, settings:TextureImporterSettings) : void
+    GetBuildTargetName(sp:SerializedProperty) : string
+    platformSettingsArray : SerializedProperty <<get>>
+}
+class TexturePlatformSettings {
+    - m_Data : TextureImportPlatformSettingsData
+    - m_DataProvider : ITexturePlatformSettingsDataProvider
+    - DefaultImportSettings : Func<BaseTextureImportPlatformSettings>
+    + <<override>> model : TextureImportPlatformSettingsData <<get>>
+    + TexturePlatformSettings(name:string, target:BuildTarget, inspector:ITexturePlatformSettingsDataProvider, defaultPlatform:Func<BaseTextureImportPlatformSettings>)
+    + CacheSerializedProperties(platformSettingsArray:SerializedProperty) : void
+    + <<override>> textureTypeHasMultipleDifferentValues : bool <<get>>
+    + <<override>> textureType : TextureImporterType <<get>>
+    + <<override>> spriteImportMode : SpriteImportMode <<get>>
+    + <<override>> GetTargetCount() : int
+    + <<override>> ShowPresetSettings() : bool
+    + <<override>> GetImporterSettings(i:int) : TextureImporterSettings
+    + <<override>> IsSourceTextureHDR(i:int) : bool
+    + <<override>> DoesSourceTextureHaveAlpha(i:int) : bool
+    + <<override>> GetPlatformTextureSettings(i:int, name:string) : TextureImporterPlatformSettings
+    + <<override>> GetDefaultImportSettings() : BaseTextureImportPlatformSettings
+    + <<override>> SetPlatformTextureSettings(i:int, platformSettings:TextureImporterPlatformSettings) : void
+    - GetFixedPlatformName(platform:string) : string
+}
+class TexturePlatformSettingsHelper {
+    - m_PlatformSettings : List<TexturePlatformSettings>
+    - m_DataProvider : ITexturePlatformSettingsDataProvider
+    <<internal>> {static} PlatformSettingsNeeded(dataProvider:ITexturePlatformSettingsDataProvider) : List<TextureImporterPlatformSettings>
+    + TexturePlatformSettingsHelper(dataProvider:ITexturePlatformSettingsDataProvider)
+    - DefaultTextureImportPlatformSettings() : BaseTextureImportPlatformSettings
+    + {static} defaultPlatformName : string <<get>>
+    + spriteImportMode : SpriteImportMode <<get>>
+    + textureType : TextureImporterType <<get>>
+    + textureTypeHasMultipleDifferentValues : bool <<get>>
+    + ShowPlatformSpecificSettings() : void
+    + HasModified() : bool
+    - SyncPlatformSettings() : void
+    + Apply() : void
+    + {static} GetBuildTargetGroupName(target:BuildTarget) : string
+}
+BaseTextureImportPlatformSettings <|-- TexturePlatformSettings
+@enduml

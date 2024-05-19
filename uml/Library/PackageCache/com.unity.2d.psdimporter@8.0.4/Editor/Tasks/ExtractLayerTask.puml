@@ -1,0 +1,29 @@
+@startuml
+class ExtractLayerTask <<static>> {
+    + {static} <<unsafe>> Execute(psdExtractLayerData:PSDExtractLayerData[], outputLayers:List<PSDLayer>, importHiddenLayer:bool, canvasSize:Vector2Int) : void
+    {static} - ExtractLayerData(inputLayers:PSDExtractLayerData[], extractedLayers:List<PSDLayer>, importHiddenLayer:bool, flatten:bool, parentGroupVisible:bool, canvasSize:Vector2Int) : void
+    {static} - GenerateOutputLayers(inputLayers:List<PSDLayer>, outputLayers:List<PSDLayer>, layerGroupData:List<LayerGroupData>, flatten:bool, canvasSize:Vector2Int) : void
+    {static} - FindAllChildrenOfParent(parentIndex:int, layers:List<PSDLayer>) : List<int>
+    {static} - CalculateLayerRectInChildren(inputLayers:List<PSDLayer>, childIndices:List<int>) : RectInt
+    {static} - IsRectIntDefault(rectInt:RectInt) : bool
+    {static} - CropRect(baseRect:RectInt, cropArea:RectInt) : void
+    {static} - FitRectInsideRect(baseRect:RectInt, rectToFitIn:RectInt) : void
+}
+struct LayerGroupData {
+    + startIndex : int <<get>> <<set>>
+    + endIndex : int <<get>> <<set>>
+    + documentRect : int4 <<get>> <<set>>
+}
+struct ConvertBufferJob {
+    + inputTextureBufferSizes : NativeArray<int>
+    + inputTextures : NativeArray<IntPtr>
+    + inputLayerRects : NativeArray<int4>
+    + layerGroupDataData : NativeArray<LayerGroupData>
+    + outputLayerRect : NativeArray<int4>
+    + outputTextures : NativeArray<IntPtr>
+    + <<unsafe>> Execute(groupIndex:int) : void
+}
+ExtractLayerTask +-- LayerGroupData
+ExtractLayerTask +-- ConvertBufferJob
+IJobParallelFor <|-- ConvertBufferJob
+@enduml

@@ -1,0 +1,104 @@
+@startuml
+class InputDevice {
+    + <<const>> InvalidDeviceId : int = 0
+    <<internal>> <<const>> kLocalParticipantId : int = 0
+    <<internal>> <<const>> kInvalidDeviceIndex : int
+    + description : InputDeviceDescription <<get>>
+    + enabled : bool <<get>>
+    + canRunInBackground : bool <<get>>
+    + added : bool <<get>>
+    + remote : bool <<get>>
+    + native : bool <<get>>
+    + updateBeforeRender : bool <<get>>
+    + deviceId : int <<get>>
+    + lastUpdateTime : double <<get>>
+    + wasUpdatedThisFrame : bool <<get>>
+    + allControls : ReadOnlyArray<InputControl> <<get>>
+    + <<override>> valueType : Type <<get>>
+    + <<override>> valueSizeInBytes : int <<get>>
+    + {static} all : ReadOnlyArray<InputDevice> <<get>>
+    + InputDevice()
+    + <<override>> <<unsafe>> ReadValueFromBufferAsObject(buffer:void*, bufferSize:int) : object
+    + <<override>> <<unsafe>> ReadValueFromStateAsObject(statePtr:void*) : object
+    + <<override>> <<unsafe>> ReadValueFromStateIntoBuffer(statePtr:void*, bufferPtr:void*, bufferSize:int) : void
+    + <<override>> <<unsafe>> CompareValue(firstStatePtr:void*, secondStatePtr:void*) : bool
+    <<internal>> NotifyConfigurationChanged() : void
+    + <<virtual>> MakeCurrent() : void
+    # <<virtual>> OnAdded() : void
+    # <<virtual>> OnRemoved() : void
+    # <<virtual>> OnConfigurationChanged() : void
+    + <<unsafe>> ExecuteCommand(command:TCommand) : long
+    # <<virtual>> <<unsafe>> ExecuteCommand(commandPtr:InputDeviceCommand*) : long
+    <<internal>> QueryEnabledStateFromRuntime() : bool
+    <<internal>> disabledInFrontend : bool <<get>> <<set>>
+    <<internal>> disabledInRuntime : bool <<get>> <<set>>
+    <<internal>> disabledWhileInBackground : bool <<get>> <<set>>
+    <<internal>> m_DeviceFlags : DeviceFlags
+    <<internal>> m_DeviceId : int
+    <<internal>> m_ParticipantId : int
+    <<internal>> m_DeviceIndex : int
+    <<internal>> m_Description : InputDeviceDescription
+    <<internal>> m_LastUpdateTimeInternal : double
+    <<internal>> m_CurrentUpdateStepCount : uint
+    <<internal>> m_AliasesForEachControl : InternedString[]
+    <<internal>> m_UsagesForEachControl : InternedString[]
+    <<internal>> m_UsageToControl : InputControl[]
+    <<internal>> m_ChildrenForEachControl : InputControl[]
+    <<internal>> m_StateOffsetToControlMap : uint[]
+    <<internal>> m_ControlTreeNodes : ControlBitRangeNode[]
+    <<internal>> m_ControlTreeIndices : ushort[]
+    <<internal>> <<const>> kControlIndexBits : int = 10
+    <<internal>> <<const>> kStateOffsetBits : int = 13
+    <<internal>> <<const>> kStateSizeBits : int = 9
+    <<internal>> {static} EncodeStateOffsetToControlMapEntry(controlIndex:uint, stateOffsetInBits:uint, stateSizeInBits:uint) : uint
+    <<internal>> {static} DecodeStateOffsetToControlMapEntry(entry:uint, controlIndex:uint, stateOffset:uint, stateSize:uint) : void
+    <<internal>> hasControlsWithDefaultState : bool <<get>> <<set>>
+    <<internal>> hasDontResetControls : bool <<get>> <<set>>
+    <<internal>> hasStateCallbacks : bool <<get>> <<set>>
+    <<internal>> hasEventMerger : bool <<get>> <<set>>
+    <<internal>> hasEventPreProcessor : bool <<get>> <<set>>
+    <<internal>> AddDeviceUsage(usage:InternedString) : void
+    <<internal>> RemoveDeviceUsage(usage:InternedString) : void
+    <<internal>> ClearDeviceUsages() : void
+    <<internal>> RequestSync() : bool
+    <<internal>> RequestReset() : bool
+    <<internal>> ExecuteEnableCommand() : bool
+    <<internal>> ExecuteDisableCommand() : bool
+    <<internal>> NotifyAdded() : void
+    <<internal>> NotifyRemoved() : void
+    <<internal>> {static} Build(layoutName:string, layoutVariants:string, deviceDescription:InputDeviceDescription, noPrecompiledLayouts:bool) : TDevice
+    <<internal>> <<unsafe>> WriteChangedControlStates(deviceStateBuffer:byte*, statePtr:void*, stateSizeInBytes:uint, stateOffsetInDevice:uint) : void
+    - <<unsafe>> WritePartialChangedControlStatesInternal(statePtr:void*, stateSizeInBits:uint, stateOffsetInDeviceInBits:uint, deviceStatePtr:byte*, parentNode:ControlBitRangeNode, startOffset:uint) : void
+    - DumpControlBitRangeNode(nodeIndex:int, node:ControlBitRangeNode, startOffset:uint, sizeInBits:uint, output:List<string>) : void
+    - DumpControlTree(parentNode:ControlBitRangeNode, startOffset:uint, output:List<string>) : void
+    <<internal>> DumpControlTree() : string
+    - <<unsafe>> WriteChangedControlStatesInternal(statePtr:void*, stateSizeInBits:uint, deviceStatePtr:byte*, parentNode:ControlBitRangeNode, startOffset:uint) : void
+    - {static} <<unsafe>> HasDataChangedInRange(deviceStatePtr:byte*, statePtr:void*, startOffset:uint, sizeInBits:uint) : bool
+}
+enum DeviceFlags {
+    UpdateBeforeRender= 1 << 0,
+    HasStateCallbacks= 1 << 1,
+    HasControlsWithDefaultState= 1 << 2,
+    HasDontResetControls= 1 << 10,
+    HasEventMerger= 1 << 13,
+    HasEventPreProcessor= 1 << 14,
+    Remote= 1 << 3,
+    Native= 1 << 4,
+    DisabledInFrontend= 1 << 5,
+    DisabledInRuntime= 1 << 7,
+    DisabledWhileInBackground= 1 << 8,
+    DisabledStateHasBeenQueriedFromRuntime= 1 << 6,
+    CanRunInBackground= 1 << 11,
+    CanRunInBackgroundHasBeenQueried= 1 << 12,
+}
+struct ControlBitRangeNode {
+    + endBitOffset : ushort
+    + leftChildIndex : short
+    + controlStartIndex : ushort
+    + controlCount : byte
+    + ControlBitRangeNode(endOffset:ushort)
+}
+InputControl <|-- InputDevice
+InputDevice +-- DeviceFlags
+InputDevice +-- ControlBitRangeNode
+@enduml

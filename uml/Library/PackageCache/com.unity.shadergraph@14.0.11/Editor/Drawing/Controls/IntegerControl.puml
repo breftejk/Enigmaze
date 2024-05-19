@@ -1,0 +1,16 @@
+@startuml
+class IntegerControlAttribute {
+    - m_Label : string
+    + IntegerControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class IntegerControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    + IntegerControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnChange(evt:ChangeEvent<int>) : void
+}
+Attribute <|-- IntegerControlAttribute
+IControlAttribute <|-- IntegerControlAttribute
+VisualElement <|-- IntegerControlView
+@enduml

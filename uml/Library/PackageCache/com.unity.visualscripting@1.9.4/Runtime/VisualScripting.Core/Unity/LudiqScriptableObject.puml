@@ -1,0 +1,18 @@
+@startuml
+abstract class LudiqScriptableObject {
+    # _data : SerializationData
+    <<internal>>  <<event>> OnDestroyActions : Action 
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    # <<virtual>> OnBeforeSerialize() : void
+    # <<virtual>> OnAfterSerialize() : void
+    # <<virtual>> OnBeforeDeserialize() : void
+    # <<virtual>> OnAfterDeserialize() : void
+    # <<virtual>> OnPostDeserializeInEditor() : void
+    - OnDestroy() : void
+    # <<virtual>> ShowData() : void
+    + <<override>> ToString() : string
+}
+ScriptableObject <|-- LudiqScriptableObject
+ISerializationCallbackReceiver <|-- LudiqScriptableObject
+@enduml

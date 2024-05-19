@@ -1,0 +1,10 @@
+@startuml
+class Serializer {
+    - <<readonly>> _stream : MemoryStream
+    - <<readonly>> _writer : BinaryWriter
+    + Serializer()
+    + WriteInt32(i:int) : void
+    + WriteString(s:string) : void
+    + Buffer() : byte[]
+}
+@enduml

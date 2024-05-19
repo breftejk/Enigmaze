@@ -1,0 +1,13 @@
+@startuml
+class SubGraphOutputNodePropertyDrawer {
+    - m_setNodesAsDirtyCallback : Action
+    - m_updateNodeViewsCallback : Action
+    + GetPropertyData(setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    - CreateGUI(node:SubGraphOutputNode, attribute:InspectableAttribute, propertyVisualElement:VisualElement) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- SubGraphOutputNodePropertyDrawer
+IGetNodePropertyDrawerPropertyData <|-- SubGraphOutputNodePropertyDrawer
+@enduml

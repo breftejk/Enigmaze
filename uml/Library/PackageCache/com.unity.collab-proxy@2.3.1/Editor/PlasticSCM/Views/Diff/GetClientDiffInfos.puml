@@ -1,0 +1,6 @@
+@startuml
+class GetClientDiffInfos <<static>> {
+    <<internal>> {static} FromCategories(categories:List<IDiffCategory>) : List<ClientDiffInfo>
+    {static} - AddClientDiffInfos(node:ITreeViewNode, result:List<ClientDiffInfo>) : void
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class SampleTexture2DNodePropertyDrawer {
+    <<internal>> <<override>> AddCustomNodeProperties(parentElement:VisualElement, nodeBase:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+}
+AbstractMaterialNodePropertyDrawer <|-- SampleTexture2DNodePropertyDrawer
+@enduml

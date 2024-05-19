@@ -1,0 +1,8 @@
+@startuml
+class TrackedReference {
+    <<internal>> m_Ptr : IntPtr
+    # TrackedReference()
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+}
+@enduml

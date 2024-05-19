@@ -1,0 +1,95 @@
+@startuml
+enum ActionType {
+    SelectCategory,
+    SelectLabels,
+    RenameCategory,
+    RenameLabel,
+    CreateCategory,
+    CreateLabel,
+    DeleteCategories,
+    DeleteLabels,
+    ReorderCategories,
+    ReorderLabels,
+    ModifiedCategories,
+    ModifiedLabels,
+    SetMainLibrary,
+    SetLabelSprite,
+    None,
+}
+enum ViewType {
+    List,
+    Grid,
+}
+struct ViewData {
+    + viewType : ViewType
+    + relativeSize : float
+    + absoluteSize : float
+}
+enum SearchType {
+    CategoryAndLabel,
+    Category,
+    Label,
+}
+class WindowController {
+    - m_Window : ISpriteLibraryEditorWindow
+    - m_Model : SpriteLibraryEditorModel
+    - selectedCategories : List<string> <<get>>
+    - selectedLabels : List<string> <<get>>
+    + GetSelectedAsset() : SpriteLibraryAsset
+    - m_ControllerEvents : ControllerEvents
+    - m_ViewEvents : ViewEvents
+    - hasSelectedLibrary : bool <<get>>
+    <<const>> - k_ViewSizeDivision : float = 0.1f
+    - m_ViewSize : float
+    - m_ViewType : ViewType
+    - m_FilterString : string = ""
+    - m_FilterType : SearchType
+    - m_SelectedAssetPath : string
+    <<const>> - k_DefaultLabelName : string = "New Label"
+    <<const>> - k_DefaultCategoryName : string = "New Category"
+    - m_AutoSave : bool
+    + WindowController(window:ISpriteLibraryEditorWindow, model:SpriteLibraryEditorModel, controllerEvents:ControllerEvents, viewEvents:ViewEvents)
+    + Destroy() : void
+    + SaveChanges() : void
+    + RevertChanges() : void
+    + SelectAsset(asset:SpriteLibraryAsset, modifiedExternally:bool) : void
+    - AddViewEventListeners() : void
+    - AddAssetPostprocessorListeners() : void
+    - RemoveAssetPostprocessorListeners() : void
+    - CreateNewSpriteLibraryAsset(newAssetPath:string) : void
+    - ChangeViewSize(newSize:float) : void
+    - ChangeViewType(viewType:ViewType) : void
+    {static} - GetAdjustedViewSize(size:float, viewType:ViewType) : float
+    - SelectedFilterType(newFilterType:SearchType) : void
+    - SelectedFilter(newFilterString:string) : void
+    - OnAssetModified(modifiedAssetPath:string) : void
+    - OnAssetMoved(sourcePath:string, destinationPath:string) : void
+    - SelectionChanged() : void
+    - RefreshView() : void
+    - RefreshSelection() : void
+    - PropagateLastAction() : void
+    - SetMainAsset(libraryAsset:SpriteLibraryAsset) : void
+    - SelectCategories(newSelection:IList<string>) : void
+    - SelectLabels(newSelection:IList<string>) : void
+    - CreateNewCategory(categoryName:string, sprites:IList<Sprite>) : void
+    - RenameSelectedCategory(newName:string) : void
+    - ReorderCategories(reorderedCategories:IList<string>) : void
+    - DeleteSelectedCategories() : void
+    - CreateNewLabel(labelName:string) : void
+    - RenameSelectedLabel(newName:string) : void
+    - ReorderLabels(reorderedLabels:IList<string>) : void
+    - DeleteSelectedLabels() : void
+    - SetLabelSprite(labelName:string, newSprite:Sprite) : void
+    - ToggleAutoSave(newAutoSaveValue:bool) : void
+    - OnSave() : void
+    - OnRevert() : void
+    - AutoSave() : void
+    - AddDataToCategories(spritesData:IList<DragAndDropData>, alt:bool, category:string) : void
+    - AddDataToLabels(spritesData:IList<DragAndDropData>, alt:bool, label:string) : void
+    - HandlePsdData(data:DragAndDropData) : void
+    - RevertOverridenLabels(labels:IList<string>) : void
+    - GetCategoryData(categoryName:string) : CategoryData
+    - GetLabelData(labelName:string) : LabelData
+    {static} - AreSequencesEqual(first:IList<string>, second:IList<string>) : bool
+}
+@enduml

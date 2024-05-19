@@ -1,0 +1,43 @@
+@startuml
+class TextMeshProUGUI <<partial>> {
+    + <<override>> materialForRendering : Material <<get>>
+    + <<override>> autoSizeTextContainer : bool <<get>> <<set>>
+    + <<override>> mesh : Mesh <<get>>
+    + <<new>> canvasRenderer : CanvasRenderer <<get>>
+    - m_Maskable : bool = true
+    - m_isRebuildingLayout : bool = false
+    - m_DelayedGraphicRebuild : Coroutine
+    - m_DelayedMaterialRebuild : Coroutine
+    + CalculateLayoutInputHorizontal() : void
+    + CalculateLayoutInputVertical() : void
+    + <<override>> SetVerticesDirty() : void
+    + <<override>> SetLayoutDirty() : void
+    + <<override>> SetMaterialDirty() : void
+    + <<override>> SetAllDirty() : void
+    - DelayedGraphicRebuild() : IEnumerator
+    - DelayedMaterialRebuild() : IEnumerator
+    + <<override>> Rebuild(update:CanvasUpdate) : void
+    - UpdateSubObjectPivot() : void
+    + <<override>> GetModifiedMaterial(baseMaterial:Material) : Material
+    # <<override>> UpdateMaterial() : void
+    + maskOffset : Vector4 <<get>> <<set>>
+    + <<override>> RecalculateClipping() : void
+    + <<override>> Cull(clipRect:Rect, validRect:bool) : void
+    - m_ClipRect : Rect
+    - m_ValidRect : bool
+    <<internal>> <<override>> UpdateCulling() : void
+    + <<override>> UpdateMeshPadding() : void
+    # <<override>> InternalCrossFadeColor(targetColor:Color, duration:float, ignoreTimeScale:bool, useAlpha:bool) : void
+    # <<override>> InternalCrossFadeAlpha(alpha:float, duration:float, ignoreTimeScale:bool) : void
+    + <<override>> ForceMeshUpdate(ignoreActiveState:bool, forceTextReparsing:bool) : void
+    + <<override>> GetTextInfo(text:string) : TMP_TextInfo
+    + <<override>> ClearMesh() : void
+    + <<override>>  <<event>> OnPreRenderText : Action<TMP_TextInfo> 
+    + <<override>> UpdateGeometry(mesh:Mesh, index:int) : void
+    + <<override>> UpdateVertexData(flags:TMP_VertexDataUpdateFlags) : void
+    + <<override>> UpdateVertexData() : void
+    + UpdateFontAsset() : void
+}
+TMP_Text <|-- TextMeshProUGUI
+ILayoutElement <|-- TextMeshProUGUI
+@enduml

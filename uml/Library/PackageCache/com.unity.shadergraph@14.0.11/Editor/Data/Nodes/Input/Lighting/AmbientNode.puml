@@ -1,0 +1,14 @@
+@startuml
+class AmbientNode {
+    <<const>> - kOutputSlotName : string = "Color/Sky"
+    <<const>> - kOutputSlot1Name : string = "Equator"
+    <<const>> - kOutputSlot2Name : string = "Ground"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> OutputSlot1Id : int = 1
+    + <<const>> OutputSlot2Id : int = 2
+    + AmbientNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+}
+AbstractMaterialNode <|-- AmbientNode
+@enduml

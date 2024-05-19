@@ -1,0 +1,38 @@
+@startuml
+class InGameHintsExample {
+    + helpText : Text
+    + moveSpeed : float
+    + rotateSpeed : float
+    + throwForce : float
+    + pickupDistance : float
+    + holdDistance : float
+    - m_Rotation : Vector2
+    - m_PlayerInput : PlayerInput
+    - m_CurrentState : State
+    - m_CurrentObject : Transform
+    - m_PropertyBlock : MaterialPropertyBlock
+    - m_LookAtObjectHelpText : string
+    - m_ThrowObjectHelpText : string
+    - <<const>> kDefaultHelpTextFormat : string = "Move close to one of the cubes and look at it to pick up"
+    - <<const>> kLookAtObjectHelpTextFormat : string = "Press {pickup&#125; to pick object up"
+    - <<const>> kThrowObjectHelpTextFormat : string = "Press {throw&#125; to throw object; press {drop&#125; to drop object"
+    + Awake() : void
+    + OnEnable() : void
+    + OnControlsChanged() : void
+    - m_UpdateCount : int
+    + Update() : void
+    - ChangeState(newState:State) : void
+    - UpdateUIHints(regenerate:bool) : void
+    - Throw(drop:bool) : void
+    - PickUp() : void
+    - Move(direction:Vector2) : void
+    - Look(rotate:Vector2) : void
+}
+enum State {
+    Wandering,
+    ObjectInSights,
+    ObjectPickedUp,
+}
+MonoBehaviour <|-- InGameHintsExample
+InGameHintsExample +-- State
+@enduml

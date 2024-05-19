@@ -1,0 +1,10 @@
+@startuml
+interface "IElementAdderMenuBuilder`1"<TContext> {
+    SetContractType(contractType:Type) : void
+    SetElementAdder(elementAdder:IElementAdder<TContext>) : void
+    SetTypeDisplayNameFormatter(formatter:Func<Type, string>) : void
+    AddTypeFilter(typeFilter:Func<Type, bool>) : void
+    AddCustomCommand(command:IElementAdderMenuCommand<TContext>) : void
+    GetMenu() : IElementAdderMenu
+}
+@enduml

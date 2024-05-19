@@ -1,0 +1,6 @@
+@startuml
+class InterceptedEventsPreviewTests {
+    + InterceptedEventsPreviewCacheUsingTypeCacheReturnsSameTypes() : void
+    - {static} GetAccessibleTypesInLoadedAssemblies() : IEnumerable<Type>
+}
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+class GridPaletteBrushes {
+    <<internal>> {static} <<readonly>> s_SessionStateLastUsedBrush : string = "GridPaletteBrushes.LastUsedBrush"
+    - {static} <<readonly>> s_LibraryPath : string = "Library/GridBrush"
+    - {static} <<readonly>> s_GridBrushExtension : string = ".asset"
+    - {static} s_RefreshCache : bool
+    - m_Brushes : List<GridBrushBase>
+    + {static} brushes : List<GridBrushBase> <<get>>
+    - m_BrushNames : string[]
+    + {static} brushNames : string[] <<get>>
+    - m_BrushTooltips : string[]
+    + {static} brushTooltips : string[] <<get>>
+    + GetLastUsedBrush() : GridBrushBase
+    + StoreLastUsedBrush(brush:GridBrushBase) : void
+    + {static} GetDefaultBrushType() : Type
+    + {static} ActiveGridBrushAssetChanged() : void
+    - RefreshBrushesCache() : void
+    - IsDefaultInstanceVisibleGridBrushType(brushType:Type) : bool
+    - IsAssetVisibleGridBrushType(brushType:Type) : bool
+    - SaveLibraryGridBrushAsset(brush:GridBrushBase) : void
+    - LoadOrCreateLibraryGridBrushAsset(brushType:Type) : GridBrushBase
+    - CreateLibraryGridBrushAsset(brushType:Type) : GridBrushBase
+    - GenerateGridBrushInstanceLibraryPath(brushType:Type) : string
+    - GetBrushDropdownName(brush:GridBrushBase) : string
+    - {static} IsLibraryBrush(brush:GridBrushBase) : bool
+    <<internal>> {static} FlushCache() : void
+}
+class AssetProcessor {
+    + <<override>> GetPostprocessOrder() : int
+    - {static} OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromPath:string[]) : void
+}
+"ScriptableSingleton`1" "<GridPaletteBrushes>" <|-- GridPaletteBrushes
+GridPaletteBrushes +-- AssetProcessor
+AssetPostprocessor <|-- AssetProcessor
+@enduml

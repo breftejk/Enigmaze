@@ -1,0 +1,13 @@
+@startuml
+class AsepriteImportData {
+    - m_ImportedTextureWidth : int
+    + importedTextureWidth : int <<get>> <<set>>
+    - m_ImportedTextureHeight : int
+    + importedTextureHeight : int <<get>> <<set>>
+    - m_TextureActualHeight : int
+    + textureActualHeight : int <<get>> <<set>>
+    - m_TextureActualWidth : int
+    + textureActualWidth : int <<get>> <<set>>
+}
+ScriptableObject <|-- AsepriteImportData
+@enduml

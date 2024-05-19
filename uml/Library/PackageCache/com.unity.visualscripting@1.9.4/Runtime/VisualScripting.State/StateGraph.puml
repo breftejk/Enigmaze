@@ -1,0 +1,19 @@
+@startuml
+class StateGraph <<sealed>> {
+    + StateGraph()
+    + <<override>> CreateData() : IGraphData
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    + states : GraphElementCollection<IState> <<get>> <<internal set>>
+    + transitions : GraphConnectionCollection<IStateTransition, IState, IState> <<get>> <<internal set>>
+    + groups : GraphElementCollection<GraphGroup> <<get>> <<internal set>>
+    + sticky : GraphElementCollection<StickyNote> <<get>>
+    - GetActiveStatesNoAlloc(pointer:GraphPointer) : HashSet<IState>
+    + Start(flow:Flow) : void
+    + Stop(flow:Flow) : void
+    + {static} WithStart() : StateGraph
+}
+Graph <|-- StateGraph
+IGraphEventListener <|-- StateGraph
+@enduml

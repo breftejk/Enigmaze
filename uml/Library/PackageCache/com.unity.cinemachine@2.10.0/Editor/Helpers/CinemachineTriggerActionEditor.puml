@@ -1,0 +1,18 @@
+@startuml
+class CinemachineTriggerActionEditor {
+    <<const>> - vSpace : int = 2
+    - def : CinemachineTriggerAction.ActionSettings
+    {static} - mEnterExpanded : bool
+    {static} - mExitExpanded : bool
+    - mRepeatProperties : SerializedProperty[]
+    - mRepeatLabel : GUIContent
+    - mRepeatSubLabels : GUIContent[]
+    - mFoldoutStyle : GUIStyle
+    - OnEnable() : void
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawActionSettings(property:SerializedProperty, expanded:bool) : bool
+    - GetTargetComponent(obj:UnityEngine.Object) : T
+}
+"BaseEditor`1" "<CinemachineTriggerAction>" <|-- CinemachineTriggerActionEditor
+@enduml

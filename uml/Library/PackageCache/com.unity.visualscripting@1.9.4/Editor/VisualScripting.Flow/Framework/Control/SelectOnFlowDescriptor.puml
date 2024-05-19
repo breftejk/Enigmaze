@@ -1,0 +1,7 @@
+@startuml
+class SelectOnFlowDescriptor {
+    + SelectOnFlowDescriptor(unit:SelectOnFlow)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<SelectOnFlow>" <|-- SelectOnFlowDescriptor
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+abstract class Control {
+    - m_Name : string
+    - m_NameHashCode : int
+    - m_ID : int
+    - m_LayoutData : LayoutData
+    - m_ActionID : int
+    - m_HotLayoutData : LayoutData
+    + name : string <<get>>
+    + ID : int <<get>>
+    + actionID : int <<get>>
+    + layoutData : LayoutData <<get>> <<set>>
+    + hotLayoutData : LayoutData <<get>>
+    + Control(name:string)
+    + GetControl(guiState:IGUIState) : void
+    <<internal>> SetActionID(actionID:int) : void
+    + BeginLayout(guiState:IGUIState) : void
+    + Layout(guiState:IGUIState) : void
+    + EndLayout(guiState:IGUIState) : void
+    + Repaint(guiState:IGUIState) : void
+    # <<virtual>> OnBeginLayout(data:LayoutData, guiState:IGUIState) : LayoutData
+    # <<virtual>> OnEndLayout(guiState:IGUIState) : void
+    # <<virtual>> OnRepaint(guiState:IGUIState, index:int) : void
+    # <<virtual>> GetCount() : int
+    # <<virtual>> GetPosition(guiState:IGUIState, index:int) : Vector3
+    # <<virtual>> GetForward(guiState:IGUIState, index:int) : Vector3
+    # <<virtual>> GetUp(guiState:IGUIState, index:int) : Vector3
+    # <<virtual>> GetRight(guiState:IGUIState, index:int) : Vector3
+    # <<virtual>> GetDistance(guiState:IGUIState, index:int) : float
+    # <<virtual>> GetUserData(guiState:IGUIState, index:int) : object
+}
+@enduml

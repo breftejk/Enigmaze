@@ -1,0 +1,21 @@
+@startuml
+class DrawAssetOverlay <<static>> {
+    <<internal>> {static} Enable(wkPath:string, assetStatusCache:IAssetStatusCache) : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} GetStatusString(assetStatus:AssetStatus) : string
+    <<internal>> {static} GetTooltipText(statusValue:AssetStatus, lockStatusData:LockStatusData) : string
+    {static} - OnProjectWindowItemGUI(guid:string, selectionRect:Rect) : void
+    {static} - mRepaintProjectWindow : Action
+    {static} - mIsEnabled : bool
+    {static} - mAssetStatusCache : IAssetStatusCache
+    {static} - mWkPath : string
+    <<const>> - OVERLAY_ICON_OFFSET : float = 20f
+}
+class DrawOverlayIcon <<static>> {
+    <<internal>> {static} ForStatus(selectionRect:Rect, status:AssetStatus, tooltipText:string) : void
+    <<internal>> {static} GetOverlayIcon(assetStatus:AssetStatus) : Texture
+    {static} - Inflate(rect:Rect, width:float, height:float) : Rect
+    {static} - GetTooltipRect(selectionRect:Rect, overlayRect:Rect) : Rect
+}
+DrawAssetOverlay +-- DrawOverlayIcon
+@enduml

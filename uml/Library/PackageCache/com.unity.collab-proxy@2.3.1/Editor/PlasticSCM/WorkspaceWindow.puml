@@ -1,0 +1,60 @@
+@startuml
+class WorkspaceWindow {
+    <<internal>> SetUpdateNotifierForTesting(updateNotifier:UpdateNotifier) : void
+    <<internal>> WorkspaceStatus : WorkspaceStatusString.Data <<get>>
+    <<internal>> Progress : OperationProgressData <<get>>
+    <<internal>> GluonProgressOperationHandler : Gluon.ProgressOperationHandler <<get>>
+    <<internal>> WorkspaceWindow(wkInfo:WorkspaceInfo, viewHost:ViewHost, switcher:ViewSwitcher, mergeViewLauncher:IMergeViewLauncher, developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, parentWindow:EditorWindow)
+    <<internal>> IsOperationInProgress() : bool
+    <<internal>> CancelCurrentOperation() : void
+    <<internal>> OnParentUpdated(elapsedSeconds:double) : void
+    <<internal>> RequestRepaint() : void
+    <<internal>> UpdateWorkspace() : void
+    - RefreshView(viewType:ViewType) : void
+    - RefreshWorkingObjectViews(viewType:ViewType, workingObjectInfo:WorkingObjectInfo) : void
+    - UpdateTitle() : void
+    - CheckOperationInProgress() : bool
+    - ShowUpdateProgress(title:string, notifier:UpdateNotifier) : void
+    - EndUpdateProgress() : void
+    - ShowCheckinProgress() : void
+    - EndCheckinProgress() : void
+    - RefreshCheckinProgress(checkinStatus:CheckinStatus, progressData:BuildProgressSpeedAndRemainingTime.ProgressData) : void
+    - HasCheckinCancelled() : bool
+    - ShowReplicationProgress(replicationOperation:IReplicationOperation) : void
+    - RefreshReplicationProgress(replicationData:BranchReplicationData, replicationStatus:ReplicationStatus, current:int, total:int) : void
+    - EndReplicationProgress(replicationStatus:ReplicationStatus) : void
+    - ShowProgress() : void
+    - ShowProgress(progressOperation:IProgressOperation) : void
+    - RefreshProgress(progressData:ProgressData) : void
+    - EndProgress() : void
+    - RequestEncryptionPassword(server:string) : EncryptionConfigurationDialogData
+    - ForType(viewType:ViewType) : void
+    - Show(wkInfo:WorkspaceInfo, reportLines:IList) : void
+    - AppendReport(updateReport:string) : void
+    - OnWorkspaceStatusChanged() : void
+    - UpdateWorkspaceTitle() : void
+    - mRequestedRepaint : bool
+    - mUpdateNotifierForTesting : UpdateNotifier
+    - mProgressControls : IProgressControls
+    <<readonly>> - mOperationProgressData : OperationProgressData
+    <<readonly>> - mDeveloperProgressOperationHandler : Developer.ProgressOperationHandler
+    <<readonly>> - mGluonProgressOperationHandler : Gluon.ProgressOperationHandler
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mPlasticWindow : EditorWindow
+    <<readonly>> - mDeveloperNewIncomingChangesUpdater : NewIncomingChangesUpdater
+    <<readonly>> - mMergeViewLauncher : IMergeViewLauncher
+    <<readonly>> - mSwitcher : ViewSwitcher
+    <<readonly>> - mViewHost : ViewHost
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<internal>> RegisterPendingChangesProgressControls(progressControls:ProgressControlsForViews) : void
+    <<internal>> UpdateWorkspaceForMode(isGluonMode:bool, workspaceWindow:WorkspaceWindow) : void
+    - ShowUpdateReport(wkInfo:WorkspaceInfo, errors:List<ErrorMessage>) : UpdateReportResult
+    - PartialUpdateWorkspace() : void
+    {static} - ShowUpdateReportDialog(wkInfo:WorkspaceInfo, viewHost:ViewHost, progress:UpdateProgress, progressControls:IProgressControls, guiMessage:GuiMessage.IGuiMessage, updateProgress:IUpdateProgress, updateReport:IGluonUpdateReport) : void
+}
+IWorkspaceWindow <|-- WorkspaceWindow
+IRefreshView <|-- WorkspaceWindow
+IUpdateReport <|-- WorkspaceWindow
+IGluonUpdateReport <|-- WorkspaceWindow
+IGluonWorkspaceStatusChangeListener <|-- WorkspaceWindow
+@enduml

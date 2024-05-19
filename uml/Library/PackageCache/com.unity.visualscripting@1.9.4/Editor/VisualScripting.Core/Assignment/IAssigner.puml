@@ -1,0 +1,5 @@
+@startuml
+interface IAssigner {
+    ValueChanged() : void
+}
+@enduml

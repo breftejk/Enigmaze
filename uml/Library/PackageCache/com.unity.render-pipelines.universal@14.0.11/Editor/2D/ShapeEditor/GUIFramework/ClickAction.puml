@@ -1,0 +1,12 @@
+@startuml
+class ClickAction {
+    - m_Button : int
+    - m_UseEvent : bool
+    + onClick : Action<IGUIState, Control>
+    + ClickAction(control:Control, button:int, useEvent:bool)
+    # <<override>> GetTriggerContidtion(guiState:IGUIState) : bool
+    # <<override>> OnTrigger(guiState:IGUIState) : void
+    # <<override>> GetFinishContidtion(guiState:IGUIState) : bool
+}
+HoveredControlAction <|-- ClickAction
+@enduml

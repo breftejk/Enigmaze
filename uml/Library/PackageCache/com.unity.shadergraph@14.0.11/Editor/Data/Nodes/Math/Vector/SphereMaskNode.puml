@@ -1,0 +1,8 @@
+@startuml
+class SphereMaskNode {
+    + SphereMaskNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - SphereMask(Coords:DynamicDimensionVector, Center:DynamicDimensionVector, Radius:Vector1, Hardness:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- SphereMaskNode
+@enduml

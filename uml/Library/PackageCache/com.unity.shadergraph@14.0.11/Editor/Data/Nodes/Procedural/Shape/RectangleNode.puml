@@ -1,0 +1,15 @@
+@startuml
+enum ClampType {
+    Fastest,
+    Nicest,
+}
+class RectangleNode {
+    + RectangleNode()
+    - m_ClampType : ClampType
+    + clampType : ClampType <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Rectangle_Fastest(UV:Vector2, Width:Vector1, Height:Vector1, Out:Vector1) : string
+    {static} - Unity_Rectangle_Nicest(UV:Vector2, Width:Vector1, Height:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- RectangleNode
+@enduml

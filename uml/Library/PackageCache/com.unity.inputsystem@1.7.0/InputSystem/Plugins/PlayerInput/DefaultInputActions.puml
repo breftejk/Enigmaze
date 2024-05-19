@@ -1,0 +1,101 @@
+@startuml
+class DefaultInputActions {
+    + asset : InputActionAsset <<get>>
+    + @DefaultInputActions()
+    + Dispose() : void
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + Contains(action:InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    + Enable() : void
+    + Disable() : void
+    + bindings : IEnumerable<InputBinding> <<get>>
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindBinding(bindingMask:InputBinding, action:InputAction) : int
+    - <<readonly>> m_Player : InputActionMap
+    - m_PlayerActionsCallbackInterface : IPlayerActions
+    - <<readonly>> m_Player_Move : InputAction
+    - <<readonly>> m_Player_Look : InputAction
+    - <<readonly>> m_Player_Fire : InputAction
+    + @Player : PlayerActions <<get>>
+    - <<readonly>> m_UI : InputActionMap
+    - m_UIActionsCallbackInterface : IUIActions
+    - <<readonly>> m_UI_Navigate : InputAction
+    - <<readonly>> m_UI_Submit : InputAction
+    - <<readonly>> m_UI_Cancel : InputAction
+    - <<readonly>> m_UI_Point : InputAction
+    - <<readonly>> m_UI_Click : InputAction
+    - <<readonly>> m_UI_ScrollWheel : InputAction
+    - <<readonly>> m_UI_MiddleClick : InputAction
+    - <<readonly>> m_UI_RightClick : InputAction
+    - <<readonly>> m_UI_TrackedDevicePosition : InputAction
+    - <<readonly>> m_UI_TrackedDeviceOrientation : InputAction
+    + @UI : UIActions <<get>>
+    - m_KeyboardMouseSchemeIndex : int
+    + KeyboardMouseScheme : InputControlScheme <<get>>
+    - m_GamepadSchemeIndex : int
+    + GamepadScheme : InputControlScheme <<get>>
+    - m_TouchSchemeIndex : int
+    + TouchScheme : InputControlScheme <<get>>
+    - m_JoystickSchemeIndex : int
+    + JoystickScheme : InputControlScheme <<get>>
+    - m_XRSchemeIndex : int
+    + XRScheme : InputControlScheme <<get>>
+}
+struct PlayerActions {
+    - m_Wrapper : @DefaultInputActions
+    + PlayerActions(wrapper:@DefaultInputActions)
+    + @Move : InputAction <<get>>
+    + @Look : InputAction <<get>>
+    + @Fire : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + SetCallbacks(instance:IPlayerActions) : void
+}
+struct UIActions {
+    - m_Wrapper : @DefaultInputActions
+    + UIActions(wrapper:@DefaultInputActions)
+    + @Navigate : InputAction <<get>>
+    + @Submit : InputAction <<get>>
+    + @Cancel : InputAction <<get>>
+    + @Point : InputAction <<get>>
+    + @Click : InputAction <<get>>
+    + @ScrollWheel : InputAction <<get>>
+    + @MiddleClick : InputAction <<get>>
+    + @RightClick : InputAction <<get>>
+    + @TrackedDevicePosition : InputAction <<get>>
+    + @TrackedDeviceOrientation : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + SetCallbacks(instance:IUIActions) : void
+}
+interface IPlayerActions {
+    OnMove(context:InputAction.CallbackContext) : void
+    OnLook(context:InputAction.CallbackContext) : void
+    OnFire(context:InputAction.CallbackContext) : void
+}
+interface IUIActions {
+    OnNavigate(context:InputAction.CallbackContext) : void
+    OnSubmit(context:InputAction.CallbackContext) : void
+    OnCancel(context:InputAction.CallbackContext) : void
+    OnPoint(context:InputAction.CallbackContext) : void
+    OnClick(context:InputAction.CallbackContext) : void
+    OnScrollWheel(context:InputAction.CallbackContext) : void
+    OnMiddleClick(context:InputAction.CallbackContext) : void
+    OnRightClick(context:InputAction.CallbackContext) : void
+    OnTrackedDevicePosition(context:InputAction.CallbackContext) : void
+    OnTrackedDeviceOrientation(context:InputAction.CallbackContext) : void
+}
+IInputActionCollection2 <|-- DefaultInputActions
+IDisposable <|-- DefaultInputActions
+DefaultInputActions +-- PlayerActions
+DefaultInputActions +-- UIActions
+DefaultInputActions +-- IPlayerActions
+DefaultInputActions +-- IUIActions
+@enduml

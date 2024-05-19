@@ -1,0 +1,5 @@
+@startuml
+interface IUnitRelation {
+}
+"IConnection`2" "<IUnitPort,IUnitPort>" <|-- IUnitRelation
+@enduml

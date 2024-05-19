@@ -1,0 +1,41 @@
+@startuml
+class UniversalRenderPipelineSerializedCamera {
+    + serializedObject : SerializedObject <<get>>
+    + serializedAdditionalDataObject : SerializedObject <<get>>
+    + baseCameraSettings : CameraEditor.Settings <<get>>
+    + projectionMatrixMode : SerializedProperty <<get>>
+    + dithering : SerializedProperty <<get>>
+    + stopNaNs : SerializedProperty <<get>>
+    + allowDynamicResolution : SerializedProperty <<get>>
+    + volumeLayerMask : SerializedProperty <<get>>
+    + clearDepth : SerializedProperty <<get>>
+    + antialiasing : SerializedProperty <<get>>
+    + renderShadows : SerializedProperty <<get>>
+    + renderDepth : SerializedProperty <<get>>
+    + renderOpaque : SerializedProperty <<get>>
+    + renderer : SerializedProperty <<get>>
+    + cameraType : SerializedProperty <<get>>
+    + cameras : SerializedProperty <<get>> <<set>>
+    + volumeTrigger : SerializedProperty <<get>>
+    + volumeFrameworkUpdateMode : SerializedProperty <<get>>
+    + renderPostProcessing : SerializedProperty <<get>>
+    + antialiasingQuality : SerializedProperty <<get>>
+    + taaQuality : SerializedProperty <<get>>
+    + taaFrameInfluence : SerializedProperty <<get>>
+    + taaJitterScale : SerializedProperty <<get>>
+    + taaMipBias : SerializedProperty <<get>>
+    + taaVarianceClampScale : SerializedProperty <<get>>
+    + taaContrastAdaptiveSharpening : SerializedProperty <<get>>
+    + allowHDROutput : SerializedProperty <<get>>
+    + numCameras : int <<get>>
+    - cameraSerializedObjects : UniversalRenderPipelineSerializedCamera[] <<get>> <<set>>
+    + camerasAdditionalData : UniversalAdditionalCameraData[] <<get>>
+    + UniversalRenderPipelineSerializedCamera(serializedObject:SerializedObject, settings:CameraEditor.Settings)
+    + Update() : void
+    - UpdateInternal() : void
+    + Apply() : void
+    - ApplyInternal() : void
+    + Refresh() : void
+}
+ISerializedCamera <|-- UniversalRenderPipelineSerializedCamera
+@enduml

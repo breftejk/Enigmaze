@@ -1,0 +1,64 @@
+@startuml
+class RemoveComponent {
+    # m_GameObject : GameObject
+    + SetUp() : void
+    + TearDown() : void
+    # GenericRemoveComponent(selectionAmount:int, componentToRemove:Type, componentsToAdd:Type[], removeMethod:Action<Component>) : Type[]
+    - DoesAllGameObjectHaveSameComponents(objectsToCheck:System.Collections.Generic.IEnumerable<GameObject>, typesToCheck:System.Collections.Generic.IEnumerable<Type>) : bool
+}
+class RemoveComponentUtilsTests {
+    {static} - s_RemoveComponentTestCaseDatas : TestCaseData[]
+    + RemoveComponentAndPropagateTheDeleteToAdditionalDatas(componentToRemove:Type, componentsToAdd:Type[]) : Type[]
+}
+class RemoveAdditionalDataUtilsTests {
+    {static} - s_TryGetComponentsToRemoveTestCaseDatas : TestCaseData[]
+    + TryGetComponentsToRemove(type:Type) : string[]
+    {static} - s_RemoveAdditionalDataComponentTestCaseDatas : TestCaseData[]
+    + RemoveAdditionalDataComponentAndPropagateToComponent(selectionAmount:int, componentToRemove:Type, componentsToAdd:Type[]) : Type[]
+}
+interface ITest {
+}
+class Apple {
+}
+class Banana {
+}
+class AdditionalApple {
+}
+class AdditionalBanana {
+}
+class AdditionalBananaColor {
+}
+class WaterMelon {
+}
+class FruitBasket {
+}
+RemoveComponent <|-- RemoveComponentUtilsTests
+RemoveComponent <|-- RemoveAdditionalDataUtilsTests
+RemoveComponent +-- ITest
+RemoveComponent +-- Apple
+MonoBehaviour <|-- Apple
+ITest <|-- Apple
+RemoveComponent +-- Banana
+MonoBehaviour <|-- Banana
+ITest <|-- Banana
+RemoveComponent +-- AdditionalApple
+MonoBehaviour <|-- AdditionalApple
+IAdditionalData <|-- AdditionalApple
+ITest <|-- AdditionalApple
+RemoveComponent +-- AdditionalBanana
+MonoBehaviour <|-- AdditionalBanana
+IAdditionalData <|-- AdditionalBanana
+ITest <|-- AdditionalBanana
+RemoveComponent +-- AdditionalBananaColor
+MonoBehaviour <|-- AdditionalBananaColor
+IAdditionalData <|-- AdditionalBananaColor
+ITest <|-- AdditionalBananaColor
+RemoveComponent +-- WaterMelon
+MonoBehaviour <|-- WaterMelon
+IAdditionalData <|-- WaterMelon
+ITest <|-- WaterMelon
+RemoveComponent +-- FruitBasket
+MonoBehaviour <|-- FruitBasket
+IAdditionalData <|-- FruitBasket
+ITest <|-- FruitBasket
+@enduml

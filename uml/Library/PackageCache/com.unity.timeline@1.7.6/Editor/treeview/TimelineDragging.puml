@@ -1,0 +1,40 @@
+@startuml
+class TimelineDragging {
+    - {static} <<readonly>> k_SelectTrackWithBinding : string
+    - {static} <<readonly>> k_SelectTrackWithClip : string
+    - {static} <<readonly>> k_SelectClip : string
+    <<const>> - k_GenericDragId : string = "TimelineDragging"
+    <<readonly>> - kDragSensitivity : int = 2
+    <<readonly>> - m_Timeline : TimelineAsset
+    <<readonly>> - m_Window : TimelineWindow
+    + TimelineDragging(treeView:TreeViewController, window:TimelineWindow, data:TimelineAsset)
+    + <<override>> CanStartDrag(targetItem:TreeViewItem, draggedItemIDs:List<int>, mouseDownPosition:Vector2) : bool
+    + <<override>> StartDrag(draggedNode:TreeViewItem, draggedItemIDs:List<int>) : void
+    + {static} ResolveType(types:IEnumerable<System.Type>, onComplete:Action<Type>, formatString:string) : bool
+    + <<override>> DragElement(targetItem:TreeViewItem, targetItemRect:Rect, row:int) : bool
+    - GetNextItem(item:TreeViewItem) : TreeViewItem
+    - {static} GetTrack(item:TreeViewItem) : TrackAsset
+    - HandleNestedItemGUI(parentItem:TreeViewItem, targetItem:TreeViewItem, insertBefore:TreeViewItem) : void
+    + <<override>> DoDrag(parentItem:TreeViewItem, targetItem:TreeViewItem, perform:bool, dropPos:DropPosition) : DragAndDropVisualMode
+    - ClearInsertionMarkers(item:TreeViewItem) : void
+    - ShouldUseHierarchyDragAndDrop() : bool
+    + {static} HandleHierarchyPaneDragAndDrop(objectsBeingDropped:IEnumerable<UnityObject>, targetTrack:TrackAsset, perform:bool, timeline:TimelineAsset, director:PlayableDirector, typeResolver:TypeResolver, insertBefore:TrackAsset) : DragAndDropVisualMode
+    + {static} HandleClipPaneObjectDragAndDrop(objectsBeingDropped:IEnumerable<UnityObject>, targetTrack:TrackAsset, perform:bool, timeline:TimelineAsset, parent:TrackAsset, director:PlayableDirector, candidateTime:double, typeResolver:TypeResolver, insertBefore:TrackAsset) : DragAndDropVisualMode
+    {static} - HandleTrackAndItemCreation(objectsBeingDropped:IEnumerable<UnityEngine.Object>, candidateTime:double, typeResolver:TypeResolver, timeline:TimelineAsset, parent:TrackAsset, validTrackTypes:IEnumerable<Type>, insertBefore:TrackAsset) : bool
+    {static} - HandleItemCreation(objectsBeingDropped:IEnumerable<UnityEngine.Object>, targetTrack:TrackAsset, candidateTime:double, typeResolver:TypeResolver, allowMenu:bool) : void
+    + {static} HandleClipPaneMonoScriptDragAndDrop(scriptsBeingDropped:IEnumerable<MonoScript>, targetTrack:TrackAsset, perform:bool, timeline:TimelineAsset, parent:TrackAsset, director:PlayableDirector, candidateTime:double) : DragAndDropVisualMode
+    + {static} HandleClipPanePlayableAssetDragAndDrop(assetsBeingDropped:IEnumerable<IPlayableAsset>, targetTrack:TrackAsset, perform:bool, timeline:TimelineAsset, parent:TrackAsset, director:PlayableDirector, candidateTime:double, typeResolver:TypeResolver) : DragAndDropVisualMode
+    {static} - ValidateObjectDrop(obj:UnityObject) : bool
+    + HandleTrackDrop(parentItem:TreeViewItem, targetItem:TreeViewItem, perform:bool, dropPos:DropPosition) : DragAndDropVisualMode
+    + {static} OnTrackBindingDragUpdate(dropTarget:TrackAsset) : void
+    {static} - OnAcceptTrackBindingDragUpdate() : void
+    {static} - OnRejectTrackBindingDragUpdate() : void
+    {static} - ValidDrag(target:TreeViewItem, draggedItems:List<TreeViewItem>) : bool
+}
+class TimelineDragData {
+    + TimelineDragData(draggedItems:List<TreeViewItem>)
+    + <<readonly>> draggedItems : List<TreeViewItem>
+}
+TreeViewDragging <|-- TimelineDragging
+TimelineDragging +-- TimelineDragData
+@enduml

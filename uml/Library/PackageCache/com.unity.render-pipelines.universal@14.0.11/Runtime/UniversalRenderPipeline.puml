@@ -1,0 +1,108 @@
+@startuml
+class UniversalRenderPipeline <<sealed>> <<partial>> {
+    + <<const>> k_ShaderTagName : string = "UniversalPipeline"
+    + {static} maxShadowBias : float <<get>>
+    + {static} minRenderScale : float <<get>>
+    + {static} maxRenderScale : float <<get>>
+    + {static} maxNumIterationsEnclosingSphere : int <<get>>
+    + {static} maxPerObjectLights : int <<get>>
+    + {static} maxVisibleAdditionalLights : int <<get>>
+    <<internal>> {static} lightsPerTile : int <<get>>
+    <<internal>> {static} maxZBinWords : int <<get>>
+    <<internal>> {static} maxTileWords : int <<get>>
+    <<internal>> {static} maxVisibleReflectionProbes : int <<get>>
+    <<internal>> <<const>> k_DefaultRenderingLayerMask : int = 0x00000001
+    - <<readonly>> m_DebugDisplaySettingsUI : DebugDisplaySettingsUI
+    - m_GlobalSettings : UniversalRenderPipelineGlobalSettings
+    + <<override>> defaultSettings : RenderPipelineGlobalSettings <<get>>
+    <<internal>> {static} cameraStackRequiresDepthForPostprocessing : bool = false
+    <<internal>> {static} s_RenderGraph : RenderGraph
+    <<internal>> {static} s_RTHandlePool : RTHandleResourcePool
+    - {static} useRenderGraph : bool
+    - <<readonly>> pipelineAsset : UniversalRenderPipelineAsset
+    + <<override>> ToString() : string
+    + UniversalRenderPipeline(asset:UniversalRenderPipelineAsset)
+    # <<override>> Dispose(disposing:bool) : void
+    - DisposeAdditionalCameraData() : void
+    # <<override>> Render(renderContext:ScriptableRenderContext, cameras:Camera[]) : void
+    # <<override>> IsRenderRequestSupported(camera:Camera, data:RequestData) : bool
+    # <<override>> ProcessRenderRequests(context:ScriptableRenderContext, camera:Camera, renderRequest:RequestData) : void
+    + {static} RenderSingleCamera(context:ScriptableRenderContext, camera:Camera) : void
+    <<internal>> {static} RenderSingleCameraInternal(context:ScriptableRenderContext, camera:Camera) : void
+    <<internal>> {static} RenderSingleCameraInternal(context:ScriptableRenderContext, camera:Camera, additionalCameraData:UniversalAdditionalCameraData) : void
+    {static} - TryGetCullingParameters(cameraData:CameraData, cullingParams:ScriptableCullingParameters) : bool
+    {static} - RenderSingleCamera(context:ScriptableRenderContext, cameraData:CameraData) : void
+    {static} - RenderCameraStack(context:ScriptableRenderContext, baseCamera:Camera) : void
+    {static} - UpdateCameraData(baseCameraData:CameraData, xr:XRPass) : void
+    {static} - UpdateVolumeFramework(camera:Camera, additionalCameraData:UniversalAdditionalCameraData) : void
+    {static} - CheckPostProcessForDepth(cameraData:CameraData) : bool
+    {static} - CheckPostProcessForDepth() : bool
+    {static} - SetSupportedRenderingFeatures(pipelineAsset:UniversalRenderPipelineAsset) : void
+    {static} - InitializeCameraData(camera:Camera, additionalCameraData:UniversalAdditionalCameraData, resolveFinalTarget:bool, cameraData:CameraData) : void
+    {static} - InitializeStackedCameraData(baseCamera:Camera, baseAdditionalCameraData:UniversalAdditionalCameraData, cameraData:CameraData) : void
+    {static} - InitializeAdditionalCameraData(camera:Camera, additionalCameraData:UniversalAdditionalCameraData, resolveFinalTarget:bool, cameraData:CameraData) : void
+    {static} - InitializeRenderingData(settings:UniversalRenderPipelineAsset, cameraData:CameraData, cullResults:CullingResults, cmd:CommandBuffer, renderingData:RenderingData) : void
+    {static} - InitializeShadowData(settings:UniversalRenderPipelineAsset, visibleLights:NativeArray<VisibleLight>, mainLightCastShadows:bool, additionalLightsCastShadows:bool, isForwardPlus:bool, shadowData:ShadowData) : void
+    {static} - InitializePostProcessingData(settings:UniversalRenderPipelineAsset, isHDROutputActive:bool, postProcessingData:PostProcessingData) : void
+    {static} - InitializeLightData(settings:UniversalRenderPipelineAsset, visibleLights:NativeArray<VisibleLight>, mainLightIndex:int, lightData:LightData) : void
+    - {static} ApplyTaaRenderingDebugOverrides(taaSettings:TemporalAA.Settings) : void
+    - {static} UpdateTemporalAAData(cameraData:CameraData, additionalCameraData:UniversalAdditionalCameraData) : void
+    - {static} UpdateTemporalAATargets(cameraData:CameraData) : void
+    {static} - UpdateCameraStereoMatrices(camera:Camera, xr:XRPass) : void
+    {static} - GetPerObjectLightFlags(additionalLightsCount:int, isForwardPlus:bool) : PerObjectData
+    {static} - GetMainLightIndex(settings:UniversalRenderPipelineAsset, visibleLights:NativeArray<VisibleLight>) : int
+    {static} - SetupPerFrameShaderConstants() : void
+    {static} - SetupPerCameraShaderConstants(cmd:CommandBuffer) : void
+    {static} - CheckAndApplyDebugSettings(renderingData:RenderingData) : void
+    {static} - ResolveUpscalingFilterSelection(imageSize:Vector2, renderScale:float, selection:UpscalingFilterSelection) : ImageUpscalingFilter
+    <<internal>> {static} HDROutputForMainDisplayIsActive() : bool
+    <<internal>> enableHDROnce : bool = true
+    <<internal>> {static} HDROutputForAnyDisplayIsActive() : bool
+    - SetHDRState(cameras:Camera[]) : void
+    <<internal>> {static} GetHDROutputLuminanceParameters(hdrDisplayInformation:HDROutputUtils.HDRDisplayInformation, hdrDisplayColorGamut:ColorGamut, tonemapping:Tonemapping, hdrOutputParameters:Vector4) : void
+    <<internal>> {static} GetHDROutputGradingParameters(tonemapping:Tonemapping, hdrOutputParameters:Vector4) : void
+}
+class Profiling <<static>> {
+    - {static} s_HashSamplerCache : Dictionary<int, ProfilingSampler>
+    + {static} <<readonly>> unknownSampler : ProfilingSampler
+    + {static} TryGetOrAddCameraSampler(camera:Camera) : ProfilingSampler
+}
+class SingleCameraRequest {
+    + destination : RenderTexture = null
+    + mipLevel : int = 0
+    + face : CubemapFace
+    + slice : int = 0
+}
+class Pipeline <<static>> {
+    + {static} <<readonly>> beginFrameRendering : ProfilingSampler
+    + {static} <<readonly>> endFrameRendering : ProfilingSampler
+    + {static} <<readonly>> beginCameraRendering : ProfilingSampler
+    + {static} <<readonly>> endCameraRendering : ProfilingSampler
+    <<const>> - k_Name : string
+    + {static} <<readonly>> initializeCameraData : ProfilingSampler
+    + {static} <<readonly>> initializeStackedCameraData : ProfilingSampler
+    + {static} <<readonly>> initializeAdditionalCameraData : ProfilingSampler
+    + {static} <<readonly>> initializeRenderingData : ProfilingSampler
+    + {static} <<readonly>> initializeShadowData : ProfilingSampler
+    + {static} <<readonly>> initializeLightData : ProfilingSampler
+    + {static} <<readonly>> getPerObjectLightFlags : ProfilingSampler
+    + {static} <<readonly>> getMainLightIndex : ProfilingSampler
+    + {static} <<readonly>> setupPerFrameShaderConstants : ProfilingSampler
+    + {static} <<readonly>> setupPerCameraShaderConstants : ProfilingSampler
+}
+class Renderer <<static>> {
+    <<const>> - k_Name : string
+    + {static} <<readonly>> setupCullingParameters : ProfilingSampler
+    + {static} <<readonly>> setup : ProfilingSampler
+}
+class Context <<static>> {
+    <<const>> - k_Name : string
+    + {static} <<readonly>> submit : ProfilingSampler
+}
+RenderPipeline <|-- UniversalRenderPipeline
+UniversalRenderPipeline +-- Profiling
+UniversalRenderPipeline +-- SingleCameraRequest
+Profiling +-- Pipeline
+Pipeline +-- Renderer
+Pipeline +-- Context
+@enduml

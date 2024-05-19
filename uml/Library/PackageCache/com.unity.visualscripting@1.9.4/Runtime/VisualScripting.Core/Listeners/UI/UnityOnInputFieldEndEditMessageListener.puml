@@ -1,0 +1,6 @@
+@startuml
+class UnityOnInputFieldEndEditMessageListener <<sealed>> {
+    - Start() : void
+}
+MessageListener <|-- UnityOnInputFieldEndEditMessageListener
+@enduml

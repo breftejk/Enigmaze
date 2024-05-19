@@ -1,0 +1,16 @@
+@startuml
+class UsageAnalytics <<sealed>> {
+    <<const>> - k_MaxEventsPerHour : int = 1000
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.bolt"
+    <<const>> - k_EventName : string = "BoltUsage"
+    {static} - isRegistered : bool = false
+    + {static} CollectAndSend() : void
+    - {static} RegisterEvent() : bool
+    - {static} CollectData() : UsageAnalyticsData
+}
+struct UsageAnalyticsData {
+    + productVersion : string
+}
+UsageAnalytics +-- UsageAnalyticsData
+@enduml

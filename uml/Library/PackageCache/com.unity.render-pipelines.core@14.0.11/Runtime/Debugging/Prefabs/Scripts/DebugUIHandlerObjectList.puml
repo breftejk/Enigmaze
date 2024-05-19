@@ -1,0 +1,10 @@
+@startuml
+class DebugUIHandlerObjectList {
+    - m_Index : int
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnIncrement(fast:bool) : void
+    + <<override>> OnDecrement(fast:bool) : void
+    + <<override>> UpdateValueLabel() : void
+}
+"DebugUIHandlerField`1" "<DebugUI.ObjectListField>" <|-- DebugUIHandlerObjectList
+@enduml

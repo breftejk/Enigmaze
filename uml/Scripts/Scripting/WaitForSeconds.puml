@@ -1,0 +1,7 @@
+@startuml
+class WaitForSeconds <<sealed>> {
+    <<internal>> m_Seconds : float
+    + WaitForSeconds(seconds:float)
+}
+YieldInstruction <|-- WaitForSeconds
+@enduml

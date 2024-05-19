@@ -1,0 +1,18 @@
+@startuml
+class DepthOfFieldEditor <<sealed>> {
+    - m_Mode : SerializedDataParameter
+    - m_GaussianStart : SerializedDataParameter
+    - m_GaussianEnd : SerializedDataParameter
+    - m_GaussianMaxRadius : SerializedDataParameter
+    - m_HighQualitySampling : SerializedDataParameter
+    - m_FocusDistance : SerializedDataParameter
+    - m_FocalLength : SerializedDataParameter
+    - m_Aperture : SerializedDataParameter
+    - m_BladeCount : SerializedDataParameter
+    - m_BladeCurvature : SerializedDataParameter
+    - m_BladeRotation : SerializedDataParameter
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- DepthOfFieldEditor
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class EditorPluginInterop <<static>> {
+    - {static} EditorPluginAssemblyNamePrefix : string = "JetBrains.Rider.Unity.Editor.Plugin."
+    + {static} <<readonly>> EditorPluginAssemblyName : string
+    + {static} <<readonly>> EditorPluginAssemblyNameFallback : string
+    - {static} ourEntryPointTypeName : string = "JetBrains.Rider.Unity.Editor.PluginEntryPoint"
+    - {static} ourEditorPluginAssembly : Assembly
+    + {static} EditorPluginAssembly : Assembly <<get>>
+    - {static} DisableSyncSolutionOnceCallBack() : void
+    + {static} LogPath : string <<get>>
+    + {static} OpenFileDllImplementation(path:string, line:int, column:int) : bool
+    + {static} EditorPluginIsLoadedFromAssets(assembly:Assembly) : bool
+    <<internal>> {static} InitEntryPoint(assembly:Assembly) : void
+}
+@enduml

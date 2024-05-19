@@ -1,0 +1,19 @@
+@startuml
+class ReadmeEditor {
+    <<const>> - k_Space : float = 16f
+    # <<override>> OnHeaderGUI() : void
+    + <<override>> OnInspectorGUI() : void
+    - m_Initialized : bool
+    - m_TitleStyle : GUIStyle
+    - m_HeadingStyle : GUIStyle
+    - m_LinkStyle : GUIStyle
+    - m_BodyStyle : GUIStyle
+    - linkStyle : GUIStyle <<get>>
+    - titleStyle : GUIStyle <<get>>
+    - headingStyle : GUIStyle <<get>>
+    - bodyStyle : GUIStyle <<get>>
+    - Init() : void
+    - LinkLabel(label:GUIContent, options:GUILayoutOption[]) : bool
+}
+Editor <|-- ReadmeEditor
+@enduml

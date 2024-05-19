@@ -1,0 +1,23 @@
+@startuml
+class SimpleController_UsingActions {
+    + moveSpeed : float
+    + rotateSpeed : float
+    + burstSpeed : float
+    + projectile : GameObject
+    + moveAction : InputAction
+    + lookAction : InputAction
+    + fireAction : InputAction
+    - m_Charging : bool
+    - m_Rotation : Vector2
+    + Awake() : void
+    + OnEnable() : void
+    + OnDisable() : void
+    + OnGUI() : void
+    + Update() : void
+    - Move(direction:Vector2) : void
+    - Look(rotate:Vector2) : void
+    - BurstFire(burstAmount:int) : IEnumerator
+    - Fire() : void
+}
+MonoBehaviour <|-- SimpleController_UsingActions
+@enduml

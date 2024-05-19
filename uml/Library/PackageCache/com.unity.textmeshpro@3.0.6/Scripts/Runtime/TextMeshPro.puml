@@ -1,0 +1,38 @@
+@startuml
+class TextMeshPro <<partial>> {
+    <<internal>> _SortingLayer : int
+    + sortingLayerID : int <<get>> <<set>>
+    <<internal>> _SortingLayerID : int
+    + sortingOrder : int <<get>> <<set>>
+    <<internal>> _SortingOrder : int
+    + <<override>> autoSizeTextContainer : bool <<get>> <<set>>
+    + textContainer : TextContainer <<get>>
+    + <<new>> transform : Transform <<get>>
+    + renderer : Renderer <<get>>
+    + <<override>> mesh : Mesh <<get>>
+    + meshFilter : MeshFilter <<get>>
+    + maskType : MaskingTypes <<get>> <<set>>
+    + SetMask(type:MaskingTypes, maskCoords:Vector4) : void
+    + SetMask(type:MaskingTypes, maskCoords:Vector4, softnessX:float, softnessY:float) : void
+    + <<override>> SetVerticesDirty() : void
+    + <<override>> SetLayoutDirty() : void
+    + <<override>> SetMaterialDirty() : void
+    + <<override>> SetAllDirty() : void
+    + <<override>> Rebuild(update:CanvasUpdate) : void
+    # <<override>> UpdateMaterial() : void
+    + <<override>> UpdateMeshPadding() : void
+    + <<override>> ForceMeshUpdate(ignoreActiveState:bool, forceTextReparsing:bool) : void
+    + <<override>> GetTextInfo(text:string) : TMP_TextInfo
+    + <<override>> ClearMesh(updateMesh:bool) : void
+    + <<override>>  <<event>> OnPreRenderText : Action<TMP_TextInfo> 
+    + <<override>> UpdateGeometry(mesh:Mesh, index:int) : void
+    + <<override>> UpdateVertexData(flags:TMP_VertexDataUpdateFlags) : void
+    + <<override>> UpdateVertexData() : void
+    + UpdateFontAsset() : void
+    - m_currentAutoSizeMode : bool
+    + CalculateLayoutInputHorizontal() : void
+    + CalculateLayoutInputVertical() : void
+}
+TMP_Text <|-- TextMeshPro
+ILayoutElement <|-- TextMeshPro
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class TMP_SubMesh_Editor {
+    - fontAsset_prop : SerializedProperty
+    - spriteAsset_prop : SerializedProperty
+    - m_SubMeshComponent : TMP_SubMesh
+    - m_Renderer : Renderer
+    - m_SortingLayerNames : string[]
+    + OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+struct m_foldout {
+    + {static} fontSettings : bool = true
+}
+Editor <|-- TMP_SubMesh_Editor
+TMP_SubMesh_Editor +-- m_foldout
+@enduml

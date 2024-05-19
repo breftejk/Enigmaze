@@ -1,0 +1,8 @@
+@startuml
+interface IGraphParent {
+    childGraph : IGraph <<get>>
+    isSerializationRoot : bool <<get>>
+    serializedObject : UnityObject <<get>>
+    DefaultGraph() : IGraph
+}
+@enduml

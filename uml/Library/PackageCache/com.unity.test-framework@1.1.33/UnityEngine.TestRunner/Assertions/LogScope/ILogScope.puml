@@ -1,0 +1,19 @@
+@startuml
+interface ILogScope {
+    ExpectedLogs : Queue<LogMatch> <<get>> <<set>>
+    AllLogs : List<LogEvent> <<get>>
+    FailingLogs : List<LogEvent> <<get>>
+    EvaluateLogScope(endOfScopeCheck:bool) : void
+    IgnoreFailingMessages : bool <<get>> <<set>>
+    IsNUnitException : bool <<get>>
+    IsNUnitSuccessException : bool <<get>>
+    IsNUnitInconclusiveException : bool <<get>>
+    IsNUnitIgnoreException : bool <<get>>
+    NUnitExceptionMessage : string <<get>>
+    AddLog(message:string, stacktrace:string, type:LogType) : void
+    AnyFailingLogs() : bool
+    ProcessExpectedLogs() : void
+    NoUnexpectedReceived() : void
+}
+IDisposable <|-- ILogScope
+@enduml

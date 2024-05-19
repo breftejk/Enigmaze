@@ -1,0 +1,22 @@
+@startuml
+class WaitingSignInPanel {
+    <<internal>> WaitingSignInPanel(parentNotify:IWelcomeWindowNotify, notify:OAuthSignIn.INotify, restApi:IPlasticWebRestApi, cmConnection:CmConnection)
+    <<internal>> OAuthSignInForConfigure(signInUrl:Uri, state:Guid, getToken:IGetOauthToken) : void
+    <<internal>> OnAutoLogin() : void
+    <<internal>> Dispose() : void
+    - InitializeLayoutAndStyles() : void
+    - ShowWaitingSpinner() : void
+    - CancelButton_Clicked() : void
+    - BuildComponents() : void
+    - mCancelButton : Button
+    - mProgressContainer : VisualElement
+    - mCompleteOnBrowserLabel : Label
+    - mSignIn : OAuthSignIn
+    - mProgressControls : UI.Progress.ProgressControlsForDialogs
+    <<readonly>> - mRestApi : IPlasticWebRestApi
+    <<readonly>> - mCmConnection : CmConnection
+    <<readonly>> - mNotify : OAuthSignIn.INotify
+    <<readonly>> - mParentNotify : IWelcomeWindowNotify
+}
+VisualElement <|-- WaitingSignInPanel
+@enduml

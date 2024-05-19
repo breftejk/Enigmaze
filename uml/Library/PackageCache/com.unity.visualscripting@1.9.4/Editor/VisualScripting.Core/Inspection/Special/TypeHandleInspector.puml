@@ -1,0 +1,15 @@
+@startuml
+class TypeHandleInspector {
+    <<const>> - k_LabelWidth : float = 38
+    - m_Type : Type
+    - m_TypeFilter : TypeFilter
+    - typeFilter : TypeFilter <<get>> <<set>>
+    + TypeHandleInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+    - GetTypeOptions() : IFuzzyOptionTree
+}
+Inspector <|-- TypeHandleInspector
+@enduml

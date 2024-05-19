@@ -1,0 +1,39 @@
+@startuml
+class OptimizedReflection <<static>> {
+    {static} - OptimizedReflection()
+    - {static} <<readonly>> fieldAccessors : Dictionary<FieldInfo, IOptimizedAccessor>
+    - {static} <<readonly>> propertyAccessors : Dictionary<PropertyInfo, IOptimizedAccessor>
+    - {static} <<readonly>> methodInvokers : Dictionary<MethodInfo, IOptimizedInvoker>
+    + {static} <<readonly>> jitAvailable : bool
+    - {static} _useJitIfAvailable : bool = true
+    <<internal>> {static} useJit : bool <<get>>
+    + {static} useJitIfAvailable : bool <<get>> <<set>>
+    + {static} safeMode : bool <<get>> <<set>>
+    <<internal>> {static} OnRuntimeMethodLoad() : void
+    + {static} ClearCache() : void
+    <<internal>> {static} VerifyStaticTarget(targetType:Type, target:object) : void
+    <<internal>> {static} VerifyInstanceTarget(target:object) : void
+    - {static} VerifyTarget(targetType:Type, target:object, @static:bool) : void
+    - {static} SupportsOptimization(memberInfo:MemberInfo) : bool
+    + {static} Prewarm(fieldInfo:FieldInfo) : IOptimizedAccessor
+    + {static} GetValueOptimized(fieldInfo:FieldInfo, target:object) : object
+    + {static} SetValueOptimized(fieldInfo:FieldInfo, target:object, value:object) : void
+    + {static} SupportsOptimization(fieldInfo:FieldInfo) : bool
+    - {static} GetFieldAccessor(fieldInfo:FieldInfo) : IOptimizedAccessor
+    + {static} Prewarm(propertyInfo:PropertyInfo) : IOptimizedAccessor
+    + {static} GetValueOptimized(propertyInfo:PropertyInfo, target:object) : object
+    + {static} SetValueOptimized(propertyInfo:PropertyInfo, target:object, value:object) : void
+    + {static} SupportsOptimization(propertyInfo:PropertyInfo) : bool
+    - {static} GetPropertyAccessor(propertyInfo:PropertyInfo) : IOptimizedAccessor
+    + {static} Prewarm(methodInfo:MethodInfo) : IOptimizedInvoker
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, args:object[]) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, arg0:object) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, arg0:object, arg1:object) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, arg0:object, arg1:object, arg2:object) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, arg0:object, arg1:object, arg2:object, arg3:object) : object
+    + {static} InvokeOptimized(methodInfo:MethodInfo, target:object, arg0:object, arg1:object, arg2:object, arg3:object, arg4:object) : object
+    + {static} SupportsOptimization(methodInfo:MethodInfo) : bool
+    - {static} GetMethodInvoker(methodInfo:MethodInfo) : IOptimizedInvoker
+}
+@enduml

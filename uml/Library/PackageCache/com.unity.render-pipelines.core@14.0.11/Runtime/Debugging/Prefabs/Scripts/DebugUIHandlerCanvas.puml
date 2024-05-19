@@ -1,0 +1,34 @@
+@startuml
+class DebugUIPrefabBundle {
+    + type : string
+    + prefab : RectTransform
+}
+class DebugUIHandlerCanvas {
+    - m_DebugTreeState : int
+    - m_PrefabsMap : Dictionary<Type, Transform>
+    + panelPrefab : Transform
+    + prefabs : List<DebugUIPrefabBundle>
+    - m_UIPanels : List<DebugUIHandlerPanel>
+    - m_SelectedPanel : int
+    - m_SelectedWidget : DebugUIHandlerWidget
+    - m_CurrentQueryPath : string
+    - OnEnable() : void
+    - Update() : void
+    <<internal>> RequestHierarchyReset() : void
+    - ResetAllHierarchy() : void
+    - Rebuild() : void
+    - Traverse(container:DebugUI.IContainer, parentTransform:Transform, parentUIHandler:DebugUIHandlerWidget, selectedHandler:DebugUIHandlerWidget) : void
+    - GetWidgetFromPath(queryPath:string) : DebugUIHandlerWidget
+    - ActivatePanel(index:int, selectedWidget:DebugUIHandlerWidget) : void
+    <<internal>> ChangeSelection(widget:DebugUIHandlerWidget, fromNext:bool) : void
+    <<internal>> SelectPreviousItem() : void
+    <<internal>> SelectNextPanel() : void
+    <<internal>> SelectPreviousPanel() : void
+    <<internal>> SelectNextItem() : void
+    - ChangeSelectionValue(multiplier:float) : void
+    - ActivateSelection() : void
+    - HandleInput() : void
+    <<internal>> SetScrollTarget(widget:DebugUIHandlerWidget) : void
+}
+MonoBehaviour <|-- DebugUIHandlerCanvas
+@enduml

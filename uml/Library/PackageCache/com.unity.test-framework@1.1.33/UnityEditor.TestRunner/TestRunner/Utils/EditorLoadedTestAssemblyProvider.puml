@@ -1,0 +1,17 @@
+@startuml
+class EditorLoadedTestAssemblyProvider {
+    - <<const>> k_NunitAssemblyName : string = "nunit.framework"
+    - <<const>> k_TestRunnerAssemblyName : string = "UnityEngine.TestRunner"
+    <<internal>> <<const>> k_PerformanceTestingAssemblyName : string = "Unity.PerformanceTesting"
+    - <<readonly>> m_EditorAssembliesProxy : IEditorAssembliesProxy
+    - <<readonly>> m_AllEditorScriptAssemblies : ScriptAssembly[]
+    - <<readonly>> m_AllPrecompiledAssemblies : PrecompiledAssembly[]
+    + EditorLoadedTestAssemblyProvider(compilationInterfaceProxy:IEditorCompilationInterfaceProxy, editorAssembliesProxy:IEditorAssembliesProxy)
+    + GetAssembliesGroupedByType(mode:TestPlatform) : List<IAssemblyWrapper>
+    + GetAssembliesGroupedByTypeAsync(mode:TestPlatform) : IEnumerator<IDictionary<TestPlatform, List<IAssemblyWrapper>>>
+    - FilterAssembliesWithTestReference(loadedAssemblies:IAssemblyWrapper[]) : IAssemblyWrapper[]
+    - FilterAssemblyForTestReference(assemblyToFilter:IAssemblyWrapper, loadedAssemblies:IAssemblyWrapper[], filterResults:IDictionary<IAssemblyWrapper, bool>, resultsAlreadyAnalyzed:IDictionary<IAssemblyWrapper, bool>) : void
+    - {static} IsTestReference(assemblyName:AssemblyName) : bool
+}
+IEditorLoadedTestAssemblyProvider <|-- EditorLoadedTestAssemblyProvider
+@enduml

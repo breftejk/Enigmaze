@@ -1,0 +1,22 @@
+@startuml
+class "OverrideStack`1"<T> {
+    + OverrideStack(defaultValue:T)
+    + OverrideStack(getValue:Func<T>, setValue:Action<T>)
+    + OverrideStack(getValue:Func<T>, setValue:Action<T>, clearValue:Action)
+    - <<readonly>> getValue : Func<T>
+    - <<readonly>> setValue : Action<T>
+    - <<readonly>> clearValue : Action
+    - _value : T
+    - <<readonly>> previous : Stack<T>
+    + value : T <<get>> <<internal set>>
+    + Override(item:T) : OverrideLayer<T>
+    + BeginOverride(item:T) : void
+    + EndOverride() : void
+}
+struct "OverrideLayer`1"<T> {
+    + stack : OverrideStack<T> <<get>>
+    <<internal>> OverrideLayer(stack:OverrideStack<T>, item:T)
+    + Dispose() : void
+}
+IDisposable <|-- "OverrideLayer`1"
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+struct SwapOptionData {
+    + spriteResolver : SpriteResolver
+    + category : string
+}
+class SwapPart {
+    + spriteLibrary : SpriteLibrary
+    + swapOptionData : SwapOptionData[]
+    - Start() : void
+}
+MonoBehaviour <|-- SwapPart
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class RejectionNode {
+    + RejectionNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Rejection(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- RejectionNode
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+interface IClipCurveEditorOwner {
+    clipCurveEditor : ClipCurveEditor <<get>>
+    inlineCurvesSelected : bool <<get>>
+    showLoops : bool <<get>>
+    owner : TrackAsset <<get>>
+    SelectCurves() : void
+    ValidateCurvesSelection() : void
+}
+class InlineCurveResizeHandle {
+    + boundingRect : Rect <<get>>
+    + trackGUI : TimelineTrackGUI <<get>>
+    + InlineCurveResizeHandle(trackGUI:TimelineTrackGUI)
+    + Draw(headerRect:Rect, state:WindowState) : void
+}
+class InlineCurveEditor {
+    - m_TrackRect : Rect
+    - m_HeaderRect : Rect
+    <<readonly>> - m_TrackGUI : TimelineTrackGUI
+    <<readonly>> - m_ResizeHandle : InlineCurveResizeHandle
+    - m_LastSelectionWasClip : bool
+    - m_LastSelectedClipGUI : TimelineClipGUI
+    - boundingRect : Rect <<get>>
+    + currentClipGui : TimelineClipGUI <<get>>
+    + currentCurveEditor : IClipCurveEditorOwner <<get>>
+    + InlineCurveEditor(trackGUI:TimelineTrackGUI)
+    {static} - MouseOverTrackArea(curveRect:Rect, trackRect:Rect) : bool
+    {static} - MouseOverHeaderArea(headerRect:Rect, trackRect:Rect) : bool
+    {static} - DrawCurveEditor(clipCurveEditorOwner:IClipCurveEditorOwner, state:WindowState, headerRect:Rect, trackRect:Rect, activeRange:Vector2, locked:bool) : void
+    {static} - OnMouseClick(clipCurveEditorOwner:IClipCurveEditorOwner, currentEvent:Event) : void
+    + Draw(headerRect:Rect, trackRect:Rect, state:WindowState) : void
+    - DrawCurveEditorForTrack(headerRect:Rect, trackRect:Rect, state:WindowState) : void
+    - DrawCurveEditorsForClipsOnTrack(headerRect:Rect, trackRect:Rect, state:WindowState) : void
+    - DrawCurvesEditorForNothingSelected(headerRect:Rect, trackRect:Rect, state:WindowState) : void
+    - ShouldShowClipCurves(state:WindowState) : bool
+    - ShouldShowTrackCurves() : bool
+    - TrackHasCurvesToShow() : bool
+    - UpdateViewModel() : void
+    {static} - HandleCurrentEvent() : void
+    {static} - SelectFromCurveOwner(curveOwner:IClipCurveEditorOwner) : void
+}
+IBounds <|-- InlineCurveResizeHandle
+IBounds <|-- InlineCurveEditor
+@enduml

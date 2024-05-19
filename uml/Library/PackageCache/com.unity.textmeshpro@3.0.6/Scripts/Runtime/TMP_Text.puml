@@ -1,0 +1,611 @@
+@startuml
+interface ITextElement {
+    sharedMaterial : Material <<get>>
+    Rebuild(update:CanvasUpdate) : void
+    GetInstanceID() : int
+}
+enum TextAlignmentOptions {
+    TopLeft= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Top,
+    Top= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Top,
+    TopRight= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Top,
+    TopJustified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Top,
+    TopFlush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Top,
+    TopGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Top,
+    Left= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Middle,
+    Center= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Middle,
+    Right= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Middle,
+    Justified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Middle,
+    Flush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Middle,
+    CenterGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Middle,
+    BottomLeft= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Bottom,
+    Bottom= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Bottom,
+    BottomRight= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Bottom,
+    BottomJustified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Bottom,
+    BottomFlush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Bottom,
+    BottomGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Bottom,
+    BaselineLeft= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Baseline,
+    Baseline= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Baseline,
+    BaselineRight= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Baseline,
+    BaselineJustified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Baseline,
+    BaselineFlush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Baseline,
+    BaselineGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Baseline,
+    MidlineLeft= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Geometry,
+    Midline= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Geometry,
+    MidlineRight= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Geometry,
+    MidlineJustified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Geometry,
+    MidlineFlush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Geometry,
+    MidlineGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Geometry,
+    CaplineLeft= HorizontalAlignmentOptions.Left | VerticalAlignmentOptions.Capline,
+    Capline= HorizontalAlignmentOptions.Center | VerticalAlignmentOptions.Capline,
+    CaplineRight= HorizontalAlignmentOptions.Right | VerticalAlignmentOptions.Capline,
+    CaplineJustified= HorizontalAlignmentOptions.Justified | VerticalAlignmentOptions.Capline,
+    CaplineFlush= HorizontalAlignmentOptions.Flush | VerticalAlignmentOptions.Capline,
+    CaplineGeoAligned= HorizontalAlignmentOptions.Geometry | VerticalAlignmentOptions.Capline,
+    Converted= 0xFFFF,
+}
+enum HorizontalAlignmentOptions {
+    Left= 0x1,
+    Center= 0x2,
+    Right= 0x4,
+    Justified= 0x8,
+    Flush= 0x10,
+    Geometry= 0x20,
+}
+enum VerticalAlignmentOptions {
+    Top= 0x100,
+    Middle= 0x200,
+    Bottom= 0x400,
+    Baseline= 0x800,
+    Geometry= 0x1000,
+    Capline= 0x2000,
+}
+enum TextRenderFlags {
+    DontRender= 0x0,
+    Render= 0xFF,
+}
+enum TMP_TextElementType {
+    Character,
+    Sprite,
+}
+enum MaskingTypes {
+    MaskOff= 0,
+    MaskHard= 1,
+    MaskSoft= 2,
+}
+enum TextOverflowModes {
+    Overflow= 0,
+    Ellipsis= 1,
+    Masking= 2,
+    Truncate= 3,
+    ScrollRect= 4,
+    Page= 5,
+    Linked= 6,
+}
+enum MaskingOffsetMode {
+    Percentage= 0,
+    Pixel= 1,
+}
+enum TextureMappingOptions {
+    Character= 0,
+    Line= 1,
+    Paragraph= 2,
+    MatchAspect= 3,
+}
+enum FontStyles {
+    Normal= 0x0,
+    Bold= 0x1,
+    Italic= 0x2,
+    Underline= 0x4,
+    LowerCase= 0x8,
+    UpperCase= 0x10,
+    SmallCaps= 0x20,
+    Strikethrough= 0x40,
+    Superscript= 0x80,
+    Subscript= 0x100,
+    Highlight= 0x200,
+}
+enum FontWeight {
+    Thin= 100,
+    ExtraLight= 200,
+    Light= 300,
+    Regular= 400,
+    Medium= 500,
+    SemiBold= 600,
+    Bold= 700,
+    Heavy= 800,
+    Black= 900,
+}
+abstract class TMP_Text {
+    + <<virtual>> text : string <<get>> <<set>>
+    # m_text : string
+    - m_IsTextBackingStringDirty : bool
+    + textPreprocessor : ITextPreprocessor <<get>> <<set>>
+    # m_TextPreprocessor : ITextPreprocessor
+    + isRightToLeftText : bool <<get>> <<set>>
+    # m_isRightToLeft : bool = false
+    + font : TMP_FontAsset <<get>> <<set>>
+    # m_fontAsset : TMP_FontAsset
+    # m_currentFontAsset : TMP_FontAsset
+    # m_isSDFShader : bool
+    + <<virtual>> fontSharedMaterial : Material <<get>> <<set>>
+    # m_sharedMaterial : Material
+    # m_currentMaterial : Material
+    # {static} m_materialReferences : MaterialReference[]
+    # {static} m_materialReferenceIndexLookup : Dictionary<int, int>
+    # {static} m_materialReferenceStack : TMP_TextProcessingStack<MaterialReference>
+    # m_currentMaterialIndex : int
+    + <<virtual>> fontSharedMaterials : Material[] <<get>> <<set>>
+    # m_fontSharedMaterials : Material[]
+    + fontMaterial : Material <<get>> <<set>>
+    # m_fontMaterial : Material
+    + <<virtual>> fontMaterials : Material[] <<get>> <<set>>
+    # m_fontMaterials : Material[]
+    # m_isMaterialDirty : bool
+    + <<override>> color : Color <<get>> <<set>>
+    # m_fontColor32 : Color32
+    # m_fontColor : Color
+    # {static} s_colorWhite : Color32
+    # m_underlineColor : Color32
+    # m_strikethroughColor : Color32
+    + alpha : float <<get>> <<set>>
+    + enableVertexGradient : bool <<get>> <<set>>
+    # m_enableVertexGradient : bool
+    # m_colorMode : ColorMode
+    + colorGradient : VertexGradient <<get>> <<set>>
+    # m_fontColorGradient : VertexGradient
+    + colorGradientPreset : TMP_ColorGradient <<get>> <<set>>
+    # m_fontColorGradientPreset : TMP_ColorGradient
+    + spriteAsset : TMP_SpriteAsset <<get>> <<set>>
+    # m_spriteAsset : TMP_SpriteAsset
+    + tintAllSprites : bool <<get>> <<set>>
+    # m_tintAllSprites : bool
+    # m_tintSprite : bool
+    # m_spriteColor : Color32
+    + styleSheet : TMP_StyleSheet <<get>> <<set>>
+    # m_StyleSheet : TMP_StyleSheet
+    + textStyle : TMP_Style <<get>> <<set>>
+    <<internal>> m_TextStyle : TMP_Style
+    # m_TextStyleHashCode : int
+    + overrideColorTags : bool <<get>> <<set>>
+    # m_overrideHtmlColors : bool = false
+    + faceColor : Color32 <<get>> <<set>>
+    # m_faceColor : Color32
+    + outlineColor : Color32 <<get>> <<set>>
+    # m_outlineColor : Color32
+    + outlineWidth : float <<get>> <<set>>
+    # m_outlineWidth : float = 0.0f
+    + fontSize : float <<get>> <<set>>
+    # m_fontSize : float
+    # m_currentFontSize : float
+    # m_fontSizeBase : float = 36
+    # m_sizeStack : TMP_TextProcessingStack<float>
+    + fontWeight : FontWeight <<get>> <<set>>
+    # m_fontWeight : FontWeight
+    # m_FontWeightInternal : FontWeight
+    # m_FontWeightStack : TMP_TextProcessingStack<FontWeight>
+    + pixelsPerUnit : float <<get>>
+    + enableAutoSizing : bool <<get>> <<set>>
+    # m_enableAutoSizing : bool
+    # m_maxFontSize : float
+    # m_minFontSize : float
+    # m_AutoSizeIterationCount : int
+    # m_AutoSizeMaxIterationCount : int = 100
+    # m_IsAutoSizePointSizeSet : bool
+    + fontSizeMin : float <<get>> <<set>>
+    # m_fontSizeMin : float = 0
+    + fontSizeMax : float <<get>> <<set>>
+    # m_fontSizeMax : float = 0
+    + fontStyle : FontStyles <<get>> <<set>>
+    # m_fontStyle : FontStyles
+    # m_FontStyleInternal : FontStyles
+    # m_fontStyleStack : TMP_FontStyleStack
+    + isUsingBold : bool <<get>>
+    # m_isUsingBold : bool = false
+    + horizontalAlignment : HorizontalAlignmentOptions <<get>> <<set>>
+    # m_HorizontalAlignment : HorizontalAlignmentOptions
+    + verticalAlignment : VerticalAlignmentOptions <<get>> <<set>>
+    # m_VerticalAlignment : VerticalAlignmentOptions
+    + alignment : TextAlignmentOptions <<get>> <<set>>
+    # m_textAlignment : TextAlignmentOptions
+    # m_lineJustification : HorizontalAlignmentOptions
+    # m_lineJustificationStack : TMP_TextProcessingStack<HorizontalAlignmentOptions>
+    # m_textContainerLocalCorners : Vector3[]
+    + characterSpacing : float <<get>> <<set>>
+    # m_characterSpacing : float = 0
+    # m_cSpacing : float = 0
+    # m_monoSpacing : float = 0
+    + wordSpacing : float <<get>> <<set>>
+    # m_wordSpacing : float = 0
+    + lineSpacing : float <<get>> <<set>>
+    # m_lineSpacing : float = 0
+    # m_lineSpacingDelta : float = 0
+    # m_lineHeight : float
+    # m_IsDrivenLineSpacing : bool
+    + lineSpacingAdjustment : float <<get>> <<set>>
+    # m_lineSpacingMax : float = 0
+    + paragraphSpacing : float <<get>> <<set>>
+    # m_paragraphSpacing : float = 0
+    + characterWidthAdjustment : float <<get>> <<set>>
+    # m_charWidthMaxAdj : float = 0f
+    # m_charWidthAdjDelta : float = 0
+    + enableWordWrapping : bool <<get>> <<set>>
+    # m_enableWordWrapping : bool = false
+    # m_isCharacterWrappingEnabled : bool = false
+    # m_isNonBreakingSpace : bool = false
+    # m_isIgnoringAlignment : bool
+    + wordWrappingRatios : float <<get>> <<set>>
+    # m_wordWrappingRatios : float = 0.4f
+    + overflowMode : TextOverflowModes <<get>> <<set>>
+    # m_overflowMode : TextOverflowModes
+    + isTextOverflowing : bool <<get>>
+    + firstOverflowCharacterIndex : int <<get>>
+    # m_firstOverflowCharacterIndex : int
+    + linkedTextComponent : TMP_Text <<get>> <<set>>
+    # m_linkedTextComponent : TMP_Text
+    <<internal>> parentLinkedComponent : TMP_Text
+    + isTextTruncated : bool <<get>>
+    # m_isTextTruncated : bool
+    + enableKerning : bool <<get>> <<set>>
+    # m_enableKerning : bool
+    # m_GlyphHorizontalAdvanceAdjustment : float
+    + extraPadding : bool <<get>> <<set>>
+    # m_enableExtraPadding : bool = false
+    # checkPaddingRequired : bool
+    + richText : bool <<get>> <<set>>
+    # m_isRichText : bool = true
+    + parseCtrlCharacters : bool <<get>> <<set>>
+    # m_parseCtrlCharacters : bool = true
+    + isOverlay : bool <<get>> <<set>>
+    # m_isOverlay : bool = false
+    + isOrthographic : bool <<get>> <<set>>
+    # m_isOrthographic : bool = false
+    + enableCulling : bool <<get>> <<set>>
+    # m_isCullingEnabled : bool = false
+    # m_isMaskingEnabled : bool
+    # isMaskUpdateRequired : bool
+    + ignoreVisibility : bool <<get>> <<set>>
+    # m_ignoreCulling : bool = true
+    + horizontalMapping : TextureMappingOptions <<get>> <<set>>
+    # m_horizontalMapping : TextureMappingOptions
+    + verticalMapping : TextureMappingOptions <<get>> <<set>>
+    # m_verticalMapping : TextureMappingOptions
+    + mappingUvLineOffset : float <<get>> <<set>>
+    # m_uvLineOffset : float = 0.0f
+    + renderMode : TextRenderFlags <<get>> <<set>>
+    # m_renderMode : TextRenderFlags
+    + geometrySortingOrder : VertexSortingOrder <<get>> <<set>>
+    # m_geometrySortingOrder : VertexSortingOrder
+    + isTextObjectScaleStatic : bool <<get>> <<set>>
+    # m_IsTextObjectScaleStatic : bool
+    + vertexBufferAutoSizeReduction : bool <<get>> <<set>>
+    # m_VertexBufferAutoSizeReduction : bool = false
+    + firstVisibleCharacter : int <<get>> <<set>>
+    # m_firstVisibleCharacter : int
+    + maxVisibleCharacters : int <<get>> <<set>>
+    # m_maxVisibleCharacters : int = 99999
+    + maxVisibleWords : int <<get>> <<set>>
+    # m_maxVisibleWords : int = 99999
+    + maxVisibleLines : int <<get>> <<set>>
+    # m_maxVisibleLines : int = 99999
+    + useMaxVisibleDescender : bool <<get>> <<set>>
+    # m_useMaxVisibleDescender : bool = true
+    + pageToDisplay : int <<get>> <<set>>
+    # m_pageToDisplay : int = 1
+    # m_isNewPage : bool = false
+    + <<virtual>> margin : Vector4 <<get>> <<set>>
+    # m_margin : Vector4
+    # m_marginLeft : float
+    # m_marginRight : float
+    # m_marginWidth : float
+    # m_marginHeight : float
+    # m_width : float
+    + textInfo : TMP_TextInfo <<get>>
+    # m_textInfo : TMP_TextInfo
+    + havePropertiesChanged : bool <<get>> <<set>>
+    # m_havePropertiesChanged : bool
+    + isUsingLegacyAnimationComponent : bool <<get>> <<set>>
+    # m_isUsingLegacyAnimationComponent : bool
+    + <<new>> transform : Transform <<get>>
+    # m_transform : Transform
+    + <<new>> rectTransform : RectTransform <<get>>
+    # m_rectTransform : RectTransform
+    # m_PreviousRectTransformSize : Vector2
+    # m_PreviousPivotPosition : Vector2
+    + <<virtual>> autoSizeTextContainer : bool <<get>> <<set>>
+    # m_autoSizeTextContainer : bool
+    + <<virtual>> mesh : Mesh <<get>>
+    # m_mesh : Mesh
+    + isVolumetricText : bool <<get>> <<set>>
+    # m_isVolumetricText : bool
+    + bounds : Bounds <<get>>
+    + textBounds : Bounds <<get>>
+    + {static}  <<event>> OnFontAssetRequest : Func<int, string, TMP_FontAsset> 
+    + {static}  <<event>> OnSpriteAssetRequest : Func<int, string, TMP_SpriteAsset> 
+    + <<virtual>>  <<event>> OnPreRenderText : Action<TMP_TextInfo> 
+    # spriteAnimator : TMP_SpriteAnimator <<get>>
+    # m_spriteAnimator : TMP_SpriteAnimator
+    + flexibleHeight : float <<get>>
+    # m_flexibleHeight : float
+    + flexibleWidth : float <<get>>
+    # m_flexibleWidth : float
+    + minWidth : float <<get>>
+    # m_minWidth : float
+    + minHeight : float <<get>>
+    # m_minHeight : float
+    + maxWidth : float <<get>>
+    # m_maxWidth : float
+    + maxHeight : float <<get>>
+    # m_maxHeight : float
+    # layoutElement : LayoutElement <<get>>
+    # m_LayoutElement : LayoutElement
+    + <<virtual>> preferredWidth : float <<get>>
+    # m_preferredWidth : float
+    # m_renderedWidth : float
+    # m_isPreferredWidthDirty : bool
+    + <<virtual>> preferredHeight : float <<get>>
+    # m_preferredHeight : float
+    # m_renderedHeight : float
+    # m_isPreferredHeightDirty : bool
+    # m_isCalculatingPreferredValues : bool
+    + <<virtual>> renderedWidth : float <<get>>
+    + <<virtual>> renderedHeight : float <<get>>
+    + layoutPriority : int <<get>>
+    # m_layoutPriority : int = 0
+    # m_isLayoutDirty : bool
+    # m_isAwake : bool
+    <<internal>> m_isWaitingOnResourceLoad : bool
+    <<internal>> m_inputSource : TextInputSources
+    # m_fontScaleMultiplier : float
+    - {static} m_htmlTag : char[]
+    - {static} m_xmlAttribute : RichTextTagAttribute[]
+    - {static} m_attributeParameterValues : float[]
+    # tag_LineIndent : float = 0
+    # tag_Indent : float = 0
+    # m_indentStack : TMP_TextProcessingStack<float>
+    # tag_NoParsing : bool
+    # m_isParsingText : bool
+    # m_FXMatrix : Matrix4x4
+    # m_isFXMatrixSet : bool
+    <<internal>> m_TextProcessingArray : UnicodeChar[]
+    <<internal>> m_InternalTextProcessingArraySize : int
+    - m_internalCharacterInfo : TMP_CharacterInfo[]
+    # m_totalCharacterCount : int
+    # {static} m_SavedWordWrapState : WordWrapState
+    # {static} m_SavedLineState : WordWrapState
+    # {static} m_SavedEllipsisState : WordWrapState
+    # {static} m_SavedLastValidState : WordWrapState
+    # {static} m_SavedSoftLineBreakState : WordWrapState
+    <<internal>> {static} m_EllipsisInsertionCandidateStack : TMP_TextProcessingStack<WordWrapState>
+    # m_characterCount : int
+    # m_firstCharacterOfLine : int
+    # m_firstVisibleCharacterOfLine : int
+    # m_lastCharacterOfLine : int
+    # m_lastVisibleCharacterOfLine : int
+    # m_lineNumber : int
+    # m_lineVisibleCharacterCount : int
+    # m_pageNumber : int
+    # m_PageAscender : float
+    # m_maxTextAscender : float
+    # m_maxCapHeight : float
+    # m_ElementAscender : float
+    # m_ElementDescender : float
+    # m_maxLineAscender : float
+    # m_maxLineDescender : float
+    # m_startOfLineAscender : float
+    # m_startOfLineDescender : float
+    # m_lineOffset : float
+    # m_meshExtents : Extents
+    # m_htmlColor : Color32
+    # m_colorStack : TMP_TextProcessingStack<Color32>
+    # m_underlineColorStack : TMP_TextProcessingStack<Color32>
+    # m_strikethroughColorStack : TMP_TextProcessingStack<Color32>
+    # m_HighlightStateStack : TMP_TextProcessingStack<HighlightState>
+    # m_colorGradientPreset : TMP_ColorGradient
+    # m_colorGradientStack : TMP_TextProcessingStack<TMP_ColorGradient>
+    # m_colorGradientPresetIsTinted : bool
+    # m_tabSpacing : float = 0
+    # m_spacing : float = 0
+    # m_TextStyleStacks : TMP_TextProcessingStack<int>[]
+    # m_TextStyleStackDepth : int = 0
+    # m_ItalicAngleStack : TMP_TextProcessingStack<int>
+    # m_ItalicAngle : int
+    # m_actionStack : TMP_TextProcessingStack<int>
+    # m_padding : float = 0
+    # m_baselineOffset : float
+    # m_baselineOffsetStack : TMP_TextProcessingStack<float>
+    # m_xAdvance : float
+    # m_textElementType : TMP_TextElementType
+    # m_cached_TextElement : TMP_TextElement
+    # m_Ellipsis : SpecialCharacter
+    # m_Underline : SpecialCharacter
+    # m_defaultSpriteAsset : TMP_SpriteAsset
+    # m_currentSpriteAsset : TMP_SpriteAsset
+    # m_spriteCount : int = 0
+    # m_spriteIndex : int
+    # m_spriteAnimationID : int
+    - {static} k_ParseTextMarker : ProfilerMarker
+    - {static} k_InsertNewLineMarker : ProfilerMarker
+    # <<virtual>> LoadFontAsset() : void
+    # <<virtual>> SetSharedMaterial(mat:Material) : void
+    # <<virtual>> GetMaterial(mat:Material) : Material
+    # <<virtual>> SetFontBaseMaterial(mat:Material) : void
+    # <<virtual>> GetSharedMaterials() : Material[]
+    # <<virtual>> SetSharedMaterials(materials:Material[]) : void
+    # <<virtual>> GetMaterials(mats:Material[]) : Material[]
+    # <<virtual>> CreateMaterialInstance(source:Material) : Material
+    # SetVertexColorGradient(gradient:TMP_ColorGradient) : void
+    # SetTextSortingOrder(order:VertexSortingOrder) : void
+    # SetTextSortingOrder(order:int[]) : void
+    # <<virtual>> SetFaceColor(color:Color32) : void
+    # <<virtual>> SetOutlineColor(color:Color32) : void
+    # <<virtual>> SetOutlineThickness(thickness:float) : void
+    # <<virtual>> SetShaderDepth() : void
+    # <<virtual>> SetCulling() : void
+    <<internal>> <<virtual>> UpdateCulling() : void
+    # <<virtual>> GetPaddingForMaterial() : float
+    # <<virtual>> GetPaddingForMaterial(mat:Material) : float
+    # <<virtual>> GetTextContainerLocalCorners() : Vector3[]
+    # m_ignoreActiveState : bool
+    + <<virtual>> ForceMeshUpdate(ignoreActiveState:bool, forceTextReparsing:bool) : void
+    + <<virtual>> UpdateGeometry(mesh:Mesh, index:int) : void
+    + <<virtual>> UpdateVertexData(flags:TMP_VertexDataUpdateFlags) : void
+    + <<virtual>> UpdateVertexData() : void
+    + <<virtual>> SetVertices(vertices:Vector3[]) : void
+    + <<virtual>> UpdateMeshPadding() : void
+    + <<override>> CrossFadeColor(targetColor:Color, duration:float, ignoreTimeScale:bool, useAlpha:bool) : void
+    + <<override>> CrossFadeAlpha(alpha:float, duration:float, ignoreTimeScale:bool) : void
+    # <<virtual>> InternalCrossFadeColor(targetColor:Color, duration:float, ignoreTimeScale:bool, useAlpha:bool) : void
+    # <<virtual>> InternalCrossFadeAlpha(alpha:float, duration:float, ignoreTimeScale:bool) : void
+    - m_TextBackingArray : TextBackingContainer
+    # ParseInputText() : void
+    - PopulateTextBackingArray(sourceText:string) : void
+    - PopulateTextBackingArray(sourceText:string, start:int, length:int) : void
+    - PopulateTextBackingArray(sourceText:StringBuilder, start:int, length:int) : void
+    - PopulateTextBackingArray(sourceText:char[], start:int, length:int) : void
+    - PopulateTextProcessingArray() : void
+    - SetTextInternal(sourceText:string) : void
+    + SetText(sourceText:string, syncTextInputBox:bool) : void
+    + SetText(sourceText:string, arg0:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float, arg3:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float, arg3:float, arg4:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float, arg3:float, arg4:float, arg5:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float, arg3:float, arg4:float, arg5:float, arg6:float) : void
+    + SetText(sourceText:string, arg0:float, arg1:float, arg2:float, arg3:float, arg4:float, arg5:float, arg6:float, arg7:float) : void
+    + SetText(sourceText:StringBuilder) : void
+    - SetText(sourceText:StringBuilder, start:int, length:int) : void
+    + SetText(sourceText:char[]) : void
+    + SetText(sourceText:char[], start:int, length:int) : void
+    + SetCharArray(sourceText:char[]) : void
+    + SetCharArray(sourceText:char[], start:int, length:int) : void
+    - GetStyle(hashCode:int) : TMP_Style
+    - ReplaceOpeningStyleTag(sourceText:TextBackingContainer, srcIndex:int, srcOffset:int, charBuffer:UnicodeChar[], writeIndex:int) : bool
+    - ReplaceOpeningStyleTag(sourceText:int[], srcIndex:int, srcOffset:int, charBuffer:UnicodeChar[], writeIndex:int) : bool
+    - ReplaceClosingStyleTag(sourceText:TextBackingContainer, srcIndex:int, charBuffer:UnicodeChar[], writeIndex:int) : void
+    - ReplaceClosingStyleTag(sourceText:int[], srcIndex:int, charBuffer:UnicodeChar[], writeIndex:int) : void
+    - InsertOpeningStyleTag(style:TMP_Style, srcIndex:int, charBuffer:UnicodeChar[], writeIndex:int) : bool
+    - InsertClosingStyleTag(charBuffer:UnicodeChar[], writeIndex:int) : void
+    - GetMarkupTagHashCode(tagDefinition:int[], readIndex:int) : int
+    - GetMarkupTagHashCode(tagDefinition:TextBackingContainer, readIndex:int) : int
+    - GetStyleHashCode(text:int[], index:int, closeIndex:int) : int
+    - GetStyleHashCode(text:TextBackingContainer, index:int, closeIndex:int) : int
+    - ResizeInternalArray(array:T[]) : void
+    - ResizeInternalArray(array:T[], size:int) : void
+    - <<readonly>> k_Power : decimal[]
+    - AddFloatToInternalTextBackingArray(value:float, padding:int, precision:int, writeIndex:int) : void
+    - AddIntegerToInternalTextBackingArray(number:double, padding:int, writeIndex:int) : void
+    - InternalTextBackingArrayToString() : string
+    <<internal>> <<virtual>> SetArraySizes(unicodeChars:UnicodeChar[]) : int
+    + GetPreferredValues() : Vector2
+    + GetPreferredValues(width:float, height:float) : Vector2
+    + GetPreferredValues(text:string) : Vector2
+    + GetPreferredValues(text:string, width:float, height:float) : Vector2
+    # GetPreferredWidth() : float
+    - GetPreferredWidth(margin:Vector2) : float
+    # GetPreferredHeight() : float
+    - GetPreferredHeight(margin:Vector2) : float
+    + GetRenderedValues() : Vector2
+    + GetRenderedValues(onlyVisibleCharacters:bool) : Vector2
+    - GetRenderedWidth() : float
+    # GetRenderedWidth(onlyVisibleCharacters:bool) : float
+    - GetRenderedHeight() : float
+    # GetRenderedHeight(onlyVisibleCharacters:bool) : float
+    # <<virtual>> CalculatePreferredValues(fontSize:float, marginSize:Vector2, isTextAutoSizingEnabled:bool, isWordWrappingEnabled:bool) : Vector2
+    # <<virtual>> GetCompoundBounds() : Bounds
+    <<internal>> <<virtual>> GetCanvasSpaceClippingRect() : Rect
+    # GetTextBounds() : Bounds
+    # GetTextBounds(onlyVisibleCharacters:bool) : Bounds
+    # AdjustLineOffset(startIndex:int, endIndex:int, offset:float) : void
+    # ResizeLineExtents(size:int) : void
+    # {static} k_LargePositiveVector2 : Vector2
+    # {static} k_LargeNegativeVector2 : Vector2
+    # {static} k_LargePositiveFloat : float
+    # {static} k_LargeNegativeFloat : float
+    # {static} k_LargePositiveInt : int
+    # {static} k_LargeNegativeInt : int
+    + <<virtual>> GetTextInfo(text:string) : TMP_TextInfo
+    + <<virtual>> ComputeMarginSize() : void
+    # InsertNewLine(i:int, baseScale:float, currentElementScale:float, currentEmScale:float, glyphAdjustment:float, boldSpacingAdjustment:float, characterSpacingAdjustment:float, width:float, lineGap:float, isMaxVisibleDescenderSet:bool, maxVisibleDescender:float) : void
+    # SaveWordWrappingState(state:WordWrapState, index:int, count:int) : void
+    # RestoreWordWrappingState(state:WordWrapState) : int
+    # <<virtual>> SaveGlyphVertexInfo(padding:float, style_padding:float, vertexColor:Color32) : void
+    # <<virtual>> SaveSpriteVertexInfo(vertexColor:Color32) : void
+    # <<virtual>> FillCharacterVertexBuffers(i:int, index_X4:int) : void
+    # <<virtual>> FillCharacterVertexBuffers(i:int, index_X4:int, isVolumetric:bool) : void
+    # <<virtual>> FillSpriteVertexBuffers(i:int, index_X4:int) : void
+    # <<virtual>> DrawUnderlineMesh(start:Vector3, end:Vector3, index:int, startScale:float, endScale:float, maxScale:float, sdfScale:float, underlineColor:Color32) : void
+    # <<virtual>> DrawTextHighlight(start:Vector3, end:Vector3, index:int, highlightColor:Color32) : void
+    # LoadDefaultSettings() : void
+    # GetSpecialCharacters(fontAsset:TMP_FontAsset) : void
+    # GetEllipsisSpecialCharacter(fontAsset:TMP_FontAsset) : void
+    # GetUnderlineSpecialCharacter(fontAsset:TMP_FontAsset) : void
+    # ReplaceTagWithCharacter(chars:int[], insertionIndex:int, tagLength:int, c:char) : void
+    # GetFontAssetForWeight(fontWeight:int) : TMP_FontAsset
+    <<internal>> GetTextElement(unicode:uint, fontAsset:TMP_FontAsset, fontStyle:FontStyles, fontWeight:FontWeight, isUsingAlternativeTypeface:bool) : TMP_TextElement
+    # <<virtual>> SetActiveSubMeshes(state:bool) : void
+    # <<virtual>> DestroySubMeshObjects() : void
+    + <<virtual>> ClearMesh() : void
+    + <<virtual>> ClearMesh(uploadGeometry:bool) : void
+    + <<virtual>> GetParsedText() : string
+    <<internal>> IsSelfOrLinkedAncestor(targetTextComponent:TMP_Text) : bool
+    <<internal>> ReleaseLinkedTextComponent(targetTextComponent:TMP_Text) : void
+    # PackUV(x:float, y:float, scale:float) : Vector2
+    # PackUV(x:float, y:float) : float
+    <<internal>> <<virtual>> InternalUpdate() : void
+    # HexToInt(hex:char) : int
+    # GetUTF16(text:string, i:int) : int
+    # GetUTF16(text:int[], i:int) : int
+    <<internal>> GetUTF16(text:uint[], i:int) : int
+    # GetUTF16(text:StringBuilder, i:int) : int
+    - GetUTF16(text:TextBackingContainer, i:int) : int
+    # GetUTF32(text:string, i:int) : int
+    # GetUTF32(text:int[], i:int) : int
+    <<internal>> GetUTF32(text:uint[], i:int) : int
+    # GetUTF32(text:StringBuilder, i:int) : int
+    - GetUTF32(text:TextBackingContainer, i:int) : int
+    # HexCharsToColor(hexChars:char[], tagCount:int) : Color32
+    # HexCharsToColor(hexChars:char[], startIndex:int, length:int) : Color32
+    - GetAttributeParameters(chars:char[], startIndex:int, length:int, parameters:float[]) : int
+    # ConvertToFloat(chars:char[], startIndex:int, length:int) : float
+    # ConvertToFloat(chars:char[], startIndex:int, length:int, lastIndex:int) : float
+    <<internal>> ValidateHtmlTag(chars:UnicodeChar[], startIndex:int, endIndex:int) : bool
+}
+struct CharacterSubstitution {
+    + index : int
+    + unicode : uint
+    + CharacterSubstitution(index:int, unicode:uint)
+}
+enum TextInputSources {
+    TextInputBox= 0,
+    SetText= 1,
+    SetTextArray= 2,
+    TextString= 3,
+}
+struct UnicodeChar {
+    + unicode : int
+    + stringIndex : int
+    + length : int
+}
+struct SpecialCharacter {
+    + character : TMP_Character
+    + fontAsset : TMP_FontAsset
+    + material : Material
+    + materialIndex : int
+    + SpecialCharacter(character:TMP_Character, materialIndex:int)
+}
+struct TextBackingContainer {
+    + Capacity : int <<get>>
+    + Count : int <<get>> <<set>>
+    - m_Array : uint[]
+    - m_Count : int
+    + TextBackingContainer(size:int)
+    + Resize(size:int) : void
+}
+MaskableGraphic <|-- TMP_Text
+TMP_Text +-- CharacterSubstitution
+TMP_Text +-- TextInputSources
+TMP_Text +-- UnicodeChar
+TMP_Text +-- SpecialCharacter
+TMP_Text +-- TextBackingContainer
+@enduml

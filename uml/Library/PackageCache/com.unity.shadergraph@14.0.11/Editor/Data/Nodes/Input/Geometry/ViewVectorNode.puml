@@ -1,0 +1,17 @@
+@startuml
+class ViewVectorNode {
+    + ViewVectorNode()
+    + <<virtual>> validSpaces : List<CoordinateSpace> <<get>>
+    - m_Space : CoordinateSpace
+    + spacePopup : PopupList <<get>> <<set>>
+    + space : CoordinateSpace <<get>>
+    + <<override>> hasPreview : bool <<get>>
+    + <<override>> previewMode : PreviewMode <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_ViewVectorObject(WorldSpacePosition:Vector3, Out:Vector3) : string
+    {static} - Unity_ViewVectorView(ViewSpacePosition:Vector3, Out:Vector3) : string
+    {static} - Unity_ViewVectorWorld(WorldSpacePosition:Vector3, Out:Vector3) : string
+    {static} - Unity_ViewVectorTangent(WorldSpacePosition:Vector3, WorldSpaceTangent:Vector3, WorldSpaceBitangent:Vector3, WorldSpaceNormal:Vector3, Out:Vector3) : string
+}
+CodeFunctionNode <|-- ViewVectorNode
+@enduml

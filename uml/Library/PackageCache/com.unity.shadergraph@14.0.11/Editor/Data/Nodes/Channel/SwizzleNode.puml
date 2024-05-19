@@ -1,0 +1,30 @@
+@startuml
+class SwizzleNode {
+    + SwizzleNode()
+    <<const>> - InputSlotId : int = 0
+    <<const>> - OutputSlotId : int = 1
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - _maskInput : string = "xxxx"
+    + maskInput : string <<get>> <<set>>
+    + convertedMask : string
+    + ValidateMaskInput(InputValueSize:int) : bool
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> ValidateNode() : void
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    + <<override>> allowedNodeVersions : IEnumerable<int> <<get>>
+}
+class LegacySwizzleChannelData {
+    + m_RedChannel : TextureChannel
+    + m_GreenChannel : TextureChannel
+    + m_BlueChannel : TextureChannel
+    + m_AlphaChannel : TextureChannel
+    + {static} LegacySwizzleChannel(json:string, node:SwizzleNode) : void
+}
+AbstractMaterialNode <|-- SwizzleNode
+IGeneratesBodyCode <|-- SwizzleNode
+SwizzleNode +-- LegacySwizzleChannelData
+@enduml

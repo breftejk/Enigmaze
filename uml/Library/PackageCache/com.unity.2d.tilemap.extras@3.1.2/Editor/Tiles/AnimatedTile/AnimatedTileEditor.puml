@@ -1,0 +1,36 @@
+@startuml
+class AnimatedTileEditor {
+    - {static} <<readonly>> k_UndoName : string
+    - m_AnimatedSprites : SerializedProperty
+    - tile : AnimatedTile <<get>>
+    - dragAndDropSprites : List<Sprite>
+    - reorderableList : ReorderableList
+    - OnEnable() : void
+    - OnDrawHeader(rect:Rect) : void
+    - OnDrawElement(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - GetElementHeight(index:int) : float
+    - OnAddElement(list:ReorderableList) : void
+    - OnRemoveElement(list:ReorderableList) : void
+    - OnReorderElement(list:ReorderableList) : void
+    - DisplayClipboardText(clipboardText:GUIContent, position:Rect) : void
+    - dragAndDropActive : bool <<get>>
+    - DragAndDropClear() : void
+    - {static} GetSpritesFromTexture(texture:Texture2D) : List<Sprite>
+    - {static} GetValidSingleSprites(objects:Object[]) : List<Sprite>
+    - HandleDragAndDrop(guiRect:Rect) : void
+    + <<override>> OnInspectorGUI() : void
+    - ResizeAnimatedSpriteList(count:int) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> orderAnimatedTileSpritesInfo : GUIContent
+    + {static} <<readonly>> emptyAnimatedTileInfo : GUIContent
+    + {static} <<readonly>> minimumSpeedLabel : GUIContent
+    + {static} <<readonly>> maximumSpeedLabel : GUIContent
+    + {static} <<readonly>> startTimeLabel : GUIContent
+    + {static} <<readonly>> startFrameLabel : GUIContent
+    + {static} <<readonly>> colliderTypeLabel : GUIContent
+    + {static} <<readonly>> flagsLabel : GUIContent
+}
+Editor <|-- AnimatedTileEditor
+AnimatedTileEditor +-- Styles
+@enduml

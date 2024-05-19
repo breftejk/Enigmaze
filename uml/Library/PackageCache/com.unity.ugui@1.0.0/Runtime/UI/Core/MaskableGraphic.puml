@@ -1,0 +1,39 @@
+@startuml
+abstract class MaskableGraphic {
+    # m_ShouldRecalculateStencil : bool = true
+    # m_MaskMaterial : Material
+    - m_ParentMask : RectMask2D
+    - m_Maskable : bool = true
+    - m_IsMaskingGraphic : bool = false
+    # m_IncludeForMasking : bool = false
+    - m_OnCullStateChanged : CullStateChangedEvent
+    + onCullStateChanged : CullStateChangedEvent <<get>> <<set>>
+    + maskable : bool <<get>> <<set>>
+    + isMaskingGraphic : bool <<get>> <<set>>
+    # m_ShouldRecalculate : bool = true
+    # m_StencilValue : int
+    + <<virtual>> GetModifiedMaterial(baseMaterial:Material) : Material
+    + <<virtual>> Cull(clipRect:Rect, validRect:bool) : void
+    - UpdateCull(cull:bool) : void
+    + <<virtual>> SetClipRect(clipRect:Rect, validRect:bool) : void
+    + <<virtual>> SetClipSoftness(clipSoftness:Vector2) : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnTransformParentChanged() : void
+    + <<virtual>> ParentMaskStateChanged() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+    <<readonly>> - m_Corners : Vector3[]
+    - rootCanvasRect : Rect <<get>>
+    - UpdateClipParent() : void
+    + <<virtual>> RecalculateClipping() : void
+    + <<virtual>> RecalculateMasking() : void
+}
+class CullStateChangedEvent {
+}
+Graphic <|-- MaskableGraphic
+IClippable <|-- MaskableGraphic
+IMaskable <|-- MaskableGraphic
+IMaterialModifier <|-- MaskableGraphic
+MaskableGraphic +-- CullStateChangedEvent
+"UnityEvent`1" "<bool>" <|-- CullStateChangedEvent
+@enduml

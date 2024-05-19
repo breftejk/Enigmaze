@@ -1,0 +1,16 @@
+@startuml
+class VideoPlayableBehaviour <<sealed>> {
+    + videoPlayer : VideoPlayer
+    + preloadTime : double
+    + clipInTime : double
+    + startTime : double
+    - preparing : bool
+    + PrepareVideo() : void
+    + <<override>> PrepareFrame(playable:Playable, info:FrameData) : void
+    + <<override>> OnBehaviourPlay(playable:Playable, info:FrameData) : void
+    + <<override>> OnBehaviourPause(playable:Playable, info:FrameData) : void
+    + <<override>> OnPlayableDestroy(playable:Playable) : void
+    - SyncVideoToPlayable(playable:Playable) : void
+}
+PlayableBehaviour <|-- VideoPlayableBehaviour
+@enduml

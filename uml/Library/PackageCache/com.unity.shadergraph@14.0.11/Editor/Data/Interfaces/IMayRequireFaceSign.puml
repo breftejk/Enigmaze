@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireFaceSign {
+    RequiresFaceSign(stageCapability:ShaderStageCapability) : bool
+}
+class IMayRequireFaceSignExtensions <<static>> {
+    + {static} RequiresFaceSign(slot:MaterialSlot) : bool
+}
+@enduml

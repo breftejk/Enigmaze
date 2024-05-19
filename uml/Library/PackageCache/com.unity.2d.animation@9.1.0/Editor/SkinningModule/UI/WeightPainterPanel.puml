@@ -1,0 +1,52 @@
+@startuml
+class WeightPainterPanel {
+    + {static} <<readonly>> kNone : string = "None"
+    - m_PaintMode : WeightPainterMode
+    - m_ModeField : EnumField
+    - m_NormalizeToggle : Toggle
+    - m_HardnessField : IntegerField
+    - m_StepField : IntegerField
+    - m_SizeField : IntegerField
+    - m_AmountField : FloatField
+    - m_AmountSlider : Slider
+    - m_BonePopupContainer : VisualElement
+    - m_BonePopup : PopupField<string>
+    - m_SliderActive : bool = false
+    - m_WeightInspectorPanel : WeightInspectorIMGUIPanel
+    - m_PopupWindow : UnityEngine.UIElements.PopupWindow
+    +  <<event>> bonePopupChanged : Action<int> 
+    +  <<event>> sliderStarted : Action 
+    +  <<event>> sliderChanged : Action<float> 
+    +  <<event>> sliderEnded : Action 
+    +  <<event>> weightsChanged : Action 
+    + paintMode : WeightPainterMode <<get>> <<set>>
+    + title : string <<set>>
+    + mode : WeightEditorMode <<get>> <<set>>
+    + boneIndex : int <<get>>
+    + size : int <<get>> <<set>>
+    + hardness : int <<get>> <<set>>
+    + step : int <<get>> <<set>>
+    + normalize : bool <<get>> <<set>>
+    + amount : float <<get>> <<set>>
+    + WeightPainterPanel()
+    + BindElements() : void
+    + SetActive(active:bool) : void
+    - SetupMode() : void
+    - SetupAmountSlider() : void
+    - LinkSliderToIntegerField(slider:Slider, field:IntegerField) : void
+    + UpdateWeightInspector(spriteMeshData:BaseSpriteMeshData, boneNames:string[], selection:ISelection<int>, cacheUndo:ICacheUndo) : void
+    + UpdatePanel(boneNames:string[]) : void
+    - UpdateBonePopup(names:string[]) : void
+    <<internal>> SetBoneSelectionByName(boneName:string) : void
+    + {static} GenerateFromUXML() : WeightPainterPanel
+}
+class WeightPainterPanelFactory {
+}
+class WeightPainterPanelUxmlTraits {
+}
+VisualElement <|-- WeightPainterPanel
+WeightPainterPanel +-- WeightPainterPanelFactory
+"UxmlFactory`2" "<WeightPainterPanel,WeightPainterPanelUxmlTraits>" <|-- WeightPainterPanelFactory
+WeightPainterPanel +-- WeightPainterPanelUxmlTraits
+UxmlTraits <|-- WeightPainterPanelUxmlTraits
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+abstract class BaseRaycaster {
+    - m_RootRaycaster : BaseRaycaster
+    + {abstract} Raycast(eventData:PointerEventData, resultAppendList:List<RaycastResult>) : void
+    + {abstract} eventCamera : Camera <<get>>
+    + <<virtual>> priority : int <<get>>
+    + <<virtual>> sortOrderPriority : int <<get>>
+    + <<virtual>> renderOrderPriority : int <<get>>
+    + rootRaycaster : BaseRaycaster <<get>>
+    + <<override>> ToString() : string
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+    # <<override>> OnTransformParentChanged() : void
+}
+UIBehaviour <|-- BaseRaycaster
+@enduml

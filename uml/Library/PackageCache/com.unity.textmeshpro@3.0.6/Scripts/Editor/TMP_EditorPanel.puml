@@ -1,0 +1,28 @@
+@startuml
+class TMP_EditorPanel {
+    {static} <<readonly>> - k_SortingLayerLabel : GUIContent
+    {static} <<readonly>> - k_OrderInLayerLabel : GUIContent
+    {static} <<readonly>> - k_OrthographicLabel : GUIContent
+    {static} <<readonly>> - k_VolumetricLabel : GUIContent
+    - {static} k_SortingLayerNames : string[]
+    - IsPreset : bool
+    - m_IsVolumetricTextProp : SerializedProperty
+    - m_IsOrthographicProp : SerializedProperty
+    - m_Renderers : Object[]
+    - m_RendererSerializedObject : SerializedObject
+    - m_RendererSortingLayerProp : SerializedProperty
+    - m_RendererSortingLayerIDProp : SerializedProperty
+    - m_RendererSortingOrderProp : SerializedProperty
+    - m_TextSortingLayerProp : SerializedProperty
+    - m_TextSortingLayerIDProp : SerializedProperty
+    - m_TextSortingOrderProp : SerializedProperty
+    # <<override>> OnEnable() : void
+    # <<override>> DrawExtraSettings() : void
+    - DrawSortingLayer() : void
+    - DrawOrthographicMode() : void
+    # DrawVolumetricSetup() : void
+    # <<override>> IsMixSelectionTypes() : bool
+    # <<override>> OnUndoRedo() : void
+}
+TMP_BaseEditorPanel <|-- TMP_EditorPanel
+@enduml

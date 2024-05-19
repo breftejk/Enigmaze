@@ -1,0 +1,23 @@
+@startuml
+struct FABRIKChain2D {
+    + first : Vector2 <<get>>
+    + last : Vector2 <<get>>
+    + origin : Vector2
+    + target : Vector2
+    + sqrTolerance : float
+    + positions : Vector2[]
+    + lengths : float[]
+    + subChainIndices : int[]
+    + worldPositions : Vector3[]
+}
+class FABRIK2D <<static>> {
+    + {static} Solve(targetPosition:Vector2, solverLimit:int, tolerance:float, lengths:float[], positions:Vector2[]) : bool
+    + {static} SolveChain(solverLimit:int, chains:FABRIKChain2D[]) : bool
+    {static} - ValidateChain(chains:FABRIKChain2D[]) : bool
+    {static} - SolveForwardsChain(idx:int, chains:FABRIKChain2D[]) : void
+    {static} - SolveBackwardsChain(idx:int, chains:FABRIKChain2D[]) : bool
+    {static} - Forward(targetPosition:Vector2, lengths:IList<float>, positions:Vector2[]) : void
+    {static} - Backward(originPosition:Vector2, lengths:IList<float>, positions:Vector2[]) : void
+    {static} - ValidateJoint(endPosition:Vector2, startPosition:Vector2, right:Vector2, min:float, max:float) : Vector2
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class FuzzyOptionTreeExtensionAttribute <<sealed>> {
+    + FuzzyOptionTreeExtensionAttribute(type:Type)
+    + type : Type <<get>>
+}
+Attribute <|-- FuzzyOptionTreeExtensionAttribute
+IDecoratorAttribute <|-- FuzzyOptionTreeExtensionAttribute
+@enduml

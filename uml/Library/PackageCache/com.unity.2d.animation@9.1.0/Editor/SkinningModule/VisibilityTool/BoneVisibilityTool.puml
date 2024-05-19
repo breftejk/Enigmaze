@@ -1,0 +1,60 @@
+@startuml
+class BoneVisibilityTool {
+    - m_Controller : BoneTreeWidgetController
+    - view : VisualElement <<get>>
+    + name : string <<get>>
+    + isAvailable : bool <<get>>
+    + BoneVisibilityTool(s:SkinningCache)
+    + Setup() : void
+    + Dispose() : void
+    + Activate() : void
+    + Deactivate() : void
+    + SetAvailabilityChangeCallback(callback:Action) : void
+}
+class BoneVisibilityToolView {
+    + GetController : Func<BoneTreeWidgetController>
+    + GetModel : Func<IBoneTreeViewModel>
+    + BoneVisibilityToolView()
+    # <<virtual>> SetupToolColumnHeader() : VisibilityToolColumnHeader
+    - InternalGetController() : BoneTreeWidgetController
+    # SetAllVisibility(visibility:bool) : void
+    # GetAllVisibility() : bool
+    + OnSelectionChange(skeleton:SkeletonCache) : void
+    + OnBoneSelectionChange(bones:SkeletonSelection) : void
+    + OnBoneExpandedChange(bones:BoneCache[]) : void
+    + OnBoneNameChanged(bone:BoneCache) : void
+    + Deactivate() : void
+}
+class BoneTreeView {
+    + GetController : Func<BoneTreeWidgetController>
+    + BoneTreeView(treeViewState:TreeViewState, columnHeader:MultiColumnHeader)
+    + SetupHierarchy() : void
+    - ReloadView() : void
+    + OnBoneSelectionChanged(boneSelection:SkeletonSelection) : void
+    + OnBoneExpandedChanged(bones:BoneCache[]) : void
+    + OnBoneNameChanged(bone:BoneCache) : void
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    # <<override>> ExpandedStateChanged() : void
+    # <<override>> GetCustomRowHeight(row:int, item:TreeViewItem) : float
+    - CellGUI(cellRect:Rect, item:TreeViewItem, column:int, args:RowGUIArgs) : void
+    - DrawDepthCell(cellRect:Rect, item:TreeViewItem) : void
+    - DrawColorCell(cellRect:Rect, item:TreeViewItem) : void
+    {static} - DrawCell(cellRect:Rect, item:TreeViewItem) : TreeViewItemBase<BoneCache>
+    - DrawVisibilityCell(cellRect:Rect, item:TreeViewItem) : void
+    - DrawNameCell(cellRect:Rect, item:TreeViewItem, args:RowGUIArgs) : void
+    # <<override>> GetRenameRect(rowRect:Rect, row:int, item:TreeViewItem) : Rect
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> CanRename(item:TreeViewItem) : bool
+    # <<override>> RenameEnded(args:RenameEndedArgs) : void
+    <<const>> - k_GenericDragID : string = "GenericDragColumnDragging"
+    # <<override>> CanStartDrag(args:CanStartDragArgs) : bool
+    # <<override>> SetupDragAndDrop(args:SetupDragAndDropArgs) : void
+    # <<override>> HandleDragAndDrop(args:DragAndDropArgs) : DragAndDropVisualMode
+}
+BoneTreeWidgetModel <|-- BoneVisibilityTool
+IVisibilityTool <|-- BoneVisibilityTool
+VisibilityToolViewBase <|-- BoneVisibilityToolView
+IBoneVisibilityToolView <|-- BoneVisibilityToolView
+VisibilityTreeViewBase <|-- BoneTreeView
+@enduml

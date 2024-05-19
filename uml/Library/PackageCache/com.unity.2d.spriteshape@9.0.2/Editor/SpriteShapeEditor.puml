@@ -1,0 +1,80 @@
+@startuml
+class SpriteShapeEditor {
+    - m_FillTextureProp : SerializedProperty
+    - m_AngleRangesProp : SerializedProperty
+    - m_CornerSpritesProp : SerializedProperty
+    - m_FillOffsetProp : SerializedProperty
+    - m_UseSpriteBordersProp : SerializedProperty
+    - m_AngleRangeSpriteList : ReorderableList = null
+    - m_EmptySpriteList : ReorderableList = null
+    - m_PreviewAngle : float = 0f
+    - m_SelectedIndex : int
+    - <<const>> kInvalidMinimum : int
+    - m_AngleRangeRect : Rect
+    - controller : AngleRangeController
+    - m_CurrentAngleRange : AngleRange
+    - m_SpriteSelection : Dictionary<int, int>
+    - m_PreviewSprite : Sprite
+    - m_PreviewSpriteMesh : Mesh
+    - previewSpriteMesh : Mesh <<get>>
+    + angleRanges : List<AngleRange> <<get>>
+    + selectedIndex : int <<get>> <<set>>
+    - isSelectedIndexValid : bool <<get>>
+    + previewAngle : float <<get>> <<set>>
+    + spriteShape : UnityEngine.U2D.SpriteShape <<get>>
+    + RegisterUndo(name:string) : void
+    - OnReset(obj:UnityEngine.U2D.SpriteShape) : void
+    - InitCache() : void
+    + OnEnable() : void
+    + OnDisable() : void
+    + <<override>> RequiresConstantRepaint() : bool
+    - SetupAngleRangeController() : void
+    - OnSelectionChange() : void
+    - OnDestroy() : void
+    - UndoRedoPerformed() : void
+    - OnSelelectSpriteCallback(list:ReorderableList) : void
+    - OnCanAddCallback(list:ReorderableList) : bool
+    - OnRemoveSprite(list:ReorderableList) : void
+    - DrawSpriteListHeader(rect:Rect) : void
+    - DrawSpriteListElement(rect:Rect, index:int, selected:bool, focused:bool) : void
+    + DrawHeader(content:GUIContent) : void
+    - SetPreviewSpriteIndex(rangeIndex:int, index:int) : void
+    - GetPreviewSpriteIndex(rangeIndex:int) : int
+    + <<override>> OnInspectorGUI() : void
+    - DoRangeInspector() : void
+    - DoCreateRangeButton() : void
+    - RangeField(start:float, end:float, order:int) : void
+    - HandleAngleSpriteListGUI(rect:Rect) : void
+    - DoRangesGUI() : void
+    - CreateReorderableSpriteList() : void
+    - DrawSpritePreview(rect:Rect) : void
+    - HandleSpritePreviewCycle(rect:Rect) : void
+    - ContainsPosition(rect:Rect, position:Vector2, angle:float) : bool
+}
+class Contents <<static>> {
+    + {static} <<readonly>> fillTextureLabel : GUIContent
+    + {static} <<readonly>> fillScaleLabel : GUIContent
+    + {static} <<readonly>> useSpriteBorderLabel : GUIContent
+    + {static} <<readonly>> cornerTypeLabel : GUIContent
+    + {static} <<readonly>> controlPointsLabel : GUIContent
+    + {static} <<readonly>> fillLabel : GUIContent
+    + {static} <<readonly>> cornerLabel : GUIContent
+    + {static} <<readonly>> cornerListLabel : GUIContent
+    + {static} <<readonly>> cornerSpriteTypeLabel : GUIContent
+    + {static} <<readonly>> angleRangesLabel : GUIContent
+    + {static} <<readonly>> spritesLabel : GUIContent
+    + {static} <<readonly>> angleRangeLabel : GUIContent
+    + {static} <<readonly>> wrapModeErrorLabel : GUIContent
+    + {static} <<readonly>> createRangeButtonLabel : GUIContent
+    + {static} <<readonly>> proBackgroundColor : Color
+    + {static} <<readonly>> proBackgroundRangeColor : Color
+    + {static} <<readonly>> proColor1 : Color
+    + {static} <<readonly>> proColor2 : Color
+    + {static} <<readonly>> defaultColor1 : Color
+    + {static} <<readonly>> defaultColor2 : Color
+    + {static} <<readonly>> defaultBackgroundColor : Color
+}
+Editor <|-- SpriteShapeEditor
+IAngleRangeCache <|-- SpriteShapeEditor
+SpriteShapeEditor +-- Contents
+@enduml

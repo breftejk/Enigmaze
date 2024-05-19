@@ -1,0 +1,31 @@
+@startuml
+class BinaryExpression {
+    + BinaryExpression(type:BinaryExpressionType, leftExpression:LogicalExpression, rightExpression:LogicalExpression)
+    + LeftExpression : LogicalExpression <<get>> <<set>>
+    + RightExpression : LogicalExpression <<get>> <<set>>
+    + Type : BinaryExpressionType <<get>> <<set>>
+    + <<override>> Accept(visitor:LogicalExpressionVisitor) : void
+}
+enum BinaryExpressionType {
+    And,
+    Or,
+    NotEqual,
+    LesserOrEqual,
+    GreaterOrEqual,
+    Lesser,
+    Greater,
+    Equal,
+    Minus,
+    Plus,
+    Modulo,
+    Div,
+    Times,
+    BitwiseOr,
+    BitwiseAnd,
+    BitwiseXOr,
+    LeftShift,
+    RightShift,
+    Unknown,
+}
+LogicalExpression <|-- BinaryExpression
+@enduml

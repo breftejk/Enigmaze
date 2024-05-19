@@ -1,0 +1,6 @@
+@startuml
+interface IGizmoDrawer {
+    OnDrawGizmos() : void
+    OnDrawGizmosSelected() : void
+}
+@enduml

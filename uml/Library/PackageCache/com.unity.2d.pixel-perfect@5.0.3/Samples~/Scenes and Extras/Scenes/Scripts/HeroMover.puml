@@ -1,0 +1,11 @@
+@startuml
+class HeroMover {
+    + Amplitude : float = 1.0f
+    + Frequency : float = 1.0f
+    - origin : Vector3
+    - offset : float
+    - Start() : void
+    - Update() : void
+}
+MonoBehaviour <|-- HeroMover
+@enduml

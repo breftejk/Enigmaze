@@ -1,0 +1,69 @@
+@startuml
+enum WindingRule {
+    EvenOdd,
+    NonZero,
+    Positive,
+    Negative,
+    AbsGeqTwo,
+}
+enum ElementType {
+    Polygons,
+    ConnectedPolygons,
+    BoundaryContours,
+}
+enum ContourOrientation {
+    Original,
+    Clockwise,
+    CounterClockwise,
+}
+struct ContourVertex {
+    + Position : Vec3
+    + Data : object
+    + <<override>> ToString() : string
+}
+class Tess <<partial>> {
+    - _mesh : Mesh
+    - _normal : Vec3
+    - _sUnit : Vec3
+    - _tUnit : Vec3
+    - _bminX : Real
+    - _bminY : Real
+    - _bmaxX : Real
+    - _bmaxY : Real
+    - _windingRule : WindingRule
+    - _dict : Dict<ActiveRegion>
+    - _pq : PriorityQueue<MeshUtils.Vertex>
+    - _event : MeshUtils.Vertex
+    - _combineCallback : CombineCallback
+    - _vertices : ContourVertex[]
+    - _vertexCount : int
+    - _elements : int[]
+    - _elementCount : int
+    + Normal : Vec3 <<get>> <<set>>
+    + SUnitX : Real = 1
+    + SUnitY : Real = 0
+    + SentinelCoord : Real = 4e30f
+    + NoEmptyPolygons : bool = false
+    + UsePooling : bool = false
+    + Vertices : ContourVertex[] <<get>>
+    + VertexCount : int <<get>>
+    + Elements : int[] <<get>>
+    + ElementCount : int <<get>>
+    + Tess()
+    - ComputeNormal(norm:Vec3) : void
+    - CheckOrientation() : void
+    - ProjectPolygon() : void
+    - TessellateMonoRegion(face:MeshUtils.Face) : void
+    - TessellateInterior() : void
+    - DiscardExterior() : void
+    - SetWindingNumber(value:int, keepOnlyBoundary:bool) : void
+    - GetNeighbourFace(edge:MeshUtils.Edge) : int
+    - OutputPolymesh(elementType:ElementType, polySize:int) : void
+    - OutputContours() : void
+    - SignedArea(vertices:ContourVertex[]) : Real
+    + AddContour(vertices:ContourVertex[]) : void
+    + AddContour(vertices:ContourVertex[], forceOrientation:ContourOrientation) : void
+    + Tessellate(windingRule:WindingRule, elementType:ElementType, polySize:int) : void
+    + Tessellate(windingRule:WindingRule, elementType:ElementType, polySize:int, combineCallback:CombineCallback) : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class FuzzyOptionProvider {
+    {static} - FuzzyOptionProvider()
+    + {static} instance : FuzzyOptionProvider <<get>>
+    # <<override>> cache : bool <<get>>
+    + <<override>> IsValid(decorated:object) : bool
+}
+"SingleDecoratorProvider`3" "<object,IFuzzyOption,FuzzyOptionAttribute>" <|-- FuzzyOptionProvider
+@enduml

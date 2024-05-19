@@ -1,0 +1,7 @@
+@startuml
+interface "IGraphEventHandler`1"<TArgs> {
+    GetHook(reference:GraphReference) : EventHook
+    Trigger(reference:GraphReference, args:TArgs) : void
+    IsListening(pointer:GraphPointer) : bool
+}
+@enduml

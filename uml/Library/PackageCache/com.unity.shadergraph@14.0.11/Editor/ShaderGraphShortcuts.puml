@@ -1,0 +1,7 @@
+@startuml
+class ShaderGraphShortcuts <<static>> {
+    {static} - GetFocusedShaderGraphEditorWindow() : MaterialGraphEditWindow
+    {static} - Save(args:ShortcutArguments) : void
+    {static} - SaveAs(args:ShortcutArguments) : void
+}
+@enduml

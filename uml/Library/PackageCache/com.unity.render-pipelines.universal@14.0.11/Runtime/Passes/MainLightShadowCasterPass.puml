@@ -1,0 +1,59 @@
+@startuml
+class MainLightShadowCasterPass {
+    <<const>> - k_MaxCascades : int = 4
+    <<const>> - k_ShadowmapBufferBits : int = 16
+    - m_CascadeBorder : float
+    - m_MaxShadowDistanceSq : float
+    - m_ShadowCasterCascadesCount : int
+    - m_MainLightShadowmapID : int
+    <<internal>> m_MainLightShadowmapTexture : RTHandle
+    - m_EmptyLightShadowmapTexture : RTHandle
+    - <<const>> k_EmptyShadowMapDimensions : int = 1
+    - <<const>> k_EmptyShadowMapName : string = "_EmptyLightShadowmapTexture"
+    - {static} <<readonly>> s_EmptyShadowParams : Vector4
+    - {static} <<readonly>> s_EmptyShadowmapSize : Vector4
+    - m_MainLightShadowMatrices : Matrix4x4[]
+    - m_CascadeSlices : ShadowSliceData[]
+    - m_CascadeSplitDistances : Vector4[]
+    - m_CreateEmptyShadowmap : bool
+    - renderTargetWidth : int
+    - renderTargetHeight : int
+    - m_ProfilingSetupSampler : ProfilingSampler
+    + MainLightShadowCasterPass(evt:RenderPassEvent)
+    + Dispose() : void
+    + Setup(renderingData:RenderingData) : bool
+    - SetupForEmptyRendering(renderingData:RenderingData) : bool
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescriptor:RenderTextureDescriptor) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - Clear() : void
+    - SetEmptyMainLightCascadeShadowmap(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> {static} SetEmptyMainLightShadowParams(cmd:CommandBuffer) : void
+    - RenderMainLightCascadeShadowmap(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - SetupMainLightShadowReceiverConstants(cmd:CommandBuffer, shadowLight:VisibleLight, shadowData:ShadowData) : void
+    <<internal>> Render(graph:RenderGraph, renderingData:RenderingData) : TextureHandle
+    - InitPassData(passData:PassData, renderingData:RenderingData, graph:RenderGraph) : void
+}
+class MainLightShadowConstantBuffer <<static>> {
+    + {static} _WorldToShadow : int
+    + {static} _ShadowParams : int
+    + {static} _CascadeShadowSplitSpheres0 : int
+    + {static} _CascadeShadowSplitSpheres1 : int
+    + {static} _CascadeShadowSplitSpheres2 : int
+    + {static} _CascadeShadowSplitSpheres3 : int
+    + {static} _CascadeShadowSplitSphereRadii : int
+    + {static} _ShadowOffset0 : int
+    + {static} _ShadowOffset1 : int
+    + {static} _ShadowmapSize : int
+}
+class PassData {
+    <<internal>> pass : MainLightShadowCasterPass
+    <<internal>> graph : RenderGraph
+    <<internal>> shadowmapTexture : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> shadowmapID : int
+    <<internal>> emptyShadowmap : bool
+}
+ScriptableRenderPass <|-- MainLightShadowCasterPass
+MainLightShadowCasterPass +-- MainLightShadowConstantBuffer
+MainLightShadowCasterPass +-- PassData
+@enduml

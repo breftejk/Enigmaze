@@ -1,0 +1,13 @@
+@startuml
+class SelectOnFlow <<sealed>> {
+    - _branchCount : int = 2
+    + branchCount : int <<get>> <<set>>
+    + branches : Dictionary<ControlInput, ValueInput> <<get>>
+    + exit : ControlOutput <<get>>
+    + selection : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Select(flow:Flow, branchValue:ValueInput) : ControlOutput
+}
+Unit <|-- SelectOnFlow
+ISelectUnit <|-- SelectOnFlow
+@enduml

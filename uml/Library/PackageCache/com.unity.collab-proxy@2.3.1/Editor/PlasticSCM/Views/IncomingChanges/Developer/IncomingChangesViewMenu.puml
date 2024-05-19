@@ -1,0 +1,35 @@
+@startuml
+class IncomingChangesViewMenu {
+    <<internal>> IncomingChangesViewMenu(incomingChangesViewMenuOperations:IIncomingChangesViewMenuOperations, incomingChangesMetaMenuOperations:IMetaMenuOperations)
+    <<internal>> Popup() : void
+    - MergeSelectedFilesMenuItem_Click() : void
+    - MergeKeepingSourceChangesMenuItem_Click() : void
+    - MergeKeepingWorkspaceChangesMenuItem_Click() : void
+    - DiffYoursWithIncomingMenuItem_Click() : void
+    - DiffIncomingChangesMenuItem_Click() : void
+    - DiffMetaYoursWithIncomingMenuItem_Click() : void
+    - DiffMetaIncomingChangesMenuItem_Click() : void
+    - UpdateMenuItems(menu:GenericMenu) : void
+    - AddMergeActions(menu:GenericMenu, operations:IncomingChangesMenuOperations) : void
+    - AddDiffActions(menu:GenericMenu, operations:IncomingChangesMenuOperations) : void
+    - AddMetaActions(menu:GenericMenu, operations:IncomingChangesMenuOperations) : void
+    - GetNoActionMenuItemContent() : GUIContent
+    - BuildComponents() : void
+    - mNoActionMenuItemContent : GUIContent
+    - mMergeSelectedFilesMenuItemContent : GUIContent
+    - mMergeKeepingSourceChangesMenuItemContent : GUIContent
+    - mMergeKeepingWorkspaceChangesMenuItemContent : GUIContent
+    - mDiffYoursWithIncomingMenuItemContent : GUIContent
+    - mDiffIncomingChangesMenuItemContent : GUIContent
+    - mDiffMetaYoursWithIncomingMenuItemContent : GUIContent
+    - mDiffMetaIncomingChangesMenuItemContent : GUIContent
+    <<readonly>> - mIncomingChangesViewMenuOperations : IIncomingChangesViewMenuOperations
+    <<readonly>> - mIncomingChangesMetaMenuOperations : IMetaMenuOperations
+}
+interface IMetaMenuOperations {
+    DiffIncomingChanges() : void
+    DiffYoursWithIncoming() : void
+    SelectionHasMeta() : bool
+}
+IncomingChangesViewMenu +-- IMetaMenuOperations
+@enduml

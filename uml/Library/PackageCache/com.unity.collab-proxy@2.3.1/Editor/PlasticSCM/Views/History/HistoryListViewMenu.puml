@@ -1,0 +1,35 @@
+@startuml
+class HistoryListViewMenu {
+    <<internal>> HistoryListViewMenu(openMenuOperations:IOpenMenuOperations, operations:IHistoryViewMenuOperations, menuOperations:IMenuOperations)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - OpenRevisionMenu_Click() : void
+    - OpenRevisionWithMenu_Click() : void
+    - SaveRevisionasMenu_Click() : void
+    - DiffWithPreviousMenuItem_Click() : void
+    - DiffSelectedRevisionsMenu_Click() : void
+    - DiffChangesetMenu_Click() : void
+    - RevertToThisRevisionMenu_Click() : void
+    <<internal>> UpdateMenuItems(menu:GenericMenu) : void
+    {static} - GetMenuOperation(e:Event) : HistoryMenuOperations
+    - ProcessMenuOperation(operationToExecute:HistoryMenuOperations) : void
+    - GetNoActionMenuItemContent() : GUIContent
+    {static} - GetSelectedChangesetName(menuOperations:IMenuOperations) : string
+    - BuildComponents() : void
+    - mNoActionMenuItemContent : GUIContent
+    - mOpenRevisionMenuItemContent : GUIContent
+    - mOpenRevisionWithMenuItemContent : GUIContent
+    - mSaveRevisionAsMenuItemContent : GUIContent
+    - mDiffWithPreviousMenuItemContent : GUIContent
+    - mDiffSelectedRevisionsMenuItemContent : GUIContent
+    - mDiffChangesetMenuItemContent : GUIContent
+    - mRevertToThisRevisionMenuItemContent : GUIContent
+    <<readonly>> - mOpenMenuOperations : IOpenMenuOperations
+    <<readonly>> - mOperations : IHistoryViewMenuOperations
+    <<readonly>> - mMenuOperations : IMenuOperations
+}
+interface IMenuOperations {
+    GetSelectedChangesetId() : long
+}
+HistoryListViewMenu +-- IMenuOperations
+@enduml

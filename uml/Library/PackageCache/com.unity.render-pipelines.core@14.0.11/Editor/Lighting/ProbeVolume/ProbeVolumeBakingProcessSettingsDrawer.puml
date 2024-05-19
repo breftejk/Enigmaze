@@ -1,0 +1,26 @@
+@startuml
+class ProbeVolumeBakingProcessSettingsDrawer {
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - DrawDilationSettings(dilationSettings:SerializedProperty) : void
+    - DrawVirtualOffsetSettings(virtualOffsetSettings:SerializedProperty) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> enableDilation : GUIContent
+    + {static} <<readonly>> dilationDistance : GUIContent
+    + {static} <<readonly>> dilationValidity : GUIContent
+    + {static} <<readonly>> dilationIterationCount : GUIContent
+    + {static} <<readonly>> dilationSquaredDistanceWeighting : GUIContent
+    + {static} <<readonly>> useVirtualOffset : GUIContent
+    + {static} <<readonly>> virtualOffsetSearchMultiplier : GUIContent
+    + {static} <<readonly>> virtualOffsetBiasOutGeometry : GUIContent
+    + {static} <<readonly>> virtualOffsetRayOriginBias : GUIContent
+    + {static} <<readonly>> virtualOffsetMaxHitsPerRay : GUIContent
+    + {static} <<readonly>> virtualOffsetCollisionMask : GUIContent
+    + {static} <<readonly>> advanced : GUIContent
+    + {static} <<readonly>> dilationSettingsTitle : GUIContent
+    + {static} <<readonly>> virtualOffsetSettingsTitle : GUIContent
+}
+PropertyDrawer <|-- ProbeVolumeBakingProcessSettingsDrawer
+ProbeVolumeBakingProcessSettingsDrawer +-- Styles
+@enduml

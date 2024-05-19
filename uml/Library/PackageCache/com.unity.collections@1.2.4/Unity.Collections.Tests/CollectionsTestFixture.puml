@@ -1,0 +1,16 @@
+@startuml
+class CollectionsTestCommonBase {
+    - rwdAllocatorHelper : AllocatorHelper<RewindableAllocator>
+    # CommonRwdAllocatorHelper : AllocatorHelper<RewindableAllocator> <<get>>
+    # CommonRwdAllocator : ref RewindableAllocator <<get>>
+    + <<virtual>> Setup() : void
+    + <<virtual>> TearDown() : void
+}
+abstract class CollectionsTestFixture {
+    {static} - SafetyChecksMenu : string = "Jobs > Burst > Safety Checks"
+    - JobsDebuggerWasEnabled : bool
+    + <<override>> Setup() : void
+    + <<override>> TearDown() : void
+}
+CollectionsTestCommonBase <|-- CollectionsTestFixture
+@enduml

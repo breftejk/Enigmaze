@@ -1,0 +1,19 @@
+@startuml
+class SpriteMetaData {
+    + spriteBone : List<SpriteBone>
+    + spriteOutline : List<SpriteOutline>
+    + vertices : List<Vertex2DMetaData>
+    + spritePhysicsOutline : List<SpriteOutline>
+    + indices : int[]
+    + edges : Vector2Int[]
+    + tessellationDetail : float
+    + uvTransform : Vector2Int
+    + SpriteMetaData()
+    + SpriteMetaData(sr:SpriteRect)
+    + {static} GetPivotValue(alignment:SpriteAlignment, customOffset:Vector2) : Vector2
+}
+class SpriteOutline {
+    + outline : Vector2[]
+}
+SpriteRect <|-- SpriteMetaData
+@enduml

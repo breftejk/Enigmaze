@@ -1,0 +1,10 @@
+@startuml
+class Jog {
+    - m_MouseDownOrigin : Vector2
+    {static} - JogShortcut(args:ShortcutArguments) : void
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+}
+Manipulator <|-- Jog
+@enduml

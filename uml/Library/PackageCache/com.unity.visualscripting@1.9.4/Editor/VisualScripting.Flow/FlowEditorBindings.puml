@@ -1,0 +1,6 @@
+@startuml
+class FlowEditorBindings <<static>> {
+    {static} - FlowEditorBindings()
+    - {static} IsInspected(pointer:GraphPointer) : bool
+}
+@enduml

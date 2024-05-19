@@ -1,0 +1,14 @@
+@startuml
+class "InstancePropertyAccessor`2"<TTarget,TProperty> {
+    + InstancePropertyAccessor(propertyInfo:PropertyInfo)
+    - <<readonly>> propertyInfo : PropertyInfo
+    - getter : Func<TTarget, TProperty>
+    - setter : Action<TTarget, TProperty>
+    + Compile() : void
+    + GetValue(target:object) : object
+    - GetValueUnsafe(target:object) : object
+    + SetValue(target:object, value:object) : void
+    - SetValueUnsafe(target:object, value:object) : void
+}
+IOptimizedAccessor <|-- "InstancePropertyAccessor`2"
+@enduml

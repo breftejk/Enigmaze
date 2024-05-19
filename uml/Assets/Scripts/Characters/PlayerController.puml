@@ -1,0 +1,17 @@
+@startuml
+class PlayerController {
+    + movementSpeed : float = 1f
+    + contactFilter : ContactFilter2D
+    - animator : Animator
+    - rb : Rigidbody2D
+    - movementInput : Vector2
+    - collisions : List<RaycastHit2D>
+    - spriteRenderer : SpriteRenderer
+    - isWalking : bool
+    - Start() : void
+    - FixedUpdate() : void
+    - TryMoving(direction:Vector2) : bool
+    - OnMove(movementValue:InputValue) : void
+}
+MonoBehaviour <|-- PlayerController
+@enduml

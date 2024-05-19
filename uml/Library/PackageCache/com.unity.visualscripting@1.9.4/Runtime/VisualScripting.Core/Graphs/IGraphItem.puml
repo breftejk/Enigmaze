@@ -1,0 +1,5 @@
+@startuml
+interface IGraphItem {
+    graph : IGraph <<get>>
+}
+@enduml

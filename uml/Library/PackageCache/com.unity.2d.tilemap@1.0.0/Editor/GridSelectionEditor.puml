@@ -1,0 +1,17 @@
+@startuml
+class GridSelectionEditor {
+    - <<const>> iconSize : float = 32f
+    - OnValidate() : void
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    # <<override>> OnHeaderGUI() : void
+    + HasFrameBounds() : bool
+    + OnGetFrameBounds() : Bounds
+}
+class Styles <<static>> {
+    + {static} <<readonly>> gridSelectionLabel : GUIContent
+    + {static} <<readonly>> iconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/GridSelection.png"
+}
+Editor <|-- GridSelectionEditor
+GridSelectionEditor +-- Styles
+@enduml

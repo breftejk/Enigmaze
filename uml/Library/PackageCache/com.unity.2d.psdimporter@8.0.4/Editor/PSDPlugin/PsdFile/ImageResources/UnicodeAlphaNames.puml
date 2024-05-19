@@ -1,0 +1,10 @@
+@startuml
+class UnicodeAlphaNames {
+    + <<override>> ID : ResourceID <<get>>
+    - channelNames : List<string>
+    + ChannelNames : List<string> <<get>>
+    + UnicodeAlphaNames()
+    + UnicodeAlphaNames(reader:PsdBinaryReader, name:string, resourceDataLength:int)
+}
+ImageResource <|-- UnicodeAlphaNames
+@enduml

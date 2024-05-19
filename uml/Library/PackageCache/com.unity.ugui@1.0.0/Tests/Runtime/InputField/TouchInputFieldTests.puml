@@ -1,0 +1,30 @@
+@startuml
+class TouchInputFieldTests {
+    # <<const>> kPrefabPath : string = "Assets/Resources/TouchInputFieldPrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OnetimeTearDown() : void
+    # <<const>> kDefaultInputStr : string = "foobar"
+    <<const>> - kEmailSpecialCharacters : string = "!#$%&'*+-/=?^_`{|&#125;~"
+    + HonorsCharacterValidationSettingsAssignment(input:string, output:string, validation:InputField.CharacterValidation) : void
+    + HonorsCharacterValidationSettingsTypingWithSelection(input:string, output:string, validation:InputField.CharacterValidation) : IEnumerator
+    + AssignmentAgainstCharacterLimit(text:string) : void
+    + AssignmentAgainstCharacterLimitWithContentType(text:string) : void
+    + SendsEndEditEventOnDeselect() : IEnumerator
+    + StripsNullCharacters2() : void
+    + FocusOpensTouchScreenKeyboard() : IEnumerator
+    + AssignsShouldHideInput() : IEnumerator
+    + IsTouchScreenKeyboardVisible() : IEnumerator
+}
+struct CharValidationTestData {
+    + input : string
+    + output : string
+    + validation : InputField.CharacterValidation
+    + CharValidationTestData(input:string, output:string, validation:InputField.CharacterValidation)
+    + <<override>> ToString() : string
+}
+BaseInputFieldTests <|-- TouchInputFieldTests
+IPrebuildSetup <|-- TouchInputFieldTests
+TouchInputFieldTests +-- CharValidationTestData
+@enduml

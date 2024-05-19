@@ -1,0 +1,30 @@
+@startuml
+class XRSystem <<static>> {
+    {static} - s_Layout : XRLayout
+    {static} - s_PassAllocator : Func<XRPassCreateInfo, XRPass> = null
+    {static} - s_MSAASamples : MSAASamples
+    {static} - s_OcclusionMeshMaterial : Material
+    {static} - s_MirrorViewMaterial : Material
+    {static} - s_LayoutOverride : Action<XRLayout, Camera> = null
+    {static} + displayActive : bool <<get>>
+    {static} + isHDRDisplayOutputActive : bool <<get>>
+    + {static} <<readonly>> emptyPass : XRPass
+    {static} + singlePassAllowed : bool <<get>> <<set>> = true
+    {static} + foveatedRenderingCaps : FoveatedRenderingCaps <<get>> <<set>>
+    {static} + dumpDebugInfo : bool <<get>> <<set>> = false
+    + {static} Initialize(passAllocator:Func<XRPassCreateInfo, XRPass>, occlusionMeshPS:Shader, mirrorViewPS:Shader) : void
+    + {static} SetDisplayMSAASamples(msaaSamples:MSAASamples) : void
+    + {static} GetDisplayMSAASamples() : MSAASamples
+    + {static} SetRenderScale(renderScale:float) : void
+    + {static} NewLayout() : XRLayout
+    + {static} EndLayout() : void
+    + {static} RenderMirrorView(cmd:CommandBuffer, camera:Camera) : void
+    + {static} Dispose() : void
+    <<internal>> {static} SetDisplayZRange(zNear:float, zFar:float) : void
+    {static} - SetLayoutOverride(action:Action<XRLayout, Camera>) : void
+    {static} - XRSystemInit() : void
+    {static} - RefreshDeviceInfo() : void
+    <<internal>> {static} CreateDefaultLayout(camera:Camera) : void
+    <<internal>> {static} ReconfigurePass(xrPass:XRPass, camera:Camera) : void
+}
+@enduml

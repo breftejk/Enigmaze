@@ -1,0 +1,7 @@
+@startuml
+class TypeSetAttribute {
+    + TypeSetAttribute(typeSet:TypeSet)
+    + typeSet : TypeSet <<get>>
+}
+Attribute <|-- TypeSetAttribute
+@enduml

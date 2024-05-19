@@ -1,0 +1,7 @@
+@startuml
+class SetupCoroutine {
+    <<unsafe>> {static} + InvokeMoveNext(enumerator:IEnumerator, returnValueAddress:IntPtr) : void
+    {static} + InvokeMember(behaviour:object, name:string, variable:object) : object
+    {static} + InvokeStatic(klass:Type, name:string, variable:object) : object
+}
+@enduml

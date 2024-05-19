@@ -1,0 +1,9 @@
+@startuml
+class IsSceneVariableDefined <<sealed>> {
+    + IsSceneVariableDefined()
+    + IsSceneVariableDefined(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+IsVariableDefinedUnit <|-- IsSceneVariableDefined
+ISceneVariableUnit <|-- IsSceneVariableDefined
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+enum TextureChannel {
+    Red,
+    Green,
+    Blue,
+    Alpha,
+}
+class ChannelMaskNode {
+    + ChannelMaskNode()
+    <<const>> - InputSlotId : int = 0
+    <<const>> - OutputSlotId : int = 1
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + channel : TextureChannel
+    - m_ChannelMask : int
+    + channelMask : int <<get>> <<set>>
+    - ValidateChannelCount() : void
+    - GetFunctionPrototype(argIn:string, argOut:string) : string
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    - GetFunctionCallBody(inputValue:string, outputValue:string) : string
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- ChannelMaskNode
+IGeneratesBodyCode <|-- ChannelMaskNode
+IGeneratesFunction <|-- ChannelMaskNode
+@enduml

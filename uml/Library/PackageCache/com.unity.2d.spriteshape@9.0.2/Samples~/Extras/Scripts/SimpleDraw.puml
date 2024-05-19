@@ -1,0 +1,13 @@
+@startuml
+class SimpleDraw {
+    + minimumDistance : float = 1.0f
+    - lastPosition : Vector3
+    - Start() : void
+    - {static} NextIndex(index:int, pointCount:int) : int
+    - {static} PreviousIndex(index:int, pointCount:int) : int
+    - {static} Mod(x:int, m:int) : int
+    - Smoothen(sc:SpriteShapeController, pointIndex:int) : void
+    - Update() : void
+}
+MonoBehaviour <|-- SimpleDraw
+@enduml

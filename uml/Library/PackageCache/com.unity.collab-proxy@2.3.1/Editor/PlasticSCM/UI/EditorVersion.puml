@@ -1,0 +1,13 @@
+@startuml
+class EditorVersion {
+    <<internal>> Year : int
+    <<internal>> Release : int
+    <<internal>> Update : int
+    - EditorVersion(year:int, release:int, update:int)
+    + <<override>> ToString() : string
+    <<internal>> {static} IsCurrentEditorOlderThan(version:string) : bool
+    <<internal>> {static} IsEditorOlderThan(versionA:string, versionB:string) : bool
+    {static} - ParseUpdateString(version:string) : int
+    {static} - Parse(version:string) : EditorVersion
+}
+@enduml

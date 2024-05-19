@@ -1,0 +1,31 @@
+@startuml
+class ProbeCellIndices {
+    <<const>> - kUintPerEntry : int = 3
+    <<internal>> estimatedVMemCost : int <<get>>
+    - m_IndexOfIndicesBuffer : ComputeBuffer
+    - m_IndexOfIndicesData : uint[]
+    - m_CellCount : Vector3Int
+    - m_CellMin : Vector3Int
+    - m_CellSizeInMinBricks : int
+    - m_NeedUpdateComputeBuffer : bool
+    <<internal>> GetCellIndexDimension() : Vector3Int
+    <<internal>> GetCellMinPosition() : Vector3Int
+    - GetFlatIndex(normalizedPos:Vector3Int) : int
+    <<internal>> ProbeCellIndices(cellMin:Vector3Int, cellMax:Vector3Int, cellSizeInMinBricks:int)
+    <<internal>> GetFlatIdxForCell(cellPosition:Vector3Int) : int
+    <<internal>> UpdateCell(cellFlatIdx:int, cellUpdateInfo:ProbeBrickIndex.CellIndexUpdateInfo) : void
+    <<internal>> MarkCellAsUnloaded(cellFlatIdx:int) : void
+    <<internal>> PushComputeData() : void
+    <<internal>> GetRuntimeResources(rr:ProbeReferenceVolume.RuntimeResources) : void
+    <<internal>> Cleanup() : void
+}
+struct IndexMetaData {
+    {static} - s_PackedValues : uint[]
+    <<internal>> minLocalIdx : Vector3Int
+    <<internal>> maxLocalIdx : Vector3Int
+    <<internal>> firstChunkIndex : int
+    <<internal>> minSubdiv : int
+    <<internal>> Pack(vals:uint[]) : void
+}
+ProbeCellIndices +-- IndexMetaData
+@enduml

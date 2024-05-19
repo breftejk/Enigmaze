@@ -1,0 +1,43 @@
+@startuml
+class UniversalRendererDataEditor {
+    - m_OpaqueLayerMask : SerializedProperty
+    - m_TransparentLayerMask : SerializedProperty
+    - m_RenderingMode : SerializedProperty
+    - m_DepthPrimingMode : SerializedProperty
+    - m_CopyDepthMode : SerializedProperty
+    - m_AccurateGbufferNormals : SerializedProperty
+    - m_UseNativeRenderPass : SerializedProperty
+    - m_DefaultStencilState : SerializedProperty
+    - m_PostProcessData : SerializedProperty
+    - m_Shaders : SerializedProperty
+    - m_ShadowTransparentReceiveProp : SerializedProperty
+    - m_IntermediateTextureMode : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> RendererTitle : GUIContent
+    + {static} <<readonly>> PostProcessIncluded : GUIContent
+    + {static} <<readonly>> PostProcessLabel : GUIContent
+    + {static} <<readonly>> FilteringSectionLabel : GUIContent
+    + {static} <<readonly>> OpaqueMask : GUIContent
+    + {static} <<readonly>> TransparentMask : GUIContent
+    + {static} <<readonly>> RenderingSectionLabel : GUIContent
+    + {static} <<readonly>> RenderingModeLabel : GUIContent
+    + {static} <<readonly>> DepthPrimingModeLabel : GUIContent
+    + {static} <<readonly>> DepthPrimingModeInfo : GUIContent
+    + {static} <<readonly>> CopyDepthModeLabel : GUIContent
+    + {static} <<readonly>> RenderPassLabel : GUIContent
+    + {static} <<readonly>> RenderPassSectionLabel : GUIContent
+    + {static} <<readonly>> ShadowsSectionLabel : GUIContent
+    + {static} <<readonly>> PostProcessingSectionLabel : GUIContent
+    + {static} <<readonly>> OverridesSectionLabel : GUIContent
+    + {static} <<readonly>> accurateGbufferNormalsLabel : GUIContent
+    + {static} <<readonly>> defaultStencilStateLabel : GUIContent
+    + {static} <<readonly>> shadowTransparentReceiveLabel : GUIContent
+    + {static} <<readonly>> invalidStencilOverride : GUIContent
+    + {static} <<readonly>> intermediateTextureMode : GUIContent
+}
+ScriptableRendererDataEditor <|-- UniversalRendererDataEditor
+UniversalRendererDataEditor +-- Styles
+@enduml

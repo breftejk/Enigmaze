@@ -1,0 +1,8 @@
+@startuml
+class StateGraphContext {
+    + StateGraphContext(reference:GraphReference)
+    + <<override>> windowTitle : string <<get>>
+    # <<override>> SidebarPanels() : IEnumerable<ISidebarPanelContent>
+}
+"GraphContext`2" "<StateGraph,StateCanvas>" <|-- StateGraphContext
+@enduml

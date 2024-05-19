@@ -1,0 +1,8 @@
+@startuml
+class SquareRootNode {
+    + SquareRootNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SquareRoot(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SquareRootNode
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+class MaterialGraphEditWindow {
+    <<const>> - k_PrevSubGraphPathKey : string = "SHADER_GRAPH_CONVERT_TO_SUB_GRAPH_PATH"
+    <<const>> - k_PrevSubGraphPathDefaultValue : string = "?"
+    - m_Selected : string
+    - m_GraphObject : GraphObject
+    - m_LastSerializedFileContents : string
+    - m_ChangedFileDependencyGUIDs : HashSet<string>
+    - m_ColorSpace : ColorSpace
+    - m_RenderPipelineAsset : RenderPipelineAsset
+    - m_FrameAllAfterLayout : bool
+    - m_HasError : bool
+    - m_ProTheme : bool
+    - m_customInterpWarn : int
+    - m_customInterpErr : int
+    - m_AssetMaybeChangedOnDisk : bool
+    - m_AssetMaybeDeleted : bool
+    <<internal>> WereWindowResourcesDisposed : bool <<get>>
+    - m_MessageManager : MessageManager
+    - messageManager : MessageManager <<get>>
+    - m_GraphEditorView : GraphEditorView
+    <<internal>> graphEditorView : GraphEditorView <<get>>
+    <<internal>> graphObject : GraphObject <<get>> <<set>>
+    + selectedGuid : string <<get>>
+    + assetName : string <<get>>
+    - AssetFileExists() : bool
+    - DisplayDeletedFromDiskDialog(reopen:bool) : bool
+    - Update() : void
+    + ReloadSubGraphsOnNextUpdate(changedFileGUIDs:List<string>) : void
+    - UpdateDropdownEntries() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    <<internal>> FileOnDiskHasChanged() : bool
+    <<internal>> GraphHasChangedSinceLastSerialization() : bool
+    <<internal>> GraphIsDifferentFromFileOnDisk() : bool
+    + CheckForChanges() : void
+    + AssetWasDeleted() : void
+    + UpdateTitle() : void
+    - OnDestroy() : void
+    + PingAsset() : void
+    + IsGraphAssetCheckedOut() : bool
+    + CheckoutAsset() : void
+    + SaveAsset() : bool
+    - OnSaveGraph(path:string) : void
+    + SaveAs() : void
+    - SaveAsImplementation(openWhenSaved:bool) : string
+    + ToSubGraph() : void
+    + Initialize(other:MaterialGraphEditWindow) : void
+    - {static} <<readonly>> GraphLoadMarker : ProfilerMarker
+    - {static} <<readonly>> CreateGraphEditorViewMarker : ProfilerMarker
+    + Initialize(assetGuid:string) : void
+    - ReadAssetFile() : string
+    - PromptSaveIfDirtyOnQuit() : bool
+    - GetSaveChangesMessage() : string
+    + <<override>> SaveChanges() : void
+    - OnGeometryChanged(evt:GeometryChangedEvent) : void
+}
+EditorWindow <|-- MaterialGraphEditWindow
+@enduml

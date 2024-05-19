@@ -1,0 +1,31 @@
+@startuml
+class FlowGraph <<sealed>> {
+    + FlowGraph()
+    + <<override>> CreateData() : IGraphData
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    + variables : VariableDeclarations <<get>>
+    + GetDynamicVariableNames(kind:VariableKind, reference:GraphReference) : IEnumerable<string>
+    + units : GraphElementCollection<IUnit> <<get>>
+    + controlConnections : GraphConnectionCollection<ControlConnection, ControlOutput, ControlInput> <<get>>
+    + valueConnections : GraphConnectionCollection<ValueConnection, ValueOutput, ValueInput> <<get>>
+    + invalidConnections : GraphConnectionCollection<InvalidConnection, IUnitOutputPort, IUnitInputPort> <<get>>
+    + groups : GraphElementCollection<GraphGroup> <<get>>
+    + sticky : GraphElementCollection<StickyNote> <<get>>
+    - <<const>> DefinitionRemoveWarningTitle : string = "Remove Port Definition"
+    - <<const>> DefinitionRemoveWarningMessage : string = "Removing this definition will break any existing connection to this port. Are you sure you want to continue?"
+    + controlInputDefinitions : UnitPortDefinitionCollection<ControlInputDefinition> <<get>>
+    + controlOutputDefinitions : UnitPortDefinitionCollection<ControlOutputDefinition> <<get>>
+    + valueInputDefinitions : UnitPortDefinitionCollection<ValueInputDefinition> <<get>>
+    + valueOutputDefinitions : UnitPortDefinitionCollection<ValueOutputDefinition> <<get>>
+    + validPortDefinitions : IEnumerable<IUnitPortDefinition> <<get>>
+    +  <<event>> onPortDefinitionsChanged : Action 
+    + PortDefinitionsChanged() : void
+    + {static} WithInputOutput() : FlowGraph
+    + {static} WithStartUpdate() : FlowGraph
+}
+Graph <|-- FlowGraph
+IGraphWithVariables <|-- FlowGraph
+IGraphEventListener <|-- FlowGraph
+@enduml

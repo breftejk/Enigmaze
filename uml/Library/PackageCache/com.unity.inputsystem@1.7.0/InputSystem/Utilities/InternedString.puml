@@ -1,0 +1,17 @@
+@startuml
+struct InternedString {
+    - <<readonly>> m_StringOriginalCase : string
+    - <<readonly>> m_StringLowerCase : string
+    + length : int <<get>>
+    + InternedString(text:string)
+    + IsEmpty() : bool
+    + ToLower() : string
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:InternedString) : bool
+    + CompareTo(other:InternedString) : int
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+"IEquatable`1" "<InternedString>" <|-- InternedString
+"IComparable`1" "<InternedString>" <|-- InternedString
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class ToggleGroup {
+    - m_AllowSwitchOff : bool = false
+    + allowSwitchOff : bool <<get>> <<set>>
+    # m_Toggles : List<Toggle>
+    # ToggleGroup()
+    # <<override>> Start() : void
+    # <<override>> OnEnable() : void
+    - ValidateToggleIsInGroup(toggle:Toggle) : void
+    + NotifyToggleOn(toggle:Toggle, sendCallback:bool) : void
+    + UnregisterToggle(toggle:Toggle) : void
+    + RegisterToggle(toggle:Toggle) : void
+    + EnsureValidState() : void
+    + AnyTogglesOn() : bool
+    + ActiveToggles() : IEnumerable<Toggle>
+    + GetFirstActiveToggle() : Toggle
+    + SetAllTogglesOff(sendCallback:bool) : void
+}
+UIBehaviour <|-- ToggleGroup
+@enduml

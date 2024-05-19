@@ -1,0 +1,42 @@
+@startuml
+class StickyNoteWidget {
+    + StickyNoteWidget(canvas:ICanvas, stickyNote:StickyNote)
+    - sticky : StickyNote <<get>>
+    + <<override>> CacheItem() : void
+    + <<override>> foregroundRequiresInput : bool <<get>>
+    - {static} <<readonly>> maxHeadLabelSizeContent : GUIContent
+    - <<readonly>> labelContent : GUIContent
+    - scrollPosition : Vector2
+    - {static} _transparentWhite : Color
+    # <<override>> snapToGrid : bool <<get>>
+    + <<override>> zIndex : float <<get>> <<set>>
+    + <<override>> position : Rect <<get>> <<set>>
+    + titlePosition : Rect <<get>>
+    + bodyPosition : Rect <<get>>
+    + <<override>> hotArea : Rect <<get>>
+    + <<override>> CachePosition() : void
+    + <<override>> OnViewportChange() : void
+    - AdjustLabelFontSize() : void
+    {static} - DrawBox(rect:Rect, thickness:int, color:Color) : void
+    + <<override>> DrawForeground() : void
+    + <<override>> canDelete : bool <<get>>
+    + <<override>> canAlignAndDistribute : bool <<get>>
+    + <<override>> canResizeHorizontal : bool <<get>>
+    + <<override>> canResizeVertical : bool <<get>>
+    - focusOnTitle : bool
+    - focusOnBody : bool
+    + <<override>> canSelect : bool <<get>>
+    # <<override>> OnDoubleClick() : void
+    + <<override>> canDrag : bool <<get>>
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> headerFontSize : float = 14
+    + {static} <<readonly>> sticky : GUIStyle
+    + {static} <<readonly>> title : GUIStyle
+    + {static} <<readonly>> body : GUIStyle
+    + {static} headerHeight : float <<get>>
+}
+"GraphElementWidget`2" "<ICanvas,StickyNote>" <|-- StickyNoteWidget
+StickyNoteWidget +-- Styles
+@enduml

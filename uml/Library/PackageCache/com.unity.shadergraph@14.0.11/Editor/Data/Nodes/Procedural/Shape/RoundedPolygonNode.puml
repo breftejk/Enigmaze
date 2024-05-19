@@ -1,0 +1,8 @@
+@startuml
+class RoundedPolygonNode {
+    + RoundedPolygonNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - RoundedPolygon_Func(UV:Vector2, Width:Vector1, Height:Vector1, Sides:Vector1, Roundness:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- RoundedPolygonNode
+@enduml

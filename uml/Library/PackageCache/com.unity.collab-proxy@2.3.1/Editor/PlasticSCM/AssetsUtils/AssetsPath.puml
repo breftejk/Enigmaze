@@ -1,0 +1,23 @@
+@startuml
+class AssetsPath <<static>> {
+    <<internal>> {static} GetLayoutsFolderRelativePath() : string
+    <<internal>> {static} GetStylesFolderRelativePath() : string
+    <<internal>> {static} GetImagesFolderRelativePath() : string
+    <<internal>> {static} GetRelativePath(fullPath:string) : string
+    <<internal>> {static} IsRunningAsUPMPackage() : bool
+    {static} - GetAssetPath(guid:string) : string
+    {static} - AssetsPath()
+    {static} - mProjectFullPath : string
+    {static} - mAssetsFolderLocation : string
+}
+class GetFullPath <<static>> {
+    <<internal>> {static} ForObject(obj:Object) : string
+    <<internal>> {static} ForGuid(guid:string) : string
+}
+class GetFullPathUnderWorkspace <<static>> {
+    <<internal>> {static} ForAsset(wkPath:string, assetPath:string) : string
+    <<internal>> {static} ForGuid(wkPath:string, guid:string) : string
+}
+AssetsPath +-- GetFullPath
+AssetsPath +-- GetFullPathUnderWorkspace
+@enduml

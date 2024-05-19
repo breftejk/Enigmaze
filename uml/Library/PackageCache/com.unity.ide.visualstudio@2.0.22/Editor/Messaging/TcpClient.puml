@@ -1,0 +1,16 @@
+@startuml
+class TcpClient {
+    - <<const>> ConnectOrReadTimeoutMilliseconds : int = 5000
+    + {static} Queue(address:IPAddress, port:int, bufferSize:int, onBufferAvailable:Action<byte[]>) : void
+    - {static} OnClientConnected(result:IAsyncResult) : void
+    - {static} OnEndRead(result:IAsyncResult) : void
+    - {static} Cleanup(state:State) : void
+}
+class State {
+    + TcpClient : System.Net.Sockets.TcpClient
+    + NetworkStream : NetworkStream
+    + Buffer : byte[]
+    + OnBufferAvailable : Action<byte[]>
+}
+TcpClient +-- State
+@enduml

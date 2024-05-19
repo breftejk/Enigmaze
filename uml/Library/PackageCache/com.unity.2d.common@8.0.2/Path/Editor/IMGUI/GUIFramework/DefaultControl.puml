@@ -1,0 +1,8 @@
+@startuml
+abstract class DefaultControl {
+    + {static} <<readonly>> kPickDistance : float = 5f
+    + DefaultControl(name:string)
+    # <<override>> OnBeginLayout(data:LayoutData, guiState:IGUIState) : LayoutData
+}
+Control <|-- DefaultControl
+@enduml

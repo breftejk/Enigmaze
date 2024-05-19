@@ -1,0 +1,20 @@
+@startuml
+class FuzzyOptionNode {
+    + FuzzyOptionNode(option:IFuzzyOption)
+    + FuzzyOptionNode(option:IFuzzyOption, label:string)
+    + option : IFuzzyOption <<get>>
+    + labelText : string <<get>>
+    + children : List<FuzzyOptionNode> <<get>>
+    + hasChildren : bool <<get>> <<set>>
+    + isPopulated : bool <<get>> <<set>>
+    + isLoading : bool <<get>> <<set>> = true
+    + scroll : Vector2 <<get>> <<set>>
+    + selectedIndex : int <<get>> <<set>>
+    + isDrawable : bool <<get>>
+    + label : GUIContent <<get>>
+    + style : GUIStyle <<get>>
+    + width : float <<get>>
+    + EnsureDrawable() : void
+    + PrepareDrawing() : void
+}
+@enduml

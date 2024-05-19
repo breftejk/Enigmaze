@@ -1,0 +1,24 @@
+@startuml
+class SelectionTool {
+    - m_ForceSelectedToSpriteEditor : bool = false
+    - m_LastMouseButtonDown : int
+    +  <<event>> CanSelect : Func<bool> 
+    - m_Sprites : List<SpriteCache>
+    + spriteEditor : ISpriteEditor <<get>> <<set>>
+    - selectedSprite : SpriteCache <<get>> <<set>>
+    - selectedSpriteAssetID : string <<get>>
+    # <<override>> OnAfterDeserialize() : void
+    + <<override>> Initialize(layoutOverlay:LayoutOverlay) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - OnSpriteSelectionChange(sprite:SpriteCache) : void
+    - OnSelectionChanged() : void
+    - SetFromSpriteEditor() : void
+    - SetToSpriteEditor() : void
+    # <<override>> OnGUI() : void
+    - HandleSpriteSelection() : void
+    - TrySelect(mousePosition:Vector2) : SpriteCache
+    - IsSelectionRequested() : bool
+}
+BaseTool <|-- SelectionTool
+@enduml

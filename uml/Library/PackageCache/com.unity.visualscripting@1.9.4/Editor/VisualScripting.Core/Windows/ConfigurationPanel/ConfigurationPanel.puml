@@ -1,0 +1,37 @@
+@startuml
+class ConfigurationPanel {
+    + ConfigurationPanel(product:Product)
+    - <<readonly>> product : Product
+    - <<readonly>> configurations : List<PluginConfiguration>
+    - label : string <<get>>
+    + PreferenceItem() : void
+    + Show() : void
+    + GetSearchKeywords() : IEnumerable<string>
+    {static} - ConfigurationPanel()
+    - {static} internalHooksAvailable : bool
+    - {static} PreferencesWindowType : Type
+    - {static} PreferencesWindow_SectionType : Type
+    - {static} PreferencesWindow_m_Sections : FieldInfo
+    - {static} PreferencesWindow_selectedSectionIndex : PropertyInfo
+    - {static} PreferencesWindow_ShowPreferencesWindow : MethodInfo
+    - {static} PreferencesWindow_Section_content : FieldInfo
+    - {static} PreferencesWindow_m_RefreshCustomPreferences : FieldInfo
+    - {static} PreferencesWindow_AddCustomSections : MethodInfo
+    - {static} PreferencesWindow_s_ScrollPosition : FieldInfo
+    - {static} Show(label:string) : void
+    - {static} _scroll : Vector2
+    - {static} scroll : Vector2 <<get>> <<set>>
+    - {static} Header(text:string) : void
+    - OnGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + <<const>> iconSize : int = 12
+    + {static} <<readonly>> header : GUIStyle
+    + {static} <<readonly>> tabBackground : GUIStyle
+    + {static} <<readonly>> tabIcon : GUIStyle
+    + {static} <<readonly>> tabTitle : GUIStyle
+    + {static} <<readonly>> tabDescription : GUIStyle
+}
+ConfigurationPanel +-- Styles
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class AnimationSampleDependency {
+    - errorUI : GameObject = null
+    - dependency : Dependency
+    - Update() : void
+    - HasDependencyInstalled() : bool
+}
+enum Dependency {
+    None,
+    PsdImporter,
+    AssetBundle,
+}
+MonoBehaviour <|-- AnimationSampleDependency
+AnimationSampleDependency +-- Dependency
+@enduml

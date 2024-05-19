@@ -1,0 +1,12 @@
+@startuml
+struct NameAndParameters {
+    + name : string <<get>> <<set>>
+    + parameters : ReadOnlyArray<NamedValue> <<get>> <<set>>
+    + <<override>> ToString() : string
+    + {static} ParseMultiple(text:string) : IEnumerable<NameAndParameters>
+    <<internal>> {static} ParseMultiple(text:string, list:List<NameAndParameters>) : bool
+    <<internal>> {static} ParseName(text:string) : string
+    + {static} Parse(text:string) : NameAndParameters
+    - {static} ParseNameAndParameters(text:string, index:int, nameOnly:bool) : NameAndParameters
+}
+@enduml

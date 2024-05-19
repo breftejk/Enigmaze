@@ -1,0 +1,10 @@
+@startuml
+class OnToggleValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, value:bool) : void
+}
+"GameObjectEventUnit`1" "<bool>" <|-- OnToggleValueChanged
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class InputSystem <<static>> <<partial>> {
+    <<internal>> <<const>> kAssemblyVersion : string = "1.7.0"
+    <<internal>> <<const>> kDocUrl : string = "https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7"
+}
+@enduml

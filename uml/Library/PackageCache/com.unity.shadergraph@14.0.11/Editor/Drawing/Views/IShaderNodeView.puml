@@ -1,0 +1,16 @@
+@startuml
+interface IShaderNodeView {
+    gvNode : Node <<get>>
+    node : AbstractMaterialNode <<get>>
+    colorElement : VisualElement <<get>>
+    SetColor(newColor:Color) : void
+    ResetColor() : void
+    UpdatePortInputTypes() : void
+    UpdateDropdownEntries() : void
+    OnModified(scope:ModificationScope) : void
+    AttachMessage(errString:string, severity:ShaderCompilerMessageSeverity) : void
+    ClearMessage() : void
+    FindPort(slot:SlotReference, port:ShaderPort) : bool
+}
+IDisposable <|-- IShaderNodeView
+@enduml

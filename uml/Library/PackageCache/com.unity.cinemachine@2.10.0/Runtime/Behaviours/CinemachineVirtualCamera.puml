@@ -1,0 +1,46 @@
+@startuml
+class CinemachineVirtualCamera {
+    + m_LookAt : Transform = null
+    + m_Follow : Transform = null
+    + m_Lens : LensSettings
+    + m_Transitions : TransitionParams
+    - m_LegacyBlendHint : BlendHint
+    + <<const>> PipelineName : string = "cm"
+    <<override>> + State : CameraState <<get>>
+    <<override>> + LookAt : Transform <<get>> <<set>>
+    <<override>> + Follow : Transform <<get>> <<set>>
+    + <<override>> GetMaxDampTime() : float
+    <<override>> + InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    <<override>> # OnEnable() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> OnValidate() : void
+    - OnTransformChildrenChanged() : void
+    - Reset() : void
+    + {static} CreatePipelineOverride : CreatePipelineDelegate
+    + {static} DestroyPipelineOverride : DestroyPipelineDelegate
+    <<internal>> DestroyPipeline() : void
+    <<internal>> CreatePipeline(copyFrom:CinemachineVirtualCamera) : Transform
+    + InvalidateComponentPipeline() : void
+    + GetComponentOwner() : Transform
+    + GetComponentPipeline() : CinemachineComponentBase[]
+    + GetCinemachineComponent(stage:CinemachineCore.Stage) : CinemachineComponentBase
+    + GetCinemachineComponent() : T
+    + AddCinemachineComponent() : T
+    + DestroyCinemachineComponent() : void
+    - m_State : CameraState
+    - m_ComponentPipeline : CinemachineComponentBase[] = null
+    - m_ComponentOwner : Transform = null
+    - UpdateComponentPipeline() : void
+    {static} <<internal>> SetFlagsForHiddenChild(child:GameObject) : void
+    - mCachedLookAtTarget : Transform
+    - mCachedLookAtTargetVcam : CinemachineVirtualCameraBase
+    - CalculateNewState(worldUp:Vector3, deltaTime:float) : CameraState
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    <<internal>> SetStateRawPosition(pos:Vector3) : void
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    <<internal>> <<override>> RequiresUserInput() : bool
+    <<internal>> <<override>> OnBeforeSerialize() : void
+}
+CinemachineVirtualCameraBase <|-- CinemachineVirtualCamera
+@enduml

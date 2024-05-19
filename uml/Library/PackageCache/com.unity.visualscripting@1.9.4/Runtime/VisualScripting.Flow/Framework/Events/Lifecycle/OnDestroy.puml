@@ -1,0 +1,8 @@
+@startuml
+class OnDestroy <<sealed>> {
+    # <<override>> hookName : string <<get>>
+    + <<override>> StopListening(stack:GraphStack) : void
+    - # <<override>> InternalTrigger(reference:GraphReference, args:EmptyEventArgs) : void
+}
+"MachineEventUnit`1" "<EmptyEventArgs>" <|-- OnDestroy
+@enduml

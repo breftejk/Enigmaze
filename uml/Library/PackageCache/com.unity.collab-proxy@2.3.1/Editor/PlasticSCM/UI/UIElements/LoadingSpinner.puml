@@ -1,0 +1,15 @@
+@startuml
+class LoadingSpinner {
+    <<internal>> LoadingSpinner()
+    <<internal>> Dispose() : void
+    <<internal>> Start() : void
+    <<internal>> Stop() : void
+    - UpdateProgress() : void
+    - mRotation : int
+    - mLastRotationTime : double
+    - mStarted : bool
+    - mSpinner : VisualElement
+    <<const>> - ROTATION_SPEED : int = 360
+}
+VisualElement <|-- LoadingSpinner
+@enduml

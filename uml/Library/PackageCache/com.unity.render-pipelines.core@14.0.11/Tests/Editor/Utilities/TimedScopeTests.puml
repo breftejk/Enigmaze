@@ -1,0 +1,8 @@
+@startuml
+class TimedScopeTests {
+    - <<const>> k_MillisecondsTimeout : int = 1000
+    - <<const>> k_TimeComparisonDelta : int = 20
+    + <<unsafe>> SimpleTimeCheckFromPtr() : void
+    + SimpleTimeCheckFromRef() : void
+}
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class DebugUIHandlerWidget {
+    + colorDefault : Color
+    + colorSelected : Color
+    + parentUIHandler : DebugUIHandlerWidget <<get>> <<set>>
+    + previousUIHandler : DebugUIHandlerWidget <<get>> <<set>>
+    + nextUIHandler : DebugUIHandlerWidget <<get>> <<set>>
+    # m_Widget : DebugUI.Widget
+    # <<virtual>> OnEnable() : void
+    <<internal>> <<virtual>> SetWidget(widget:DebugUI.Widget) : void
+    <<internal>> GetWidget() : DebugUI.Widget
+    # CastWidget() : T
+    + <<virtual>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<virtual>> OnDeselection() : void
+    + <<virtual>> OnAction() : void
+    + <<virtual>> OnIncrement(fast:bool) : void
+    + <<virtual>> OnDecrement(fast:bool) : void
+    + <<virtual>> Previous() : DebugUIHandlerWidget
+    + <<virtual>> Next() : DebugUIHandlerWidget
+}
+MonoBehaviour <|-- DebugUIHandlerWidget
+@enduml

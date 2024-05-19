@@ -1,0 +1,17 @@
+@startuml
+class "EmbeddeAssetEditor`1"<T> {
+    + EmbeddeAssetEditor(propertyName:string, owner:UnityEditor.Editor)
+    + OnCreateEditor : OnCreateEditorDelegate
+    + OnChanged : OnChangedDelegate
+    + OnDisable() : void
+    + m_CreateButtonGUIContent : GUIContent
+    - m_PropertyName : string
+    - m_Editor : UnityEditor.Editor = null
+    - m_Owner : UnityEditor.Editor = null
+    <<const>> - kIndentOffset : int = 3
+    + DrawEditorCombo(title:string, defaultName:string, extension:string, message:string, showLabel:string, indent:bool) : void
+    - AssetFieldWithCreateButton(property:SerializedProperty, title:string, defaultName:string, extension:string, message:string) : void
+    + DestroyEditor() : void
+    + UpdateEditor(property:SerializedProperty) : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+interface IIncomingChangesTab {
+    IsVisible : bool <<get>> <<set>>
+    OnDisable() : void
+    Update() : void
+    OnGUI() : void
+    AutoRefresh() : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class GraphOutput <<sealed>> {
+    + <<override>> canDefine : bool <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AfterDefine() : void
+    # <<override>> BeforeUndefine() : void
+}
+Unit <|-- GraphOutput
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+class LabelsTab {
+    - m_ViewEvents : ViewEvents
+    - m_LabelsContainer : VisualElement
+    - m_AddButton : Button
+    - m_InfoLabel : Label
+    - m_ItemsCollection : IRenamableCollection
+    - m_SelectedCategories : List<string>
+    - m_SelectedLabels : List<string>
+    - m_LabelData : List<LabelData>
+    - m_CurrentViewType : ViewType
+    - m_CurrentViewSize : float
+    - m_AdjustedViewSize : float
+    <<const>> - k_ListLabelClassName : string
+    <<const>> - k_GridLabelClassName : string
+    <<const>> - k_ListTextClassName : string
+    <<const>> - k_GridTextClassName : string
+    <<const>> - k_MinListSize : float = 20f
+    <<const>> - k_MaxListSize : float = 30f
+    <<const>> - k_MinGridSize : float = 80f
+    <<const>> - k_MaxGridSize : float = 200f
+    - m_IsFiltered : bool
+    - IsTabActive() : bool
+    - CanModifyLabels() : bool
+    + BindElements(controllerEvents:ControllerEvents, viewEvents:ViewEvents) : void
+    - OnViewChanged(viewData:ViewData) : void
+    - OnModifiedLabels(labels:List<LabelData>, filter:bool) : void
+    - OnSelectedCategories(categories:List<string>) : void
+    - SetupUI() : void
+    - PostRefreshUI() : void
+    - UpdateShowInfoLabel() : void
+    - SetViewType(newView:ViewType) : void
+    {static} - UnbindCollectionItem(e:VisualElement, i:int) : void
+    - InitializeItemsCollection() : void
+    - OnGeometryChanged(evt:GeometryChangedEvent) : void
+    - OnItemsReordered() : void
+    - OnSelectionChanged(selection:IEnumerable<object>) : void
+    - OnRenameLabel(i:int, newName:string) : void
+    - SetSelection(labels:List<string>) : void
+    - CreateNewLabel() : void
+    - RenameSelected() : void
+    - DeleteSelected() : void
+    - RevertLabelOverride(revertAll:bool) : void
+    - SpriteReferenceChanged(objectField:ObjectField) : void
+    - MakeListItem() : VisualElement
+    - BindListItem(e:VisualElement, i:int) : void
+    - MakeGridItem() : VisualElement
+    - BindGridItem(e:VisualElement, i:int) : void
+    - OnTextFocusOut(evt:FocusOutEvent) : void
+    {static} - CanRevertLabel(labelData:LabelData) : bool
+    - CanRenameAtId(i:int) : bool
+    - ContextualManipulatorAddActions(evt:ContextualMenuPopulateEvent) : void
+    {static} - GetAdjustedViewSize(viewType:ViewType, size:float) : float
+}
+class CustomUxmlFactory {
+}
+VisualElement <|-- LabelsTab
+LabelsTab +-- CustomUxmlFactory
+"UxmlFactory`2" "<LabelsTab,UxmlTraits>" <|-- CustomUxmlFactory
+@enduml

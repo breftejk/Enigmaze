@@ -1,0 +1,10 @@
+@startuml
+class UVCPackageVersion <<static>> {
+    <<internal>> {static} Value : string <<get>>
+    <<internal>> {static} AsyncGetVersion() : void
+    {static} - OnFindPackageCompleted(packageInfo:PackageManager.PackageInfo) : void
+    {static} - AsyncFindPackage(packageName:string, listRequest:PackageManager.Requests.ListRequest, onCompleted:Action<PackageManager.PackageInfo>) : void
+    <<const>> - UVCS_PACKAGE_NAME : string = "com.unity.collab-proxy"
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

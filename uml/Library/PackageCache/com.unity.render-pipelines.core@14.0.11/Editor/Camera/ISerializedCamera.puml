@@ -1,0 +1,17 @@
+@startuml
+interface ISerializedCamera {
+    serializedObject : SerializedObject <<get>>
+    serializedAdditionalDataObject : SerializedObject <<get>>
+    baseCameraSettings : CameraEditor.Settings <<get>>
+    projectionMatrixMode : SerializedProperty <<get>>
+    dithering : SerializedProperty <<get>>
+    stopNaNs : SerializedProperty <<get>>
+    allowDynamicResolution : SerializedProperty <<get>>
+    volumeLayerMask : SerializedProperty <<get>>
+    clearDepth : SerializedProperty <<get>>
+    antialiasing : SerializedProperty <<get>>
+    Update() : void
+    Apply() : void
+    Refresh() : void
+}
+@enduml

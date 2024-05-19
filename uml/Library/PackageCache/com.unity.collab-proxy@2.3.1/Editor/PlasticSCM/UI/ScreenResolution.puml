@@ -1,0 +1,5 @@
+@startuml
+class ScreenResolution <<static>> {
+    <<internal>> {static} Get() : string
+}
+@enduml

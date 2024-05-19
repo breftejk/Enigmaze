@@ -1,0 +1,78 @@
+@startuml
+abstract class "StateWidget`1"<TState> {
+    # StateWidget(canvas:StateCanvas, state:TState)
+    + <<virtual>> canForceEnter : bool <<get>>
+    + <<virtual>> canForceExit : bool <<get>>
+    + <<virtual>> canToggleStart : bool <<get>>
+    # state : TState <<get>>
+    # stateDebugData : IStateDebugData <<get>>
+    # stateData : State.Data <<get>>
+    - state : IState <<get>>
+    # description : StateDescription <<get>>
+    # analysis : StateAnalysis <<get>>
+    # <<override>> CacheDescription() : void
+    + <<override>> BeforeFrame() : void
+    + <<override>> HandleInput() : void
+    # <<virtual>> title : string <<get>> <<set>>
+    # <<virtual>> summary : string <<get>> <<set>>
+    - titleContent : GUIContent <<get>>
+    - summaryContent : GUIContent <<get>>
+    + <<override>> positionDependers : IEnumerable<IWidget> <<get>>
+    + titlePosition : Rect <<get>>
+    + summaryPosition : Rect <<get>>
+    + contentOuterPosition : Rect <<get>>
+    + contentBackgroundPosition : Rect <<get>>
+    + contentInnerPosition : Rect <<get>>
+    - targetContentOuterHeight : float
+    - currentContentOuterHeight : float
+    - revealInitialized : bool
+    - _position : Rect
+    + <<override>> position : Rect <<get>> <<set>>
+    + <<override>> CachePosition() : void
+    # <<virtual>> GetContentHeight(width:float) : float
+    # <<virtual>> showTitle : bool <<get>>
+    # <<virtual>> showSummary : bool <<get>>
+    # <<virtual>> showContent : bool <<get>>
+    # <<virtual>> baseColor : NodeColorMix <<get>>
+    # <<override>> color : NodeColorMix <<get>>
+    # <<override>> shape : NodeShape <<get>>
+    - revealContent : bool <<get>>
+    - revealedContent : bool
+    - CheckReveal() : void
+    # <<override>> dim : bool <<get>>
+    + <<override>> DrawForeground() : void
+    - DrawTitle() : void
+    - DrawSummary() : void
+    - DrawContentWrapped() : void
+    # <<virtual>> DrawContentBackground() : void
+    # <<virtual>> DrawContent() : void
+    + <<override>> canSelect : bool <<get>>
+    # <<override>> snapToGrid : bool <<get>>
+    + <<override>> canDrag : bool <<get>>
+    + <<override>> ExpandDragGroup(dragGroup:HashSet<IGraphElement>) : void
+    + <<override>> canDelete : bool <<get>>
+    + <<override>> canResizeHorizontal : bool <<get>>
+    + <<override>> ExpandCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    # <<override>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    - ForceEnter() : void
+    - ForceExit() : void
+    # MakeTransition() : void
+    # MakeSelfTransition() : void
+    # ToggleStart() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> title : GUIStyle
+    + {static} <<readonly>> summary : GUIStyle
+    + {static} <<readonly>> titleInverted : GUIStyle
+    + {static} <<readonly>> summaryInverted : GUIStyle
+    + {static} <<readonly>> contentBackground : GUIStyle
+    + {static} <<readonly>> spaceBeforeContent : float = 5
+    + {static} <<readonly>> spaceBetweenTitleAndSummary : float = 0
+    + {static} <<readonly>> enterFadeDuration : float = 0.5f
+    + {static} <<readonly>> contentRevealSpeed : float = 15
+}
+"NodeWidget`2" "<StateCanvas,TState>" <|-- "StateWidget`1"
+IStateWidget <|-- "StateWidget`1"
+"StateWidget`1" +-- Styles
+@enduml

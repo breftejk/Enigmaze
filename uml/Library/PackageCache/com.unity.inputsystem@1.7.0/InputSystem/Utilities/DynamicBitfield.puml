@@ -1,0 +1,11 @@
+@startuml
+struct DynamicBitfield {
+    + array : InlinedArray<ulong>
+    + length : int
+    + SetLength(newLength:int) : void
+    + SetBit(bitIndex:int) : void
+    + TestBit(bitIndex:int) : bool
+    + ClearBit(bitIndex:int) : void
+    - {static} BitCountToULongCount(bitCount:int) : int
+}
+@enduml

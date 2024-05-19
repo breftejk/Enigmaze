@@ -1,0 +1,53 @@
+@startuml
+class ScriptableRenderer <<partial>> {
+    - <<const>> kRenderPassMapSize : int = 10
+    - <<const>> kRenderPassMaxCount : int = 20
+    - m_LastBeginSubpassPassIndex : int = 0
+    - m_MergeableRenderPassesMap : Dictionary<Hash128, int[]>
+    - m_MergeableRenderPassesMapArrays : int[][]
+    - m_PassIndexToPassHash : Hash128[]
+    - m_RenderPassesAttachmentCount : Dictionary<Hash128, int>
+    - m_ActiveColorAttachmentDescriptors : AttachmentDescriptor[]
+    - m_ActiveDepthAttachmentDescriptor : AttachmentDescriptor
+    - m_IsActiveColorAttachmentTransient : bool[]
+    <<internal>> m_FinalColorStoreAction : RenderBufferStoreAction[]
+    <<internal>> m_FinalDepthStoreAction : RenderBufferStoreAction
+    <<internal>> ResetNativeRenderPassFrameData() : void
+    <<internal>> SetupNativeRenderPassFrameData(cameraData:CameraData, isRenderPassEnabled:bool) : void
+    <<internal>> UpdateFinalStoreActions(currentMergeablePasses:int[], cameraData:CameraData) : void
+    <<internal>> SetNativeRenderPassMRTAttachmentList(renderPass:ScriptableRenderPass, cameraData:CameraData, needCustomCameraColorClear:bool, cameraClearFlag:ClearFlag) : void
+    - IsDepthOnlyRenderTexture(t:RenderTexture) : bool
+    <<internal>> SetNativeRenderPassAttachmentList(renderPass:ScriptableRenderPass, cameraData:CameraData, passColorAttachment:RTHandle, passDepthAttachment:RTHandle, finalClearFlag:ClearFlag, finalClearColor:Color) : void
+    <<internal>> ExecuteNativeRenderPass(context:ScriptableRenderContext, renderPass:ScriptableRenderPass, cameraData:CameraData, renderingData:RenderingData) : void
+    <<internal>> SetupInputAttachmentIndices(pass:ScriptableRenderPass) : void
+    <<internal>> SetupTransientInputAttachments(attachmentCount:int) : void
+    <<internal>> {static} GetSubPassAttachmentIndicesCount(pass:ScriptableRenderPass) : uint
+    <<internal>> {static} AreAttachmentIndicesCompatible(lastSubPass:ScriptableRenderPass, currentSubPass:ScriptableRenderPass) : bool
+    <<internal>> {static} GetValidColorAttachmentCount(colorAttachments:AttachmentDescriptor[]) : uint
+    <<internal>> {static} GetValidInputAttachmentCount(renderPass:ScriptableRenderPass) : int
+    <<internal>> {static} FindAttachmentDescriptorIndexInList(attachmentIdx:int, attachmentDescriptor:AttachmentDescriptor, attachmentDescriptors:AttachmentDescriptor[]) : int
+    <<internal>> {static} FindAttachmentDescriptorIndexInList(target:RenderTargetIdentifier, attachmentDescriptors:AttachmentDescriptor[]) : int
+    <<internal>> {static} GetValidPassIndexCount(array:int[]) : int
+    <<internal>> {static} GetFirstAllocatedRTHandle(pass:ScriptableRenderPass) : RTHandle
+    <<internal>> {static} PassHasInputAttachments(renderPass:ScriptableRenderPass) : bool
+    <<internal>> {static} CreateRenderPassHash(width:int, height:int, depthID:int, sample:int, hashIndex:uint) : Hash128
+    <<internal>> {static} CreateRenderPassHash(desc:RenderPassDescriptor, hashIndex:uint) : Hash128
+    <<internal>> {static} GetRenderTextureDescriptor(cameraData:CameraData, renderPass:ScriptableRenderPass, targetRT:RenderTextureDescriptor) : void
+    - InitializeRenderPassDescriptor(cameraData:CameraData, renderPass:ScriptableRenderPass) : RenderPassDescriptor
+}
+class Profiling <<static>> <<partial>> {
+    + {static} <<readonly>> setMRTAttachmentsList : ProfilingSampler
+    + {static} <<readonly>> setAttachmentList : ProfilingSampler
+    + {static} <<readonly>> execute : ProfilingSampler
+    + {static} <<readonly>> setupFrameData : ProfilingSampler
+}
+struct RenderPassDescriptor {
+    <<internal>> w : int
+    <<internal>> h : int
+    <<internal>> samples : int
+    <<internal>> depthID : int
+    <<internal>> RenderPassDescriptor(width:int, height:int, sampleCount:int, rtID:int)
+}
+ScriptableRenderer +-- Profiling
+ScriptableRenderer +-- RenderPassDescriptor
+@enduml

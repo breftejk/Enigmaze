@@ -1,0 +1,13 @@
+@startuml
+class "InstanceFunctionInvoker`5"<TTarget,TParam0,TParam1,TParam2,TResult> <<sealed>> {
+    + InstanceFunctionInvoker(methodInfo:MethodInfo)
+    - invoke : Func<TTarget, TParam0, TParam1, TParam2, TResult>
+    + <<override>> Invoke(target:object, args:object[]) : object
+    + <<override>> Invoke(target:object, arg0:object, arg1:object, arg2:object) : object
+    + InvokeUnsafe(target:object, arg0:object, arg1:object, arg2:object) : object
+    # <<override>> GetParameterTypes() : Type[]
+    # <<override>> CompileExpression(callExpression:MethodCallExpression, parameterExpressions:ParameterExpression[]) : void
+    # <<override>> CreateDelegate() : void
+}
+"InstanceFunctionInvokerBase`2" "<TTarget,TResult>" <|-- "InstanceFunctionInvoker`5"
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class FieldsCloner <<sealed>> {
+    # <<override>> IncludeField(field:FieldInfo) : bool
+    # <<override>> IncludeProperty(property:PropertyInfo) : bool
+}
+ReflectedCloner <|-- FieldsCloner
+@enduml

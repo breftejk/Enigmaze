@@ -1,0 +1,8 @@
+@startuml
+class DrawProgressForViews <<static>> {
+    <<internal>> {static} ForNotificationArea(data:ProgressControlsForViews.Data) : void
+    <<internal>> {static} ForIndeterminateProgress(data:ProgressControlsForViews.Data) : void
+    {static} - DoProgressBar(progressPercent:float) : void
+    {static} - DoProgressLabel(progressMessage:string) : void
+}
+@enduml

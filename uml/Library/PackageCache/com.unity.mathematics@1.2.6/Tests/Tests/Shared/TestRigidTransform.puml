@@ -1,0 +1,17 @@
+@startuml
+class TestRigidTransform {
+    + {static} rigid_transform_construct_from_matrix() : void
+    + {static} rigid_transform_axisAngle() : void
+    + {static} rigid_transform_euler() : void
+    + {static} rigid_transform_rotateX() : void
+    + {static} rigid_transform_rotateY() : void
+    + {static} rigid_transform_rotateZ() : void
+    {static} <<internal>> <<readonly>> test_q0 : quaternion
+    {static} <<internal>> <<readonly>> test_q1 : quaternion
+    {static} <<internal>> <<readonly>> test_q2 : quaternion
+    {static} <<internal>> <<readonly>> test_q3 : quaternion
+    + {static} rigid_transform_inverse() : void
+    + {static} rigid_transform_mul_vector() : void
+    + {static} rigid_transform_EqualsObjectOverride() : void
+}
+@enduml

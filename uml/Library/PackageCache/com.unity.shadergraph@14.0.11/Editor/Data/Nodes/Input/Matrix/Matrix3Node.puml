@@ -1,0 +1,24 @@
+@startuml
+class Matrix3Node {
+    + <<const>> OutputSlotId : int = 0
+    <<const>> - kOutputSlotName : string = "Out"
+    - m_Row0 : Vector3
+    - m_Row1 : Vector3
+    - m_Row2 : Vector3
+    + row0 : Vector3 <<get>> <<set>>
+    + row1 : Vector3 <<get>> <<set>>
+    + row2 : Vector3 <<get>> <<set>>
+    - SetRow(row:Vector3, value:Vector3) : void
+    + Matrix3Node()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- Matrix3Node
+IGeneratesBodyCode <|-- Matrix3Node
+IPropertyFromNode <|-- Matrix3Node
+@enduml

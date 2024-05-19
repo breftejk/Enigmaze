@@ -1,0 +1,15 @@
+@startuml
+abstract class "BuildActionTaskBase`1"<T> {
+    - typeName : string
+    <<internal>> attributeFinder : IAttributeFinder
+    <<internal>> targetPlatform : RuntimePlatform
+    <<internal>> logAction : Action<string>
+    <<internal>> logScopeProvider : Func<ILogScope>
+    <<internal>> createInstance : Func<Type, object>
+    # BuildActionTaskBase(attributeFinder:IAttributeFinder)
+    # {abstract} Action(target:T) : void
+    + <<override>> Execute(testJobData:TestJobData) : IEnumerator
+    # ExecuteMethods(testTree:ITest, testRunnerFilter:ITestFilter) : IEnumerator
+}
+TestTaskBase <|-- "BuildActionTaskBase`1"
+@enduml

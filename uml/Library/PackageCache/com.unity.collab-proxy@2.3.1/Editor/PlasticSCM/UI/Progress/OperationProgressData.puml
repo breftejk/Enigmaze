@@ -1,0 +1,20 @@
+@startuml
+class OperationProgressData {
+    <<internal>> ProgressHeader : string <<get>> <<set>>
+    <<internal>> TotalProgressMessage : string <<get>> <<set>>
+    <<internal>> CurrentBlockProgressMessage : string <<get>> <<set>>
+    <<internal>> TotalProgressPercent : double <<get>> <<set>>
+    <<internal>> CurrentBlockProgressPercent : double <<get>> <<set>>
+    <<internal>> ShowCurrentBlock : bool <<get>> <<set>>
+    <<internal>> CanCancelProgress : bool <<get>> <<set>>
+    <<internal>> ResetProgress() : void
+    - mProgressHeader : string
+    - mTotalProgressMessage : string
+    - mBlockProgressMessage : string
+    - mTotalProgressPercent : double
+    - mBlockProgressPercent : double
+    - mShowCurrentBlock : bool
+    - mCanCancelProgress : bool
+    - mLockGuard : object
+}
+@enduml

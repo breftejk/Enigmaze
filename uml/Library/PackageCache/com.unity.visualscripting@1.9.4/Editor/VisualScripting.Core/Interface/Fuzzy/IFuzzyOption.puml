@@ -1,0 +1,15 @@
+@startuml
+interface IFuzzyOption {
+    value : object <<get>>
+    parentOnly : bool <<get>>
+    label : string <<get>>
+    icon : EditorTexture <<get>>
+    style : GUIStyle <<get>>
+    headerLabel : string <<get>>
+    showHeaderIcon : bool <<get>>
+    hasFooter : bool <<get>>
+    GetFooterHeight(width:float) : float
+    OnFooterGUI(position:Rect) : void
+    OnPopulate() : void
+}
+@enduml

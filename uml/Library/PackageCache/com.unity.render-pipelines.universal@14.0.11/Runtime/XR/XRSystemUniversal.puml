@@ -1,0 +1,9 @@
+@startuml
+class XRSystemUniversal <<static>> {
+    {static} - s_projMatrix : Matrix4x4[]
+    <<internal>> {static} BeginLateLatching(camera:Camera, xrPass:XRPassUniversal) : void
+    <<internal>> {static} EndLateLatching(camera:Camera, xrPass:XRPassUniversal) : void
+    <<internal>> {static} UnmarkShaderProperties(cmd:CommandBuffer, xrPass:XRPassUniversal) : void
+    <<internal>> {static} MarkShaderProperties(cmd:CommandBuffer, xrPass:XRPassUniversal, renderIntoTexture:bool) : void
+}
+@enduml

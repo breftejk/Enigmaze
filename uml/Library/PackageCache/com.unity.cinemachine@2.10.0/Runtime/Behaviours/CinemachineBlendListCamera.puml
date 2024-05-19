@@ -1,0 +1,43 @@
+@startuml
+class CinemachineBlendListCamera {
+    + m_LookAt : Transform
+    + m_Follow : Transform
+    + m_ShowDebugText : bool
+    + m_Loop : bool
+    <<internal>> m_ChildCameras : CinemachineVirtualCameraBase[]
+    + m_Instructions : Instruction[]
+    + <<override>> Description : string <<get>>
+    - Reset() : void
+    + LiveChild : ICinemachineCamera <<get>> <<set>>
+    + <<override>> IsLiveChild(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    + <<override>> State : CameraState <<get>>
+    <<override>> + LookAt : Transform <<get>> <<set>>
+    <<override>> + Follow : Transform <<get>> <<set>>
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    - m_TransitioningFrom : ICinemachineCamera
+    + <<override>> InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    - OnTransformChildrenChanged() : void
+    - OnGuiHandler() : void
+    - m_State : CameraState
+    + ChildCameras : CinemachineVirtualCameraBase[] <<get>>
+    + IsBlending : bool <<get>>
+    - mActivationTime : float
+    - mCurrentInstruction : int = 0
+    - mActiveBlend : CinemachineBlend = null
+    - InvalidateListOfChildren() : void
+    - UpdateListOfChildren() : void
+    <<internal>> ValidateInstructions() : void
+    - AdvanceCurrentInstruction(deltaTime:float) : void
+}
+struct Instruction {
+    + m_VirtualCamera : CinemachineVirtualCameraBase
+    + m_Hold : float
+    + m_Blend : CinemachineBlendDefinition
+}
+CinemachineVirtualCameraBase <|-- CinemachineBlendListCamera
+CinemachineBlendListCamera +-- Instruction
+@enduml

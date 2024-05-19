@@ -1,0 +1,9 @@
+@startuml
+class AnimationTrackKeyDataSource {
+    <<readonly>> - m_TrackOffset : float
+    # <<override>> animationClip : AnimationClip <<get>>
+    + AnimationTrackKeyDataSource(track:AnimationTrack)
+    # <<override>> TransformKeyTime(keyTime:float) : float
+}
+BasePropertyKeyDataSource <|-- AnimationTrackKeyDataSource
+@enduml

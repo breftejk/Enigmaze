@@ -1,0 +1,9 @@
+@startuml
+class IsInfiniteNode {
+    + IsInfiniteNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_IsInfinite(In:Vector1, Out:Boolean) : string
+}
+CodeFunctionNode <|-- IsInfiniteNode
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+abstract class "AccessorInfoStubWriter`1"<TAccessor> {
+    # AccessorInfoStubWriter(accessorInfo:TAccessor)
+    # {abstract} GetOptimizedAccessor(accessorInfo:TAccessor) : IOptimizedAccessor
+    + <<override>> GetStubStatements() : IEnumerable<CodeStatement>
+}
+"MemberInfoStubWriter`1" "<TAccessor>" <|-- "AccessorInfoStubWriter`1"
+@enduml

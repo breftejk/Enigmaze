@@ -1,0 +1,32 @@
+@startuml
+class FontData {
+    - m_Font : Font
+    - m_FontSize : int
+    - m_FontStyle : FontStyle
+    - m_BestFit : bool
+    - m_MinSize : int
+    - m_MaxSize : int
+    - m_Alignment : TextAnchor
+    - m_AlignByGeometry : bool
+    - m_RichText : bool
+    - m_HorizontalOverflow : HorizontalWrapMode
+    - m_VerticalOverflow : VerticalWrapMode
+    - m_LineSpacing : float
+    + {static} defaultFontData : FontData <<get>>
+    + font : Font <<get>> <<set>>
+    + fontSize : int <<get>> <<set>>
+    + fontStyle : FontStyle <<get>> <<set>>
+    + bestFit : bool <<get>> <<set>>
+    + minSize : int <<get>> <<set>>
+    + maxSize : int <<get>> <<set>>
+    + alignment : TextAnchor <<get>> <<set>>
+    + alignByGeometry : bool <<get>> <<set>>
+    + richText : bool <<get>> <<set>>
+    + horizontalOverflow : HorizontalWrapMode <<get>> <<set>>
+    + verticalOverflow : VerticalWrapMode <<get>> <<set>>
+    + lineSpacing : float <<get>> <<set>>
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+ISerializationCallbackReceiver <|-- FontData
+@enduml

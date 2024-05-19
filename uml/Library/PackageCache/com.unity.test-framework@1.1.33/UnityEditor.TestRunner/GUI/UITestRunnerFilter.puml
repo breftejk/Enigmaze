@@ -1,0 +1,27 @@
+@startuml
+class UITestRunnerFilter {
+    + assemblyNames : string[]
+    + groupNames : string[]
+    + categoryNames : string[]
+    + testNames : string[]
+    + testRepetitions : int = 1
+    + synchronousOnly : bool = false
+    + {static} AssemblyNameFromPath(path:string) : string
+    - CategoryMatches(categories:IEnumerable<string>) : bool
+    - IDMatchesAssembly(id:string) : bool
+    - NameMatches(name:string) : bool
+    - AreOptionalFiltersEmpty() : bool
+    - NameMatchesExactly(name:string) : bool
+    - {static} ClearAncestors(newResultList:IEnumerable<IClearableResult>, parentID:string) : void
+    + ClearResults(newResultList:List<IClearableResult>) : void
+}
+interface IClearableResult {
+    Id : string <<get>>
+    FullName : string <<get>>
+    ParentId : string <<get>>
+    IsSuite : bool <<get>>
+    Categories : List<string> <<get>>
+    Clear() : void
+}
+UITestRunnerFilter +-- IClearableResult
+@enduml

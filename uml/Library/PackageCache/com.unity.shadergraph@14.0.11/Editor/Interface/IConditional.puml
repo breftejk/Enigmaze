@@ -1,0 +1,5 @@
+@startuml
+interface IConditional {
+    fieldConditions : FieldCondition[] <<get>>
+}
+@enduml

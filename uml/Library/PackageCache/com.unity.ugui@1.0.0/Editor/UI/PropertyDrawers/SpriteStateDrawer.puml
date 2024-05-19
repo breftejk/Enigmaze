@@ -1,0 +1,13 @@
+@startuml
+class SpriteStateDrawer {
+    <<const>> - kHighlightedSprite : string = "m_HighlightedSprite"
+    <<const>> - kPressedSprite : string = "m_PressedSprite"
+    <<const>> - kSelectedSprite : string = "m_SelectedSprite"
+    <<const>> - kDisabledSprite : string = "m_DisabledSprite"
+    <<const>> - kVisualElementName : string = "SpriteState"
+    + <<override>> OnGUI(rect:Rect, prop:SerializedProperty, label:GUIContent) : void
+    + <<override>> GetPropertyHeight(prop:SerializedProperty, label:GUIContent) : float
+    + <<override>> CreatePropertyGUI(property:SerializedProperty) : VisualElement
+}
+PropertyDrawer <|-- SpriteStateDrawer
+@enduml

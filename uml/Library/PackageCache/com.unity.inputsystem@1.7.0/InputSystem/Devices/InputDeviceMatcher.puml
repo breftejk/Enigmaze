@@ -1,0 +1,49 @@
+@startuml
+struct InputDeviceMatcher {
+    - m_Patterns : KeyValuePair<InternedString, object>[]
+    + empty : bool <<get>>
+    + patterns : IEnumerable<KeyValuePair<string, object>> <<get>>
+    + WithInterface(pattern:string, supportRegex:bool) : InputDeviceMatcher
+    + WithDeviceClass(pattern:string, supportRegex:bool) : InputDeviceMatcher
+    + WithManufacturer(pattern:string, supportRegex:bool) : InputDeviceMatcher
+    + WithProduct(pattern:string, supportRegex:bool) : InputDeviceMatcher
+    + WithVersion(pattern:string, supportRegex:bool) : InputDeviceMatcher
+    + WithCapability(path:string, value:TValue) : InputDeviceMatcher
+    - With(key:InternedString, value:object, supportRegex:bool) : InputDeviceMatcher
+    + MatchPercentage(deviceDescription:InputDeviceDescription) : float
+    - {static} MatchSingleProperty(pattern:object, value:string) : bool
+    - {static} GetNumPropertiesIn(description:InputDeviceDescription) : int
+    + {static} FromDeviceDescription(deviceDescription:InputDeviceDescription) : InputDeviceMatcher
+    + <<override>> ToString() : string
+    + Equals(other:InputDeviceMatcher) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    - {static} <<readonly>> kInterfaceKey : InternedString
+    - {static} <<readonly>> kDeviceClassKey : InternedString
+    - {static} <<readonly>> kManufacturerKey : InternedString
+    - {static} <<readonly>> kProductKey : InternedString
+    - {static} <<readonly>> kVersionKey : InternedString
+}
+struct MatcherJson {
+    + @interface : string
+    + interfaces : string[]
+    + deviceClass : string
+    + deviceClasses : string[]
+    + manufacturer : string
+    + manufacturers : string[]
+    + product : string
+    + products : string[]
+    + version : string
+    + versions : string[]
+    + capabilities : Capability[]
+    + {static} FromMatcher(matcher:InputDeviceMatcher) : MatcherJson
+    + ToMatcher() : InputDeviceMatcher
+}
+struct Capability {
+    + path : string
+    + value : string
+}
+"IEquatable`1" "<InputDeviceMatcher>" <|-- InputDeviceMatcher
+InputDeviceMatcher +-- MatcherJson
+MatcherJson +-- Capability
+@enduml

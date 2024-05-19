@@ -1,0 +1,6 @@
+@startuml
+class UnityWorkItemDataHolder {
+    + {static} alreadyStartedTests : List<string>
+    + {static} alreadyExecutedTests : List<string>
+}
+@enduml

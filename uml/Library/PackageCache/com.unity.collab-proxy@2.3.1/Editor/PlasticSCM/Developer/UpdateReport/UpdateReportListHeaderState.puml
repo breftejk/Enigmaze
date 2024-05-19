@@ -1,0 +1,16 @@
+@startuml
+enum ErrorsListColumn {
+    Path,
+}
+class UpdateReportListHeaderState {
+    <<internal>> {static} GetDefault() : UpdateReportListHeaderState
+    {static} - GetColumnName(column:ErrorsListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - UpdateReportListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+}
+MultiColumnHeaderState <|-- UpdateReportListHeaderState
+ISerializationCallbackReceiver <|-- UpdateReportListHeaderState
+@enduml

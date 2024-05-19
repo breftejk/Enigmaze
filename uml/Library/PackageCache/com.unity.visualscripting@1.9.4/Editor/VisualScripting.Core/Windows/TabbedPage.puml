@@ -1,0 +1,26 @@
+@startuml
+class TabbedPage {
+    + TabbedPage()
+    - _currentPage : Page
+    + pages : List<Page> <<get>>
+    - pageOptions : List<ListOption> <<get>>
+    + currentPage : Page <<get>> <<set>>
+    + UpdateOptions() : void
+    # <<override>> OnShow() : void
+    + <<override>> Update() : void
+    # <<virtual>> OnEmptyGUI() : void
+    # <<override>> OnHeaderGUI() : void
+    # OnTabsGUI() : void
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> emptyBackground : GUIStyle
+    + {static} <<readonly>> tabLeft : GUIStyle
+    + {static} <<readonly>> tabMid : GUIStyle
+    + {static} <<readonly>> tabRight : GUIStyle
+    + {static} <<readonly>> tabSingle : GUIStyle
+}
+Page <|-- TabbedPage
+TabbedPage +-- Styles
+@enduml

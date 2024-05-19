@@ -1,0 +1,12 @@
+@startuml
+class "WatchedList`1"<T> {
+    +  <<event>> ItemAdded : Action<T> 
+    +  <<event>> ItemRemoved : Action<T> 
+    +  <<event>> CollectionChanged : Action 
+    # <<override>> InsertItem(index:int, item:T) : void
+    # <<override>> RemoveItem(index:int) : void
+    # <<override>> ClearItems() : void
+}
+"Collection`1" "<T>" <|-- "WatchedList`1"
+"INotifyCollectionChanged`1" "<T>" <|-- "WatchedList`1"
+@enduml

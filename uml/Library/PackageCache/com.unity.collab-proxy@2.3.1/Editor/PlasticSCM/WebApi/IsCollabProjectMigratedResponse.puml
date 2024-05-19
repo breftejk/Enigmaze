@@ -1,0 +1,9 @@
+@startuml
+class IsCollabProjectMigratedResponse {
+    + Error : ErrorResponse.ErrorFields <<get>> <<set>>
+    + IsMigrated : bool <<get>> <<set>>
+    + WebServerUri : string <<get>> <<set>>
+    + PlasticCloudOrganizationName : string <<get>> <<set>>
+    + Credentials : CredentialsResponse <<get>> <<set>>
+}
+@enduml

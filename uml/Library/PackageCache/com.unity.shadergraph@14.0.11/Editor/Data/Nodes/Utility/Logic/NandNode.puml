@@ -1,0 +1,9 @@
+@startuml
+class NandNode {
+    + NandNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Nand(A:Boolean, B:Boolean, Out:Boolean) : string
+}
+CodeFunctionNode <|-- NandNode
+@enduml

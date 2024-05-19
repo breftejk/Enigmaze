@@ -1,0 +1,12 @@
+@startuml
+class OperationParams {
+    <<internal>> <<readonly>> ProjectFullPath : string
+    <<internal>> <<readonly>> Organization : string
+    <<internal>> <<readonly>> Repository : string
+    <<internal>> <<readonly>> RepositorySpec : RepositorySpec
+    <<internal>> <<readonly>> AccessToken : string
+    <<internal>> {static} BuildFromCommand(command:ParseArguments.Command, unityAccessToken:string) : OperationParams
+    {static} - BuildRepositorySpec(organization:string, repository:string) : RepositorySpec
+    - OperationParams(projectFullPath:string, organization:string, repository:string, repositorySpec:RepositorySpec, accessToken:string)
+}
+@enduml

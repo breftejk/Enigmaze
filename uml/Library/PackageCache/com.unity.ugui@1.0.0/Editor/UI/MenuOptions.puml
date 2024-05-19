@@ -1,0 +1,64 @@
+@startuml
+class MenuOptions <<static>> {
+    - <<const>> kUILayerName : string = "UI"
+    - <<const>> kStandardSpritePath : string = "UI/Skin/UISprite.psd"
+    - <<const>> kBackgroundSpritePath : string = "UI/Skin/Background.psd"
+    - <<const>> kInputFieldBackgroundPath : string = "UI/Skin/InputFieldBackground.psd"
+    - <<const>> kKnobPath : string = "UI/Skin/Knob.psd"
+    - <<const>> kCheckmarkPath : string = "UI/Skin/Checkmark.psd"
+    - <<const>> kDropdownArrowPath : string = "UI/Skin/DropdownArrow.psd"
+    - <<const>> kMaskPath : string = "UI/Skin/UIMask.psd"
+    {static} - s_StandardResources : DefaultControls.Resources
+    {static} - GetStandardResources() : DefaultControls.Resources
+    - {static} SetPositionVisibleinSceneView(canvasRTransform:RectTransform, itemTransform:RectTransform) : void
+    - {static} PlaceUIElementRoot(element:GameObject, menuCommand:MenuCommand) : void
+    - {static} SetParentAndAlign(child:GameObject, parent:GameObject) : void
+    - {static} SetLayerRecursively(go:GameObject, layer:int) : void
+    {static} + AddImage(menuCommand:MenuCommand) : void
+    {static} + AddRawImage(menuCommand:MenuCommand) : void
+    {static} + AddPanel(menuCommand:MenuCommand) : void
+    {static} + AddToggle(menuCommand:MenuCommand) : void
+    {static} + AddSlider(menuCommand:MenuCommand) : void
+    {static} + AddScrollbar(menuCommand:MenuCommand) : void
+    {static} + AddScrollView(menuCommand:MenuCommand) : void
+    {static} + AddCanvas(menuCommand:MenuCommand) : void
+    {static} + AddText(menuCommand:MenuCommand) : void
+    {static} + AddButton(menuCommand:MenuCommand) : void
+    {static} + AddDropdown(menuCommand:MenuCommand) : void
+    + {static} AddInputField(menuCommand:MenuCommand) : void
+    {static} + CreateNewUI() : GameObject
+    + {static} CreateEventSystem(menuCommand:MenuCommand) : void
+    - {static} CreateEventSystem(select:bool) : void
+    - {static} CreateEventSystem(select:bool, parent:GameObject) : void
+    {static} + GetOrCreateCanvasGameObject() : GameObject
+    {static} - IsValidCanvas(canvas:Canvas) : bool
+}
+enum MenuOptionsPriorityOrder {
+    Image= 2001,
+    RawImage= 2002,
+    Panel= 2003,
+    Toggle= 2021,
+    Slider= 2024,
+    Scrollbar= 2025,
+    ScrollView= 2026,
+    Canvas= 2060,
+    EventSystem= 2061,
+    Text= 2080,
+    Button= 2081,
+    Dropdown= 2082,
+    InputField= 2083,
+}
+class DefaultEditorFactory {
+    + {static} Default : DefaultEditorFactory
+    + CreateGameObject(name:string, components:Type[]) : GameObject
+}
+class FactorySwapToEditor {
+    - factory : DefaultControls.IFactoryControls
+    + FactorySwapToEditor()
+    + Dispose() : void
+}
+MenuOptions +-- MenuOptionsPriorityOrder
+MenuOptions +-- DefaultEditorFactory
+MenuOptions +-- FactorySwapToEditor
+IDisposable <|-- FactorySwapToEditor
+@enduml

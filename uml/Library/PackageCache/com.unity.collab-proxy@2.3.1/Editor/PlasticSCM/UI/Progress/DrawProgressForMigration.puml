@@ -1,0 +1,8 @@
+@startuml
+class DrawProgressForMigration <<static>> {
+    <<internal>> {static} For(data:ProgressControlsForMigration.Data) : void
+    {static} - DoNotificationMessage(rect:Rect, notificationMessage:string, notificationType:MessageType) : void
+    {static} - DoProgressMessage(rect:Rect, progressMessage:string) : void
+    {static} - DoProgressBar(rect:Rect, progressMessage:string, progressPercent:float) : void
+}
+@enduml

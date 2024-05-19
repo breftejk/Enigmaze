@@ -1,0 +1,13 @@
+@startuml
+class Vector4EqualityComparer {
+    - <<const>> k_DefaultError : float = 0.0001f
+    - <<readonly>> AllowedError : float
+    - {static} <<readonly>> m_Instance : Vector4EqualityComparer
+    + {static} Instance : Vector4EqualityComparer <<get>>
+    - Vector4EqualityComparer()
+    + Vector4EqualityComparer(allowedError:float)
+    + Equals(expected:Vector4, actual:Vector4) : bool
+    + GetHashCode(vec4:Vector4) : int
+}
+"IEqualityComparer`1" "<Vector4>" <|-- Vector4EqualityComparer
+@enduml

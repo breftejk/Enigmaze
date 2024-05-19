@@ -1,0 +1,35 @@
+@startuml
+class CreateWorkspaceView {
+    <<internal>> CreateWorkspaceView(parentWindow:PlasticWindow, listener:ICreateWorkspaceListener, plasticApi:IPlasticAPI, plasticWebRestApi:IPlasticWebRestApi, workspacePath:string)
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    - Initialize(plasticApi:IPlasticAPI, plasticWebRestApi:IPlasticWebRestApi) : void
+    {static} - OnRepositoryChanged(dialogUserAssistant:CreateWorkspaceDialogUserAssistant, createWorkspaceState:CreateWorkspaceViewState, workspacePath:string) : void
+    - CreateRepository(data:RepositoryCreationData) : void
+    - ValidateAndCreateWorkspace(state:CreateWorkspaceViewState) : void
+    - CloseDialog() : void
+    - RefreshAndSelect(wkInfo:WorkspaceInfo) : void
+    {static} - BuildCreationDataFromState(state:CreateWorkspaceViewState, workspacePath:string) : WorkspaceCreationData
+    {static} - DisplayException(progressControls:IProgressControls, ex:Exception) : void
+    - mWkCreationData : WorkspaceCreationData
+    - mCreateWorkspaceState : CreateWorkspaceViewState
+    - mDialogUserAssistant : CreateWorkspaceDialogUserAssistant
+    - mDefaultServer : string
+    <<readonly>> - mWorkspaceOperations : WorkspaceOperations
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mWorkspacePath : string
+    <<readonly>> - mCreateWorkspaceListener : ICreateWorkspaceListener
+    <<readonly>> - mParentWindow : PlasticWindow
+    <<readonly>> - mPlasticWebRestApi : IPlasticWebRestApi
+}
+interface ICreateWorkspaceListener {
+    OnWorkspaceCreated(wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+}
+class GetDefaultServer {
+    <<internal>> {static} ToCreateWorkspace(plasticWebRestApi:IPlasticWebRestApi) : string
+}
+IPlasticDialogCloser <|-- CreateWorkspaceView
+IWorkspacesRefreshableView <|-- CreateWorkspaceView
+CreateWorkspaceView +-- ICreateWorkspaceListener
+CreateWorkspaceView +-- GetDefaultServer
+@enduml

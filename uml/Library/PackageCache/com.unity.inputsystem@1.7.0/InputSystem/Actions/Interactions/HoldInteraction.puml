@@ -1,0 +1,12 @@
+@startuml
+class HoldInteraction {
+    + duration : float
+    + pressPoint : float
+    - durationOrDefault : float <<get>>
+    - pressPointOrDefault : float <<get>>
+    - m_TimePressed : double
+    + Process(context:InputInteractionContext) : void
+    + Reset() : void
+}
+IInputInteraction <|-- HoldInteraction
+@enduml

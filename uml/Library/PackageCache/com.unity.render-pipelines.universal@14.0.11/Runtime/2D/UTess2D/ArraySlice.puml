@@ -1,0 +1,22 @@
+@startuml
+struct "ArraySlice`1"<T> {
+    <<internal>> m_Buffer : byte*
+    <<internal>> m_Stride : int
+    <<internal>> m_Length : int
+    + ArraySlice(array:NativeArray<T>, start:int, length:int)
+    + Equals(other:ArraySlice<T>) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + {static} <<unsafe>> ConvertExistingDataToArraySlice(dataPointer:void*, stride:int, length:int) : ArraySlice<T>
+    <<internal>> <<unsafe>> GetUnsafeReadOnlyPtr() : void*
+    <<internal>> CopyTo(array:T[]) : void
+    <<internal>> ToArray() : T[]
+    + Stride : int <<get>>
+    + Length : int <<get>>
+}
+class "ArraySliceDebugView`1"<T> <<sealed>> {
+    - m_Slice : ArraySlice<T>
+    + ArraySliceDebugView(slice:ArraySlice<T>)
+    + Items : T[] <<get>>
+}
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+class ProbeVolume <<partial>> {
+    + mode : Mode
+    + size : Vector3
+    + overrideRendererFilters : bool = false
+    + minRendererVolumeSize : float = 0.1f
+    + objectLayerMask : LayerMask
+    + lowestSubdivLevelOverride : int = 0
+    + highestSubdivLevelOverride : int
+    + overridesSubdivLevels : bool = false
+    <<internal>> mightNeedRebaking : bool = false
+    <<internal>> cachedTransform : Matrix4x4
+    <<internal>> cachedHashCode : int
+    + fillEmptySpaces : bool = false
+}
+enum Mode {
+    Global,
+    Scene,
+    Local,
+}
+MonoBehaviour <|-- ProbeVolume
+ProbeVolume +-- Mode
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class CheckinDialogOperations <<static>> {
+    <<internal>> {static} CheckinPaths(wkInfo:WorkspaceInfo, paths:List<string>, comment:string, workspaceWindow:IWorkspaceWindow, dialog:CheckinDialog, guiMessage:GuiMessage.IGuiMessage, progressControls:IProgressControls, mergeViewLauncher:IMergeViewLauncher) : void
+    <<internal>> {static} CheckinPathsPartial(wkInfo:WorkspaceInfo, paths:List<string>, comment:string, viewHost:ViewHost, dialog:CheckinDialog, guiMessage:GuiMessage.IGuiMessage, progressControls:IProgressControls, gluonViewSwitcher:IGluonViewSwitcher) : void
+    {static} - UserWantsToShowIncomingView(guiMessage:GuiMessage.IGuiMessage) : bool
+}
+@enduml

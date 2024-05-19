@@ -1,0 +1,21 @@
+@startuml
+class SpritePolygonModeModule <<partial>> {
+    - m_PolygonShapeView : VisualElement
+    - m_ChangeButton : UIElementButton
+    - m_WarningMessage : VisualElement
+    - AddMainUI(element:VisualElement) : void
+    + <<override>> DoMainGUI() : void
+    + <<override>> DoToolbarGUI(toolbarRect:Rect) : void
+    - DrawGizmos() : void
+    - ViewUpdateSideCountField() : void
+    - SetupPolygonChangeShapeWindowElements(moduleView:VisualElement) : void
+    - ShowHideWarningMessage() : void
+    - isSidesValid : bool <<get>>
+    + showChangeShapeWindow : bool <<get>> <<set>>
+}
+class SpritePolygonModeStyles <<static>> {
+    + {static} <<readonly>> changeShapeLabel : GUIContent
+}
+SpriteFrameModuleBase <|-- SpritePolygonModeModule
+SpritePolygonModeModule +-- SpritePolygonModeStyles
+@enduml

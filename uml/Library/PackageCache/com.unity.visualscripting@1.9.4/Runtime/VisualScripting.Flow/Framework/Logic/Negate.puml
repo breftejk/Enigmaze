@@ -1,0 +1,9 @@
+@startuml
+class Negate <<sealed>> {
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Operation(flow:Flow) : bool
+}
+Unit <|-- Negate
+@enduml

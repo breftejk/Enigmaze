@@ -1,0 +1,8 @@
+@startuml
+class SawtoothWaveNode {
+    + SawtoothWaveNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - SawtoothWave(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SawtoothWaveNode
+@enduml

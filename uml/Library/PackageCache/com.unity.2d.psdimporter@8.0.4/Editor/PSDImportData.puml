@@ -1,0 +1,59 @@
+@startuml
+class PSDImportData {
+    - m_ImportedTextureWidth : int
+    + importedTextureWidth : int <<get>> <<set>>
+    - m_ImportedTextureHeight : int
+    + importedTextureHeight : int <<get>> <<set>>
+    - m_DocumentSize : Vector2Int
+    + documentSize : Vector2Int <<get>> <<set>>
+    - m_TextureActualHeight : int
+    + textureActualHeight : int <<get>> <<set>>
+    - m_TextureActualWidth : int
+    + textureActualWidth : int <<get>> <<set>>
+    - m_PsdLayerData : PSDLayerData[]
+    + psdLayerData : PSDLayerData[] <<get>> <<set>>
+    + CreatePSDLayerData(bitmapLayer:List<BitmapLayer>) : void
+    - CreatePSDLayerData(layer:BitmapLayer, layerData:List<PSDLayerData>, parentIndex:int) : void
+}
+struct BoneGO {
+    + go : GameObject
+    + index : int
+}
+class PSDLayerImportSetting {
+    - m_SpriteId : string
+    - m_SpriteIDGUID : GUID
+    + name : string
+    + layerId : int
+    + flatten : bool
+    + isGroup : bool
+    + importLayer : bool
+    + layerID : int <<get>>
+    - name : string <<get>>
+    - isGroup : bool <<get>>
+    + spriteId : GUID <<get>> <<set>>
+}
+class PSDLayerData {
+    - m_Name : string
+    + name : string <<get>> <<set>>
+    - m_ParentIndex : int
+    + parentIndex : int <<get>> <<set>>
+    - m_LayerID : int
+    + layerID : int <<get>> <<set>>
+    - m_IsVisible : bool
+    + isVisible : bool <<get>> <<set>>
+    - m_IsGroup : bool
+    + isGroup : bool <<get>> <<set>>
+    - m_IsImported : bool
+    + isImported : bool <<get>> <<set>>
+    - m_LayerSizeOnFile : Vector2Int
+    + layerSizeOnFile : Vector2Int <<get>> <<set>>
+}
+class PSDExtractLayerData {
+    + bitmapLayer : BitmapLayer
+    + importSetting : PSDLayerImportSetting
+    + children : PSDExtractLayerData[]
+}
+ScriptableObject <|-- PSDImportData
+IPSDLayerMappingStrategyComparable <|-- PSDLayerImportSetting
+IPSDLayerMappingStrategyComparable <|-- PSDLayerData
+@enduml

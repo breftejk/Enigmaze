@@ -1,0 +1,39 @@
+@startuml
+class ForwardRendererData {
+    - <<const>> k_ErrorMessage : string = "ForwardRendererData has been deprecated. Use UniversalRendererData instead"
+    + shaders : ShaderResources
+    + postProcessData : PostProcessData
+    - m_OpaqueLayerMask : LayerMask
+    - m_TransparentLayerMask : LayerMask
+    - m_DefaultStencilState : StencilStateData
+    - m_ShadowTransparentReceive : bool
+    - m_RenderingMode : RenderingMode
+    - m_DepthPrimingMode : DepthPrimingMode
+    - m_AccurateGbufferNormals : bool
+    - m_ClusteredRendering : bool
+    - m_TileSize : TileSize
+    # <<override>> Create() : ScriptableRenderer
+    + opaqueLayerMask : LayerMask <<get>> <<set>>
+    + transparentLayerMask : LayerMask <<get>> <<set>>
+    + defaultStencilState : StencilStateData <<get>> <<set>>
+    + shadowTransparentReceive : bool <<get>> <<set>>
+    + renderingMode : RenderingMode <<get>> <<set>>
+    + accurateGbufferNormals : bool <<get>> <<set>>
+}
+class ShaderResources <<sealed>> {
+    + blitPS : Shader
+    + copyDepthPS : Shader
+    + screenSpaceShadowPS : Shader
+    + samplingPS : Shader
+    + stencilDeferredPS : Shader
+    + fallbackErrorPS : Shader
+    + fallbackLoadingPS : Shader
+    + materialErrorPS : Shader
+    <<internal>> coreBlitPS : Shader
+    <<internal>> coreBlitColorAndDepthPS : Shader
+    + cameraMotionVector : Shader
+    + objectMotionVector : Shader
+}
+ScriptableRendererData <|-- ForwardRendererData
+ForwardRendererData +-- ShaderResources
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class CinemachineCollisionImpulseSource {
+    + m_LayerMask : LayerMask = 1
+    + m_IgnoreTag : string
+    + m_UseImpactDirection : bool = false
+    + m_ScaleImpactWithMass : bool = false
+    + m_ScaleImpactWithSpeed : bool = false
+    - mRigidBody : Rigidbody
+    - mRigidBody2D : Rigidbody2D
+    - Start() : void
+    - OnEnable() : void
+    - OnCollisionEnter(c:Collision) : void
+    - OnTriggerEnter(c:Collider) : void
+    - GetMassAndVelocity(other:Collider, vel:Vector3) : float
+    - GenerateImpactEvent(other:Collider, vel:Vector3) : void
+    - OnCollisionEnter2D(c:Collision2D) : void
+    - OnTriggerEnter2D(c:Collider2D) : void
+    - GetMassAndVelocity2D(other2d:Collider2D, vel:Vector3) : float
+    - GenerateImpactEvent2D(other2d:Collider2D, vel:Vector3) : void
+}
+CinemachineImpulseSource <|-- CinemachineCollisionImpulseSource
+@enduml

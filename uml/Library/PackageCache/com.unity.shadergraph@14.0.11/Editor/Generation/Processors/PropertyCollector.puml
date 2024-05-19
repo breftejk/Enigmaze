@@ -1,0 +1,26 @@
+@startuml
+class PropertyCollector {
+    - m_ReadOnly : bool
+    - m_HLSLProperties : List<HLSLProperty> = null
+    - m_ReferenceNames : Dictionary<string, int>
+    - m_Properties : List<AbstractShaderProperty>
+    + propertyCount : int <<get>>
+    + properties : IEnumerable<AbstractShaderProperty> <<get>>
+    + GetProperty(index:int) : AbstractShaderProperty
+    + Sort() : void
+    + SetReadOnly() : void
+    - {static} EquivalentHLSLProperties(a:AbstractShaderProperty, b:AbstractShaderProperty) : bool
+    + AddShaderProperty(prop:AbstractShaderProperty) : void
+    - BuildHLSLPropertyList() : List<HLSLProperty>
+    + GetPropertiesDeclaration(builder:ShaderStringBuilder, mode:GenerationMode, defaultPrecision:ConcretePrecision) : void
+    + HasDotsProperties() : bool
+    + GetConfiguredTextures() : List<TextureInfo>
+}
+struct TextureInfo {
+    + name : string
+    + textureId : int
+    + dimension : TextureDimension
+    + modifiable : bool
+}
+PropertyCollector +-- TextureInfo
+@enduml

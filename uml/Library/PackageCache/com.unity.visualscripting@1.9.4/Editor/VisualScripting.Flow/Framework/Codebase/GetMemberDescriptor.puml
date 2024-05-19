@@ -1,0 +1,8 @@
+@startuml
+class GetMemberDescriptor {
+    + GetMemberDescriptor(unit:GetMember)
+    # <<override>> direction : ActionDirection <<get>>
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"MemberUnitDescriptor`1" "<GetMember>" <|-- GetMemberDescriptor
+@enduml

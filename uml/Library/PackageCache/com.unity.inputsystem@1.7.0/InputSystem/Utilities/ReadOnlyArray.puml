@@ -1,0 +1,36 @@
+@startuml
+struct "ReadOnlyArray`1"<TValue> {
+    <<internal>> m_Array : TValue[]
+    <<internal>> m_StartIndex : int
+    <<internal>> m_Length : int
+    + ReadOnlyArray(array:TValue[])
+    + ReadOnlyArray(array:TValue[], index:int, length:int)
+    + ToArray() : TValue[]
+    + IndexOf(predicate:Predicate<TValue>) : int
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator<TValue>
+    - GetEnumerator() : IEnumerator
+    + Count : int <<get>>
+}
+class ReadOnlyArrayExtensions <<static>> {
+    + {static} Contains(array:ReadOnlyArray<TValue>, value:TValue) : bool
+    + {static} ContainsReference(array:ReadOnlyArray<TValue>, value:TValue) : bool
+    + {static} IndexOfReference(array:ReadOnlyArray<TValue>, value:TValue) : int
+    <<internal>> {static} HaveEqualReferences(array1:ReadOnlyArray<TValue>, array2:IReadOnlyList<TValue>, count:int) : bool
+}
+struct Enumerator {
+    - <<readonly>> m_Array : TValue[]
+    - <<readonly>> m_IndexStart : int
+    - <<readonly>> m_IndexEnd : int
+    - m_Index : int
+    <<internal>> Enumerator(array:TValue[], index:int, length:int)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : TValue <<get>>
+    - Current : object <<get>>
+}
+"IReadOnlyList`1" "<TValue>" <|-- "ReadOnlyArray`1"
+"ReadOnlyArray`1" +-- Enumerator
+"IEnumerator`1" "<TValue>" <|-- Enumerator
+@enduml

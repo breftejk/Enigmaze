@@ -1,0 +1,9 @@
+@startuml
+class VariableDeclarationCollection <<sealed>> {
+    # <<override>> GetKeyForItem(item:VariableDeclaration) : string
+    + EditorRename(item:VariableDeclaration, newName:string) : void
+    + <<new>> TryGetValue(key:string, value:VariableDeclaration) : bool
+}
+"KeyedCollection`2" "<string,VariableDeclaration>" <|-- VariableDeclarationCollection
+"IKeyedCollection`2" "<string,VariableDeclaration>" <|-- VariableDeclarationCollection
+@enduml

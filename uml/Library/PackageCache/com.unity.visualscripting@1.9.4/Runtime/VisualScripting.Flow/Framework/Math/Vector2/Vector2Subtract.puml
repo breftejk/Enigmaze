@@ -1,0 +1,8 @@
+@startuml
+class Vector2Subtract <<sealed>> {
+    # <<override>> defaultMinuend : Vector2 <<get>>
+    # <<override>> defaultSubtrahend : Vector2 <<get>>
+    + <<override>> Operation(a:Vector2, b:Vector2) : Vector2
+}
+"Subtract`1" "<Vector2>" <|-- Vector2Subtract
+@enduml

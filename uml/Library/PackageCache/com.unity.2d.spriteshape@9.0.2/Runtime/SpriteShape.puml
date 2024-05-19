@@ -1,0 +1,81 @@
+@startuml
+enum ShapeTangentMode {
+    Linear= 0,
+    Continuous= 1,
+    Broken= 2,
+}
+enum CornerType {
+    OuterTopLeft,
+    OuterTopRight,
+    OuterBottomLeft,
+    OuterBottomRight,
+    InnerTopLeft,
+    InnerTopRight,
+    InnerBottomLeft,
+    InnerBottomRight,
+}
+enum QualityDetail {
+    High= 16,
+    Mid= 8,
+    Low= 4,
+}
+enum Corner {
+    Disable= 0,
+    Automatic= 1,
+    Stretched= 2,
+}
+class SplineControlPoint {
+    + position : Vector3
+    + leftTangent : Vector3
+    + rightTangent : Vector3
+    + mode : ShapeTangentMode
+    + height : float = 1f
+    + spriteIndex : int
+    + corner : bool
+    - m_CornerMode : Corner
+    + cornerMode : Corner <<get>> <<set>>
+    + <<override>> GetHashCode() : int
+}
+class AngleRange {
+    + start : float <<get>> <<set>>
+    + end : float <<get>> <<set>>
+    + order : int <<get>> <<set>>
+    + sprites : List<Sprite> <<get>> <<set>>
+    - m_Start : float
+    - m_End : float
+    - m_Order : int
+    - m_Sprites : List<Sprite>
+    + Clone() : object
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+class CornerSprite {
+    + cornerType : CornerType <<get>> <<set>>
+    + sprites : List<Sprite> <<get>> <<set>>
+    - m_CornerType : CornerType
+    - m_Sprites : List<Sprite>
+    + Clone() : object
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+class SpriteShape {
+    + angleRanges : List<AngleRange> <<get>> <<set>>
+    + fillTexture : Texture2D <<get>> <<set>>
+    + cornerSprites : List<CornerSprite> <<get>> <<set>>
+    + fillOffset : float <<get>> <<set>>
+    + useSpriteBorders : bool <<get>> <<set>>
+    - m_Angles : List<AngleRange>
+    - m_FillTexture : Texture2D
+    - m_CornerSprites : List<CornerSprite>
+    - m_FillOffset : float
+    - m_UseSpriteBorders : bool = true
+    - GetCornerSprite(cornerType:CornerType) : CornerSprite
+    - ResetCornerList() : void
+    - OnValidate() : void
+    - Reset() : void
+    <<internal>> {static} GetSpriteShapeHashCode(spriteShape:SpriteShape) : int
+}
+ICloneable <|-- AngleRange
+ICloneable <|-- CornerSprite
+ScriptableObject <|-- SpriteShape
+@enduml

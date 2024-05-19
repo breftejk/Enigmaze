@@ -1,0 +1,7 @@
+@startuml
+class GridPaintPaletteWindowActiveTargets {
+    <<const>> - kUssClassName : string = "unity-tilepalette-activetargets"
+    + GridPaintPaletteWindowActiveTargets()
+}
+VisualElement <|-- GridPaintPaletteWindowActiveTargets
+@enduml

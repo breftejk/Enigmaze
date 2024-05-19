@@ -1,0 +1,19 @@
+@startuml
+class CharacterMovementNoCamera {
+    + InvisibleCameraOrigin : Transform
+    + StrafeSpeed : float = 0.1f
+    + TurnSpeed : float = 3
+    + Damping : float = 0.2f
+    + VerticalRotMin : float
+    + VerticalRotMax : float = 80
+    + sprintJoystick : KeyCode
+    + sprintKeyboard : KeyCode
+    - isSprinting : bool
+    - anim : Animator
+    - currentStrafeSpeed : float
+    - currentVelocity : Vector2
+    - OnEnable() : void
+    - FixedUpdate() : void
+}
+MonoBehaviour <|-- CharacterMovementNoCamera
+@enduml

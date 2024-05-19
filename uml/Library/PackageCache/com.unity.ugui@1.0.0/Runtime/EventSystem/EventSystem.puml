@@ -1,0 +1,43 @@
+@startuml
+class EventSystem {
+    - m_SystemInputModules : List<BaseInputModule>
+    - m_CurrentInputModule : BaseInputModule
+    - {static} m_EventSystems : List<EventSystem>
+    + {static} current : EventSystem <<get>> <<set>>
+    - m_FirstSelected : GameObject
+    - m_sendNavigationEvents : bool = true
+    + sendNavigationEvents : bool <<get>> <<set>>
+    - m_DragThreshold : int = 10
+    + pixelDragThreshold : int <<get>> <<set>>
+    - m_CurrentSelected : GameObject
+    + currentInputModule : BaseInputModule <<get>>
+    + firstSelectedGameObject : GameObject <<get>> <<set>>
+    + currentSelectedGameObject : GameObject <<get>>
+    + lastSelectedGameObject : GameObject <<get>>
+    - m_HasFocus : bool = true
+    + isFocused : bool <<get>>
+    # EventSystem()
+    + UpdateModules() : void
+    - m_SelectionGuard : bool
+    + alreadySelecting : bool <<get>>
+    + SetSelectedGameObject(selected:GameObject, pointer:BaseEventData) : void
+    - m_DummyData : BaseEventData
+    - baseEventDataCache : BaseEventData <<get>>
+    + SetSelectedGameObject(selected:GameObject) : void
+    - {static} RaycastComparer(lhs:RaycastResult, rhs:RaycastResult) : int
+    - {static} <<readonly>> s_RaycastComparer : Comparison<RaycastResult>
+    + RaycastAll(eventData:PointerEventData, raycastResults:List<RaycastResult>) : void
+    + IsPointerOverGameObject() : bool
+    + IsPointerOverGameObject(pointerId:int) : bool
+    + {static} SetUITookitEventSystemOverride(activeEventSystem:EventSystem, sendEvents:bool, createPanelGameObjectsOnStart:bool) : void
+    # <<override>> Start() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    - TickModules() : void
+    # <<virtual>> OnApplicationFocus(hasFocus:bool) : void
+    # <<virtual>> Update() : void
+    - ChangeEventModule(module:BaseInputModule) : void
+    + <<override>> ToString() : string
+}
+UIBehaviour <|-- EventSystem
+@enduml

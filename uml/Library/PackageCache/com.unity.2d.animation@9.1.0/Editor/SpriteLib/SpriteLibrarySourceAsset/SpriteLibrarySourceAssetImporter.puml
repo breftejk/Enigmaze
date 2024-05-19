@@ -1,0 +1,15 @@
+@startuml
+class SpriteLibrarySourceAssetImporter {
+    + <<override>> OnImportAsset(ctx:AssetImportContext) : void
+    <<internal>> {static} UpdateSpriteLibrarySourceAssetLibraryWithMainAsset(sourceLibraryAsset:SpriteLibrarySourceAsset) : void
+    <<internal>> {static} HasValidMainLibrary(sourceLibraryAsset:SpriteLibrarySourceAsset, assetPath:string) : bool
+    <<internal>> {static} LoadSpriteLibrarySourceAsset(path:string) : SpriteLibrarySourceAsset
+    <<internal>> {static} SaveSpriteLibrarySourceAsset(obj:SpriteLibrarySourceAsset, path:string) : void
+    {static} - ConvertToSpriteLibrarySourceAssetValidate() : bool
+    {static} - ConvertToSourceAsset() : void
+    <<internal>> {static} GetAssetParent(asset:SpriteLibraryAsset) : SpriteLibraryAsset
+    <<internal>> {static} GetAssetParentChain(asset:SpriteLibraryAsset) : List<SpriteLibraryAsset>
+    <<internal>> {static} GetAssetFromSelection() : SpriteLibraryAsset
+}
+ScriptedImporter <|-- SpriteLibrarySourceAssetImporter
+@enduml

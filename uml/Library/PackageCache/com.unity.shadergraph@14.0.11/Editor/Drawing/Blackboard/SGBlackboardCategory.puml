@@ -1,0 +1,65 @@
+@startuml
+class SGBlackboardCategory <<sealed>> {
+    + OnControllerChanged(e:SGControllerChangedEvent) : void
+    + OnControllerEvent(e:SGControllerEvent) : void
+    + controller : BlackboardCategoryController <<get>> <<set>>
+    - controller : SGController <<get>>
+    - m_Controller : BlackboardCategoryController
+    - m_ViewModel : BlackboardCategoryViewModel
+    + viewModel : BlackboardCategoryViewModel <<get>>
+    <<const>> - k_StylePath : string = "Styles/SGBlackboard"
+    <<const>> - k_UxmlPath : string = "UXML/Blackboard/SGBlackboardCategory"
+    - m_DragIndicator : VisualElement
+    - m_MainContainer : VisualElement
+    - m_Header : VisualElement
+    - m_TitleLabel : Label
+    - m_Foldout : Foldout
+    - m_TextField : TextField
+    <<internal>> textField : TextField <<get>>
+    - m_RowsContainer : VisualElement
+    - m_InsertIndex : int
+    - blackboard : SGBlackboard <<get>>
+    - m_IsDragInProgress : bool
+    - m_WasHoverExpanded : bool
+    - m_DroppedOnBottomEdge : bool
+    - m_DroppedOnTopEdge : bool
+    - m_RenameInProgress : bool
+    - m_ContextMenuManipulator : ContextualMenuManipulator
+    - m_SelectionDropperManipulator : SelectionDropper
+    + canAcceptDrop : CanAcceptDropDelegate <<get>> <<set>>
+    - InsertionIndex(pos:Vector2) : int
+    {static} - FindCategoryDirectChild(blackboardCategory:SGBlackboardCategory, element:VisualElement) : VisualElement
+    <<internal>> SGBlackboardCategory(categoryViewModel:BlackboardCategoryViewModel, inController:BlackboardCategoryController)
+    + <<override>> contentContainer : VisualElement <<get>>
+    + <<override>> title : string <<get>> <<set>>
+    + headerVisible : bool <<get>> <<set>>
+    - SetDragIndicatorVisible(visible:bool) : void
+    + CategoryContains(selection:List<ISelectable>) : bool
+    - OnFoldoutToggle(evt:ChangeEvent<bool>) : void
+    <<internal>> TryDoFoldout(expand:bool) : void
+    - OnMouseDownEvent(e:MouseDownEvent) : void
+    <<internal>> OpenTextEditor() : void
+    - OnEditTextFinished() : void
+    - OnHoverStartEvent(evt:MouseEnterEvent) : void
+    - OnHoverEndEvent(evt:MouseLeaveEvent) : void
+    - OnDragUpdatedEvent(evt:DragUpdatedEvent) : void
+    - OnDragPerformEvent(evt:DragPerformEvent) : void
+    - OnDragLeaveEvent(evt:DragLeaveEvent) : void
+    <<internal>> OnDragActionCanceled() : void
+    + <<override>> Select(selectionContainer:VisualElement, additive:bool) : void
+    + <<override>> OnSelected() : void
+    + <<override>> OnUnselected() : void
+    + AddToSelection(selectable:ISelectable) : void
+    + RemoveFromSelection(selectable:ISelectable) : void
+    + ClearSelection() : void
+    + selection : List<ISelectable> <<get>>
+    - RequestCategoryDelete() : void
+    - AddContextMenuOptions(evt:ContextualMenuPopulateEvent) : void
+    + CompareTo(other:SGBlackboardCategory) : int
+    + Dispose() : void
+}
+GraphElement <|-- SGBlackboardCategory
+"ISGControlledElement`1" "<BlackboardCategoryController>" <|-- SGBlackboardCategory
+ISelection <|-- SGBlackboardCategory
+"IComparable`1" "<SGBlackboardCategory>" <|-- SGBlackboardCategory
+@enduml

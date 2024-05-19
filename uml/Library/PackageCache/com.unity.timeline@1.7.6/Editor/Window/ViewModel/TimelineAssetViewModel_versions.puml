@@ -1,0 +1,14 @@
+@startuml
+class TimelineAssetViewModel <<partial>> {
+    - m_Version : int
+    - deprecated_timeAreaPlayRange : Vector2
+    - UpgradeIfNecessary() : void
+    - Upgrade_PlayRangeAsStruct() : void
+}
+enum Versions {
+    Default= 0,
+    PlayRangeAsStruct= 1,
+    Current= PlayRangeAsStruct,
+}
+TimelineAssetViewModel +-- Versions
+@enduml

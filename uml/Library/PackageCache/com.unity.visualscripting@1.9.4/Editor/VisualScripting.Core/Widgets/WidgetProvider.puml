@@ -1,0 +1,10 @@
+@startuml
+class WidgetProvider {
+    + canvas : ICanvas <<get>>
+    + WidgetProvider(canvas:ICanvas)
+    # <<override>> cache : bool <<get>>
+    + <<override>> IsValid(item:IGraphItem) : bool
+    # <<override>> CreateDecorator(widgetType:Type, item:IGraphItem) : IWidget
+}
+"SingleDecoratorProvider`3" "<IGraphItem,IWidget,WidgetAttribute>" <|-- WidgetProvider
+@enduml

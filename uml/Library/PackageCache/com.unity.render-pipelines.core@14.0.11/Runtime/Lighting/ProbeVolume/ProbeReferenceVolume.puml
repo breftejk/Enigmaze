@@ -1,0 +1,270 @@
+@startuml
+struct ProbeVolumeSystemParameters {
+    + memoryBudget : ProbeVolumeTextureMemoryBudget
+    + blendingMemoryBudget : ProbeVolumeBlendingTextureMemoryBudget
+    + probeDebugMesh : Mesh
+    + probeDebugShader : Shader
+    + offsetDebugMesh : Mesh
+    + offsetDebugShader : Shader
+    + scenarioBlendingShader : ComputeShader
+    + sceneData : ProbeVolumeSceneData
+    + shBands : ProbeVolumeSHBands
+    + supportsRuntimeDebug : bool
+    + supportStreaming : bool
+}
+struct ProbeVolumeShadingParameters {
+    + normalBias : float
+    + viewBias : float
+    + scaleBiasByMinDistanceBetweenProbes : bool
+    + samplingNoise : float
+    + weight : float
+    + leakReductionMode : APVLeakReductionMode
+    + occlusionWeightContribution : float
+    + minValidNormalWeight : float
+    + frameIndexForNoise : int
+    + reflNormalizationLowerClamp : float
+    + reflNormalizationUpperClamp : float
+}
+enum ProbeVolumeTextureMemoryBudget {
+    MemoryBudgetLow= 512,
+    MemoryBudgetMedium= 1024,
+    MemoryBudgetHigh= 2048,
+}
+enum ProbeVolumeBlendingTextureMemoryBudget {
+    None= 0,
+    MemoryBudgetLow= 128,
+    MemoryBudgetMedium= 256,
+    MemoryBudgetHigh= 512,
+}
+enum ProbeVolumeSHBands {
+    SphericalHarmonicsL1= 1,
+    SphericalHarmonicsL2= 2,
+}
+class ProbeReferenceVolume <<partial>> {
+    - m_IsInitialized : bool = false
+    - m_SupportStreaming : bool = false
+    - m_Transform : RefVolTransform
+    - m_MaxSubdivision : int
+    - m_Pool : ProbeBrickPool
+    - m_Index : ProbeBrickIndex
+    - m_CellIndices : ProbeCellIndices
+    - m_BlendingPool : ProbeBrickBlendingPool
+    - m_TmpSrcChunks : List<Chunk>
+    - m_PositionOffsets : float[]
+    - m_CurrGlobalBounds : Bounds
+    <<internal>> globalBounds : Bounds <<get>> <<set>>
+    <<internal>> cells : Dictionary<int, CellInfo>
+    - m_CellInfoPool : ObjectPool<CellInfo>
+    - m_BlendingCellInfoPool : ObjectPool<BlendingCellInfo>
+    - m_TemporaryDataLocation : ProbeBrickPool.DataLocation
+    - m_TemporaryDataLocationMemCost : int
+    - m_CurrentProbeVolumeChunkSizeInBricks : int = 0
+    <<internal>> sceneData : ProbeVolumeSceneData
+    - minLoadedCellPos : Vector3Int
+    - maxLoadedCellPos : Vector3Int
+    + retrieveExtraDataAction : Action<ExtraDataActionInput>
+    + checksDuringBakeAction : Action = null
+    - m_BricksLoaded : bool = false
+    - m_PendingAssetsToBeLoaded : Dictionary<string, ProbeVolumeAsset>
+    - m_PendingAssetsToBeUnloaded : Dictionary<string, ProbeVolumeAsset>
+    - m_ActiveAssets : Dictionary<string, ProbeVolumeAsset>
+    - m_NeedLoadAsset : bool = false
+    - m_ProbeReferenceVolumeInit : bool = false
+    - m_EnabledBySRP : bool = false
+    + isInitialized : bool <<get>>
+    <<internal>> enabledBySRP : bool <<get>>
+    <<internal>> hasUnloadedCells : bool <<get>>
+    <<internal>> enableScenarioBlending : bool <<get>>
+    - m_PendingInitInfo : InitInfo
+    - m_NeedsIndexRebuild : bool = false
+    - m_HasChangedIndex : bool = false
+    - m_CBShaderID : int
+    - m_NumberOfCellsLoadedPerFrame : int = 2
+    <<internal>> numberOfCellsLoadedPerFrame : int <<get>>
+    - m_NumberOfCellsBlendedPerFrame : int = 10000
+    + numberOfCellsBlendedPerFrame : int <<get>> <<set>>
+    - m_TurnoverRate : float = 0.1f
+    + turnoverRate : float <<get>> <<set>>
+    - m_MemoryBudget : ProbeVolumeTextureMemoryBudget
+    - m_BlendingMemoryBudget : ProbeVolumeBlendingTextureMemoryBudget
+    - m_SHBands : ProbeVolumeSHBands
+    - m_ProbeVolumesWeight : float
+    + shBands : ProbeVolumeSHBands <<get>>
+    <<internal>> clearAssetsOnVolumeClear : bool = false
+    + lightingScenario : string <<get>> <<set>>
+    + scenarioBlendingFactor : float <<get>> <<set>>
+    + BlendLightingScenario(otherScenario:string, blendingFactor:float) : void
+    <<internal>> {static} defaultLightingScenario : string = "Default"
+    + memoryBudget : ProbeVolumeTextureMemoryBudget <<get>>
+    + probeVolumesWeight : float <<get>> <<set>>
+    {static} - _instance : ProbeReferenceVolume
+    <<internal>> perSceneDataList : List<ProbeVolumePerSceneData> <<get>>
+    <<internal>> RegisterPerSceneData(data:ProbeVolumePerSceneData) : void
+    <<internal>> UnregisterPerSceneData(data:ProbeVolumePerSceneData) : void
+    + {static} instance : ProbeReferenceVolume <<get>>
+    + Initialize(parameters:ProbeVolumeSystemParameters) : void
+    + SetEnableStateFromSRP(srpEnablesPV:bool) : void
+    <<internal>> ForceSHBand(shBands:ProbeVolumeSHBands) : void
+    + Cleanup() : void
+    + GetVideoMemoryCost() : int
+    - RemoveCell(cell:Cell) : void
+    <<internal>> UnloadCell(cellInfo:CellInfo) : void
+    <<internal>> UnloadBlendingCell(blendingCell:BlendingCellInfo) : void
+    <<internal>> UnloadAllCells() : void
+    <<internal>> UnloadAllBlendingCells() : void
+    - AddCell(cell:Cell, assetInstanceID:int) : void
+    <<internal>> LoadCell(cellInfo:CellInfo, ignoreErrorLog:bool) : bool
+    <<internal>> LoadAllCells() : void
+    - RecomputeMinMaxLoadedCellPos() : void
+    - CheckCompatibilityWithCollection(asset:ProbeVolumeAsset, collection:Dictionary<string, ProbeVolumeAsset>) : bool
+    <<internal>> AddPendingAssetLoading(asset:ProbeVolumeAsset) : void
+    <<internal>> AddPendingAssetRemoval(asset:ProbeVolumeAsset) : void
+    <<internal>> RemovePendingAsset(asset:ProbeVolumeAsset) : void
+    - PerformPendingIndexChangeAndInit() : void
+    <<internal>> SetMinBrickAndMaxSubdiv(minBrickSize:float, maxSubdiv:int) : void
+    - LoadAsset(asset:ProbeVolumeAsset) : void
+    - PerformPendingLoading() : void
+    - PerformPendingDeletion() : void
+    <<internal>> GetNumberOfBricksAtSubdiv(position:Vector3Int, minSubdiv:int, minValidLocalIdxAtMaxRes:Vector3Int, sizeOfValidIndicesAtMaxRes:Vector3Int) : int
+    - GetCellIndexUpdate(cell:Cell, cellUpdateInfo:ProbeBrickIndex.CellIndexUpdateInfo, ignoreErrorLog:bool) : bool
+    + PerformPendingOperations() : void
+    - InitProbeReferenceVolume(memoryBudget:ProbeVolumeTextureMemoryBudget, blendingMemoryBudget:ProbeVolumeBlendingTextureMemoryBudget, shBands:ProbeVolumeSHBands) : void
+    - AllocateTemporaryDataLocation() : void
+    - ProbeReferenceVolume()
+    + GetRuntimeResources() : RuntimeResources
+    <<internal>> SetTRS(position:Vector3, rotation:Quaternion, minBrickSize:float) : void
+    <<internal>> SetMaxSubdivision(maxSubdivision:int) : void
+    <<internal>> {static} CellSize(subdivisionLevel:int) : int
+    <<internal>> BrickSize(subdivisionLevel:int) : float
+    <<internal>> MinBrickSize() : float
+    <<internal>> MaxBrickSize() : float
+    <<internal>> GetTransform() : RefVolTransform
+    <<internal>> GetMaxSubdivision() : int
+    <<internal>> GetMaxSubdivision(multiplier:float) : int
+    <<internal>> GetDistanceBetweenProbes(subdivisionLevel:int) : float
+    <<internal>> MinDistanceBetweenProbes() : float
+    + DataHasBeenLoaded() : bool
+    <<internal>> Clear() : void
+    - GetSourceLocations(count:int, chunkSize:int, dataLoc:ProbeBrickPool.DataLocation) : List<Chunk>
+    - UpdatePool(chunkList:List<Chunk>, data:Cell.PerScenarioData, validityNeighMaskData:NativeArray<byte>, chunkIndex:int, poolIndex:int) : void
+    - UpdatePoolValidity(chunkList:List<Chunk>, data:Cell.PerScenarioData, validityNeighMaskData:NativeArray<byte>, chunkIndex:int) : void
+    - AddBlendingBricks(blendingCell:BlendingCellInfo) : bool
+    - AddBricks(cellInfo:CellInfo, cellUpdateInfo:ProbeBrickIndex.CellIndexUpdateInfo, ignoreErrorLog:bool) : bool
+    - UpdateCellIndex(cellInfo:CellInfo) : void
+    - ReleaseBricks(cellInfo:CellInfo) : void
+    + UpdateConstantBuffer(cmd:CommandBuffer, parameters:ProbeVolumeShadingParameters) : void
+    - CleanupLoadedData() : void
+}
+class Cell {
+    + position : Vector3Int
+    + index : int
+    + probeCount : int
+    + minSubdiv : int
+    + maxSubdiv : int
+    + indexChunkCount : int
+    + shChunkCount : int
+    + hasTwoScenarios : bool
+    + shBands : ProbeVolumeSHBands
+    + bricks : NativeArray<Brick> <<get>> <<internal set>>
+    + validityNeighMaskData : NativeArray<byte> <<get>> <<internal set>>
+    + probePositions : NativeArray<Vector3> <<get>> <<internal set>>
+    + touchupVolumeInteraction : NativeArray<float> <<get>> <<internal set>>
+    + offsetVectors : NativeArray<Vector3> <<get>> <<internal set>>
+    + validity : NativeArray<float> <<get>> <<internal set>>
+    + scenario0 : PerScenarioData
+    + scenario1 : PerScenarioData
+    + bakingScenario : PerScenarioData <<get>>
+}
+class CellInfo {
+    + cell : Cell
+    + blendingCell : BlendingCellInfo
+    + chunkList : List<Chunk>
+    + flatIdxInCellIndices : int
+    + loaded : bool
+    + updateInfo : ProbeBrickIndex.CellIndexUpdateInfo
+    + indexUpdated : bool
+    + tempUpdateInfo : ProbeBrickIndex.CellIndexUpdateInfo
+    + sourceAssetInstanceID : int
+    + streamingScore : float
+    + referenceCount : int = 0
+    + debugProbes : CellInstancedDebugProbes
+    + CompareTo(other:CellInfo) : int
+    + Clear() : void
+}
+class BlendingCellInfo {
+    + cellInfo : CellInfo
+    + chunkList : List<Chunk>
+    + streamingScore : float
+    + blendingFactor : float
+    + blending : bool
+    + CompareTo(other:BlendingCellInfo) : int
+    + Clear() : void
+    + MarkUpToDate() : void
+    + IsUpToDate() : bool
+    + ForceReupload() : void
+    + ShouldReupload() : bool
+    + Prioritize() : void
+    + ShouldPrioritize() : bool
+}
+struct Volume {
+    <<internal>> corner : Vector3
+    <<internal>> X : Vector3
+    <<internal>> Y : Vector3
+    <<internal>> Z : Vector3
+    <<internal>> maxSubdivisionMultiplier : float
+    <<internal>> minSubdivisionMultiplier : float
+    + Volume(trs:Matrix4x4, maxSubdivision:float, minSubdivision:float)
+    + Volume(corner:Vector3, X:Vector3, Y:Vector3, Z:Vector3, maxSubdivision:float, minSubdivision:float)
+    + Volume(copy:Volume)
+    + Volume(bounds:Bounds)
+    + CalculateAABB() : Bounds
+    + CalculateCenterAndSize(center:Vector3, size:Vector3) : void
+    + Transform(trs:Matrix4x4) : void
+    + <<override>> ToString() : string
+    + Equals(other:Volume) : bool
+}
+struct RefVolTransform {
+    + posWS : Vector3
+    + rot : Quaternion
+    + scale : float
+}
+struct RuntimeResources {
+    + index : ComputeBuffer
+    + cellIndices : ComputeBuffer
+    + L0_L1rx : RenderTexture
+    + L1_G_ry : RenderTexture
+    + L1_B_rz : RenderTexture
+    + L2_0 : RenderTexture
+    + L2_1 : RenderTexture
+    + L2_2 : RenderTexture
+    + L2_3 : RenderTexture
+    + Validity : Texture3D
+}
+struct ExtraDataActionInput {
+}
+struct InitInfo {
+    + pendingMinCellPosition : Vector3Int
+    + pendingMaxCellPosition : Vector3Int
+}
+struct PerScenarioData {
+    + shL0L1RxData : NativeArray<ushort> <<get>> <<internal set>>
+    + shL1GL1RyData : NativeArray<byte> <<get>> <<internal set>>
+    + shL1BL1RzData : NativeArray<byte> <<get>> <<internal set>>
+    + shL2Data_0 : NativeArray<byte> <<get>> <<internal set>>
+    + shL2Data_1 : NativeArray<byte> <<get>> <<internal set>>
+    + shL2Data_2 : NativeArray<byte> <<get>> <<internal set>>
+    + shL2Data_3 : NativeArray<byte> <<get>> <<internal set>>
+}
+ProbeReferenceVolume +-- Cell
+ProbeReferenceVolume +-- CellInfo
+"IComparable`1" "<CellInfo>" <|-- CellInfo
+ProbeReferenceVolume +-- BlendingCellInfo
+"IComparable`1" "<BlendingCellInfo>" <|-- BlendingCellInfo
+ProbeReferenceVolume +-- Volume
+"IEquatable`1" "<Volume>" <|-- Volume
+ProbeReferenceVolume +-- RefVolTransform
+ProbeReferenceVolume +-- RuntimeResources
+ProbeReferenceVolume +-- ExtraDataActionInput
+ProbeReferenceVolume +-- InitInfo
+Cell +-- PerScenarioData
+@enduml

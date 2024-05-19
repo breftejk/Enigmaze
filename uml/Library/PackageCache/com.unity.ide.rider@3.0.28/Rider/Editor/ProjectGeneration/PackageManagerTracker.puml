@@ -1,0 +1,6 @@
+@startuml
+class PackageManagerTracker <<static>> {
+    - {static} HasManifestJsonLastWriteTimeChanged() : bool
+    <<internal>> {static} SyncIfNeeded(checkProjectFiles:bool) : void
+}
+@enduml

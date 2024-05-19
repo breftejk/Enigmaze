@@ -1,0 +1,14 @@
+@startuml
+class CinemachineConfiner2DEditor <<sealed>> {
+    - m_MaxWindowSizeProperty : SerializedProperty
+    - m_ComputeSkeletonLabel : GUIContent
+    - m_MaxWindowSizeLabel : GUIContent
+    - m_InvalidateCacheLabel : GUIContent
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} s_currentPathCache : List<List<Vector2>>
+    - {static} DrawConfinerGizmos(confiner2D:CinemachineConfiner2D, type:GizmoType) : void
+}
+"BaseEditor`1" "<CinemachineConfiner2D>" <|-- CinemachineConfiner2DEditor
+@enduml

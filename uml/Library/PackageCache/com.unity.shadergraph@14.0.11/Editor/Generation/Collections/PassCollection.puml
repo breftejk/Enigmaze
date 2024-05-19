@@ -1,0 +1,20 @@
+@startuml
+class PassCollection {
+    <<readonly>> - m_Items : List<Item>
+    + PassCollection()
+    + Add(passes:PassCollection) : PassCollection
+    + Add(descriptor:PassDescriptor) : PassCollection
+    + Add(descriptor:PassDescriptor, fieldCondition:FieldCondition) : PassCollection
+    + Add(descriptor:PassDescriptor, fieldConditions:FieldCondition[]) : PassCollection
+    + GetEnumerator() : IEnumerator<Item>
+    - GetEnumerator() : IEnumerator
+}
+class Item {
+    + descriptor : PassDescriptor <<get>>
+    + fieldConditions : FieldCondition[] <<get>>
+    + Item(descriptor:PassDescriptor, fieldConditions:FieldCondition[])
+}
+"IEnumerable`1" "<PassCollection.Item>" <|-- PassCollection
+PassCollection +-- Item
+IConditional <|-- Item
+@enduml

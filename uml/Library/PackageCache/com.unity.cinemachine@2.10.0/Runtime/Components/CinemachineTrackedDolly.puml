@@ -1,0 +1,42 @@
+@startuml
+class CinemachineTrackedDolly {
+    + m_Path : CinemachinePathBase
+    + m_PathPosition : float
+    + m_PositionUnits : CinemachinePathBase.PositionUnits
+    + m_PathOffset : Vector3
+    + m_XDamping : float = 0f
+    + m_YDamping : float = 0f
+    + m_ZDamping : float = 1f
+    + m_CameraUp : CameraUpMode
+    + m_PitchDamping : float = 0
+    + m_YawDamping : float = 0
+    + m_RollDamping : float = 0f
+    + m_AutoDolly : AutoDolly
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + <<override>> GetMaxDampTime() : float
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+    - GetCameraOrientationAtPathPoint(pathOrientation:Quaternion, up:Vector3) : Quaternion
+    - AngularDamping : Vector3 <<get>>
+    - m_PreviousPathPosition : float = 0
+    - m_PreviousOrientation : Quaternion
+    - m_PreviousCameraPosition : Vector3
+}
+enum CameraUpMode {
+    Default,
+    Path,
+    PathNoRoll,
+    FollowTarget,
+    FollowTargetNoRoll,
+}
+struct AutoDolly {
+    + m_Enabled : bool
+    + m_PositionOffset : float
+    + m_SearchRadius : int
+    + m_SearchResolution : int
+    + AutoDolly(enabled:bool, positionOffset:float, searchRadius:int, stepsPerSegment:int)
+}
+CinemachineComponentBase <|-- CinemachineTrackedDolly
+CinemachineTrackedDolly +-- CameraUpMode
+CinemachineTrackedDolly +-- AutoDolly
+@enduml

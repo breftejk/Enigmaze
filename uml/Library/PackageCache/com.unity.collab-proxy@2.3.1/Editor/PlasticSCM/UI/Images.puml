@@ -1,0 +1,166 @@
+@startuml
+class Images {
+    <<internal>> {static} GetImage(image:Name) : Texture2D
+    <<internal>> {static} GetFileIcon(path:string) : Texture
+    <<internal>> {static} GetFileIconFromCmPath(path:string) : Texture
+    <<internal>> {static} GetDropDownIcon() : Texture
+    <<internal>> {static} GetDirectoryIcon() : Texture
+    <<internal>> {static} GetPrivatedOverlayIcon() : Texture
+    <<internal>> {static} GetAddedOverlayIcon() : Texture
+    <<internal>> {static} GetDeletedLocalOverlayIcon() : Texture
+    <<internal>> {static} GetDeletedRemoteOverlayIcon() : Texture
+    <<internal>> {static} GetCheckedOutOverlayIcon() : Texture
+    <<internal>> {static} GetOutOfSyncOverlayIcon() : Texture
+    <<internal>> {static} GetConflictedOverlayIcon() : Texture
+    <<internal>> {static} GetConflictResolvedOverlayIcon() : Texture
+    <<internal>> {static} GetLockedLocalOverlayIcon() : Texture
+    <<internal>> {static} GetLockedRemoteOverlayIcon() : Texture
+    <<internal>> {static} GetRetainedOverlayIcon() : Texture
+    <<internal>> {static} GetIgnoredOverlayIcon() : Texture
+    <<internal>> {static} GetWarnIcon() : Texture
+    <<internal>> {static} GetInfoIcon() : Texture
+    <<internal>> {static} GetErrorDialogIcon() : Texture
+    <<internal>> {static} GetWarnDialogIcon() : Texture
+    <<internal>> {static} GetInfoDialogIcon() : Texture
+    <<internal>> {static} GetRefreshIcon() : Texture
+    <<internal>> {static} GetSettingsIcon() : Texture
+    <<internal>> {static} GetCloseIcon() : Texture
+    <<internal>> {static} GetClickedCloseIcon() : Texture
+    <<internal>> {static} GetHoveredCloseIcon() : Texture
+    <<internal>> {static} GetUndoIcon() : Texture2D
+    <<internal>> {static} GetPlasticIcon() : Texture2D
+    <<internal>> {static} GetBranchIcon() : Texture2D
+    <<internal>> {static} GetConflictedIcon() : Texture2D
+    <<internal>> {static} GetOutOfSyncIcon() : Texture2D
+    <<internal>> {static} GetPlasticViewIcon() : Texture2D
+    <<internal>> {static} GePlasticNotifyIncomingIcon() : Texture2D
+    <<internal>> {static} GetPlasticNotifyConflictIcon() : Texture2D
+    <<internal>> {static} GetEmptyGravatar() : Texture2D
+    <<internal>> {static} GetStepOkIcon() : Texture2D
+    <<internal>> {static} GetStep1Icon() : Texture2D
+    <<internal>> {static} GetStep2Icon() : Texture2D
+    <<internal>> {static} GetMergeLinkIcon() : Texture2D
+    <<internal>> {static} GetAddedLocalIcon() : Texture2D
+    <<internal>> {static} GetDeletedRemoteIcon() : Texture2D
+    <<internal>> {static} GetDeletedIcon() : Texture2D
+    <<internal>> {static} GetMovedIcon() : Texture2D
+    <<internal>> {static} GetRepositoryIcon() : Texture2D
+    <<internal>> {static} GetFileIcon() : Texture
+    <<internal>> {static} GetLinkUnderlineImage() : Texture2D
+    <<internal>> {static} GetInviteUsersIcon() : Texture2D
+    <<internal>> {static} GetLockIcon() : Texture2D
+    <<internal>> {static} GetTreeviewBackgroundTexture() : Texture2D
+    <<internal>> {static} GetCommentBackgroundTexture() : Texture2D
+    <<internal>> {static} GetColumnsBackgroundTexture() : Texture2D
+    <<internal>> {static} GetNewTextureFromTexture(texture:Texture2D) : Texture2D
+    <<internal>> {static} GetNewTextureFromBytes(width:int, height:int, bytes:byte[]) : Texture2D
+    {static} - GetNewTextureFromFile(path:string) : Texture2D
+    {static} - GetOverlay(image:Name) : Texture2D
+    {static} - LoadImage(image:Name, preferFulResImage:bool) : Texture2D
+    {static} - GetEmptyImage() : Texture2D
+    {static} - GetTextureFromColor(color:Color) : Texture2D
+    {static} - GetFileIconFromRelativePath(relativePath:string) : Texture
+    {static} - GetFileIconFromKnownExtension(relativePath:string) : Texture
+    {static} - GetIconFromEditorGUI(name:string) : Texture2D
+    {static} - GetIconFromAssetPreview(type:System.Type) : Texture2D
+    {static} - GetImageFileRelativePath(imageFileName:string) : string
+    {static} - TryLoadImage(imageFileRelativePath:string, image2xFilePath:string, preferFulResImage:bool) : Texture2D
+    {static} - LoadTextureFromFile(path:string) : Texture2D
+    {static} - mImagesByPathCache : Dictionary<string, Texture2D>
+    {static} - mImagesFromEditorGUICache : Dictionary<string, Texture2D>
+    {static} - mImagesFromAssetPreviewCache : Dictionary<string, Texture2D>
+    {static} - mFileIcon : Texture
+    {static} - mPrivatedOverlayIcon : Texture
+    {static} - mAddedOverlayIcon : Texture
+    {static} - mDeletedLocalOverlayIcon : Texture
+    {static} - mDeletedRemoteOverlayIcon : Texture
+    {static} - mCheckedOutOverlayIcon : Texture
+    {static} - mOutOfSyncOverlayIcon : Texture
+    {static} - mConflictedOverlayIcon : Texture
+    {static} - mConflictResolvedOverlayIcon : Texture
+    {static} - mLockedLocalOverlayIcon : Texture
+    {static} - mLockedRemoteOverlayIcon : Texture
+    {static} - mRetainedOverlayIcon : Texture
+    {static} - mIgnoredverlayIcon : Texture
+    {static} - mRefreshIcon : Texture
+    {static} - mCloseIcon : Texture
+    {static} - mClickedCloseIcon : Texture
+    {static} - mHoveredCloseIcon : Texture
+    {static} - mLinkUnderlineImage : Texture2D
+    {static} - mEmptyImage : Texture2D
+    {static} - mTreeviewBackgroundTexture : Texture2D
+    {static} - mColumnsBackgroundTexture : Texture2D
+    {static} - mCommentBackground : Texture2D
+    {static} - mUndoIcon : Texture2D
+    {static} - mPlasticIcon : Texture2D
+    {static} - mBranchIcon : Texture2D
+    {static} - mConflictedIcon : Texture2D
+    {static} - mOutOfSyncIcon : Texture2D
+    {static} - mInviteUsersIcon : Texture2D
+    {static} - mLockIcon : Texture2D
+    {static} - mPlasticViewIcon : Texture2D
+    {static} - mPlasticNotifyIncomingIcon : Texture2D
+    {static} - mPlasticNotifyConflictIcon : Texture2D
+    {static} - mEmptyGravatarIcon : Texture2D
+    {static} - mStepOkIcon : Texture2D
+    {static} - mStep1Icon : Texture2D
+    {static} - mStep2Icon : Texture2D
+    {static} - mMergeLinkIcon : Texture2D
+    {static} - mAddedLocalIcon : Texture2D
+    {static} - mDeletedRemoteIcon : Texture2D
+    {static} - mDeletedIcon : Texture2D
+    {static} - mMovedIcon : Texture2D
+    {static} - mRepositoryIcon : Texture2D
+    {static} <<readonly>> - mLog : ILog
+}
+enum Name {
+    None,
+    IconPlastic,
+    IconCloseButton,
+    IconPressedCloseButton,
+    IconAddedLocal,
+    IconAddedOverlay,
+    IconPrivateOverlay,
+    IconCheckedOutLocalOverlay,
+    IconDeleted,
+    IconDeletedLocalOverlay,
+    IconDeletedRemote,
+    IconDeletedRemoteOverlay,
+    IconOutOfSync,
+    IconOutOfSyncOverlay,
+    IconMoved,
+    IconMergeLink,
+    Ignored,
+    IgnoredOverlay,
+    IconConflicted,
+    IconConflictedOverlay,
+    IconConflictResolvedOverlay,
+    IconLockedLocalOverlay,
+    IconLockedRemoteOverlay,
+    IconRetainedOverlay,
+    XLink,
+    Ok,
+    SecondaryTabClose,
+    SecondaryTabCloseHover,
+    NotOnDisk,
+    IconRepository,
+    IconPlasticView,
+    IconPlasticNotifyIncoming,
+    IconPlasticNotifyConflict,
+    Loading,
+    IconEmptyGravatar,
+    Step1,
+    Step2,
+    Step3,
+    StepOk,
+    ButtonSsoSignInUnity,
+    ButtonSsoSignInEmail,
+    ButtonSsoSignInGoogle,
+    IconBranch,
+    IconUndo,
+    Refresh,
+    IconInviteUsers,
+    IconLock,
+}
+Images +-- Name
+@enduml

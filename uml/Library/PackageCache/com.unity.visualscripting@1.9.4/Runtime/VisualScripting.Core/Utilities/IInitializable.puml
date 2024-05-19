@@ -1,0 +1,5 @@
+@startuml
+interface IInitializable {
+    Initialize() : void
+}
+@enduml

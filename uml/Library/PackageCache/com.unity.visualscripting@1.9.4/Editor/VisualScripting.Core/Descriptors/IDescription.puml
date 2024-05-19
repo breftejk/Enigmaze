@@ -1,0 +1,11 @@
+@startuml
+interface IDescription {
+    title : string <<get>>
+    summary : string <<get>>
+    icon : EditorTexture <<get>>
+}
+class XDescription <<static>> {
+    + {static} ToGUIContent(description:IDescription) : GUIContent
+    + {static} ToGUIContent(description:IDescription, iconSize:int) : GUIContent
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class RawImage {
+    - data : byte[]
+    # <<override>> AltersWrittenData : bool <<get>>
+    + RawImage(data:byte[], size:Size, bitDepth:int)
+    <<internal>> <<override>> Read(buffer:byte[]) : void
+    + <<override>> ReadCompressed() : byte[]
+}
+ImageData <|-- RawImage
+@enduml

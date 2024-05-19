@@ -1,0 +1,25 @@
+@startuml
+abstract class "SerializableSelection`1"<T> {
+    <<internal>> <<readonly>> {static} kInvalidID : int
+    - m_Keys : T[]
+    - m_Selection : HashSet<T>
+    - m_TemporalSelection : HashSet<T>
+    - m_SelectionInProgress : bool = false
+    + Count : int <<get>>
+    + activeElement : T <<get>> <<set>>
+    + elements : T[] <<get>> <<set>>
+    # {abstract} GetInvalidElement() : T
+    + Clear() : void
+    + BeginSelection() : void
+    + EndSelection(select:bool) : void
+    + Select(element:T, select:bool) : bool
+    + Contains(element:T) : bool
+    - GetSelection() : HashSet<T>
+    - First() : T
+    - First(set:HashSet<T>) : T
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+"ISelection`1" "<T>" <|-- "SerializableSelection`1"
+ISerializationCallbackReceiver <|-- "SerializableSelection`1"
+@enduml

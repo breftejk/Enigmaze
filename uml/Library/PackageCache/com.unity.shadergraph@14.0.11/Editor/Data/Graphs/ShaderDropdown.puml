@@ -1,0 +1,24 @@
+@startuml
+class ShaderDropdown {
+    + ShaderDropdown()
+    - m_Entries : List<DropdownEntry>
+    + entries : List<DropdownEntry> <<get>> <<set>>
+    + <<override>> allowedInMainGraph : bool <<get>>
+    - m_Value : int
+    - GetClampedValue(value:int) : int
+    + value : int <<get>> <<set>>
+    + entryName : string <<get>>
+    + entryId : int <<get>>
+    + ContainsEntry(entryName:string) : bool
+    + IndexOfName(entryName:string) : int
+    + IndexOfId(entryId:int) : int
+    + count : int <<get>>
+    <<internal>> <<override>> isCustomSlotAllowed : bool <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> concreteShaderValueType : ConcreteSlotValueType <<get>>
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> latestVersion : int <<get>>
+}
+ShaderInput <|-- ShaderDropdown
+@enduml

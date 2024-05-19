@@ -1,0 +1,11 @@
+@startuml
+interface IUnitPortWidget {
+    port : IUnitPort <<get>>
+    y : float <<set>>
+    handlePosition : Rect <<get>>
+    GetInnerWidth() : float
+    GetHeight() : float
+    willDisconnect : bool <<get>>
+}
+IWidget <|-- IUnitPortWidget
+@enduml

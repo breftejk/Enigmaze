@@ -1,0 +1,5 @@
+@startuml
+class MaterialAccess <<static>> {
+    <<internal>> {static} ReadMaterialRawRenderQueue(mat:Material) : int
+}
+@enduml

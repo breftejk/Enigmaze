@@ -1,0 +1,10 @@
+@startuml
+class ShaderGroup <<sealed>> {
+    - m_Graph : GraphData
+    + <<new>> userData : GroupData <<get>> <<set>>
+    + ShaderGroup()
+    + BuildContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    + <<override>> AcceptsElement(element:GraphElement, reasonWhyNotAccepted:string) : bool
+}
+Group <|-- ShaderGroup
+@enduml

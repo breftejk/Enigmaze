@@ -1,0 +1,18 @@
+@startuml
+class CameraUI <<static>> <<partial>> {
+}
+class Rendering <<static>> <<partial>> {
+}
+class Styles <<static>> {
+    + {static} <<readonly>> header : GUIContent
+    + {static} <<readonly>> antialiasing : GUIContent
+    + {static} <<readonly>> dithering : GUIContent
+    + {static} <<readonly>> stopNaNs : GUIContent
+    + {static} <<readonly>> cullingMask : GUIContent
+    + {static} <<readonly>> occlusionCulling : GUIContent
+    + {static} <<readonly>> renderingPath : GUIContent
+    + {static} <<readonly>> exposureTarget : GUIContent
+}
+CameraUI +-- Rendering
+Rendering +-- Styles
+@enduml

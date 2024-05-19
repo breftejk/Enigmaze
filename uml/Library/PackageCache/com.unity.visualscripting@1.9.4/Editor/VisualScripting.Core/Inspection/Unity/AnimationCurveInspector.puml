@@ -1,0 +1,9 @@
+@startuml
+class AnimationCurveInspector {
+    + AnimationCurveInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- AnimationCurveInspector
+@enduml

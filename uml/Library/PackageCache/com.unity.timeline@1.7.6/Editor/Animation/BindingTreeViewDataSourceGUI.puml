@@ -1,0 +1,22 @@
+@startuml
+class BindingTreeViewGUI {
+    <<const>> - k_RowRightOffset : float = 10
+    <<const>> - k_CurveColorIndicatorIconSize : float = 11
+    <<const>> - k_ColorIndicatorTopMargin : float = 3
+    {static} <<readonly>> - s_KeyColorForNonCurves : Color
+    {static} <<readonly>> - s_ChildrenCurveLabelColor : Color
+    {static} <<readonly>> - s_PhantomPropertyLabelColor : Color
+    {static} <<readonly>> - s_DefaultScriptTexture : Texture2D
+    {static} <<readonly>> - s_TrackDefault : Texture2D
+    + parentWidth : float <<get>> <<set>>
+    + BindingTreeViewGUI(treeView:TreeViewController)
+    + <<override>> OnRowGUI(rowRect:Rect, node:TreeViewItem, row:int, selected:bool, focused:bool) : void
+    # <<override>> IsRenaming(id:int) : bool
+    + <<override>> BeginRename(item:TreeViewItem, delay:float) : bool
+    {static} - DoCurveColorIndicator(rect:Rect, node:CurveTreeViewNode) : void
+    # <<override>> GetIconForItem(item:TreeViewItem) : Texture
+    {static} - OnItemIconOverlay(item:TreeViewItem, rect:Rect) : void
+    + <<override>> GetTotalSize() : Vector2
+}
+TreeViewGUI <|-- BindingTreeViewGUI
+@enduml

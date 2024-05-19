@@ -1,0 +1,45 @@
+@startuml
+class Stage {
+    <<const>> - k_PreviewCullingLayerIndex : int = 31
+    - <<readonly>> m_PreviewScene : Scene
+    - <<readonly>> m_GameObjects : List<GameObject>
+    - <<readonly>> m_PersistentGameObjects : List<GameObject>
+    - <<readonly>> m_Camera : Camera
+    - <<readonly>> m_SunLight : Light
+    + camera : Camera <<get>>
+    + sunLight : Light <<get>>
+    + scene : Scene <<get>>
+    - SRI : StageRuntimeInterface
+    + runtimeInterface : StageRuntimeInterface <<get>>
+    + Stage(sceneName:string)
+    + MoveIntoStage(gameObject:GameObject, persistent:bool) : void
+    + MoveIntoStage(gameObject:GameObject, position:Vector3, rotation:Quaternion, persistent:bool) : void
+    + InstantiateIntoStage(prefabOrSceneObject:GameObject, persistent:bool) : GameObject
+    + InstantiateIntoStage(prefabOrSceneObject:GameObject, position:Vector3, rotation:Quaternion, persistent:bool) : GameObject
+    + CreateGameObjectIntoStage(persistent:bool) : GameObject
+    + Clear(persistent:bool) : void
+    {static} - InitAddedObjectsRecursively(go:GameObject) : void
+    - SetGameObjectVisible(visible:bool) : void
+    + OnBeginRendering(dataProvider:IDataProvider) : void
+    + OnEndRendering(dataProvider:IDataProvider) : void
+    - disposedValue : bool = false
+    - CleanUp() : void
+    + Dispose() : void
+}
+class StageCache {
+    <<const>> - firstStageName : string = "LookDevFirstView"
+    <<const>> - secondStageName : string = "LookDevSecondView"
+    - m_Stages : Stage[]
+    - m_CurrentDataProvider : IDataProvider
+    + initialized : bool <<get>>
+    + StageCache(dataProvider:IDataProvider)
+    - InitStage(index:ViewIndex, dataProvider:IDataProvider) : Stage
+    + UpdateSceneObjects(index:ViewIndex) : void
+    + UpdateSceneLighting(index:ViewIndex, provider:IDataProvider) : void
+    - disposedValue : bool = false
+    - CleanUp() : void
+    + Dispose() : void
+}
+IDisposable <|-- Stage
+IDisposable <|-- StageCache
+@enduml

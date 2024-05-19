@@ -1,0 +1,51 @@
+@startuml
+class DummyChangeAction {
+    - OnDummyChangeAction(m_GraphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+}
+struct SGControllerChangedEvent {
+    + target : ISGControlledElement
+    + controller : SGController
+    + change : IGraphDataAction
+    - m_PropagationStopped : bool
+    - StopPropagation() : void
+    + isPropagationStopped : bool <<get>>
+}
+class SGControllerEvent {
+    - target : ISGControlledElement = null
+    - SGControllerEvent(controlledTarget:ISGControlledElement)
+}
+abstract class SGController {
+    + m_DisableCalled : bool = false
+    # DummyChange : IGraphDataAction
+    + <<virtual>> OnDisable() : void
+    <<internal>> RegisterHandler(handler:ISGControlledElement) : void
+    <<internal>> UnregisterHandler(handler:ISGControlledElement) : void
+    # NotifyChange(changeAction:IGraphDataAction) : void
+    - NotifyEventHandler(eventHandler:ISGControlledElement, changeAction:IGraphDataAction) : void
+    + SendEvent(e:SGControllerEvent) : void
+    + {abstract} ApplyChanges() : void
+    + <<virtual>> allChildren : IEnumerable<SGController> <<get>>
+    # m_EventHandlers : List<ISGControlledElement>
+}
+abstract class "SGController`1"<T> {
+    - m_DataStore : GraphDataStore
+    # DataStore : GraphDataStore <<get>>
+    # SGController(model:T, dataStore:GraphDataStore)
+    # {abstract} RequestModelChange(changeAction:IGraphDataAction) : void
+    # {abstract} ModelChanged(graphData:GraphData, changeAction:IGraphDataAction) : void
+    - m_Model : T
+    + Model : T <<get>>
+    + Cleanup() : void
+}
+abstract class "SGViewController`2"<ModelType,ViewModelType> {
+    # SGViewController(model:ModelType, viewModel:ViewModelType, graphDataStore:GraphDataStore)
+    - m_ViewModel : ViewModelType
+    + ViewModel : ViewModelType <<get>>
+    + <<override>> ApplyChanges() : void
+    + <<virtual>> Dispose() : void
+}
+IGraphDataAction <|-- DummyChangeAction
+SGController <|-- "SGController`1"
+"SGController`1" "<ModelType>" <|-- "SGViewController`2"
+@enduml

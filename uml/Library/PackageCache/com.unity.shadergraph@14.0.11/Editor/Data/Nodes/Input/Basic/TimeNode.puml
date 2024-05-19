@@ -1,0 +1,21 @@
+@startuml
+class TimeNode {
+    - <<const>> kOutputSlotName : string = "Time"
+    - <<const>> kOutputSlot1Name : string = "Sine Time"
+    - <<const>> kOutputSlot2Name : string = "Cosine Time"
+    - <<const>> kOutputSlot3Name : string = "Delta Time"
+    - <<const>> kOutputSlot4Name : string = "Smooth Delta"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> OutputSlot1Id : int = 1
+    + <<const>> OutputSlot2Id : int = 2
+    + <<const>> OutputSlot3Id : int = 3
+    + <<const>> OutputSlot4Id : int = 4
+    + TimeNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    # validSlots : int[] <<get>>
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresTime() : bool
+}
+AbstractMaterialNode <|-- TimeNode
+IMayRequireTime <|-- TimeNode
+@enduml

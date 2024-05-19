@@ -1,0 +1,15 @@
+@startuml
+class EventTriggerEditor {
+    - m_DelegatesProperty : SerializedProperty
+    - m_IconToolbarMinus : GUIContent
+    - m_EventIDName : GUIContent
+    - m_EventTypes : GUIContent[]
+    - m_AddButonContent : GUIContent
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - RemoveEntry(toBeRemovedEntry:int) : void
+    - ShowAddTriggermenu() : void
+    - OnAddNewSelected(index:object) : void
+}
+Editor <|-- EventTriggerEditor
+@enduml

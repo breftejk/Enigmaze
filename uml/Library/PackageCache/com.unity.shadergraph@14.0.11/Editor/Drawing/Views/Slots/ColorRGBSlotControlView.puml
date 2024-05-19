@@ -1,0 +1,8 @@
+@startuml
+class ColorRGBSlotControlView {
+    - m_Slot : ColorRGBMaterialSlot
+    + ColorRGBSlotControlView(slot:ColorRGBMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Color>) : void
+}
+VisualElement <|-- ColorRGBSlotControlView
+@enduml

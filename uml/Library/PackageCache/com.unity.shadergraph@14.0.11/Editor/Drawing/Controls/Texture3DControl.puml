@@ -1,0 +1,16 @@
+@startuml
+class Texture3DControlAttribute {
+    - m_Label : string
+    + Texture3DControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class Texture3DControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    + Texture3DControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnChange(evt:ChangeEvent<UnityEngine.Object>) : void
+}
+Attribute <|-- Texture3DControlAttribute
+IControlAttribute <|-- Texture3DControlAttribute
+VisualElement <|-- Texture3DControlView
+@enduml

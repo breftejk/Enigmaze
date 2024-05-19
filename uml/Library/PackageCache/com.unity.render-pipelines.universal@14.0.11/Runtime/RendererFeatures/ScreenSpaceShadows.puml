@@ -1,0 +1,40 @@
+@startuml
+class ScreenSpaceShadowsSettings {
+}
+class ScreenSpaceShadows {
+    - m_Shader : Shader = null
+    - m_Settings : ScreenSpaceShadowsSettings
+    - m_Material : Material
+    - m_SSShadowsPass : ScreenSpaceShadowsPass = null
+    - m_SSShadowsPostPass : ScreenSpaceShadowsPostPass = null
+    - <<const>> k_ShaderName : string = "Hidden/Universal Render Pipeline/ScreenSpaceShadows"
+    + <<override>> Create() : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+    - LoadMaterial() : bool
+}
+class ScreenSpaceShadowsPass {
+    - {static} m_ProfilerTag : string = "ScreenSpaceShadows"
+    - {static} m_ProfilingSampler : ProfilingSampler
+    - m_Material : Material
+    - m_CurrentSettings : ScreenSpaceShadowsSettings
+    - m_RenderTarget : RTHandle
+    <<internal>> ScreenSpaceShadowsPass()
+    + Dispose() : void
+    <<internal>> Setup(featureSettings:ScreenSpaceShadowsSettings, material:Material) : bool
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+class ScreenSpaceShadowsPostPass {
+    - {static} m_ProfilerTag : string = "ScreenSpaceShadows Post"
+    - {static} m_ProfilingSampler : ProfilingSampler
+    - {static} <<readonly>> k_CurrentActive : RTHandle
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescriptor:RenderTextureDescriptor) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRendererFeature <|-- ScreenSpaceShadows
+ScreenSpaceShadows +-- ScreenSpaceShadowsPass
+ScriptableRenderPass <|-- ScreenSpaceShadowsPass
+ScreenSpaceShadows +-- ScreenSpaceShadowsPostPass
+ScriptableRenderPass <|-- ScreenSpaceShadowsPostPass
+@enduml

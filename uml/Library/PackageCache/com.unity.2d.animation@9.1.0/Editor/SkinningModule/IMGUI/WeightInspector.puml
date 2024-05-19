@@ -1,0 +1,17 @@
+@startuml
+class WeightInspector {
+    - m_SpriteMeshDataController : SpriteMeshDataController
+    - m_BoneNameContents : GUIContent[]
+    + spriteMeshData : BaseSpriteMeshData <<get>> <<set>>
+    + boneNames : GUIContent[] <<get>> <<set>>
+    + cacheUndo : ICacheUndo <<get>> <<set>>
+    + selection : ISelection<int> <<get>> <<set>>
+    + controlID : int <<get>>
+    - m_UndoRegistered : bool = false
+    # spriteEditor : ISpriteEditor <<get>>
+    + OnInspectorGUI() : void
+    - ChannelsGUI() : void
+    - WeightChannelDrawer(isChannelEnabled:bool, boneIndex:int, weight:float, isChannelEnabledMixed:bool, isBoneIndexMixed:bool, isWeightMixed:bool) : void
+    - RegisterUndo() : void
+}
+@enduml

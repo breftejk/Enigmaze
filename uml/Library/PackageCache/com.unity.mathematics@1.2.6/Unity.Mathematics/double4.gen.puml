@@ -1,0 +1,406 @@
+@startuml
+struct double4 {
+    + x : double
+    + y : double
+    + z : double
+    + w : double
+    + {static} <<readonly>> zero : double4
+    + double4(x:double, y:double, z:double, w:double)
+    + double4(x:double, y:double, zw:double2)
+    + double4(x:double, yz:double2, w:double)
+    + double4(x:double, yzw:double3)
+    + double4(xy:double2, z:double, w:double)
+    + double4(xy:double2, zw:double2)
+    + double4(xyz:double3, w:double)
+    + double4(xyzw:double4)
+    + double4(v:double)
+    + double4(v:bool)
+    + double4(v:bool4)
+    + double4(v:int)
+    + double4(v:int4)
+    + double4(v:uint)
+    + double4(v:uint4)
+    + double4(v:half)
+    + double4(v:half4)
+    + double4(v:float)
+    + double4(v:float4)
+    + xxxx : double4 <<get>>
+    + xxxy : double4 <<get>>
+    + xxxz : double4 <<get>>
+    + xxxw : double4 <<get>>
+    + xxyx : double4 <<get>>
+    + xxyy : double4 <<get>>
+    + xxyz : double4 <<get>>
+    + xxyw : double4 <<get>>
+    + xxzx : double4 <<get>>
+    + xxzy : double4 <<get>>
+    + xxzz : double4 <<get>>
+    + xxzw : double4 <<get>>
+    + xxwx : double4 <<get>>
+    + xxwy : double4 <<get>>
+    + xxwz : double4 <<get>>
+    + xxww : double4 <<get>>
+    + xyxx : double4 <<get>>
+    + xyxy : double4 <<get>>
+    + xyxz : double4 <<get>>
+    + xyxw : double4 <<get>>
+    + xyyx : double4 <<get>>
+    + xyyy : double4 <<get>>
+    + xyyz : double4 <<get>>
+    + xyyw : double4 <<get>>
+    + xyzx : double4 <<get>>
+    + xyzy : double4 <<get>>
+    + xyzz : double4 <<get>>
+    + xyzw : double4 <<get>> <<set>>
+    + xywx : double4 <<get>>
+    + xywy : double4 <<get>>
+    + xywz : double4 <<get>> <<set>>
+    + xyww : double4 <<get>>
+    + xzxx : double4 <<get>>
+    + xzxy : double4 <<get>>
+    + xzxz : double4 <<get>>
+    + xzxw : double4 <<get>>
+    + xzyx : double4 <<get>>
+    + xzyy : double4 <<get>>
+    + xzyz : double4 <<get>>
+    + xzyw : double4 <<get>> <<set>>
+    + xzzx : double4 <<get>>
+    + xzzy : double4 <<get>>
+    + xzzz : double4 <<get>>
+    + xzzw : double4 <<get>>
+    + xzwx : double4 <<get>>
+    + xzwy : double4 <<get>> <<set>>
+    + xzwz : double4 <<get>>
+    + xzww : double4 <<get>>
+    + xwxx : double4 <<get>>
+    + xwxy : double4 <<get>>
+    + xwxz : double4 <<get>>
+    + xwxw : double4 <<get>>
+    + xwyx : double4 <<get>>
+    + xwyy : double4 <<get>>
+    + xwyz : double4 <<get>> <<set>>
+    + xwyw : double4 <<get>>
+    + xwzx : double4 <<get>>
+    + xwzy : double4 <<get>> <<set>>
+    + xwzz : double4 <<get>>
+    + xwzw : double4 <<get>>
+    + xwwx : double4 <<get>>
+    + xwwy : double4 <<get>>
+    + xwwz : double4 <<get>>
+    + xwww : double4 <<get>>
+    + yxxx : double4 <<get>>
+    + yxxy : double4 <<get>>
+    + yxxz : double4 <<get>>
+    + yxxw : double4 <<get>>
+    + yxyx : double4 <<get>>
+    + yxyy : double4 <<get>>
+    + yxyz : double4 <<get>>
+    + yxyw : double4 <<get>>
+    + yxzx : double4 <<get>>
+    + yxzy : double4 <<get>>
+    + yxzz : double4 <<get>>
+    + yxzw : double4 <<get>> <<set>>
+    + yxwx : double4 <<get>>
+    + yxwy : double4 <<get>>
+    + yxwz : double4 <<get>> <<set>>
+    + yxww : double4 <<get>>
+    + yyxx : double4 <<get>>
+    + yyxy : double4 <<get>>
+    + yyxz : double4 <<get>>
+    + yyxw : double4 <<get>>
+    + yyyx : double4 <<get>>
+    + yyyy : double4 <<get>>
+    + yyyz : double4 <<get>>
+    + yyyw : double4 <<get>>
+    + yyzx : double4 <<get>>
+    + yyzy : double4 <<get>>
+    + yyzz : double4 <<get>>
+    + yyzw : double4 <<get>>
+    + yywx : double4 <<get>>
+    + yywy : double4 <<get>>
+    + yywz : double4 <<get>>
+    + yyww : double4 <<get>>
+    + yzxx : double4 <<get>>
+    + yzxy : double4 <<get>>
+    + yzxz : double4 <<get>>
+    + yzxw : double4 <<get>> <<set>>
+    + yzyx : double4 <<get>>
+    + yzyy : double4 <<get>>
+    + yzyz : double4 <<get>>
+    + yzyw : double4 <<get>>
+    + yzzx : double4 <<get>>
+    + yzzy : double4 <<get>>
+    + yzzz : double4 <<get>>
+    + yzzw : double4 <<get>>
+    + yzwx : double4 <<get>> <<set>>
+    + yzwy : double4 <<get>>
+    + yzwz : double4 <<get>>
+    + yzww : double4 <<get>>
+    + ywxx : double4 <<get>>
+    + ywxy : double4 <<get>>
+    + ywxz : double4 <<get>> <<set>>
+    + ywxw : double4 <<get>>
+    + ywyx : double4 <<get>>
+    + ywyy : double4 <<get>>
+    + ywyz : double4 <<get>>
+    + ywyw : double4 <<get>>
+    + ywzx : double4 <<get>> <<set>>
+    + ywzy : double4 <<get>>
+    + ywzz : double4 <<get>>
+    + ywzw : double4 <<get>>
+    + ywwx : double4 <<get>>
+    + ywwy : double4 <<get>>
+    + ywwz : double4 <<get>>
+    + ywww : double4 <<get>>
+    + zxxx : double4 <<get>>
+    + zxxy : double4 <<get>>
+    + zxxz : double4 <<get>>
+    + zxxw : double4 <<get>>
+    + zxyx : double4 <<get>>
+    + zxyy : double4 <<get>>
+    + zxyz : double4 <<get>>
+    + zxyw : double4 <<get>> <<set>>
+    + zxzx : double4 <<get>>
+    + zxzy : double4 <<get>>
+    + zxzz : double4 <<get>>
+    + zxzw : double4 <<get>>
+    + zxwx : double4 <<get>>
+    + zxwy : double4 <<get>> <<set>>
+    + zxwz : double4 <<get>>
+    + zxww : double4 <<get>>
+    + zyxx : double4 <<get>>
+    + zyxy : double4 <<get>>
+    + zyxz : double4 <<get>>
+    + zyxw : double4 <<get>> <<set>>
+    + zyyx : double4 <<get>>
+    + zyyy : double4 <<get>>
+    + zyyz : double4 <<get>>
+    + zyyw : double4 <<get>>
+    + zyzx : double4 <<get>>
+    + zyzy : double4 <<get>>
+    + zyzz : double4 <<get>>
+    + zyzw : double4 <<get>>
+    + zywx : double4 <<get>> <<set>>
+    + zywy : double4 <<get>>
+    + zywz : double4 <<get>>
+    + zyww : double4 <<get>>
+    + zzxx : double4 <<get>>
+    + zzxy : double4 <<get>>
+    + zzxz : double4 <<get>>
+    + zzxw : double4 <<get>>
+    + zzyx : double4 <<get>>
+    + zzyy : double4 <<get>>
+    + zzyz : double4 <<get>>
+    + zzyw : double4 <<get>>
+    + zzzx : double4 <<get>>
+    + zzzy : double4 <<get>>
+    + zzzz : double4 <<get>>
+    + zzzw : double4 <<get>>
+    + zzwx : double4 <<get>>
+    + zzwy : double4 <<get>>
+    + zzwz : double4 <<get>>
+    + zzww : double4 <<get>>
+    + zwxx : double4 <<get>>
+    + zwxy : double4 <<get>> <<set>>
+    + zwxz : double4 <<get>>
+    + zwxw : double4 <<get>>
+    + zwyx : double4 <<get>> <<set>>
+    + zwyy : double4 <<get>>
+    + zwyz : double4 <<get>>
+    + zwyw : double4 <<get>>
+    + zwzx : double4 <<get>>
+    + zwzy : double4 <<get>>
+    + zwzz : double4 <<get>>
+    + zwzw : double4 <<get>>
+    + zwwx : double4 <<get>>
+    + zwwy : double4 <<get>>
+    + zwwz : double4 <<get>>
+    + zwww : double4 <<get>>
+    + wxxx : double4 <<get>>
+    + wxxy : double4 <<get>>
+    + wxxz : double4 <<get>>
+    + wxxw : double4 <<get>>
+    + wxyx : double4 <<get>>
+    + wxyy : double4 <<get>>
+    + wxyz : double4 <<get>> <<set>>
+    + wxyw : double4 <<get>>
+    + wxzx : double4 <<get>>
+    + wxzy : double4 <<get>> <<set>>
+    + wxzz : double4 <<get>>
+    + wxzw : double4 <<get>>
+    + wxwx : double4 <<get>>
+    + wxwy : double4 <<get>>
+    + wxwz : double4 <<get>>
+    + wxww : double4 <<get>>
+    + wyxx : double4 <<get>>
+    + wyxy : double4 <<get>>
+    + wyxz : double4 <<get>> <<set>>
+    + wyxw : double4 <<get>>
+    + wyyx : double4 <<get>>
+    + wyyy : double4 <<get>>
+    + wyyz : double4 <<get>>
+    + wyyw : double4 <<get>>
+    + wyzx : double4 <<get>> <<set>>
+    + wyzy : double4 <<get>>
+    + wyzz : double4 <<get>>
+    + wyzw : double4 <<get>>
+    + wywx : double4 <<get>>
+    + wywy : double4 <<get>>
+    + wywz : double4 <<get>>
+    + wyww : double4 <<get>>
+    + wzxx : double4 <<get>>
+    + wzxy : double4 <<get>> <<set>>
+    + wzxz : double4 <<get>>
+    + wzxw : double4 <<get>>
+    + wzyx : double4 <<get>> <<set>>
+    + wzyy : double4 <<get>>
+    + wzyz : double4 <<get>>
+    + wzyw : double4 <<get>>
+    + wzzx : double4 <<get>>
+    + wzzy : double4 <<get>>
+    + wzzz : double4 <<get>>
+    + wzzw : double4 <<get>>
+    + wzwx : double4 <<get>>
+    + wzwy : double4 <<get>>
+    + wzwz : double4 <<get>>
+    + wzww : double4 <<get>>
+    + wwxx : double4 <<get>>
+    + wwxy : double4 <<get>>
+    + wwxz : double4 <<get>>
+    + wwxw : double4 <<get>>
+    + wwyx : double4 <<get>>
+    + wwyy : double4 <<get>>
+    + wwyz : double4 <<get>>
+    + wwyw : double4 <<get>>
+    + wwzx : double4 <<get>>
+    + wwzy : double4 <<get>>
+    + wwzz : double4 <<get>>
+    + wwzw : double4 <<get>>
+    + wwwx : double4 <<get>>
+    + wwwy : double4 <<get>>
+    + wwwz : double4 <<get>>
+    + wwww : double4 <<get>>
+    + xxx : double3 <<get>>
+    + xxy : double3 <<get>>
+    + xxz : double3 <<get>>
+    + xxw : double3 <<get>>
+    + xyx : double3 <<get>>
+    + xyy : double3 <<get>>
+    + xyz : double3 <<get>> <<set>>
+    + xyw : double3 <<get>> <<set>>
+    + xzx : double3 <<get>>
+    + xzy : double3 <<get>> <<set>>
+    + xzz : double3 <<get>>
+    + xzw : double3 <<get>> <<set>>
+    + xwx : double3 <<get>>
+    + xwy : double3 <<get>> <<set>>
+    + xwz : double3 <<get>> <<set>>
+    + xww : double3 <<get>>
+    + yxx : double3 <<get>>
+    + yxy : double3 <<get>>
+    + yxz : double3 <<get>> <<set>>
+    + yxw : double3 <<get>> <<set>>
+    + yyx : double3 <<get>>
+    + yyy : double3 <<get>>
+    + yyz : double3 <<get>>
+    + yyw : double3 <<get>>
+    + yzx : double3 <<get>> <<set>>
+    + yzy : double3 <<get>>
+    + yzz : double3 <<get>>
+    + yzw : double3 <<get>> <<set>>
+    + ywx : double3 <<get>> <<set>>
+    + ywy : double3 <<get>>
+    + ywz : double3 <<get>> <<set>>
+    + yww : double3 <<get>>
+    + zxx : double3 <<get>>
+    + zxy : double3 <<get>> <<set>>
+    + zxz : double3 <<get>>
+    + zxw : double3 <<get>> <<set>>
+    + zyx : double3 <<get>> <<set>>
+    + zyy : double3 <<get>>
+    + zyz : double3 <<get>>
+    + zyw : double3 <<get>> <<set>>
+    + zzx : double3 <<get>>
+    + zzy : double3 <<get>>
+    + zzz : double3 <<get>>
+    + zzw : double3 <<get>>
+    + zwx : double3 <<get>> <<set>>
+    + zwy : double3 <<get>> <<set>>
+    + zwz : double3 <<get>>
+    + zww : double3 <<get>>
+    + wxx : double3 <<get>>
+    + wxy : double3 <<get>> <<set>>
+    + wxz : double3 <<get>> <<set>>
+    + wxw : double3 <<get>>
+    + wyx : double3 <<get>> <<set>>
+    + wyy : double3 <<get>>
+    + wyz : double3 <<get>> <<set>>
+    + wyw : double3 <<get>>
+    + wzx : double3 <<get>> <<set>>
+    + wzy : double3 <<get>> <<set>>
+    + wzz : double3 <<get>>
+    + wzw : double3 <<get>>
+    + wwx : double3 <<get>>
+    + wwy : double3 <<get>>
+    + wwz : double3 <<get>>
+    + www : double3 <<get>>
+    + xx : double2 <<get>>
+    + xy : double2 <<get>> <<set>>
+    + xz : double2 <<get>> <<set>>
+    + xw : double2 <<get>> <<set>>
+    + yx : double2 <<get>> <<set>>
+    + yy : double2 <<get>>
+    + yz : double2 <<get>> <<set>>
+    + yw : double2 <<get>> <<set>>
+    + zx : double2 <<get>> <<set>>
+    + zy : double2 <<get>> <<set>>
+    + zz : double2 <<get>>
+    + zw : double2 <<get>> <<set>>
+    + wx : double2 <<get>> <<set>>
+    + wy : double2 <<get>> <<set>>
+    + wz : double2 <<get>> <<set>>
+    + ww : double2 <<get>>
+    + Equals(rhs:double4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} double4(x:double, y:double, z:double, w:double) : double4
+    + {static} double4(x:double, y:double, zw:double2) : double4
+    + {static} double4(x:double, yz:double2, w:double) : double4
+    + {static} double4(x:double, yzw:double3) : double4
+    + {static} double4(xy:double2, z:double, w:double) : double4
+    + {static} double4(xy:double2, zw:double2) : double4
+    + {static} double4(xyz:double3, w:double) : double4
+    + {static} double4(xyzw:double4) : double4
+    + {static} double4(v:double) : double4
+    + {static} double4(v:bool) : double4
+    + {static} double4(v:bool4) : double4
+    + {static} double4(v:int) : double4
+    + {static} double4(v:int4) : double4
+    + {static} double4(v:uint) : double4
+    + {static} double4(v:uint4) : double4
+    + {static} double4(v:half) : double4
+    + {static} double4(v:half4) : double4
+    + {static} double4(v:float) : double4
+    + {static} double4(v:float4) : double4
+    + {static} hash(v:double4) : uint
+    + {static} hashwide(v:double4) : uint4
+    + {static} shuffle(left:double4, right:double4, x:ShuffleComponent) : double
+    + {static} shuffle(left:double4, right:double4, x:ShuffleComponent, y:ShuffleComponent) : double2
+    + {static} shuffle(left:double4, right:double4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : double3
+    + {static} shuffle(left:double4, right:double4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : double4
+    <<internal>> {static} select_shuffle_component(a:double4, b:double4, component:ShuffleComponent) : double
+}
+class DebuggerProxy <<sealed>> {
+    + x : double
+    + y : double
+    + z : double
+    + w : double
+    + DebuggerProxy(v:double4)
+}
+IFormattable <|-- double4
+double4 +-- DebuggerProxy
+@enduml

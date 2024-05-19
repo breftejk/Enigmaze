@@ -1,0 +1,24 @@
+@startuml
+class Cloning <<static>> {
+    {static} - Cloning()
+    - {static} <<readonly>> skippable : Dictionary<Type, bool>
+    + {static} cloners : HashSet<ICloner> <<get>>
+    + {static} arrayCloner : ArrayCloner <<get>>
+    + {static} dictionaryCloner : DictionaryCloner <<get>>
+    + {static} enumerableCloner : EnumerableCloner <<get>>
+    + {static} listCloner : ListCloner <<get>>
+    + {static} animationCurveCloner : AnimationCurveCloner <<get>>
+    <<internal>> {static} gradientCloner : GradientCloner <<get>>
+    + {static} fieldsCloner : FieldsCloner <<get>>
+    + {static} fakeSerializationCloner : FakeSerializationCloner <<get>>
+    + {static} Clone(original:object, fallbackCloner:ICloner, tryPreserveInstances:bool) : object
+    + {static} Clone(original:T, fallbackCloner:ICloner, tryPreserveInstances:bool) : T
+    + {static} CloneViaFakeSerialization(original:object) : object
+    + {static} CloneViaFakeSerialization(original:T) : T
+    <<internal>> {static} Clone(context:CloningContext, original:object) : object
+    <<internal>> {static} CloneInto(context:CloningContext, clone:object, original:object) : void
+    + {static} GetCloner(original:object, type:Type) : ICloner
+    - {static} GetCloner(original:object, type:Type, fallbackCloner:ICloner) : ICloner
+    - {static} Skippable(type:Type) : bool
+}
+@enduml

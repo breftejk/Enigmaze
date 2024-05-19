@@ -1,0 +1,25 @@
+@startuml
+class AsepriteFile {
+    + fileSize : uint <<get>>
+    + noOfFrames : ushort <<get>>
+    + width : ushort <<get>>
+    + height : ushort <<get>>
+    + colorDepth : ushort <<get>>
+    <<internal>> flags : uint <<get>>
+    + animSpeed : ushort <<get>>
+    + alphaPaletteEntry : byte <<get>>
+    + noOfColors : ushort <<get>>
+    + pixelWidth : byte <<get>>
+    + pixelHeight : byte <<get>>
+    + gridPosX : short <<get>>
+    + gridPosY : short <<get>>
+    + gridWidth : ushort <<get>>
+    + gridHeight : ushort <<get>>
+    + frameData : ReadOnlyCollection<FrameData> <<get>>
+    - m_FrameData : FrameData[]
+    <<internal>> Read(reader:BinaryReader) : void
+    <<internal>> SetFrameData(index:int, data:FrameData) : void
+    + Dispose() : void
+}
+IDisposable <|-- AsepriteFile
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+class ColorCurvesEditor <<sealed>> {
+    - m_Master : SerializedDataParameter
+    - m_Red : SerializedDataParameter
+    - m_Green : SerializedDataParameter
+    - m_Blue : SerializedDataParameter
+    - m_HueVsHue : SerializedDataParameter
+    - m_HueVsSat : SerializedDataParameter
+    - m_SatVsSat : SerializedDataParameter
+    - m_LumVsSat : SerializedDataParameter
+    - m_RawMaster : SerializedProperty
+    - m_RawRed : SerializedProperty
+    - m_RawGreen : SerializedProperty
+    - m_RawBlue : SerializedProperty
+    - m_RawHueVsHue : SerializedProperty
+    - m_RawHueVsSat : SerializedProperty
+    - m_RawSatVsSat : SerializedProperty
+    - m_RawLumVsSat : SerializedProperty
+    - m_CurveEditor : InspectorCurveEditor
+    - m_CurveDict : Dictionary<SerializedProperty, Color>
+    {static} - s_MaterialGrid : Material
+    {static} - s_PreLabel : GUIStyle
+    {static} - s_Curves : GUIContent[]
+    - m_SelectedCurve : SavedInt
+    + <<override>> OnEnable() : void
+    - SetupCurve(prop:SerializedProperty, color:Color, minPointCount:uint, loop:bool) : void
+    - ResetVisibleCurves() : void
+    - SetCurveVisible(rawProp:SerializedProperty, overrideProp:SerializedProperty) : void
+    - CurveOverrideToggle(overrideProp:SerializedProperty) : void
+    - DoCurveSelectionPopup(id:int) : int
+    - DrawBackgroundTexture(rect:Rect, pass:int) : void
+    - MarkTextureCurveAsDirty(curveId:int) : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- ColorCurvesEditor
+@enduml

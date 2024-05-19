@@ -1,0 +1,24 @@
+@startuml
+class DecalProjectorEditor <<partial>> {
+    <<const>> - k_EditShapePreservingUVTooltip : string = "Modifies the projector boundaries and crops/tiles the decal to fill them."
+    <<const>> - k_EditShapeWithoutPreservingUVTooltip : string = "Modifies the projector boundaries and stretches the decal to fill them."
+    <<const>> - k_EditUVTooltip : string = "Modify the UV and the pivot position without moving the projection box. It can alter Transform."
+    {static} <<readonly>> - k_ScaleMode : GUIContent
+    {static} <<readonly>> - k_WidthContent : GUIContent
+    {static} <<readonly>> - k_HeightContent : GUIContent
+    {static} <<readonly>> - k_ProjectionDepthContent : GUIContent
+    {static} <<readonly>> - k_MaterialContent : GUIContent
+    {static} <<readonly>> - k_RenderingLayerMaskContent : GUIContent
+    {static} <<readonly>> - k_DistanceContent : GUIContent
+    {static} <<readonly>> - k_FadeScaleContent : GUIContent
+    {static} <<readonly>> - k_AngleFadeContent : GUIContent
+    {static} <<readonly>> - k_UVScaleContent : GUIContent
+    {static} <<readonly>> - k_UVBiasContent : GUIContent
+    {static} <<readonly>> - k_OpacityContent : GUIContent
+    {static} <<readonly>> - k_Offset : GUIContent
+    {static} <<readonly>> - k_BaseSceneEditingToolText : string = "<color=grey>Decal Scene Editing Mode:</color> "
+    {static} <<readonly>> - k_EditShapeWithoutPreservingUVName : string
+    {static} <<readonly>> - k_EditShapePreservingUVName : string
+    {static} <<readonly>> - k_EditUVAndPivotName : string
+}
+@enduml

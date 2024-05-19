@@ -1,0 +1,10 @@
+@startuml
+class UserColors {
+    <<const>> - m_Title : string = "User Defined"
+    + <<override>> GetTitle() : string
+    + <<override>> AllowCustom() : bool
+    + <<override>> ClearOnDirty() : bool
+    # <<override>> GetColorFromNode(node:AbstractMaterialNode, color:Color) : bool
+}
+ColorProviderFromCode <|-- UserColors
+@enduml

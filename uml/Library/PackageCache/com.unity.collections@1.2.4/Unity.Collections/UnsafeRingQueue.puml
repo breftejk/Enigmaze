@@ -1,0 +1,41 @@
+@startuml
+struct RingControl {
+    <<internal>> RingControl(capacity:int)
+    <<internal>> Reset() : void
+    <<internal>> Distance(from:int, to:int) : int
+    <<internal>> Available() : int
+    <<internal>> Reserve(count:int) : int
+    <<internal>> Commit(count:int) : int
+    <<internal>> Consume(count:int) : int
+    <<internal>> Length : int <<get>>
+    <<internal>> <<readonly>> Capacity : int
+    <<internal>> Current : int
+    <<internal>> Write : int
+    <<internal>> Read : int
+}
+struct "UnsafeRingQueue`1"<T> {
+    + Ptr : T*
+    + Allocator : AllocatorManager.AllocatorHandle
+    <<internal>> Control : RingControl
+    + IsEmpty : bool <<get>>
+    + Length : int <<get>>
+    + Capacity : int <<get>>
+    + UnsafeRingQueue(ptr:T*, capacity:int)
+    + UnsafeRingQueue(capacity:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions)
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + TryEnqueue(value:T) : bool
+    {static} - ThrowQueueFull() : void
+    + Enqueue(value:T) : void
+    + TryDequeue(item:T) : bool
+    {static} - ThrowQueueEmpty() : void
+    + Dequeue() : T
+}
+class "UnsafeRingQueueDebugView`1"<T> <<sealed>> {
+    - Data : UnsafeRingQueue<T>
+    + UnsafeRingQueueDebugView(data:UnsafeRingQueue<T>)
+    + <<unsafe>> Items : T[] <<get>>
+}
+INativeDisposable <|-- "UnsafeRingQueue`1"
+@enduml

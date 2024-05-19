@@ -1,0 +1,10 @@
+@startuml
+class "GuidCollection`1"<T> {
+    # <<override>> GetKeyForItem(item:T) : Guid
+    # <<override>> InsertItem(index:int, item:T) : void
+    # <<override>> SetItem(index:int, item:T) : void
+    + <<new>> TryGetValue(key:Guid, value:T) : bool
+}
+"KeyedCollection`2" "<Guid,T>" <|-- "GuidCollection`1"
+"IKeyedCollection`2" "<Guid,T>" <|-- "GuidCollection`1"
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ScalarModulo <<sealed>> {
+    # <<override>> defaultDividend : float <<get>>
+    # <<override>> defaultDivisor : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+}
+"Modulo`1" "<float>" <|-- ScalarModulo
+@enduml

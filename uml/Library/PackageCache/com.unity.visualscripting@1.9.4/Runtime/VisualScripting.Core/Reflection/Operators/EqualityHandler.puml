@@ -1,0 +1,9 @@
+@startuml
+class EqualityHandler {
+    + EqualityHandler()
+    # <<override>> BothNullHandling() : object
+    # <<override>> SingleNullHandling() : object
+    # <<override>> CustomHandling(leftOperand:object, rightOperand:object) : object
+}
+BinaryOperatorHandler <|-- EqualityHandler
+@enduml

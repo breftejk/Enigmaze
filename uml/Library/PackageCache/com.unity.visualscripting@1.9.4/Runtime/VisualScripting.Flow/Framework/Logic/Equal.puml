@@ -1,0 +1,10 @@
+@startuml
+class Equal <<sealed>> {
+    + Equal()
+    # <<override>> outputKey : string <<get>>
+    + <<override>> comparison : ValueOutput <<get>>
+    # <<override>> NumericComparison(a:float, b:float) : bool
+    # <<override>> GenericComparison(a:object, b:object) : bool
+}
+BinaryComparisonUnit <|-- Equal
+@enduml

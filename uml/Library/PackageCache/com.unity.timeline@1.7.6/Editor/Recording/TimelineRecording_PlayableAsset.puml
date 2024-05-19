@@ -1,0 +1,10 @@
+@startuml
+class TimelineRecording <<static>> <<partial>> {
+    <<internal>> {static} HasAnyPlayableAssetModifications(modifications:UndoPropertyModification[]) : bool
+    <<internal>> {static} ProcessPlayableAssetModification(modifications:UndoPropertyModification[], state:WindowState, allowAdd:bool) : UndoPropertyModification[]
+    {static} - ProcessPlayableAssetModification(mod:UndoPropertyModification, state:WindowState, allowAdd:bool) : bool
+    <<internal>> {static} FindClipWithAsset(asset:TimelineAsset, target:IPlayableAsset) : TimelineClip
+    {static} - ProcessPlayableAssetRecording(mod:UndoPropertyModification, state:WindowState, curvesOwner:ICurvesOwner, allowAdd:bool) : bool
+    {static} - IsPlayableAssetProperty(property:SerializedProperty) : bool
+}
+@enduml

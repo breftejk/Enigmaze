@@ -1,0 +1,8 @@
+@startuml
+class DoubleControl {
+    + DoubleControl()
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : double
+    + <<override>> <<unsafe>> WriteValueIntoState(value:double, statePtr:void*) : void
+}
+"InputControl`1" "<double>" <|-- DoubleControl
+@enduml

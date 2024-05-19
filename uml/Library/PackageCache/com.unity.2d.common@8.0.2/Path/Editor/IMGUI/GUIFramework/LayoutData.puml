@@ -1,0 +1,13 @@
+@startuml
+struct LayoutData {
+    + index : int
+    + distance : float
+    + position : Vector3
+    + forward : Vector3
+    + up : Vector3
+    + right : Vector3
+    + userData : object
+    + {static} <<readonly>> zero : LayoutData
+    + {static} Nearest(currentData:LayoutData, newData:LayoutData) : LayoutData
+}
+@enduml

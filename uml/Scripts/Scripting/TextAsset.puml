@@ -1,0 +1,27 @@
+@startuml
+class TextAsset <<partial>> {
+    + text : string <<get>>
+    + dataSize : long <<get>>
+    + <<override>> ToString() : string
+    + TextAsset()
+    + TextAsset(text:string)
+    + TextAsset(bytes:ReadOnlySpan<byte>)
+    <<internal>> TextAsset(options:CreateOptions, text:string)
+    <<internal>> TextAsset(options:CreateOptions, bytes:ReadOnlySpan<byte>)
+    + <<unsafe>> GetData() : NativeArray<T>
+    <<internal>> GetPreview(maxChars:int) : string
+    <<internal>> {static} DecodeString(bytes:byte[]) : string
+}
+enum CreateOptions {
+    None= 0,
+    CreateNativeObject= 1,
+}
+class EncodingUtility <<static>> {
+    <<internal>> {static} <<readonly>> encodingLookup : KeyValuePair<byte[], Encoding>[]
+    <<internal>> {static} <<readonly>> targetEncoding : Encoding
+    {static} - EncodingUtility()
+}
+Object <|-- TextAsset
+TextAsset +-- CreateOptions
+TextAsset +-- EncodingUtility
+@enduml

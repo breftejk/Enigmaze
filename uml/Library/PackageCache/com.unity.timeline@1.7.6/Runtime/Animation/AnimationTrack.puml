@@ -1,0 +1,105 @@
+@startuml
+enum MatchTargetFields {
+    PositionX= 1 << 0,
+    PositionY= 1 << 1,
+    PositionZ= 1 << 2,
+    RotationX= 1 << 3,
+    RotationY= 1 << 4,
+    RotationZ= 1 << 5,
+}
+enum TrackOffset {
+    ApplyTransformOffsets,
+    ApplySceneOffsets,
+    Auto,
+}
+enum AppliedOffsetMode {
+    NoRootTransform,
+    TransformOffset,
+    SceneOffset,
+    TransformOffsetLegacy,
+    SceneOffsetLegacy,
+    SceneOffsetEditor,
+    SceneOffsetLegacyEditor,
+}
+class MatchTargetFieldConstants <<static>> {
+    + {static} All : MatchTargetFields
+    + {static} None : MatchTargetFields = 0
+    + {static} Position : MatchTargetFields
+    + {static} Rotation : MatchTargetFields
+    + {static} HasAny(me:MatchTargetFields, fields:MatchTargetFields) : bool
+    + {static} Toggle(me:MatchTargetFields, flag:MatchTargetFields) : MatchTargetFields
+}
+class AnimationTrack <<partial>> {
+    <<const>> - k_DefaultInfiniteClipName : string = "Recorded"
+    <<const>> - k_DefaultRecordableClipName : string = "Recorded"
+    - m_InfiniteClipPreExtrapolation : TimelineClip.ClipExtrapolation
+    - m_InfiniteClipPostExtrapolation : TimelineClip.ClipExtrapolation
+    - m_InfiniteClipOffsetPosition : Vector3
+    - m_InfiniteClipOffsetEulerAngles : Vector3
+    - m_InfiniteClipTimeOffset : double
+    - m_InfiniteClipRemoveOffset : bool
+    - m_InfiniteClipApplyFootIK : bool = true
+    - mInfiniteClipLoop : AnimationPlayableAsset.LoopMode
+    - m_MatchTargetFields : MatchTargetFields
+    - m_Position : Vector3
+    - m_EulerAngles : Vector3
+    - m_AvatarMask : AvatarMask
+    - m_ApplyAvatarMask : bool = true
+    - m_TrackOffset : TrackOffset
+    - m_InfiniteClip : AnimationClip
+    + position : Vector3 <<get>> <<set>>
+    + rotation : Quaternion <<get>> <<set>>
+    + eulerAngles : Vector3 <<get>> <<set>>
+    + applyOffsets : bool <<get>> <<set>>
+    + trackOffset : TrackOffset <<get>> <<set>>
+    + matchTargetFields : MatchTargetFields <<get>> <<set>>
+    + infiniteClip : AnimationClip <<get>> <<internal set>>
+    <<internal>> infiniteClipRemoveOffset : bool <<get>> <<set>>
+    + avatarMask : AvatarMask <<get>> <<set>>
+    + applyAvatarMask : bool <<get>> <<set>>
+    <<internal>> <<override>> CanCompileClips() : bool
+    + <<override>> outputs : IEnumerable<PlayableBinding> <<get>>
+    + inClipMode : bool <<get>>
+    + infiniteClipOffsetPosition : Vector3 <<get>> <<set>>
+    + infiniteClipOffsetRotation : Quaternion <<get>> <<set>>
+    + infiniteClipOffsetEulerAngles : Vector3 <<get>> <<set>>
+    <<internal>> infiniteClipApplyFootIK : bool <<get>> <<set>>
+    <<internal>> infiniteClipTimeOffset : double <<get>> <<set>>
+    + infiniteClipPreExtrapolation : TimelineClip.ClipExtrapolation <<get>> <<set>>
+    + infiniteClipPostExtrapolation : TimelineClip.ClipExtrapolation <<get>> <<set>>
+    <<internal>> infiniteClipLoop : AnimationPlayableAsset.LoopMode <<get>> <<set>>
+    - ResetOffsets() : void
+    + CreateClip(clip:AnimationClip) : TimelineClip
+    + CreateInfiniteClip(infiniteClipName:string) : void
+    + CreateRecordableClip(animClipName:string) : TimelineClip
+    # <<override>> OnCreateClip(clip:TimelineClip) : void
+    # <<internal>> <<override>> CalculateItemsHash() : int
+    <<internal>> UpdateClipOffsets() : void
+    - CompileTrackPlayable(graph:PlayableGraph, track:AnimationTrack, go:GameObject, tree:IntervalTree<RuntimeElement>, mode:AppliedOffsetMode) : Playable
+    - CreateLayerMixer(graph:PlayableGraph, go:GameObject, inputCount:int) : Playable
+    <<internal>> <<override>> CreateMixerPlayableGraph(graph:PlayableGraph, go:GameObject, tree:IntervalTree<RuntimeElement>) : Playable
+    - GetDefaultBlendCount() : int
+    - AttachDefaultBlend(graph:PlayableGraph, mixer:AnimationLayerMixerPlayable, requireOffset:bool) : void
+    - AttachOffsetPlayable(graph:PlayableGraph, playable:Playable, pos:Vector3, rot:Quaternion) : Playable
+    - RequiresMotionXPlayable(mode:AppliedOffsetMode, gameObject:GameObject) : bool
+    {static} - UsesAbsoluteMotion(mode:AppliedOffsetMode) : bool
+    - HasController(gameObject:GameObject) : bool
+    <<internal>> GetBinding(director:PlayableDirector) : Animator
+    {static} - CreateGroupMixer(graph:PlayableGraph, go:GameObject, inputCount:int) : AnimationLayerMixerPlayable
+    - CreateInfiniteTrackPlayable(graph:PlayableGraph, go:GameObject, tree:IntervalTree<RuntimeElement>, mode:AppliedOffsetMode) : Playable
+    - ApplyTrackOffset(graph:PlayableGraph, root:Playable, go:GameObject, mode:AppliedOffsetMode) : Playable
+    <<internal>> <<override>> GetEvaluationTime(outStart:double, outDuration:double) : void
+    <<internal>> <<override>> GetSequenceTime(outStart:double, outDuration:double) : void
+    - AssignAnimationClip(clip:TimelineClip, animClip:AnimationClip) : void
+    + <<override>> GatherProperties(director:PlayableDirector, driver:IPropertyCollector) : void
+    - GetAnimationClips(animClips:List<AnimationClip>) : void
+    - GetOffsetMode(go:GameObject, animatesRootTransform:bool) : AppliedOffsetMode
+    - IsRootTransformDisabledByMask(gameObject:GameObject, genericRootNode:Transform) : bool
+    - GetGenericRootNode(gameObject:GameObject) : Transform
+    <<internal>> AnimatesRootTransform() : bool
+    - {static} <<readonly>> s_CachedQueue : Queue<Transform>
+    - {static} FindInHierarchyBreadthFirst(t:Transform, name:string) : Transform
+}
+TrackAsset <|-- AnimationTrack
+ILayerable <|-- AnimationTrack
+@enduml

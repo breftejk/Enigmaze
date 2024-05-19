@@ -1,0 +1,12 @@
+@startuml
+struct TileRangeExpansionJob {
+    + tileRanges : NativeArray<InclusiveRange>
+    + tileMasks : NativeArray<uint>
+    + rangesPerItem : int
+    + itemsPerTile : int
+    + wordsPerTile : int
+    + tileResolution : int2
+    + Execute(jobIndex:int) : void
+}
+IJobFor <|-- TileRangeExpansionJob
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+class EaseClip {
+    - m_IsCaptured : bool
+    - m_UndoSaved : bool
+    - m_EaseClipHandler : TimelineClipHandle
+    - m_Edges : ManipulateEdges
+    - m_Clip : TimelineClip
+    - m_OverlayText : StringBuilder
+    - m_OriginalValue : double
+    + {static} <<readonly>> EaseInClipText : string
+    + {static} <<readonly>> EaseOutClipText : string
+    + {static} <<readonly>> EaseInText : string
+    + {static} <<readonly>> EaseOutText : string
+    + {static} <<readonly>> DurationText : string
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # MouseDownInternal(evt:Event, state:WindowState, handle:TimelineClipHandle) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+    + <<override>> Overlay(evt:Event, state:WindowState) : void
+    - RefreshOverlayStrings(handle:TimelineClipHandle, state:WindowState) : void
+}
+Manipulator <|-- EaseClip
+@enduml

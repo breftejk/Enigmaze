@@ -1,0 +1,13 @@
+@startuml
+class VertexIDNode {
+    - <<const>> kOutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    + VertexIDNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresVertexID(stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- VertexIDNode
+IMayRequireVertexID <|-- VertexIDNode
+@enduml

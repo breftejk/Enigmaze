@@ -1,0 +1,7 @@
+@startuml
+class Null <<sealed>> {
+    + @null : ValueOutput <<get>>
+    # <<override>> Definition() : void
+}
+Unit <|-- Null
+@enduml

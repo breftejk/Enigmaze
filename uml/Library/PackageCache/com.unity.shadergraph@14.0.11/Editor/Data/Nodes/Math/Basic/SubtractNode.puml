@@ -1,0 +1,8 @@
+@startuml
+class SubtractNode {
+    + SubtractNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Subtract(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SubtractNode
+@enduml

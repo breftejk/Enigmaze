@@ -1,0 +1,22 @@
+@startuml
+enum HistoryListColumn {
+    Changeset,
+    CreationDate,
+    CreatedBy,
+    Comment,
+    Branch,
+}
+class HistoryListHeaderState {
+    <<internal>> {static} GetDefault() : HistoryListHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:HistoryListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - HistoryListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- HistoryListHeaderState
+ISerializationCallbackReceiver <|-- HistoryListHeaderState
+@enduml

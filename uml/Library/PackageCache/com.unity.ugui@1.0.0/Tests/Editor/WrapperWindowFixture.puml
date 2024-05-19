@@ -1,0 +1,16 @@
+@startuml
+class WrapperWindowFixture {
+    - {static} s_MostRecentWrapperWindow : WrapperWindow
+    + {static} GetWindow(onGUIDelegate:Func<WrapperWindow, bool>, utility:bool) : WrapperWindow
+    + {static} GetWindow(onGUIDelegate:Func<WrapperWindow, bool>, width:int, height:int, utility:bool) : WrapperWindow
+    + CloseMostRecentWrapperWindow() : void
+    # {static} RegisterWrapperWindow(window:WrapperWindow) : void
+}
+class WrapperWindow {
+    + onGUIDelegate : Func<WrapperWindow, bool>
+    + TestCompleted : bool <<get>> <<set>>
+    + OnGUI() : void
+}
+WrapperWindowFixture +-- WrapperWindow
+EditorWindow <|-- WrapperWindow
+@enduml

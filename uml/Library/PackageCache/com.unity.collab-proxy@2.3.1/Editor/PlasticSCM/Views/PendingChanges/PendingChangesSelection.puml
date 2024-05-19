@@ -1,0 +1,18 @@
+@startuml
+class PendingChangesSelection <<static>> {
+    <<internal>> {static} SelectChanges(treeView:PendingChangesTreeView, changesToSelect:List<ChangeInfo>) : void
+    <<internal>> {static} GetSelectedPathsWithoutMeta(treeView:PendingChangesTreeView) : List<string>
+    <<internal>> {static} GetSelectedPaths(treeView:PendingChangesTreeView) : List<string>
+    <<internal>> {static} GetSelectedMetaPaths(treeView:PendingChangesTreeView) : List<string>
+    <<internal>> {static} GetAllChanges(treeView:PendingChangesTreeView) : List<ChangeInfo>
+    <<internal>> {static} GetChangesToFocus(treeView:PendingChangesTreeView) : List<ChangeInfo>
+    <<internal>> {static} GetSelectedChangesGroupInfo(wkPath:string, treeView:PendingChangesTreeView) : SelectedChangesGroupInfo
+    <<internal>> {static} GetSelectedChanges(treeView:PendingChangesTreeView) : List<ChangeInfo>
+    <<internal>> {static} GetSelectedChangeListInfos(treeView:PendingChangesTreeView) : List<ChangeListInfo>
+    <<internal>> {static} GetSelectedChangeListInfo(treeView:PendingChangesTreeView) : ChangeListInfo
+    <<internal>> {static} GetSelectedChangelistNodes(treeView:PendingChangesTreeView) : List<ChangelistNode>
+    <<internal>> {static} GetSelectedChange(treeView:PendingChangesTreeView) : ChangeInfo
+    {static} - GetInvolvedChangelists(changes:List<PendingChangeInfo>) : List<ChangeListInfo>
+    {static} - IsAddedFile(change:ChangeInfo) : bool
+}
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+class AssetOperations {
+    <<internal>> AssetOperations(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, viewSwitcher:IViewSwitcher, historyViewLauncher:IHistoryViewLauncher, viewHost:ViewHost, workspaceOperationsMonitor:WorkspaceOperationsMonitor, newIncomingChangesUpdater:NewIncomingChangesUpdater, assetStatusCache:IAssetStatusCache, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:IGluonViewSwitcher, parentWindow:EditorWindow, assetSelection:IAssetSelection, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, isGluonMode:bool)
+    - ShowPendingChanges() : void
+    - Add() : void
+    - Checkout() : void
+    - Checkin() : void
+    - Undo() : void
+    - ShowDiff() : void
+    - ShowHistory() : void
+    - AddFilesFilterPatterns(type:FilterTypes, action:FilterActions, operation:FilterOperationType) : void
+    {static} - GetSymbolicName(selectedPath:string) : string
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mViewSwitcher : IViewSwitcher
+    <<readonly>> - mHistoryViewLauncher : IHistoryViewLauncher
+    <<readonly>> - mWorkspaceWindow : IWorkspaceWindow
+    <<readonly>> - mViewHost : ViewHost
+    <<readonly>> - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    <<readonly>> - mNewIncomingChangesUpdater : NewIncomingChangesUpdater
+    <<readonly>> - mAssetStatusCache : IAssetStatusCache
+    <<readonly>> - mMergeViewLauncher : IMergeViewLauncher
+    <<readonly>> - mGluonViewSwitcher : IGluonViewSwitcher
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mProgressControls : EditorProgressControls
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mAssetSelection : IAssetSelection
+    <<readonly>> - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+}
+interface IAssetSelection {
+    GetSelectedAssets() : AssetList
+}
+IAssetMenuOperations <|-- AssetOperations
+IAssetFilesFilterPatternsMenuOperations <|-- AssetOperations
+AssetOperations +-- IAssetSelection
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+abstract class "ShaderPreprocessor`2"<TShader,TShaderVariant> {
+    - m_Strippers : IVariantStripper<TShader, TShaderVariant>[] = null
+    # <<virtual>> strippers : IVariantStripper<TShader, TShaderVariant>[] <<get>>
+    - m_GlobalRenderPipeline : Lazy<string>
+    - globalRenderPipeline : string <<get>>
+    - m_Scopes : IVariantStripperScope<TShader, TShaderVariant>[] = null
+    # <<virtual>> scopes : IVariantStripperScope<TShader, TShaderVariant>[] <<get>>
+    # ShaderPreprocessor()
+    # ShaderPreprocessor(strippers:IVariantStripper<TShader, TShaderVariant>[])
+    - {static} FetchGlobalRenderPipelineShaderTag() : string
+    - TryGetShaderVariantRenderPipelineTag(shader:TShader, shaderVariant:TShaderVariant, renderPipelineTag:string) : bool
+    - {static} FetchShaderStrippers() : IVariantStripper<TShader, TShaderVariant>[]
+    - CanRemoveVariant(shader:TShader, shaderVariant:TShaderVariant, shaderCompilerData:ShaderCompilerData) : bool
+    # TryStripShaderVariants(shader:TShader, shaderVariant:TShaderVariant, compilerDataList:IList<ShaderCompilerData>, error:Exception) : bool
+}
+class ShaderVariantStripper {
+    + callbackOrder : int <<get>>
+    + OnProcessShader(shader:Shader, snippet:ShaderSnippetData, inputData:IList<ShaderCompilerData>) : void
+}
+class ComputeShaderVariantStripper {
+    + callbackOrder : int <<get>>
+    + OnProcessComputeShader(shader:ComputeShader, kernelName:string, inputData:IList<ShaderCompilerData>) : void
+}
+"ShaderPreprocessor`2" "<Shader,ShaderSnippetData>" <|-- ShaderVariantStripper
+IPreprocessShaders <|-- ShaderVariantStripper
+"ShaderPreprocessor`2" "<ComputeShader,string>" <|-- ComputeShaderVariantStripper
+IPreprocessComputeShaders <|-- ComputeShaderVariantStripper
+@enduml

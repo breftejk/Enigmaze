@@ -1,0 +1,33 @@
+@startuml
+class GenerateGeometryPanel {
+    - m_OutlineDetailField : IntegerField
+    - m_AlphaToleranceField : IntegerField
+    - m_SubdivideField : IntegerField
+    - m_Toggle : Toggle
+    +  <<event>> onAutoGenerateGeometry : Action<float, byte, float> 
+    +  <<event>> onAutoGenerateGeometryAll : Action<float, byte, float> 
+    + generateWeights : bool <<get>> <<set>>
+    + skinningCache : SkinningCache <<get>> <<set>>
+    + GenerateGeometryPanel()
+    - BindElements() : void
+    - LinkSliderToFloatField(slider:Slider, field:IntegerField, updatePreferenceAction:Action<int>) : void
+    + SetMode(mode:GenerateMode) : void
+    + GenerateGeometry() : void
+    + GenerateGeometryAll() : void
+    + {static} GenerateFromUXML() : GenerateGeometryPanel
+}
+class GenerateGeometryPanelFactory {
+}
+class GenerateGeometryPanelUxmlTraits {
+}
+enum GenerateMode {
+    Single,
+    Multiple,
+}
+VisualElement <|-- GenerateGeometryPanel
+GenerateGeometryPanel +-- GenerateGeometryPanelFactory
+"UxmlFactory`2" "<GenerateGeometryPanel,GenerateGeometryPanelUxmlTraits>" <|-- GenerateGeometryPanelFactory
+GenerateGeometryPanel +-- GenerateGeometryPanelUxmlTraits
+UxmlTraits <|-- GenerateGeometryPanelUxmlTraits
+GenerateGeometryPanel +-- GenerateMode
+@enduml

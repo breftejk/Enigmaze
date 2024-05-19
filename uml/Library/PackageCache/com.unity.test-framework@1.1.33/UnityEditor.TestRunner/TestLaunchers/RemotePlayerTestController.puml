@@ -1,0 +1,23 @@
+@startuml
+class RemoteTestRunController {
+    <<internal>> <<const>> k_HeartbeatTimeout : int
+    - m_RemoteTestResultReciever : RemoteTestResultReciever
+    - m_PlatformSpecificSetup : PlatformSpecificSetup
+    - m_RegisteredConnectionCallbacks : bool
+    - m_HearbeatTimeOut : int
+    - m_TimeoutCallback : UnityEditor.TestTools.TestRunner.DelayedCallback
+    + Init(buildTarget:BuildTarget, heartbeatTimeout:int) : void
+    - DelegateEditorConnectionEvents() : void
+    - RunStarted(messageEventArgs:MessageEventArgs) : void
+    - RunFinished(messageEventArgs:MessageEventArgs) : void
+    - TestStarted(messageEventArgs:MessageEventArgs) : void
+    - TestFinished(messageEventArgs:MessageEventArgs) : void
+    - PlayerAliveHeartbeat(messageEventArgs:MessageEventArgs) : void
+    - TimeoutCallback() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+}
+"ScriptableSingleton`1" "<RemoteTestRunController>" <|-- RemoteTestRunController
+@enduml

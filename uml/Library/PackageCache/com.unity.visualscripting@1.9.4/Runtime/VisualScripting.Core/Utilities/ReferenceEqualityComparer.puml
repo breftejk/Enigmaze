@@ -1,0 +1,18 @@
+@startuml
+class ReferenceEqualityComparer {
+    - ReferenceEqualityComparer()
+    - Equals(a:object, b:object) : bool
+    - GetHashCode(a:object) : int
+    + {static} <<readonly>> Instance : ReferenceEqualityComparer
+    + {static} GetHashCode(a:object) : int
+}
+class "ReferenceEqualityComparer`1"<T> {
+    - ReferenceEqualityComparer()
+    - Equals(a:T, b:T) : bool
+    - GetHashCode(a:T) : int
+    + {static} <<readonly>> Instance : ReferenceEqualityComparer<T>
+    + {static} GetHashCode(a:T) : int
+}
+"IEqualityComparer`1" "<object>" <|-- ReferenceEqualityComparer
+"IEqualityComparer`1" "<T>" <|-- "ReferenceEqualityComparer`1"
+@enduml

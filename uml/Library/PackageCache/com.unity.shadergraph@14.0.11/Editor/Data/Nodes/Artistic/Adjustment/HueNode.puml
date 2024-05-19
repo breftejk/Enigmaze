@@ -1,0 +1,15 @@
+@startuml
+enum HueMode {
+    Degrees,
+    Normalized,
+}
+class HueNode {
+    + HueNode()
+    - m_HueMode : HueMode
+    + hueMode : HueMode <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Hue_Degrees(In:Vector3, Offset:Vector1, Out:Vector3) : string
+    {static} - Unity_Hue_Normalized(In:Vector3, Offset:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- HueNode
+@enduml

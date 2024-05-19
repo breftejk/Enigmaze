@@ -1,0 +1,20 @@
+@startuml
+class LightUI <<partial>> {
+}
+class Styles <<static>> {
+    + {static} <<readonly>> generalHeader : GUIContent
+    + {static} <<readonly>> shapeHeader : GUIContent
+    + {static} <<readonly>> renderingHeader : GUIContent
+    + {static} <<readonly>> emissionHeader : GUIContent
+    + {static} <<readonly>> shadowHeader : GUIContent
+    + {static} <<readonly>> lightLayer : GUIContent
+    + {static} <<readonly>> color : GUIContent
+    + {static} <<readonly>> lightAppearance : GUIContent
+    + {static} <<readonly>> lightAppearanceOptions : GUIContent[]
+    + {static} <<readonly>> lightAppearanceUnits : GUIContent[]
+    + {static} <<readonly>> colorFilter : GUIContent
+    + {static} <<readonly>> colorTemperature : GUIContent
+    + {static} <<readonly>> unsupportedPresetPropertiesMessage : string
+}
+LightUI +-- Styles
+@enduml

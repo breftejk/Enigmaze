@@ -1,0 +1,20 @@
+@startuml
+class TestResultSerializer {
+    - {static} <<readonly>> flags : BindingFlags
+    + id : string
+    + fullName : string
+    - duration : double
+    - label : string
+    - message : string
+    - output : string
+    - site : string
+    - stacktrace : string
+    - startTimeAO : double
+    - endTimeAO : double
+    - status : string
+    + uniqueName : string
+    + {static} MakeFromTestResult(result:ITestResult) : TestResultSerializer
+    + RestoreTestResult(result:TestResult) : void
+    + IsPassed() : bool
+}
+@enduml

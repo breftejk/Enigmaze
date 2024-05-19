@@ -1,0 +1,22 @@
+@startuml
+struct LayerBatch {
+    + startLayerID : int
+    + endLayerValue : int
+    + layerRange : SortingLayerRange
+    + lightStats : LightStats
+    - <<unsafe>> <<fixed>> renderTargetIds : int
+    - <<unsafe>> <<fixed>> renderTargetUsed : bool
+    + InitRTIds(index:int) : void
+    + GetRTId(cmd:CommandBuffer, desc:RenderTextureDescriptor, index:int) : RenderTargetIdentifier
+    + ReleaseRT(cmd:CommandBuffer) : void
+}
+class LayerUtility <<static>> {
+    - {static} s_LayerBatches : LayerBatch[]
+    + {static} maxTextureCount : uint <<get>>
+    + {static} InitializeBudget(maxTextureCount:uint) : void
+    - {static} CanBatchLightsInLayer(layerIndex1:int, layerIndex2:int, sortingLayers:SortingLayer[], lightCullResult:ILight2DCullResult) : bool
+    - {static} FindUpperBoundInBatch(startLayerIndex:int, sortingLayers:SortingLayer[], lightCullResult:ILight2DCullResult) : int
+    - {static} InitializeBatchInfos(cachedSortingLayers:SortingLayer[]) : void
+    + {static} CalculateBatches(lightCullResult:ILight2DCullResult, batchCount:int) : LayerBatch[]
+}
+@enduml

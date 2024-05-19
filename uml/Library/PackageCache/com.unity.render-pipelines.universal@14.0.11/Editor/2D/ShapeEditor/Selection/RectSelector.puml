@@ -1,0 +1,24 @@
+@startuml
+abstract class "RectSelector`1"<T> {
+    + onSelectionBegin : Action<ISelector<T>, bool>
+    + onSelectionChanged : Action<ISelector<T>>
+    + onSelectionEnd : Action<ISelector<T>> = null
+    - m_GUISystem : GUISystem
+    - m_RectSelectorControl : Control
+    - m_RectSelectAction : GUIAction
+    - m_RectStart : Vector3
+    - m_RectEnd : Vector3
+    - m_GUIRect : Rect
+    - m_Drawer : IDrawer
+    + guiRect : Rect <<get>>
+    + RectSelector()
+    + RectSelector(guiSystem:GUISystem)
+    - GUIToWorld(guiState:IGUIState, guiPosition:Vector2) : Vector3
+    - CalculateGUIRect() : Rect
+    - FromToRect(start:Vector2, end:Vector2) : Rect
+    + OnGUI() : void
+    - Select(element:T) : bool
+    # {abstract} Select(element:T) : bool
+}
+"ISelector`1" "<T>" <|-- "RectSelector`1"
+@enduml

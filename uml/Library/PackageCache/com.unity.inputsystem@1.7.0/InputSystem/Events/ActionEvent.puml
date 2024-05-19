@@ -1,0 +1,26 @@
+@startuml
+struct ActionEvent {
+    + {static} Type : FourCC <<get>>
+    + baseEvent : InputEvent
+    - m_ControlIndex : ushort
+    - m_BindingIndex : ushort
+    - m_InteractionIndex : ushort
+    - m_StateIndex : byte
+    - m_Phase : byte
+    - m_StartTime : double
+    + <<fixed>> m_ValueData : byte
+    + startTime : double <<get>> <<set>>
+    + phase : InputActionPhase <<get>> <<set>>
+    + valueData : byte* <<get>>
+    + valueSizeInBytes : int <<get>>
+    + stateIndex : int <<get>> <<set>>
+    + controlIndex : int <<get>> <<set>>
+    + bindingIndex : int <<get>> <<set>>
+    + interactionIndex : int <<get>> <<set>>
+    + ToEventPtr() : InputEventPtr
+    + typeStatic : FourCC <<get>>
+    + {static} GetEventSizeWithValueSize(valueSizeInBytes:int) : int
+    + {static} From(ptr:InputEventPtr) : ActionEvent*
+}
+IInputEventTypeInfo <|-- ActionEvent
+@enduml

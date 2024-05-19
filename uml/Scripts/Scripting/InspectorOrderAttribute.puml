@@ -1,0 +1,16 @@
+@startuml
+class InspectorOrderAttribute <<sealed>> {
+    <<internal>> m_inspectorSort : InspectorSort <<get>>
+    <<internal>> m_sortDirection : InspectorSortDirection <<get>>
+    + InspectorOrderAttribute(inspectorSort:InspectorSort, sortDirection:InspectorSortDirection)
+}
+enum InspectorSort {
+    ByName,
+    ByValue,
+}
+enum InspectorSortDirection {
+    Ascending,
+    Descending,
+}
+PropertyAttribute <|-- InspectorOrderAttribute
+@enduml

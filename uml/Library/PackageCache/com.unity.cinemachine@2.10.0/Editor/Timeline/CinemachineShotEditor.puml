@@ -1,0 +1,20 @@
+@startuml
+class CinemachineShotEditor <<sealed>> {
+    {static} - kAutoCreateKey : string = "CM_Timeline_AutoCreateShotFromSceneView"
+    + {static} AutoCreateShotFromSceneView : bool <<get>> <<set>>
+    {static} + CreatePassiveVcamFromSceneView() : CinemachineVirtualCameraBase
+    - {static} <<readonly>> kVirtualCameraLabel : GUIContent
+    - {static} <<readonly>> kAutoCreateLabel : GUIContent
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - OnDisable() : void
+    - OnDestroy() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawSubeditors(vcam:CinemachineVirtualCameraBase) : void
+    - m_cachedReferenceObject : CinemachineVirtualCameraBase
+    - m_editors : UnityEditor.Editor[] = null
+    {static} - s_EditorExpanded : Dictionary<System.Type, bool>
+    - UpdateComponentEditors(obj:CinemachineVirtualCameraBase) : void
+    - DestroyComponentEditors() : void
+}
+"BaseEditor`1" "<CinemachineShot>" <|-- CinemachineShotEditor
+@enduml

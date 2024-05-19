@@ -1,0 +1,6 @@
+@startuml
+interface "IMaterialSlotHasValue`1"<T> {
+    defaultValue : T <<get>>
+    value : T <<get>>
+}
+@enduml

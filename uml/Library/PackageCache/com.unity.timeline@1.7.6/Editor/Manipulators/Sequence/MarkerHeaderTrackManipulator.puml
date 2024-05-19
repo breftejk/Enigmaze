@@ -1,0 +1,8 @@
+@startuml
+class MarkerHeaderTrackManipulator {
+    # <<override>> ContextClick(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    {static} - IsMouseOverMarkerHeader(mousePosition:Vector2, state:WindowState) : bool
+}
+Manipulator <|-- MarkerHeaderTrackManipulator
+@enduml

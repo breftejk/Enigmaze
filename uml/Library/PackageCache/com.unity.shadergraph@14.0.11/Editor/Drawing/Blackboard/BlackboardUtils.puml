@@ -1,0 +1,7 @@
+@startuml
+class BlackboardUtils <<static>> {
+    <<internal>> {static} GetInsertionIndex(owner:VisualElement, position:Vector2, children:IEnumerable<VisualElement>) : int
+    <<internal>> {static} FormatPath(path:string) : string
+    <<internal>> {static} SanitizePath(path:string) : string
+}
+@enduml

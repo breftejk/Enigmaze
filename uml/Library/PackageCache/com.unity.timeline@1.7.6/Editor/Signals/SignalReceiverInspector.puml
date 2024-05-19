@@ -1,0 +1,18 @@
+@startuml
+class SignalReceiverInspector {
+    - m_Target : SignalReceiver
+    - m_TreeState : TreeViewState
+    - m_MultiColumnHeaderState : MultiColumnHeaderState
+    <<internal>> m_TreeView : SignalReceiverTreeView
+    - signalEmitterContext : SignalEmitter <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnUndoRedo() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawEmitterControls() : void
+    <<internal>> SetAssetContext(asset:SignalAsset) : void
+    - DrawAddRemoveButtons() : void
+    - InitTreeView(so:SerializedObject) : void
+}
+Editor <|-- SignalReceiverInspector
+@enduml

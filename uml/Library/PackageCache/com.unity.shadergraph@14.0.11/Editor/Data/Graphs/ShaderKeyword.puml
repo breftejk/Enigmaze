@@ -1,0 +1,34 @@
+@startuml
+class ShaderKeyword {
+    + <<const>> kVariantLimitWarning : string = "Graph is generating too many variants. Either delete Keywords, reduce Keyword variants or increase the Shader Variant Limit in Preferences > Shader Graph."
+    + ShaderKeyword()
+    + ShaderKeyword(keywordType:KeywordType)
+    + {static} CreateBuiltInKeyword(descriptor:KeywordDescriptor) : ShaderKeyword
+    - m_KeywordType : KeywordType
+    + keywordType : KeywordType <<get>> <<set>>
+    - m_KeywordDefinition : KeywordDefinition
+    + keywordDefinition : KeywordDefinition <<get>> <<set>>
+    - m_KeywordScope : KeywordScope
+    + keywordScope : KeywordScope <<get>> <<set>>
+    - m_KeywordStages : KeywordShaderStage
+    + keywordStages : KeywordShaderStage <<get>> <<set>>
+    - m_Entries : List<KeywordEntry>
+    + entries : List<KeywordEntry> <<get>> <<set>>
+    - m_Value : int
+    + value : int <<get>> <<set>>
+    - m_IsEditable : bool = true
+    + isBuiltIn : bool <<get>> <<set>>
+    <<internal>> <<override>> isCustomSlotAllowed : bool <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> concreteShaderValueType : ConcreteSlotValueType <<get>>
+    + <<override>> GetOldDefaultReferenceName() : string
+    + AppendPropertyBlockStrings(builder:ShaderStringBuilder) : void
+    + AppendKeywordDeclarationStrings(builder:ShaderStringBuilder) : void
+    + GetKeywordPreviewDeclarationString() : string
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+ShaderInput <|-- ShaderKeyword
+@enduml

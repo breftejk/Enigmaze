@@ -1,0 +1,13 @@
+@startuml
+class XboxOnePlatformSetup {
+    - oldXboxOneDeployMethod : XboxOneDeployMethod
+    - oldXboxOneDeployDrive : XboxOneDeployDrive
+    - oldXboxOneAdditionalDebugPorts : string
+    + Setup() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+}
+IPlatformSetup <|-- XboxOnePlatformSetup
+@enduml

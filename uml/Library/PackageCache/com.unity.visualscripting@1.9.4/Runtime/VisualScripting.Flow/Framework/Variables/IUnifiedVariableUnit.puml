@@ -1,0 +1,7 @@
+@startuml
+interface IUnifiedVariableUnit {
+    kind : VariableKind <<get>>
+    name : ValueInput <<get>>
+}
+IUnit <|-- IUnifiedVariableUnit
+@enduml

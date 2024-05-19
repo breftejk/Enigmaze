@@ -1,0 +1,13 @@
+@startuml
+class SmoothingUtility {
+    - {static} m_DataInTemp : float[,]
+    - {static} m_DataOutTemp : float[,]
+    - {static} m_DenominatorTemp : float[]
+    - {static} s_BoneWeight : EditableBoneWeight
+    + {static} SmoothWeights(boneWeightIn:BoneWeight[], indices:IList<int>, boneCount:int, boneWeightOut:BoneWeight[]) : void
+    + {static} SmoothWeights(boneWeightIn:BoneWeight[], indices:IList<int>, boneCount:int, iterations:int, boneWeightOut:BoneWeight[]) : void
+    + {static} SmoothPerVertexData(indices:IList<int>, dataIn:float[,], dataOut:float[,]) : void
+    - {static} PrepareDenominatorBuffer(rowLength:int) : void
+    - {static} PrepareTempBuffers(rowLength:int, colLength:int) : void
+}
+@enduml

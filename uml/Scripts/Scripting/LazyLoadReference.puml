@@ -1,0 +1,12 @@
+@startuml
+struct "LazyLoadReference`1"<T> {
+    - <<const>> kInstanceID_None : int = 0
+    - m_InstanceID : int
+    + isSet : bool <<get>>
+    + isBroken : bool <<get>>
+    + asset : T <<get>> <<set>>
+    + instanceID : int <<get>> <<set>>
+    + LazyLoadReference(asset:T)
+    + LazyLoadReference(instanceID:int)
+}
+@enduml

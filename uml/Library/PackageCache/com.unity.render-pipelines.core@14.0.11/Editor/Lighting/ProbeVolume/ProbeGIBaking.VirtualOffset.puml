@@ -1,0 +1,50 @@
+@startuml
+class ProbeGIBaking <<partial>> {
+    <<const>> - kMaxMemoryUsage : int
+    <<const>> - kMinCommandsPerJob : int = 512
+    <<const>> - kRayDirectionsPerPosition : int
+    {static} - s_AddedOccluders : List<MeshCollider>
+    {static} - s_ExcludedColliders : List<Collider>
+    {static} - s_ExcludedRigidBodies : List<Rigidbody>
+    {static} - ApplyVirtualOffsets(positions:Vector3[], offsets:Vector3[]) : void
+    {static} - GeneratePhysicsComponentToModList() : void
+    {static} - ModifyPhysicsComponentsForBaking() : void
+    {static} - RestorePhysicsComponentsAfterBaking() : void
+    {static} - AddOccluders() : void
+    - {static} CleanupOccluders() : void
+    {static} - DoApplyVirtualOffsets(probePositions:Vector3[], probeOffsets:Vector3[], voSettings:VirtualOffsetSettings) : void
+}
+struct CreateRayCastCommandsJob {
+    + voSettings : VirtualOffsetSettings
+    + positions : NativeArray<Vector3>
+    + positionIndex : NativeArray<int>
+    + searchDistanceForPosition : NativeArray<float>
+    + startIdx : int
+    + raycastCommands : NativeArray<RaycastCommand>
+    + raycastHits : NativeArray<RaycastHit>
+    + queryParams : QueryParameters
+    + Execute(i:int) : void
+    <<const>> - k0 : float = 0
+    <<const>> - k1 : float = 1
+    <<const>> - k2 : float
+    <<const>> - k3 : float
+    {static} <<readonly>> - kRayDirections : Vector3[]
+}
+struct PushOutGeometryJob {
+    + voSettings : VirtualOffsetSettings
+    + positionIndex : NativeArray<int>
+    + startIdx : int
+    + raycastCommands : NativeArray<RaycastCommand>
+    + raycastHits : NativeArray<RaycastHit>
+    + positions : NativeArray<Vector3>
+    + offsets : NativeArray<Vector3>
+    + Execute(i:int) : void
+    {static} - IsNewBestHit(newDistance:float, oldDistance:float, newDot:float, oldDot:float) : bool
+    - GetClosestColliderHit(hitIdx:int, outRay:Vector3, maxHitsPerRay:int, distance:float, dotSurface:float) : void
+    - PushOutOfGeometry(cmdIdx:int, biasOutGeo:float, maxHitsPerRay:int) : Vector3
+}
+ProbeGIBaking +-- CreateRayCastCommandsJob
+IJobParallelFor <|-- CreateRayCastCommandsJob
+ProbeGIBaking +-- PushOutGeometryJob
+IJobParallelFor <|-- PushOutGeometryJob
+@enduml

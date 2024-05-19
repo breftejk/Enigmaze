@@ -1,0 +1,14 @@
+@startuml
+class Awaitable <<partial>> {
+    + GetAwaiter() : Awaiter
+}
+struct Awaiter {
+    - <<readonly>> _awaited : Awaitable
+    <<internal>> Awaiter(awaited:Awaitable)
+    + OnCompleted(continuation:Action) : void
+    + IsCompleted : bool <<get>>
+    + GetResult() : void
+}
+Awaitable +-- Awaiter
+INotifyCompletion <|-- Awaiter
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+class CustomInterpolatorUtils <<static>> {
+    <<internal>> {static} generatorSkipFlag : bool = false
+    <<internal>> {static} generatorNodeOnly : bool = false
+    <<internal>> {static} GetCustomBlockNodeDependents(bnode:BlockNode) : IEnumerable<CustomInterpolatorNode>
+}
+class CustomInterpSubGen {
+    - customBlockNodes : List<BlockNode>
+    - isNodePreview : bool
+    - spliceCommandBuffer : Dictionary<string, ShaderStringBuilder>
+    <<internal>> CustomInterpSubGen(isNodePreview:bool)
+    <<internal>> ProcessExistingStackData(vertexNodes:List<AbstractMaterialNode>, vertexSlots:List<MaterialSlot>, pixelNodes:List<AbstractMaterialNode>, activeFields:IActiveFieldsSet) : void
+    <<internal>> CopyModifyExistingPassStructs(passStructs:IEnumerable<StructDescriptor>, activeFields:IActiveFieldsSet) : List<StructDescriptor>
+    <<internal>> ProcessDescriptors(descriptors:IEnumerable<Descriptor>) : void
+    <<internal>> AppendToSpliceCommands(spliceCommands:Dictionary<string, string>) : void
+    - GenStruct(structName:string, builder:ShaderStringBuilder, makeDefine:string) : void
+    - GenCopyBlock(dst:string, src:string, builder:ShaderStringBuilder) : void
+    - GenCopyMacroBlock(startMacro:string, endMacro:string, builder:ShaderStringBuilder) : void
+    - GenCopyFunc(funcName:string, dstType:string, srcType:string, builder:ShaderStringBuilder, makeDefine:string) : void
+    - {static} GetAntecedents(blockNode:BlockNode) : List<AbstractMaterialNode>
+    - {static} InsertAntecedent(nodes:List<AbstractMaterialNode>, node:AbstractMaterialNode) : void
+    - {static} ShaderValueTypeFrom(width:int) : ShaderValueType
+}
+class Splice <<static>> {
+    <<internal>> {static} k_splicePreInclude : string <<get>>
+    <<internal>> {static} k_splicePrePacking : string <<get>>
+    <<internal>> {static} k_splicePreSurface : string <<get>>
+    <<internal>> {static} k_splicePreVertex : string <<get>>
+    <<internal>> {static} k_spliceCopyToSDI : string <<get>>
+}
+struct Descriptor {
+    <<internal>> src : string
+    <<internal>> dst : string
+    <<internal>> name : string
+    <<internal>> define : string
+    <<internal>> splice : string
+    <<internal>> preprocessor : string
+    <<internal>> hasMacro : bool
+    <<internal>> isBlock : bool <<get>>
+    <<internal>> isMacroBlock : bool <<get>>
+    <<internal>> isStruct : bool <<get>>
+    <<internal>> isFunc : bool <<get>>
+    <<internal>> isDefine : bool <<get>>
+    <<internal>> isValid : bool <<get>>
+    <<internal>> hasPreprocessor : bool <<get>>
+    <<internal>> {static} MakeFunc(splice:string, name:string, dstType:string, srcType:string, define:string, preprocessor:string) : Descriptor
+    <<internal>> {static} MakeStruct(splice:string, name:string, define:string, preprocessor:string) : Descriptor
+    <<internal>> {static} MakeBlock(splice:string, dst:string, src:string, preprocessor:string) : Descriptor
+    <<internal>> {static} MakeMacroBlock(splice:string, startMacro:string, endMacro:string, preprocessor:string) : Descriptor
+    <<internal>> {static} MakeDefine(splice:string, define:string, preprocessor:string) : Descriptor
+}
+class Collection {
+    <<readonly>> - m_Items : List<Collection.Item>
+    + Collection()
+    + Add(structs:Collection) : Collection
+    + Add(descriptor:Descriptor) : Collection
+    + GetEnumerator() : IEnumerator<Item>
+    - GetEnumerator() : System.Collections.IEnumerator
+}
+class Item {
+    + descriptor : Descriptor <<get>>
+    + Item(descriptor:Descriptor)
+}
+CustomInterpSubGen +-- Splice
+CustomInterpSubGen +-- Descriptor
+CustomInterpSubGen +-- Collection
+"IEnumerable`1" "<Collection.Item>" <|-- Collection
+Collection +-- Item
+@enduml

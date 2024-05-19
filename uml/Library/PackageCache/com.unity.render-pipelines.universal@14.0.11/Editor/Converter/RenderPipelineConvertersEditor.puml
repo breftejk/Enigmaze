@@ -1,0 +1,89 @@
+@startuml
+enum Status {
+    Pending,
+    Warning,
+    Error,
+    Success,
+}
+class ConverterItemState {
+    + isActive : bool
+    + message : string
+    + status : Status
+    <<internal>> hasConverted : bool = false
+}
+class ConverterState {
+    + isEnabled : bool
+    + isActive : bool
+    + isLoading : bool
+    + isInitialized : bool
+    + items : List<ConverterItemState>
+    + pending : int
+    + warnings : int
+    + errors : int
+    + success : int
+    <<internal>> index : int
+    + isActiveAndEnabled : bool <<get>>
+    + requiresInitialization : bool <<get>>
+}
+struct ConverterItems {
+    + itemDescriptors : List<ConverterItemDescriptor>
+}
+class RenderPipelineConvertersEditor {
+    - converterStateInfoDisabled : Tuple<string, Texture2D>
+    - converterStateInfoPendingInitialization : Tuple<string, Texture2D>
+    - converterStateInfoPendingConversion : Tuple<string, Texture2D>
+    - converterStateInfoPendingConversionWarning : Tuple<string, Texture2D>
+    - converterStateInfoCompleteErrors : Tuple<string, Texture2D>
+    - converterStateInfoComplete : Tuple<string, Texture2D>
+    + converterEditorAsset : VisualTreeAsset
+    + converterItem : VisualTreeAsset
+    + converterWidgetMainAsset : VisualTreeAsset
+    - m_ScrollView : ScrollView
+    - m_ConverterSelectedVE : VisualElement
+    - m_ConvertButton : Button
+    - m_InitButton : Button
+    - m_InitAnConvertButton : Button
+    - m_ContainerHelpButton : Button
+    - m_InitAndConvert : bool
+    - m_CoreConvertersList : List<RenderPipelineConverter>
+    - m_VEList : List<VisualElement>
+    - m_ItemsToConvert : List<ConverterItems>
+    - m_SerializedObject : SerializedObject
+    - m_ContainerChoices : List<string>
+    - m_Containers : List<RenderPipelineConverterContainer>
+    - m_ContainerChoiceIndex : int = 0
+    - m_WorkerCount : int
+    - m_ConverterStates : List<ConverterState>
+    - m_ConverterContainers : TypeCache.TypeCollection
+    - currentContainer : RenderPipelineConverterContainer <<get>>
+    - m_URPConverterIndex : string = "URPConverterIndex"
+    + {static} ShowWindow() : void
+    <<internal>> {static} DontSaveToLayout(wnd:EditorWindow) : void
+    - OnEnable() : void
+    - InitIfNeeded() : void
+    - ClearConverterStates() : void
+    - GetConverters() : void
+    + CreateGUI() : void
+    - GotoHelpURL(evt:ClickEvent) : void
+    - InitOrConvert() : void
+    - UpdateSelectedConverterItems(index:int, element:VisualElement) : void
+    - ShowConverterLayout(element:VisualElement) : void
+    - HideConverterLayout(element:VisualElement) : void
+    - ToggleAllNone(evt:ClickEvent, index:int, value:bool, item:VisualElement) : void
+    - ConverterStatusInfo(index:int, item:VisualElement) : void
+    - BackToConverters(evt:ClickEvent) : void
+    - RecreateUI() : void
+    - HideUnhideConverters() : void
+    - DeselectAllNoneLabels(item:VisualElement) : void
+    - GetAndSetData(i:int, onAllConvertersCompleted:Action) : void
+    - InitializeAndConvert(evt:ClickEvent) : void
+    - InitializeAllActiveConverters(evt:ClickEvent) : void
+    - SaveCurrentSceneAndContinue() : bool
+    - ShouldCreateSearchIndex() : bool
+    - AddToContextMenu(evt:ContextualMenuPopulateEvent, coreConverterIndex:int) : void
+    - UpdateInfo(stateIndex:int, ctx:RunItemContext) : void
+    - Convert(evt:ClickEvent) : void
+    - ConvertIndex(coreConverterIndex:int, index:int) : void
+}
+EditorWindow <|-- RenderPipelineConvertersEditor
+@enduml

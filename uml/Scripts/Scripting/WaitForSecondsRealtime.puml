@@ -1,0 +1,10 @@
+@startuml
+class WaitForSecondsRealtime {
+    + waitTime : float <<get>> <<set>>
+    - m_WaitUntilTime : float
+    + <<override>> keepWaiting : bool <<get>>
+    + WaitForSecondsRealtime(time:float)
+    + <<override>> Reset() : void
+}
+CustomYieldInstruction <|-- WaitForSecondsRealtime
+@enduml

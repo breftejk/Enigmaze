@@ -1,0 +1,11 @@
+@startuml
+class SetObjectVariable <<sealed>> {
+    + SetObjectVariable()
+    + SetObjectVariable(name:string)
+    + source : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+SetVariableUnit <|-- SetObjectVariable
+IObjectVariableUnit <|-- SetObjectVariable
+@enduml

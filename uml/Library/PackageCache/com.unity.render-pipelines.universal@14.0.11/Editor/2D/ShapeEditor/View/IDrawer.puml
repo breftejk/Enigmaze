@@ -1,0 +1,14 @@
+@startuml
+interface IDrawer {
+    DrawSelectionRect(rect:Rect) : void
+    DrawCreatePointPreview(position:Vector3) : void
+    DrawRemovePointPreview(position:Vector3) : void
+    DrawPoint(position:Vector3) : void
+    DrawPointHovered(position:Vector3) : void
+    DrawPointSelected(position:Vector3) : void
+    DrawLine(p1:Vector3, p2:Vector3, width:float, color:Color) : void
+    DrawDottedLine(p1:Vector3, p2:Vector3, width:float, color:Color) : void
+    DrawBezier(p1:Vector3, p2:Vector3, p3:Vector3, p4:Vector3, width:float, color:Color) : void
+    DrawTangent(position:Vector3, tangent:Vector3) : void
+}
+@enduml

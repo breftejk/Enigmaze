@@ -1,0 +1,15 @@
+@startuml
+abstract class MemberUnit {
+    # MemberUnit()
+    # MemberUnit(member:Member)
+    + member : Member <<get>> <<set>>
+    + target : ValueInput <<get>>
+    + <<override>> canDefine : bool <<get>>
+    # <<override>> Definition() : void
+    # {abstract} IsMemberValid(member:Member) : bool
+    + <<override>> Prewarm() : void
+    + <<override>> GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+}
+Unit <|-- MemberUnit
+IAotStubbable <|-- MemberUnit
+@enduml

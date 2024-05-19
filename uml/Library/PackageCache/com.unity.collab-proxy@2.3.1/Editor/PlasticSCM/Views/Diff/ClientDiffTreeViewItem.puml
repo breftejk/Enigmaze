@@ -1,0 +1,7 @@
+@startuml
+class ClientDiffTreeViewItem {
+    <<internal>> Difference : ClientDiffInfo <<get>>
+    <<internal>> ClientDiffTreeViewItem(id:int, depth:int, diff:ClientDiffInfo)
+}
+TreeViewItem <|-- ClientDiffTreeViewItem
+@enduml

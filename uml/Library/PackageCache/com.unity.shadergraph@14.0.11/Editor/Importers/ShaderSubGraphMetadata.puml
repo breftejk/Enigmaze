@@ -1,0 +1,6 @@
+@startuml
+class ShaderSubGraphMetadata {
+    + assetDependencies : List<Object>
+}
+ScriptableObject <|-- ShaderSubGraphMetadata
+@enduml

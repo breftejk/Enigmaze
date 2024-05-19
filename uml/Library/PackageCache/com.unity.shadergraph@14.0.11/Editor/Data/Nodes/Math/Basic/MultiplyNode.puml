@@ -1,0 +1,30 @@
+@startuml
+class MultiplyNode {
+    + MultiplyNode()
+    <<const>> - Input1SlotId : int = 0
+    <<const>> - Input2SlotId : int = 1
+    <<const>> - OutputSlotId : int = 2
+    <<const>> - kInput1SlotName : string = "A"
+    <<const>> - kInput2SlotName : string = "B"
+    <<const>> - kOutputSlotName : string = "Out"
+    - m_MultiplyType : MultiplyType
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + <<override>> EvaluateDynamicMaterialSlots(inputSlots:List<MaterialSlot>, outputSlots:List<MaterialSlot>) : void
+    - GetMultiplyType(inputTypes:IEnumerable<ConcreteSlotValueType>) : MultiplyType
+    - GetMatrixSlot() : MaterialSlot
+    - SetConcreteValueTypeFromEdge(slot:DynamicValueMaterialSlot) : void
+}
+enum MultiplyType {
+    Vector,
+    Matrix,
+    Mixed,
+}
+AbstractMaterialNode <|-- MultiplyNode
+IGeneratesBodyCode <|-- MultiplyNode
+IGeneratesFunction <|-- MultiplyNode
+MultiplyNode +-- MultiplyType
+@enduml

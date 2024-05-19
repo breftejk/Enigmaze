@@ -1,0 +1,15 @@
+@startuml
+class SerializationVisitor {
+    + SerializationVisitor()
+    - <<readonly>> _numberFormatInfo : NumberFormatInfo
+    + Result : StringBuilder <<get>> <<protected set>>
+    + <<override>> Visit(ternary:TernaryExpression) : void
+    + <<override>> Visit(binary:BinaryExpression) : void
+    + <<override>> Visit(unary:UnaryExpression) : void
+    + <<override>> Visit(value:ValueExpression) : void
+    + <<override>> Visit(function:FunctionExpression) : void
+    + <<override>> Visit(identifier:IdentifierExpression) : void
+    # EncapsulateNoValue(expression:LogicalExpression) : void
+}
+LogicalExpressionVisitor <|-- SerializationVisitor
+@enduml

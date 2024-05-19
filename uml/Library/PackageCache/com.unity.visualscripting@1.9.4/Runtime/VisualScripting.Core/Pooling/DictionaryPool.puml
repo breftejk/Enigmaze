@@ -1,0 +1,9 @@
+@startuml
+class "DictionaryPool`2"<TKey,TValue> <<static>> {
+    - {static} <<readonly>> @lock : object
+    - {static} <<readonly>> free : Stack<Dictionary<TKey, TValue>>
+    - {static} <<readonly>> busy : HashSet<Dictionary<TKey, TValue>>
+    + {static} New(source:Dictionary<TKey, TValue>) : Dictionary<TKey, TValue>
+    + {static} Free(dictionary:Dictionary<TKey, TValue>) : void
+}
+@enduml

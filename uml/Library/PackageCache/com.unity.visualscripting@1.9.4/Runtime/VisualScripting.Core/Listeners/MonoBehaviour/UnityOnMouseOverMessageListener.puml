@@ -1,0 +1,6 @@
+@startuml
+class UnityOnMouseOverMessageListener <<sealed>> {
+    - OnMouseOver() : void
+}
+MessageListener <|-- UnityOnMouseOverMessageListener
+@enduml

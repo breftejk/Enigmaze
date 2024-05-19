@@ -1,0 +1,42 @@
+@startuml
+class LightUnitSlider {
+    # m_SerializedObject : SerializedObject
+    # <<readonly>> m_Descriptor : LightUnitSliderUIDescriptor
+    + LightUnitSlider(descriptor:LightUnitSliderUIDescriptor)
+    + SetSerializedObject(serialized:SerializedObject) : void
+    + <<virtual>> Draw(rect:Rect, value:SerializedProperty, floatValue:float) : void
+    - CurrentRange(value:float) : LightUnitSliderUIRange
+    - BuildRects(baseRect:Rect, sliderRect:Rect, iconRect:Rect) : void
+    - ClampValue(value:float, range:Vector2) : void
+    <<internal>> ClampValue(value:float) : float
+    - {static} k_DarkThemeColor : Color
+    - {static} k_LiteThemeColor : Color
+    {static} - GetMarkerColor() : Color
+    - DoSliderMarker(rect:Rect, position:float, value:float, tooltip:string) : void
+    - DoIcon(rect:Rect, icon:GUIContent, value:SerializedProperty, floatValue:float, range:float) : void
+    - DoContextMenu(pos:Vector2, value:SerializedProperty, floatValue:float) : void
+    - DoThumbTooltip(rect:Rect, position:float, value:float, tooltip:string) : void
+    # <<virtual>> SetValueToPreset(value:SerializedProperty, preset:LightUnitSliderUIRange) : void
+    # <<virtual>> GetLightUnitTooltip(baseTooltip:string, value:float, unit:string) : GUIContent
+    # <<virtual>> DoSlider(rect:Rect, value:float, sliderRange:Vector2, _:Vector2) : void
+    # <<virtual>> DoSlider(rect:Rect, value:float, sliderRange:Vector2) : void
+    {static} - Remap(v:float, x0:float, y0:float, x1:float, y1:float) : float
+    # <<virtual>> GetPositionOnSlider(value:float, valueRange:Vector2) : float
+    # <<virtual>> GetPositionOnSlider(value:float) : float
+}
+class SliderConfig <<static>> {
+    + <<const>> k_IconSeparator : float = 0
+    + <<const>> k_MarkerWidth : float = 2
+    + <<const>> k_MarkerHeight : float = 2
+    + <<const>> k_MarkerTooltipScale : float = 4
+    + <<const>> k_ThumbTooltipSize : float = 10
+    + <<const>> k_KnobSize : float = 10
+}
+class SliderStyles <<static>> {
+    + {static} k_IconButton : GUIStyle
+    + {static} k_TemperatureBorder : GUIStyle
+    + {static} k_TemperatureThumb : GUIStyle
+}
+LightUnitSlider +-- SliderConfig
+LightUnitSlider +-- SliderStyles
+@enduml

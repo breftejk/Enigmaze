@@ -1,0 +1,22 @@
+@startuml
+class SimpleController_UsingPlayerInput {
+    + moveSpeed : float
+    + rotateSpeed : float
+    + burstSpeed : float
+    + projectile : GameObject
+    - m_Charging : bool
+    - m_Rotation : Vector2
+    - m_Look : Vector2
+    - m_Move : Vector2
+    + OnMove(context:InputAction.CallbackContext) : void
+    + OnLook(context:InputAction.CallbackContext) : void
+    + OnFire(context:InputAction.CallbackContext) : void
+    + OnGUI() : void
+    + Update() : void
+    - Move(direction:Vector2) : void
+    - Look(rotate:Vector2) : void
+    - BurstFire(burstAmount:int) : IEnumerator
+    - Fire() : void
+}
+MonoBehaviour <|-- SimpleController_UsingPlayerInput
+@enduml

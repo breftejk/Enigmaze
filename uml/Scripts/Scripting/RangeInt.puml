@@ -1,0 +1,8 @@
+@startuml
+struct RangeInt {
+    + start : int
+    + length : int
+    + end : int <<get>>
+    + RangeInt(start:int, length:int)
+}
+@enduml

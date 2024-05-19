@@ -1,0 +1,31 @@
+@startuml
+class RuleOverrideTile {
+    + m_Tile : RuleTile
+    + m_Sprites : List<TileSpritePair>
+    + m_GameObjects : List<TileGameObjectPair>
+    + m_InstanceTile : RuleTile
+    - CreateInstanceTile() : void
+    + ApplyOverrides(overrides:IList<KeyValuePair<Sprite, Sprite>>) : void
+    + ApplyOverrides(overrides:IList<KeyValuePair<GameObject, GameObject>>) : void
+    + GetOverrides(overrides:List<KeyValuePair<Sprite, Sprite>>, validCount:int) : void
+    + GetOverrides(overrides:List<KeyValuePair<GameObject, GameObject>>, validCount:int) : void
+    + <<virtual>> Override() : void
+    + PrepareOverride() : void
+    + <<override>> GetTileAnimationData(position:Vector3Int, tilemap:ITilemap, tileAnimationData:TileAnimationData) : bool
+    + <<override>> GetTileData(position:Vector3Int, tilemap:ITilemap, tileData:TileData) : void
+    + <<override>> RefreshTile(position:Vector3Int, tilemap:ITilemap) : void
+    + <<override>> StartUp(position:Vector3Int, tilemap:ITilemap, go:GameObject) : bool
+    + OnEnable() : void
+}
+class TileSpritePair {
+    + m_OriginalSprite : Sprite
+    + m_OverrideSprite : Sprite
+}
+class TileGameObjectPair {
+    + m_OriginalGameObject : GameObject
+    + m_OverrideGameObject : GameObject
+}
+TileBase <|-- RuleOverrideTile
+RuleOverrideTile +-- TileSpritePair
+RuleOverrideTile +-- TileGameObjectPair
+@enduml

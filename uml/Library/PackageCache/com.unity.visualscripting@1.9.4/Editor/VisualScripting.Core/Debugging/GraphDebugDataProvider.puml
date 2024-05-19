@@ -1,0 +1,8 @@
+@startuml
+class GraphDebugDataProvider {
+    {static} - GraphDebugDataProvider()
+    - {static} FetchRootDebugData(root:IGraphRoot) : IGraphDebugData
+    - {static} ReleaseRootDebugData(root:IGraphRoot) : void
+    - {static} rootDatas : Dictionary<IGraphRoot, IGraphDebugData>
+}
+@enduml

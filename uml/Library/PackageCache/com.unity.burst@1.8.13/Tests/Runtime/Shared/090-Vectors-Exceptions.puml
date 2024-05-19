@@ -1,0 +1,6 @@
+@startuml
+class VectorsExceptions <<partial>> {
+    + {static} Float4WithException(a:float) : float
+    - {static} GetFloat4(value:float) : float4
+}
+@enduml

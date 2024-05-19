@@ -1,0 +1,13 @@
+@startuml
+struct RendererListHandle {
+    - m_IsValid : bool
+    <<internal>> handle : int <<get>>
+    <<internal>> RendererListHandle(handle:int)
+    + IsValid() : bool
+}
+struct RendererListResource {
+    + desc : CoreRendererListDesc
+    + rendererList : CoreRendererList
+    <<internal>> RendererListResource(desc:CoreRendererListDesc)
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+interface IDualMotorRumble {
+    SetMotorSpeeds(lowFrequency:float, highFrequency:float) : void
+}
+IHaptics <|-- IDualMotorRumble
+@enduml

@@ -1,0 +1,83 @@
+@startuml
+enum TouchFlags {
+    IndirectTouch= 1 << 0,
+    PrimaryTouch= 1 << 3,
+    TapPress= 1 << 4,
+    TapRelease= 1 << 5,
+    OrphanedPrimaryTouch= 1 << 6,
+    BeganInSameFrame= 1 << 7,
+}
+struct TouchState {
+    <<internal>> <<const>> kSizeInBytes : int = 56
+    + {static} Format : FourCC <<get>>
+    + touchId : int
+    + position : Vector2
+    + delta : Vector2
+    + pressure : float
+    + radius : Vector2
+    + phaseId : byte
+    + tapCount : byte
+    + displayIndex : byte
+    + flags : byte
+    <<internal>> updateStepCount : uint
+    + startTime : double
+    + startPosition : Vector2
+    + phase : TouchPhase <<get>> <<set>>
+    + isNoneEndedOrCanceled : bool <<get>>
+    + isInProgress : bool <<get>>
+    + isPrimaryTouch : bool <<get>> <<set>>
+    <<internal>> isOrphanedPrimaryTouch : bool <<get>> <<set>>
+    + isIndirectTouch : bool <<get>> <<set>>
+    + isTap : bool <<get>> <<set>>
+    <<internal>> isTapPress : bool <<get>> <<set>>
+    <<internal>> isTapRelease : bool <<get>> <<set>>
+    <<internal>> beganInSameFrame : bool <<get>> <<set>>
+    + format : FourCC <<get>>
+    + <<override>> ToString() : string
+}
+struct TouchscreenState {
+    + {static} Format : FourCC <<get>>
+    + <<const>> MaxTouches : int = 10
+    + <<fixed>> primaryTouchData : byte
+    <<internal>> <<const>> kTouchDataOffset : int
+    + <<fixed>> touchData : byte
+    + primaryTouch : TouchState* <<get>>
+    + touches : TouchState* <<get>>
+    + format : FourCC <<get>>
+}
+enum TouchPhase {
+    None,
+    Began,
+    Moved,
+    Ended,
+    Canceled,
+    Stationary,
+}
+class Touchscreen {
+    + primaryTouch : TouchControl <<get>> <<protected set>>
+    + touches : ReadOnlyArray<TouchControl> <<get>> <<protected set>>
+    # touchControlArray : TouchControl[] <<get>> <<set>>
+    + <<new>> {static} current : Touchscreen <<get>> <<internal set>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+    # <<new>> <<unsafe>> OnNextUpdate() : void
+    # <<new>> <<unsafe>> OnStateEvent(eventPtr:InputEventPtr) : void
+    - OnNextUpdate() : void
+    - OnStateEvent(eventPtr:InputEventPtr) : void
+    <<unsafe>> - GetStateOffsetForEvent(control:InputControl, eventPtr:InputEventPtr, offset:uint) : bool
+    <<unsafe>> - Reset() : void
+    <<internal>> {static} <<unsafe>> MergeForward(currentEventPtr:InputEventPtr, nextEventPtr:InputEventPtr) : bool
+    - MergeForward(currentEventPtr:InputEventPtr, nextEventPtr:InputEventPtr) : bool
+    - {static} TriggerTap(control:TouchControl, state:TouchState, eventPtr:InputEventPtr) : void
+    <<internal>> {static} s_TapTime : float
+    <<internal>> {static} s_TapDelayTime : float
+    <<internal>> {static} s_TapRadiusSquared : float
+}
+IInputStateTypeInfo <|-- TouchState
+IInputStateTypeInfo <|-- TouchscreenState
+Pointer <|-- Touchscreen
+IInputStateCallbackReceiver <|-- Touchscreen
+IEventMerger <|-- Touchscreen
+ICustomDeviceReset <|-- Touchscreen
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class UwpPlatformSetup {
+    - <<const>> k_SettingsBuildConfiguration : string = "BuildConfiguration"
+    - m_InternetClientServer : bool
+    - m_PrivateNetworkClientServer : bool
+    + Setup() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+}
+IPlatformSetup <|-- UwpPlatformSetup
+@enduml

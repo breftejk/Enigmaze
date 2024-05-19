@@ -1,0 +1,6 @@
+@startuml
+class ModelPostprocessor {
+    - OnPostprocessModel(go:GameObject) : void
+}
+AssetPostprocessor <|-- ModelPostprocessor
+@enduml

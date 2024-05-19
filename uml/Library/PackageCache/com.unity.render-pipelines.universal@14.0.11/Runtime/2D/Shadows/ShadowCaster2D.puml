@@ -1,0 +1,52 @@
+@startuml
+class ShadowCaster2D {
+    <<const>> - k_CurrentComponentVersion : ComponentVersions
+    - m_ComponentVersion : ComponentVersions
+    - m_HasRenderer : bool = false
+    - m_UseRendererSilhouette : bool = true
+    - m_CastsShadows : bool = true
+    - m_SelfShadows : bool = false
+    - m_ApplyToSortingLayers : int[] = null
+    - m_ShapePath : Vector3[] = null
+    - m_ShapePathHash : int = 0
+    - m_Mesh : Mesh
+    - m_InstanceId : int
+    <<internal>> m_ShadowCasterGroup : ShadowCasterGroup2D = null
+    <<internal>> m_PreviousShadowCasterGroup : ShadowCasterGroup2D = null
+    <<internal>> m_LocalBounds : Bounds
+    <<internal>> m_BoundingSphere : BoundingSphere
+    + mesh : Mesh <<get>>
+    + shapePath : Vector3[] <<get>>
+    <<internal>> shapePathHash : int <<get>> <<set>>
+    - m_PreviousShadowGroup : int = 0
+    - m_PreviousCastsShadows : bool = true
+    - m_PreviousPathHash : int = 0
+    <<internal>> m_CachedPosition : Vector3
+    <<internal>> m_CachedLossyScale : Vector3
+    <<internal>> m_CachedRotation : Quaternion
+    <<internal>> m_CachedShadowMatrix : Matrix4x4
+    <<internal>> m_CachedInverseShadowMatrix : Matrix4x4
+    <<internal>> m_CachedLocalToWorldMatrix : Matrix4x4
+    <<internal>> <<override>> CacheValues() : void
+    + useRendererSilhouette : bool <<set>> <<get>>
+    + selfShadows : bool <<set>> <<get>>
+    + castsShadows : bool <<set>> <<get>>
+    {static} - SetDefaultSortingLayers() : int[]
+    <<internal>> IsLit(light:Light2D) : bool
+    <<internal>> IsShadowedLayer(layer:int) : bool
+    - Awake() : void
+    # OnEnable() : void
+    # OnDisable() : void
+    + Update() : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    - UpdateBoundingSphere() : void
+}
+enum ComponentVersions {
+    Version_Unserialized= 0,
+    Version_1= 1,
+}
+ShadowCasterGroup2D <|-- ShadowCaster2D
+ISerializationCallbackReceiver <|-- ShadowCaster2D
+ShadowCaster2D +-- ComponentVersions
+@enduml

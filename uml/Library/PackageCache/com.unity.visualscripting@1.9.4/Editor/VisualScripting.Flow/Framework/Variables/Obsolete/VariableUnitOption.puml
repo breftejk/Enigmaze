@@ -1,0 +1,19 @@
+@startuml
+interface IVariableUnitOption {
+    Kind() : string
+}
+abstract class "VariableUnitOption`1"<TVariableUnit> {
+    # VariableUnitOption()
+    # VariableUnitOption(unit:TVariableUnit)
+    # hasDefaultName : bool <<get>>
+    # <<override>> FavoriteKey() : string
+    - DimmedKind() : string
+    + <<virtual>> Kind() : string
+    # <<virtual>> DefaultNameLabel() : string
+    # <<override>> Label(human:bool) : string
+    # <<override>> Haystack(human:bool) : string
+    + <<override>> SearchResultLabel(query:string) : string
+}
+"UnitOption`1" "<TVariableUnit>" <|-- "VariableUnitOption`1"
+IVariableUnitOption <|-- "VariableUnitOption`1"
+@enduml

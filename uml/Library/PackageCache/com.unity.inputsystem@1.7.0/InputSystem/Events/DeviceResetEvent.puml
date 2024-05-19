@@ -1,0 +1,10 @@
+@startuml
+struct DeviceResetEvent {
+    + <<const>> Type : int = 0x44525354
+    + baseEvent : InputEvent
+    + hardReset : bool
+    + typeStatic : FourCC <<get>>
+    + {static} Create(deviceId:int, hardReset:bool, time:double) : DeviceResetEvent
+}
+IInputEventTypeInfo <|-- DeviceResetEvent
+@enduml

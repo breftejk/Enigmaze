@@ -1,0 +1,8 @@
+@startuml
+class TriangleWaveNode {
+    + TriangleWaveNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - TriangleWave(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- TriangleWaveNode
+@enduml

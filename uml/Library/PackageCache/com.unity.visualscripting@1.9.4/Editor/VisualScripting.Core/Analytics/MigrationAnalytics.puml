@@ -1,0 +1,24 @@
+@startuml
+class MigrationAnalytics <<static>> {
+    - <<const>> MaxEventsPerHour : int = 120
+    - <<const>> MaxNumberOfElements : int = 1000
+    - <<const>> VendorKey : string = "unity.visualscripting"
+    - <<const>> EventName : string = "VScriptMigration"
+    - {static} _isRegistered : bool = false
+    <<internal>> {static} Send(data:Data) : void
+    - {static} RegisterEvent() : bool
+}
+class Data {
+    <<internal>> total : MigrationStepAnalyticsData
+    <<internal>> steps : List<MigrationStepAnalyticsData>
+}
+class MigrationStepAnalyticsData {
+    <<internal>> pluginId : string
+    <<internal>> from : string
+    <<internal>> to : string
+    <<internal>> success : bool
+    <<internal>> exception : string
+}
+MigrationAnalytics +-- Data
+MigrationAnalytics +-- MigrationStepAnalyticsData
+@enduml

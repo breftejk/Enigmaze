@@ -1,0 +1,20 @@
+@startuml
+class TMP_UpdateRegistry {
+    - {static} s_Instance : TMP_UpdateRegistry
+    - <<readonly>> m_LayoutRebuildQueue : List<ICanvasElement>
+    - m_LayoutQueueLookup : HashSet<int>
+    - <<readonly>> m_GraphicRebuildQueue : List<ICanvasElement>
+    - m_GraphicQueueLookup : HashSet<int>
+    + {static} instance : TMP_UpdateRegistry <<get>>
+    # TMP_UpdateRegistry()
+    + {static} RegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : void
+    - InternalRegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : bool
+    + {static} RegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : void
+    - InternalRegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : bool
+    - PerformUpdateForCanvasRendererObjects() : void
+    - PerformUpdateForMeshRendererObjects() : void
+    + {static} UnRegisterCanvasElementForRebuild(element:ICanvasElement) : void
+    - InternalUnRegisterCanvasElementForLayoutRebuild(element:ICanvasElement) : void
+    - InternalUnRegisterCanvasElementForGraphicRebuild(element:ICanvasElement) : void
+}
+@enduml

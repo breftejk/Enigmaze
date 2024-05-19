@@ -1,0 +1,9 @@
+@startuml
+abstract class StaticInvokerBase {
+    # StaticInvokerBase(methodInfo:MethodInfo)
+    # <<sealed>> <<override>> CompileExpression() : void
+    # {abstract} CompileExpression(callExpression:MethodCallExpression, parameterExpressions:ParameterExpression[]) : void
+    # <<override>> VerifyTarget(target:object) : void
+}
+InvokerBase <|-- StaticInvokerBase
+@enduml

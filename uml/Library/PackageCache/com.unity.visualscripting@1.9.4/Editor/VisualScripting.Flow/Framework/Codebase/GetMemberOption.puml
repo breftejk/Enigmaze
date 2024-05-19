@@ -1,0 +1,8 @@
+@startuml
+class GetMemberOption {
+    + GetMemberOption()
+    + GetMemberOption(unit:GetMember)
+    # <<override>> direction : ActionDirection <<get>>
+}
+"MemberUnitOption`1" "<GetMember>" <|-- GetMemberOption
+@enduml

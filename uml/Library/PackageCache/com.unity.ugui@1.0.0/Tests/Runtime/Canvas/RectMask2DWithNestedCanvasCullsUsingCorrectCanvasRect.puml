@@ -1,0 +1,10 @@
+@startuml
+class RectMask2DWithNestedCanvasCullsUsingCorrectCanvasRect {
+    - m_RootCanvasGO : GameObject
+    - m_MaskGO : GameObject
+    - m_ImageGO : GameObject
+    + TestSetup() : void
+    + RectMask2DShouldNotCullImagesWithCanvas() : IEnumerator
+    + TearDown() : void
+}
+@enduml

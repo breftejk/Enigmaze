@@ -1,0 +1,8 @@
+@startuml
+class OneMinusNode {
+    + OneMinusNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_OneMinus(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- OneMinusNode
+@enduml

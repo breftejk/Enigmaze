@@ -1,0 +1,11 @@
+@startuml
+class LiftGammaGain <<sealed>> {
+    + lift : Vector4Parameter
+    + gamma : Vector4Parameter
+    + gain : Vector4Parameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+VolumeComponent <|-- LiftGammaGain
+IPostProcessComponent <|-- LiftGammaGain
+@enduml

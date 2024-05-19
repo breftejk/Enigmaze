@@ -1,0 +1,5 @@
+@startuml
+interface IIdentifiable {
+    guid : Guid <<get>>
+}
+@enduml

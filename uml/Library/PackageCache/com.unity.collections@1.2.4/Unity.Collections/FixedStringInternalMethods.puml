@@ -1,0 +1,10 @@
+@startuml
+class FixedStringMethods <<unsafe>> <<static>> <<partial>> {
+    <<internal>> {static} Append(fs:T, a:char, b:char) : FormatError
+    <<internal>> {static} Append(fs:T, a:char, b:char, c:char) : FormatError
+    <<internal>> {static} Append(fs:T, a:char, b:char, c:char, d:char, e:char, f:char, g:char, h:char) : FormatError
+    <<internal>> {static} AppendScientific(fs:T, source:char *, sourceLength:int, decimalExponent:int, decimalSeparator:char) : FormatError
+    <<internal>> {static} Found(fs:T, offset:int, a:char, b:char, c:char) : bool
+    <<internal>> {static} Found(fs:T, offset:int, a:char, b:char, c:char, d:char, e:char, f:char, g:char, h:char) : bool
+}
+@enduml

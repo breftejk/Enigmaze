@@ -1,0 +1,24 @@
+@startuml
+enum LoopAnimationDirection {
+    Forward= 0,
+    Reverse= 1,
+    PingPong= 2,
+    PingPongReverse= 3,
+}
+class TagData {
+    + fromFrame : ushort <<get>> <<set>>
+    + toFrame : ushort <<get>> <<set>>
+    + loopDirection : LoopAnimationDirection <<get>> <<set>>
+    + noOfRepeats : ushort <<get>> <<set>>
+    + name : string <<get>> <<set>>
+}
+class TagsChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + noOfTags : int <<get>>
+    + tagData : ReadOnlyCollection<TagData> <<get>>
+    - m_TagData : TagData[]
+    <<internal>> TagsChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- TagsChunk
+@enduml

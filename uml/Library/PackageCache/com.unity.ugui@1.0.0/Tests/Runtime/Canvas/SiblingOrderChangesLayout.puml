@@ -1,0 +1,12 @@
+@startuml
+class SiblingOrderChangesLayout {
+    - m_CanvasGO : GameObject
+    - m_ParentGO : GameObject
+    - m_Child1GO : GameObject
+    - m_Child2GO : GameObject
+    + TestSetup() : void
+    + ReorderingSiblingChangesLayout() : IEnumerator
+    + TearDown() : void
+    - CreateTextObject(name:string) : GameObject
+}
+@enduml

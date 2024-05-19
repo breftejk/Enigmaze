@@ -1,0 +1,10 @@
+@startuml
+class GradientSlotControlView {
+    - m_Slot : GradientInputMaterialSlot
+    - m_GradientObject : GradientObject
+    - m_SerializedObject : SerializedObject
+    + GradientSlotControlView(slot:GradientInputMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Gradient>) : void
+}
+VisualElement <|-- GradientSlotControlView
+@enduml

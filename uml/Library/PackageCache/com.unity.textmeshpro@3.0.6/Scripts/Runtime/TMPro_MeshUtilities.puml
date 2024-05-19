@@ -1,0 +1,144 @@
+@startuml
+enum TMP_VertexDataUpdateFlags {
+    None= 0x0,
+    Vertices= 0x1,
+    Uv0= 0x2,
+    Uv2= 0x4,
+    Uv4= 0x8,
+    Colors32= 0x10,
+    All= 0xFF,
+}
+struct VertexGradient {
+    + topLeft : Color
+    + topRight : Color
+    + bottomLeft : Color
+    + bottomRight : Color
+    + VertexGradient(color:Color)
+    + VertexGradient(color0:Color, color1:Color, color2:Color, color3:Color)
+}
+struct TMP_PageInfo {
+    + firstCharacterIndex : int
+    + lastCharacterIndex : int
+    + ascender : float
+    + baseLine : float
+    + descender : float
+}
+struct TMP_LinkInfo {
+    + textComponent : TMP_Text
+    + hashCode : int
+    + linkIdFirstCharacterIndex : int
+    + linkIdLength : int
+    + linkTextfirstCharacterIndex : int
+    + linkTextLength : int
+    <<internal>> linkID : char[]
+    <<internal>> SetLinkID(text:char[], startIndex:int, length:int) : void
+    + GetLinkText() : string
+    + GetLinkID() : string
+}
+struct TMP_WordInfo {
+    + textComponent : TMP_Text
+    + firstCharacterIndex : int
+    + lastCharacterIndex : int
+    + characterCount : int
+    + GetWord() : string
+}
+struct TMP_SpriteInfo {
+    + spriteIndex : int
+    + characterIndex : int
+    + vertexIndex : int
+}
+struct Extents {
+    <<internal>> {static} zero : Extents
+    <<internal>> {static} uninitialized : Extents
+    + min : Vector2
+    + max : Vector2
+    + Extents(min:Vector2, max:Vector2)
+    + <<override>> ToString() : string
+}
+struct Mesh_Extents {
+    + min : Vector2
+    + max : Vector2
+    + Mesh_Extents(min:Vector2, max:Vector2)
+    + <<override>> ToString() : string
+}
+struct WordWrapState {
+    + previous_WordBreak : int
+    + total_CharacterCount : int
+    + visible_CharacterCount : int
+    + visible_SpriteCount : int
+    + visible_LinkCount : int
+    + firstCharacterIndex : int
+    + firstVisibleCharacterIndex : int
+    + lastCharacterIndex : int
+    + lastVisibleCharIndex : int
+    + lineNumber : int
+    + maxCapHeight : float
+    + maxAscender : float
+    + maxDescender : float
+    + startOfLineAscender : float
+    + maxLineAscender : float
+    + maxLineDescender : float
+    + pageAscender : float
+    + horizontalAlignment : HorizontalAlignmentOptions
+    + marginLeft : float
+    + marginRight : float
+    + xAdvance : float
+    + preferredWidth : float
+    + preferredHeight : float
+    + previousLineScale : float
+    + wordCount : int
+    + fontStyle : FontStyles
+    + italicAngle : int
+    + fontScaleMultiplier : float
+    + currentFontSize : float
+    + baselineOffset : float
+    + lineOffset : float
+    + isDrivenLineSpacing : bool
+    + glyphHorizontalAdvanceAdjustment : float
+    + cSpace : float
+    + mSpace : float
+    + textInfo : TMP_TextInfo
+    + lineInfo : TMP_LineInfo
+    + vertexColor : Color32
+    + underlineColor : Color32
+    + strikethroughColor : Color32
+    + highlightColor : Color32
+    + basicStyleStack : TMP_FontStyleStack
+    + italicAngleStack : TMP_TextProcessingStack<int>
+    + colorStack : TMP_TextProcessingStack<Color32>
+    + underlineColorStack : TMP_TextProcessingStack<Color32>
+    + strikethroughColorStack : TMP_TextProcessingStack<Color32>
+    + highlightColorStack : TMP_TextProcessingStack<Color32>
+    + highlightStateStack : TMP_TextProcessingStack<HighlightState>
+    + colorGradientStack : TMP_TextProcessingStack<TMP_ColorGradient>
+    + sizeStack : TMP_TextProcessingStack<float>
+    + indentStack : TMP_TextProcessingStack<float>
+    + fontWeightStack : TMP_TextProcessingStack<FontWeight>
+    + styleStack : TMP_TextProcessingStack<int>
+    + baselineStack : TMP_TextProcessingStack<float>
+    + actionStack : TMP_TextProcessingStack<int>
+    + materialReferenceStack : TMP_TextProcessingStack<MaterialReference>
+    + lineJustificationStack : TMP_TextProcessingStack<HorizontalAlignmentOptions>
+    + spriteAnimationID : int
+    + currentFontAsset : TMP_FontAsset
+    + currentSpriteAsset : TMP_SpriteAsset
+    + currentMaterial : Material
+    + currentMaterialIndex : int
+    + meshExtents : Extents
+    + tagNoParsing : bool
+    + isNonBreakingSpace : bool
+}
+struct TagAttribute {
+    + startIndex : int
+    + length : int
+    + hashCode : int
+}
+struct RichTextTagAttribute {
+    + nameHashCode : int
+    + valueHashCode : int
+    + valueType : TagValueType
+    + valueStartIndex : int
+    + valueLength : int
+    + unitType : TagUnitType
+}
+@enduml

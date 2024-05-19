@@ -1,0 +1,25 @@
+@startuml
+class Variables {
+    + declarations : VariableDeclarations <<get>> <<internal set>>
+    + {static} Graph(pointer:GraphPointer) : VariableDeclarations
+    + {static} GraphInstance(pointer:GraphPointer) : VariableDeclarations
+    + {static} GraphDefinition(pointer:GraphPointer) : VariableDeclarations
+    + {static} GraphDefinition(graph:IGraphWithVariables) : VariableDeclarations
+    + {static} Object(go:GameObject) : VariableDeclarations
+    + {static} Object(component:Component) : VariableDeclarations
+    + {static} Scene(scene:Scene?) : VariableDeclarations
+    + {static} Scene(go:GameObject) : VariableDeclarations
+    + {static} Scene(component:Component) : VariableDeclarations
+    + {static} ActiveScene : VariableDeclarations <<get>>
+    + {static} Application : VariableDeclarations <<get>>
+    + {static} Saved : VariableDeclarations <<get>>
+    + {static} ExistOnObject(go:GameObject) : bool
+    + {static} ExistOnObject(component:Component) : bool
+    + {static} ExistInScene(scene:Scene?) : bool
+    + {static} ExistInActiveScene : bool <<get>>
+    # <<override>> ShowData() : void
+    + GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+}
+LudiqBehaviour <|-- Variables
+IAotStubbable <|-- Variables
+@enduml

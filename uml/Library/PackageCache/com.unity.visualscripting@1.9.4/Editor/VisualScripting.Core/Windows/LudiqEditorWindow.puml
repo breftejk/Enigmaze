@@ -1,0 +1,17 @@
+@startuml
+abstract class LudiqEditorWindow {
+    # _data : SerializationData
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    # <<virtual>> OnBeforeSerialize() : void
+    # <<virtual>> OnAfterDeserialize() : void
+    # <<virtual>> Update() : void
+    # <<virtual>> OnGUI() : void
+    + reliablePosition : Rect <<get>>
+    + AddItemsToMenu(menu:GenericMenu) : void
+    + <<override>> ToString() : string
+}
+EditorWindow <|-- LudiqEditorWindow
+ISerializationCallbackReceiver <|-- LudiqEditorWindow
+IHasCustomMenu <|-- LudiqEditorWindow
+@enduml

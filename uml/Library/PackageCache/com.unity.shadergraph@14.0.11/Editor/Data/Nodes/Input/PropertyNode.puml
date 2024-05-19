@@ -1,0 +1,24 @@
+@startuml
+class PropertyNode {
+    + PropertyNode()
+    + <<override>> documentationURL : string <<get>>
+    + <<override>> UpdateNodeAfterDeserialization() : void
+    - m_Property : JsonRef<AbstractShaderProperty>
+    + property : AbstractShaderProperty <<get>> <<set>>
+    + <<override>> canSetPrecision : bool <<get>>
+    + UpdateNodeDisplayName(newDisplayName:string) : void
+    + OnEnable() : void
+    + <<const>> OutputSlotId : int = 0
+    - AddOutputSlot() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, mode:GenerationMode) : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + GetConnectionStateVariableNameForSlot(slotId:int) : string
+    # <<override>> CalculateNodeHasError() : void
+    + <<override>> UpdatePrecision(inputSlots:List<MaterialSlot>) : void
+    + OnShaderInputUpdated(modificationScope:ModificationScope) : void
+}
+AbstractMaterialNode <|-- PropertyNode
+IGeneratesBodyCode <|-- PropertyNode
+IOnAssetEnabled <|-- PropertyNode
+IShaderInputObserver <|-- PropertyNode
+@enduml

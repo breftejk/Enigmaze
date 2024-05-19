@@ -1,0 +1,11 @@
+@startuml
+class DropdownOptionListDrawer {
+    - m_ReorderableList : ReorderableList
+    - Init(property:SerializedProperty) : void
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - DrawHeader(rect:Rect) : void
+    - DrawOptionData(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+}
+PropertyDrawer <|-- DropdownOptionListDrawer
+@enduml

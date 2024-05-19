@@ -1,0 +1,11 @@
+@startuml
+interface IEventUnit {
+    coroutine : bool <<get>>
+}
+interface IGameObjectEventUnit {
+    MessageListenerType : Type <<get>>
+}
+IUnit <|-- IEventUnit
+IGraphEventListener <|-- IEventUnit
+IEventUnit <|-- IGameObjectEventUnit
+@enduml

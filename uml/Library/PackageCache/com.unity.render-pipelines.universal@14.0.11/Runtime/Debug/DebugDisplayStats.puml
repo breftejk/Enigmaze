@@ -1,0 +1,18 @@
+@startuml
+class DebugDisplayStats {
+    - m_DebugFrameTiming : DebugFrameTiming
+    + UpdateFrameTiming() : void
+    + AreAnySettingsActive : bool <<get>>
+    + IsPostProcessingAllowed : bool <<get>>
+    + IsLightingActive : bool <<get>>
+    + TryGetScreenClearColor(_:Color) : bool
+    + CreatePanel() : IDebugDisplaySettingsPanelDisposable
+}
+class StatsPanel {
+    + <<override>> Flags : DebugUI.Flags <<get>>
+    + StatsPanel(frameTiming:DebugFrameTiming)
+}
+IDebugDisplaySettingsData <|-- DebugDisplayStats
+DebugDisplayStats +-- StatsPanel
+DebugDisplaySettingsPanel <|-- StatsPanel
+@enduml

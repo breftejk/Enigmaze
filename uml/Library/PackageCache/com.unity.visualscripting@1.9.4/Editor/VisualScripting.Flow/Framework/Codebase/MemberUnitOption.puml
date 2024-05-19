@@ -1,0 +1,30 @@
+@startuml
+interface IMemberUnitOption {
+    targetType : Type <<get>>
+    member : Member <<get>>
+    pseudoDeclarer : Member <<get>>
+}
+abstract class "MemberUnitOption`1"<TMemberUnit> {
+    # MemberUnitOption()
+    # MemberUnitOption(unit:TMemberUnit)
+    - _member : Member
+    - _pseudoDeclarer : Member
+    + member : Member <<get>> <<set>>
+    + pseudoDeclarer : Member <<get>> <<set>>
+    + isPseudoInherited : bool <<get>>
+    # {abstract} direction : ActionDirection <<get>>
+    + targetType : Type <<get>>
+    # <<override>> Style() : GUIStyle
+    # <<override>> Label(human:bool) : string
+    # <<override>> FavoriteKey() : string
+    # <<override>> Order() : int
+    # <<override>> Haystack(human:bool) : string
+    # <<override>> FillFromUnit() : void
+    + <<override>> Deserialize(row:UnitOptionRow) : void
+    + <<override>> Serialize() : UnitOptionRow
+    + <<override>> OnPopulate() : void
+}
+IUnitOption <|-- IMemberUnitOption
+"UnitOption`1" "<TMemberUnit>" <|-- "MemberUnitOption`1"
+IMemberUnitOption <|-- "MemberUnitOption`1"
+@enduml

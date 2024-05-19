@@ -1,0 +1,6 @@
+@startuml
+class DrawIncomingChangesOverview <<static>> {
+    <<internal>> {static} For(directoryConflictCount:int, fileConflictCount:int, changesSummary:MergeViewTexts.ChangesToApplySummary) : void
+    {static} - DrawItem(icon:Texture2D, singularLabel:PlasticLocalization.Name, pluralLabel:PlasticLocalization.Name, count:int, size:long, showSize:bool) : void
+}
+@enduml

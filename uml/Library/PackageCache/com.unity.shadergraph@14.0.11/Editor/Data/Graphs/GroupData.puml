@@ -1,0 +1,11 @@
+@startuml
+class GroupData {
+    - m_Title : string
+    + title : string <<get>> <<set>>
+    - m_Position : Vector2
+    + position : Vector2 <<get>> <<set>>
+    + GroupData()
+    + GroupData(title:string, position:Vector2)
+}
+JsonObject <|-- GroupData
+@enduml

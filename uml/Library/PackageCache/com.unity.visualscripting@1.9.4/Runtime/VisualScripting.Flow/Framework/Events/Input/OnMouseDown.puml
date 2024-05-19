@@ -1,0 +1,8 @@
+@startuml
+class OnMouseDown <<sealed>> {
+    # <<override>> hookName : string <<get>>
+    + <<override>> MessageListenerType : Type <<get>>
+}
+"GameObjectEventUnit`1" "<EmptyEventArgs>" <|-- OnMouseDown
+IMouseEventUnit <|-- OnMouseDown
+@enduml

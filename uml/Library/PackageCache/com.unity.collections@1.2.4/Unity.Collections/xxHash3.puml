@@ -1,0 +1,83 @@
+@startuml
+class xxHash3 <<static>> <<partial>> {
+    + {static} <<unsafe>> Hash64(input:void*, length:long) : uint2
+    + {static} <<unsafe>> Hash64(input:T) : uint2
+    + {static} <<unsafe>> Hash64(input:void*, length:long, seed:ulong) : uint2
+    + {static} <<unsafe>> Hash128(input:void*, length:long) : uint4
+    + {static} <<unsafe>> Hash128(input:T) : uint4
+    + {static} <<unsafe>> Hash128(input:void*, destination:void*, length:long) : uint4
+    + {static} <<unsafe>> Hash128(input:void*, length:long, seed:ulong) : uint4
+    + {static} <<unsafe>> Hash128(input:void*, destination:void*, length:long, seed:ulong) : uint4
+    - <<const>> STRIPE_LEN : int = 64
+    - <<const>> ACC_NB : int
+    - <<const>> SECRET_CONSUME_RATE : int = 8
+    - <<const>> SECRET_KEY_SIZE : int = 192
+    - <<const>> SECRET_KEY_MIN_SIZE : int = 136
+    - <<const>> SECRET_LASTACC_START : int = 7
+    - <<const>> NB_ROUNDS : int
+    - <<const>> BLOCK_LEN : int
+    - <<const>> PRIME32_1 : uint = 0x9E3779B1U
+    - <<const>> PRIME32_2 : uint = 0x85EBCA77U
+    - <<const>> PRIME32_3 : uint = 0xC2B2AE3DU
+    - <<const>> PRIME32_5 : uint = 0x165667B1U
+    - <<const>> PRIME64_1 : ulong = 0x9E3779B185EBCA87UL
+    - <<const>> PRIME64_2 : ulong = 0xC2B2AE3D27D4EB4FUL
+    - <<const>> PRIME64_3 : ulong = 0x165667B19E3779F9UL
+    - <<const>> PRIME64_4 : ulong = 0x85EBCA77C2B2AE63UL
+    - <<const>> PRIME64_5 : ulong = 0x27D4EB2F165667C5UL
+    - <<const>> MIDSIZE_MAX : int = 240
+    - <<const>> MIDSIZE_STARTOFFSET : int = 3
+    - <<const>> MIDSIZE_LASTOFFSET : int = 17
+    - <<const>> SECRET_MERGEACCS_START : int = 11
+    <<internal>> {static} <<unsafe>> Hash64Internal(input:byte*, dest:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    <<internal>> {static} <<unsafe>> Hash128Internal(input:byte*, dest:byte*, length:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash64Len1To3(input:byte*, len:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Len4To8(input:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Len9To16(input:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Len0To16(input:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Len17To128(input:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Len129To240(input:byte*, length:long, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Hash64Long(input:byte*, dest:byte*, length:long, secret:byte*) : ulong
+    - {static} <<unsafe>> Hash128Len1To3(input:byte*, length:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Len4To8(input:byte*, len:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Len9To16(input:byte*, len:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Len0To16(input:byte*, length:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Len17To128(input:byte*, length:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Len129To240(input:byte*, length:long, secret:byte*, seed:ulong, result:uint4) : void
+    - {static} <<unsafe>> Hash128Long(input:byte*, dest:byte*, length:long, secret:byte*, result:uint4) : void
+    <<internal>> {static} ToUint2(u:ulong) : uint2
+    <<internal>> {static} ToUint4(ul0:ulong, ul1:ulong) : uint4
+    <<internal>> {static} <<unsafe>> EncodeSecretKey(dst:byte*, secret:byte*, seed:ulong) : void
+    - {static} <<unsafe>> Read64LE(addr:void*) : ulong
+    - {static} <<unsafe>> Read32LE(addr:void*) : uint
+    - {static} <<unsafe>> Write64LE(addr:void*, value:ulong) : void
+    - {static} <<unsafe>> Read32LE(addr:void*, value:uint) : void
+    - {static} Mul32To64(x:uint, y:uint) : ulong
+    - {static} Swap64(x:ulong) : ulong
+    - {static} Swap32(x:uint) : uint
+    - {static} RotL32(x:uint, r:int) : uint
+    - {static} RotL64(x:ulong, r:int) : ulong
+    - {static} XorShift64(v64:ulong, shift:int) : ulong
+    - {static} Mul128Fold64(lhs:ulong, rhs:ulong) : ulong
+    - {static} <<unsafe>> Mix16(input:byte*, secret:byte*, seed:ulong) : ulong
+    - {static} <<unsafe>> Mix32(acc:ulong2, input_1:byte*, input_2:byte*, secret:byte*, seed:ulong) : ulong2
+    - {static} Avalanche(h64:ulong) : ulong
+    - {static} AvalancheH64(h64:ulong) : ulong
+    - {static} rrmxmx(h64:ulong, length:ulong) : ulong
+    - {static} <<unsafe>> Mix2Acc(acc0:ulong, acc1:ulong, secret:byte*) : ulong
+    <<internal>> {static} <<unsafe>> MergeAcc(acc:ulong*, secret:byte*, start:ulong) : ulong
+    - {static} <<unsafe>> DefaultHashLongInternalLoop(acc:ulong*, input:byte*, dest:byte*, length:long, secret:byte*, isHash64:int) : void
+    <<internal>> {static} <<unsafe>> DefaultAccumulate(acc:ulong*, input:byte*, dest:byte*, secret:byte*, nbStripes:long, isHash64:int) : void
+    <<internal>> {static} <<unsafe>> DefaultAccumulate512(acc:ulong*, input:byte*, dest:byte*, secret:byte*, isHash64:int) : void
+    <<internal>> {static} <<unsafe>> DefaultScrambleAcc(acc:ulong*, secret:byte*) : void
+}
+class xxHashDefaultKey <<static>> {
+    + {static} <<readonly>> kSecret : byte[]
+}
+struct ulong2 {
+    + x : ulong
+    + y : ulong
+    + ulong2(x:ulong, y:ulong)
+}
+xxHash3 +-- ulong2
+@enduml

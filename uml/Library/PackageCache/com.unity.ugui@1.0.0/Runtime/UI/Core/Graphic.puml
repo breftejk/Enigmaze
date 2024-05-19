@@ -1,0 +1,82 @@
+@startuml
+abstract class Graphic {
+    {static} # s_DefaultUI : Material = null
+    {static} # s_WhiteTexture : Texture2D = null
+    {static} + defaultGraphicMaterial : Material <<get>>
+    # m_Material : Material
+    - m_Color : Color
+    # m_SkipLayoutUpdate : bool
+    # m_SkipMaterialUpdate : bool
+    + <<virtual>> color : Color <<get>> <<set>>
+    - m_RaycastTarget : bool = true
+    - m_RaycastTargetCache : bool = true
+    + <<virtual>> raycastTarget : bool <<get>> <<set>>
+    - m_RaycastPadding : Vector4
+    + raycastPadding : Vector4 <<get>> <<set>>
+    - m_RectTransform : RectTransform
+    - m_CanvasRenderer : CanvasRenderer
+    - m_Canvas : Canvas
+    - m_VertsDirty : bool
+    - m_MaterialDirty : bool
+    # m_OnDirtyLayoutCallback : UnityAction
+    # m_OnDirtyVertsCallback : UnityAction
+    # m_OnDirtyMaterialCallback : UnityAction
+    # {static} s_Mesh : Mesh
+    - {static} <<readonly>> s_VertexHelper : VertexHelper
+    # m_CachedMesh : Mesh
+    # m_CachedUvs : Vector2[]
+    - <<readonly>> m_ColorTweenRunner : TweenRunner<ColorTween>
+    # useLegacyMeshGeneration : bool <<get>> <<set>>
+    # Graphic()
+    + <<virtual>> SetAllDirty() : void
+    + <<virtual>> SetLayoutDirty() : void
+    + <<virtual>> SetVerticesDirty() : void
+    + <<virtual>> SetMaterialDirty() : void
+    + SetRaycastDirty() : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    # <<override>> OnBeforeTransformParentChanged() : void
+    # <<override>> OnTransformParentChanged() : void
+    + depth : int <<get>>
+    + rectTransform : RectTransform <<get>>
+    + canvas : Canvas <<get>>
+    - CacheCanvas() : void
+    + canvasRenderer : CanvasRenderer <<get>>
+    + <<virtual>> defaultMaterial : Material <<get>>
+    + <<virtual>> material : Material <<get>> <<set>>
+    + <<virtual>> materialForRendering : Material <<get>>
+    + <<virtual>> mainTexture : Texture <<get>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+    + <<virtual>> OnCullingChanged() : void
+    + <<virtual>> Rebuild(update:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    # <<virtual>> UpdateMaterial() : void
+    # <<virtual>> UpdateGeometry() : void
+    - DoMeshGeneration() : void
+    - DoLegacyMeshGeneration() : void
+    # {static} workerMesh : Mesh <<get>>
+    # <<virtual>> OnFillVBO(vbo:System.Collections.Generic.List<UIVertex>) : void
+    # <<virtual>> OnPopulateMesh(m:Mesh) : void
+    # <<virtual>> OnPopulateMesh(vh:VertexHelper) : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    + <<virtual>> SetNativeSize() : void
+    + <<virtual>> Raycast(sp:Vector2, eventCamera:Camera) : bool
+    + PixelAdjustPoint(point:Vector2) : Vector2
+    + GetPixelAdjustedRect() : Rect
+    + <<virtual>> CrossFadeColor(targetColor:Color, duration:float, ignoreTimeScale:bool, useAlpha:bool) : void
+    + <<virtual>> CrossFadeColor(targetColor:Color, duration:float, ignoreTimeScale:bool, useAlpha:bool, useRGB:bool) : void
+    {static} - CreateColorFromAlpha(alpha:float) : Color
+    + <<virtual>> CrossFadeAlpha(alpha:float, duration:float, ignoreTimeScale:bool) : void
+    + RegisterDirtyLayoutCallback(action:UnityAction) : void
+    + UnregisterDirtyLayoutCallback(action:UnityAction) : void
+    + RegisterDirtyVerticesCallback(action:UnityAction) : void
+    + UnregisterDirtyVerticesCallback(action:UnityAction) : void
+    + RegisterDirtyMaterialCallback(action:UnityAction) : void
+    + UnregisterDirtyMaterialCallback(action:UnityAction) : void
+}
+UIBehaviour <|-- Graphic
+ICanvasElement <|-- Graphic
+@enduml

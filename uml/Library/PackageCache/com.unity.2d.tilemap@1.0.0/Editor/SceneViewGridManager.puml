@@ -1,0 +1,34 @@
+@startuml
+class SceneViewGridManager {
+    <<internal>> {static} <<readonly>> sceneViewGridComponentGizmo : PrefColor
+    - {static} s_GridProxyMesh : Mesh
+    - {static} s_GridProxyMaterial : Material
+    - {static} s_LastGridProxyHash : int
+    - m_ActiveGridProxy : GridLayout
+    - m_SceneViewShowGridMap : Dictionary<SceneView, bool>
+    - m_RegisteredEventHandlers : bool
+    - active : bool <<get>>
+    <<internal>> activeGridProxy : GridLayout <<get>>
+    - m_GridType : UnityType
+    - {static} Initialize() : void
+    - OnEnable() : void
+    - RegisterEventHandlers() : void
+    - OnBrushChanged(brush:GridBrushBase) : void
+    - ActiveToolChanged() : void
+    - OnScenePaintTargetChanged(scenePaintTarget:GameObject) : void
+    - OnDisable() : void
+    - UpdateCache() : void
+    - EditorQuitting() : void
+    <<internal>> IsGridAnnotationEnabled() : bool
+    - OnSceneGuiDelegate(sceneView:SceneView) : void
+    - {static} GenerateHash(layout:GridLayout, color:Color) : int
+    - {static} DrawGrid(gridLayout:GridLayout) : void
+    - NeedsRestoreSceneViewShowGrid() : bool
+    - StoreSceneViewShowGrid(value:bool) : void
+    - RestoreSceneViewShowGrid() : void
+    - GetActive() : bool
+    <<internal>> OnSnapPosition(position:Vector3) : Vector3
+    <<internal>> {static} FlushCachedGridProxy() : void
+}
+"ScriptableSingleton`1" "<SceneViewGridManager>" <|-- SceneViewGridManager
+@enduml

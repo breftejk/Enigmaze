@@ -1,0 +1,35 @@
+@startuml
+class ImagePackerDebugEditor {
+    {static} - Launch() : void
+    - m_ReorderableList : ReorderableList
+    - m_PackingRect : ImagePacker.ImagePackRect[] = null
+    - m_PackRects : List<RectInt>
+    - m_PackResult : RectInt[] = null
+    - m_SpriteRects : SpriteRect[] = null
+    - m_Texture : Texture2D
+    - m_TextureActualWidth : int = 0
+    - m_TextureActualHeight : int = 0
+    - m_PackWidth : int = 0
+    - m_PackHeight : int = 0
+    - m_Padding : int = 0
+    - m_ConfigScroll : Vector2
+    - m_Zoom : float = 1
+    - m_PackArea : IMGUIContainer
+    - m_PackStep : int
+    # <<const>> k_MinZoomPercentage : float = 0.9f
+    # <<const>> k_WheelZoomSpeed : float = 0.03f
+    # <<const>> k_MouseZoomSpeed : float = 0.005f
+    - OnEnable() : void
+    - SetupConfigGUI() : void
+    - DrawListElement(rect:Rect, index:int, isactive:bool, isfocused:bool) : void
+    - OnConfigGUI() : void
+    - UpdateSpriteRect() : void
+    - Pack() : void
+    - DrawLabel(rect:Rect, label:string) : void
+    - OnImagePackerGUI() : void
+    - SetupHandlesMatrix() : void
+    # HandleZoom() : void
+    # GetMinZoom() : float
+}
+EditorWindow <|-- ImagePackerDebugEditor
+@enduml

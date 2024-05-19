@@ -1,0 +1,9 @@
+@startuml
+class "EnumPopupSetting`1"<E> <<static>> {
+    <<internal>> {static} Load(popupSettingName:string, defaultValue:E) : E
+    <<internal>> {static} Save(selected:E, popupSettingName:string) : void
+    <<internal>> {static} Clear(popupSettingName:string) : void
+    {static} - GetSettingKey(popupSettingName:string) : string
+    {static} - SELECTED_ENUM_VALUE_KEY : string = "SelectedEnumValue"
+}
+@enduml

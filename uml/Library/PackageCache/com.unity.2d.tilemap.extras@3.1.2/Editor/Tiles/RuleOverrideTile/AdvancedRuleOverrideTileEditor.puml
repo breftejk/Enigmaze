@@ -1,0 +1,25 @@
+@startuml
+class AdvancedRuleOverrideTileEditor {
+    + <<new>> overrideTile : AdvancedRuleOverrideTile <<get>>
+    - m_Rules : List<KeyValuePair<RuleTile.TilingRule, RuleTile.TilingRuleOutput>>
+    - m_RuleList : ReorderableList
+    - m_MissingOriginalRuleIndex : int
+    - m_UniqueIds : HashSet<int>
+    {static} - k_DefaultElementHeight : float <<get>>
+    {static} - k_SingleLineHeight : float <<get>>
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - ValidateRuleTile(ruleTile:RuleTile) : void
+    + DrawRulesHeader(rect:Rect) : void
+    + DrawRuleElement(rect:Rect, index:int, active:bool, focused:bool) : void
+    + DrawRule(rect:Rect, rule:RuleTile.TilingRuleOutput, isOverride:bool, originalRule:RuleTile.TilingRule, isMissing:bool) : void
+    + GetRuleElementHeight(index:int) : float
+}
+class Styles <<static>> {
+    + {static} <<readonly>> defaultSprite : GUIContent
+    + {static} <<readonly>> defaultGameObject : GUIContent
+    + {static} <<readonly>> defaultCollider : GUIContent
+}
+RuleOverrideTileEditor <|-- AdvancedRuleOverrideTileEditor
+AdvancedRuleOverrideTileEditor +-- Styles
+@enduml

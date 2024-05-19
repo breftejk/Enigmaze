@@ -1,0 +1,9 @@
+@startuml
+class ChangesetsSelection <<static>> {
+    <<internal>> {static} SelectChangesets(listView:ChangesetsListView, csetsToSelect:List<RepObjectInfo>, defaultRow:int) : void
+    <<internal>> {static} GetSelectedRepObjectInfos(listView:ChangesetsListView) : List<RepObjectInfo>
+    <<internal>> {static} GetSelectedChangesetsCount(listView:ChangesetsListView) : int
+    <<internal>> {static} GetSelectedChangeset(listView:ChangesetsListView) : ChangesetExtendedInfo
+    <<internal>> {static} GetSelectedRepository(listView:ChangesetsListView) : RepositorySpec
+}
+@enduml

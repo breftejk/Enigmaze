@@ -1,0 +1,383 @@
+@startuml
+struct bool4 {
+    + x : bool
+    + y : bool
+    + z : bool
+    + w : bool
+    + bool4(x:bool, y:bool, z:bool, w:bool)
+    + bool4(x:bool, y:bool, zw:bool2)
+    + bool4(x:bool, yz:bool2, w:bool)
+    + bool4(x:bool, yzw:bool3)
+    + bool4(xy:bool2, z:bool, w:bool)
+    + bool4(xy:bool2, zw:bool2)
+    + bool4(xyz:bool3, w:bool)
+    + bool4(xyzw:bool4)
+    + bool4(v:bool)
+    + xxxx : bool4 <<get>>
+    + xxxy : bool4 <<get>>
+    + xxxz : bool4 <<get>>
+    + xxxw : bool4 <<get>>
+    + xxyx : bool4 <<get>>
+    + xxyy : bool4 <<get>>
+    + xxyz : bool4 <<get>>
+    + xxyw : bool4 <<get>>
+    + xxzx : bool4 <<get>>
+    + xxzy : bool4 <<get>>
+    + xxzz : bool4 <<get>>
+    + xxzw : bool4 <<get>>
+    + xxwx : bool4 <<get>>
+    + xxwy : bool4 <<get>>
+    + xxwz : bool4 <<get>>
+    + xxww : bool4 <<get>>
+    + xyxx : bool4 <<get>>
+    + xyxy : bool4 <<get>>
+    + xyxz : bool4 <<get>>
+    + xyxw : bool4 <<get>>
+    + xyyx : bool4 <<get>>
+    + xyyy : bool4 <<get>>
+    + xyyz : bool4 <<get>>
+    + xyyw : bool4 <<get>>
+    + xyzx : bool4 <<get>>
+    + xyzy : bool4 <<get>>
+    + xyzz : bool4 <<get>>
+    + xyzw : bool4 <<get>> <<set>>
+    + xywx : bool4 <<get>>
+    + xywy : bool4 <<get>>
+    + xywz : bool4 <<get>> <<set>>
+    + xyww : bool4 <<get>>
+    + xzxx : bool4 <<get>>
+    + xzxy : bool4 <<get>>
+    + xzxz : bool4 <<get>>
+    + xzxw : bool4 <<get>>
+    + xzyx : bool4 <<get>>
+    + xzyy : bool4 <<get>>
+    + xzyz : bool4 <<get>>
+    + xzyw : bool4 <<get>> <<set>>
+    + xzzx : bool4 <<get>>
+    + xzzy : bool4 <<get>>
+    + xzzz : bool4 <<get>>
+    + xzzw : bool4 <<get>>
+    + xzwx : bool4 <<get>>
+    + xzwy : bool4 <<get>> <<set>>
+    + xzwz : bool4 <<get>>
+    + xzww : bool4 <<get>>
+    + xwxx : bool4 <<get>>
+    + xwxy : bool4 <<get>>
+    + xwxz : bool4 <<get>>
+    + xwxw : bool4 <<get>>
+    + xwyx : bool4 <<get>>
+    + xwyy : bool4 <<get>>
+    + xwyz : bool4 <<get>> <<set>>
+    + xwyw : bool4 <<get>>
+    + xwzx : bool4 <<get>>
+    + xwzy : bool4 <<get>> <<set>>
+    + xwzz : bool4 <<get>>
+    + xwzw : bool4 <<get>>
+    + xwwx : bool4 <<get>>
+    + xwwy : bool4 <<get>>
+    + xwwz : bool4 <<get>>
+    + xwww : bool4 <<get>>
+    + yxxx : bool4 <<get>>
+    + yxxy : bool4 <<get>>
+    + yxxz : bool4 <<get>>
+    + yxxw : bool4 <<get>>
+    + yxyx : bool4 <<get>>
+    + yxyy : bool4 <<get>>
+    + yxyz : bool4 <<get>>
+    + yxyw : bool4 <<get>>
+    + yxzx : bool4 <<get>>
+    + yxzy : bool4 <<get>>
+    + yxzz : bool4 <<get>>
+    + yxzw : bool4 <<get>> <<set>>
+    + yxwx : bool4 <<get>>
+    + yxwy : bool4 <<get>>
+    + yxwz : bool4 <<get>> <<set>>
+    + yxww : bool4 <<get>>
+    + yyxx : bool4 <<get>>
+    + yyxy : bool4 <<get>>
+    + yyxz : bool4 <<get>>
+    + yyxw : bool4 <<get>>
+    + yyyx : bool4 <<get>>
+    + yyyy : bool4 <<get>>
+    + yyyz : bool4 <<get>>
+    + yyyw : bool4 <<get>>
+    + yyzx : bool4 <<get>>
+    + yyzy : bool4 <<get>>
+    + yyzz : bool4 <<get>>
+    + yyzw : bool4 <<get>>
+    + yywx : bool4 <<get>>
+    + yywy : bool4 <<get>>
+    + yywz : bool4 <<get>>
+    + yyww : bool4 <<get>>
+    + yzxx : bool4 <<get>>
+    + yzxy : bool4 <<get>>
+    + yzxz : bool4 <<get>>
+    + yzxw : bool4 <<get>> <<set>>
+    + yzyx : bool4 <<get>>
+    + yzyy : bool4 <<get>>
+    + yzyz : bool4 <<get>>
+    + yzyw : bool4 <<get>>
+    + yzzx : bool4 <<get>>
+    + yzzy : bool4 <<get>>
+    + yzzz : bool4 <<get>>
+    + yzzw : bool4 <<get>>
+    + yzwx : bool4 <<get>> <<set>>
+    + yzwy : bool4 <<get>>
+    + yzwz : bool4 <<get>>
+    + yzww : bool4 <<get>>
+    + ywxx : bool4 <<get>>
+    + ywxy : bool4 <<get>>
+    + ywxz : bool4 <<get>> <<set>>
+    + ywxw : bool4 <<get>>
+    + ywyx : bool4 <<get>>
+    + ywyy : bool4 <<get>>
+    + ywyz : bool4 <<get>>
+    + ywyw : bool4 <<get>>
+    + ywzx : bool4 <<get>> <<set>>
+    + ywzy : bool4 <<get>>
+    + ywzz : bool4 <<get>>
+    + ywzw : bool4 <<get>>
+    + ywwx : bool4 <<get>>
+    + ywwy : bool4 <<get>>
+    + ywwz : bool4 <<get>>
+    + ywww : bool4 <<get>>
+    + zxxx : bool4 <<get>>
+    + zxxy : bool4 <<get>>
+    + zxxz : bool4 <<get>>
+    + zxxw : bool4 <<get>>
+    + zxyx : bool4 <<get>>
+    + zxyy : bool4 <<get>>
+    + zxyz : bool4 <<get>>
+    + zxyw : bool4 <<get>> <<set>>
+    + zxzx : bool4 <<get>>
+    + zxzy : bool4 <<get>>
+    + zxzz : bool4 <<get>>
+    + zxzw : bool4 <<get>>
+    + zxwx : bool4 <<get>>
+    + zxwy : bool4 <<get>> <<set>>
+    + zxwz : bool4 <<get>>
+    + zxww : bool4 <<get>>
+    + zyxx : bool4 <<get>>
+    + zyxy : bool4 <<get>>
+    + zyxz : bool4 <<get>>
+    + zyxw : bool4 <<get>> <<set>>
+    + zyyx : bool4 <<get>>
+    + zyyy : bool4 <<get>>
+    + zyyz : bool4 <<get>>
+    + zyyw : bool4 <<get>>
+    + zyzx : bool4 <<get>>
+    + zyzy : bool4 <<get>>
+    + zyzz : bool4 <<get>>
+    + zyzw : bool4 <<get>>
+    + zywx : bool4 <<get>> <<set>>
+    + zywy : bool4 <<get>>
+    + zywz : bool4 <<get>>
+    + zyww : bool4 <<get>>
+    + zzxx : bool4 <<get>>
+    + zzxy : bool4 <<get>>
+    + zzxz : bool4 <<get>>
+    + zzxw : bool4 <<get>>
+    + zzyx : bool4 <<get>>
+    + zzyy : bool4 <<get>>
+    + zzyz : bool4 <<get>>
+    + zzyw : bool4 <<get>>
+    + zzzx : bool4 <<get>>
+    + zzzy : bool4 <<get>>
+    + zzzz : bool4 <<get>>
+    + zzzw : bool4 <<get>>
+    + zzwx : bool4 <<get>>
+    + zzwy : bool4 <<get>>
+    + zzwz : bool4 <<get>>
+    + zzww : bool4 <<get>>
+    + zwxx : bool4 <<get>>
+    + zwxy : bool4 <<get>> <<set>>
+    + zwxz : bool4 <<get>>
+    + zwxw : bool4 <<get>>
+    + zwyx : bool4 <<get>> <<set>>
+    + zwyy : bool4 <<get>>
+    + zwyz : bool4 <<get>>
+    + zwyw : bool4 <<get>>
+    + zwzx : bool4 <<get>>
+    + zwzy : bool4 <<get>>
+    + zwzz : bool4 <<get>>
+    + zwzw : bool4 <<get>>
+    + zwwx : bool4 <<get>>
+    + zwwy : bool4 <<get>>
+    + zwwz : bool4 <<get>>
+    + zwww : bool4 <<get>>
+    + wxxx : bool4 <<get>>
+    + wxxy : bool4 <<get>>
+    + wxxz : bool4 <<get>>
+    + wxxw : bool4 <<get>>
+    + wxyx : bool4 <<get>>
+    + wxyy : bool4 <<get>>
+    + wxyz : bool4 <<get>> <<set>>
+    + wxyw : bool4 <<get>>
+    + wxzx : bool4 <<get>>
+    + wxzy : bool4 <<get>> <<set>>
+    + wxzz : bool4 <<get>>
+    + wxzw : bool4 <<get>>
+    + wxwx : bool4 <<get>>
+    + wxwy : bool4 <<get>>
+    + wxwz : bool4 <<get>>
+    + wxww : bool4 <<get>>
+    + wyxx : bool4 <<get>>
+    + wyxy : bool4 <<get>>
+    + wyxz : bool4 <<get>> <<set>>
+    + wyxw : bool4 <<get>>
+    + wyyx : bool4 <<get>>
+    + wyyy : bool4 <<get>>
+    + wyyz : bool4 <<get>>
+    + wyyw : bool4 <<get>>
+    + wyzx : bool4 <<get>> <<set>>
+    + wyzy : bool4 <<get>>
+    + wyzz : bool4 <<get>>
+    + wyzw : bool4 <<get>>
+    + wywx : bool4 <<get>>
+    + wywy : bool4 <<get>>
+    + wywz : bool4 <<get>>
+    + wyww : bool4 <<get>>
+    + wzxx : bool4 <<get>>
+    + wzxy : bool4 <<get>> <<set>>
+    + wzxz : bool4 <<get>>
+    + wzxw : bool4 <<get>>
+    + wzyx : bool4 <<get>> <<set>>
+    + wzyy : bool4 <<get>>
+    + wzyz : bool4 <<get>>
+    + wzyw : bool4 <<get>>
+    + wzzx : bool4 <<get>>
+    + wzzy : bool4 <<get>>
+    + wzzz : bool4 <<get>>
+    + wzzw : bool4 <<get>>
+    + wzwx : bool4 <<get>>
+    + wzwy : bool4 <<get>>
+    + wzwz : bool4 <<get>>
+    + wzww : bool4 <<get>>
+    + wwxx : bool4 <<get>>
+    + wwxy : bool4 <<get>>
+    + wwxz : bool4 <<get>>
+    + wwxw : bool4 <<get>>
+    + wwyx : bool4 <<get>>
+    + wwyy : bool4 <<get>>
+    + wwyz : bool4 <<get>>
+    + wwyw : bool4 <<get>>
+    + wwzx : bool4 <<get>>
+    + wwzy : bool4 <<get>>
+    + wwzz : bool4 <<get>>
+    + wwzw : bool4 <<get>>
+    + wwwx : bool4 <<get>>
+    + wwwy : bool4 <<get>>
+    + wwwz : bool4 <<get>>
+    + wwww : bool4 <<get>>
+    + xxx : bool3 <<get>>
+    + xxy : bool3 <<get>>
+    + xxz : bool3 <<get>>
+    + xxw : bool3 <<get>>
+    + xyx : bool3 <<get>>
+    + xyy : bool3 <<get>>
+    + xyz : bool3 <<get>> <<set>>
+    + xyw : bool3 <<get>> <<set>>
+    + xzx : bool3 <<get>>
+    + xzy : bool3 <<get>> <<set>>
+    + xzz : bool3 <<get>>
+    + xzw : bool3 <<get>> <<set>>
+    + xwx : bool3 <<get>>
+    + xwy : bool3 <<get>> <<set>>
+    + xwz : bool3 <<get>> <<set>>
+    + xww : bool3 <<get>>
+    + yxx : bool3 <<get>>
+    + yxy : bool3 <<get>>
+    + yxz : bool3 <<get>> <<set>>
+    + yxw : bool3 <<get>> <<set>>
+    + yyx : bool3 <<get>>
+    + yyy : bool3 <<get>>
+    + yyz : bool3 <<get>>
+    + yyw : bool3 <<get>>
+    + yzx : bool3 <<get>> <<set>>
+    + yzy : bool3 <<get>>
+    + yzz : bool3 <<get>>
+    + yzw : bool3 <<get>> <<set>>
+    + ywx : bool3 <<get>> <<set>>
+    + ywy : bool3 <<get>>
+    + ywz : bool3 <<get>> <<set>>
+    + yww : bool3 <<get>>
+    + zxx : bool3 <<get>>
+    + zxy : bool3 <<get>> <<set>>
+    + zxz : bool3 <<get>>
+    + zxw : bool3 <<get>> <<set>>
+    + zyx : bool3 <<get>> <<set>>
+    + zyy : bool3 <<get>>
+    + zyz : bool3 <<get>>
+    + zyw : bool3 <<get>> <<set>>
+    + zzx : bool3 <<get>>
+    + zzy : bool3 <<get>>
+    + zzz : bool3 <<get>>
+    + zzw : bool3 <<get>>
+    + zwx : bool3 <<get>> <<set>>
+    + zwy : bool3 <<get>> <<set>>
+    + zwz : bool3 <<get>>
+    + zww : bool3 <<get>>
+    + wxx : bool3 <<get>>
+    + wxy : bool3 <<get>> <<set>>
+    + wxz : bool3 <<get>> <<set>>
+    + wxw : bool3 <<get>>
+    + wyx : bool3 <<get>> <<set>>
+    + wyy : bool3 <<get>>
+    + wyz : bool3 <<get>> <<set>>
+    + wyw : bool3 <<get>>
+    + wzx : bool3 <<get>> <<set>>
+    + wzy : bool3 <<get>> <<set>>
+    + wzz : bool3 <<get>>
+    + wzw : bool3 <<get>>
+    + wwx : bool3 <<get>>
+    + wwy : bool3 <<get>>
+    + wwz : bool3 <<get>>
+    + www : bool3 <<get>>
+    + xx : bool2 <<get>>
+    + xy : bool2 <<get>> <<set>>
+    + xz : bool2 <<get>> <<set>>
+    + xw : bool2 <<get>> <<set>>
+    + yx : bool2 <<get>> <<set>>
+    + yy : bool2 <<get>>
+    + yz : bool2 <<get>> <<set>>
+    + yw : bool2 <<get>> <<set>>
+    + zx : bool2 <<get>> <<set>>
+    + zy : bool2 <<get>> <<set>>
+    + zz : bool2 <<get>>
+    + zw : bool2 <<get>> <<set>>
+    + wx : bool2 <<get>> <<set>>
+    + wy : bool2 <<get>> <<set>>
+    + wz : bool2 <<get>> <<set>>
+    + ww : bool2 <<get>>
+    + Equals(rhs:bool4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+class math <<static>> <<partial>> {
+    + {static} bool4(x:bool, y:bool, z:bool, w:bool) : bool4
+    + {static} bool4(x:bool, y:bool, zw:bool2) : bool4
+    + {static} bool4(x:bool, yz:bool2, w:bool) : bool4
+    + {static} bool4(x:bool, yzw:bool3) : bool4
+    + {static} bool4(xy:bool2, z:bool, w:bool) : bool4
+    + {static} bool4(xy:bool2, zw:bool2) : bool4
+    + {static} bool4(xyz:bool3, w:bool) : bool4
+    + {static} bool4(xyzw:bool4) : bool4
+    + {static} bool4(v:bool) : bool4
+    + {static} hash(v:bool4) : uint
+    + {static} hashwide(v:bool4) : uint4
+    + {static} shuffle(left:bool4, right:bool4, x:ShuffleComponent) : bool
+    + {static} shuffle(left:bool4, right:bool4, x:ShuffleComponent, y:ShuffleComponent) : bool2
+    + {static} shuffle(left:bool4, right:bool4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : bool3
+    + {static} shuffle(left:bool4, right:bool4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : bool4
+    <<internal>> {static} select_shuffle_component(a:bool4, b:bool4, component:ShuffleComponent) : bool
+}
+class DebuggerProxy <<sealed>> {
+    + x : bool
+    + y : bool
+    + z : bool
+    + w : bool
+    + DebuggerProxy(v:bool4)
+}
+bool4 +-- DebuggerProxy
+@enduml

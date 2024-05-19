@@ -1,0 +1,8 @@
+@startuml
+class ScalarRound <<sealed>> {
+    # <<override>> Floor(input:float) : int
+    # <<override>> AwayFromZero(input:float) : int
+    # <<override>> Ceiling(input:float) : int
+}
+"Round`2" "<float,int>" <|-- ScalarRound
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class SelectOnIntegerDescriptor {
+    + SelectOnIntegerDescriptor(unit:SelectOnInteger)
+    # <<override>> GetLabelForOption(option:int) : string
+}
+"SelectUnitDescriptor`1" "<int>" <|-- SelectOnIntegerDescriptor
+@enduml

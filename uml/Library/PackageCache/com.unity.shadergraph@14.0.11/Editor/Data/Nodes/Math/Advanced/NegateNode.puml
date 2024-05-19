@@ -1,0 +1,8 @@
+@startuml
+class NegateNode {
+    + NegateNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Negate(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- NegateNode
+@enduml

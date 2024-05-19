@@ -1,0 +1,16 @@
+@startuml
+class DebugUIHandlerProgressBar {
+    + nameLabel : Text
+    + valueLabel : Text
+    + progressBarRect : RectTransform
+    - m_Value : DebugUI.ProgressBarValue
+    - m_Timer : float
+    # <<override>> OnEnable() : void
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    - Update() : void
+    - UpdateValue() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerProgressBar
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class HelpLink {
+    <<internal>> Position : int
+    <<internal>> Length : int
+    <<internal>> Link : string
+    <<internal>> Type : LinkType
+}
+enum LinkType {
+    Action,
+    Help,
+    Link,
+}
+HelpLink +-- LinkType
+@enduml

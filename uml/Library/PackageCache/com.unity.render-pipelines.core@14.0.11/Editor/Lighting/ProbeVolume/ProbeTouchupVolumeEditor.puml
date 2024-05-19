@@ -1,0 +1,49 @@
+@startuml
+class ProbeTouchupColorPreferences {
+    <<internal>> {static} GetColorPrefProbeVolumeGizmoColor : Func<Color>
+    <<internal>> {static} s_ProbeTouchupVolumeGizmoColorDefault : Color
+    {static} - ProbeTouchupColorPreferences()
+}
+class ProbeTouchupVolumeEditor {
+    - m_SerializedTouchupVolume : SerializedProbeTouchupVolume
+    <<internal>> <<const>> k_EditShape : EditMode.SceneViewEditMode
+    {static} - _ShapeBox : HierarchicalBox
+    {static} - s_ShapeBox : HierarchicalBox <<get>>
+    # OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - DrawGizmosSelected(touchupVolume:ProbeTouchupVolume, gizmoType:GizmoType) : void
+    # OnSceneGUI() : void
+}
+class Styles <<static>> {
+    <<internal>> {static} <<readonly>> s_Size : GUIContent
+    <<internal>> {static} <<readonly>> s_IntensityScale : GUIContent
+    <<internal>> {static} <<readonly>> s_InvalidateProbes : GUIContent
+    <<internal>> {static} <<readonly>> s_OverrideDilationThreshold : GUIContent
+    <<internal>> {static} <<readonly>> s_OverriddenDilationThreshold : GUIContent
+    <<internal>> {static} <<readonly>> s_TouchupHeader : GUIContent
+    <<internal>> {static} <<readonly>> k_GizmoColorBase : Color
+    <<internal>> {static} <<readonly>> k_BaseHandlesColor : Color[]
+}
+class ProbeTouchupVolumeUI <<static>> {
+    + {static} <<readonly>> Inspector : CED.IDrawer = null
+    <<readonly>> {static} - k_ExpandedState : ExpandedState<Expandable, ProbeTouchupVolume>
+    <<readonly>> {static} - k_AdditionalPropertiesState : AdditionalPropertiesState<AdditionalProperties, ProbeTouchupVolume>
+    + {static} RegisterEditor(editor:ProbeTouchupVolumeEditor) : void
+    + {static} UnregisterEditor(editor:ProbeTouchupVolumeEditor) : void
+    + {static} SetAdditionalPropertiesVisibility(value:bool) : void
+    + {static} DrawTouchupAdditionalContent(serialized:SerializedProbeTouchupVolume, owner:Editor) : void
+    + {static} DrawTouchupContent(serialized:SerializedProbeTouchupVolume, owner:Editor) : void
+    {static} - ProbeTouchupVolumeUI()
+}
+enum AdditionalProperties {
+    Touchup= 1 << 0,
+}
+enum Expandable {
+    Touchup= 1 << 0,
+}
+Editor <|-- ProbeTouchupVolumeEditor
+ProbeTouchupVolumeEditor +-- Styles
+ProbeTouchupVolumeEditor +-- ProbeTouchupVolumeUI
+ProbeTouchupVolumeUI +-- AdditionalProperties
+ProbeTouchupVolumeUI +-- Expandable
+@enduml

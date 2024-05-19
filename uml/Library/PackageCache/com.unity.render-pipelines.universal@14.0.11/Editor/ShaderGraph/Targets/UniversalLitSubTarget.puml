@@ -1,0 +1,82 @@
+@startuml
+class UniversalLitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<override>> latestVersion : int <<get>>
+    - m_WorkflowMode : WorkflowMode
+    - m_NormalDropOffSpace : NormalDropOffSpace
+    - m_ClearCoat : bool = false
+    - m_BlendModePreserveSpecular : bool = true
+    + UniversalLitSubTarget()
+    # <<override>> shaderID : ShaderID <<get>>
+    + workflowMode : WorkflowMode <<get>> <<set>>
+    + normalDropOffSpace : NormalDropOffSpace <<get>> <<set>>
+    + clearCoat : bool <<get>> <<set>>
+    - complexLit : bool <<get>>
+    + blendModePreserveSpecular : bool <<get>> <<set>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> ProcessPreviewMaterial(material:Material) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    # <<override>> ComputeMaterialNeedsUpdateHash() : int
+    + TryUpgradeFromMasterNode(masterNode:IMasterNode1, blockMap:Dictionary<BlockFieldDescriptor, int>) : bool
+    <<internal>> <<override>> OnAfterParentTargetDeserialized() : void
+}
+class SubShaders <<static>> {
+    + {static} LitSubShader(target:UniversalTarget, workflowMode:WorkflowMode, renderType:string, renderQueue:string, disableBatchingTag:string, complexLit:bool, blendModePreserveSpecular:bool) : SubShaderDescriptor
+}
+class LitPasses <<static>> {
+    {static} - AddWorkflowModeControlToPass(pass:PassDescriptor, target:UniversalTarget, workflowMode:WorkflowMode) : void
+    {static} - AddReceiveShadowsControlToPass(pass:PassDescriptor, target:UniversalTarget, receiveShadows:bool) : void
+    + {static} Forward(target:UniversalTarget, workflowMode:WorkflowMode, blendModePreserveSpecular:bool, pragmas:PragmaCollection, keywords:KeywordCollection) : PassDescriptor
+    + {static} ForwardOnly(target:UniversalTarget, workflowMode:WorkflowMode, complexLit:bool, blendModePreserveSpecular:bool, vertexBlocks:BlockFieldDescriptor[], pixelBlocks:BlockFieldDescriptor[], pragmas:PragmaCollection, keywords:KeywordCollection) : PassDescriptor
+    + {static} GBuffer(target:UniversalTarget, workflowMode:WorkflowMode, blendModePreserveSpecular:bool) : PassDescriptor
+    + {static} Meta(target:UniversalTarget) : PassDescriptor
+    + {static} _2D(target:UniversalTarget) : PassDescriptor
+    + {static} DepthNormal(target:UniversalTarget) : PassDescriptor
+    + {static} DepthNormalOnly(target:UniversalTarget) : PassDescriptor
+}
+class LitBlockMasks <<static>> {
+    + {static} <<readonly>> FragmentLit : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentComplexLit : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentMeta : BlockFieldDescriptor[]
+}
+class LitRequiredFields <<static>> {
+    + {static} <<readonly>> Forward : FieldCollection
+    + {static} <<readonly>> GBuffer : FieldCollection
+    + {static} <<readonly>> Meta : FieldCollection
+}
+class LitDefines <<static>> {
+    + {static} <<readonly>> ClearCoat : KeywordDescriptor
+    + {static} <<readonly>> SpecularSetup : KeywordDescriptor
+}
+class LitKeywords <<static>> {
+    + {static} <<readonly>> ReceiveShadowsOff : KeywordDescriptor
+    + {static} <<readonly>> Forward : KeywordCollection
+    + {static} <<readonly>> GBuffer : KeywordCollection
+}
+class LitIncludes <<static>> {
+    <<const>> - kShadows : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+    <<const>> - kMetaInput : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+    <<const>> - kForwardPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBRForwardPass.hlsl"
+    <<const>> - kGBuffer : string = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+    <<const>> - kPBRGBufferPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBRGBufferPass.hlsl"
+    <<const>> - kLightingMetaPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/LightingMetaPass.hlsl"
+    <<const>> - k2DPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/PBR2DPass.hlsl"
+    + {static} <<readonly>> Forward : IncludeCollection
+    + {static} <<readonly>> GBuffer : IncludeCollection
+    + {static} <<readonly>> Meta : IncludeCollection
+    + {static} <<readonly>> _2D : IncludeCollection
+}
+UniversalSubTarget <|-- UniversalLitSubTarget
+ILegacyTarget <|-- UniversalLitSubTarget
+UniversalLitSubTarget +-- SubShaders
+UniversalLitSubTarget +-- LitPasses
+UniversalLitSubTarget +-- LitBlockMasks
+UniversalLitSubTarget +-- LitRequiredFields
+UniversalLitSubTarget +-- LitDefines
+UniversalLitSubTarget +-- LitKeywords
+UniversalLitSubTarget +-- LitIncludes
+@enduml

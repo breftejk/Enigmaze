@@ -1,0 +1,24 @@
+@startuml
+class Volume {
+    - m_IsGlobal : bool = true
+    + isGlobal : bool <<get>> <<set>>
+    + priority : float = 0f
+    + blendDistance : float = 0f
+    + weight : float = 1f
+    + sharedProfile : VolumeProfile = null
+    + profile : VolumeProfile <<get>> <<set>>
+    <<internal>> m_Colliders : List<Collider>
+    + colliders : List<Collider> <<get>>
+    <<internal>> profileRef : VolumeProfile <<get>>
+    + HasInstantiatedProfile() : bool
+    - m_PreviousLayer : int
+    - m_PreviousPriority : float
+    - m_InternalProfile : VolumeProfile
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    <<internal>> UpdateLayer() : void
+}
+MonoBehaviour <|-- Volume
+IVolume <|-- Volume
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class DrawSkyboxPass {
+    + m_IsActiveTargetBackBuffer : bool
+    + DrawSkyboxPass(evt:RenderPassEvent)
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - CreateSkyboxRendererList(context:ScriptableRenderContext, cameraData:CameraData) : RendererList
+    <<internal>> Render(renderGraph:RenderGraph, colorTarget:TextureHandle, depthTarget:TextureHandle, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> color : TextureHandle
+    <<internal>> depth : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> pass : DrawSkyboxPass
+}
+ScriptableRenderPass <|-- DrawSkyboxPass
+DrawSkyboxPass +-- PassData
+@enduml

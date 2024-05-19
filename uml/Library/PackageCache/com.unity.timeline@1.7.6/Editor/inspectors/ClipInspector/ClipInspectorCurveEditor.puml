@@ -1,0 +1,32 @@
+@startuml
+class ClipInspectorCurveEditor {
+    - m_CurveEditor : CurveEditor
+    - m_CurveWrappers : CurveWrapper[]
+    <<const>> - k_HeaderHeight : float = 30
+    <<const>> - k_PresetHeight : float = 30
+    - m_CurveUpdatedCallback : Action<AnimationCurve, EditorCurveBinding>
+    - m_TextContent : GUIContent
+    - m_LabelStyle : GUIStyle
+    - m_LegendStyle : GUIStyle
+    + {static} <<readonly>> kDisableTrackTime : double
+    - m_trackTime : double
+    + trackTime : double <<get>> <<set>>
+    + headerString : string <<get>> <<set>>
+    + ClipInspectorCurveEditor()
+    <<internal>> InitStyles() : bool
+    <<internal>> OnGUI(clientRect:Rect, presets:CurvePresetLibrary) : void
+    {static} - ConsumeMouseEvents(rect:Rect) : void
+    - DrawPresets(position:Rect, curveLibrary:PresetLibrary) : void
+    - DrawTrackHead(clientRect:Rect) : void
+    - DrawLegend(r:Rect) : void
+    {static} - s_LabelMarkers : char[]
+    {static} - LabelName(propertyName:string) : string
+    + SetCurve(curve:AnimationCurve) : void
+    <<internal>> SetUpdateCurveCallback(callback:Action<AnimationCurve, EditorCurveBinding>) : void
+    - ProcessUpdates() : void
+    + SetSelected(curve:AnimationCurve) : void
+    - UpdateSelectionColors() : void
+    + {static} CurveField(title:GUIContent, property:SerializedProperty, onClick:Action<SerializedProperty>) : void
+    {static} - DrawCurve(controlRect:Rect, property:SerializedProperty, onClick:Action<SerializedProperty>, fgColor:Color, bgColor:Color) : Rect
+}
+@enduml

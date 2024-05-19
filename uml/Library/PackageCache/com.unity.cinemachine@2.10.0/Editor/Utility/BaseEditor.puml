@@ -1,0 +1,17 @@
+@startuml
+class "BaseEditor`1"<T> {
+    # Target : T <<get>>
+    # FindAndExcludeProperty(expr:Expression<Func<T, TValue>>) : SerializedProperty
+    # FindProperty(expr:Expression<Func<T, TValue>>) : SerializedProperty
+    # FieldPath(expr:Expression<Func<T, TValue>>) : string
+    # <<virtual>> GetExcludedPropertiesInInspector() : List<string>
+    # <<virtual>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    # ExcludeProperty(propertyName:string) : void
+    # IsPropertyExcluded(propertyName:string) : bool
+    + <<override>> OnInspectorGUI() : void
+    - mExcluded : List<string>
+    # <<virtual>> BeginInspector() : void
+    # <<virtual>> DrawPropertyInInspector(p:SerializedProperty) : void
+    # DrawRemainingPropertiesInInspector() : void
+}
+@enduml

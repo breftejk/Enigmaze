@@ -1,0 +1,16 @@
+@startuml
+interface "ISet`1"<T> {
+    <<new>> Add(item:T) : bool
+    UnionWith(other:IEnumerable<T>) : void
+    IntersectWith(other:IEnumerable<T>) : void
+    ExceptWith(other:IEnumerable<T>) : void
+    SymmetricExceptWith(other:IEnumerable<T>) : void
+    IsSubsetOf(other:IEnumerable<T>) : bool
+    IsSupersetOf(other:IEnumerable<T>) : bool
+    IsProperSupersetOf(other:IEnumerable<T>) : bool
+    IsProperSubsetOf(other:IEnumerable<T>) : bool
+    Overlaps(other:IEnumerable<T>) : bool
+    SetEquals(other:IEnumerable<T>) : bool
+}
+"ICollection`1" "<T>" <|-- "ISet`1"
+@enduml

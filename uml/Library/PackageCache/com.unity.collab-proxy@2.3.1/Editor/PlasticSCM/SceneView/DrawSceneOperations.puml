@@ -1,0 +1,11 @@
+@startuml
+class DrawSceneOperations <<static>> {
+    <<internal>> {static} Enable(wkPath:string, workspaceOperationsMonitor:WorkspaceOperationsMonitor, assetStatusCache:IAssetStatusCache) : void
+    <<internal>> {static} Disable() : void
+    {static} - Provider_preCheckoutCallback(list:AssetList, changesetID:string, changesetDescription:string) : bool
+    {static} - mIsEnabled : bool
+    {static} - mAssetStatusCache : IAssetStatusCache
+    {static} - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    {static} - mWkPath : string
+}
+@enduml

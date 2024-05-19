@@ -1,0 +1,10 @@
+@startuml
+interface ISerializedLight {
+    settings : LightEditor.Settings <<get>>
+    serializedObject : SerializedObject <<get>>
+    serializedAdditionalDataObject : SerializedObject <<get>>
+    intensity : SerializedProperty <<get>>
+    Update() : void
+    Apply() : void
+}
+@enduml

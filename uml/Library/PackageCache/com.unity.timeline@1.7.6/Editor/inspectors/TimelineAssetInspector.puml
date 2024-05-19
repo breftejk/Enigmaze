@@ -1,0 +1,27 @@
+@startuml
+class TimelineAssetInspector {
+    <<const>> - k_MinWidth : int = 140
+    - m_FrameRateProperty : SerializedProperty
+    - m_DurationModeProperty : SerializedProperty
+    - m_FixedDurationProperty : SerializedProperty
+    - m_ScenePreviewProperty : SerializedProperty
+    - InitializeProperties() : void
+    + OnEnable() : void
+    <<internal>> <<override>> IsEnabled() : bool
+    # <<override>> OnHeaderGUI() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawIgnorePreviewProperty() : void
+    {static} - ResetWindowState(state:WindowState) : void
+    {static} - ContainsMasterAsset(asset:Object[]) : bool
+}
+class Styles <<static>> {
+    + {static} <<readonly>> FrameRate : GUIContent
+    + {static} <<readonly>> DurationMode : GUIContent
+    + {static} <<readonly>> Duration : GUIContent
+    + {static} <<readonly>> HeaderTitleMultiselection : GUIContent
+    + {static} <<readonly>> IgnorePreviewWarning : GUIContent
+    + {static} <<readonly>> ScenePreviewLabel : GUIContent
+}
+Editor <|-- TimelineAssetInspector
+TimelineAssetInspector +-- Styles
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class fsObjectAttribute {
+    + fsObjectAttribute()
+    + fsObjectAttribute(versionString:string, previousModels:Type[])
+    + PreviousModels : Type[]
+    + VersionString : string
+    + MemberSerialization : fsMemberSerialization
+    + Converter : Type
+    + Processor : Type
+}
+Attribute <|-- fsObjectAttribute
+@enduml

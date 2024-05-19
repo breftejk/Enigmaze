@@ -1,0 +1,6 @@
+@startuml
+abstract class "MethodBaseStubWriter`1"<TMethodBase> {
+    # MethodBaseStubWriter(methodBase:TMethodBase)
+}
+"MemberInfoStubWriter`1" "<TMethodBase>" <|-- "MethodBaseStubWriter`1"
+@enduml

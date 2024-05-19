@@ -1,0 +1,50 @@
+@startuml
+class ProbeGIBaking <<partial>> {
+    {static} - dilationShader : ComputeShader
+    {static} - dilationKernel : int
+    {static} <<internal>> s_CustomDilationThresh : Dictionary<(int, int), float>
+    {static} - InitDilationShaders() : void
+    {static} <<readonly>> - _ProbePositionsBuffer : int
+    {static} <<readonly>> - _NeedDilating : int
+    {static} <<readonly>> - _DilationParameters : int
+    {static} <<readonly>> - _DilationParameters2 : int
+    {static} <<readonly>> - _OutputProbes : int
+    {static} <<readonly>> - _APVResIndex : int
+    {static} <<readonly>> - _APVResCellIndices : int
+    {static} <<readonly>> - _APVResL0_L1Rx : int
+    {static} <<readonly>> - _APVResL1G_L1Ry : int
+    {static} <<readonly>> - _APVResL1B_L1Rz : int
+    {static} <<readonly>> - _APVResL2_0 : int
+    {static} <<readonly>> - _APVResL2_1 : int
+    {static} <<readonly>> - _APVResL2_2 : int
+    {static} <<readonly>> - _APVResL2_3 : int
+    {static} - PerformDilation(cell:ProbeReferenceVolume.Cell, settings:ProbeDilationSettings) : void
+}
+struct DilatedProbe {
+    + L0 : Vector3
+    + L1_0 : Vector3
+    + L1_1 : Vector3
+    + L1_2 : Vector3
+    + L2_0 : Vector3
+    + L2_1 : Vector3
+    + L2_2 : Vector3
+    + L2_3 : Vector3
+    + L2_4 : Vector3
+    - ToSphericalHarmonicsL2(sh:SphericalHarmonicsL2) : void
+    - FromSphericalHarmonicsL2(sh:SphericalHarmonicsL2) : void
+    <<internal>> FromSphericalHarmonicsShaderConstants(cell:ProbeReferenceVolume.Cell, probeIdx:int) : void
+    <<internal>> ToSphericalHarmonicsShaderConstants(cell:ProbeReferenceVolume.Cell, probeIdx:int) : void
+}
+struct DataForDilation {
+    + positionBuffer : ComputeBuffer <<get>>
+    + outputProbes : ComputeBuffer <<get>>
+    + needDilatingBuffer : ComputeBuffer <<get>>
+    - dilatedProbes : DilatedProbe[]
+    - cell : ProbeReferenceVolume.Cell
+    + DataForDilation(cell:ProbeReferenceVolume.Cell, defaultThreshold:float)
+    + ExtractDilatedProbes() : void
+    + Dispose() : void
+}
+ProbeGIBaking +-- DilatedProbe
+ProbeGIBaking +-- DataForDilation
+@enduml

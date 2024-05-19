@@ -1,0 +1,22 @@
+@startuml
+class PopupControlAttribute {
+    - m_Label : string
+    + PopupControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+struct PopupList {
+    + selectedEntry : int
+    + popupEntries : string[]
+    + PopupList(entries:string[], defaultEntry:int)
+}
+class PopupControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_PopupField : PopupField<string>
+    + PopupControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnValueChanged(evt:ChangeEvent<string>) : void
+}
+Attribute <|-- PopupControlAttribute
+IControlAttribute <|-- PopupControlAttribute
+VisualElement <|-- PopupControlView
+@enduml

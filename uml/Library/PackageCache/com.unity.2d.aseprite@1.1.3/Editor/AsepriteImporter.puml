@@ -1,0 +1,61 @@
+@startuml
+class AsepriteImporter <<partial>> {
+    - m_TextureImporterSettings : TextureImporterSettings
+    - m_PreviousAsepriteImporterSettings : AsepriteImporterSettings
+    - m_AsepriteImporterSettings : AsepriteImporterSettings
+    - m_ImportFileNodeState : bool = true
+    - m_PlatformSettingsDirtyTick : long
+    - m_TextureAssetName : string = null
+    - m_SingleSpriteImportData : List<SpriteMetaData>
+    - m_AnimatedSpriteImportData : List<SpriteMetaData>
+    - m_SpriteSheetImportData : List<SpriteMetaData>
+    - m_AsepriteLayers : List<Layer>
+    - m_PlatformSettings : List<TextureImporterPlatformSettings>
+    - m_GeneratePhysicsShape : bool = false
+    - m_SecondarySpriteTextures : SecondarySpriteTexture[]
+    - m_SpritePackingTag : string = ""
+    - spriteImportModeToUse : SpriteImportMode <<get>>
+    - m_ImportData : AsepriteImportData
+    - m_AsepriteFile : AsepriteFile
+    - m_Tags : List<Tag>
+    - m_Frames : List<Frame>
+    - m_CanvasSize : Vector2Int
+    - m_RootGameObject : GameObject
+    <<readonly>> - m_LayerIdToGameObject : Dictionary<int, GameObject>
+    - importData : AsepriteImportData <<get>>
+    <<internal>> isNPOT : bool <<get>>
+    <<internal>> textureActualWidth : int <<get>>
+    <<internal>> textureActualHeight : int <<get>>
+    - definitionScale : float <<get>>
+    <<internal>> secondaryTextures : SecondarySpriteTexture[] <<get>> <<set>>
+    + <<override>> OnImportAsset(ctx:AssetImportContext) : void
+    - RestructureImportData(file:AsepriteFile) : List<Layer>
+    - FilterOutLayers(layers:List<Layer>) : void
+    {static} - DisposeCellsInLayer(layer:Layer) : void
+    {static} - UpdateCellNames(layers:List<Layer>) : void
+    {static} - UpdateLayers(newLayers:List<Layer>, oldLayers:List<Layer>) : List<Layer>
+    - IsRequiringSquarePotTexture(ctx:AssetImportContext) : bool
+    {static} - ExtractFrameData(file:AsepriteFile) : List<Frame>
+    {static} - ExtractEventStringFromCells(frameData:FrameData) : string[]
+    {static} - ExtractTagsData(file:AsepriteFile) : List<Tag>
+    - UpdateSpriteImportData(layers:List<Layer>, spriteRects:RectInt[], packOffsets:Vector2Int[], uvTransforms:Vector2Int[]) : List<SpriteMetaData>
+    - CreateNewSpriteMetaData(cell:Cell, spriteRect:RectInt, packOffset:Vector2Int, uvTransform:Vector2Int) : SpriteMetaData
+    {static} - SetPhysicsOutline(physicsOutlineDataProvider:ISpritePhysicsOutlineDataProvider, sprites:Sprite[], definitionScale:float, pixelsPerUnit:float, generatePhysicsShape:bool) : void
+    - RegisterAssets(ctx:AssetImportContext, output:TextureGenerationOutput) : void
+    - RegisterTextureAsset(ctx:AssetImportContext, output:TextureGenerationOutput, assetName:string, mainAsset:UnityEngine.Object) : void
+    {static} - RegisterSprites(ctx:AssetImportContext, output:TextureGenerationOutput, assetNameGenerator:UniqueNameGenerator) : void
+    - RegisterGameObjects(ctx:AssetImportContext, output:TextureGenerationOutput, mainAsset:UnityEngine.Object) : void
+    - RegisterAnimationClip(ctx:AssetImportContext, assetName:string, output:TextureGenerationOutput) : void
+    - RegisterAnimatorController(ctx:AssetImportContext, assetName:string) : void
+    <<internal>> Apply() : void
+    + <<override>> SupportsRemappedAssetType(type:Type) : bool
+    - SetPlatformTextureSettings(platformSettings:TextureImporterPlatformSettings) : void
+    - SetDirty() : void
+    - GetSpriteImportData() : List<SpriteMetaData>
+    <<internal>> GetSpriteData(guid:GUID) : SpriteRect
+    <<internal>> GetAllPlatformSettings() : TextureImporterPlatformSettings[]
+    <<internal>> ReadTextureSettings(dest:TextureImporterSettings) : void
+}
+ScriptedImporter <|-- AsepriteImporter
+ISpriteEditorDataProvider <|-- AsepriteImporter
+@enduml

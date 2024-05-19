@@ -1,0 +1,11 @@
+@startuml
+class DebugUIHandlerButton {
+    + nameLabel : Text
+    - m_Field : DebugUI.Button
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnAction() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerButton
+@enduml

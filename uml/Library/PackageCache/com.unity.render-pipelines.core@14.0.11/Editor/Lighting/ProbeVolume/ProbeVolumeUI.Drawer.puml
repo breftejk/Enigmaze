@@ -1,0 +1,10 @@
+@startuml
+class ProbeVolumeUI <<static>> <<partial>> {
+    <<internal>> {static} <<readonly>> Inspector : CED.IDrawer
+    {static} - Drawer_BakeToolBar(serialized:SerializedProbeVolume, owner:Editor) : void
+    {static} - s_SubdivisionRangeID : int
+    {static} - SubdivisionRange(serialized:SerializedProbeVolume, maxSubdiv:int, minDistance:float) : void
+    {static} - Drawer_VolumeContent(serialized:SerializedProbeVolume, owner:Editor) : void
+    {static} - Drawer_RebakeWarning(serialized:SerializedProbeVolume, owner:Editor) : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class LudiqCoreChangelog_1_2_2 {
+    + LudiqCoreChangelog_1_2_2(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+PluginChangelog <|-- LudiqCoreChangelog_1_2_2
+@enduml

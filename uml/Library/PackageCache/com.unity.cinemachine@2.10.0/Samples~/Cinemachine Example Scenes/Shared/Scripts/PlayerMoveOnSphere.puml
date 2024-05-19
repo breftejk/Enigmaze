@@ -1,0 +1,10 @@
+@startuml
+class PlayerMoveOnSphere {
+    + Sphere : SphereCollider
+    + speed : float = 5
+    + rotatePlayer : bool = true
+    + rotationDamping : float = 0.5f
+    - Update() : void
+}
+MonoBehaviour <|-- PlayerMoveOnSphere
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class PSDImporter <<partial>> {
+    - spriteImportMode : SpriteImportMode <<get>>
+    - targetObject : UnityEngine.Object <<get>>
+    <<internal>> targetObject : UnityEngine.Object <<get>>
+    - pixelsPerUnit : float <<get>>
+    <<internal>> pixelsPerUnit : float <<get>>
+    - GetDataProvider() : T
+    <<internal>> GetDataProvider() : T
+    - HasDataProvider(type:Type) : bool
+    <<internal>> HasDataProvider(type:Type) : bool
+    - Apply() : void
+    - InitSpriteEditorDataProvider() : void
+    - InitSpriteEditorDataProvider() : void
+    - GetSpriteRects() : SpriteRect[]
+    <<internal>> GetSpriteRects() : SpriteRect[]
+    - SetSpriteRects(spriteRects:SpriteRect[]) : void
+    <<internal>> SetSpriteRects(spriteRects:SpriteRect[]) : void
+}
+ScriptedImporter <|-- PSDImporter
+ISpriteEditorDataProvider <|-- PSDImporter
+@enduml

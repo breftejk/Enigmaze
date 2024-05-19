@@ -1,0 +1,10 @@
+@startuml
+class Or <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + result : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Operation(flow:Flow) : bool
+}
+Unit <|-- Or
+@enduml

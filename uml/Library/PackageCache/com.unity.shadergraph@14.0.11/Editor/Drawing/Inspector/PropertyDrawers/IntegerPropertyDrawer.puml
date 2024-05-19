@@ -1,0 +1,9 @@
+@startuml
+class IntegerPropertyDrawer {
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:int, labelName:string, propertyFloatField:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- IntegerPropertyDrawer
+@enduml

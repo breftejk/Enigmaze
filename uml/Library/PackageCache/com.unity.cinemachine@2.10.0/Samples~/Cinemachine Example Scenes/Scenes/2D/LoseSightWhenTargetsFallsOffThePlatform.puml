@@ -1,0 +1,10 @@
+@startuml
+class LoseSightWhenTargetsFallsOffThePlatform {
+    + LowerPlatform : Transform
+    + LoseSightAtRange : float = 20
+    - m_TargetGroup : CinemachineTargetGroup
+    - Awake() : void
+    - Update() : void
+}
+MonoBehaviour <|-- LoseSightWhenTargetsFallsOffThePlatform
+@enduml

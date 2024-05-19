@@ -1,0 +1,33 @@
+@startuml
+class AxisControl {
+    + clamp : Clamp
+    + clampMin : float
+    + clampMax : float
+    + clampConstant : float
+    + invert : bool
+    + normalize : bool
+    + normalizeMin : float
+    + normalizeMax : float
+    + normalizeZero : float
+    + scale : bool
+    + scaleFactor : float
+    # Preprocess(value:float) : float
+    - Unpreprocess(value:float) : float
+    + AxisControl()
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : float
+    + <<override>> <<unsafe>> WriteValueIntoState(value:float, statePtr:void*) : void
+    + <<override>> <<unsafe>> CompareValue(firstStatePtr:void*, secondStatePtr:void*) : bool
+    + <<override>> <<unsafe>> EvaluateMagnitude(statePtr:void*) : float
+    - EvaluateMagnitude(value:float) : float
+    # <<override>> CalculateOptimizedControlDataType() : FourCC
+}
+enum Clamp {
+    None= 0,
+    BeforeNormalize= 1,
+    AfterNormalize= 2,
+    ToConstantBeforeNormalize= 3,
+}
+"InputControl`1" "<float>" <|-- AxisControl
+AxisControl +-- Clamp
+@enduml

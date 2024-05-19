@@ -1,0 +1,30 @@
+@startuml
+class MaterialNodeTests {
+    - m_Graph : GraphData
+    - m_NodeA : TestNode
+    + RunBeforeAnyTests() : void
+    + TestSetUp() : void
+    + GetVariableNameForSlotThrowsWhenInvalid() : void
+    + ReplacingMaterialSlotPreservesTheOldCurrentValue() : void
+    + CanConvertConcreteSlotValueTypeToOutputChunkProperly() : void
+    + CanGetDefaultInputsFromNodeAsPreviewProperties() : void
+    + CanGetDefaultSlotValueWhenNoEdgesConnected() : void
+}
+class TestNode {
+    + <<const>> V1Out : int = 0
+    + <<const>> V1In : int = 1
+    + TestNode()
+}
+class NotAMaterialSlot {
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + <<override>> CopyDefaultValue(other:MaterialSlot) : void
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + <<override>> isDefaultValue : bool <<get>>
+}
+MaterialNodeTests +-- TestNode
+AbstractMaterialNode <|-- TestNode
+MaterialNodeTests +-- NotAMaterialSlot
+MaterialSlot <|-- NotAMaterialSlot
+@enduml

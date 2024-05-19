@@ -1,0 +1,9 @@
+@startuml
+interface ISelectable {
+    Select() : void
+    IsSelected() : bool
+    Deselect() : void
+    CanSelect(evt:UnityEngine.Event) : bool
+}
+ILayerable <|-- ISelectable
+@enduml

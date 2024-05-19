@@ -1,0 +1,14 @@
+@startuml
+class QuaternionControl {
+    + x : AxisControl <<get>> <<set>>
+    + y : AxisControl <<get>> <<set>>
+    + z : AxisControl <<get>> <<set>>
+    + w : AxisControl <<get>> <<set>>
+    + QuaternionControl()
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : Quaternion
+    + <<override>> <<unsafe>> WriteValueIntoState(value:Quaternion, statePtr:void*) : void
+    # <<override>> CalculateOptimizedControlDataType() : FourCC
+}
+"InputControl`1" "<Quaternion>" <|-- QuaternionControl
+@enduml

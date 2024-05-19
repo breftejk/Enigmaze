@@ -1,0 +1,9 @@
+@startuml
+class "DataStore`1"<T> {
+    - m_Reducer : Action<T, ActionType>
+    <<internal>> State : T <<get>>
+    + Subscribe : Action<T, ActionType>
+    <<internal>> DataStore(reducer:Action<T, ActionType>, initialState:T)
+    + Dispatch(action:ActionType) : void
+}
+@enduml

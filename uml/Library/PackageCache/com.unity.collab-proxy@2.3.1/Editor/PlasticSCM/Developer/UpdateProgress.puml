@@ -1,0 +1,10 @@
+@startuml
+class UpdateProgress {
+    <<internal>> UpdateProgress(notifier:UpdateNotifier, wkPath:string, title:string, workspaceWindow:WorkspaceWindow)
+    <<internal>> OnUpdateProgress() : void
+    <<readonly>> - mProgressData : BuildProgressSpeedAndRemainingTime.ProgressData
+    <<readonly>> - mWorkspaceWindow : WorkspaceWindow
+    <<readonly>> - mWkPath : string
+    <<readonly>> - mNotifier : UpdateNotifier
+}
+@enduml

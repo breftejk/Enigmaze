@@ -1,0 +1,13 @@
+@startuml
+class InfiniteRuntimeClip {
+    - m_Playable : Playable
+    - {static} <<readonly>> kIntervalEnd : Int64
+    + InfiniteRuntimeClip(playable:Playable)
+    + <<override>> intervalStart : Int64 <<get>>
+    + <<override>> intervalEnd : Int64 <<get>>
+    + <<override>> enable : bool <<set>>
+    + <<override>> EvaluateAt(localTime:double, frameData:FrameData) : void
+    + <<override>> DisableAt(localTime:double, rootDuration:double, frameData:FrameData) : void
+}
+RuntimeElement <|-- InfiniteRuntimeClip
+@enduml

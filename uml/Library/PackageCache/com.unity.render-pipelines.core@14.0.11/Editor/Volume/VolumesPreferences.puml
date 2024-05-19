@@ -1,0 +1,31 @@
+@startuml
+class VolumesPreferences {
+    {static} - s_VolumeGizmosVisibilityOption : VolumeGizmoVisibility
+    {static} - VolumesPreferences()
+    + {static} volumeGizmosVisibilityOption : VolumeGizmoVisibility <<get>> <<set>>
+    + {static} drawWireFrame : bool <<get>>
+    + {static} drawSolid : bool <<get>>
+    {static} - s_VolumeGizmoColorDefault : Color
+    - {static} GetColorPrefVolumeGizmoColor : Func<Color>
+    + {static} volumeGizmoColor : Color <<get>>
+    {static} - s_SearchKeywords : List<string>
+    + keywords : List<string> <<get>>
+    + header : GUIContent <<get>>
+    + PreferenceGUI() : void
+}
+class Keys <<static>> {
+    <<internal>> <<const>> volumeGizmosVisibility : string = "General.VolumeGizmosVisibility"
+}
+enum VolumeGizmoVisibility {
+    Wireframe= 1,
+    Solid= 2,
+    Everything= Wireframe | Solid,
+}
+class Styles {
+    + {static} <<readonly>> volumeGizmosVisibilityLabel : GUIContent
+}
+ICoreRenderPipelinePreferencesProvider <|-- VolumesPreferences
+VolumesPreferences +-- Keys
+VolumesPreferences +-- VolumeGizmoVisibility
+VolumesPreferences +-- Styles
+@enduml

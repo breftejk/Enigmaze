@@ -1,0 +1,42 @@
+@startuml
+class ImageEditor {
+    - m_FillMethod : SerializedProperty
+    - m_FillOrigin : SerializedProperty
+    - m_FillAmount : SerializedProperty
+    - m_FillClockwise : SerializedProperty
+    - m_Type : SerializedProperty
+    - m_FillCenter : SerializedProperty
+    - m_Sprite : SerializedProperty
+    - m_PreserveAspect : SerializedProperty
+    - m_UseSpriteMesh : SerializedProperty
+    - m_PixelsPerUnitMultiplier : SerializedProperty
+    - m_SpriteContent : GUIContent
+    - m_SpriteTypeContent : GUIContent
+    - m_ClockwiseContent : GUIContent
+    - m_ShowSlicedOrTiled : AnimBool
+    - m_ShowSliced : AnimBool
+    - m_ShowTiled : AnimBool
+    - m_ShowFilled : AnimBool
+    - m_ShowType : AnimBool
+    - m_bIsDriven : bool
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - SetShowNativeSize(instant:bool) : void
+    # SpriteGUI() : void
+    # TypeGUI() : void
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnPreviewGUI(rect:Rect, background:GUIStyle) : void
+    + <<override>> GetInfoString() : string
+}
+class Styles {
+    + {static} text : GUIContent
+    + {static} OriginHorizontalStyle : GUIContent[]
+    + {static} OriginVerticalStyle : GUIContent[]
+    + {static} Origin90Style : GUIContent[]
+    + {static} Origin180Style : GUIContent[]
+    + {static} Origin360Style : GUIContent[]
+}
+GraphicEditor <|-- ImageEditor
+ImageEditor +-- Styles
+@enduml

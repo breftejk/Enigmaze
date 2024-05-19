@@ -1,0 +1,26 @@
+@startuml
+class ValueOutput <<sealed>> {
+    + ValueOutput(key:string, type:Type, getValue:Func<Flow, object>)
+    + ValueOutput(key:string, type:Type)
+    <<internal>> <<readonly>> getValue : Func<Flow, object>
+    <<internal>> canPredictValue : Func<Flow, bool>
+    + supportsPrediction : bool <<get>>
+    + supportsFetch : bool <<get>>
+    + type : Type <<get>>
+    + <<override>> validConnections : IEnumerable<ValueConnection> <<get>>
+    + <<override>> invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    + <<override>> validConnectedPorts : IEnumerable<ValueInput> <<get>>
+    + <<override>> invalidConnectedPorts : IEnumerable<IUnitInputPort> <<get>>
+    + <<override>> CanConnectToValid(port:ValueInput) : bool
+    + <<override>> ConnectToValid(port:ValueInput) : void
+    + <<override>> ConnectToInvalid(port:IUnitInputPort) : void
+    + <<override>> DisconnectFromValid(port:ValueInput) : void
+    + <<override>> DisconnectFromInvalid(port:IUnitInputPort) : void
+    + PredictableIf(condition:Func<Flow, bool>) : ValueOutput
+    + Predictable() : ValueOutput
+    + <<override>> CompatiblePort(unit:IUnit) : IUnitPort
+}
+"UnitPort`3" "<ValueInput,IUnitInputPort,ValueConnection>" <|-- ValueOutput
+IUnitValuePort <|-- ValueOutput
+IUnitOutputPort <|-- ValueOutput
+@enduml

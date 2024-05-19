@@ -1,0 +1,9 @@
+@startuml
+class ScalarSum <<sealed>> {
+    + defaultValue : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+    + <<override>> Operation(values:IEnumerable<float>) : float
+}
+"Sum`1" "<float>" <|-- ScalarSum
+"IDefaultValue`1" "<float>" <|-- ScalarSum
+@enduml

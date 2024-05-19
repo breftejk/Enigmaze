@@ -1,0 +1,17 @@
+@startuml
+class CinemachineBlendListCameraEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - mChildList : UnityEditorInternal.ReorderableList
+    - mInstructionList : UnityEditorInternal.ReorderableList
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - mCameraCandidates : string[]
+    - mCameraIndexLookup : Dictionary<CinemachineVirtualCameraBase, int>
+    - UpdateCameraCandidates() : void
+    - GetCameraIndex(obj:Object) : int
+    - SetupInstructionList() : void
+    - SetupChildList() : void
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineBlendListCamera>" <|-- CinemachineBlendListCameraEditor
+@enduml

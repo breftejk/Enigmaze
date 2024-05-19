@@ -1,0 +1,9 @@
+@startuml
+class TMP_GlyphPropertyDrawer {
+    - k_ColorProperty : string = "_Color"
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    - DrawGlyph(position:Rect, property:SerializedProperty) : void
+}
+PropertyDrawer <|-- TMP_GlyphPropertyDrawer
+@enduml

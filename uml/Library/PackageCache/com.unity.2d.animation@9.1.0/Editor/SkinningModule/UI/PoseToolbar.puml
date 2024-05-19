@@ -1,0 +1,33 @@
+@startuml
+class PoseToolbar {
+    - <<const>> k_UxmlPath : string = "SkinningModule/PoseToolbar.uxml"
+    - <<const>> k_UssPath : string = "SkinningModule/PoseToolbarStyle.uss"
+    - <<const>> k_ToolbarId : string = "PoseToolbar"
+    - <<const>> k_PreviewPoseId : string = "PreviewPose"
+    - <<const>> k_RestorePoseId : string = "RestorePose"
+    - <<const>> k_CharacterPivotId : string = "PivotPose"
+    +  <<event>> SetMeshTool : Action<Tools> 
+    +  <<event>> SetSkeletonTool : Action<Tools> 
+    +  <<event>> ActivateEditPoseTool : Action 
+    - skinningCache : SkinningCache <<get>> <<set>>
+    - m_PreviewBtn : Button
+    - m_RestoreBtn : Button
+    - m_PivotBtn : Button
+    + {static} GenerateFromUXML() : PoseToolbar
+    + PoseToolbar()
+    + Setup(s:SkinningCache) : void
+    - BindElements() : void
+    - PivotPose() : void
+    - OnSkinningModeChange(mode:SkinningMode) : void
+    - RestorePose() : void
+    - SetupShortcutUtility() : void
+    + UpdateToggleState() : void
+    + UpdateResetButtonState() : void
+    - AddShortcutsToToolTips() : void
+}
+class CustomUXMLFactor {
+}
+Toolbar <|-- PoseToolbar
+PoseToolbar +-- CustomUXMLFactor
+"UxmlFactory`2" "<PoseToolbar,UxmlTraits>" <|-- CustomUXMLFactor
+@enduml

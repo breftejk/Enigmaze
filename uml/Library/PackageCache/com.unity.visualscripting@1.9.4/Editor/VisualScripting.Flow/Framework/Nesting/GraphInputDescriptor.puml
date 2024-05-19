@@ -1,0 +1,7 @@
+@startuml
+class GraphInputDescriptor {
+    + GraphInputDescriptor(unit:GraphInput)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<GraphInput>" <|-- GraphInputDescriptor
+@enduml

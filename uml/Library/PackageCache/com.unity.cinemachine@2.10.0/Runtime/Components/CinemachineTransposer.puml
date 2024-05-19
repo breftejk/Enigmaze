@@ -1,0 +1,50 @@
+@startuml
+class CinemachineTransposer {
+    + m_BindingMode : BindingMode
+    + m_FollowOffset : Vector3
+    + m_XDamping : float = 1f
+    + m_YDamping : float = 1f
+    + m_ZDamping : float = 1f
+    + m_AngularDampingMode : AngularDampingMode
+    + m_PitchDamping : float = 0
+    + m_YawDamping : float = 0
+    + m_RollDamping : float = 0f
+    + m_AngularDamping : float = 0f
+    # <<virtual>> OnValidate() : void
+    + HideOffsetInInspector : bool <<get>> <<set>>
+    + EffectiveOffset : Vector3 <<get>>
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + <<override>> GetMaxDampTime() : float
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    # InitPrevFrameStateInfo(curState:CameraState, deltaTime:float) : void
+    # TrackTarget(deltaTime:float, up:Vector3, desiredCameraOffset:Vector3, outTargetPosition:Vector3, outTargetOrient:Quaternion) : void
+    # GetOffsetForMinimumTargetDistance(dampedTargetPos:Vector3, cameraOffset:Vector3, cameraFwd:Vector3, up:Vector3, actualTargetPos:Vector3) : Vector3
+    # Damping : Vector3 <<get>>
+    # AngularDamping : Vector3 <<get>>
+    + <<virtual>> GetTargetCameraPosition(worldUp:Vector3) : Vector3
+    - m_PreviousTargetPosition : Vector3
+    - m_PreviousReferenceOrientation : Quaternion
+    - m_targetOrientationOnAssign : Quaternion
+    - m_PreviousOffset : Vector3
+    - m_previousTarget : Transform = null
+    + GetReferenceOrientation(worldUp:Vector3) : Quaternion
+}
+enum BindingMode {
+    LockToTargetOnAssign= 0,
+    LockToTargetWithWorldUp= 1,
+    LockToTargetNoRoll= 2,
+    LockToTarget= 3,
+    WorldSpace= 4,
+    SimpleFollowWithWorldUp= 5,
+}
+enum AngularDampingMode {
+    Euler,
+    Quaternion,
+}
+CinemachineComponentBase <|-- CinemachineTransposer
+CinemachineTransposer +-- BindingMode
+CinemachineTransposer +-- AngularDampingMode
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class CustomEvent <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    - _argumentCount : int
+    + argumentCount : int <<get>> <<set>>
+    + name : ValueInput <<get>>
+    + argumentPorts : List<ValueOutput> <<get>>
+    # <<override>> Definition() : void
+    # <<override>> ShouldTrigger(flow:Flow, args:CustomEventArgs) : bool
+    # <<override>> AssignArguments(flow:Flow, args:CustomEventArgs) : void
+    + {static} Trigger(target:GameObject, name:string, args:object[]) : void
+}
+"GameObjectEventUnit`1" "<CustomEventArgs>" <|-- CustomEvent
+@enduml

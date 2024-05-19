@@ -1,0 +1,31 @@
+@startuml
+class UpdateReportListView {
+    <<internal>> UpdateReportListView(wkInfo:WorkspaceInfo, headerState:UpdateReportListHeaderState, onCheckedErrorChanged:Action)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(errorMessages:List<ErrorMessage>) : void
+    <<internal>> CheckAllLines() : void
+    <<internal>> UncheckAllLines() : void
+    <<internal>> AreAllErrorsChecked() : bool
+    <<internal>> IsAnyErrorChecked() : bool
+    <<internal>> GetCheckedPaths() : List<string>
+    <<internal>> GetUncheckedErrors() : List<ErrorMessage>
+    <<internal>> GetSelectedError() : ErrorMessage
+    {static} - UpdateCheckState(checkedErrors:HashSet<ErrorMessage>, errorMessage:ErrorMessage, isChecked:bool) : void
+    {static} - GetSelectedErrors(listView:UpdateReportListView) : List<ErrorMessage>
+    {static} - RegenerateRows(listView:UpdateReportListView, errorMessages:List<ErrorMessage>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ErrorListViewItemGUI(rowHeight:float, wkInfo:WorkspaceInfo, checkedErrors:HashSet<ErrorMessage>, item:ErrorListViewItem, onCheckedErrorChanged:Action, args:RowGUIArgs) : void
+    {static} - ErrorListViewItemCellGUI(rect:Rect, rowHeight:float, wkInfo:WorkspaceInfo, checkedErrors:HashSet<ErrorMessage>, item:ErrorListViewItem, onCheckedErrorChanged:Action, column:UpdateReportListColumn, isSelected:bool, isFocused:bool) : void
+    {static} - GetColumnText(wkInfo:WorkspaceInfo, message:ErrorMessage, columnName:string) : string
+    - mRows : List<TreeViewItem>
+    - mCheckedErrors : HashSet<ErrorMessage>
+    - mErrorMessages : List<ErrorMessage>
+    <<readonly>> - mOnCheckedErrorChanged : Action
+    <<readonly>> - mWkInfo : WorkspaceInfo
+}
+TreeView <|-- UpdateReportListView
+@enduml

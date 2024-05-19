@@ -1,0 +1,17 @@
+@startuml
+class ChannelMixer <<sealed>> {
+    + redOutRedIn : ClampedFloatParameter
+    + redOutGreenIn : ClampedFloatParameter
+    + redOutBlueIn : ClampedFloatParameter
+    + greenOutRedIn : ClampedFloatParameter
+    + greenOutGreenIn : ClampedFloatParameter
+    + greenOutBlueIn : ClampedFloatParameter
+    + blueOutRedIn : ClampedFloatParameter
+    + blueOutGreenIn : ClampedFloatParameter
+    + blueOutBlueIn : ClampedFloatParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+VolumeComponent <|-- ChannelMixer
+IPostProcessComponent <|-- ChannelMixer
+@enduml

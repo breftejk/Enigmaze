@@ -1,0 +1,18 @@
+@startuml
+class InvalidOutput <<sealed>> {
+    + InvalidOutput(key:string)
+    + <<override>> validConnections : IEnumerable<InvalidConnection> <<get>>
+    + <<override>> invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    + <<override>> validConnectedPorts : IEnumerable<IUnitInputPort> <<get>>
+    + <<override>> invalidConnectedPorts : IEnumerable<IUnitInputPort> <<get>>
+    + <<override>> CanConnectToValid(port:IUnitInputPort) : bool
+    + <<override>> ConnectToValid(port:IUnitInputPort) : void
+    + <<override>> ConnectToInvalid(port:IUnitInputPort) : void
+    + <<override>> DisconnectFromValid(port:IUnitInputPort) : void
+    + <<override>> DisconnectFromInvalid(port:IUnitInputPort) : void
+    + <<override>> CompatiblePort(unit:IUnit) : IUnitPort
+}
+"UnitPort`3" "<IUnitInputPort,IUnitInputPort,InvalidConnection>" <|-- InvalidOutput
+IUnitInvalidPort <|-- InvalidOutput
+IUnitOutputPort <|-- InvalidOutput
+@enduml

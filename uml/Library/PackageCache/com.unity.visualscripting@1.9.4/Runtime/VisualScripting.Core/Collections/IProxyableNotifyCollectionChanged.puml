@@ -1,0 +1,9 @@
+@startuml
+interface "IProxyableNotifyCollectionChanged`1"<T> {
+    ProxyCollectionChange : bool <<get>> <<set>>
+    BeforeAdd(item:T) : void
+    AfterAdd(item:T) : void
+    BeforeRemove(item:T) : void
+    AfterRemove(item:T) : void
+}
+@enduml

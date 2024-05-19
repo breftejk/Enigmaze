@@ -1,0 +1,17 @@
+@startuml
+struct RenderTargetHandle {
+    + id : int <<set>> <<get>>
+    - rtid : RenderTargetIdentifier <<set>> <<get>>
+    + {static} <<readonly>> CameraTarget : RenderTargetHandle
+    + RenderTargetHandle(renderTargetIdentifier:RenderTargetIdentifier)
+    + RenderTargetHandle(rtHandle:RTHandle)
+    <<internal>> {static} GetCameraTarget(cameraData:CameraData) : RenderTargetHandle
+    + Init(shaderProperty:string) : void
+    + Init(renderTargetIdentifier:RenderTargetIdentifier) : void
+    + Identifier() : RenderTargetIdentifier
+    + HasInternalRenderTargetId() : bool
+    + Equals(other:RenderTargetHandle) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+@enduml

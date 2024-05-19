@@ -1,0 +1,9 @@
+@startuml
+class InvokeMemberDescriptor {
+    + InvokeMemberDescriptor(unit:InvokeMember)
+    # <<override>> direction : ActionDirection <<get>>
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"MemberUnitDescriptor`1" "<InvokeMember>" <|-- InvokeMemberDescriptor
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+enum ChangesetsListColumn {
+    Name,
+    CreationDate,
+    CreatedBy,
+    Comment,
+    Branch,
+    Repository,
+    Guid,
+}
+class ChangesetsListHeaderState {
+    <<internal>> {static} GetDefault() : ChangesetsListHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:ChangesetsListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - ChangesetsListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- ChangesetsListHeaderState
+ISerializationCallbackReceiver <|-- ChangesetsListHeaderState
+@enduml

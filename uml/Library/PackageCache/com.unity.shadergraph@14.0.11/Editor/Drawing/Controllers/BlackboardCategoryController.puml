@@ -1,0 +1,50 @@
+@startuml
+class MoveShaderInputAction {
+    - MoveShaderInput(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> associatedCategoryGuid : string <<get>> <<set>>
+    <<internal>> shaderInputReference : ShaderInput <<get>> <<set>>
+    <<internal>> newIndexValue : int <<get>> <<set>>
+}
+class DeleteCategoryAction {
+    - RemoveCategory(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + categoriesToRemoveGuids : HashSet<string> <<get>> <<set>>
+}
+class ChangeCategoryIsExpandedAction {
+    <<internal>> <<const>> kEditorPrefKey : string = ".isCategoryExpanded"
+    - ChangeIsExpanded(graphData:GraphData) : void
+    + editorPrefsBaseKey : string
+    + categoryGuids : List<string> <<get>> <<set>>
+    + isExpanded : bool <<get>> <<set>>
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+}
+class ChangeCategoryNameAction {
+    - ChangeCategoryName(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + categoryGuid : string <<get>> <<set>>
+    <<internal>> newCategoryNameValue : string <<get>> <<set>>
+}
+class BlackboardCategoryController {
+    <<internal>> blackboardCategoryView : SGBlackboardCategory <<get>>
+    - m_BlackboardCategoryView : SGBlackboardCategory
+    - m_BlackboardItemControllers : Dictionary<string, BlackboardItemController>
+    - blackboard : SGBlackboard <<get>> <<set>>
+    - m_UnregisterAll : Action
+    <<internal>> BlackboardCategoryController(categoryData:CategoryData, categoryViewModel:BlackboardCategoryViewModel, dataStore:GraphDataStore)
+    # <<override>> RequestModelChange(changeAction:IGraphDataAction) : void
+    # <<override>> ModelChanged(graphData:GraphData, changeAction:IGraphDataAction) : void
+    <<internal>> IsInputInCategory(shaderInput:ShaderInput) : bool
+    <<internal>> FindBlackboardRow(shaderInput:ShaderInput) : SGBlackboardRow
+    <<internal>> InsertBlackboardRow(shaderInput:BlackboardItem, insertionIndex:int) : SGBlackboardRow
+    <<internal>> RemoveBlackboardRow(shaderInput:BlackboardItem) : void
+    - ClearBlackboardRows() : void
+    + <<override>> Dispose() : void
+}
+IGraphDataAction <|-- MoveShaderInputAction
+IGraphDataAction <|-- DeleteCategoryAction
+IGraphDataAction <|-- ChangeCategoryIsExpandedAction
+IGraphDataAction <|-- ChangeCategoryNameAction
+"SGViewController`2" "<CategoryData,BlackboardCategoryViewModel>" <|-- BlackboardCategoryController
+IDisposable <|-- BlackboardCategoryController
+@enduml

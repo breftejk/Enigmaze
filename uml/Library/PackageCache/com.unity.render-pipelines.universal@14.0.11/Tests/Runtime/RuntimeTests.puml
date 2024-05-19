@@ -1,0 +1,12 @@
+@startuml
+class RuntimeTests {
+    - go : GameObject
+    - camera : Camera
+    - currentAssetGraphics : RenderPipelineAsset
+    - currentAssetQuality : RenderPipelineAsset
+    + Setup() : void
+    + Cleanup() : void
+    + PipelineHasCorrectColorSpace() : IEnumerator
+    - AssetCheck() : void
+}
+@enduml

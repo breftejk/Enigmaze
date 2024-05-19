@@ -1,0 +1,67 @@
+@startuml
+class ExecuteEvents <<static>> {
+    + {static} ValidateEventData(data:BaseEventData) : T
+    - {static} <<readonly>> s_PointerMoveHandler : EventFunction<IPointerMoveHandler>
+    - {static} Execute(handler:IPointerMoveHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_PointerEnterHandler : EventFunction<IPointerEnterHandler>
+    - {static} Execute(handler:IPointerEnterHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_PointerExitHandler : EventFunction<IPointerExitHandler>
+    - {static} Execute(handler:IPointerExitHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_PointerDownHandler : EventFunction<IPointerDownHandler>
+    - {static} Execute(handler:IPointerDownHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_PointerUpHandler : EventFunction<IPointerUpHandler>
+    - {static} Execute(handler:IPointerUpHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_PointerClickHandler : EventFunction<IPointerClickHandler>
+    - {static} Execute(handler:IPointerClickHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_InitializePotentialDragHandler : EventFunction<IInitializePotentialDragHandler>
+    - {static} Execute(handler:IInitializePotentialDragHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_BeginDragHandler : EventFunction<IBeginDragHandler>
+    - {static} Execute(handler:IBeginDragHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_DragHandler : EventFunction<IDragHandler>
+    - {static} Execute(handler:IDragHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_EndDragHandler : EventFunction<IEndDragHandler>
+    - {static} Execute(handler:IEndDragHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_DropHandler : EventFunction<IDropHandler>
+    - {static} Execute(handler:IDropHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_ScrollHandler : EventFunction<IScrollHandler>
+    - {static} Execute(handler:IScrollHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_UpdateSelectedHandler : EventFunction<IUpdateSelectedHandler>
+    - {static} Execute(handler:IUpdateSelectedHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_SelectHandler : EventFunction<ISelectHandler>
+    - {static} Execute(handler:ISelectHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_DeselectHandler : EventFunction<IDeselectHandler>
+    - {static} Execute(handler:IDeselectHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_MoveHandler : EventFunction<IMoveHandler>
+    - {static} Execute(handler:IMoveHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_SubmitHandler : EventFunction<ISubmitHandler>
+    - {static} Execute(handler:ISubmitHandler, eventData:BaseEventData) : void
+    - {static} <<readonly>> s_CancelHandler : EventFunction<ICancelHandler>
+    - {static} Execute(handler:ICancelHandler, eventData:BaseEventData) : void
+    + {static} pointerMoveHandler : EventFunction<IPointerMoveHandler> <<get>>
+    + {static} pointerEnterHandler : EventFunction<IPointerEnterHandler> <<get>>
+    + {static} pointerExitHandler : EventFunction<IPointerExitHandler> <<get>>
+    + {static} pointerDownHandler : EventFunction<IPointerDownHandler> <<get>>
+    + {static} pointerUpHandler : EventFunction<IPointerUpHandler> <<get>>
+    + {static} pointerClickHandler : EventFunction<IPointerClickHandler> <<get>>
+    + {static} initializePotentialDrag : EventFunction<IInitializePotentialDragHandler> <<get>>
+    + {static} beginDragHandler : EventFunction<IBeginDragHandler> <<get>>
+    + {static} dragHandler : EventFunction<IDragHandler> <<get>>
+    + {static} endDragHandler : EventFunction<IEndDragHandler> <<get>>
+    + {static} dropHandler : EventFunction<IDropHandler> <<get>>
+    + {static} scrollHandler : EventFunction<IScrollHandler> <<get>>
+    + {static} updateSelectedHandler : EventFunction<IUpdateSelectedHandler> <<get>>
+    + {static} selectHandler : EventFunction<ISelectHandler> <<get>>
+    + {static} deselectHandler : EventFunction<IDeselectHandler> <<get>>
+    + {static} moveHandler : EventFunction<IMoveHandler> <<get>>
+    + {static} submitHandler : EventFunction<ISubmitHandler> <<get>>
+    + {static} cancelHandler : EventFunction<ICancelHandler> <<get>>
+    - {static} GetEventChain(root:GameObject, eventChain:IList<Transform>) : void
+    + {static} Execute(target:GameObject, eventData:BaseEventData, functor:EventFunction<T>) : bool
+    - {static} <<readonly>> s_InternalTransformList : List<Transform>
+    + {static} ExecuteHierarchy(root:GameObject, eventData:BaseEventData, callbackFunction:EventFunction<T>) : GameObject
+    - {static} ShouldSendToComponent(component:Component) : bool
+    - {static} GetEventList(go:GameObject, results:IList<IEventSystemHandler>) : void
+    + {static} CanHandleEvent(go:GameObject) : bool
+    + {static} GetEventHandler(root:GameObject) : GameObject
+}
+@enduml

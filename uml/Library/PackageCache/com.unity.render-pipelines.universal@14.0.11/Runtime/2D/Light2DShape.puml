@@ -1,0 +1,22 @@
+@startuml
+class Light2D <<sealed>> <<partial>> {
+    - m_ShapeLightParametricSides : int = 5
+    - m_ShapeLightParametricAngleOffset : float = 0.0f
+    - m_ShapeLightParametricRadius : float = 1.0f
+    - m_ShapeLightFalloffSize : float = 0.50f
+    - m_ShapeLightFalloffOffset : Vector2
+    - m_ShapePath : Vector3[] = null
+    - m_PreviousShapeLightFalloffSize : float
+    - m_PreviousShapeLightParametricSides : int
+    - m_PreviousShapeLightParametricAngleOffset : float
+    - m_PreviousShapeLightParametricRadius : float
+    - m_PreviousShapePathHash : int
+    - m_PreviousLightType : LightType
+    + shapeLightParametricSides : int <<get>>
+    + shapeLightParametricAngleOffset : float <<get>>
+    + shapeLightParametricRadius : float <<get>> <<internal set>>
+    + shapeLightFalloffSize : float <<get>> <<set>>
+    + shapePath : Vector3[] <<get>> <<internal set>>
+    + SetShapePath(path:Vector3[]) : void
+}
+@enduml

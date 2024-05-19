@@ -1,0 +1,52 @@
+@startuml
+class Renderer2D {
+    <<internal>> <<const>> k_DepthBufferBits : int = 32
+    <<const>> - k_FinalBlitPassQueueOffset : int = 1
+    <<const>> - k_AfterFinalBlitPassQueueOffset : int
+    - m_Render2DLightingPass : Render2DLightingPass
+    - m_PixelPerfectBackgroundPass : PixelPerfectBackgroundPass
+    - m_UpscalePass : UpscalePass
+    - m_FinalBlitPass : FinalBlitPass
+    - m_DrawOffscreenUIPass : DrawScreenSpaceUIPass
+    - m_DrawOverlayUIPass : DrawScreenSpaceUIPass
+    - m_LightCullResult : Light2DCullResult
+    <<internal>> m_ColorBufferSystem : RenderTargetBufferSystem
+    - {static} <<readonly>> m_ProfilingSampler : ProfilingSampler
+    - m_UseDepthStencilBuffer : bool = true
+    - m_CreateColorTexture : bool
+    - m_CreateDepthTexture : bool
+    - m_ColorTextureHandle : RTHandle
+    - m_DepthTextureHandle : RTHandle
+    - m_BlitMaterial : Material
+    - m_BlitHDRMaterial : Material
+    - m_SamplingMaterial : Material
+    - m_Renderer2DData : Renderer2DData
+    <<internal>> createColorTexture : bool <<get>>
+    <<internal>> createDepthTexture : bool <<get>>
+    - m_PostProcessPasses : PostProcessPasses
+    <<internal>> colorGradingLutPass : ColorGradingLutPass <<get>>
+    <<internal>> postProcessPass : PostProcessPass <<get>>
+    <<internal>> finalPostProcessPass : PostProcessPass <<get>>
+    <<internal>> afterPostProcessColorHandle : RTHandle <<get>>
+    <<internal>> colorGradingLutHandle : RTHandle <<get>>
+    + <<override>> SupportedCameraStackingTypes() : int
+    + Renderer2D(data:Renderer2DData)
+    # <<override>> Dispose(disposing:bool) : void
+    <<internal>> <<override>> ReleaseRenderTargets() : void
+    + GetRenderer2DData() : Renderer2DData
+    - GetRenderPassInputs(renderingData:RenderingData, cameraData:CameraData) : RenderPassInputSummary
+    - CreateRenderTextures(renderPassInputs:RenderPassInputSummary, cmd:CommandBuffer, cameraData:CameraData, forceCreateColorTexture:bool, colorTextureFilterMode:FilterMode, colorTargetHandle:RTHandle, depthTargetHandle:RTHandle) : void
+    + <<override>> Setup(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<override>> SetupCullingParameters(cullingParameters:ScriptableCullingParameters, cameraData:CameraData) : void
+    <<internal>> <<override>> SwapColorBuffer(cmd:CommandBuffer) : void
+    <<internal>> <<override>> GetCameraColorFrontBuffer(cmd:CommandBuffer) : RTHandle
+    <<internal>> <<override>> GetCameraColorBackBuffer(cmd:CommandBuffer) : RTHandle
+    <<internal>> <<override>> EnableSwapBufferMSAA(enable:bool) : void
+}
+struct RenderPassInputSummary {
+    <<internal>> requiresDepthTexture : bool
+    <<internal>> requiresColorTexture : bool
+}
+ScriptableRenderer <|-- Renderer2D
+Renderer2D +-- RenderPassInputSummary
+@enduml

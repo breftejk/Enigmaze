@@ -1,0 +1,18 @@
+@startuml
+class ProbeVolumeUI <<static>> <<partial>> {
+}
+class Styles <<static>> {
+    <<internal>> {static} <<readonly>> s_Size : GUIContent
+    <<internal>> {static} <<readonly>> s_OverridesSubdivision : GUIContent
+    <<internal>> {static} <<readonly>> s_HighestSubdivLevel : GUIContent
+    <<internal>> {static} <<readonly>> s_LowestSubdivLevel : GUIContent
+    <<internal>> {static} <<readonly>> s_ObjectLayerMask : GUIContent
+    <<internal>> {static} <<readonly>> s_MinRendererVolumeSize : GUIContent
+    <<internal>> {static} <<readonly>> s_OverrideRendererFilters : GUIContent
+    <<internal>> {static} <<readonly>> s_DistanceBetweenProbes : GUIContent
+    <<internal>> {static} <<readonly>> s_ProbeVolumeChangedMessage : string = "The probe volume has changed since last baking or the data was never baked.\nPlease bake lighting in the lighting panel to update the lighting data."
+    <<internal>> {static} <<readonly>> k_GizmoColorBase : Color
+    <<internal>> {static} <<readonly>> k_BaseHandlesColor : Color[]
+}
+ProbeVolumeUI +-- Styles
+@enduml

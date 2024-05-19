@@ -1,0 +1,31 @@
+@startuml
+class CreateRepositoryDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} CreateRepository(parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, proposedRepositoryName:string, proposedServer:string, lastUsedRepServer:string, clientConfServer:string) : RepositoryCreationData
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - FillValues(values:List<string>) : void
+    - DoEntriesArea() : void
+    - SelectServer(userData:object) : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    - OkButtonWithValidationAction() : void
+    - BuildCreationData() : RepositoryCreationData
+    {static} - Create(plasticWebRestApi:IPlasticWebRestApi, progressControls:ProgressControlsForDialogs, proposedRepositoryName:string, proposedServer:string) : CreateRepositoryDialog
+    - BuildComponents(proposedRepositoryName:string, proposedServer:string) : void
+    {static} - GetExtraServers(proposedServer:string) : List<string>
+    - mPlasticWebRestApi : IPlasticWebRestApi
+    - mFocusIsAreadySet : bool
+    - mName : string
+    - mServer : string
+    - mKnownServers : List<string>
+    - mProgressData : ProgressControlsForDialogs.Data
+    - mProgressControls : ProgressControlsForDialogs
+    <<const>> - ENTRY_WIDTH : float = 400
+    <<const>> - ENTRY_X : float = 175f
+    <<const>> - REPONAME_CONTROL_NAME : string = "CreateRepositoryDialog.RepositoryName"
+    <<const>> - DROPDOWN_CONTROL_NAME : string = "CreateRepositoryDialog.ServerDropdown"
+}
+PlasticDialog <|-- CreateRepositoryDialog
+@enduml

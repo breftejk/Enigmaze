@@ -1,0 +1,6 @@
+@startuml
+class UnityOnMouseDragMessageListener <<sealed>> {
+    - OnMouseDrag() : void
+}
+MessageListener <|-- UnityOnMouseDragMessageListener
+@enduml

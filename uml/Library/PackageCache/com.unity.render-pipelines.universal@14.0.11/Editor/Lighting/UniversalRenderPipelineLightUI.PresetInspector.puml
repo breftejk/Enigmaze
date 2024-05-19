@@ -1,0 +1,6 @@
+@startuml
+class UniversalRenderPipelineLightUI <<partial>> {
+    {static} <<readonly>> - k_ExpandedStatePreset : ExpandedState<Expandable, Light>
+    + {static} <<readonly>> PresetInspector : CED.IDrawer
+}
+@enduml

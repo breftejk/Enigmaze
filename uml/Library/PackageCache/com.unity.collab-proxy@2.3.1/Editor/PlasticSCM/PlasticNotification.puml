@@ -1,0 +1,11 @@
+@startuml
+class PlasticNotification <<static>> {
+    <<internal>> {static} GetIcon(status:Status) : Texture
+}
+enum Status {
+    None,
+    IncomingChanges,
+    Conflicts,
+}
+PlasticNotification +-- Status
+@enduml

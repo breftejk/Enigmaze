@@ -1,0 +1,11 @@
+@startuml
+struct Spline {
+    + isOpenEnded : bool
+    + points : Vector3[]
+    - type : ShapeType <<get>>
+    - isOpenEnded : bool <<get>>
+    - ToControlPoints() : ControlPoint[]
+    + {static} empty : Spline
+}
+IShape <|-- Spline
+@enduml

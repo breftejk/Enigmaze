@@ -1,0 +1,122 @@
+@startuml
+enum RenderingMode {
+    Forward= 0,
+    ForwardPlus= 2,
+    Deferred= 1,
+}
+enum DepthPrimingMode {
+    Disabled,
+    Auto,
+    Forced,
+}
+class UniversalRenderer <<sealed>> <<partial>> {
+    <<const>> - k_DepthStencilFormat : GraphicsFormat
+    <<const>> - k_DepthBufferBits : int = 32
+    <<const>> - k_FinalBlitPassQueueOffset : int = 1
+    <<const>> - k_AfterFinalBlitPassQueueOffset : int
+    {static} <<readonly>> - k_DepthNormalsOnly : List<ShaderTagId>
+    + <<override>> SupportedCameraStackingTypes() : int
+    <<internal>> renderingModeRequested : RenderingMode <<get>>
+    <<internal>> renderingModeActual : RenderingMode <<get>>
+    - m_Clustering : bool
+    <<internal>> accurateGbufferNormals : bool <<get>>
+    + depthPrimingMode : DepthPrimingMode <<get>> <<set>>
+    - m_DepthPrepass : DepthOnlyPass
+    - m_DepthNormalPrepass : DepthNormalOnlyPass
+    - m_PrimedDepthCopyPass : CopyDepthPass
+    - m_MotionVectorPass : MotionVectorRenderPass
+    - m_MainLightShadowCasterPass : MainLightShadowCasterPass
+    - m_AdditionalLightsShadowCasterPass : AdditionalLightsShadowCasterPass
+    - m_GBufferPass : GBufferPass
+    - m_GBufferCopyDepthPass : CopyDepthPass
+    - m_DeferredPass : DeferredPass
+    - m_RenderOpaqueForwardOnlyPass : DrawObjectsPass
+    - m_RenderOpaqueForwardPass : DrawObjectsPass
+    - m_RenderOpaqueForwardWithRenderingLayersPass : DrawObjectsWithRenderingLayersPass
+    - m_DrawSkyboxPass : DrawSkyboxPass
+    - m_CopyDepthPass : CopyDepthPass
+    - m_CopyColorPass : CopyColorPass
+    - m_TransparentSettingsPass : TransparentSettingsPass
+    - m_RenderTransparentForwardPass : DrawObjectsPass
+    - m_OnRenderObjectCallbackPass : InvokeOnRenderObjectCallbackPass
+    - m_FinalBlitPass : FinalBlitPass
+    - m_CapturePass : CapturePass
+    - m_DrawOffscreenUIPass : DrawScreenSpaceUIPass
+    - m_DrawOverlayUIPass : DrawScreenSpaceUIPass
+    <<internal>> m_ColorBufferSystem : RenderTargetBufferSystem
+    <<internal>> m_ActiveCameraColorAttachment : RTHandle
+    - m_ColorFrontBuffer : RTHandle
+    <<internal>> m_ActiveCameraDepthAttachment : RTHandle
+    <<internal>> m_CameraDepthAttachment : RTHandle
+    - m_XRTargetHandleAlias : RTHandle
+    <<internal>> m_DepthTexture : RTHandle
+    - m_NormalsTexture : RTHandle
+    - m_DecalLayersTexture : RTHandle
+    - m_OpaqueColor : RTHandle
+    - m_MotionVectorColor : RTHandle
+    - m_MotionVectorDepth : RTHandle
+    - m_ForwardLights : ForwardLights
+    - m_DeferredLights : DeferredLights
+    - m_RenderingMode : RenderingMode
+    - m_DepthPrimingMode : DepthPrimingMode
+    - m_CopyDepthMode : CopyDepthMode
+    - m_DepthPrimingRecommended : bool
+    - m_DefaultStencilState : StencilState
+    - m_LightCookieManager : LightCookieManager
+    - m_IntermediateTextureMode : IntermediateTextureMode
+    - m_VulkanEnablePreTransform : bool
+    - m_BlitMaterial : Material = null
+    - m_BlitHDRMaterial : Material = null
+    - m_CopyDepthMaterial : Material = null
+    - m_SamplingMaterial : Material = null
+    - m_StencilDeferredMaterial : Material = null
+    - m_CameraMotionVecMaterial : Material = null
+    - m_ObjectMotionVecMaterial : Material = null
+    - m_PostProcessPasses : PostProcessPasses
+    <<internal>> colorGradingLutPass : ColorGradingLutPass <<get>>
+    <<internal>> postProcessPass : PostProcessPass <<get>>
+    <<internal>> finalPostProcessPass : PostProcessPass <<get>>
+    <<internal>> colorGradingLut : RTHandle <<get>>
+    <<internal>> deferredLights : DeferredLights <<get>>
+    + UniversalRenderer(data:UniversalRendererData)
+    # <<override>> Dispose(disposing:bool) : void
+    <<internal>> <<override>> ReleaseRenderTargets() : void
+    - SetupFinalPassDebug(cameraData:CameraData) : void
+    + {static} IsOffscreenDepthTexture(cameraData:CameraData) : bool
+    - IsDepthPrimingEnabled(cameraData:CameraData) : bool
+    - IsWebGL() : bool
+    - IsGLESDevice() : bool
+    - IsGLDevice() : bool
+    + <<override>> Setup(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<override>> SetupLights(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<override>> SetupCullingParameters(cullingParameters:ScriptableCullingParameters, cameraData:CameraData) : void
+    + <<override>> FinishRendering(cmd:CommandBuffer) : void
+    - EnqueueDeferred(renderingData:RenderingData, hasDepthPrepass:bool, hasNormalPrepass:bool, hasRenderingLayerPrepass:bool, applyMainShadow:bool, applyAdditionalShadow:bool) : void
+    - GetRenderPassInputs(renderingData:RenderingData) : RenderPassInputSummary
+    - CreateCameraRenderTarget(context:ScriptableRenderContext, descriptor:RenderTextureDescriptor, primedDepth:bool, cmd:CommandBuffer, cameraData:CameraData) : void
+    - PlatformRequiresExplicitMsaaResolve() : bool
+    - RequiresIntermediateColorTexture(cameraData:CameraData) : bool
+    - CanCopyDepth(cameraData:CameraData) : bool
+    <<internal>> <<override>> SwapColorBuffer(cmd:CommandBuffer) : void
+    <<internal>> <<override>> GetCameraColorFrontBuffer(cmd:CommandBuffer) : RTHandle
+    <<internal>> <<override>> GetCameraColorBackBuffer(cmd:CommandBuffer) : RTHandle
+    <<internal>> <<override>> EnableSwapBufferMSAA(enable:bool) : void
+}
+class Profiling <<static>> {
+    - <<const>> k_Name : string
+    + {static} <<readonly>> createCameraRenderTarget : ProfilingSampler
+}
+struct RenderPassInputSummary {
+    <<internal>> requiresDepthTexture : bool
+    <<internal>> requiresDepthPrepass : bool
+    <<internal>> requiresNormalsTexture : bool
+    <<internal>> requiresColorTexture : bool
+    <<internal>> requiresColorTextureCreated : bool
+    <<internal>> requiresMotionVectors : bool
+    <<internal>> requiresDepthNormalAtEvent : RenderPassEvent
+    <<internal>> requiresDepthTextureEarliestEvent : RenderPassEvent
+}
+ScriptableRenderer <|-- UniversalRenderer
+UniversalRenderer +-- Profiling
+UniversalRenderer +-- RenderPassInputSummary
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+class UnityIncomingChangesTree {
+    <<internal>> {static} BuildIncomingChangeCategories(tree:IncomingChangesTree) : UnityIncomingChangesTree
+    - UnityIncomingChangesTree(tree:IncomingChangesTree)
+    <<internal>> GetNodes() : List<IncomingChangeCategory>
+    <<internal>> HasMeta(changeInfo:IncomingChangeInfo) : bool
+    <<internal>> GetMetaChange(change:IncomingChangeInfo) : IncomingChangeInfo
+    <<internal>> FillWithMeta(changes:List<IncomingChangeInfo>) : void
+    <<internal>> Sort(key:string, isAscending:bool) : void
+    - mMetaCache : MetaCache
+    - mInnerTree : IncomingChangesTree
+}
+class MetaCache {
+    <<internal>> ContainsMeta(changeInfo:IncomingChangeInfo) : bool
+    <<internal>> GetExistingMeta(change:IncomingChangeInfo) : IncomingChangeInfo
+    <<internal>> GetExistingMeta(changes:List<IncomingChangeInfo>) : List<IncomingChangeInfo>
+    <<internal>> Build(incomingChangesCategories:List<IncomingChangeCategory>) : void
+    {static} - ExtractMetaToCache(category:IncomingChangeCategory, cache:Dictionary<string, IncomingChangeInfo>) : void
+    {static} - BuildIndexedKeys(changes:List<IncomingChangeInfo>) : HashSet<string>
+    - mCache : Dictionary<string, IncomingChangeInfo>
+}
+class BuildKey <<static>> {
+    <<internal>> {static} ForChange(change:IncomingChangeInfo) : string
+    <<internal>> {static} ForMetaChange(change:IncomingChangeInfo) : string
+    <<internal>> {static} BuildCacheKey(type:IncomingChangeCategory.Type, path:string) : string
+}
+UnityIncomingChangesTree +-- MetaCache
+MetaCache +-- BuildKey
+@enduml

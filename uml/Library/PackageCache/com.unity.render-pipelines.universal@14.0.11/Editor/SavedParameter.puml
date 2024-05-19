@@ -1,0 +1,28 @@
+@startuml
+class "SavedParameter`1"<T> {
+    <<readonly>> - m_Key : string
+    - m_Loaded : bool
+    - m_Value : T
+    <<readonly>> - m_Setter : SetParameter
+    <<readonly>> - m_Getter : GetParameter
+    + SavedParameter(key:string, value:T, getter:GetParameter, setter:SetParameter)
+    - Load() : void
+    + value : T <<get>> <<set>>
+}
+class SavedBool <<sealed>> {
+    + SavedBool(key:string, value:bool)
+}
+class SavedInt <<sealed>> {
+    + SavedInt(key:string, value:int)
+}
+class SavedFloat <<sealed>> {
+    + SavedFloat(key:string, value:float)
+}
+class SavedString <<sealed>> {
+    + SavedString(key:string, value:string)
+}
+"SavedParameter`1" "<bool>" <|-- SavedBool
+"SavedParameter`1" "<int>" <|-- SavedInt
+"SavedParameter`1" "<float>" <|-- SavedFloat
+"SavedParameter`1" "<string>" <|-- SavedString
+@enduml

@@ -1,0 +1,126 @@
+@startuml
+class PendingChangesTab <<partial>> {
+    <<internal>> ProgressControlsForTesting : IProgressControls <<get>>
+    <<internal>> HelpPanelForTesting : HelpPanel <<get>>
+    <<internal>> SetMergeLinksForTesting(mergeLinks:IDictionary<MountPoint, IList<PendingMergeLink>>) : void
+    <<internal>> CommentText : string <<get>> <<set>>
+    <<internal>> ForceToShowComment : bool <<get>> <<set>>
+    <<internal>> PendingChangesTab(wkInfo:WorkspaceInfo, viewHost:ViewHost, isGluonMode:bool, workspaceWindow:WorkspaceWindow, switcher:IViewSwitcher, mergeViewLauncher:IMergeViewLauncher, historyViewLauncher:IHistoryViewLauncher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, workspaceOperationsMonitor:WorkspaceOperationsMonitor, developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, gluonNewIncomingChangesUpdater:GluonNewIncomingChangesUpdater, assetStatusCache:IAssetStatusCache, statusBar:StatusBar, parentWindow:EditorWindow)
+    <<internal>> AutoRefresh() : void
+    <<internal>> ClearIsCommentWarningNeeded() : void
+    <<internal>> UpdateIsCommentWarningNeeded(comment:string) : void
+    <<internal>> OnDisable() : void
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    <<internal>> DrawSearchFieldForPendingChangesTab() : void
+    - SetDefaultComment(defaultComment:string) : void
+    - ClearComments() : void
+    - Refresh() : void
+    - DisableAutoRefresh() : void
+    - EnableAutoRefresh() : void
+    - ForceRefresh() : void
+    - ClearChangesToCheck(changes:List<string>) : void
+    - CleanCheckedElements(checkedChanges:List<ChangeInfo>) : void
+    - CheckChanges(changesToCheck:List<string>) : void
+    - IncludeDependencies(changesDependencies:IList<ChangeDependencies<ChangeInfo>>, operation:string) : bool
+    - AskForMatches(changePath:string) : SearchMatchesData
+    - CleanLinkedTasks() : void
+    - CollapseWarningMessagePanel() : void
+    - ExpandWarningMessagePanel(text:string) : void
+    - ClearComments() : void
+    - SelectionHasMeta() : bool
+    - DiffMeta() : void
+    - HistoryMeta() : void
+    - OpenMeta() : void
+    - OpenMetaWith() : void
+    - OpenMetaInExplorer() : void
+    - GetSelectedChangesGroupInfo() : SelectedChangesGroupInfo
+    - Diff() : void
+    - UndoChanges() : void
+    - SearchMatches() : void
+    - ApplyLocalChanges() : void
+    - Delete() : void
+    - Annotate() : void
+    - History() : void
+    - GetSelectedChangesGroupInfo() : SelectedChangesGroupInfo
+    - GetSelectedChangelistInfos() : List<ChangeListInfo>
+    - Checkin() : void
+    - Shelve() : void
+    - Undo() : void
+    - CreateNew() : void
+    - MoveToNewChangelist(changes:List<ChangeInfo>) : void
+    - Edit() : void
+    - Delete() : void
+    - MoveToChangelist(changes:List<ChangeInfo>, targetChangelist:string) : void
+    - Open() : void
+    - OpenWith() : void
+    - OpenWithCustom(exePath:string, args:string) : void
+    - OpenInExplorer() : void
+    - AddFilesFilterPatterns(type:FilterTypes, action:FilterActions, operation:FilterOperationType) : void
+    - GetSelectedNodes() : List<IPlasticTreeNode>
+    - OnSuccessOperation() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    - InitIgnoreRulesAndRefreshView(wkPath:string, view:IRefreshableView) : void
+    - FillPendingChanges(newChangesInWk:INewChangesInWk) : void
+    - DoCommentsSection() : void
+    - DoOperationsToolbar(wkInfo:WorkspaceInfo, isGluonMode:bool, advancedDropdownMenu:GenericMenu, isOperationRunning:bool) : void
+    - UpdateChangesTree(changes:List<ChangeInfo>) : void
+    {static} - DoWarningMessage(message:string) : void
+    - UpdateMergeLinksList() : void
+    - ClearAssetStatusCache() : void
+    - UpdateNotificationPanel() : void
+    - DoActionsToolbar(workspaceInfo:WorkspaceInfo, isGluonMode:bool, progressControls:ProgressControlsForViews) : void
+    {static} - DoChangesArea(changesTreeView:PendingChangesTreeView, isOperationRunning:bool, isCheckedInSuccessful:bool, organizationToInviteUsers:string) : void
+    {static} - DrawEmptyState(rect:Rect, isCheckedInSuccessful:bool, organizationToInviteUsers:string) : void
+    {static} - DrawNoPendingChangesEmptyState(rect:Rect) : void
+    {static} - DrawCheckinSuccessfulEmptyState(rect:Rect, organizationToInviteUsers:string) : void
+    {static} - DrawInviteOtherTeamMembersEmptyState(rect:Rect, organizationToInviteUsers:string) : void
+    - HasPendingMergeLinks() : bool
+    {static} - DoMergeLinksArea(mergeLinksListView:MergeLinksListView, width:float) : void
+    - BuildComponents(isGluonMode:bool, plasticWindow:EditorWindow) : void
+    - mNewChangesInWk : INewChangesInWk
+    - mAdvancedDropdownMenu : GenericMenu
+    - ClearComments() : void
+    - mPendingChangesTreeView : PendingChangesTreeView
+    - mMergeLinksListView : MergeLinksListView
+    - mHelpPanel : HelpPanel
+    <<volatile>> - mAreIgnoreRulesInitialized : bool = false
+    - mIsRefreshing : bool
+    - mIsAutoRefreshDisabled : bool
+    - mIsEmptyCheckinCommentWarningNeeded : bool = false
+    - mNeedsToShowEmptyCommentDialog : bool = false
+    - mHasPendingCheckinFromPreviousUpdate : bool = false
+    - mHasPendingMergeLinksFromRevert : bool = false
+    - mKeepItemsLocked : bool
+    - mGluonWarningMessage : string
+    - mIsCheckedInSuccessful : bool
+    - mOrganizationToInviteUsers : string
+    - mPendingMergeLinks : IDictionary<MountPoint, IList<PendingMergeLink>>
+    - mSearchField : SearchField
+    - mBorderColor : Color
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mParentWindow : EditorWindow
+    <<readonly>> - mStatusBar : StatusBar
+    <<readonly>> - mCooldownClearCheckinSuccessAction : CooldownWindowDelayer
+    <<readonly>> - mAssetStatusCache : IAssetStatusCache
+    <<readonly>> - mPendingChangesOperations : PendingChangesOperations
+    <<readonly>> - mCheckedStateManager : PendingChangesViewCheckedStateManager
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mDeveloperNewIncomingChangesUpdater : NewIncomingChangesUpdater
+    <<readonly>> - mGluonNewIncomingChangesUpdater : GluonNewIncomingChangesUpdater
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    <<readonly>> - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mHistoryViewLauncher : IHistoryViewLauncher
+    <<readonly>> - mWorkspaceWindow : WorkspaceWindow
+    <<readonly>> - mViewHost : ViewHost
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    {static} <<readonly>> - mLog : ILog
+}
+IRefreshableView <|-- PendingChangesTab
+IPendingChangesView <|-- PendingChangesTab
+IPendingChangesMenuOperations <|-- PendingChangesTab
+IChangelistMenuOperations <|-- PendingChangesTab
+IOpenMenuOperations <|-- PendingChangesTab
+IFilesFilterPatternsMenuOperations <|-- PendingChangesTab
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+class RenderingUtils <<static>> {
+    {static} - m_LegacyShaderPassNames : List<ShaderTagId>
+    {static} - s_EmptyAttachment : AttachmentDescriptor
+    <<internal>> {static} emptyAttachment : AttachmentDescriptor <<get>>
+    {static} - s_FullscreenMesh : Mesh = null
+    + {static} fullscreenMesh : Mesh <<get>>
+    <<internal>> {static} useStructuredBuffer : bool <<get>>
+    <<internal>> {static} SupportsLightLayers(type:GraphicsDeviceType) : bool
+    {static} - s_ErrorMaterial : Material
+    {static} - errorMaterial : Material <<get>>
+    + {static} SetViewAndProjectionMatrices(cmd:CommandBuffer, viewMatrix:Matrix4x4, projectionMatrix:Matrix4x4, setInverseMatrices:bool) : void
+    <<internal>> {static} SetScaleBiasRt(cmd:CommandBuffer, renderingData:RenderingData) : void
+    <<internal>> {static} Blit(cmd:CommandBuffer, source:RTHandle, viewport:Rect, destination:RTHandle, loadAction:RenderBufferLoadAction, storeAction:RenderBufferStoreAction, clearFlag:ClearFlag, clearColor:Color, material:Material, passIndex:int) : void
+    <<internal>> {static} Blit(cmd:CommandBuffer, source:RTHandle, viewport:Rect, destinationColor:RTHandle, colorLoadAction:RenderBufferLoadAction, colorStoreAction:RenderBufferStoreAction, destinationDepthStencil:RTHandle, depthStencilLoadAction:RenderBufferLoadAction, depthStencilStoreAction:RenderBufferStoreAction, clearFlag:ClearFlag, clearColor:Color, material:Material, passIndex:int) : void
+    <<internal>> {static} FinalBlit(cmd:CommandBuffer, cameraData:CameraData, source:RTHandle, destination:RTHandle, loadAction:RenderBufferLoadAction, storeAction:RenderBufferStoreAction, material:Material, passIndex:int) : void
+    <<internal>> {static} RenderObjectsWithError(context:ScriptableRenderContext, cullResults:CullingResults, camera:Camera, filterSettings:FilteringSettings, sortFlags:SortingCriteria) : void
+    {static} - m_RenderTextureFormatSupport : Dictionary<RenderTextureFormat, bool>
+    {static} - m_GraphicsFormatSupport : Dictionary<GraphicsFormat, Dictionary<FormatUsage, bool>>
+    <<internal>> {static} ClearSystemInfoCache() : void
+    + {static} SupportsRenderTextureFormat(format:RenderTextureFormat) : bool
+    + {static} SupportsGraphicsFormat(format:GraphicsFormat, usage:FormatUsage) : bool
+    <<internal>> {static} GetLastValidColorBufferIndex(colorBuffers:RenderTargetIdentifier[]) : int
+    <<internal>> {static} GetValidColorBufferCount(colorBuffers:RenderTargetIdentifier[]) : uint
+    <<internal>> {static} GetValidColorBufferCount(colorBuffers:RTHandle[]) : uint
+    <<internal>> {static} IsMRT(colorBuffers:RenderTargetIdentifier[]) : bool
+    <<internal>> {static} IsMRT(colorBuffers:RTHandle[]) : bool
+    <<internal>> {static} Contains(source:RenderTargetIdentifier[], value:RenderTargetIdentifier) : bool
+    <<internal>> {static} IndexOf(source:RenderTargetIdentifier[], value:RenderTargetIdentifier) : int
+    <<internal>> {static} CountDistinct(source:RenderTargetIdentifier[], value:RenderTargetIdentifier) : uint
+    <<internal>> {static} LastValid(source:RenderTargetIdentifier[]) : int
+    <<internal>> {static} Contains(a:ClearFlag, b:ClearFlag) : bool
+    <<internal>> {static} SequenceEqual(left:RenderTargetIdentifier[], right:RenderTargetIdentifier[]) : bool
+    <<internal>> {static} MultisampleDepthResolveSupported() : bool
+    <<internal>> {static} RTHandleNeedsReAlloc(handle:RTHandle, descriptor:TextureDesc, scaled:bool) : bool
+    <<internal>> {static} GetCameraTargetIdentifier(renderingData:RenderingData) : RenderTargetIdentifier
+    + {static} ReAllocateIfNeeded(handle:RTHandle, descriptor:RenderTextureDescriptor, filterMode:FilterMode, wrapMode:TextureWrapMode, isShadowMap:bool, anisoLevel:int, mipMapBias:float, name:string) : bool
+    + {static} ReAllocateIfNeeded(handle:RTHandle, scaleFactor:Vector2, descriptor:RenderTextureDescriptor, filterMode:FilterMode, wrapMode:TextureWrapMode, isShadowMap:bool, anisoLevel:int, mipMapBias:float, name:string) : bool
+    + {static} ReAllocateIfNeeded(handle:RTHandle, scaleFunc:ScaleFunc, descriptor:RenderTextureDescriptor, filterMode:FilterMode, wrapMode:TextureWrapMode, isShadowMap:bool, anisoLevel:int, mipMapBias:float, name:string) : bool
+    + {static} SetMaxRTHandlePoolCapacity(capacity:int) : bool
+    <<internal>> {static} AddStaleResourceToPoolOrRelease(desc:TextureDesc, handle:RTHandle) : void
+    {static} + CreateDrawingSettings(shaderTagId:ShaderTagId, renderingData:RenderingData, sortingCriteria:SortingCriteria) : DrawingSettings
+    {static} + CreateDrawingSettings(shaderTagIdList:List<ShaderTagId>, renderingData:RenderingData, sortingCriteria:SortingCriteria) : DrawingSettings
+}
+@enduml

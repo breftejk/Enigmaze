@@ -1,0 +1,29 @@
+@startuml
+class SliderControlAttribute {
+    - m_Label : string
+    - m_DisplayMinMax : bool
+    + SliderControlAttribute(label:string, displayMinMax:bool)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class SliderControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_DisplayMinMax : bool
+    - m_Value : Vector3
+    - m_SliderPanel : VisualElement
+    - m_Slider : Slider
+    - m_SliderInput : FloatField
+    - m_MinField : FloatField
+    - m_MaxField : FloatField
+    + SliderControlView(label:string, displayMinMax:bool, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    + OnNodeModified(scope:ModificationScope) : void
+    - OnChangeSlider(newValue:float) : void
+    - UpdateSlider() : void
+    - AddMinMaxField(panel:VisualElement, label:string, index:int) : FloatField
+    - Repaint(evt:MouseEventBase<T>) : void
+}
+Attribute <|-- SliderControlAttribute
+IControlAttribute <|-- SliderControlAttribute
+VisualElement <|-- SliderControlView
+AbstractMaterialNodeModificationListener <|-- SliderControlView
+@enduml

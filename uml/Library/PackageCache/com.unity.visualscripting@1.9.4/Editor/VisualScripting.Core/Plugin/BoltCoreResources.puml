@@ -1,0 +1,45 @@
+@startuml
+class BoltCoreResources <<sealed>> {
+    - BoltCoreResources(plugin:BoltCore)
+    + icons : Icons <<get>>
+    + loader : EditorTexture <<get>>
+    + <<override>> LateInitialize() : void
+}
+class Icons {
+    + variablesWindow : EditorTexture <<get>>
+    + variable : EditorTexture <<get>>
+    + flowVariable : EditorTexture <<get>>
+    + graphVariable : EditorTexture <<get>>
+    + objectVariable : EditorTexture <<get>>
+    + sceneVariable : EditorTexture <<get>>
+    + applicationVariable : EditorTexture <<get>>
+    + savedVariable : EditorTexture <<get>>
+    + window : EditorTexture <<get>>
+    + inspectorWindow : EditorTexture <<get>>
+    + empty : EditorTexture <<get>>
+    + progress : EditorTexture <<get>>
+    + errorState : EditorTexture <<get>>
+    + successState : EditorTexture <<get>>
+    + warningState : EditorTexture <<get>>
+    + informationMessage : EditorTexture <<get>>
+    + questionMessage : EditorTexture <<get>>
+    + warningMessage : EditorTexture <<get>>
+    + successMessage : EditorTexture <<get>>
+    + errorMessage : EditorTexture <<get>>
+    + upgrade : EditorTexture <<get>>
+    + upToDate : EditorTexture <<get>>
+    + downgrade : EditorTexture <<get>>
+    + supportWindow : EditorTexture <<get>>
+    + sidebarAnchorLeft : EditorTexture <<get>>
+    + sidebarAnchorRight : EditorTexture <<get>>
+    + editorPref : EditorTexture <<get>>
+    + projectSetting : EditorTexture <<get>>
+    + @null : EditorTexture <<get>>
+    + Icons(resources:BoltCoreResources)
+    - <<readonly>> resources : BoltCoreResources
+    + Load() : void
+    + VariableKind(kind:VariableKind) : EditorTexture
+}
+PluginResources <|-- BoltCoreResources
+BoltCoreResources +-- Icons
+@enduml

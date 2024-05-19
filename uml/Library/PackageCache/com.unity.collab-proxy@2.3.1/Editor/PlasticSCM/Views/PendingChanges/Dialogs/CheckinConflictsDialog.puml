@@ -1,0 +1,20 @@
+@startuml
+class CheckinConflictsDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} Show(conflicts:IList<CheckinConflict>, dialogTitle:PlasticLocalization.Name, dialogExplanation:PlasticLocalization.Name, okButtonCaption:PlasticLocalization.Name, parentWindow:EditorWindow) : ResponseType
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - ConflictsArea() : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    {static} - GetConflictsText(conflicts:IList<CheckinConflict>) : string
+    {static} - Create(dialogTitle:string, dialogExplanation:string, conflictsText:string, okButtonCaption:string) : CheckinConflictsDialog
+    - mScrollPosition : Vector2
+    - mDialogTitle : string
+    - mDialogExplanation : string
+    - mConflictsText : string
+    - mOkButtonCaption : string
+}
+PlasticDialog <|-- CheckinConflictsDialog
+@enduml

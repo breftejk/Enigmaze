@@ -1,0 +1,7 @@
+@startuml
+class TilePalettePrefabUtility {
+    <<internal>> {static} IsObjectPrefabInstance(target:Object) : bool
+    <<internal>> {static} FindPrefabInstanceEquivalent(prefabInstance:GameObject, prefabTarget:GameObject) : GameObject
+    <<internal>> {static} GoToPrefabMode(target:GameObject) : void
+}
+@enduml

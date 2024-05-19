@@ -1,0 +1,8 @@
+@startuml
+class InspectorAttribute {
+    + InspectorAttribute(type:Type)
+    + type : Type <<get>>
+}
+Attribute <|-- InspectorAttribute
+IDecoratorAttribute <|-- InspectorAttribute
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+abstract class SetVariableUnit {
+    # SetVariableUnit()
+    # SetVariableUnit(defaultName:string)
+    + assign : ControlInput <<get>> <<set>>
+    + input : ValueInput <<get>>
+    + assigned : ControlOutput <<get>> <<set>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<virtual>> Assign(flow:Flow) : ControlOutput
+}
+VariableUnit <|-- SetVariableUnit
+@enduml

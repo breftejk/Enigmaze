@@ -1,0 +1,24 @@
+@startuml
+class ChannelList {
+    + ToIdArray() : Channel[]
+    + ChannelList()
+    + GetId(id:int) : Channel
+    + ContainsId(id:int) : bool
+}
+class Channel {
+    + Layer : Layer <<get>>
+    + ID : short <<get>> <<set>>
+    + Rect : Rectangle <<get>>
+    + Length : long <<get>> <<set>>
+    + ImageDataRaw : byte[] <<get>> <<set>>
+    + ImageData : NativeArray<byte> <<get>> <<set>>
+    + ImageCompression : ImageCompression <<get>> <<set>>
+    + RleRowLengths : RleRowLengths <<get>> <<set>>
+    <<internal>> Channel(id:short, layer:Layer)
+    <<internal>> Channel(reader:PsdBinaryReader, layer:Layer)
+    <<internal>> Cleanup() : void
+    <<internal>> LoadPixelData(reader:PsdBinaryReader) : void
+    + DecodeImageData() : void
+}
+"List`1" "<Channel>" <|-- ChannelList
+@enduml

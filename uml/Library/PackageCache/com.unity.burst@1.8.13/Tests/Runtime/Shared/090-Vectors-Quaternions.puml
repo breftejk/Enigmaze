@@ -1,0 +1,7 @@
+@startuml
+class VectorsQuaternions <<partial>> {
+    + {static} Normalize() : float
+    + {static} IdentityValue() : float
+    - {static} PassByRef(x:float4) : float4
+}
+@enduml

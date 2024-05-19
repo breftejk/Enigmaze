@@ -1,0 +1,33 @@
+@startuml
+enum OutputSpace {
+    Tangent,
+    World,
+}
+class NormalFromHeightNode {
+    + NormalFromHeightNode()
+    - m_OutputSpace : OutputSpace
+    + outputSpace : OutputSpace <<get>> <<set>>
+    <<const>> - InputSlotId : int = 0
+    <<const>> - StrengthSlotId : int = 2
+    <<const>> - OutputSlotId : int = 1
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kStrengthSlotName : string = "Strength"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + RequiresTangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+AbstractMaterialNode <|-- NormalFromHeightNode
+IGeneratesBodyCode <|-- NormalFromHeightNode
+IGeneratesFunction <|-- NormalFromHeightNode
+IMayRequireTangent <|-- NormalFromHeightNode
+IMayRequireBitangent <|-- NormalFromHeightNode
+IMayRequireNormal <|-- NormalFromHeightNode
+IMayRequirePosition <|-- NormalFromHeightNode
+@enduml

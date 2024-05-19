@@ -1,0 +1,16 @@
+@startuml
+class CinemachineBlenderSettingsEditor <<sealed>> {
+    - mBlendList : ReorderableList
+    + GetAllVirtualCameras : GetAllVirtualCamerasDelegate
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - <<const>> kNoneLabel : string = "(none)"
+    - mCameraCandidates : string[]
+    - mCameraIndexLookup : Dictionary<string, int>
+    - UpdateCameraCandidates() : void
+    - GetCameraIndex(name:string) : int
+    - DrawVcamSelector(r:Rect, prop:SerializedProperty) : void
+    - SetupBlendList() : void
+}
+"BaseEditor`1" "<CinemachineBlenderSettings>" <|-- CinemachineBlenderSettingsEditor
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class ImageDataFactory <<static>> {
+    + {static} Create(channel:Channel, data:byte[]) : ImageData
+    - {static} CreateZipPredict(data:byte[], size:Size, bitDepth:int) : ImageData
+    - {static} WrapEndianness(imageData:ImageData) : ImageData
+}
+@enduml

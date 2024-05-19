@@ -1,0 +1,24 @@
+@startuml
+class PlasticPlugin <<static>> {
+    + {static}  <<event>> OnNotificationUpdated : Action 
+    <<internal>> {static} AssetStatusCache : IAssetStatusCache <<get>>
+    <<internal>> {static} WorkspaceOperationsMonitor : WorkspaceOperationsMonitor <<get>>
+    <<internal>> {static} ConnectionMonitor : PlasticConnectionMonitor <<get>>
+    <<internal>> {static} IsUnitTesting : bool <<get>> <<set>>
+    {static} - PlasticPlugin()
+    + {static} OpenPlasticWindowDisablingOfflineModeIfNeeded() : void
+    + {static} GetPluginStatusIcon() : Texture
+    <<internal>> {static} Enable() : void
+    <<internal>> {static} EnableForWorkspace() : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} SetNotificationStatus(plasticWindow:PlasticWindow, status:PlasticNotification.Status) : void
+    {static} - BuildWorkspaceOperationsMonitor(plasticAssetsProcessor:PlasticAssetsProcessor, isGluonMode:bool) : WorkspaceOperationsMonitor
+    {static} - EnsureServerConnection(wkInfo:WorkspaceInfo, plasticConnectionMonitor:PlasticConnectionMonitor) : void
+    {static} - mNotificationStatus : PlasticNotification.Status
+    {static} - mAssetStatusCache : AssetStatusCache
+    {static} - mWorkspaceOperationsMonitor : WorkspaceOperationsMonitor
+    {static} - mPlasticConnectionMonitor : PlasticConnectionMonitor
+    {static} - mIsEnabled : bool
+    {static} - mIsEnabledForWorkspace : bool
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class GenericDivide <<sealed>> {
+    + <<override>> Operation(a:object, b:object) : object
+}
+"Divide`1" "<object>" <|-- GenericDivide
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class RefreshAsset <<static>> {
+    <<internal>> {static} BeforeLongAssetOperation() : void
+    <<internal>> {static} AfterLongAssetOperation() : void
+    <<internal>> {static} UnityAssetDatabase() : void
+    <<internal>> {static} VersionControlCache() : void
+}
+@enduml

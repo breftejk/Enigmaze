@@ -1,0 +1,13 @@
+@startuml
+class MarkerInspector {
+    <<internal>> <<override>> IsEnabled() : bool
+    <<internal>> <<override>> OnHeaderTitleGUI(titleRect:Rect, header:string) : void
+    {static} - IsCurrentSequenceReadOnly() : bool
+}
+class Styles <<static>> {
+    + {static} <<readonly>> MultipleMarkerSelectionTitle : string
+    + {static} <<readonly>> UndoCommand : string
+}
+BasicAssetInspector <|-- MarkerInspector
+MarkerInspector +-- Styles
+@enduml

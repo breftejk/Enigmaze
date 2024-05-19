@@ -1,0 +1,17 @@
+@startuml
+class TonemappingEditor <<sealed>> {
+    - m_Mode : SerializedDataParameter
+    - m_NeutralHDRRangeReductionMode : SerializedDataParameter
+    - m_HueShiftAmount : SerializedDataParameter
+    - m_HDRDetectPaperWhite : SerializedDataParameter
+    - m_HDRPaperwhite : SerializedDataParameter
+    - m_HDRDetectNitLimits : SerializedDataParameter
+    - m_HDRMinNits : SerializedDataParameter
+    - m_HDRMaxNits : SerializedDataParameter
+    - m_HDRAcesPreset : SerializedDataParameter
+    + <<override>> hasAdditionalProperties : bool <<get>>
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- TonemappingEditor
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+class PSDLayer {
+    - m_Name : string
+    - m_SpriteName : string
+    - m_IsGroup : bool
+    - m_ParentIndex : int
+    - m_SpriteID : string
+    - m_LayerID : int
+    - m_MosaicPosition : Vector2Int
+    - m_Flatten : bool
+    - m_IsImported : bool
+    - m_IsVisible : bool
+    - m_LayerPosition : Vector2
+    - m_GameObject : GameObject
+    + PSDLayer(tex:NativeArray<Color32>, parent:int, group:bool, layerName:string, width:int, height:int, id:int, hidden:bool)
+    + PSDLayer(layer:PSDLayer)
+    + isVisible : bool <<get>>
+    + layerID : int <<get>>
+    + name : string <<get>>
+    + spriteName : string <<get>> <<set>>
+    + isGroup : bool <<get>>
+    + parentIndex : int <<get>>
+    + mosaicPosition : Vector2Int <<get>> <<set>>
+    + spriteID : GUID <<get>> <<set>>
+    + layerPosition : Vector2 <<get>> <<set>>
+    + gameObject : GameObject <<get>> <<set>>
+    + flatten : bool <<get>> <<set>>
+    + isImported : bool <<get>> <<set>>
+    + texture : NativeArray<Color32> <<get>> <<set>>
+    + width : int <<get>> <<set>>
+    + height : int <<get>> <<set>>
+    + Dispose() : void
+}
+IPSDLayerMappingStrategyComparable <|-- PSDLayer
+@enduml

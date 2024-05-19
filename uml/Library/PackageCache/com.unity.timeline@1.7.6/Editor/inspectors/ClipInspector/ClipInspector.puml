@@ -1,0 +1,119 @@
+@startuml
+class ClipInspector {
+    - m_DisplayNameProperty : SerializedProperty
+    - m_BlendInDurationProperty : SerializedProperty
+    - m_BlendOutDurationProperty : SerializedProperty
+    - m_EaseInDurationProperty : SerializedProperty
+    - m_EaseOutDurationProperty : SerializedProperty
+    - m_ClipInProperty : SerializedProperty
+    - m_TimeScaleProperty : SerializedProperty
+    - m_PostExtrapolationModeProperty : SerializedProperty
+    - m_PreExtrapolationModeProperty : SerializedProperty
+    - m_PostExtrapolationTimeProperty : SerializedProperty
+    - m_PreExtrapolationTimeProperty : SerializedProperty
+    - m_MixInCurveProperty : SerializedProperty
+    - m_MixOutCurveProperty : SerializedProperty
+    - m_BlendInCurveModeProperty : SerializedProperty
+    - m_BlendOutCurveModeProperty : SerializedProperty
+    - InitializeProperties() : void
+    - m_TimelineAsset : TimelineAsset
+    - m_SelectionCache : List<EditorClipSelection>
+    - m_SelectedPlayableAssetsInspector : Editor
+    - m_ClipCurveEditor : ClipInspectorCurveEditor
+    - m_CurvePresets : CurvePresetLibrary
+    - m_IsClipAssetInspectorExpanded : bool = true
+    - m_ClipAssetTitle : GUIContent
+    - m_MultiselectionHeaderTitle : string
+    - m_SelectionInfo : ClipInspectorSelectionInfo
+    - m_PreviewCurveState : PreviewCurveState
+    <<const>> - k_TimeScaleSensitivity : double = 0.003
+    - hasMultipleSelection : bool <<get>>
+    - currentFrameRate : float <<get>>
+    - selectionHasIncompatibleCapabilities : bool <<get>>
+    + <<override>> RequiresConstantRepaint() : bool
+    <<internal>> <<override>> OnHeaderTitleGUI(titleRect:Rect, header:string) : void
+    <<internal>> <<override>> DrawHeaderHelpAndSettingsGUI(r:Rect) : Rect
+    <<internal>> <<override>> OnHeaderIconGUI(iconRect:Rect) : void
+    + OnEnable() : void
+    - OnDisable() : void
+    - DrawClipProperties() : void
+    + <<override>> OnInspectorGUI() : void
+    <<internal>> <<override>> IsEnabled() : bool
+    - DrawTimeScale() : void
+    - DrawStartTimeField() : void
+    - DrawEndTimeField() : void
+    - DrawClipAssetGui() : void
+    - DrawExtrapolationOptions() : void
+    - OnDestroy() : void
+    + <<override>> GetPreviewTitle() : GUIContent
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnInteractivePreviewGUI(r:Rect, background:GUIStyle) : void
+    - SetCurveEditorTrackHead() : void
+    - UnselectCurves() : void
+    - OnMixCurveSelected(title:string, library:CurvePresetLibrary, curveSelected:SerializedProperty, easeIn:bool) : void
+    - MixInCurveUpdated(curve:AnimationCurve, binding:EditorCurveBinding) : void
+    - MixOutCurveUpdated(curve:AnimationCurve, binding:EditorCurveBinding) : void
+    - RefreshCurves() : void
+    - DrawBlendCurve(title:GUIContent, modeProperty:SerializedProperty, curveProperty:SerializedProperty, onCurveClick:Action<SerializedProperty>) : void
+    - ShowPlayableAssetInspector() : void
+    - ApplyModifiedProperties() : void
+    - MarkClipsDirty() : void
+    - PlayableAssetSectionTitle() : string
+    - IsTimelineAssetValidForEditorClip(editorClip:EditorClip) : bool
+    - CanShowPlayableAssetInspector() : bool
+    - DrawDurationProperty() : void
+    - DrawBlendingProperties() : void
+    - DrawClipInProperty() : void
+    - DrawBlendOptions() : void
+    - DrawGroupSelectionProperties() : void
+    - IsLocked() : bool
+    {static} - IsCurrentSequenceReadOnly() : bool
+    - OnUndoRedoPerformed() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> StartName : GUIContent
+    + {static} <<readonly>> DurationName : GUIContent
+    + {static} <<readonly>> EndName : GUIContent
+    + {static} <<readonly>> EaseInDurationName : GUIContent
+    + {static} <<readonly>> BlendInDurationName : GUIContent
+    + {static} <<readonly>> EaseOutDurationName : GUIContent
+    + {static} <<readonly>> BlendOutDurationName : GUIContent
+    + {static} <<readonly>> ClipInName : GUIContent
+    + {static} <<readonly>> TimeScaleName : GUIContent
+    + {static} <<readonly>> PreExtrapolateLabel : GUIContent
+    + {static} <<readonly>> PostExtrapolateLabel : GUIContent
+    + {static} <<readonly>> BlendInCurveName : GUIContent
+    + {static} <<readonly>> BlendOutCurveName : GUIContent
+    + {static} <<readonly>> PreviewTitle : GUIContent
+    + {static} <<readonly>> ClipTimingTitle : GUIContent
+    + {static} <<readonly>> AnimationExtrapolationTitle : GUIContent
+    + {static} <<readonly>> BlendCurvesTitle : GUIContent
+    + {static} <<readonly>> GroupTimingTitle : GUIContent
+    + {static} <<readonly>> MultipleClipsSelectedIncompatibleCapabilitiesWarning : GUIContent
+    + {static} <<readonly>> MultipleSelectionTitle : GUIContent
+    + {static} <<readonly>> MultipleClipStartName : GUIContent
+    + {static} <<readonly>> MultipleClipEndName : GUIContent
+    + {static} <<readonly>> TimelineClipFG : GUIContent
+    + {static} <<readonly>> TimelineClipBG : GUIContent
+}
+class EditorClipSelection {
+    + editorClip : EditorClip <<get>>
+    + clip : TimelineClip <<get>>
+    + serializedPlayableAsset : SerializedObject <<get>>
+    + curvesOwner : ICurvesOwner <<get>>
+    + lastCurveVersion : int <<get>> <<set>>
+    + lastEvalTime : double <<get>> <<set>>
+    + EditorClipSelection(anEditorClip:EditorClip)
+    + ToLocalTime(time:double) : double
+}
+enum PreviewCurveState {
+    None= 0,
+    MixIn= 1,
+    MixOut= 2,
+}
+Editor <|-- ClipInspector
+ClipInspector +-- Styles
+ClipInspector +-- EditorClipSelection
+ICurvesOwnerInspectorWrapper <|-- EditorClipSelection
+ClipInspector +-- PreviewCurveState
+@enduml

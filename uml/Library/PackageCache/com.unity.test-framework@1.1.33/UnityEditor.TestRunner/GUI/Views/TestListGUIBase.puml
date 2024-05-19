@@ -1,0 +1,56 @@
+@startuml
+abstract class TestListGUI {
+    - {static} <<readonly>> s_GUIRunSelectedTests : GUIContent
+    - {static} <<readonly>> s_GUIRunAllTests : GUIContent
+    - {static} <<readonly>> s_GUIRerunFailedTests : GUIContent
+    - {static} <<readonly>> s_GUIRun : GUIContent
+    - {static} <<readonly>> s_GUIRunUntilFailed : GUIContent
+    - {static} <<readonly>> s_GUIRun100Times : GUIContent
+    - {static} <<readonly>> s_GUIOpenTest : GUIContent
+    - {static} <<readonly>> s_GUIOpenErrorLine : GUIContent
+    - {static} <<readonly>> s_GUIClearResults : GUIContent
+    # m_Window : TestRunnerWindow
+    + newResultList : List<TestRunnerResult> <<get>> <<set>>
+    - m_NewResultList : List<TestRunnerResult>
+    - m_ResultByKey : Dictionary<string, TestRunnerResult>
+    <<internal>> ResultsByKey : Dictionary<string, TestRunnerResult> <<get>>
+    - m_ResultText : string
+    - m_ResultStacktrace : string
+    - m_TestListTree : TreeViewController
+    <<internal>> m_TestListState : TreeViewState
+    <<internal>> m_TestRunnerUIFilter : TestRunnerUIFilter
+    - m_TestInfoScroll : Vector2
+    - m_TestListScroll : Vector2
+    - m_PreviousProjectPath : string
+    - m_QueuedResults : List<TestRunnerResult>
+    # TestListGUI()
+    # MonoCecilHelper : IMonoCecilHelper <<get>>
+    # AssetsDatabaseHelper : IAssetsDatabaseHelper <<get>>
+    # GuiHelper : IGuiHelper <<get>>
+    # SelectedTestsFilter : UITestRunnerFilter[] <<get>>
+    + {abstract} TestMode : TestMode <<get>>
+    + <<virtual>> PrintHeadPanel() : void
+    # DrawFilters() : void
+    + HasTreeData() : bool
+    + <<virtual>> RenderTestList() : void
+    + <<virtual>> RenderNoTestsInfo() : void
+    + RenderDetails() : void
+    + Reload() : void
+    + Repaint() : void
+    + Init(window:TestRunnerWindow, rootTest:ITestAdaptor) : void
+    + UpdateResult(result:TestRunnerResult) : void
+    + UpdateTestTree(test:ITestAdaptor) : void
+    - UpdateQueuedResults() : void
+    <<internal>> TestSelectionCallback(selected:int[]) : void
+    # <<virtual>> TestDoubleClickCallback(id:int) : void
+    # <<virtual>> RunTests(filters:UITestRunnerFilter[]) : void
+    # <<virtual>> TestContextClickCallback(id:int) : void
+    - GetSelectedTestsAsFilter(selectedIDs:IEnumerable<int>) : UITestRunnerFilter[]
+    - GetSelectedTest() : TestTreeViewItem
+    - FrameSelection() : void
+    + {abstract} TestPlatform : TestPlatform <<get>>
+    + RebuildUIFilter() : void
+    + RepaintIfProjectPathChanged() : void
+    # {abstract} IsBusy() : bool
+}
+@enduml

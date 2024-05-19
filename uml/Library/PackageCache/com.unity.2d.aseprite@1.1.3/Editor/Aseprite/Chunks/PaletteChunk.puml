@@ -1,0 +1,19 @@
+@startuml
+struct PaletteEntry {
+    <<internal>> PaletteEntry(name:string, color:Color32)
+    + name : string <<get>>
+    + color : Color32 <<get>>
+}
+class PaletteChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + noOfEntries : uint <<get>>
+    + firstColorIndex : uint <<get>>
+    + lastColorIndex : uint <<get>>
+    + entries : ReadOnlyCollection<PaletteEntry> <<get>>
+    - m_Entries : PaletteEntry[]
+    <<internal>> PaletteChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- PaletteChunk
+IPaletteProvider <|-- PaletteChunk
+@enduml

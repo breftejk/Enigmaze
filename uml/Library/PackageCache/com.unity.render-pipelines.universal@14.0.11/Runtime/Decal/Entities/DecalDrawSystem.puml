@@ -1,0 +1,21 @@
+@startuml
+abstract class DecalDrawSystem {
+    # m_EntityManager : DecalEntityManager
+    - m_WorldToDecals : Matrix4x4[]
+    - m_NormalToDecals : Matrix4x4[]
+    - m_DecalLayerMasks : float[]
+    - m_Sampler : ProfilingSampler
+    + overrideMaterial : Material <<get>> <<set>>
+    + DecalDrawSystem(sampler:string, entityManager:DecalEntityManager)
+    + Execute(cmd:CommandBuffer) : void
+    # <<virtual>> GetMaterial(decalEntityChunk:DecalEntityChunk) : Material
+    # {abstract} GetPassIndex(decalCachedChunk:DecalCachedChunk) : int
+    - Execute(cmd:CommandBuffer, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk, count:int) : void
+    - Draw(cmd:CommandBuffer, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk, passIndex:int) : void
+    - DrawInstanced(cmd:CommandBuffer, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk, passIndex:int) : void
+    + Execute(cameraData:CameraData) : void
+    - Execute(cameraData:CameraData, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk, count:int) : void
+    - Draw(cameraData:CameraData, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk) : void
+    - DrawInstanced(cameraData:CameraData, decalEntityChunk:DecalEntityChunk, decalCachedChunk:DecalCachedChunk, decalDrawCallChunk:DecalDrawCallChunk) : void
+}
+@enduml

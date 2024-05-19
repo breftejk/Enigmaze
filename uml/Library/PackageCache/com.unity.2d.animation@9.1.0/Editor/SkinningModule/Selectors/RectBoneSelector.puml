@@ -1,0 +1,9 @@
+@startuml
+class RectBoneSelector {
+    + selection : ISelection<BoneCache> <<get>> <<set>>
+    + bones : BoneCache[] <<get>> <<set>>
+    + rect : Rect <<get>> <<set>>
+    + Select() : void
+}
+"IRectSelector`1" "<BoneCache>" <|-- RectBoneSelector
+@enduml

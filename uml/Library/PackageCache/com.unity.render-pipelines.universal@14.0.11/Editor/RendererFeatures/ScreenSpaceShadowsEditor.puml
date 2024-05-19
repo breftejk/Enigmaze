@@ -1,0 +1,13 @@
+@startuml
+class ScreenSpaceShadowsEditor {
+    - m_SettingsProp : SerializedProperty
+    - m_IsInitialized : bool = false
+    - Init() : void
+    + <<override>> OnInspectorGUI() : void
+}
+struct Styles {
+    + {static} Description : GUIContent
+}
+Editor <|-- ScreenSpaceShadowsEditor
+ScreenSpaceShadowsEditor +-- Styles
+@enduml

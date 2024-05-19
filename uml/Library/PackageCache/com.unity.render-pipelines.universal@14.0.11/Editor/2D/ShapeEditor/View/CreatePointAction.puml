@@ -1,0 +1,11 @@
+@startuml
+class CreatePointAction {
+    - m_PointControl : Control
+    + guiToWorld : Func<IGUIState, Vector2, Vector3>
+    + onCreatePoint : Action<int, Vector3>
+    + CreatePointAction(pointControl:Control, edgeControl:Control)
+    # <<override>> OnTrigger(guiState:IGUIState) : void
+    - GetMousePositionWorld(guiState:IGUIState) : Vector3
+}
+ClickAction <|-- CreatePointAction
+@enduml

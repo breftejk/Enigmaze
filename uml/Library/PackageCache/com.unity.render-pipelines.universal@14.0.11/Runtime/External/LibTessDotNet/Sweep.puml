@@ -1,0 +1,45 @@
+@startuml
+class Tess <<partial>> {
+    - RegionBelow(reg:ActiveRegion) : ActiveRegion
+    - RegionAbove(reg:ActiveRegion) : ActiveRegion
+    - EdgeLeq(reg1:ActiveRegion, reg2:ActiveRegion) : bool
+    - DeleteRegion(reg:ActiveRegion) : void
+    - FixUpperEdge(reg:ActiveRegion, newEdge:MeshUtils.Edge) : void
+    - TopLeftRegion(reg:ActiveRegion) : ActiveRegion
+    - TopRightRegion(reg:ActiveRegion) : ActiveRegion
+    - AddRegionBelow(regAbove:ActiveRegion, eNewUp:MeshUtils.Edge) : ActiveRegion
+    - ComputeWinding(reg:ActiveRegion) : void
+    - FinishRegion(reg:ActiveRegion) : void
+    - FinishLeftRegions(regFirst:ActiveRegion, regLast:ActiveRegion) : MeshUtils.Edge
+    - AddRightEdges(regUp:ActiveRegion, eFirst:MeshUtils.Edge, eLast:MeshUtils.Edge, eTopLeft:MeshUtils.Edge, cleanUp:bool) : void
+    - SpliceMergeVertices(e1:MeshUtils.Edge, e2:MeshUtils.Edge) : void
+    - VertexWeights(isect:MeshUtils.Vertex, org:MeshUtils.Vertex, dst:MeshUtils.Vertex, w0:Real, w1:Real) : void
+    - GetIntersectData(isect:MeshUtils.Vertex, orgUp:MeshUtils.Vertex, dstUp:MeshUtils.Vertex, orgLo:MeshUtils.Vertex, dstLo:MeshUtils.Vertex) : void
+    - CheckForRightSplice(regUp:ActiveRegion) : bool
+    - CheckForLeftSplice(regUp:ActiveRegion) : bool
+    - CheckForIntersect(regUp:ActiveRegion) : bool
+    - WalkDirtyRegions(regUp:ActiveRegion) : void
+    - ConnectRightVertex(regUp:ActiveRegion, eBottomLeft:MeshUtils.Edge) : void
+    - ConnectLeftDegenerate(regUp:ActiveRegion, vEvent:MeshUtils.Vertex) : void
+    - ConnectLeftVertex(vEvent:MeshUtils.Vertex) : void
+    - SweepEvent(vEvent:MeshUtils.Vertex) : void
+    - AddSentinel(smin:Real, smax:Real, t:Real) : void
+    - InitEdgeDict() : void
+    - DoneEdgeDict() : void
+    - RemoveDegenerateEdges() : void
+    - InitPriorityQ() : void
+    - DonePriorityQ() : void
+    - RemoveDegenerateFaces() : void
+    # ComputeInterior() : void
+}
+class ActiveRegion {
+    <<internal>> _eUp : MeshUtils.Edge
+    <<internal>> _nodeUp : Dict<ActiveRegion>.Node
+    <<internal>> _windingNumber : int
+    <<internal>> _inside : bool
+    <<internal>> _sentinel : bool
+    <<internal>> _dirty : bool
+    <<internal>> _fixUpperEdge : bool
+}
+Tess +-- ActiveRegion
+@enduml

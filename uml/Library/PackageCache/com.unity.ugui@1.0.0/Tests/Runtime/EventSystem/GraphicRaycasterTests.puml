@@ -1,0 +1,15 @@
+@startuml
+class GraphicRaycasterTests {
+    - m_Camera : Camera
+    - m_EventSystem : EventSystem
+    - m_Canvas : Canvas
+    - m_CanvasRectTrans : RectTransform
+    - m_TextComponent : Text
+    + TestSetup() : void
+    + GraphicRaycasterDoesNotHitGraphicBehindCameraFarClipPlane() : IEnumerator
+    + GraphicRaycasterReturnsWorldPositionAndWorldNormal() : IEnumerator
+    + GraphicRaycasterUsesGraphicPadding() : IEnumerator
+    + GraphicOnTheSamePlaneAsTheCameraCanBeTargetedForEvents() : IEnumerator
+    + TearDown() : void
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class DepthOnlyPass {
+    - {static} <<readonly>> k_ShaderTagId : ShaderTagId
+    - destination : RTHandle <<get>> <<set>>
+    - depthStencilFormat : GraphicsFormat
+    <<internal>> shaderTagId : ShaderTagId <<get>> <<set>>
+    - m_PassData : PassData
+    - m_FilteringSettings : FilteringSettings
+    + DepthOnlyPass(evt:RenderPassEvent, renderQueueRange:RenderQueueRange, layerMask:LayerMask)
+    + Setup(baseDescriptor:RenderTextureDescriptor, depthAttachmentHandle:RTHandle) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - {static} ExecutePass(context:ScriptableRenderContext, passData:PassData, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> Render(renderGraph:RenderGraph, cameraDepthTexture:TextureHandle, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> cameraDepthTexture : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> shaderTagId : ShaderTagId
+    <<internal>> filteringSettings : FilteringSettings
+}
+ScriptableRenderPass <|-- DepthOnlyPass
+DepthOnlyPass +-- PassData
+@enduml

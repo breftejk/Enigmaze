@@ -1,0 +1,25 @@
+@startuml
+class StickyNote {
+    + {static} <<readonly>> defaultColor : Color
+    + StickyNote()
+    + position : Rect <<get>> <<set>>
+    + title : string <<get>> <<set>> = "Sticky Note"
+    + body : string <<get>> <<set>>
+    + colorTheme : ColorEnum <<get>> <<set>>
+    + {static} GetStickyColor(enumValue:ColorEnum) : Color
+    + {static} GetFontColor(enumValue:ColorEnum) : Color
+}
+enum ColorEnum {
+    Classic,
+    Black,
+    Dark,
+    Orange,
+    Green,
+    Blue,
+    Red,
+    Purple,
+    Teal,
+}
+"GraphElement`1" "<IGraph>" <|-- StickyNote
+StickyNote +-- ColorEnum
+@enduml

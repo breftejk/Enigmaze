@@ -1,0 +1,14 @@
+@startuml
+class MonoPInvokeCallbackAttribute {
+    + MonoPInvokeCallbackAttribute(type:Type)
+}
+class AttributeHelperEngine {
+    {static} - GetParentTypeDisallowingMultipleInclusion(type:Type) : Type
+    {static} - GetRequiredComponents(klass:Type) : Type[]
+    {static} - GetExecuteMode(klass:Type) : int
+    {static} - CheckIsEditorScript(klass:Type) : int
+    {static} - GetDefaultExecutionOrderFor(klass:Type) : int
+    {static} - GetCustomAttributeOfType(klass:Type) : T
+}
+Attribute <|-- MonoPInvokeCallbackAttribute
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class OnSubmit <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+GenericGuiEventUnit <|-- OnSubmit
+@enduml

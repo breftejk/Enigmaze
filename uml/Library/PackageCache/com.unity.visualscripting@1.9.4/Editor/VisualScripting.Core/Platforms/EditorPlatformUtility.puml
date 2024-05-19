@@ -1,0 +1,15 @@
+@startuml
+class EditorPlatformUtility <<static>> {
+    <<internal>> {static} InitializeActiveBuildTarget() : void
+    + {static} activeBuildTarget : BuildTarget <<get>> <<internal set>>
+    + {static} isTargettingJit : bool <<get>>
+    + {static} isTargettingAot : bool <<get>>
+    + {static} SupportsJit(target:BuildTarget) : bool
+    + {static} allowJit : bool <<get>>
+}
+class EditorPlatformWatcher {
+    + callbackOrder : int <<get>>
+    + OnActiveBuildTargetChanged(previousTarget:BuildTarget, newTarget:BuildTarget) : void
+}
+IActiveBuildTargetChanged <|-- EditorPlatformWatcher
+@enduml

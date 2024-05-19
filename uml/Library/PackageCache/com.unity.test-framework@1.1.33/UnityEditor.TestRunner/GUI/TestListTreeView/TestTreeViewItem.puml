@@ -1,0 +1,18 @@
+@startuml
+class TestTreeViewItem <<sealed>> {
+    + result : TestRunnerResult
+    <<internal>> m_Test : ITestAdaptor
+    + type : Type
+    + method : MethodInfo
+    - <<const>> k_ResultTestMaxLength : int = 15000
+    + IsGroupNode : bool <<get>>
+    + FullName : string <<get>>
+    + GetAssemblyName() : string
+    + TestTreeViewItem(test:ITestAdaptor, depth:int, parent:TreeViewItem)
+    - {static} GetId(test:ITestAdaptor) : int
+    + SetResult(testResult:TestRunnerResult) : void
+    + GetResultText() : string
+    - ResultUpdated(testResult:TestRunnerResult) : void
+}
+TreeViewItem <|-- TestTreeViewItem
+@enduml

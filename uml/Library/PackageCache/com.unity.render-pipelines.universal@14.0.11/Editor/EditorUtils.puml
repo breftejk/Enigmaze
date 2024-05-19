@@ -1,0 +1,18 @@
+@startuml
+class ResourceGuid <<static>> {
+    + {static} <<readonly>> rendererTemplate : string = "51493ed8d97d3c24b94c6cffe834630b"
+}
+class EditorUtils <<static>> <<partial>> {
+    <<internal>> {static} FeatureHelpBox(message:string, type:MessageType) : void
+    <<internal>> {static} DrawRenderingLayerMask(property:SerializedProperty, style:GUIContent) : void
+}
+enum Unit {
+    Metric,
+    Percent,
+}
+class Styles {
+    + {static} defaultLineSpace : float
+}
+EditorUtils +-- Unit
+EditorUtils +-- Styles
+@enduml

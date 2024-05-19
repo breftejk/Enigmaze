@@ -1,0 +1,20 @@
+@startuml
+abstract class "MultiDecoratorProvider`3"<TDecorated,TDecorator,TAttribute> {
+    # MultiDecoratorProvider()
+    # <<virtual>> typeset : IEnumerable<Type> <<get>>
+    - <<readonly>> decorators : Dictionary<TDecorated, HashSet<TDecorator>>
+    # <<readonly>> definedDecoratorTypes : Dictionary<Type, HashSet<Type>>
+    - <<readonly>> resolvedDecoratorTypes : Dictionary<Type, HashSet<Type>>
+    # <<virtual>> CreateDecorators(decorated:TDecorated) : IEnumerable<TDecorator>
+    # <<virtual>> ShouldInvalidateDecorators(decorated:TDecorated) : bool
+    + GetDecorators(decorated:TDecorated) : IEnumerable<TDecorator>
+    + GetDecorators(decorated:TDecorated) : IEnumerable<TSpecificDecorator>
+    + <<virtual>> ClearCache() : void
+    + HasDecorator(type:Type) : bool
+    + GetDecoratorTypes(type:Type) : IEnumerable<Type>
+    # <<virtual>> ResolveDecoratorTypes(type:Type) : IEnumerable<Type>
+    # ResolveDecoratorTypesByHierarchy(type:Type, inherit:bool) : IEnumerable<Type>
+    - DirectResolve(type:Type) : IEnumerable<Type>
+    - GenericResolve(type:Type) : IEnumerable<Type>
+}
+@enduml

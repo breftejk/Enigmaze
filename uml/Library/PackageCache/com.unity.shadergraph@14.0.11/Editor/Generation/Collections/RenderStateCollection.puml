@@ -1,0 +1,21 @@
+@startuml
+class RenderStateCollection {
+    <<readonly>> - m_Items : List<Item>
+    + RenderStateCollection()
+    + Add(renderStates:RenderStateCollection) : RenderStateCollection
+    + Add(descriptor:RenderStateDescriptor) : RenderStateCollection
+    + Add(descriptor:RenderStateDescriptor, fieldCondition:FieldCondition) : RenderStateCollection
+    + Add(descriptor:RenderStateDescriptor, fieldConditions:FieldCondition[]) : RenderStateCollection
+    + GetEnumerator() : IEnumerator<Item>
+    - GetEnumerator() : IEnumerator
+}
+class Item {
+    + descriptor : RenderStateDescriptor <<get>>
+    + fieldConditions : FieldCondition[] <<get>>
+    + value : string <<get>>
+    + Item(descriptor:RenderStateDescriptor, fieldConditions:FieldCondition[])
+}
+"IEnumerable`1" "<RenderStateCollection.Item>" <|-- RenderStateCollection
+RenderStateCollection +-- Item
+IConditional <|-- Item
+@enduml

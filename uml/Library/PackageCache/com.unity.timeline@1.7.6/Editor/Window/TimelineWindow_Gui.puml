@@ -1,0 +1,55 @@
+@startuml
+class TimelineWindow <<partial>> {
+    {static} <<internal>> <<readonly>> s_ActiveMode : TimelineMode
+    {static} <<internal>> <<readonly>> s_EditAssetMode : TimelineMode
+    {static} <<internal>> <<readonly>> s_InactiveMode : TimelineMode
+    {static} <<internal>> <<readonly>> s_DisabledMode : TimelineMode
+    {static} <<internal>> <<readonly>> s_PrefabOutOfContextMode : TimelineMode
+    {static} <<internal>> <<readonly>> s_ReadonlyMode : TimelineMode
+    - {static} <<readonly>> MenuItemFrames : GUIContent
+    - {static} <<readonly>> MenuItemTimecode : GUIContent
+    - {static} <<readonly>> MenuItemSeconds : GUIContent
+    {static} <<readonly>> - k_FrameRateMenuLabel : string
+    {static} <<readonly>> - k_CustomFpsLabel : string
+    - m_VerticalScrollBarSize : float
+    - m_HorizontalScrollBarSize : float
+    - m_OverlayQueue : List<MarkerOverlay>
+    - headerHeight : float <<get>>
+    + markerHeaderRect : Rect <<get>>
+    + markerContentRect : Rect <<get>>
+    - trackRect : Rect <<get>>
+    + sequenceRect : Rect <<get>>
+    + sequenceHeaderRect : Rect <<get>>
+    + headerSplitterRect : Rect <<get>>
+    + sequenceContentRect : Rect <<get>>
+    + verticalScrollbarWidth : float <<get>>
+    + horizontalScrollbarHeight : float <<get>>
+    <<internal>> currentMode : TimelineMode <<get>>
+    - DoLayout() : void
+    - SplitterGUI() : void
+    - TrackViewsGUI() : void
+    - UserOverlaysGUI() : void
+    - DrawHeaderBackground() : void
+    - HandleBottomFillerDragAndDrop(rect:Rect) : void
+    - DrawHeaderBackgroundBottomFiller() : void
+    - SequencerGUI() : void
+    - DrawToolbar() : void
+    - SubTimelineRangeGUI() : void
+    - DrawOptions() : void
+    - AddStandardFrameRateMenu(menu:GenericMenu, option:StandardFrameRates, label:string, on:bool) : void
+    + AddUserOverlay(marker:IMarker, rect:Rect, editor:MarkerEditor, collapsed:bool, selected:bool) : void
+}
+struct MarkerOverlay {
+    + marker : IMarker
+    + rect : Rect
+    + isSelected : bool
+    + isCollapsed : bool
+    + editor : MarkerEditor
+}
+enum TimelineItemArea {
+    Header,
+    Lines,
+}
+TimelineWindow +-- MarkerOverlay
+TimelineWindow +-- TimelineItemArea
+@enduml

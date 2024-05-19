@@ -1,0 +1,7 @@
+@startuml
+interface IUnitConnection {
+    <<new>> graph : FlowGraph <<get>>
+}
+"IConnection`2" "<IUnitOutputPort,IUnitInputPort>" <|-- IUnitConnection
+IGraphElementWithDebugData <|-- IUnitConnection
+@enduml

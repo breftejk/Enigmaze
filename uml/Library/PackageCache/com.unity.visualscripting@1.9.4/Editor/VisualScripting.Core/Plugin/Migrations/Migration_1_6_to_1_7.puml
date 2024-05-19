@@ -1,0 +1,20 @@
+@startuml
+class MigrationUtility_1_6_to_1_7 {
+    + {static} GetLegacyProjectSettingsAsset(pluginId:string) : DictionaryAsset
+}
+class Migration_1_6_to_1_7 {
+    <<internal>> Migration_1_6_to_1_7(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + <<override>> Run() : void
+    - {static} MigrateProjectSettings() : void
+    - AddFeatureSetAssembliesToAssemblyList() : void
+}
+class DeprecatedSavedVersionLoader_1_6_1 {
+    + DeprecatedSavedVersionLoader_1_6_1(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> Run(savedVersion:SemanticVersion) : bool
+}
+PluginMigration <|-- Migration_1_6_to_1_7
+PluginDeprecatedSavedVersionLoader <|-- DeprecatedSavedVersionLoader_1_6_1
+@enduml

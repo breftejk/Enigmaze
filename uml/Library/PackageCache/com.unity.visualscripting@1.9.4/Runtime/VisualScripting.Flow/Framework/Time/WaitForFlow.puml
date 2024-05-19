@@ -1,0 +1,24 @@
+@startuml
+class WaitForFlow <<sealed>> {
+    + resetOnExit : bool <<get>> <<set>>
+    - _inputCount : int = 2
+    + inputCount : int <<get>> <<set>>
+    + awaitedInputs : ReadOnlyCollection<ControlInput> <<get>>
+    + reset : ControlInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + CreateData() : IGraphElementData
+    - Enter(flow:Flow, index:int) : ControlOutput
+    - CheckActivated(flow:Flow) : bool
+    - EnterCoroutine(flow:Flow, index:int) : IEnumerator
+    - Reset(flow:Flow) : ControlOutput
+}
+class Data <<sealed>> {
+    + inputsActivated : bool[]
+    + isWaitingCoroutine : bool
+}
+Unit <|-- WaitForFlow
+IGraphElementWithData <|-- WaitForFlow
+WaitForFlow +-- Data
+IGraphElementData <|-- Data
+@enduml

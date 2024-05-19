@@ -1,0 +1,6 @@
+@startuml
+class OnEnterState {
+    # <<override>> hookName : string <<get>>
+}
+"ManualEventUnit`1" "<EmptyEventArgs>" <|-- OnEnterState
+@enduml

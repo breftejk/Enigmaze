@@ -1,0 +1,74 @@
+@startuml
+class Documentation <<static>> {
+    + <<const>> BaseURL : string = "https://docs.unity3d.com/Packages/com.unity.cinemachine@2.9/"
+}
+class CinemachineCore <<sealed>> {
+    + {static} <<readonly>> kStreamingVersion : int = 20170927
+    - {static} sInstance : CinemachineCore = null
+    + {static} Instance : CinemachineCore <<get>>
+    + {static} sShowHiddenObjects : bool = false
+    + {static} GetInputAxis : AxisInputDelegate
+    + {static} UniformDeltaTimeOverride : float
+    + {static} DeltaTime : float <<get>>
+    + {static} CurrentTimeOverride : float
+    + {static} CurrentTime : float <<get>>
+    + {static} GetBlendOverride : GetBlendOverrideDelegate
+    + {static} CameraUpdatedEvent : CinemachineBrain.BrainEvent
+    + {static} CameraCutEvent : CinemachineBrain.BrainEvent
+    - mActiveBrains : List<CinemachineBrain>
+    + BrainCount : int <<get>>
+    <<internal>> {static} FrameDeltaCompensationEnabled : bool = true
+    + GetActiveBrain(index:int) : CinemachineBrain
+    <<internal>> AddActiveBrain(brain:CinemachineBrain) : void
+    <<internal>> RemoveActiveBrain(brain:CinemachineBrain) : void
+    - mActiveCameras : List<CinemachineVirtualCameraBase>
+    - m_ActiveCamerasAreSorted : bool
+    - m_ActivationSequence : int
+    + VirtualCameraCount : int <<get>>
+    + GetVirtualCamera(index:int) : CinemachineVirtualCameraBase
+    <<internal>> AddActiveCamera(vcam:CinemachineVirtualCameraBase) : void
+    <<internal>> RemoveActiveCamera(vcam:CinemachineVirtualCameraBase) : void
+    <<internal>> CameraDestroyed(vcam:CinemachineVirtualCameraBase) : void
+    - mAllCameras : List<List<CinemachineVirtualCameraBase>>
+    <<internal>> CameraEnabled(vcam:CinemachineVirtualCameraBase) : void
+    <<internal>> CameraDisabled(vcam:CinemachineVirtualCameraBase) : void
+    - mRoundRobinVcamLastFrame : CinemachineVirtualCameraBase = null
+    {static} - s_LastUpdateTime : float
+    {static} - s_FixedFrameCount : int
+    <<internal>> UpdateAllActiveVirtualCameras(layerMask:int, worldUp:Vector3, deltaTime:float) : void
+    <<internal>> UpdateVirtualCamera(vcam:CinemachineVirtualCameraBase, worldUp:Vector3, deltaTime:float) : void
+    - mUpdateStatus : Dictionary<CinemachineVirtualCameraBase, UpdateStatus>
+    {static} - InitializeModule() : void
+    <<internal>> m_CurrentUpdateFilter : UpdateFilter
+    - {static} GetUpdateTarget(vcam:CinemachineVirtualCameraBase) : Transform
+    <<internal>> GetVcamUpdateStatus(vcam:CinemachineVirtualCameraBase) : UpdateTracker.UpdateClock
+    + IsLive(vcam:ICinemachineCamera) : bool
+    + IsLiveInBlend(vcam:ICinemachineCamera) : bool
+    + GenerateCameraActivationEvent(vcam:ICinemachineCamera, vcamFrom:ICinemachineCamera) : void
+    + GenerateCameraCutEvent(vcam:ICinemachineCamera) : void
+    + FindPotentialTargetBrain(vcam:CinemachineVirtualCameraBase) : CinemachineBrain
+    + OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+}
+enum Stage {
+    Body,
+    Aim,
+    Noise,
+    Finalize,
+}
+class UpdateStatus {
+    + lastUpdateFrame : int
+    + lastUpdateFixedFrame : int
+    + lastUpdateMode : UpdateTracker.UpdateClock
+    + lastUpdateDeltaTime : float
+}
+enum UpdateFilter {
+    Fixed= UpdateTracker.UpdateClock.Fixed,
+    Late= UpdateTracker.UpdateClock.Late,
+    Smart= 8,
+    SmartFixed= Smart | Fixed,
+    SmartLate= Smart | Late,
+}
+CinemachineCore +-- Stage
+CinemachineCore +-- UpdateStatus
+CinemachineCore +-- UpdateFilter
+@enduml

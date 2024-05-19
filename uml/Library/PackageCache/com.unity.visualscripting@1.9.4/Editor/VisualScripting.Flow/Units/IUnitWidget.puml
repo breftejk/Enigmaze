@@ -1,0 +1,7 @@
+@startuml
+interface IUnitWidget {
+    unit : IUnit <<get>>
+    GetPortInspector(port:IUnitPort, metadata:Metadata) : Inspector
+}
+IGraphElementWidget <|-- IUnitWidget
+@enduml

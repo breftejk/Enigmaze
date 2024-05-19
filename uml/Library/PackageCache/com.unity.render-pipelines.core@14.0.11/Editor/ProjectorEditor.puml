@@ -1,0 +1,7 @@
+@startuml
+class ProjectorEditor {
+    {static} <<readonly>> - k_Message : GUIContent
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- ProjectorEditor
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class ExampleHelpWindow {
+    + m_Title : string
+    + m_Description : string
+    - mShowingHelpWindow : bool = true
+    - <<const>> kPadding : float = 40f
+    - OnGUI() : void
+    - DrawWindow(id:int, maxWidth:float) : void
+}
+MonoBehaviour <|-- ExampleHelpWindow
+@enduml

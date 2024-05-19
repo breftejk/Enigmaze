@@ -1,0 +1,18 @@
+@startuml
+class TileDragAndDropManager {
+    - m_RegisteredEventHandlers : bool
+    - m_HoverData : Dictionary<Vector2Int, TileDragAndDropHoverData>
+    - m_LastUserTileAssetPath : string
+    {static} - Initialize() : void
+    - OnEnable() : void
+    - RegisterEventHandlers() : void
+    - OnDisable() : void
+    - DuringSceneGui(sceneView:SceneView) : void
+    <<internal>> {static} GetDefaultTileAssetDirectoryPath() : string
+    <<internal>> {static} SetUserTileAssetDirectoryPath(path:string) : void
+    {static} - GetOrCreateActiveTilemap() : Tilemap
+    {static} - CreateNewTilemap(grid:Grid) : Tilemap
+    {static} - GetActiveGrid() : Grid
+}
+"ScriptableSingleton`1" "<TileDragAndDropManager>" <|-- TileDragAndDropManager
+@enduml

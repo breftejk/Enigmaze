@@ -1,0 +1,12 @@
+@startuml
+struct DualMotorRumbleCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + lowFrequencyMotorSpeed : float
+    + highFrequencyMotorSpeed : float
+    + typeStatic : FourCC <<get>>
+    + {static} Create(lowFrequency:float, highFrequency:float) : DualMotorRumbleCommand
+}
+IInputDeviceCommandInfo <|-- DualMotorRumbleCommand
+@enduml

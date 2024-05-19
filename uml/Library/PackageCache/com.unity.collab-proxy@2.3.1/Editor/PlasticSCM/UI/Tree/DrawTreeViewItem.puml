@@ -1,0 +1,17 @@
+@startuml
+class DrawTreeViewItem <<static>> {
+    <<internal>> {static} InitializeStyles() : void
+    <<internal>> {static} ForCategoryItem(rowRect:Rect, depth:int, label:string, infoLabel:string, isSelected:bool, isFocused:bool) : void
+    <<internal>> {static} ForCheckableCategoryItem(rowRect:Rect, rowHeight:float, depth:int, label:string, infoLabel:string, isSelected:bool, isFocused:bool, wasChecked:bool, hadCheckedChildren:bool, hadPartiallyCheckedChildren:bool) : bool
+    <<internal>> {static} ForItemCell(rect:Rect, rowHeight:float, depth:int, icon:Texture, overlayIcon:Texture, label:string, isSelected:bool, isFocused:bool, isBoldText:bool, isSecondaryLabel:bool) : void
+    <<internal>> {static} ForCheckableItemCell(rect:Rect, rowHeight:float, depth:int, icon:Texture, overlayIcon:Texture, label:string, isSelected:bool, isFocused:bool, isHighlighted:bool, wasChecked:bool) : bool
+    <<internal>> {static} DrawIconLeft(rect:Rect, rowHeight:float, icon:Texture, overlayIcon:Texture) : Rect
+    {static} - DrawInfolabel(rect:Rect, label:string, infoLabel:string) : void
+    {static} - GetCheckboxRect(rect:Rect, rowHeight:float) : Rect
+    {static} - GetIndent(depth:int) : float
+    <<internal>> {static} ForSecondaryLabelRightAligned(rect:Rect, label:string, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    <<internal>> {static} ForSecondaryLabel(rect:Rect, label:string, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    <<internal>> {static} ForLabel(rect:Rect, label:string, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    <<const>> - OVERLAY_ICON_OFFSET : float = 16f
+}
+@enduml

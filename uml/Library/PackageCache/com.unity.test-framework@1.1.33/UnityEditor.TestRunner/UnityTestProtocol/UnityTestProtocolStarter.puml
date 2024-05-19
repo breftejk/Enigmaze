@@ -1,0 +1,6 @@
+@startuml
+class UnityTestProtocolStarter <<static>> {
+    {static} - UnityTestProtocolStarter()
+    - {static} GetRepositoryPath(commandLineArgs:IReadOnlyList<string>) : string
+}
+@enduml

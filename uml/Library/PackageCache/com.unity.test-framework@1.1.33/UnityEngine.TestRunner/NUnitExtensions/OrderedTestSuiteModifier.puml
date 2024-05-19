@@ -1,0 +1,13 @@
+@startuml
+class OrderedTestSuiteModifier {
+    <<internal>> <<const>> suiteIsReorderedProperty : string = "suiteIsReordered"
+    - m_OrderedTestNames : string[]
+    + OrderedTestSuiteModifier(orderedTestNames:string[])
+    + ModifySuite(root:TestSuite) : TestSuite
+    - {static} CloneProperties(target:ITest, source:ITest) : void
+    - {static} CloneNode(test:ITest) : Test
+    - {static} GetAncestorList(test:ITest) : List<ITest>
+    - {static} FindTest(node:ITest, fullName:string) : ITest
+}
+ITestSuiteModifier <|-- OrderedTestSuiteModifier
+@enduml

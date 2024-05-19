@@ -1,0 +1,9 @@
+@startuml
+class BoltUnityEvent <<sealed>> {
+    # <<override>> hookName : string <<get>>
+    + name : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> ShouldTrigger(flow:Flow, name:string) : bool
+}
+"MachineEventUnit`1" "<string>" <|-- BoltUnityEvent
+@enduml

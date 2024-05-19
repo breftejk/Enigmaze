@@ -1,0 +1,13 @@
+@startuml
+class Matrix3ShaderProperty {
+    + Matrix3ShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+MatrixShaderProperty <|-- Matrix3ShaderProperty
+@enduml

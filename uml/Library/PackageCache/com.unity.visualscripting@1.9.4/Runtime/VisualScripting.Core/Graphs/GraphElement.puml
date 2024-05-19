@@ -1,0 +1,26 @@
+@startuml
+abstract class "GraphElement`1"<TGraph> {
+    + guid : Guid <<get>> <<set>>
+    + <<virtual>> Instantiate(instance:GraphReference) : void
+    + <<virtual>> Uninstantiate(instance:GraphReference) : void
+    + <<virtual>> BeforeAdd() : void
+    + <<virtual>> AfterAdd() : void
+    + <<virtual>> BeforeRemove() : void
+    + <<virtual>> AfterRemove() : void
+    + <<virtual>> Dispose() : void
+    # InstantiateNest() : void
+    # UninstantiateNest() : void
+    + <<virtual>> dependencyOrder : int <<get>>
+    + <<virtual>> HandleDependencies() : bool
+    + graph : TGraph <<get>> <<set>>
+    - graph : IGraph <<get>> <<set>>
+    - graph : IGraph <<get>>
+    + <<virtual>> deserializationDependencies : IEnumerable<ISerializationDependency> <<get>>
+    + <<virtual>> GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+    + <<virtual>> Prewarm() : void
+    # CopyFrom(source:GraphElement<TGraph>) : void
+    + <<override>> ToString() : string
+    + <<virtual>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+IGraphElement <|-- "GraphElement`1"
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class CustomPropertyProviderSettings {
+    - <<const>> Title : string = "Custom Inspector Properties"
+    - <<const>> ButtonLabel : string = "Generate"
+    + OnGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> defaultsButton : GUIStyle
+}
+CustomPropertyProviderSettings +-- Styles
+@enduml

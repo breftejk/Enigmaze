@@ -1,0 +1,24 @@
+@startuml
+class StencilMaterial <<static>> {
+    - {static} m_List : List<MatEntry>
+    + {static} Add(baseMat:Material, stencilID:int) : Material
+    + {static} Add(baseMat:Material, stencilID:int, operation:StencilOp, compareFunction:CompareFunction, colorWriteMask:ColorWriteMask) : Material
+    {static} - LogWarningWhenNotInBatchmode(warning:string, context:Object) : void
+    + {static} Add(baseMat:Material, stencilID:int, operation:StencilOp, compareFunction:CompareFunction, colorWriteMask:ColorWriteMask, readMask:int, writeMask:int) : Material
+    + {static} Remove(customMat:Material) : void
+    + {static} ClearAll() : void
+}
+class MatEntry {
+    + baseMat : Material
+    + customMat : Material
+    + count : int
+    + stencilId : int
+    + operation : StencilOp
+    + compareFunction : CompareFunction
+    + readMask : int
+    + writeMask : int
+    + useAlphaClip : bool
+    + colorMask : ColorWriteMask
+}
+StencilMaterial +-- MatEntry
+@enduml

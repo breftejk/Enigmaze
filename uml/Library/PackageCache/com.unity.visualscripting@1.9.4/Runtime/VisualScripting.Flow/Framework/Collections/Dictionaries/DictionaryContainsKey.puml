@@ -1,0 +1,10 @@
+@startuml
+class DictionaryContainsKey <<sealed>> {
+    + dictionary : ValueInput <<get>>
+    + key : ValueInput <<get>>
+    + contains : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Contains(flow:Flow) : bool
+}
+Unit <|-- DictionaryContainsKey
+@enduml

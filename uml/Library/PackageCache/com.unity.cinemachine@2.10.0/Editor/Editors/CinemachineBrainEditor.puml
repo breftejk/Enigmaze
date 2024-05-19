@@ -1,0 +1,20 @@
+@startuml
+class CinemachineBrainEditor <<sealed>> {
+    - m_BlendsEditor : EmbeddeAssetEditor<CinemachineBlenderSettings>
+    - mEventsExpanded : bool = false
+    # <<override>> GetExcludedPropertiesInInspector() : List<string>
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - OnEnable() : void
+    - OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DrawBrainGizmos(brain:CinemachineBrain, drawType:GizmoType) : void
+    <<internal>> {static} DrawCameraFrustumGizmo(brain:CinemachineBrain, lens:LensSettings, transform:Matrix4x4, color:Color) : void
+    + {static} DrawVirtualCameraBaseGizmos(vcam:CinemachineVirtualCameraBase, selectionType:GizmoType) : void
+    {static} - kGizmoFileName : string = "Cinemachine/cm_logo_lg.png"
+}
+class InstallGizmos <<static>> {
+    {static} - InstallGizmos()
+}
+"BaseEditor`1" "<CinemachineBrain>" <|-- CinemachineBrainEditor
+CinemachineBrainEditor +-- InstallGizmos
+@enduml

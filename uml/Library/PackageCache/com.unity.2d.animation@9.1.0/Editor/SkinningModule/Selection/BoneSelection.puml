@@ -1,0 +1,9 @@
+@startuml
+class BoneSelection {
+    # <<override>> GetInvalidElement() : BoneCache
+    + root : BoneCache <<get>>
+    + roots : BoneCache[] <<get>>
+}
+"SerializableSelection`1" "<BoneCache>" <|-- BoneSelection
+IBoneSelection <|-- BoneSelection
+@enduml

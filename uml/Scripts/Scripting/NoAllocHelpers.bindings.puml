@@ -1,0 +1,17 @@
+@startuml
+class NoAllocHelpers <<static>> {
+    + {static} EnsureListElemCount(list:List<T>, count:int) : void
+    + {static} SafeLength(values:System.Array) : int
+    + {static} SafeLength(values:List<T>) : int
+    + {static} ExtractArrayFromListT(list:List<T>) : T[]
+    + {static} ExtractArrayFromList(list:List<T>) : T[]
+    + {static} ResetListContents(list:List<T>, span:ReadOnlySpan<T>) : void
+    + {static} ResetListSize(list:List<T>, size:int) : void
+}
+class "ListPrivateFieldAccess`1"<T> {
+    <<internal>> _items : T[]
+    <<internal>> _size : int
+    <<internal>> _version : int
+}
+NoAllocHelpers +-- "ListPrivateFieldAccess`1"
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class ButtonWithTwoModifiers {
+    + modifier1 : int
+    + modifier2 : int
+    + button : int
+    + overrideModifiersNeedToBePressedFirst : bool
+    + <<override>> ReadValue(context:InputBindingCompositeContext) : float
+    - ModifiersArePressed(context:InputBindingCompositeContext) : bool
+    + <<override>> EvaluateMagnitude(context:InputBindingCompositeContext) : float
+    # <<override>> FinishSetup(context:InputBindingCompositeContext) : void
+}
+"InputBindingComposite`1" "<float>" <|-- ButtonWithTwoModifiers
+@enduml

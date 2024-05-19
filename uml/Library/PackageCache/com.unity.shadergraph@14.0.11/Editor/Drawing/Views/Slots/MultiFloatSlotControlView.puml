@@ -1,0 +1,11 @@
+@startuml
+class MultiFloatSlotControlView {
+    <<readonly>> - m_Node : AbstractMaterialNode
+    <<readonly>> - m_Get : Func<Vector4>
+    <<readonly>> - m_Set : Action<Vector4>
+    - m_UndoGroup : int
+    + MultiFloatSlotControlView(node:AbstractMaterialNode, labels:string[], get:Func<Vector4>, set:Action<Vector4>)
+    - AddField(initialValue:Vector4, index:int, subLabel:string) : void
+}
+VisualElement <|-- MultiFloatSlotControlView
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class SerializedProbeTouchupVolume {
+    <<internal>> size : SerializedProperty
+    <<internal>> intensityScale : SerializedProperty
+    <<internal>> invalidateProbes : SerializedProperty
+    <<internal>> overrideDilationThreshold : SerializedProperty
+    <<internal>> overriddenDilationThreshold : SerializedProperty
+    <<internal>> serializedObject : SerializedObject
+    <<internal>> SerializedProbeTouchupVolume(obj:SerializedObject)
+    <<internal>> Apply() : void
+}
+@enduml

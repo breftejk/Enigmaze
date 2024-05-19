@@ -1,0 +1,6 @@
+@startuml
+class StateGraphDescriptor <<sealed>> {
+    + StateGraphDescriptor(target:StateGraph)
+}
+"GraphDescriptor`2" "<StateGraph,GraphDescription>" <|-- StateGraphDescriptor
+@enduml

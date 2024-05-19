@@ -1,0 +1,107 @@
+@startuml
+class ManagedExceptionsBurstJobs {
+    - {static} ThrowNewArgumentException() : void
+    + ThrowArgumentException() : void
+    - {static} ThrowNewArgumentNullException() : void
+    + ThrowArgumentNullException() : void
+    - {static} ThrowNewNullReferenceException() : void
+    + ThrowNullReferenceException() : void
+    - {static} ThrowNewInvalidOperationException() : void
+    + ThrowInvalidOperationException() : void
+    - {static} ThrowNewNotSupportedException() : void
+    + ThrowNotSupportedException() : void
+    - {static} ThrowNewUnityException() : void
+    + ThrowUnityException() : void
+    - {static} ThrowNewIndexOutOfRangeException() : void
+    + ThrowIndexOutOfRange() : void
+    + ThrowFromDereferenceNull() : void
+    + ThrowFromDivideByZero() : void
+    - {static} <<unsafe>> DereferenceNull(a:int*) : void
+    + <<unsafe>> ThrowFromFunctionPointer() : void
+    + ThrowFromDereferenceNullParallel() : void
+    + ThrowFromDereferenceNullManaged() : void
+    + ThrowFromDereferenceNullBurstDisabled() : void
+    + TestConditionalThrowWithSideEffect() : void
+    + ThrowFromManagedStackOverflow() : void
+}
+struct ThrowArgumentExceptionJob {
+    + Execute() : void
+}
+struct ThrowArgumentNullExceptionJob {
+    + Execute() : void
+}
+struct ThrowNullReferenceExceptionJob {
+    + Execute() : void
+}
+struct ThrowInvalidOperationExceptionJob {
+    + Execute() : void
+}
+struct ThrowNotSupportedExceptionJob {
+    + Execute() : void
+}
+struct ThrowUnityExceptionJob {
+    + Execute() : void
+}
+struct ThrowIndexOutOfRangeExceptionJob {
+    + Execute() : void
+}
+struct ThrowFromDereferenceNullJob {
+    + Ptr : int*
+    + Execute() : void
+}
+struct ThrowFromDivideByZeroJob {
+    + Int : int
+    + Execute() : void
+}
+struct ThrowFromFunctionPointerJob {
+    + FuncPtr : IntPtr
+    + Ptr : int*
+    + Execute() : void
+}
+struct ThrowFromDereferenceNullParallelJob {
+    + Ptr : int*
+    + Execute(index:int) : void
+}
+struct ThrowFromDereferenceNullManagedJob {
+    + Ptr : int*
+    + Execute() : void
+}
+struct Thrower {
+    + X : int
+    + {static} ConditionalThrowWithSideEffect(x:int) : void
+    + Execute() : void
+}
+struct ThrowFromManagedStackOverflowJob {
+    - {static} DoStackOverflow(x:int) : int
+    + Int : int
+    + Execute() : void
+}
+ManagedExceptionsBurstJobs +-- ThrowArgumentExceptionJob
+IJob <|-- ThrowArgumentExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowArgumentNullExceptionJob
+IJob <|-- ThrowArgumentNullExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowNullReferenceExceptionJob
+IJob <|-- ThrowNullReferenceExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowInvalidOperationExceptionJob
+IJob <|-- ThrowInvalidOperationExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowNotSupportedExceptionJob
+IJob <|-- ThrowNotSupportedExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowUnityExceptionJob
+IJob <|-- ThrowUnityExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowIndexOutOfRangeExceptionJob
+IJob <|-- ThrowIndexOutOfRangeExceptionJob
+ManagedExceptionsBurstJobs +-- ThrowFromDereferenceNullJob
+IJob <|-- ThrowFromDereferenceNullJob
+ManagedExceptionsBurstJobs +-- ThrowFromDivideByZeroJob
+IJob <|-- ThrowFromDivideByZeroJob
+ManagedExceptionsBurstJobs +-- ThrowFromFunctionPointerJob
+IJob <|-- ThrowFromFunctionPointerJob
+ManagedExceptionsBurstJobs +-- ThrowFromDereferenceNullParallelJob
+IJobParallelFor <|-- ThrowFromDereferenceNullParallelJob
+ManagedExceptionsBurstJobs +-- ThrowFromDereferenceNullManagedJob
+IJob <|-- ThrowFromDereferenceNullManagedJob
+ManagedExceptionsBurstJobs +-- Thrower
+IJob <|-- Thrower
+ManagedExceptionsBurstJobs +-- ThrowFromManagedStackOverflowJob
+IJob <|-- ThrowFromManagedStackOverflowJob
+@enduml

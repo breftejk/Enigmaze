@@ -1,0 +1,58 @@
+@startuml
+class SpriteMeshController {
+    <<const>> - k_SnapDistance : float = 10f
+    - m_SpriteMeshDataController : SpriteMeshDataController
+    - m_EdgeIntersectionResult : EdgeIntersectionResult
+    + spriteMeshView : ISpriteMeshView <<get>> <<set>>
+    + spriteMeshData : BaseSpriteMeshData <<get>> <<set>>
+    + selection : ISelection<int> <<get>> <<set>>
+    + cacheUndo : ICacheUndo <<get>> <<set>>
+    + triangulator : ITriangulator <<get>> <<set>>
+    + disable : bool <<get>> <<set>>
+    + frame : Rect <<get>> <<set>>
+    + OnGUI() : void
+    - ValidateSelectionValues() : void
+    - LayoutVertices() : void
+    - LayoutEdges() : void
+    - DrawEdges() : void
+    - SkipDrawEdge(edgeIndex:int) : bool
+    - PreviewCreateVertex() : void
+    - PreviewCreateEdge() : void
+    - PreviewSplitEdge() : void
+    - DrawVertices() : void
+    - HandleSelectVertex() : void
+    - HandleSelectEdge() : void
+    - HandleMoveVertexAndEdge() : void
+    - HandleCreateVertex() : void
+    - HandleSplitEdge() : void
+    - HandleCreateEdge() : void
+    - HandleRemoveVertices() : void
+    - CreateVertex(position:Vector2, indices:Vector3Int, barycentricCoords:Vector3) : void
+    - CreateVertex(position:Vector2, edgeIndex:int) : void
+    - SelectVertex(index:int, additiveToggle:bool) : void
+    - SelectEdge(index:int, additiveToggle:bool) : void
+    - ClearSelection() : void
+    - MoveSelectedVertices(movedVertices:Vector2[]) : void
+    - CreateEdge(fromVertexIndex:int, toVertexIndex:int) : void
+    - SplitEdge(position:Vector2, edgeIndex:int) : void
+    - IsEdgeSelected() : bool
+    - RemoveSelectedVertices() : void
+    - Triangulate() : void
+    - ClampToFrame(position:Vector2) : Vector2
+    - CalculateRectFromSelection() : Rect
+    - UpdateEdgeIntersection() : void
+    - CalculateEdgeIntersection(vertexIndex:int, hoveredVertexIndex:int, hoveredEdgeIndex:int, targetPosition:Vector2) : EdgeIntersectionResult
+    - SegmentIntersectsEdge(p1:Vector2, p2:Vector2, ignoreIndex:int, point:Vector2, intersectingEdgeIndex:int) : bool
+    {static} - GetMovedVertexSelection(selection:int[], vertices:Vector2[], deltaPosition:Vector2) : Vector2[]
+    {static} - IsMovedEdgeIntersectingWithOtherEdge(selection:int[], movedVertices:Vector2[], meshEdges:int2[], meshVertices:Vector2[]) : bool
+    {static} - FindSelectionIndexFromEdge(selection:int[], edge:int2) : int2
+    {static} - IsMovedVertexIntersectingWithOutline(selection:int[], movedVertices:Vector2[], outlineEdges:int2[], meshVertices:Vector2[]) : bool
+}
+struct EdgeIntersectionResult {
+    + startVertexIndex : int
+    + endVertexIndex : int
+    + intersectEdgeIndex : int
+    + endPosition : Vector2
+}
+SpriteMeshController +-- EdgeIntersectionResult
+@enduml

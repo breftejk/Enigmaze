@@ -1,0 +1,18 @@
+@startuml
+class TrackballUIDrawer <<sealed>> {
+    {static} <<readonly>> - s_ThumbHash : int
+    {static} - s_WheelThumb : GUIStyle
+    {static} - s_WheelThumbSize : Vector2
+    {static} - s_Material : Material
+    - m_ComputeFunc : Func<Vector4, Vector3>
+    - m_ResetState : bool
+    - m_CursorPos : Vector2
+    <<const>> - k_ShaderName : string = "Hidden/Universal Render Pipeline/Editor/Trackball"
+    + OnGUI(property:SerializedProperty, overrideState:SerializedProperty, title:GUIContent, computeFunc:Func<Vector4, Vector3>) : void
+    - DrawWheel(value:Vector4, overrideState:bool) : void
+    - DrawLabelAndOverride(title:GUIContent, overrideState:SerializedProperty) : void
+    - GetInput(bounds:Rect, hsv:Vector3, thumbPos:Vector2, radius:float) : Vector3
+    - GetWheelHueSaturation(x:float, y:float, radius:float, hue:float, saturation:float) : void
+    - CheckMaterialAndShader() : bool
+}
+@enduml

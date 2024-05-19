@@ -1,0 +1,6 @@
+@startuml
+interface IStateTransitionWidget {
+    sourceEdge : Edge <<get>>
+}
+INodeWidget <|-- IStateTransitionWidget
+@enduml

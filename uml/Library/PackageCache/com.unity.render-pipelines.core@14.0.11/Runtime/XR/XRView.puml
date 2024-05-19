@@ -1,0 +1,12 @@
+@startuml
+struct XRView {
+    <<internal>> <<readonly>> projMatrix : Matrix4x4
+    <<internal>> <<readonly>> viewMatrix : Matrix4x4
+    <<internal>> <<readonly>> viewport : Rect
+    <<internal>> <<readonly>> occlusionMesh : Mesh
+    <<internal>> <<readonly>> textureArraySlice : int
+    <<internal>> <<readonly>> eyeCenterUV : Vector2
+    <<internal>> XRView(projMatrix:Matrix4x4, viewMatrix:Matrix4x4, viewport:Rect, occlusionMesh:Mesh, textureArraySlice:int)
+    - {static} ComputeEyeCenterUV(proj:Matrix4x4) : Vector2
+}
+@enduml

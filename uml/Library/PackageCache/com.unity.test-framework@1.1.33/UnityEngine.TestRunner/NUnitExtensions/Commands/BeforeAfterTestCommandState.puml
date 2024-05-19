@@ -1,0 +1,20 @@
+@startuml
+class BeforeAfterTestCommandState {
+    + NextBeforeStepIndex : int
+    + NextBeforeStepPc : int
+    + NextAfterStepIndex : int
+    + NextAfterStepPc : int
+    + TestHasRun : bool
+    + CurrentTestResultStatus : TestStatus
+    + CurrentTestResultLabel : string
+    + CurrentTestResultSite : FailureSite
+    + CurrentTestMessage : string
+    + CurrentTestStrackTrace : string
+    + TestAfterStarted : bool
+    + Timestamp : long
+    + Reset() : void
+    + StoreTestResult(result:TestResult) : void
+    + ApplyTestResult(result:TestResult) : void
+}
+ScriptableObject <|-- BeforeAfterTestCommandState
+@enduml

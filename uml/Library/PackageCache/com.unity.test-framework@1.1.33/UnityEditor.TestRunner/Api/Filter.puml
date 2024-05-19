@@ -1,0 +1,12 @@
+@startuml
+class Filter {
+    + testMode : TestMode
+    + testNames : string[]
+    + groupNames : string[]
+    + categoryNames : string[]
+    + assemblyNames : string[]
+    + targetPlatform : BuildTarget?
+    <<internal>> ToRuntimeTestRunnerFilter(synchronousOnly:bool) : RuntimeTestRunnerFilter
+    <<internal>> HasAny() : bool
+}
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class StateUnit <<sealed>> {
+    + StateUnit()
+    + StateUnit(macro:StateGraphAsset)
+    + start : ControlInput <<get>>
+    + stop : ControlInput <<get>>
+    + started : ControlOutput <<get>>
+    + stopped : ControlOutput <<get>>
+    + {static} WithStart() : StateUnit
+    # <<override>> Definition() : void
+    - Start(flow:Flow) : ControlOutput
+    - Stop(flow:Flow) : ControlOutput
+    + <<override>> DefaultGraph() : StateGraph
+}
+"NesterUnit`2" "<StateGraph,StateGraphAsset>" <|-- StateUnit
+@enduml

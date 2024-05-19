@@ -1,0 +1,18 @@
+@startuml
+class TimelineWindow <<partial>> {
+    + <<override>> navigator : TimelineNavigator <<get>>
+}
+class TimelineNavigatorImpl {
+    + TimelineNavigatorImpl(window:IWindowStateProvider)
+    + GetCurrentContext() : SequenceContext
+    + GetParentContext() : SequenceContext
+    + GetRootContext() : SequenceContext
+    + GetChildContexts() : IEnumerable<SequenceContext>
+    + GetBreadcrumbs() : IEnumerable<SequenceContext>
+    + NavigateTo(context:SequenceContext) : void
+    - windowState : IWindowState <<get>>
+    - CollectBreadcrumbContexts() : IEnumerable<SequenceContext>
+    - <<readonly>> m_Window : IWindowStateProvider
+}
+TimelineWindow +-- TimelineNavigatorImpl
+@enduml

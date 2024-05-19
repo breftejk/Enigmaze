@@ -1,0 +1,33 @@
+@startuml
+abstract class FlipTool {
+    # Flip(axis:GridBrushBase.FlipAxis) : void
+    + <<override>> OnToolGUI(window:EditorWindow) : void
+}
+class FlipXTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+    + <<override>> OnActivated() : void
+}
+class FlipYTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+    + <<override>> OnActivated() : void
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string
+    + {static} shortcutId : string = "Grid Painting/Flip X"
+    + {static} toolContent : GUIContent
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string
+    + {static} shortcutId : string = "Grid Painting/Flip Y"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- FlipTool
+FlipTool <|-- FlipXTool
+FlipTool <|-- FlipYTool
+FlipXTool +-- Styles
+FlipYTool +-- Styles
+@enduml

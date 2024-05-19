@@ -1,0 +1,7 @@
+@startuml
+class GraphInputAnalyser {
+    + GraphInputAnalyser(reference:GraphReference, unit:GraphInput)
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"UnitAnalyser`1" "<GraphInput>" <|-- GraphInputAnalyser
+@enduml

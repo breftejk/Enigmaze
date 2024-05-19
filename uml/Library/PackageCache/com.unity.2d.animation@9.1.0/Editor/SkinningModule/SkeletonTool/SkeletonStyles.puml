@@ -1,0 +1,44 @@
+@startuml
+interface ISkeletonStyle {
+    GetColor(bone:BoneCache) : Color
+    GetPreviewColor(index:int) : Color
+    GetParentLinkColor(bone:BoneCache) : Color
+    GetParentLinkPreviewColor(index:int) : Color
+    GetOutlineColor(bone:BoneCache, isSelected:bool, isHovered:bool) : Color
+    GetPreviewOutlineColor(index:int) : Color
+    GetOutlineScale(isSelected:bool) : float
+}
+abstract class SkeletonStyleBase {
+    - <<const>> kOutlineScale : float = 1.35f
+    - <<const>> kSelectedOutlineScale : float = 1.55f
+    + GetColor(bone:BoneCache) : Color
+    + GetPreviewColor(index:int) : Color
+    + GetParentLinkColor(bone:BoneCache) : Color
+    + GetParentLinkPreviewColor(index:int) : Color
+    + GetOutlineColor(bone:BoneCache, isSelected:bool, isHovered:bool) : Color
+    + GetPreviewOutlineColor(index:int) : Color
+    + GetOutlineScale(isSelected:bool) : float
+    - CalculateOutlineColor(color:Color, opacity:float) : Color
+    - SetAlpha(color:Color, alpha:float, opacity:float) : Color
+    # <<virtual>> GetAlpha(bone:BoneCache) : float
+    # {abstract} GetBoneColorRaw(bone:BoneCache) : Color
+    # {abstract} GetBoneColorRaw(index:int) : Color
+}
+class BoneColorSkeletonStyle {
+    # <<override>> GetBoneColorRaw(bone:BoneCache) : Color
+    # <<override>> GetBoneColorRaw(index:int) : Color
+    # <<override>> GetAlpha(bone:BoneCache) : float
+}
+class WeightmapSkeletonStyle {
+    # <<override>> GetBoneColorRaw(bone:BoneCache) : Color
+    # <<override>> GetBoneColorRaw(index:int) : Color
+    # <<override>> GetAlpha(bone:BoneCache) : float
+}
+class SkeletonStyles <<static>> {
+    + {static} <<readonly>> Default : ISkeletonStyle
+    + {static} <<readonly>> WeightMap : ISkeletonStyle
+}
+ISkeletonStyle <|-- SkeletonStyleBase
+SkeletonStyleBase <|-- BoneColorSkeletonStyle
+SkeletonStyleBase <|-- WeightmapSkeletonStyle
+@enduml

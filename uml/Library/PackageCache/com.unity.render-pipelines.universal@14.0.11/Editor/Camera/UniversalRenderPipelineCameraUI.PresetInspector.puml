@@ -1,0 +1,6 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+    {static} <<readonly>> - k_ExpandedStatePreset : ExpandedState<Expandable, Camera>
+    + {static} <<readonly>> PresetInspector : CED.IDrawer
+}
+@enduml

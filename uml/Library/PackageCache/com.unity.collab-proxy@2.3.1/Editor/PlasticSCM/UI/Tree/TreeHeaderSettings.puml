@@ -1,0 +1,14 @@
+@startuml
+class TreeHeaderSettings <<static>> {
+    <<internal>> {static} Load(headerState:MultiColumnHeaderState, treeSettingsName:string, defaultSortColumnIdx:int, defaultSortedAscending:bool) : void
+    <<internal>> {static} Save(headerState:MultiColumnHeaderState, treeSettingsName:string) : void
+    <<internal>> {static} Clear(treeSettingsName:string) : void
+    {static} - GetColumnsSettings(treeSettingsName:string, headerColumnsLenght:int, visibleColumns:int[], columnWidths:float[]) : void
+    {static} - GetSettingKey(treeSettingsName:string, key:string) : string
+    {static} - VISIBLE_COLUMNS_KEY : string = "VisibleColumns"
+    {static} - COLUMNS_WIDTHS_KEY : string = "ColumnWidths"
+    {static} - SORT_COLUMN_INDEX_KEY : string = "SortColumnIdx"
+    {static} - SORT_ASCENDING_KEY : string = "SortAscending"
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

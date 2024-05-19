@@ -1,0 +1,37 @@
+@startuml
+class LudiqStyles <<static>> {
+    {static} - LudiqStyles()
+    + {static} <<readonly>> centeredLabel : GUIStyle
+    + {static} <<readonly>> horizontalSeparator : GUIStyle
+    + {static} <<readonly>> verticalSeparator : GUIStyle
+    + {static} <<readonly>> expandedTooltip : GUIStyle
+    + {static} <<readonly>> paddedButton : GUIStyle
+    + {static} <<readonly>> compactHorizontalSpacing : float = 2
+    + {static} <<readonly>> textAreaWordWrapped : GUIStyle
+    + {static} <<readonly>> spinnerButton : GUIStyle
+    + {static} <<readonly>> spinnerDownArrow : Texture2D
+    + {static} <<readonly>> headerBackground : GUIStyle
+    + {static} <<readonly>> headerIcon : GUIStyle
+    + {static} <<readonly>> headerTitle : GUIStyle
+    + {static} <<readonly>> headerTitleField : GUIStyle
+    + {static} <<readonly>> headerTitleFieldHidable : GUIStyle
+    + {static} <<readonly>> headerTitlePlaceholder : GUIStyle
+    + {static} <<readonly>> headerSummary : GUIStyle
+    + {static} <<readonly>> headerSummaryField : GUIStyle
+    + {static} <<readonly>> headerSummaryFieldHidable : GUIStyle
+    + {static} <<readonly>> headerSummaryPlaceholder : GUIStyle
+    + {static} <<readonly>> listRow : GUIStyle
+    + {static} <<readonly>> listBackground : GUIStyle
+    + {static} <<readonly>> toolbarBackground : GUIStyle
+    + {static} <<readonly>> toolbarButton : GUIStyle
+    + {static} <<readonly>> toolbarPopup : GUIStyle
+    + {static} <<readonly>> toolbarBreadcrumbRoot : GUIStyle
+    + {static} <<readonly>> toolbarBreadcrumb : GUIStyle
+    + {static} <<readonly>> toolbarLabel : GUIStyle
+    + {static} <<readonly>> windowHeaderBackground : GUIStyle
+    + {static} <<readonly>> windowHeaderTitle : GUIStyle
+    + {static} <<readonly>> windowHeaderIcon : GUIStyle
+    + {static} <<readonly>> windowBackground : GUIStyle
+    + {static} <<readonly>> spaceBetweenWindowHeaderIconAndTitle : float = 14
+}
+@enduml

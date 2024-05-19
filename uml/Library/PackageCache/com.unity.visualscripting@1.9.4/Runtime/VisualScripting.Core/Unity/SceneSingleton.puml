@@ -1,0 +1,19 @@
+@startuml
+class "SceneSingleton`1"<T> <<static>> {
+    {static} - SceneSingleton()
+    - {static} instances : Dictionary<Scene, T>
+    - {static} <<readonly>> attribute : SingletonAttribute
+    - {static} persistent : bool <<get>>
+    - {static} automatic : bool <<get>>
+    - {static} name : string <<get>>
+    - {static} hideFlags : HideFlags <<get>>
+    - {static} EnsureSceneValid(scene:Scene) : void
+    + {static} InstantiatedIn(scene:Scene) : bool
+    + {static} InstanceIn(scene:Scene) : T
+    - {static} FindObjectsOfType() : T[]
+    - {static} FindInstances(scene:Scene) : T[]
+    - {static} FindOrCreateInstance(scene:Scene) : T
+    + {static} Awake(instance:T) : void
+    + {static} OnDestroy(instance:T) : void
+}
+@enduml

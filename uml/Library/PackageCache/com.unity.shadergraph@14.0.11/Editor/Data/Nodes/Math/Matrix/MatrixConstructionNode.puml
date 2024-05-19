@@ -1,0 +1,28 @@
+@startuml
+class MatrixConstructionNode {
+    <<const>> - kInputSlotM0Name : string = "M0"
+    <<const>> - kInputSlotM1Name : string = "M1"
+    <<const>> - kInputSlotM2Name : string = "M2"
+    <<const>> - kInputSlotM3Name : string = "M3"
+    <<const>> - kOutput4x4SlotName : string = "4x4"
+    <<const>> - kOutput3x3SlotName : string = "3x3"
+    <<const>> - kOutput2x2SlotName : string = "2x2"
+    + <<const>> InputSlotM0Id : int = 0
+    + <<const>> InputSlotM1Id : int = 1
+    + <<const>> InputSlotM2Id : int = 2
+    + <<const>> InputSlotM3Id : int = 3
+    + <<const>> Output4x4SlotId : int = 4
+    + <<const>> Output3x3SlotId : int = 5
+    + <<const>> Output2x2SlotId : int = 6
+    + MatrixConstructionNode()
+    - m_Axis : MatrixAxis
+    - axis : MatrixAxis <<get>> <<set>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- MatrixConstructionNode
+IGeneratesBodyCode <|-- MatrixConstructionNode
+IGeneratesFunction <|-- MatrixConstructionNode
+@enduml

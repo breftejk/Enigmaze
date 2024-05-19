@@ -1,0 +1,15 @@
+@startuml
+class GeneratePropertyProvidersPage {
+    + GeneratePropertyProvidersPage()
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> nextButton : GUIStyle
+    + {static} <<readonly>> skipButton : GUIStyle
+    + {static} <<readonly>> regenerateLabel : GUIStyle
+}
+Page <|-- GeneratePropertyProvidersPage
+GeneratePropertyProvidersPage +-- Styles
+@enduml

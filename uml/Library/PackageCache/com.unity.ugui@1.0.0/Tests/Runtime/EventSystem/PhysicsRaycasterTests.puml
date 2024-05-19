@@ -1,0 +1,9 @@
+@startuml
+class PhysicsRaycasterTests {
+    - m_CamGO : GameObject
+    - m_Collider : GameObject
+    + TestSetup() : void
+    + PhysicsRaycasterDoesNotCastOutsideCameraViewRect() : void
+    + TearDown() : void
+}
+@enduml

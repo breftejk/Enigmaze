@@ -1,0 +1,14 @@
+@startuml
+class HIDSupport <<static>> {
+    - {static} s_SupportedHIDUsages : HIDPageUsage[]
+    + {static} supportedHIDUsages : ReadOnlyArray<HIDPageUsage> <<get>> <<set>>
+    <<internal>> {static} Initialize() : void
+}
+struct HIDPageUsage {
+    + page : HID.UsagePage
+    + usage : int
+    + HIDPageUsage(page:HID.UsagePage, usage:int)
+    + HIDPageUsage(usage:HID.GenericDesktop)
+}
+HIDSupport +-- HIDPageUsage
+@enduml

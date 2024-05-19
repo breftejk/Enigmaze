@@ -1,0 +1,23 @@
+@startuml
+class FBXArnoldSurfaceMaterialDescriptionPreprocessor {
+    {static} <<readonly>> - k_Version : uint = 3
+    {static} <<readonly>> - k_Order : int
+    {static} <<readonly>> - k_ShaderPath : string = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/ArnoldStandardSurface/ArnoldStandardSurface.shadergraph"
+    {static} <<readonly>> - k_ShaderTransparentPath : string = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/ArnoldStandardSurface/ArnoldStandardSurfaceTransparent.shadergraph"
+    + <<override>> GetVersion() : uint
+    + <<override>> GetPostprocessOrder() : int
+    {static} - IsMayaArnoldStandardSurfaceMaterial(description:MaterialDescription) : bool
+    {static} - Is3DsMaxArnoldStandardSurfaceMaterial(description:MaterialDescription) : bool
+    + OnPreprocessMaterialDescription(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    - CreateFromMayaArnoldStandardSurfaceMaterial(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    - CreateFrom3DsMaxArnoldStandardSurfaceMaterial(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    {static} - SetMaterialTextureProperty(propertyName:string, material:Material, textureProperty:TexturePropertyDescription) : void
+    {static} - remapPropertyFloat(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - remapPropertyTexture(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - remapPropertyColorOrTexture3DsMax(description:MaterialDescription, material:Material, inPropName:string, outPropName:string, multiplier:float) : void
+    {static} - remapPropertyFloatOrTexture3DsMax(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+    {static} - remapPropertyColorOrTexture(description:MaterialDescription, material:Material, inPropName:string, outPropName:string, multiplier:float) : void
+    {static} - remapPropertyFloatOrTexture(description:MaterialDescription, material:Material, inPropName:string, outPropName:string) : void
+}
+AssetPostprocessor <|-- FBXArnoldSurfaceMaterialDescriptionPreprocessor
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class RemoveDictionaryItem <<sealed>> {
+    + enter : ControlInput <<get>>
+    + dictionaryInput : ValueInput <<get>>
+    + dictionaryOutput : ValueOutput <<get>>
+    + key : ValueInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Remove(flow:Flow) : ControlOutput
+}
+Unit <|-- RemoveDictionaryItem
+@enduml

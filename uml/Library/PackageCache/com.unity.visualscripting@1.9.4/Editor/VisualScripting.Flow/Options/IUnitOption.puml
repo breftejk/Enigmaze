@@ -1,0 +1,29 @@
+@startuml
+interface IUnitOption {
+    unit : IUnit <<get>>
+    InstantiateUnit() : IUnit
+    PreconfigureUnit(unit:IUnit) : void
+    sourceScriptGuids : HashSet<string> <<get>>
+    order : int <<get>>
+    category : UnitCategory <<get>>
+    favoriteKey : string <<get>>
+    favoritable : bool <<get>>
+    unitType : Type <<get>>
+    Deserialize(row:UnitOptionRow) : void
+    Serialize() : UnitOptionRow
+    controlInputCount : int <<get>>
+    controlOutputCount : int <<get>>
+    valueInputTypes : HashSet<Type> <<get>>
+    valueOutputTypes : HashSet<Type> <<get>>
+    haystack : string <<get>>
+    formerHaystack : string <<get>>
+    SearchResultLabel(query:string) : string
+}
+class XUnitOption <<static>> {
+    + {static} UnitIs(option:IUnitOption, type:Type) : bool
+    + {static} UnitIs(option:IUnitOption) : bool
+    + {static} HasCompatibleValueInput(option:IUnitOption, outputType:Type) : bool
+    + {static} HasCompatibleValueOutput(option:IUnitOption, inputType:Type) : bool
+}
+IFuzzyOption <|-- IUnitOption
+@enduml

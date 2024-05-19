@@ -1,0 +1,16 @@
+@startuml
+class For <<sealed>> {
+    + firstIndex : ValueInput <<get>>
+    + lastIndex : ValueInput <<get>>
+    + step : ValueInput <<get>>
+    + currentIndex : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Start(flow:Flow, currentIndex:int, lastIndex:int, ascending:bool) : int
+    - CanMoveNext(currentIndex:int, lastIndex:int, ascending:bool) : bool
+    - MoveNext(flow:Flow, currentIndex:int) : void
+    # <<override>> Loop(flow:Flow) : ControlOutput
+    # <<override>> LoopCoroutine(flow:Flow) : IEnumerator
+    + IsStepValueZero() : bool
+}
+LoopUnit <|-- For
+@enduml

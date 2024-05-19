@@ -1,0 +1,44 @@
+@startuml
+class ParallaxOcclusionMappingNode {
+    + ParallaxOcclusionMappingNode()
+    - <<const>> kHeightmapSlotId : int = 2
+    - <<const>> kHeightmapSlotName : string = "Heightmap"
+    - <<const>> kHeightmapSamplerSlotId : int = 3
+    - <<const>> kHeightmapSamplerSlotName : string = "HeightmapSampler"
+    - <<const>> kAmplitudeSlotId : int = 4
+    - <<const>> kAmplitudeSlotName : string = "Amplitude"
+    - <<const>> kStepsSlotId : int = 5
+    - <<const>> kStepsSlotName : string = "Steps"
+    - <<const>> kUVsSlotId : int = 6
+    - <<const>> kUVsSlotName : string = "UVs"
+    - <<const>> kLodSlotId : int = 7
+    - <<const>> kLodSlotName : string = "LOD"
+    - <<const>> kLodThresholdSlotId : int = 8
+    - <<const>> kLodThresholdSlotName : string = "LODThreshold"
+    - <<const>> kTilingSlotId : int = 10
+    - <<const>> kTilingSlotName : string = "Tiling"
+    - <<const>> kOffsetSlotId : int = 11
+    - <<const>> kOffsetSlotName : string = "Offset"
+    - <<const>> kPrimitiveSizeSlotId : int = 12
+    - <<const>> kPrimitiveSizeSlotName : string = "PrimitiveSize"
+    - <<const>> kPixelDepthOffsetOutputSlotId : int = 0
+    - <<const>> kPixelDepthOffsetOutputSlotName : string = "PixelDepthOffset"
+    - <<const>> kParallaxUVsOutputSlotId : int = 1
+    - <<const>> kParallaxUVsOutputSlotName : string = "ParallaxUVs"
+    + <<override>> hasPreview : bool <<get>>
+    - m_Channel : Channel
+    + channel : Channel <<get>> <<set>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - GetFunctionName() : string
+    + <<override>> Setup() : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresViewDirection(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- ParallaxOcclusionMappingNode
+IGeneratesBodyCode <|-- ParallaxOcclusionMappingNode
+IGeneratesFunction <|-- ParallaxOcclusionMappingNode
+IMayRequireViewDirection <|-- ParallaxOcclusionMappingNode
+IMayRequireMeshUV <|-- ParallaxOcclusionMappingNode
+@enduml

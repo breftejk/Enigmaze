@@ -1,0 +1,38 @@
+@startuml
+class TilePaletteActivePalettePopup <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tools/Tile Palette Active Palette"
+    - {static} kNullGameObjectName : string
+    - {static} kLabelTooltip : string
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-activepalettes-field"
+    - <<new>> {static} <<readonly>> labelUssClassName : string
+    - <<new>> {static} <<readonly>> inputUssClassName : string
+    + TilePaletteActivePalettePopup()
+    + TilePaletteActivePalettePopup(label:string)
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - OnPaletteChanged(_:GameObject) : void
+    - FormatSelectedValueCallback(go:GameObject) : string
+    - CreateMenuCallback() : IGenericMenu
+    - {static} GetActivePaletteIndex() : int
+    - UpdateChoices() : void
+    - UpdateActivePalette() : void
+    - UpdateTargets() : void
+}
+class TilePaletteActivePalettePopupIcon {
+    <<internal>> <<const>> k_ToolbarId : string = "Tools/Tile Palette Active Palette Icon"
+    - {static} kTooltip : string
+    + {static} <<readonly>> ussClassName : string = "unity-tilepalette-activepalette-icon"
+    - <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.TilePalette.png"
+    + TilePaletteActivePalettePopupIcon()
+}
+class TilePaletteActivePalettePopupFactory {
+}
+class TilePaletteActivePalettePopupUxmlTraits {
+}
+"PopupField`1" "<GameObject>" <|-- TilePaletteActivePalettePopup
+VisualElement <|-- TilePaletteActivePalettePopupIcon
+TilePaletteActivePalettePopup +-- TilePaletteActivePalettePopupFactory
+"UxmlFactory`2" "<TilePaletteActivePalettePopup,TilePaletteActivePalettePopupUxmlTraits>" <|-- TilePaletteActivePalettePopupFactory
+TilePaletteActivePalettePopup +-- TilePaletteActivePalettePopupUxmlTraits
+UxmlTraits <|-- TilePaletteActivePalettePopupUxmlTraits
+@enduml

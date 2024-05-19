@@ -1,0 +1,97 @@
+@startuml
+class SubGraphNode {
+    - m_SerializedSubGraph : string
+    - m_SubGraph : SubGraphAsset
+    - m_PropertyGuids : List<string>
+    - m_PropertyIds : List<int>
+    - m_Dropdowns : List<string>
+    - m_DropdownSelectedEntries : List<string>
+    + subGraphGuid : string <<get>>
+    - LoadSubGraph() : void
+    + asset : SubGraphAsset <<get>> <<set>>
+    + <<override>> hasPreview : bool <<get>>
+    + <<override>> previewMode : PreviewMode <<get>>
+    + SubGraphNode()
+    + <<override>> allowedInSubGraph : bool <<get>>
+    + <<override>> canSetPrecision : bool <<get>>
+    + <<override>> GetInputSlots(startingSlot:MaterialSlot, foundSlots:List<T>) : void
+    + <<override>> GetOutputSlots(startingSlot:MaterialSlot, foundSlots:List<T>) : void
+    - GetSlotCapability(slot:MaterialSlot) : ShaderStageCapability
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + OnEnable() : void
+    + Reload(changedFileDependencyGUIDs:HashSet<string>) : bool
+    + <<override>> UpdatePrecision(inputSlots:List<MaterialSlot>) : void
+    + <<virtual>> UpdateSlots() : void
+    - ValidateShaderStage() : void
+    + <<override>> ValidateNode() : void
+    + <<override>> CollectShaderProperties(visitor:PropertyCollector, generationMode:GenerationMode) : void
+    + GetShaderProperty(id:int) : AbstractShaderProperty
+    + CollectShaderKeywords(keywords:KeywordCollector, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<virtual>> GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+    + RequiresScreenPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresNDCPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresPixelPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresViewDirection(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresPositionPredisplacement(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresTangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresTime() : bool
+    + RequiresFaceSign(stageCapability:ShaderStageCapability) : bool
+    + RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresVertexColor(stageCapability:ShaderStageCapability) : bool
+    + RequiresCameraOpaqueTexture(stageCapability:ShaderStageCapability) : bool
+    + RequiresDepthTexture(stageCapability:ShaderStageCapability) : bool
+    + RequiresVertexSkinning(stageCapability:ShaderStageCapability) : bool
+    + RequiresVertexID(stageCapability:ShaderStageCapability) : bool
+    + GetDropdownEntryName(referenceName:string) : string
+    + SetDropdownEntryName(referenceName:string, value:string) : void
+    + <<override>> Dispose() : void
+}
+class MinimalSubGraphNode {
+    - m_SerializedSubGraph : string
+    + GetSourceAssetDependencies(assetCollection:AssetCollection) : void
+}
+class SubGraphHelper {
+    + subGraph : SubGraphAsset
+}
+class SubGraphAssetReference {
+    + subGraph : AssetReference = default
+    + <<override>> ToString() : string
+}
+class AssetReference {
+    + fileID : long = default
+    + guid : string = default
+    + type : int = default
+    + <<override>> ToString() : string
+}
+AbstractMaterialNode <|-- SubGraphNode
+IGeneratesBodyCode <|-- SubGraphNode
+IOnAssetEnabled <|-- SubGraphNode
+IGeneratesFunction <|-- SubGraphNode
+IMayRequireNormal <|-- SubGraphNode
+IMayRequireTangent <|-- SubGraphNode
+IMayRequireBitangent <|-- SubGraphNode
+IMayRequireMeshUV <|-- SubGraphNode
+IMayRequireScreenPosition <|-- SubGraphNode
+IMayRequireNDCPosition <|-- SubGraphNode
+IMayRequirePixelPosition <|-- SubGraphNode
+IMayRequireViewDirection <|-- SubGraphNode
+IMayRequirePosition <|-- SubGraphNode
+IMayRequirePositionPredisplacement <|-- SubGraphNode
+IMayRequireVertexColor <|-- SubGraphNode
+IMayRequireTime <|-- SubGraphNode
+IMayRequireFaceSign <|-- SubGraphNode
+IMayRequireCameraOpaqueTexture <|-- SubGraphNode
+IMayRequireDepthTexture <|-- SubGraphNode
+IMayRequireVertexSkinning <|-- SubGraphNode
+IMayRequireVertexID <|-- SubGraphNode
+IDisposable <|-- SubGraphNode
+SubGraphNode +-- MinimalSubGraphNode
+IHasDependencies <|-- MinimalSubGraphNode
+SubGraphNode +-- SubGraphHelper
+SubGraphNode +-- SubGraphAssetReference
+SubGraphNode +-- AssetReference
+@enduml

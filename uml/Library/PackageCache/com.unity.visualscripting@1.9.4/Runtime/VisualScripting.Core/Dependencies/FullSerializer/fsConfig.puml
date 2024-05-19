@@ -1,0 +1,19 @@
+@startuml
+class fsGlobalConfig <<static>> {
+    + {static} IsCaseSensitive : bool = true
+    + {static} AllowInternalExceptions : bool = true
+    + {static} InternalFieldPrefix : string = "$"
+}
+class fsConfig {
+    + SerializeAttributes : Type[]
+    + IgnoreSerializeAttributes : Type[]
+    + DefaultMemberSerialization : fsMemberSerialization
+    + GetJsonNameFromMemberName : Func<string, MemberInfo, string>
+    + EnablePropertySerialization : bool = true
+    + SerializeNonAutoProperties : bool = false
+    + SerializeNonPublicSetProperties : bool = true
+    + CustomDateTimeFormatString : string = null
+    + Serialize64BitIntegerAsString : bool = false
+    + SerializeEnumsAsInteger : bool = false
+}
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IUnityObjectOwnable {
+    owner : UnityObject <<get>> <<set>>
+}
+@enduml

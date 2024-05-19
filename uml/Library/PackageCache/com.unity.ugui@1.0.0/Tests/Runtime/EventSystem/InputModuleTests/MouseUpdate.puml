@@ -1,0 +1,8 @@
+@startuml
+class MouseUpdate {
+    - m_FakeBaseInput : FakeBaseInput
+    - Awake() : void
+    - Update() : void
+}
+MonoBehaviour <|-- MouseUpdate
+@enduml

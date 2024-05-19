@@ -1,0 +1,27 @@
+@startuml
+class DragAndDropManipulator {
+    + <<const>> overlayClassName : string = "DragAndDropOverlay"
+    <<const>> - k_DragReceiverClassName : string = "DragReceiver"
+    -  <<event>> onDragPerform : Action<IList<DragAndDropData>, bool> 
+    - m_OverlayVisual : VisualElement
+    - m_CanStartDrag : Func<bool>
+    <<const>> - k_DragOverAddClassName : string
+    {static} <<readonly>> - k_SupportedPsdExtensions : List<string>
+    - m_IsDragging : bool
+    - m_IsChildDragged : bool
+    - isActiveDrag : bool <<get>>
+    + DragAndDropManipulator(overlayVisual:VisualElement, canDragStart:Func<bool>, dragPerform:Action<IList<DragAndDropData>, bool>)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - OnDragEnter(evt:DragEnterEvent) : void
+    - TryStartDrag() : void
+    - StopDragging() : void
+    - OnDragUpdate(evt:DragUpdatedEvent) : void
+    - OnDragExit(evt:DragExitedEvent) : void
+    - OnDragLeave(evt:DragLeaveEvent) : void
+    - UpdateVisuals() : void
+    - OnDragPerform(evt:DragPerformEvent) : void
+    {static} - RetrieveDraggedSprites(objectReferences:Object[]) : List<DragAndDropData>
+}
+Manipulator <|-- DragAndDropManipulator
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class ButtonControl {
+    + pressPoint : float
+    + pressPointOrDefault : float <<get>>
+    + ButtonControl()
+    + <<new>> IsValueConsideredPressed(value:float) : bool
+    + isPressed : bool <<get>>
+    + wasPressedThisFrame : bool <<get>>
+    + wasReleasedThisFrame : bool <<get>>
+    <<internal>> {static} s_GlobalDefaultButtonPressPoint : float
+    <<internal>> {static} s_GlobalDefaultButtonReleaseThreshold : float
+    <<internal>> <<const>> kMinButtonPressPoint : float = 0.0001f
+}
+AxisControl <|-- ButtonControl
+@enduml

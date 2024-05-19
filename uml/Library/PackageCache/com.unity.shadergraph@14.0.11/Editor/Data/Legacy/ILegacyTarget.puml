@@ -1,0 +1,5 @@
+@startuml
+interface ILegacyTarget {
+    TryUpgradeFromMasterNode(masterNode:IMasterNode1, blockMap:Dictionary<BlockFieldDescriptor, int>) : bool
+}
+@enduml

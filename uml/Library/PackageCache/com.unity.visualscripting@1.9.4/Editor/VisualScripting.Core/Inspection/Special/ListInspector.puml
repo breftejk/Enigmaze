@@ -1,0 +1,18 @@
+@startuml
+class ListInspector {
+    + ListInspector(metadata:Metadata)
+    # adaptor : MetadataListAdaptor <<get>> <<set>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+class ProjectAssemblyOptionsListInspector {
+    + ProjectAssemblyOptionsListInspector(metadata:Metadata)
+    - adaptor : ProjectAssemblyOptionsListAdaptor <<get>> <<set>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- ListInspector
+Inspector <|-- ProjectAssemblyOptionsListInspector
+@enduml

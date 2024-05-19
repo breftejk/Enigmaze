@@ -1,0 +1,13 @@
+@startuml
+class BackupSettings {
+    - <<const>> Title : string = "Backup Graphs"
+    - <<const>> ButtonBackupLabel : string = "Create Backup"
+    - <<const>> ButtonRestoreLabel : string = "Restore Backup"
+    + OnGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> defaultsButton : GUIStyle
+}
+BackupSettings +-- Styles
+@enduml

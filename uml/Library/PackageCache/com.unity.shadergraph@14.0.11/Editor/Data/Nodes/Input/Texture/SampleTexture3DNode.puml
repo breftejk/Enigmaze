@@ -1,0 +1,27 @@
+@startuml
+class SampleTexture3DNode {
+    + <<const>> OutputSlotRGBAId : int = 0
+    + <<const>> OutputSlotRId : int = 5
+    + <<const>> OutputSlotGId : int = 6
+    + <<const>> OutputSlotBId : int = 7
+    + <<const>> OutputSlotAId : int = 8
+    + <<const>> TextureInputId : int = 1
+    + <<const>> UVInput : int = 2
+    + <<const>> SamplerInput : int = 3
+    + <<const>> LodInput : int = 4
+    <<const>> - kTextureInputName : string = "Texture"
+    <<const>> - kUVInputName : string = "UV"
+    <<const>> - kSamplerInputName : string = "Sampler"
+    - m_RGBAPins : RGBANodeOutput
+    - m_Mip3DSamplingInputs : Mip3DSamplingInputs
+    + <<override>> hasPreview : bool <<get>>
+    - m_MipSamplingMode : Texture3DMipSamplingMode
+    <<internal>> mipSamplingMode : Texture3DMipSamplingMode <<set>> <<get>>
+    - UpdateMipSamplingModeInputs() : void
+    + SampleTexture3DNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<virtual>> GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- SampleTexture3DNode
+IGeneratesBodyCode <|-- SampleTexture3DNode
+@enduml

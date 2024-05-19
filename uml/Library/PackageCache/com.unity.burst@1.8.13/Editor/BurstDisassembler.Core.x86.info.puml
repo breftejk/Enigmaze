@@ -1,0 +1,8 @@
+@startuml
+class BurstDisassembler <<partial>> {
+}
+class X86AsmInstructionInfo {
+    <<internal>> {static} GetX86InstructionInfo(instructionName:string, instructionInfo:string) : bool
+}
+BurstDisassembler +-- X86AsmInstructionInfo
+@enduml

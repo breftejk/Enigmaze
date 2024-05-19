@@ -1,0 +1,133 @@
+@startuml
+class StructFields <<static>> {
+}
+struct Attributes {
+    + {static} name : string = "Attributes"
+    + {static} positionOS : FieldDescriptor
+    + {static} normalOS : FieldDescriptor
+    + {static} tangentOS : FieldDescriptor
+    + {static} uv0 : FieldDescriptor
+    + {static} uv1 : FieldDescriptor
+    + {static} uv2 : FieldDescriptor
+    + {static} uv3 : FieldDescriptor
+    + {static} weights : FieldDescriptor
+    + {static} indices : FieldDescriptor
+    + {static} color : FieldDescriptor
+    + {static} instanceID : FieldDescriptor
+    + {static} vertexID : FieldDescriptor
+}
+struct Varyings {
+    + {static} name : string = "Varyings"
+    + {static} positionCS : FieldDescriptor
+    + {static} positionWS : FieldDescriptor
+    + {static} positionPredisplacementWS : FieldDescriptor
+    + {static} normalWS : FieldDescriptor
+    + {static} tangentWS : FieldDescriptor
+    + {static} texCoord0 : FieldDescriptor
+    + {static} texCoord1 : FieldDescriptor
+    + {static} texCoord2 : FieldDescriptor
+    + {static} texCoord3 : FieldDescriptor
+    + {static} color : FieldDescriptor
+    + {static} screenPosition : FieldDescriptor
+    + {static} instanceID : FieldDescriptor
+    + {static} cullFace : FieldDescriptor
+    + {static} vertexID : FieldDescriptor
+    + {static} stereoTargetEyeIndexAsRTArrayIdx : FieldDescriptor
+    + {static} stereoTargetEyeIndexAsBlendIdx0 : FieldDescriptor
+    + {static} worldToElement0 : FieldDescriptor
+    + {static} worldToElement1 : FieldDescriptor
+    + {static} worldToElement2 : FieldDescriptor
+    + {static} elementToWorld0 : FieldDescriptor
+    + {static} elementToWorld1 : FieldDescriptor
+    + {static} elementToWorld2 : FieldDescriptor
+}
+struct VertexDescriptionInputs {
+    + {static} name : string = "VertexDescriptionInputs"
+    + {static} ObjectSpaceNormal : FieldDescriptor
+    + {static} ViewSpaceNormal : FieldDescriptor
+    + {static} WorldSpaceNormal : FieldDescriptor
+    + {static} TangentSpaceNormal : FieldDescriptor
+    + {static} ObjectSpaceTangent : FieldDescriptor
+    + {static} ViewSpaceTangent : FieldDescriptor
+    + {static} WorldSpaceTangent : FieldDescriptor
+    + {static} TangentSpaceTangent : FieldDescriptor
+    + {static} ObjectSpaceBiTangent : FieldDescriptor
+    + {static} ViewSpaceBiTangent : FieldDescriptor
+    + {static} WorldSpaceBiTangent : FieldDescriptor
+    + {static} TangentSpaceBiTangent : FieldDescriptor
+    + {static} ObjectSpaceViewDirection : FieldDescriptor
+    + {static} ViewSpaceViewDirection : FieldDescriptor
+    + {static} WorldSpaceViewDirection : FieldDescriptor
+    + {static} TangentSpaceViewDirection : FieldDescriptor
+    + {static} ObjectSpacePosition : FieldDescriptor
+    + {static} ViewSpacePosition : FieldDescriptor
+    + {static} WorldSpacePosition : FieldDescriptor
+    + {static} TangentSpacePosition : FieldDescriptor
+    + {static} AbsoluteWorldSpacePosition : FieldDescriptor
+    + {static} ObjectSpacePositionPredisplacement : FieldDescriptor
+    + {static} ViewSpacePositionPredisplacement : FieldDescriptor
+    + {static} WorldSpacePositionPredisplacement : FieldDescriptor
+    + {static} TangentSpacePositionPredisplacement : FieldDescriptor
+    + {static} AbsoluteWorldSpacePositionPredisplacement : FieldDescriptor
+    + {static} ScreenPosition : FieldDescriptor
+    + {static} NDCPosition : FieldDescriptor
+    + {static} PixelPosition : FieldDescriptor
+    + {static} uv0 : FieldDescriptor
+    + {static} uv1 : FieldDescriptor
+    + {static} uv2 : FieldDescriptor
+    + {static} uv3 : FieldDescriptor
+    + {static} VertexColor : FieldDescriptor
+    + {static} TimeParameters : FieldDescriptor
+    + {static} BoneWeights : FieldDescriptor
+    + {static} BoneIndices : FieldDescriptor
+    + {static} VertexID : FieldDescriptor
+}
+struct SurfaceDescriptionInputs {
+    + {static} name : string = "SurfaceDescriptionInputs"
+    + {static} ObjectSpaceNormal : FieldDescriptor
+    + {static} ViewSpaceNormal : FieldDescriptor
+    + {static} WorldSpaceNormal : FieldDescriptor
+    + {static} TangentSpaceNormal : FieldDescriptor
+    + {static} ObjectSpaceTangent : FieldDescriptor
+    + {static} ViewSpaceTangent : FieldDescriptor
+    + {static} WorldSpaceTangent : FieldDescriptor
+    + {static} TangentSpaceTangent : FieldDescriptor
+    + {static} ObjectSpaceBiTangent : FieldDescriptor
+    + {static} ViewSpaceBiTangent : FieldDescriptor
+    + {static} WorldSpaceBiTangent : FieldDescriptor
+    + {static} TangentSpaceBiTangent : FieldDescriptor
+    + {static} ObjectSpaceViewDirection : FieldDescriptor
+    + {static} ViewSpaceViewDirection : FieldDescriptor
+    + {static} WorldSpaceViewDirection : FieldDescriptor
+    + {static} TangentSpaceViewDirection : FieldDescriptor
+    + {static} ObjectSpacePosition : FieldDescriptor
+    + {static} ViewSpacePosition : FieldDescriptor
+    + {static} WorldSpacePosition : FieldDescriptor
+    + {static} TangentSpacePosition : FieldDescriptor
+    + {static} AbsoluteWorldSpacePosition : FieldDescriptor
+    + {static} ObjectSpacePositionPredisplacement : FieldDescriptor
+    + {static} ViewSpacePositionPredisplacement : FieldDescriptor
+    + {static} WorldSpacePositionPredisplacement : FieldDescriptor
+    + {static} TangentSpacePositionPredisplacement : FieldDescriptor
+    + {static} AbsoluteWorldSpacePositionPredisplacement : FieldDescriptor
+    + {static} ScreenPosition : FieldDescriptor
+    + {static} NDCPosition : FieldDescriptor
+    + {static} PixelPosition : FieldDescriptor
+    + {static} uv0 : FieldDescriptor
+    + {static} uv1 : FieldDescriptor
+    + {static} uv2 : FieldDescriptor
+    + {static} uv3 : FieldDescriptor
+    + {static} VertexColor : FieldDescriptor
+    + {static} TimeParameters : FieldDescriptor
+    + {static} FaceSign : FieldDescriptor
+    + {static} BoneWeights : FieldDescriptor
+    + {static} BoneIndices : FieldDescriptor
+    + {static} VertexID : FieldDescriptor
+    + {static} worldToElement : FieldDescriptor
+    + {static} elementToWorld : FieldDescriptor
+}
+StructFields +-- Attributes
+StructFields +-- Varyings
+StructFields +-- VertexDescriptionInputs
+StructFields +-- SurfaceDescriptionInputs
+@enduml

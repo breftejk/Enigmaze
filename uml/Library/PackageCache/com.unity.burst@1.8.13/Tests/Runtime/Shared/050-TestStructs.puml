@@ -1,0 +1,575 @@
+@startuml
+class TestStructs <<partial>> {
+    + {static} test_struct_func_call_by_value() : float
+    + {static} test_struct_func_call_by_ref() : float
+    + {static} test_struct_func_call_instance() : float
+    + {static} test_struct_constructor_nondefault() : float
+    + {static} test_struct_constructor_default() : float
+    + {static} test_struct_copysemantic() : float
+    + {static} test_struct_nested() : float
+    + {static} test_struct_multiple_fields(x:float) : float
+    + {static} test_struct_multi_assign() : float
+    + {static} test_custom_struct_return_simple() : int
+    + {static} test_custom_struct_return_constructor() : int
+    + {static} test_struct_self_reference() : int
+    + {static} test_struct_deep() : int
+    + {static} test_struct_empty(x:int) : int
+    + {static} test_struct_with_static_fields() : float
+    + {static} TestStructWithBoolAsInt(value:bool) : bool
+    + {static} TestStructDisposable() : int
+    + {static} TestStructWithStaticFieldWrite() : void
+    + {static} TestStructWithStaticFieldRead() : void
+    + {static} TestExplicitLayoutSize() : int
+    + {static} TestExplicitLayoutStruct() : int
+    {static} - GetColorR(color:Color) : uint
+    {static} - GetColorG(color:Color) : uint
+    + {static} TestExplicitLayoutWrite() : uint
+    {static} - ColorWriteBByRef(color:Color, v:byte) : void
+    + {static} <<unsafe>> TestExplicitLayoutStructUnaligned() : int
+    + {static} <<unsafe>> TestExplicitLayoutStructFixedBuffer(x:ExplicitLayoutStructFixedBuffer) : int
+    + {static} <<unsafe>> TestStructSizingExplicitStructWithSize() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructWithSize() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructWithSize2() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructWithSizeAndPack8() : int
+    + {static} <<unsafe>> TestStructSizingExplicitStructWithSizeAndPack8() : int
+    + {static} <<unsafe>> TestStructExplicitWithSizeAndPack8Wrapper() : int
+    + {static} <<unsafe>> TestStructSequentialWithSizeSmallerThanActual() : int
+    + {static} <<unsafe>> TestStructSequentialWithSizeSmallerThanNatural() : int
+    + {static} <<unsafe>> TestStructExplicitWithSizeSmallerThanActual() : int
+    + {static} <<unsafe>> TestStructExplicitWithSizeAndOverlappingFields() : int
+    + {static} <<unsafe>> TestStructExplicitWithSize() : int
+    + {static} <<unsafe>> TestStructExplicitWithSize17() : int
+    + {static} <<unsafe>> TestStructSizingExplicitStructEmpty() : int
+    + {static} <<unsafe>> TestEmptyStructEmbeddedInStruct() : int
+    + {static} <<unsafe>> TestStructSizingExplicitStructEmptyWithSize() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructEmptyNoAttributes() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructEmpty() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructEmptyWithSize() : int
+    + {static} <<unsafe>> TestStructSizingSequentialStructEmptyWithNonZeroSize() : int
+    + {static} <<unsafe>> TestAutoStruct() : int
+    + {static} TestNestedExplicitLayouts() : int
+    + {static} TestNestedExplicitLayoutsSize() : int
+    + {static} TestBitcast() : uint
+    + {static} TestExplicitStructFromCall() : uint
+    {static} - ReturnStruct() : Color
+    + {static} <<unsafe>> TestExplicitLayoutStructWithFixedArray() : uint
+    + {static} <<unsafe>> TestExplicitLayoutStructWithFixedArraySize() : int
+    - {static} return_value_helper_simple(a:int, b:int) : CustomStruct
+    - {static} return_value_helper_constructor(a:int, b:int) : CustomStruct
+    - {static} byvalue_function_helper(customStruct:CustomStruct) : float
+    - {static} byref_function_helper(customStruct:CustomStruct) : void
+    {static} - copy_struct_with_static_by_value(byValue:StructWithStaticVariables) : StructWithStaticVariables
+    {static} - mutate_struct_with_static_by_ref_value(byValue:StructWithStaticVariables) : void
+    + {static} <<unsafe>> TestRegressionInvalidGetElementPtrStructLayout() : int
+    + {static} <<unsafe>> TestRegressionInvalidGetElementPtrStructLayoutInternal(index:int, limit:int, currentChunk:Chunk**) : int
+    + {static} <<unsafe>> TestExplicitSizeReporting() : int
+    + {static} TestExplicitStructPackedButWithHolesSize() : int
+    + {static} <<unsafe>> TestExplicitStructPackedButWithHolesOffsetC() : int
+    + {static} TestExplicitStructPackedButWithHolesContainerSize() : int
+    + {static} <<unsafe>> TestExplicitStructPackedButWithHolesContainerOffsetC() : int
+    + {static} TestExplicitStructNotPackedWithHolesSize() : int
+    + {static} TestExplicitStructNested() : float
+    + {static} TestExplicitStructNestedAsArgument() : float
+    + {static} TestABITransformIntoExplicitLayoutTransform(a:NetworkEndPoint, b:NetworkEndPoint) : bool
+    + {static} TestSequentialStructWithPaddingAndVectorField(value:SequentialStructWithPaddingAndVectorField) : int
+    - {static} TestSequentialStructWithPaddingAndVectorFieldRefHelper(value:SequentialStructWithPaddingAndVectorField) : void
+    + {static} TestSequentialStructWithPaddingAndVectorFieldRef(value:SequentialStructWithPaddingAndVectorField) : int
+    + {static} <<unsafe>> TestSequentialStructWithPaddingAndVectorFieldPtr() : int
+    + {static} <<unsafe>> TestCreatingVectorTypeFromNonVectorScalarType() : int
+    + {static} <<unsafe>> TestVectorLoadFromExplicitStruct() : int
+    + {static} <<unsafe>> TestVectorStoreToExplicitStruct(a:int2) : int
+    + {static} <<unsafe>> TestStructWithNonBlittableTypes(a:StructWithNonBlittableTypes) : int
+    + {static} <<unsafe>> TestStructWithBlittableTypesWithMarshalAs(a:StructWithNonBlittableTypesWithMarshalAs) : int
+    + {static} TestSizeOfStructWithBlittableTypesWithMarshalAs() : int
+    + {static} <<unsafe>> TestStructWithBlittableTypes(a:StructWithBlittableTypes) : int
+    + {static} TestStructWithPointerDependency() : int
+    + {static} TestExplicitStructNestedFieldAccess() : uint
+    + {static} <<unsafe>> TestSized4096(a:Sized4096, b:Sized4096) : void
+    + {static} <<unsafe>> TestSized4096ManualCopy(a:Sized4096, b:Sized4096) : void
+    + {static} <<unsafe>> TestSized4096CopyToAlloca(a:Sized4096, b:Sized4096) : void
+    + {static} <<unsafe>> TestSized4096CopyToStackAlloc0(a:Sized4096, b:Sized4096) : void
+    + {static} <<unsafe>> TestSized4096CopyToStackAlloc1(a:Sized4096, b:Sized4096) : void
+    + {static} TestMultipleSized4096(a:MultipleSized4096, b:Sized4096) : void
+    + {static} TestMultipleSized4096CopyToAlloca(a:MultipleSized4096, b:Sized4096, c:Sized4096) : void
+    + {static} <<unsafe>> TestFixed4096(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestFixed4096ManualCopy(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestFixed4096CopyToAlloca(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestFixed4096CopyToStackAlloc0(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestFixed4096CopyToStackAlloc1(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestPointersInStruct(a:PointersInStruct, b:Fixed4096) : void
+    - {static} <<unsafe>> GenericGetT(t:T*) : T
+    + {static} <<unsafe>> TestGetStructThroughGeneric(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestGetStructThroughReadArrayElement(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestSetStructThroughWriteArrayElement(a:Fixed4096, b:Fixed4096) : void
+    + {static} <<unsafe>> TestGetSetStructThroughReadWriteArrayElement(a:Fixed4096) : void
+    + {static} <<unsafe>> TestGetSetStructThroughReadWriteArrayElementNoAlias(a:Fixed4096) : void
+    - {static} <<readonly>> withPadding : WithPadding
+    + {static} <<unsafe>> TestWithPadding(o:WithPadding*) : byte
+    - {static} <<readonly>> myCompilerGeneratedButNotReally : MyCompilerGeneratedButNotReally
+    + {static} <<unsafe>> TestMyCompilerGeneratedButNotReallyStruct(o:MyCompilerGeneratedButNotReally*) : int
+    + {static} <<unsafe>> TestUninitFieldsAreZero(o:UninitFieldsAreZero*) : void
+    + {static} <<unsafe>> TestExplicitSizesMatch() : int
+    + {static} <<unsafe>> TestSequentialLayoutAndBoolIsSupported() : long
+}
+struct ExplicitLayoutStructUnaligned {
+    + a : int
+    + b : sbyte
+    + c : int
+    + <<fixed>> d : int
+}
+struct ExplicitLayoutStructFixedBuffer {
+    + First : int
+    + <<fixed>> Data : int
+    + ExplicitLayoutStructFixedBuffer(x:int)
+}
+struct ExplicitStructWithSize {
+    + a : int
+    + b : sbyte
+    + c : int
+}
+struct SequentialStructWithSize {
+    + a : int
+    + b : int
+    + c : sbyte
+}
+struct SequentialStructWithSize2 {
+    + a : int
+    + b : int
+    + c : sbyte
+}
+struct StructSequentialWithSizeAndPack8 {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeAndPack8 {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeAndPack8Wrapper {
+    + FieldA : byte
+    + FieldB : StructExplicitWithSizeAndPack8
+    + StructExplicitWithSizeAndPack8Wrapper(a:byte, b:StructExplicitWithSizeAndPack8)
+}
+struct StructSequentialWithSizeSmallerThanActual {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructSequentialWithSizeSmallerThanNatural {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeSmallerThanActual {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeAndOverlappingFields {
+    + FieldA : double
+    + FieldB : int
+    + FieldC : int
+}
+struct StructExplicitWithSize {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSize17 {
+    + FieldA : double
+    + FieldB : int
+}
+struct ExplicitStructEmpty {
+}
+struct ExplicitStructEmptyContainer {
+    + A : ExplicitStructEmpty
+    + B : int
+}
+struct ExplicitStructEmptyWithSize {
+}
+struct SequentialStructEmptyNoAttributes {
+}
+struct SequentialStructEmpty {
+}
+struct SequentialStructEmptyWithSize {
+}
+struct SequentialStructEmptyWithNonZeroSize {
+}
+struct AutoStruct {
+    + a : int
+}
+struct StructInvalid {
+    + WowThatStringIsNotSupported : string
+}
+struct EmptyStruct {
+    + Increment(x:int) : int
+}
+struct CustomStruct {
+    + firstfield : int
+    + value : int
+    + CustomStruct(a:int, b:int)
+}
+struct DeepStruct2 {
+    + value : DeepStruct1
+}
+struct DeepStruct1 {
+    + value : DeepStruct0
+}
+struct DeepStruct0 {
+    + value : int
+    + SetValue(value:int) : void
+    + GetValue() : int
+}
+struct CustomStruct2 {
+    + value : float
+    + returnDoubleValue() : float
+    + CustomStruct2(initialValue:float)
+}
+struct TestVector4 {
+    + x : float
+    + y : float
+    + z : float
+    + w : float
+}
+struct StructWithBoolAsInt {
+    - _value : int
+    + StructWithBoolAsInt(value:bool)
+}
+struct TestNestedStruct {
+    + v1 : TestVector4
+}
+struct MultiAssignStruct {
+    + x : float
+    + y : float
+    + z : float
+    + MultiAssignStruct(val:float)
+}
+struct SelfReferenceStruct {
+    + Value : int
+    + <<unsafe>> Left : SelfReferenceStruct*
+    + <<unsafe>> Right : SelfReferenceStruct*
+}
+struct StructForSizeOf {
+    + Value1 : IntPtr
+    + Vec1 : Float4
+    + Value2 : IntPtr
+    + Vec2 : Float4
+}
+struct StructWithStaticField {
+    + {static} MyField : int
+    + CheckWrite() : void
+    + CheckRead() : int
+}
+struct Float4 {
+    + x : float
+    + y : float
+    + z : float
+    + w : float
+}
+struct StructWithStaticVariables {
+    <<const>> - static_const_float : float = 9
+    {static} - static_string : string = "hello"
+    + myFloat : float
+    + myFloat4 : Float4
+    {static} - static_float_2 : float = 5
+}
+struct StructDisposable {
+    + x : int
+    + Dispose() : void
+}
+struct Color {
+    + Value : uint
+    + R : byte
+    + G : byte
+    + B : byte
+    + A : byte
+    + GetColorB() : byte
+}
+struct NumberPair {
+    + UnsignedA : uint
+    + SignedA : int
+    + UnsignedB : uint
+    + SignedB : int
+}
+struct NestedExplicit0 {
+    + Next : NestedExplicit1
+    + NextAsInt : int
+}
+struct NestedExplicit1 {
+    + Next : NestedExplicit2
+    + NextAsInt : int
+}
+struct NestedExplicit2 {
+    + FValue : float
+    + IValue : int
+}
+struct FloatRepr {
+    + Value : float
+    + AsUint : uint
+}
+struct PaddedStruct {
+    + Value : int
+}
+struct FixedArrayExplitLayoutStruct {
+    + <<fixed>> Bytes : byte
+    + <<fixed>> Shorts : ushort
+    + UpperUInt : uint
+    + LowerUInt : uint
+}
+struct Chunk {
+    + Archetype : Chunk*
+    + metaChunkEntity : Chunk*
+    + Count : int
+}
+struct Packet {
+    + data : int
+    + <<fixed>> moreData : byte
+}
+struct ExplicitStructPackedButWithHoles {
+    + A : byte
+    + B : long
+    + C : byte
+}
+struct ExplicitStructPackedButWithHolesContainer {
+    + A : ExplicitStructPackedButWithHoles
+    + B : int
+    + C : ExplicitStructPackedButWithHoles
+}
+struct ExplicitStructNotPackedWithHoles {
+    + A : int
+    + B : int
+}
+struct StructWithNestUnion {
+    + Value : UnionValue
+}
+struct UnionValue {
+    + Min : float
+    + Max : float
+    + Property : uint
+}
+struct NetworkEndPoint {
+    <<internal>> <<const>> ArrayLength : int = 2
+    <<internal>> <<fixed>> data : byte
+    <<internal>> family : ushort
+    <<internal>> length : int
+    + Compare(other:NetworkEndPoint) : bool
+}
+struct SequentialStructWithPaddingAndVectorField {
+    + a : byte
+    + b : float2
+}
+struct ExplicitVectors {
+    + A : int
+    + B : int2
+}
+struct StructWithNestUnionContainer {
+    + Something : StructWithNestUnion <<get>>
+}
+struct StructWithBlittableTypes {
+    + StructWithBlittableTypes(a:int, b:int, c:int, d:int2)
+    + a : int
+    + b : int
+    + c : int
+    + d : int2
+    + Value : object <<get>>
+}
+struct StructWithNonBlittableTypes {
+    + StructWithNonBlittableTypes(a0:byte, b0:byte, c0:byte, d0:bool, a1:byte, b1:byte, c1:byte, d1:bool, check:int)
+    + a0 : byte
+    + b0 : byte
+    + c0 : byte
+    + d0 : bool
+    + a1 : byte
+    + b1 : byte
+    + c1 : byte
+    + d1 : bool
+    + Check : int
+    + Value : object <<get>>
+}
+struct StructWithNonBlittableTypesWithMarshalAs {
+    + StructWithNonBlittableTypesWithMarshalAs(a0:byte, b0:byte, c0:byte, d0:bool, a1:byte, b1:byte, c1:byte, d1:bool, check:int)
+    + a0 : byte
+    + b0 : byte
+    + c0 : byte
+    + d0 : bool
+    + a1 : byte
+    + b1 : byte
+    + c1 : byte
+    + d1 : bool
+    + Check : int
+    + Value : object <<get>>
+}
+struct StructWithPointerDependency {
+    + PointerToNoDependency : StructWithNoDependency*
+    + DirectNoDependency : StructWithNoDependency
+}
+struct StructWithNoDependency {
+    + Value : int
+}
+struct Sized4096 {
+    + First : byte
+}
+struct MultipleSized4096 {
+    + a : Sized4096
+    + b : Sized4096
+}
+struct Fixed4096 {
+    + <<fixed>> First : byte
+}
+struct PointersInStruct {
+    + a : byte*
+    + b : byte*
+}
+struct Fixed1021 {
+    + <<unsafe>> <<fixed>> Data : byte
+}
+struct WithPadding {
+    + A : byte
+}
+struct MyCompilerGeneratedButNotReally {
+    + <<fixed>> A : int
+}
+struct UninitFieldsAreZero {
+    + <<fixed>> a : ushort
+    + <<fixed>> b : byte
+    + UninitFieldsAreZero(x:ushort, y:ushort, z:ushort)
+}
+struct ExplicitSizesMatchB {
+    + U : uint
+}
+struct ExplicitSizesMatchC {
+    + L : ulong
+    + U : uint
+    + S : ushort
+    + B : byte
+}
+struct ExplicitSizesMatch {
+    + A : int
+    + B : ExplicitSizesMatchB
+    + C : ExplicitSizesMatchC
+}
+struct SequentialLayoutAndBoolStruct {
+    + Bool : bool
+    + SequentialLayout : SequentialLayoutStruct
+    + Int64 : long
+}
+struct Provider {
+    + Value : object <<get>>
+}
+class Provider {
+    + Value : object <<get>>
+}
+class Provider {
+    + Value : object <<get>>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+struct SequentialLayoutStruct {
+    + Byte : byte
+}
+TestStructs +-- ExplicitLayoutStructUnaligned
+TestStructs +-- ExplicitLayoutStructFixedBuffer
+TestStructs +-- ExplicitStructWithSize
+TestStructs +-- SequentialStructWithSize
+TestStructs +-- SequentialStructWithSize2
+TestStructs +-- StructSequentialWithSizeAndPack8
+TestStructs +-- StructExplicitWithSizeAndPack8
+TestStructs +-- StructExplicitWithSizeAndPack8Wrapper
+TestStructs +-- StructSequentialWithSizeSmallerThanActual
+TestStructs +-- StructSequentialWithSizeSmallerThanNatural
+TestStructs +-- StructExplicitWithSizeSmallerThanActual
+TestStructs +-- StructExplicitWithSizeAndOverlappingFields
+TestStructs +-- StructExplicitWithSize
+TestStructs +-- StructExplicitWithSize17
+TestStructs +-- ExplicitStructEmpty
+TestStructs +-- ExplicitStructEmptyContainer
+TestStructs +-- ExplicitStructEmptyWithSize
+TestStructs +-- SequentialStructEmptyNoAttributes
+TestStructs +-- SequentialStructEmpty
+TestStructs +-- SequentialStructEmptyWithSize
+TestStructs +-- SequentialStructEmptyWithNonZeroSize
+TestStructs +-- AutoStruct
+TestStructs +-- StructInvalid
+TestStructs +-- EmptyStruct
+TestStructs +-- CustomStruct
+TestStructs +-- DeepStruct2
+TestStructs +-- DeepStruct1
+TestStructs +-- DeepStruct0
+TestStructs +-- CustomStruct2
+TestStructs +-- TestVector4
+TestStructs +-- StructWithBoolAsInt
+TestStructs +-- TestNestedStruct
+TestStructs +-- MultiAssignStruct
+TestStructs +-- SelfReferenceStruct
+TestStructs +-- StructForSizeOf
+TestStructs +-- StructWithStaticField
+TestStructs +-- Float4
+TestStructs +-- StructWithStaticVariables
+TestStructs +-- StructDisposable
+IDisposable <|-- StructDisposable
+TestStructs +-- Color
+TestStructs +-- NumberPair
+TestStructs +-- NestedExplicit0
+TestStructs +-- NestedExplicit1
+TestStructs +-- NestedExplicit2
+TestStructs +-- FloatRepr
+TestStructs +-- PaddedStruct
+TestStructs +-- FixedArrayExplitLayoutStruct
+TestStructs +-- Chunk
+TestStructs +-- Packet
+TestStructs +-- ExplicitStructPackedButWithHoles
+TestStructs +-- ExplicitStructPackedButWithHolesContainer
+TestStructs +-- ExplicitStructNotPackedWithHoles
+TestStructs +-- StructWithNestUnion
+TestStructs +-- UnionValue
+TestStructs +-- NetworkEndPoint
+TestStructs +-- SequentialStructWithPaddingAndVectorField
+TestStructs +-- ExplicitVectors
+TestStructs +-- StructWithNestUnionContainer
+TestStructs +-- StructWithBlittableTypes
+IArgumentProvider <|-- StructWithBlittableTypes
+TestStructs +-- StructWithNonBlittableTypes
+IArgumentProvider <|-- StructWithNonBlittableTypes
+TestStructs +-- StructWithNonBlittableTypesWithMarshalAs
+IArgumentProvider <|-- StructWithNonBlittableTypesWithMarshalAs
+TestStructs +-- StructWithPointerDependency
+TestStructs +-- StructWithNoDependency
+TestStructs +-- Sized4096
+TestStructs +-- MultipleSized4096
+TestStructs +-- Fixed4096
+TestStructs +-- PointersInStruct
+TestStructs +-- Fixed1021
+TestStructs +-- WithPadding
+TestStructs +-- MyCompilerGeneratedButNotReally
+TestStructs +-- UninitFieldsAreZero
+TestStructs +-- ExplicitSizesMatchB
+TestStructs +-- ExplicitSizesMatchC
+TestStructs +-- ExplicitSizesMatch
+TestStructs +-- SequentialLayoutAndBoolStruct
+ExplicitLayoutStructFixedBuffer +-- Provider
+IArgumentProvider <|-- Provider
+NetworkEndPoint +-- Provider
+IArgumentProvider <|-- Provider
+SequentialStructWithPaddingAndVectorField +-- Provider
+IArgumentProvider <|-- Provider
+Sized4096 +-- Provider
+IArgumentProvider <|-- Provider
+MultipleSized4096 +-- Provider
+IArgumentProvider <|-- Provider
+Fixed4096 +-- Provider
+IArgumentProvider <|-- Provider
+PointersInStruct +-- Provider
+IArgumentProvider <|-- Provider
+WithPadding +-- Provider
+IArgumentProvider <|-- Provider
+SequentialLayoutAndBoolStruct +-- SequentialLayoutStruct
+@enduml

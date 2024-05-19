@@ -1,0 +1,5 @@
+@startuml
+class GetInstallerTmpFileName <<static>> {
+    <<internal>> {static} ForPlatform() : string
+}
+@enduml

@@ -1,0 +1,73 @@
+@startuml
+abstract class "StateTransitionWidget`1"<TStateTransition> {
+    # StateTransitionWidget(canvas:StateCanvas, transition:TStateTransition)
+    # transition : TStateTransition <<get>>
+    # transitionDebugData : IStateTransitionDebugData <<get>>
+    - description : StateTransitionDescription
+    - analysis : StateTransitionAnalysis <<get>>
+    # <<override>> CacheDescription() : void
+    + <<override>> BeforeFrame() : void
+    - label : GUIContent <<get>>
+    - <<readonly>> siblingStateTransitions : List<IStateTransition>
+    - sourcePosition : Rect
+    - destinationPosition : Rect
+    - sourceEdge : Edge
+    - entryEdge : Edge
+    - exitEdge : Edge
+    - destinationEdge : Edge
+    - sourceEdgeCenter : Vector2
+    - entryEdgeCenter : Vector2
+    - exitEdgeCenter : Vector2
+    - destinationEdgeCenter : Vector2
+    - middle : Vector2
+    - _position : Rect
+    - _clippingPosition : Rect
+    - targetInnerWidth : float
+    - currentInnerWidth : float
+    - revealInitialized : bool
+    - minBend : float <<get>>
+    - relativeBend : float <<get>>
+    - sourceEdge : Edge <<get>>
+    + <<override>> positionDependencies : IEnumerable<IWidget> <<get>>
+    + <<override>> positionDependers : IEnumerable<IWidget> <<get>>
+    + iconPosition : Rect <<get>>
+    + clipPosition : Rect <<get>>
+    + labelInnerPosition : Rect <<get>>
+    + <<override>> position : Rect <<get>> <<set>>
+    + <<override>> clippingPosition : Rect <<get>>
+    + <<override>> CachePositionFirstPass() : void
+    + <<override>> CachePosition() : void
+    # <<virtual>> baseColor : NodeColorMix <<get>>
+    # <<override>> color : NodeColorMix <<get>>
+    # <<override>> shape : NodeShape <<get>>
+    - revealLabel : bool <<get>>
+    - revealedLabel : bool
+    - CheckReveal() : void
+    # <<override>> dim : bool <<get>>
+    + <<override>> DrawForeground() : void
+    + <<override>> DrawBackground() : void
+    - DrawConnection() : void
+    + <<override>> canSelect : bool <<get>>
+    + <<override>> canDrag : bool <<get>>
+    # <<override>> snapToGrid : bool <<get>>
+    + <<override>> canDelete : bool <<get>>
+    - <<readonly>> droplets : List<float>
+    - dropTime : float
+    - lastBranchTime : float
+    # <<virtual>> showDroplets : bool <<get>>
+    # <<virtual>> GetDropletSize() : Vector2
+    # <<virtual>> DrawDroplet(position:Rect) : void
+    - DrawDroplets() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> label : GUIStyle
+    + {static} <<readonly>> labelInverted : GUIStyle
+    + {static} <<readonly>> eventIcon : GUIStyle
+    + {static} <<readonly>> spaceAroundIcon : float = 5
+    + {static} <<readonly>> revealSpeed : float = 15
+}
+"NodeWidget`2" "<StateCanvas,TStateTransition>" <|-- "StateTransitionWidget`1"
+IStateTransitionWidget <|-- "StateTransitionWidget`1"
+"StateTransitionWidget`1" +-- Styles
+@enduml

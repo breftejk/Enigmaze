@@ -1,0 +1,84 @@
+@startuml
+class GameManager {
+    + {static} Instance : GameManager
+    + Username : string <<get>> = ""
+    + CurrentLevel : int <<get>> = 1
+    - Awake() : void
+    + SetUsername(name:string) : void
+    + IncrementLevel() : void
+    + ResetProgress() : void
+    - LoadProgress() : void
+}
+MonoBehaviour <|-- GameManager
+class Health {
+    + maxHealth : float = 100f
+    + currentHealth : float
+    + animator : Animator
+    + healthSlider : Slider
+    + healthBarUIPrefab : GameObject
+    + healthBarOffset : Vector3
+    - Start() : void
+    + TakeDamage(amount:float) : void
+    + Heal(amount:float) : void
+    - Die() : void
+    - RemoveCharacterAfterDelay(delay:float) : IEnumerator
+}
+MonoBehaviour <|-- Health
+class PlayerController {
+    + attackComponent : Attack
+    - movementInput : Vector2
+    - Awake() : void
+    - FixedUpdate() : void
+    - OnMove(movementValue:InputValue) : void
+    + OnFire() : void
+}
+CharacterBaseController <|-- PlayerController
+class AIEnemyController {
+    + target : Transform
+    + stopDistance : float = 0.1f
+    + obstacleDetectionDistance : float = 1f
+    + sideDetectionAngle : float = 45f
+    + detectionRadius : float = 5f
+    + attackComponent : Attack
+    - Awake() : void
+    - FixedUpdate() : void
+    - AvoidObstacles(direction:Vector2) : Vector2
+    - UpdateAnimation(direction:Vector2) : void
+}
+CharacterBaseController <|-- AIEnemyController
+class Attack {
+    + animator : Animator
+    + swordBoxCollider : BoxCollider2D
+    + attackDamage : float = 10f
+    + attackDuration : float = 0.1f
+    + attackCooldown : float = 3f
+    - _canAttack : bool = true
+    - _isAttacking : bool = false
+    - Start() : void
+    - OnTriggerEnter2D(collision:Collider2D) : void
+    + TriggerAttack() : void
+    - PerformAttack() : IEnumerator
+    - DamageTarget(target:Collider2D, message:string) : void
+}
+MonoBehaviour <|-- Attack
+abstract class CharacterBaseController {
+    + movementSpeed : float = 1f
+    + contactFilter : ContactFilter2D
+    - # _health : Health
+    - # animator : Animator
+    - <<readonly>> _collisions : List<RaycastHit2D>
+    - _isAttacking : bool = false
+    - # _isWalking : bool
+    - _rb : Rigidbody2D
+    - # _spriteRenderer : SpriteRenderer
+    - Start() : void
+    - # TryMoving(direction:Vector2) : bool
+}
+MonoBehaviour <|-- CharacterBaseController
+class HealthBarFollow {
+    + target : Transform
+    + offset : Vector3
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- HealthBarFollow
+@enduml

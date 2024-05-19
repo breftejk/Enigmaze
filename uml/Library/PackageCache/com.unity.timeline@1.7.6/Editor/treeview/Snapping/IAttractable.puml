@@ -1,0 +1,15 @@
+@startuml
+enum AttractedEdge {
+    None,
+    Left,
+    Right,
+}
+interface IAttractable {
+    ShouldSnapTo(snappable:ISnappable) : bool
+    start : double <<get>>
+    end : double <<get>>
+}
+interface IAttractionHandler {
+    OnAttractedEdge(attractable:IAttractable, manipulateEdges:ManipulateEdges, edge:AttractedEdge, time:double) : void
+}
+@enduml

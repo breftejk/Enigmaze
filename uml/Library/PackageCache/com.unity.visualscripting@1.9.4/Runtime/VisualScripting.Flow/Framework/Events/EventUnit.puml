@@ -1,0 +1,33 @@
+@startuml
+abstract class "EventUnit`1"<TArgs> {
+    + <<virtual>> CreateData() : IGraphElementData
+    + coroutine : bool <<get>> <<set>> = false
+    + trigger : ControlOutput <<get>>
+    # {abstract} register : bool <<get>>
+    # <<override>> Definition() : void
+    + <<virtual>> GetHook(reference:GraphReference) : EventHook
+    + <<virtual>> StartListening(stack:GraphStack) : void
+    + <<virtual>> StopListening(stack:GraphStack) : void
+    + <<override>> Uninstantiate(instance:GraphReference) : void
+    {static} - StopAllCoroutines(activeCoroutines:HashSet<Flow>) : void
+    + IsListening(pointer:GraphPointer) : bool
+    + Trigger(reference:GraphReference, args:TArgs) : void
+    - # <<virtual>> InternalTrigger(reference:GraphReference, args:TArgs) : void
+    # <<virtual>> ShouldTrigger(flow:Flow, args:TArgs) : bool
+    # <<virtual>> AssignArguments(flow:Flow, args:TArgs) : void
+    - Run(flow:Flow) : void
+    # {static} CompareNames(flow:Flow, namePort:ValueInput, calledName:string) : bool
+}
+class Data {
+    + hook : EventHook
+    + handler : Delegate
+    + isListening : bool
+    + activeCoroutines : HashSet<Flow>
+}
+Unit <|-- "EventUnit`1"
+IEventUnit <|-- "EventUnit`1"
+IGraphElementWithData <|-- "EventUnit`1"
+"IGraphEventHandler`1" "<TArgs>" <|-- "EventUnit`1"
+"EventUnit`1" +-- Data
+IGraphElementData <|-- Data
+@enduml

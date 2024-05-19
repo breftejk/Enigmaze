@@ -1,0 +1,53 @@
+@startuml
+abstract class AsepriteDataProvider {
+    + dataProvider : AsepriteImporter
+}
+class SpriteBoneDataProvider {
+    + GetBones(guid:GUID) : List<SpriteBone>
+    + SetBones(guid:GUID, bones:List<SpriteBone>) : void
+}
+class TextureDataProvider {
+    - m_ReadableTexture : Texture2D
+    - m_OriginalTexture : Texture2D
+    - textureImporter : AsepriteImporter <<get>>
+    + texture : Texture2D <<get>>
+    + previewTexture : Texture2D <<get>>
+    + GetReadableTexture2D() : Texture2D
+    + GetTextureActualWidthAndHeight(width:int, height:int) : void
+}
+class SecondaryTextureDataProvider {
+    + textures : SecondarySpriteTexture[] <<get>> <<set>>
+}
+class SpriteOutlineDataProvider {
+    + GetOutlines(guid:GUID) : List<Vector2[]>
+    + SetOutlines(guid:GUID, data:List<Vector2[]>) : void
+    + GetTessellationDetail(guid:GUID) : float
+    + SetTessellationDetail(guid:GUID, value:float) : void
+}
+class SpritePhysicsOutlineProvider {
+    + GetOutlines(guid:GUID) : List<Vector2[]>
+    + SetOutlines(guid:GUID, data:List<Vector2[]>) : void
+    + GetTessellationDetail(guid:GUID) : float
+    + SetTessellationDetail(guid:GUID, value:float) : void
+}
+class SpriteMeshDataProvider {
+    + GetVertices(guid:GUID) : Vertex2DMetaData[]
+    + SetVertices(guid:GUID, vertices:Vertex2DMetaData[]) : void
+    + GetIndices(guid:GUID) : int[]
+    + SetIndices(guid:GUID, indices:int[]) : void
+    + GetEdges(guid:GUID) : Vector2Int[]
+    + SetEdges(guid:GUID, edges:Vector2Int[]) : void
+}
+AsepriteDataProvider <|-- SpriteBoneDataProvider
+ISpriteBoneDataProvider <|-- SpriteBoneDataProvider
+AsepriteDataProvider <|-- TextureDataProvider
+ITextureDataProvider <|-- TextureDataProvider
+AsepriteDataProvider <|-- SecondaryTextureDataProvider
+ISecondaryTextureDataProvider <|-- SecondaryTextureDataProvider
+AsepriteDataProvider <|-- SpriteOutlineDataProvider
+ISpriteOutlineDataProvider <|-- SpriteOutlineDataProvider
+AsepriteDataProvider <|-- SpritePhysicsOutlineProvider
+ISpritePhysicsOutlineDataProvider <|-- SpritePhysicsOutlineProvider
+AsepriteDataProvider <|-- SpriteMeshDataProvider
+ISpriteMeshDataProvider <|-- SpriteMeshDataProvider
+@enduml

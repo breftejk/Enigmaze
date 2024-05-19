@@ -1,0 +1,10 @@
+@startuml
+class PropertyRow {
+    - m_ContentContainer : VisualElement
+    - m_LabelContainer : VisualElement
+    + <<override>> contentContainer : VisualElement <<get>>
+    + label : VisualElement <<get>> <<set>>
+    + PropertyRow(label:VisualElement)
+}
+VisualElement <|-- PropertyRow
+@enduml

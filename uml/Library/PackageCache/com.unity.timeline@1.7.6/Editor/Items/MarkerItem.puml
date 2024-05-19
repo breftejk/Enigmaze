@@ -1,0 +1,22 @@
+@startuml
+class MarkerItem {
+    <<readonly>> - m_Marker : IMarker
+    + marker : IMarker <<get>>
+    + MarkerItem(marker:IMarker)
+    + parentTrack : TrackAsset <<get>> <<set>>
+    + start : double <<get>> <<set>>
+    + end : double <<get>>
+    + duration : double <<get>>
+    + IsCompatibleWithTrack(track:TrackAsset) : bool
+    + PushUndo(operation:string) : void
+    + gui : TimelineItemGUI <<get>>
+    + Delete() : void
+    + CloneTo(parent:TrackAsset, time:double) : ITimelineItem
+    # Equals(otherMarker:MarkerItem) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + Equals(other:ITimelineItem) : bool
+    + <<override>> Equals(obj:object) : bool
+}
+ITimelineItem <|-- MarkerItem
+@enduml

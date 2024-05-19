@@ -1,0 +1,12 @@
+@startuml
+class If <<sealed>> {
+    + enter : ControlInput <<get>>
+    + condition : ValueInput <<get>>
+    + ifTrue : ControlOutput <<get>>
+    + ifFalse : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Enter(flow:Flow) : ControlOutput
+}
+Unit <|-- If
+IBranchUnit <|-- If
+@enduml

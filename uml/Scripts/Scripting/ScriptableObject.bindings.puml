@@ -1,0 +1,15 @@
+@startuml
+class ScriptableObject {
+    + ScriptableObject()
+    + <<extern>> SetDirty() : void
+    + {static} CreateInstance(className:string) : ScriptableObject
+    + {static} CreateInstance(type:Type) : ScriptableObject
+    + {static} CreateInstance() : T
+    <<internal>> {static} CreateInstance(type:Type, initialize:Action<ScriptableObject>) : ScriptableObject
+    <<extern>> {static} - CreateScriptableObject(self:ScriptableObject) : void
+    <<extern>> {static} - CreateScriptableObjectInstanceFromName(className:string) : ScriptableObject
+    <<extern>> <<internal>> {static} CreateScriptableObjectInstanceFromType(type:Type, applyDefaultsAndReset:bool) : ScriptableObject
+    <<extern>> <<internal>> {static} ResetAndApplyDefaultInstances(obj:Object) : void
+}
+Object <|-- ScriptableObject
+@enduml

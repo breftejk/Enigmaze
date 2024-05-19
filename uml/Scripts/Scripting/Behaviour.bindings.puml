@@ -1,0 +1,7 @@
+@startuml
+class Behaviour {
+    <<extern>> + enabled : bool <<get>> <<set>>
+    <<extern>> + isActiveAndEnabled : bool <<get>>
+}
+Component <|-- Behaviour
+@enduml

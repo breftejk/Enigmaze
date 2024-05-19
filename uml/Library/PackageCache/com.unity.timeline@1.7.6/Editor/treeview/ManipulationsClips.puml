@@ -1,0 +1,11 @@
+@startuml
+class DrillIntoClip {
+    # <<override>> DoubleClick(evt:Event, state:WindowState) : bool
+}
+class ContextMenuManipulator {
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> ContextClick(evt:Event, state:WindowState) : bool
+}
+Manipulator <|-- DrillIntoClip
+Manipulator <|-- ContextMenuManipulator
+@enduml

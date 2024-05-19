@@ -1,0 +1,21 @@
+@startuml
+enum ColorMode {
+    Single,
+    HorizontalGradient,
+    VerticalGradient,
+    FourCornersGradient,
+}
+class TMP_ColorGradient {
+    + colorMode : ColorMode
+    + topLeft : Color
+    + topRight : Color
+    + bottomLeft : Color
+    + bottomRight : Color
+    <<const>> - k_DefaultColorMode : ColorMode
+    {static} <<readonly>> - k_DefaultColor : Color
+    + TMP_ColorGradient()
+    + TMP_ColorGradient(color:Color)
+    + TMP_ColorGradient(color0:Color, color1:Color, color2:Color, color3:Color)
+}
+ScriptableObject <|-- TMP_ColorGradient
+@enduml

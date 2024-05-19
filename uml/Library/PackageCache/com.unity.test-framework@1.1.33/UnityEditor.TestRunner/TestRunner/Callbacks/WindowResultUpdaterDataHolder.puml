@@ -1,0 +1,6 @@
+@startuml
+class WindowResultUpdaterDataHolder {
+    + CachedResults : List<TestRunnerResult>
+}
+"ScriptableSingleton`1" "<WindowResultUpdaterDataHolder>" <|-- WindowResultUpdaterDataHolder
+@enduml

@@ -1,0 +1,90 @@
+@startuml
+class MaterialGraphView <<sealed>> {
+    <<readonly>> - m_UndoRedoPerformedMethodInfo : MethodInfo
+    + MaterialGraphView()
+    - lkgPosition : Vector3
+    - lkgScale : Vector3
+    - OnTransformChanged(graphView:GraphView) : void
+    # <<override>> canCutSelection : bool <<get>>
+    # <<override>> canCopySelection : bool <<get>>
+    + MaterialGraphView(graph:GraphData, previewUpdateDelegate:Action)
+    + graph : GraphData <<get>>
+    - m_BlackboardFieldDropDelegate : Action
+    <<internal>> blackboardFieldDropDelegate : Action <<get>> <<set>>
+    + GetSelection : List<ISelectable> <<get>>
+    - m_InspectorUpdateDelegate : Action
+    - m_PreviewManagerUpdateDelegate : Action
+    + inspectorTitle : string <<get>>
+    + GetObjectToInspect() : object
+    + SupplyDataToPropertyDrawer(propertyDrawer:IPropertyDrawer, inspectorUpdateDelegate:Action) : void
+    - ChangeTargetSettings() : void
+    - ChangePrecision(newGraphDefaultPrecision:GraphPrecision) : void
+    + onConvertToSubgraphClick : Action <<get>> <<set>>
+    + cachedMousePosition : Vector2 <<get>>
+    + wasUndoRedoPerformed : bool <<get>> <<set>>
+    + contexts : List<ContextView> <<get>> <<set>>
+    + UpdateContextList() : void
+    + GetContext(contextData:ContextData) : ContextView
+    + <<override>> GetCompatiblePorts(startAnchor:Port, nodeAdapter:NodeAdapter) : List<Port>
+    <<internal>> ResetSelectedBlockNodes() : bool
+    + <<override>> BuildContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    + CreateRedirectNode(position:Vector2, edgeTarget:Edge) : void
+    - SelectUnusedNodes(action:DropdownMenuAction) : void
+    + OnSelectionChange : SelectionChanged
+    + <<override>> AddToSelection(selectable:ISelectable) : void
+    <<internal>> AddToSelectionNoUndoRecord(graphElement:GraphElement) : void
+    + <<override>> RemoveFromSelection(selectable:ISelectable) : void
+    <<internal>> RemoveFromSelectionNoUndoRecord(selectable:ISelectable) : void
+    - OnSelectedElementDetachedFromPanel(evt:DetachFromPanelEvent) : void
+    + <<override>> ClearSelection() : void
+    <<internal>> ClearSelectionNoUndoRecord() : bool
+    - RemoveNodesInsideGroup(action:DropdownMenuAction, data:GroupData) : void
+    - InitializePrecisionSubMenu(evt:ContextualMenuPopulateEvent) : void
+    - InitializeViewSubMenu(evt:ContextualMenuPopulateEvent) : void
+    - ChangeCustomNodeColor(menuAction:DropdownMenuAction) : void
+    # <<override>> canDeleteSelection : bool <<get>>
+    + GroupSelection() : void
+    + AddStickyNote(position:Vector2) : void
+    + RemoveFromGroupNode() : void
+    + SetNodeExpandedForSelectedNodes(state:bool, recordUndo:bool) : void
+    + SetPreviewExpandedForSelectedNodes(state:bool) : void
+    + SetNodePrecisionOnSelection(inPrecision:Precision) : void
+    - CollapsePreviews(action:DropdownMenuAction) : void
+    - ExpandPreviews(action:DropdownMenuAction) : void
+    - SeeDocumentation(action:DropdownMenuAction) : void
+    - OpenSubGraph(action:DropdownMenuAction) : void
+    - SeeDocumentationStatus(action:DropdownMenuAction) : DropdownMenuAction.Status
+    - ConvertToPropertyStatus(action:DropdownMenuAction) : DropdownMenuAction.Status
+    - ConvertToProperty(action:DropdownMenuAction) : void
+    - ConvertToInlineNodeStatus(action:DropdownMenuAction) : DropdownMenuAction.Status
+    - ConvertToInlineNode(action:DropdownMenuAction) : void
+    <<internal>> DuplicateSelection() : void
+    - ConvertToSubgraphStatus(action:DropdownMenuAction) : DropdownMenuAction.Status
+    - ConvertToSubgraph(action:DropdownMenuAction) : void
+    - SerializeGraphElementsImplementation(elements:IEnumerable<GraphElement>) : string
+    - CanPasteSerializedDataImplementation(serializedData:string) : bool
+    - UnserializeAndPasteImplementation(operationName:string, serializedData:string) : void
+    - DeleteSelectionImplementation(operationName:string, askUser:GraphView.AskUser) : void
+    <<internal>> RestorePersistentSelectionAfterUndoRedo() : void
+    - ValidateObjectForDrop(obj:Object) : bool
+    - OnDragUpdatedEvent(e:DragUpdatedEvent) : void
+    - OnDragPerformEvent(e:DragPerformEvent) : void
+    - OnMouseMoveEvent(evt:MouseMoveEvent) : void
+    - CreateNode(obj:object, nodePosition:Vector2) : void
+    - ElementsInsertedToStackNode(stackNode:StackNode, insertIndex:int, elements:IEnumerable<GraphElement>) : void
+}
+class GraphViewExtensions <<static>> {
+    <<internal>> {static} InsertCopyPasteGraph(graphView:MaterialGraphView, copyGraph:CopyPasteGraph) : void
+    - {static} ClampNodesWithinView(graphView:MaterialGraphView, rectList:IEnumerable<IRectInterface>) : void
+}
+class PropertyOrder {
+    - graphData : GraphData
+    <<internal>> PropertyOrder(data:GraphData)
+    + Compare(x:ShaderInput, y:ShaderInput) : int
+}
+GraphView <|-- MaterialGraphView
+IInspectable <|-- MaterialGraphView
+ISelectionProvider <|-- MaterialGraphView
+GraphViewExtensions +-- PropertyOrder
+"IComparer`1" "<ShaderInput>" <|-- PropertyOrder
+@enduml

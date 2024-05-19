@@ -1,0 +1,12 @@
+@startuml
+class SamplesWindow {
+    {static} - Init() : void
+    {static} - SceneOpened(scene:Scene, openSceneMode:OpenSceneMode) : void
+    + {static} OpenSamplesShowcaseWindow() : SamplesWindow
+    - CreateGUI() : void
+    - UpdateSamplesWindow() : void
+    - HideOpenWindowButton() : void
+    - OnGUI() : void
+}
+EditorWindow <|-- SamplesWindow
+@enduml

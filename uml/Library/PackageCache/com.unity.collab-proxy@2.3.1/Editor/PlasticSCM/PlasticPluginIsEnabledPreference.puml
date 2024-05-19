@@ -1,0 +1,7 @@
+@startuml
+class PlasticPluginIsEnabledPreference <<static>> {
+    <<internal>> {static} IsEnabled() : bool
+    <<internal>> {static} Enable() : void
+    <<internal>> {static} Disable() : void
+}
+@enduml

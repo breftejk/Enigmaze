@@ -1,0 +1,14 @@
+@startuml
+class Draggable {
+    - m_Handler : Action<Vector2>
+    - m_Active : bool
+    - m_OutputDeltaMovement : bool
+    + Draggable(handler:Action<Vector2>, outputDeltaMovement:bool)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - OnMouseDown(evt:MouseDownEvent) : void
+    - OnMouseMove(evt:MouseMoveEvent) : void
+    - OnMouseUp(evt:MouseUpEvent) : void
+}
+MouseManipulator <|-- Draggable
+@enduml

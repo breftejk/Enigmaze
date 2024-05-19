@@ -1,0 +1,29 @@
+@startuml
+class SpriteLibraryAssetInspector {
+    + {static} ExecuteOpenSpriteLibraryAsset(instanceID:int) : bool
+    - m_Labels : SerializedProperty
+    - m_LabelReorderableList : ReorderableList
+    - m_UpdateHash : bool = false
+    - <<readonly>> kElementHeight : float
+    + OnEnable() : void
+    + OnDisable() : void
+    - GetElementHeight(index:int) : float
+    - DrawElement(rect:Rect, index:int, selected:bool, focused:bool) : void
+    - DrawSpriteListProperty(rect:Rect, spriteListProp:SerializedProperty) : void
+    + <<override>> OnInspectorGUI() : void
+    - IsNameInUsed(name:string, property:SerializedProperty, propertyField:string, threshold:int) : bool
+    - OnAddCallback(list:ReorderableList) : void
+    - SetupOrderList() : void
+}
+class Style <<static>> {
+    + {static} duplicateWarningText : GUIContent
+    + {static} duplicateWarning : GUIContent
+    + {static} nameLabel : GUIContent
+    + {static} categoryListLabel : string
+    + {static} <<readonly>> UpgradeHelpBox : string
+    + {static} <<readonly>> UpgradeButton : string
+    + {static} lineSpacing : int = 3
+}
+Editor <|-- SpriteLibraryAssetInspector
+SpriteLibraryAssetInspector +-- Style
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+enum BlendStyle {
+    LightTex0,
+    LightTex1,
+    LightTex2,
+    LightTex3,
+}
+class LightTextureNode {
+    - <<const>> OutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    - m_BlendStyle : BlendStyle
+    + blendStyle : BlendStyle <<get>> <<set>>
+    + LightTextureNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - GetVariableName() : string
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- LightTextureNode
+@enduml

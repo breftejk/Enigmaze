@@ -1,0 +1,21 @@
+@startuml
+class RenderGraphDefaultResources {
+    - m_IsValid : bool
+    - m_BlackTexture2D : RTHandle
+    - m_WhiteTexture2D : RTHandle
+    - m_ShadowTexture2D : RTHandle
+    + blackTexture : TextureHandle <<get>>
+    + whiteTexture : TextureHandle <<get>>
+    + clearTextureXR : TextureHandle <<get>>
+    + magentaTextureXR : TextureHandle <<get>>
+    + blackTextureXR : TextureHandle <<get>>
+    + blackTextureArrayXR : TextureHandle <<get>>
+    + blackUIntTextureXR : TextureHandle <<get>>
+    + blackTexture3DXR : TextureHandle <<get>>
+    + whiteTextureXR : TextureHandle <<get>>
+    + defaultShadowTexture : TextureHandle <<get>>
+    <<internal>> RenderGraphDefaultResources()
+    <<internal>> Cleanup() : void
+    <<internal>> InitializeForRendering(renderGraph:RenderGraph) : void
+}
+@enduml

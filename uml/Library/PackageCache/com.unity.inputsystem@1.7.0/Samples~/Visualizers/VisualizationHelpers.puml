@@ -1,0 +1,127 @@
+@startuml
+class VisualizationHelpers <<static>> {
+    + {static} DrawAxis(axis:Axis, rect:Rect, color:Color, width:float) : void
+    + {static} DrawRectangle(rect:Rect, color:Color) : void
+    + {static} DrawText(text:string, pos:Vector2, style:GUIStyle) : void
+    + {static} DrawText(text:GUIContent, pos:Vector2, style:GUIStyle) : void
+    + {static} DrawLine(pointA:Vector2, pointB:Vector2, color:Color, width:float) : void
+    - {static} s_OnePixTex : Texture2D
+    - {static} s_ValueTextStyle : GUIStyle
+    <<internal>> {static} ValueTextStyle : GUIStyle <<get>>
+    <<internal>> {static} OnePixTex : Texture2D <<get>>
+}
+enum Axis {
+    X,
+    Y,
+    Z,
+}
+abstract class Visualizer {
+    + {abstract} OnDraw(rect:Rect) : void
+    + {abstract} AddSample(value:object, time:double) : void
+}
+abstract class "ValueVisualizer`1"<TValue> {
+    + samples : RingBuffer<TValue>
+    + samplesText : RingBuffer<GUIContent>
+    # ValueVisualizer(numSamples:int)
+    + <<override>> AddSample(value:object, time:double) : void
+}
+class "ScalarVisualizer`1"<TValue> {
+    + limitMin : TValue
+    + limitMax : TValue
+    + min : TValue
+    + max : TValue
+    + ScalarVisualizer(numSamples:int)
+    + <<override>> OnDraw(rect:Rect) : void
+    + <<override>> AddSample(value:object, time:double) : void
+    - {static} <<unsafe>> Compare(left:TValue, right:TValue) : int
+    - {static} <<unsafe>> Subtract(left:TValue, right:TValue) : void
+    - {static} <<unsafe>> Divide(left:TValue, right:TValue) : float
+}
+class CurrentDeviceVisualizer {
+    - m_CurrentDevice : InputDevice = null
+    + <<override>> OnDraw(rect:Rect) : void
+    + <<override>> AddSample(value:object, time:double) : void
+}
+class Vector2Visualizer {
+    + maximums : Vector2[]
+    + limits : Vector2
+    - limitsXText : GUIContent
+    - limitsYText : GUIContent
+    + Vector2Visualizer(numSamples:int)
+    + <<override>> AddSample(value:object, time:double) : void
+    + <<override>> OnDraw(rect:Rect) : void
+    - RectForValue(value:Vector2, rect:Rect) : Rect
+    - PixelPosForValue(value:Vector2, rect:Rect) : Vector2
+}
+class TimelineVisualizer {
+    + showLegend : bool <<get>> <<set>>
+    + showLimits : bool <<get>> <<set>>
+    + timeUnit : TimeUnit <<get>> <<set>>
+    + valueUnit : GUIContent <<get>> <<set>>
+    + timelineCount : int <<get>>
+    + historyDepth : int <<get>> <<set>> = 100
+    + limitsY : Vector2 <<get>> <<set>>
+    + TimelineVisualizer(totalTimeUnitsShown:float)
+    + <<override>> OnDraw(rect:Rect) : void
+    + <<override>> AddSample(value:object, time:double) : void
+    + AddTimeline(name:string, color:Color, plotType:PlotType) : int
+    + GetTimeline(name:string) : int
+    + AddSample(timelineIndex:int, value:PrimitiveValue, time:float) : void
+    + GetOrCreateSample(timelineIndex:int, frame:int) : ref PrimitiveValue
+    - m_TotalTimeUnitsShown : float
+    - m_LimitsY : Vector2
+    - m_LimitsYMin : GUIContent
+    - m_LimitsYMax : GUIContent
+    - m_Timelines : Timeline[]
+}
+struct "RingBuffer`1"<TValue> {
+    + array : TValue[]
+    + head : int
+    + count : int
+    + RingBuffer(size:int)
+    + Append(value:TValue) : ref TValue
+}
+struct TimeSample {
+    + value : PrimitiveValue
+    + time : float
+}
+struct FrameSample {
+    + value : PrimitiveValue
+    + frame : int
+}
+struct Timeline {
+    + name : GUIContent
+    + color : Color
+    + timeSamples : RingBuffer<TimeSample>
+    + frameSamples : RingBuffer<FrameSample>
+    + minValue : PrimitiveValue
+    + maxValue : PrimitiveValue
+    + plotType : PlotType
+}
+enum PlotType {
+    LineGraph,
+    BarChart,
+}
+enum TimeUnit {
+    Seconds,
+    Frames,
+}
+VisualizationHelpers +-- Axis
+VisualizationHelpers +-- Visualizer
+VisualizationHelpers +-- "ValueVisualizer`1"
+Visualizer <|-- "ValueVisualizer`1"
+VisualizationHelpers +-- "ScalarVisualizer`1"
+"ValueVisualizer`1" "<TValue>" <|-- "ScalarVisualizer`1"
+VisualizationHelpers +-- CurrentDeviceVisualizer
+Visualizer <|-- CurrentDeviceVisualizer
+VisualizationHelpers +-- Vector2Visualizer
+"ValueVisualizer`1" "<Vector2>" <|-- Vector2Visualizer
+VisualizationHelpers +-- TimelineVisualizer
+Visualizer <|-- TimelineVisualizer
+VisualizationHelpers +-- "RingBuffer`1"
+TimelineVisualizer +-- TimeSample
+TimelineVisualizer +-- FrameSample
+TimelineVisualizer +-- Timeline
+TimelineVisualizer +-- PlotType
+TimelineVisualizer +-- TimeUnit
+@enduml

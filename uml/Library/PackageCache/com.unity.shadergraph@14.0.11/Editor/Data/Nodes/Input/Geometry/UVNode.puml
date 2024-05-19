@@ -1,0 +1,16 @@
+@startuml
+class UVNode {
+    + <<const>> OutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    - m_OutputChannel : UVChannel
+    + uvChannel : UVChannel <<get>> <<set>>
+    + <<override>> hasPreview : bool <<get>>
+    + UVNode()
+    + <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- UVNode
+IGeneratesBodyCode <|-- UVNode
+IMayRequireMeshUV <|-- UVNode
+@enduml

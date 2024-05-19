@@ -1,0 +1,6 @@
+@startuml
+class SequenceMenuNameFormater {
+    - m_UniqueItem : Dictionary<int, int>
+    + Format(text:string) : string
+}
+@enduml

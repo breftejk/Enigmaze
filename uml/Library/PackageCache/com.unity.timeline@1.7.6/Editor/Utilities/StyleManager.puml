@@ -1,0 +1,12 @@
+@startuml
+class StyleManager <<static>> {
+    {static} <<readonly>> - k_StyleStates : StyleState[]
+    {static} <<readonly>> - k_ErrorCannotFindStyle : string
+    {static} - s_CustomStyles : Dictionary<Type, GUIStyle>
+    {static} - s_CurrentSkin : GUISkin
+    + {static} UssStyleForType(type:Type) : GUIStyle
+    {static} - CustomStyleForType(type:Type) : string
+    {static} - IsStyleValid(ussStyle:string) : bool
+    {static} - ClearCacheIfInvalid() : void
+}
+@enduml

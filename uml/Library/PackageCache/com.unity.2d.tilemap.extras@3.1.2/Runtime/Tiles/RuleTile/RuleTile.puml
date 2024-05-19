@@ -1,0 +1,87 @@
+@startuml
+class "RuleTile`1"<T> {
+    + <<sealed>> <<override>> m_NeighborType : Type <<get>>
+}
+class RuleTile {
+    + <<virtual>> m_NeighborType : Type <<get>>
+    + m_DefaultSprite : Sprite
+    + m_DefaultGameObject : GameObject
+    + m_DefaultColliderType : Tile.ColliderType
+    + <<virtual>> m_RotationAngle : int <<get>>
+    + m_RotationCount : int <<get>>
+    + m_TilingRules : List<TilingRule>
+    + neighborPositions : HashSet<Vector3Int> <<get>>
+    - m_NeighborPositions : HashSet<Vector3Int>
+    + UpdateNeighborPositions() : void
+    + <<override>> StartUp(position:Vector3Int, tilemap:ITilemap, instantiatedGameObject:GameObject) : bool
+    + <<override>> GetTileData(position:Vector3Int, tilemap:ITilemap, tileData:TileData) : void
+    + {static} GetPerlinValue(position:Vector3Int, scale:float, offset:float) : float
+    {static} - m_CacheTilemapsNeighborPositions : Dictionary<Tilemap, KeyValuePair<HashSet<TileBase>, HashSet<Vector3Int>>>
+    {static} - m_AllocatedUsedTileArr : TileBase[]
+    {static} - IsTilemapUsedTilesChange(tilemap:Tilemap, hashSet:KeyValuePair<HashSet<TileBase>, HashSet<Vector3Int>>) : bool
+    {static} - CachingTilemapNeighborPositions(tilemap:Tilemap) : KeyValuePair<HashSet<TileBase>, HashSet<Vector3Int>>
+    {static} - NeedRelease() : bool
+    {static} - ReleaseDestroyedTilemapCacheData() : void
+    + <<override>> GetTileAnimationData(position:Vector3Int, tilemap:ITilemap, tileAnimationData:TileAnimationData) : bool
+    + <<override>> RefreshTile(position:Vector3Int, tilemap:ITilemap) : void
+    + <<virtual>> RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, transform:Matrix4x4) : bool
+    + <<virtual>> ApplyRandomTransform(type:TilingRuleOutput.Transform, original:Matrix4x4, perlinScale:float, position:Vector3Int) : Matrix4x4
+    + GetCustomFields(isOverrideInstance:bool) : FieldInfo[]
+    + <<virtual>> RuleMatch(neighbor:int, other:TileBase) : bool
+    + RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, angle:int, mirrorX:bool) : bool
+    + RuleMatches(rule:TilingRule, position:Vector3Int, tilemap:ITilemap, mirrorX:bool, mirrorY:bool) : bool
+    + <<virtual>> GetRotatedPosition(position:Vector3Int, rotation:int) : Vector3Int
+    + <<virtual>> GetMirroredPosition(position:Vector3Int, mirrorX:bool, mirrorY:bool) : Vector3Int
+    + <<virtual>> GetOffsetPosition(position:Vector3Int, offset:Vector3Int) : Vector3Int
+    + <<virtual>> GetOffsetPositionReverse(position:Vector3Int, offset:Vector3Int) : Vector3Int
+}
+class TilingRuleOutput {
+    + m_Id : int
+    + m_Sprites : Sprite[]
+    + m_GameObject : GameObject
+    + m_MinAnimationSpeed : float = 1f
+    + m_MaxAnimationSpeed : float = 1f
+    + m_PerlinScale : float = 0.5f
+    + m_Output : OutputSprite
+    + m_ColliderType : Tile.ColliderType
+    + m_RandomTransform : Transform
+}
+class TilingRule {
+    + m_Neighbors : List<int>
+    + m_NeighborPositions : List<Vector3Int>
+    + m_RuleTransform : Transform
+    + Clone() : TilingRule
+    + GetNeighbors() : Dictionary<Vector3Int, int>
+    + ApplyNeighbors(dict:Dictionary<Vector3Int, int>) : void
+    + GetBounds() : BoundsInt
+}
+class DontOverride {
+}
+class Neighbor {
+    + <<const>> This : int = 1
+    + <<const>> NotThis : int = 2
+}
+enum Transform {
+    Fixed,
+    Rotated,
+    MirrorX,
+    MirrorY,
+    MirrorXY,
+    RotatedMirror,
+}
+enum OutputSprite {
+    Single,
+    Random,
+    Animation,
+}
+RuleTile <|-- "RuleTile`1"
+TileBase <|-- RuleTile
+RuleTile +-- TilingRuleOutput
+RuleTile +-- TilingRule
+TilingRuleOutput <|-- TilingRule
+RuleTile +-- DontOverride
+Attribute <|-- DontOverride
+TilingRuleOutput +-- Neighbor
+TilingRuleOutput +-- Transform
+TilingRuleOutput +-- OutputSprite
+@enduml

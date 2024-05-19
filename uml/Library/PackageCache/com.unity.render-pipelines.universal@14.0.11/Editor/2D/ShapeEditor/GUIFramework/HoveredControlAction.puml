@@ -1,0 +1,10 @@
+@startuml
+abstract class HoveredControlAction {
+    - m_HoveredControl : Control
+    + hoveredControl : Control <<get>>
+    + HoveredControlAction(control:Control)
+    # <<override>> CanTrigger(guiState:IGUIState) : bool
+    # <<override>> OnTrigger(guiState:IGUIState) : void
+}
+GUIAction <|-- HoveredControlAction
+@enduml

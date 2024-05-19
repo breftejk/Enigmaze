@@ -1,0 +1,11 @@
+@startuml
+class SetUpTearDownCommand {
+    {static} <<readonly>> - m_BeforeActionsCache : Dictionary<Type, List<MethodInfo>>
+    {static} <<readonly>> - m_AfterActionsCache : Dictionary<Type, List<MethodInfo>>
+    + SetUpTearDownCommand(innerCommand:TestCommand)
+    # <<override>> InvokeBefore(action:MethodInfo, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> InvokeAfter(action:MethodInfo, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> GetState(context:UnityTestExecutionContext) : BeforeAfterTestCommandState
+}
+"BeforeAfterTestCommandBase`1" "<MethodInfo>" <|-- SetUpTearDownCommand
+@enduml

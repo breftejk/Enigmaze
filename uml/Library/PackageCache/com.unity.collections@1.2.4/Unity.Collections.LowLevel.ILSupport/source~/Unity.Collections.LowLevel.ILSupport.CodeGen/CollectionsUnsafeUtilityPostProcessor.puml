@@ -1,0 +1,14 @@
+@startuml
+class CollectionsUnsafeUtilityPostProcessor {
+    - {static} s_Instance : CollectionsUnsafeUtilityPostProcessor
+    + <<override>> GetInstance() : ILPostProcessor
+    + <<override>> WillProcess(compiledAssembly:ICompiledAssembly) : bool
+    + <<override>> Process(compiledAssembly:ICompiledAssembly) : ILPostProcessResult
+    - InjectUtilityAddressOfIn(ctx:TypeDefinition) : void
+    - InjectUtilityAsRefIn(ctx:TypeDefinition) : void
+    <<internal>> {static} AssemblyDefinitionFor(compiledAssembly:ICompiledAssembly) : AssemblyDefinition
+    - {static} GetILProcessorForMethod(ctx:TypeDefinition, methodName:string, clear:bool) : ILProcessor
+    - {static} GetILProcessorForMethod(method:MethodDefinition, clear:bool) : ILProcessor
+}
+ILPostProcessor <|-- CollectionsUnsafeUtilityPostProcessor
+@enduml

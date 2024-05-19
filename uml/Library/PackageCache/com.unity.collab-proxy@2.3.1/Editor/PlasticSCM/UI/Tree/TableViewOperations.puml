@@ -1,0 +1,10 @@
+@startuml
+class TableViewOperations <<static>> {
+    <<internal>> {static} GetFirstSelectedRow(treeView:TreeView) : int
+    <<internal>> {static} SelectFirstRow(treeView:TreeView) : void
+    <<internal>> {static} SelectDefaultRow(treeView:TreeView, defaultRow:int) : void
+    <<internal>> {static} SetSelectionAndScroll(treeView:TreeView, idsToSelect:List<int>) : void
+    <<internal>> {static} ScrollToSelection(treeView:TreeView) : void
+    {static} - IsVisible(id:int, treeView:TreeView) : bool
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class PlayableTrack {
+    # <<override>> OnCreateClip(clip:TimelineClip) : void
+}
+TrackAsset <|-- PlayableTrack
+@enduml

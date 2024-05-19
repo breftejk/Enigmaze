@@ -1,0 +1,13 @@
+@startuml
+class WaitWhile <<sealed>> {
+    <<readonly>> - m_Predicate : Func<bool>
+    <<readonly>> - m_TimeoutCallback : Action
+    <<readonly>> - m_TimeoutMode : WaitTimeoutMode
+    <<readonly>> - m_MaxExecutionTime : double
+    + <<override>> keepWaiting : bool <<get>>
+    + WaitWhile(predicate:Func<bool>)
+    + WaitWhile(predicate:Func<bool>, timeout:TimeSpan, onTimeout:Action, timeoutMode:WaitTimeoutMode)
+    - GetTime() : double
+}
+CustomYieldInstruction <|-- WaitWhile
+@enduml

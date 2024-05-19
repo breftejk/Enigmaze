@@ -1,0 +1,7 @@
+@startuml
+class AsepriteReader <<static>> {
+    + {static} ReadFile(assetPath:string) : AsepriteFile
+    {static} - ReadFrames(reader:BinaryReader, file:AsepriteFile) : void
+    {static} - AssociateUserDataWithChunk(chunks:IReadOnlyList<BaseChunk>, index:int, userData:UserDataChunk) : void
+}
+@enduml

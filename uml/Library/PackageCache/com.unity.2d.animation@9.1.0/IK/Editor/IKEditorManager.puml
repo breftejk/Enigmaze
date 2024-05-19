@@ -1,0 +1,48 @@
+@startuml
+class IKEditorManager {
+    {static} - s_Instance : IKEditorManager
+    <<readonly>> - m_DirtyManagers : HashSet<IKManager2D>
+    <<readonly>> - m_IKManagers : HashSet<IKManager2D>
+    <<readonly>> - m_ChainPositionOverrides : Dictionary<IKChain2D, Vector3>
+    <<readonly>> - m_TargetPositions : List<Vector3>
+    - m_Helper : GameObject
+    - m_SelectedGameobjects : GameObject[]
+    <<internal>> isDraggingATool : bool <<get>>
+    - m_Initialized : bool
+    {static} - CreateInstance() : void
+    + {static} instance : IKEditorManager <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    + Initialize() : void
+    - Dispose() : void
+    - AddIKManager2D(manager:IKManager2D) : void
+    - RemoveIKManager2D(manager:IKManager2D) : void
+    - RegisterCallbacks() : void
+    - UnregisterCallbacks() : void
+    - m_EnableGizmos : bool
+    - m_CurrentEnableGizmoState : bool
+    - OnDrawGizmos() : void
+    + CheckGizmoToggle() : void
+    - OnSelectionChanged() : void
+    - Clear() : void
+    + FindManager(solver:Solver2D) : IKManager2D
+    + Record(solver:Solver2D, undoName:string) : void
+    + RegisterUndo(solver:Solver2D, undoName:string) : void
+    + Record(manager:IKManager2D, undoName:string) : void
+    + RegisterUndo(manager:IKManager2D, undoName:string) : void
+    - DoUndo(manager:IKManager2D, undoName:string, record:bool) : void
+    + UpdateManagerImmediate(manager:IKManager2D, recordRootLoops:bool) : void
+    + UpdateSolverImmediate(solver:Solver2D, recordRootLoops:bool) : void
+    + SetChainPositionOverride(chain:IKChain2D, position:Vector3) : void
+    - IsViewToolActive() : bool
+    - IsDraggingATool() : bool
+    - OnSceneGUI(sceneView:SceneView) : void
+    - SetSolverDirty(solver:Solver2D) : void
+    - SetManagerDirty(manager:IKManager2D) : void
+    - SetDirtySolversAffectedByTransform(transform:Transform) : void
+    - RegisterUndoForDirtyManagers() : void
+    - UpdateDirtyManagers(recordRootLoops:bool) : void
+    - PrepareTargetOverrides(solver:Solver2D) : bool
+}
+ScriptableObject <|-- IKEditorManager
+@enduml

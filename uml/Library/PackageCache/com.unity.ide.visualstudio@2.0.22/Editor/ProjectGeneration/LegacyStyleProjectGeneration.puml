@@ -1,0 +1,12 @@
+@startuml
+class LegacyStyleProjectGeneration {
+    <<internal>> <<override>> StyleName : string <<get>>
+    + LegacyStyleProjectGeneration(tempDirectory:string, assemblyNameProvider:IAssemblyNameProvider, fileIoProvider:IFileIO, guidGenerator:IGUIDGenerator)
+    + LegacyStyleProjectGeneration(tempDirectory:string)
+    + LegacyStyleProjectGeneration()
+    <<internal>> <<override>> GetProjectHeader(properties:ProjectProperties, headerBuilder:StringBuilder) : void
+    <<internal>> <<override>> AppendProjectReference(assembly:Assembly, reference:Assembly, projectBuilder:StringBuilder) : void
+    <<internal>> <<override>> GetProjectFooter(footerBuilder:StringBuilder) : void
+}
+ProjectGeneration <|-- LegacyStyleProjectGeneration
+@enduml

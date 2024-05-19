@@ -1,0 +1,15 @@
+@startuml
+class TweenMixerBehaviour {
+    {static} - s_DefaultCurve : AnimationCurve
+    - m_ShouldInitializeTransform : bool = true
+    - m_InitialPosition : Vector3
+    - m_InitialRotation : Quaternion
+    + <<override>> ProcessFrame(playable:Playable, info:FrameData, playerData:object) : void
+    - InitializeIfNecessary(transform:Transform) : void
+    - TweenPosition(tweenInput:TweenBehaviour, progress:float, weight:float) : Vector3
+    - TweenRotation(tweenInput:TweenBehaviour, accumRotation:Quaternion, progress:float, weight:float) : Quaternion
+    {static} - GetTweenBehaviour(playable:Playable) : TweenBehaviour
+    {static} - GetCurve(tween:TweenBehaviour) : AnimationCurve
+}
+PlayableBehaviour <|-- TweenMixerBehaviour
+@enduml

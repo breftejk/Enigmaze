@@ -1,0 +1,16 @@
+@startuml
+class FieldCollection {
+    <<readonly>> - m_Items : List<FieldCollection.Item>
+    + FieldCollection()
+    + Add(fields:FieldCollection) : FieldCollection
+    + Add(field:FieldDescriptor) : FieldCollection
+    + GetEnumerator() : IEnumerator<FieldCollection.Item>
+    - GetEnumerator() : IEnumerator
+}
+class Item {
+    + field : FieldDescriptor <<get>>
+    + Item(field:FieldDescriptor)
+}
+"IEnumerable`1" "<FieldCollection.Item>" <|-- FieldCollection
+FieldCollection +-- Item
+@enduml

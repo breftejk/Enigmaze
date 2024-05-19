@@ -1,0 +1,20 @@
+@startuml
+class LayoutPropertiesPreview {
+    - <<const>> kLabelWidth : float = 110
+    - <<const>> kValueWidth : float = 100
+    - m_Title : GUIContent
+    - m_Styles : Styles
+    + <<override>> Initialize(targets:UnityEngine.Object[]) : void
+    + <<override>> GetPreviewTitle() : GUIContent
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnPreviewGUI(r:Rect, background:GUIStyle) : void
+    - ShowProp(labelRect:Rect, valueRect:Rect, sourceRect:Rect, label:string, value:string, source:ILayoutElement) : void
+}
+class Styles {
+    + labelStyle : GUIStyle
+    + headerStyle : GUIStyle
+    + Styles()
+}
+ObjectPreview <|-- LayoutPropertiesPreview
+LayoutPropertiesPreview +-- Styles
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class This <<sealed>> {
+    + self : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Result(flow:Flow) : GameObject
+    - IsPredictable(flow:Flow) : bool
+}
+Unit <|-- This
+@enduml

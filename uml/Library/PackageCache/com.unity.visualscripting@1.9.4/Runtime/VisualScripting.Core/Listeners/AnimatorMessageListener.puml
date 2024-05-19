@@ -1,0 +1,7 @@
+@startuml
+class AnimatorMessageListener <<sealed>> {
+    - OnAnimatorMove() : void
+    - OnAnimatorIK(layerIndex:int) : void
+}
+MonoBehaviour <|-- AnimatorMessageListener
+@enduml

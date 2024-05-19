@@ -1,0 +1,16 @@
+@startuml
+class SpritePolygonModeModule <<partial>> {
+    - m_Outline : List<List<Vector2[]>>
+    + SpritePolygonModeModule(sw:ISpriteEditor, es:IEventSystem, us:IUndoSystem, ad:IAssetDatabase)
+    + <<override>> OnModuleActivate() : void
+    + <<override>> CanBeActivated() : bool
+    - polygonSprite : bool <<get>>
+    - DeterminePolygonSides() : void
+    + GetPolygonSideCount() : int
+    + polygonSides : int <<get>> <<set>>
+    + GetSpriteOutlineAt(i:int) : List<Vector2[]>
+    + GeneratePolygonOutline() : void
+    + <<override>> ApplyRevert(apply:bool) : bool
+}
+SpriteFrameModuleBase <|-- SpritePolygonModeModule
+@enduml

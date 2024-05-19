@@ -1,0 +1,14 @@
+@startuml
+class SelectTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string = "|Select an area of the grid ({0&#125;)"
+    + {static} shortcutId : string = "Grid Painting/Select"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- SelectTool
+SelectTool +-- Styles
+@enduml

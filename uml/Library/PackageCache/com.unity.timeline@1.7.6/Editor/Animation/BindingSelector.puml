@@ -1,0 +1,27 @@
+@startuml
+class BindingSelector {
+    - m_TreeView : TreeViewController
+    - m_TreeViewGUI : BindingTreeViewGUI
+    + treeViewController : TreeViewController <<get>>
+    - m_TrackGlobalTreeViewState : TreeViewState
+    - m_TreeViewState : TreeViewState
+    - m_TreeViewDataSource : BindingTreeViewDataSource
+    - m_CurveDataSource : CurveDataSource
+    - m_Window : TimelineWindow
+    - m_CurveEditor : CurveEditor
+    - m_DopeLines : ReorderableList
+    - m_StringList : string[]
+    - m_Selection : int[]
+    - m_PartOfSelection : bool
+    + BindingSelector(window:EditorWindow, curveEditor:CurveEditor, trackGlobalTreeViewState:TreeViewState)
+    + OnGUI(targetRect:Rect) : void
+    + InitIfNeeded(rect:Rect, dataSource:CurveDataSource, isNewSelection:bool) : void
+    - OnItemSelectionChanged(selection:int[]) : void
+    - RefreshAll() : void
+    - RefreshSelection() : void
+    - RefreshSelection(selection:int[]) : void
+    + RefreshCurves() : void
+    + RefreshTree() : void
+    <<internal>> <<virtual>> IsRenamingNodeAllowed(node:TreeViewItem) : bool
+}
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+class TimelineWindowAnalytics {
+    <<const>> - vendorKey : string = "unity.timeline"
+    <<const>> - eventName : string = "timeline_editor_info"
+    <<const>> - version : int = 2
+    <<const>> - maxEventsPerHour : int = 1000
+    <<const>> - maxNumberOfElements : int = 1000
+    {static} - analyticsStats : WindowAnalyticsStats
+    + SendPlayEvent(start:bool) : void
+    + SendAfterSequenceChangeEvent() : void
+    + SendManipulationEndedEvent() : void
+    <<internal>> {static} GenerateTimelineAssetStats(data:timeline_asset_stats) : bool
+    {static} - GetTrackAssetStats(timeline:TimelineAsset) : List<track_asset_stats>
+}
+class ConversionUtilities <<static>> {
+    <<internal>> {static} ConvertToString(e:T) : string
+    {static} - ToSnakeCase(str:string) : string
+}
+struct timeline_asset_stats {
+    + asset_guid : string
+    + duration : double
+    + frame_rate : double
+    + track_stats : List<track_asset_stats>
+    + mix_samples_count : double
+    + ripple_samples_count : double
+    + replace_samples_count : double
+    + display_format : string
+}
+struct track_asset_stats {
+    + track_type : string
+    + clip_count : int
+    + marker_count : int
+}
+class WindowAnalyticsStats {
+    <<internal>> editModeSamples : int[]
+}
+TimelineWindowAnalytics +-- timeline_asset_stats
+TimelineWindowAnalytics +-- track_asset_stats
+TimelineWindowAnalytics +-- WindowAnalyticsStats
+@enduml

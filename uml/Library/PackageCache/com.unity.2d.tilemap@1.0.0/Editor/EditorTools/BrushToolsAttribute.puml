@@ -1,0 +1,8 @@
+@startuml
+class BrushToolsAttribute {
+    - m_ToolTypes : List<Type>
+    <<internal>> toolList : List<Type> <<get>>
+    + BrushToolsAttribute(tools:Type[])
+}
+Attribute <|-- BrushToolsAttribute
+@enduml

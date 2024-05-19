@@ -1,0 +1,71 @@
+@startuml
+abstract class Unit {
+    # Unit()
+    + <<virtual>> CreateDebugData() : IGraphElementDebugData
+    + <<override>> AfterAdd() : void
+    + <<override>> BeforeRemove() : void
+    + <<override>> Instantiate(instance:GraphReference) : void
+    + <<override>> Uninstantiate(instance:GraphReference) : void
+    # CopyFrom(source:Unit) : void
+    + <<virtual>> canDefine : bool <<get>>
+    + failedToDefine : bool <<get>>
+    + isDefined : bool <<get>>
+    # {abstract} Definition() : void
+    # <<virtual>> AfterDefine() : void
+    # <<virtual>> BeforeUndefine() : void
+    - Undefine() : void
+    + EnsureDefined() : void
+    + Define() : void
+    + RemoveUnconnectedInvalidPorts() : void
+    + controlInputs : IUnitPortCollection<ControlInput> <<get>>
+    + controlOutputs : IUnitPortCollection<ControlOutput> <<get>>
+    + valueInputs : IUnitPortCollection<ValueInput> <<get>>
+    + valueOutputs : IUnitPortCollection<ValueOutput> <<get>>
+    + invalidInputs : IUnitPortCollection<InvalidInput> <<get>>
+    + invalidOutputs : IUnitPortCollection<InvalidOutput> <<get>>
+    + inputs : IEnumerable<IUnitInputPort> <<get>>
+    + outputs : IEnumerable<IUnitOutputPort> <<get>>
+    + validInputs : IEnumerable<IUnitInputPort> <<get>>
+    + validOutputs : IEnumerable<IUnitOutputPort> <<get>>
+    + ports : IEnumerable<IUnitPort> <<get>>
+    + invalidPorts : IEnumerable<IUnitPort> <<get>>
+    + validPorts : IEnumerable<IUnitPort> <<get>>
+    +  <<event>> onPortsChanged : Action 
+    + PortsChanged() : void
+    + defaultValues : Dictionary<string, object> <<get>>
+    + relations : IConnectionCollection<IUnitRelation, IUnitPort, IUnitPort> <<get>>
+    + connections : IEnumerable<IUnitConnection> <<get>>
+    + Disconnect() : void
+    + <<virtual>> isControlRoot : bool <<get>> <<protected set>> = false
+    # EnsureUniqueInput(key:string) : void
+    # EnsureUniqueOutput(key:string) : void
+    # ControlInput(key:string, action:Func<Flow, ControlOutput>) : ControlInput
+    # ControlInputCoroutine(key:string, coroutineAction:Func<Flow, IEnumerator>) : ControlInput
+    # ControlInputCoroutine(key:string, action:Func<Flow, ControlOutput>, coroutineAction:Func<Flow, IEnumerator>) : ControlInput
+    # ControlOutput(key:string) : ControlOutput
+    # ValueInput(type:Type, key:string) : ValueInput
+    # ValueInput(key:string) : ValueInput
+    # ValueInput(key:string, @default:T) : ValueInput
+    # ValueOutput(type:Type, key:string) : ValueOutput
+    # ValueOutput(type:Type, key:string, getValue:Func<Flow, object>) : ValueOutput
+    # ValueOutput(key:string) : ValueOutput
+    # ValueOutput(key:string, getValue:Func<Flow, T>) : ValueOutput
+    - Relation(source:IUnitPort, destination:IUnitPort) : void
+    # Requirement(source:ValueInput, destination:ControlInput) : void
+    # Requirement(source:ValueInput, destination:ValueOutput) : void
+    # Assignment(source:ControlInput, destination:ValueOutput) : void
+    # Succession(source:ControlInput, destination:ControlOutput) : void
+    + position : Vector2 <<get>> <<set>>
+    + definitionException : Exception <<get>> <<protected set>>
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+class DebugData {
+    + lastInvokeFrame : int <<get>> <<set>>
+    + lastInvokeTime : float <<get>> <<set>>
+    + runtimeException : Exception <<get>> <<set>>
+}
+"GraphElement`1" "<FlowGraph>" <|-- Unit
+IUnit <|-- Unit
+Unit +-- DebugData
+IUnitDebugData <|-- DebugData
+@enduml

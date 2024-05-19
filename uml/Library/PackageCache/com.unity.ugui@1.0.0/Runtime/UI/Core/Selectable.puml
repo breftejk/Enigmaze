@@ -1,0 +1,90 @@
+@startuml
+class Selectable {
+    # {static} s_Selectables : Selectable[]
+    # {static} s_SelectableCount : int = 0
+    - m_EnableCalled : bool = false
+    + {static} allSelectablesArray : Selectable[] <<get>>
+    + {static} allSelectableCount : int <<get>>
+    + {static} allSelectables : List<Selectable> <<get>>
+    + {static} AllSelectablesNoAlloc(selectables:Selectable[]) : int
+    - m_Navigation : Navigation
+    - m_Transition : Transition
+    - m_Colors : ColorBlock
+    - m_SpriteState : SpriteState
+    - m_AnimationTriggers : AnimationTriggers
+    - m_Interactable : bool = true
+    - m_TargetGraphic : Graphic
+    - m_GroupsAllowInteraction : bool = true
+    # m_CurrentIndex : int
+    + navigation : Navigation <<get>> <<set>>
+    + transition : Transition <<get>> <<set>>
+    + colors : ColorBlock <<get>> <<set>>
+    + spriteState : SpriteState <<get>> <<set>>
+    + animationTriggers : AnimationTriggers <<get>> <<set>>
+    + targetGraphic : Graphic <<get>> <<set>>
+    + interactable : bool <<get>> <<set>>
+    - isPointerInside : bool <<get>> <<set>>
+    - isPointerDown : bool <<get>> <<set>>
+    - hasSelection : bool <<get>> <<set>>
+    # Selectable()
+    + image : Image <<get>> <<set>>
+    # <<override>> Awake() : void
+    - <<readonly>> m_CanvasGroupCache : List<CanvasGroup>
+    # <<override>> OnCanvasGroupChanged() : void
+    - ParentGroupAllowsInteraction() : bool
+    + <<virtual>> IsInteractable() : bool
+    # <<override>> OnDidApplyAnimationProperties() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnTransformParentChanged() : void
+    - OnSetProperty() : void
+    # <<override>> OnDisable() : void
+    - OnApplicationFocus(hasFocus:bool) : void
+    # currentSelectionState : SelectionState <<get>>
+    # <<virtual>> InstantClearState() : void
+    # <<virtual>> DoStateTransition(state:SelectionState, instant:bool) : void
+    + FindSelectable(dir:Vector3) : Selectable
+    - {static} GetPointOnRectEdge(rect:RectTransform, dir:Vector2) : Vector3
+    - Navigate(eventData:AxisEventData, sel:Selectable) : void
+    + <<virtual>> FindSelectableOnLeft() : Selectable
+    + <<virtual>> FindSelectableOnRight() : Selectable
+    + <<virtual>> FindSelectableOnUp() : Selectable
+    + <<virtual>> FindSelectableOnDown() : Selectable
+    + <<virtual>> OnMove(eventData:AxisEventData) : void
+    - StartColorTween(targetColor:Color, instant:bool) : void
+    - DoSpriteSwap(newSprite:Sprite) : void
+    - TriggerAnimation(triggername:string) : void
+    # IsHighlighted() : bool
+    # IsPressed() : bool
+    - EvaluateAndTransitionToSelectionState() : void
+    + <<virtual>> OnPointerDown(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerUp(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerExit(eventData:PointerEventData) : void
+    + <<virtual>> OnSelect(eventData:BaseEventData) : void
+    + <<virtual>> OnDeselect(eventData:BaseEventData) : void
+    + <<virtual>> Select() : void
+}
+enum Transition {
+    None,
+    ColorTint,
+    SpriteSwap,
+    Animation,
+}
+enum SelectionState {
+    Normal,
+    Highlighted,
+    Pressed,
+    Selected,
+    Disabled,
+}
+UIBehaviour <|-- Selectable
+IMoveHandler <|-- Selectable
+IPointerDownHandler <|-- Selectable
+IPointerUpHandler <|-- Selectable
+IPointerEnterHandler <|-- Selectable
+IPointerExitHandler <|-- Selectable
+ISelectHandler <|-- Selectable
+IDeselectHandler <|-- Selectable
+Selectable +-- Transition
+Selectable +-- SelectionState
+@enduml

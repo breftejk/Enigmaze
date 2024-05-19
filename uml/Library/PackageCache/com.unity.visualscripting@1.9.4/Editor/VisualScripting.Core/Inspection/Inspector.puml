@@ -1,0 +1,66 @@
+@startuml
+abstract class Inspector {
+    + {static} OnOpenVFX(instanceID:int, line:int) : bool
+    # Inspector(metadata:Metadata)
+    + <<virtual>> Initialize() : void
+    - failure : Exception
+    # y : float
+    + metadata : Metadata <<get>>
+    # <<virtual>> safe : bool <<get>>
+    # {static} profile : bool <<get>>
+    # <<virtual>> indent : bool <<get>>
+    + <<virtual>> Dispose() : void
+    # {abstract} GetHeight(width:float, label:GUIContent) : float
+    - <<readonly>> warnBeforeEditingAttribute : WarnBeforeEditingAttribute
+    - editLocked : bool
+    # <<virtual>> SkipEvent(e:Event, position:Rect) : bool
+    + Draw(position:Rect, label:GUIContent) : void
+    # {abstract} OnGUI(position:Rect, label:GUIContent) : void
+    # <<virtual>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    <<internal>> {static} blockStack : Stack<InspectorBlock> <<get>>
+    - cachedHeight : float
+    - cachedHeightHash : int
+    + isHeightDirty : bool <<get>>
+    - parentInspector : Inspector
+    # <<virtual>> cacheHeight : bool <<get>>
+    + SetHeightDirty() : void
+    + GetCachedHeight(width:float, label:GUIContent, parentInspector:Inspector) : float
+    - GetHeightHash(width:float, label:GUIContent) : int
+    # wideMode : bool <<get>>
+    # full : float <<get>>
+    # half : float <<get>>
+    # <<virtual>> wideModeThreshold : float <<get>>
+    + GetLayoutPosition(label:GUIContent, scrollbarTrigger:float, offset:RectOffset) : Rect
+    + DrawLayout(label:GUIContent, scrollbarTrigger:float, offset:RectOffset) : void
+    # {static} e : Event <<get>>
+    # {static} ReclaimImplementationSelector(position:Rect) : Rect
+    - {static} blockDebugBox : GUIStyle
+    - {static} labelDebugBox : GUIStyle
+    {static} - Inspector()
+    + {static} expandTooltip : OverrideStack<bool> <<get>>
+    + {static} adaptiveWidth : OverrideStack<bool> <<get>>
+    + {static} defaultLabelStyle : OverrideStack<GUIStyle> <<get>>
+    + {static} ProcessLabel(metadata:Metadata, label:GUIContent) : GUIContent
+    + {static} ProcessLabelStyle(metadata:Metadata, labelStyle:GUIStyle) : GUIStyle
+    - {static} LabelWidth(metadata:Metadata, width:float) : float
+    + {static} WidthWithoutLabel(metadata:Metadata, width:float, label:GUIContent) : float
+    + {static} HeightWithLabel(metadata:Metadata, width:float, height:float, label:GUIContent, labelStyle:GUIStyle) : float
+    + {static} PrefixLabel(metadata:Metadata, position:Rect, label:GUIContent, style:GUIStyle) : Rect
+    + {static} BeginBlock(metadata:Metadata, position:Rect) : void
+    + {static} BeginLabeledBlock(metadata:Metadata, position:Rect, label:GUIContent, labelStyle:GUIStyle) : Rect
+    <<internal>> {static} currentBlock : InspectorBlock <<get>>
+    + {static} EndBlock(metadata:Metadata) : bool
+    + <<virtual>> GetAdaptiveWidth() : float
+    - stopwatches : Dictionary<string, Stopwatch>
+    - InitializeProfiling() : void
+    - {static} profilingLabel : GUIStyle
+    - GetProfilingHeight() : float
+    - GetProfilingLineHeight() : float
+    - OnProfilingGUI(profilingPosition:Rect) : void
+    # BeginProfiling(name:string) : void
+    # EndProfiling(name:string) : void
+    # ResetProfiling(name:string) : void
+    - OnProfilingLineGUI(profilingLinePosition:Rect, label:string, stopwatch:Stopwatch) : void
+}
+IDisposable <|-- Inspector
+@enduml

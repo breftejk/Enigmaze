@@ -1,0 +1,16 @@
+@startuml
+class SceneWithNestedLayoutElementsLoad {
+    - m_InitScene : Scene
+    <<const>> - aspectRatioFitterSceneName : string = "AspectRatioFitter"
+    <<const>> - contentSizeFitterSceneName : string = "ContentSizeFitter"
+    <<const>> - layoutGroupSceneName : string = "LayoutGroup"
+    + Setup() : void
+    + SceneWithNestedAspectRatioFitterLoads() : IEnumerator
+    + SceneWithNestedContentSizeFitterLoads() : IEnumerator
+    + SceneWithNestedLayoutGroupLoads() : IEnumerator
+    + TestSetup() : void
+    + TearDown() : void
+    + OnTimeTearDown() : void
+}
+IPrebuildSetup <|-- SceneWithNestedLayoutElementsLoad
+@enduml

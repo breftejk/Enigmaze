@@ -1,0 +1,8 @@
+@startuml
+class BoolSetting <<static>> {
+    <<internal>> {static} Load(boolSettingName:string, defaultValue:bool) : bool
+    <<internal>> {static} Save(value:bool, boolSettingName:string) : void
+    <<internal>> {static} Clear(boolSettingName:string) : void
+    {static} - GetSettingKey(boolSettingName:string) : string
+}
+@enduml

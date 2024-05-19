@@ -1,0 +1,35 @@
+@startuml
+class XmlDocumentation <<static>> {
+    - {static} LazyData : Lazy<Data>
+    - {static} <<readonly>> @lock : object
+    + {static}  <<event>> loadComplete : Action 
+    + {static} loaded : bool <<get>>
+    - {static} fallbackDirectories : string[]
+    <<internal>> {static} Initialize() : void
+    - {static} Init() : Data
+    + {static} BackgroundWork() : void
+    + {static} ClearCache() : void
+    - {static} Documentation(assembly:Assembly) : Dictionary<string, XmlDocumentationTags>
+    - {static} GetDocumentationUncached(assembly:Assembly) : Dictionary<string, XmlDocumentationTags>
+    + {static} Documentation(memberInfo:MemberInfo) : XmlDocumentationTags
+    + {static} ParameterSummary(methodBase:MethodBase, parameterInfo:ParameterInfo) : string
+    + {static} Summary(memberInfo:MemberInfo) : string
+    + {static} Summary(@enum:Enum) : string
+    + {static} Documentation(@enum:Enum) : XmlDocumentationTags
+    - {static} Documentation(methodInfo:MethodInfo) : XmlDocumentationTags
+    - {static} Documentation(fieldInfo:FieldInfo) : XmlDocumentationTags
+    - {static} Documentation(propertyInfo:PropertyInfo) : XmlDocumentationTags
+    - {static} Documentation(constructorInfo:ConstructorInfo) : XmlDocumentationTags
+    - {static} Documentation(type:Type) : XmlDocumentationTags
+    - {static} GetDocumentationFromNameInherited(type:Type, prefix:char, memberName:string, parameterTypes:IEnumerable<ParameterInfo>) : XmlDocumentationTags
+    - {static} GetDocumentationFromName(type:Type, prefix:char, memberName:string, parameterTypes:IEnumerable<ParameterInfo>) : XmlDocumentationTags
+}
+class Data {
+    + documentations : Dictionary<Assembly, Dictionary<string, XmlDocumentationTags>>
+    + typeDocumentations : Dictionary<Type, XmlDocumentationTags>
+    + memberDocumentations : Dictionary<MemberInfo, XmlDocumentationTags>
+    + enumDocumentations : Dictionary<object, XmlDocumentationTags>
+    + Clear() : void
+}
+XmlDocumentation +-- Data
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class PreviewNode {
+    + <<override>> hasPreview : bool <<get>>
+    - m_Width : float
+    - m_Height : float
+    + SetDimensions(width:float, height:float) : void
+    + width : float <<get>>
+    + height : float <<get>>
+    + PreviewNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Preview(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- PreviewNode
+@enduml

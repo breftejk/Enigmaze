@@ -1,0 +1,6 @@
+@startuml
+interface IElementAdderMenu {
+    IsEmpty : bool <<get>>
+    DropDown(position:Rect) : void
+}
+@enduml

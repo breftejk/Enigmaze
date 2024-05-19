@@ -1,0 +1,33 @@
+@startuml
+class TextureCurve {
+    <<const>> - k_Precision : int = 128
+    <<const>> - k_Step : float
+    + length : int <<get>>
+    - m_Loop : bool
+    - m_ZeroValue : float
+    - m_Range : float
+    - m_Curve : AnimationCurve
+    - m_LoopingCurve : AnimationCurve
+    - m_Texture : Texture2D
+    - m_IsCurveDirty : bool
+    - m_IsTextureDirty : bool
+    + TextureCurve(baseCurve:AnimationCurve, zeroValue:float, loop:bool, bounds:Vector2)
+    + TextureCurve(keys:Keyframe[], zeroValue:float, loop:bool, bounds:Vector2)
+    + Dispose() : void
+    + Release() : void
+    + SetDirty() : void
+    {static} - GetTextureFormat() : GraphicsFormat
+    + GetTexture() : Texture2D
+    + Evaluate(time:float) : float
+    + AddKey(time:float, value:float) : int
+    + MoveKey(index:int, key:Keyframe) : int
+    + RemoveKey(index:int) : void
+    + SmoothTangents(index:int, weight:float) : void
+}
+class TextureCurveParameter {
+    + TextureCurveParameter(value:TextureCurve, overrideState:bool)
+    + <<override>> Release() : void
+}
+IDisposable <|-- TextureCurve
+"VolumeParameter`1" "<TextureCurve>" <|-- TextureCurveParameter
+@enduml

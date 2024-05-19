@@ -1,0 +1,11 @@
+@startuml
+class NullCheck <<sealed>> {
+    + input : ValueInput <<get>>
+    + enter : ControlInput <<get>>
+    + ifNotNull : ControlOutput <<get>>
+    + ifNull : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + Enter(flow:Flow) : ControlOutput
+}
+Unit <|-- NullCheck
+@enduml

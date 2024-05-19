@@ -1,0 +1,63 @@
+@startuml
+class Gaps <<static>> {
+    {static} <<readonly>> - kInsertTime : string
+    + {static} Insert(asset:TimelineAsset, at:double, amount:double, tolerance:double) : void
+}
+class PlayheadContextMenu {
+    <<readonly>> - m_TimeAreaItem : TimeAreaItem
+    {static} <<readonly>> - kFrameInsertionValues : int[]
+    {static} <<readonly>> - kFrameInsertionValuesGuiContents : GUIContent[]
+    {static} <<readonly>> - kSingleFrameGuiContents : GUIContent
+    {static} <<readonly>> - kSelectedTimeGuiContents : GUIContent
+    + PlayheadContextMenu(timeAreaItem:TimeAreaItem)
+    # <<override>> ContextClick(evt:Event, state:WindowState) : bool
+    <<internal>> {static} SelectClipsEndingBefore(state:WindowState) : void
+    <<internal>> {static} SelectClipsStartingBefore(state:WindowState) : void
+    <<internal>> {static} SelectClipsEndingAfter(state:WindowState) : void
+    <<internal>> {static} SelectClipsStartingAfter(state:WindowState) : void
+    <<internal>> {static} SelectClipsIntersecting(state:WindowState) : void
+    <<internal>> {static} SelectBlendsIntersecting(state:WindowState) : void
+    {static} - SelectBlendingIntersecting(clip:TimelineClip, time:double) : bool
+    {static} - SelectMenuCallback(selector:Func<TimelineClip, bool>, state:WindowState) : void
+}
+class TimeAreaContextMenu {
+    # <<override>> ContextClick(evt:Event, state:WindowState) : bool
+    <<internal>> {static} AddTimeAreaMenuItems(menu:GenericMenu, state:WindowState) : void
+    {static} - SelectDurationCallback(state:WindowState, mode:TimelineAsset.DurationMode) : void
+}
+class Scrub {
+    <<readonly>> - m_OnMouseDown : Func<Event, WindowState, bool>
+    <<readonly>> - m_OnMouseDrag : Action<double>
+    <<readonly>> - m_OnMouseUp : System.Action
+    - m_IsCaptured : bool
+    + Scrub(onMouseDown:Func<Event, WindowState, bool>, onMouseDrag:Action<double>, onMouseUp:System.Action)
+    # <<override>> MouseDown(evt:Event, state:WindowState) : bool
+    # <<override>> MouseUp(evt:Event, state:WindowState) : bool
+    # <<override>> MouseDrag(evt:Event, state:WindowState) : bool
+}
+class TimeAreaItem {
+    + headColor : Color <<get>> <<set>>
+    + lineColor : Color <<get>> <<set>>
+    + drawLine : bool <<get>> <<set>>
+    + drawHead : bool <<get>> <<set>>
+    + canMoveHead : bool <<get>> <<set>>
+    + tooltip : string <<get>> <<set>>
+    + boundOffset : Vector2 <<get>> <<set>>
+    <<readonly>> - m_HeaderContent : GUIContent
+    <<readonly>> - m_Style : GUIStyle
+    <<readonly>> - m_Tooltip : Tooltip
+    - m_BoundingRect : Rect
+    - widgetHeight : float <<get>>
+    - widgetWidth : float <<get>>
+    + bounds : Rect <<get>>
+    + style : GUIStyle <<get>>
+    + showTooltip : bool <<get>> <<set>>
+    + firstDrag : bool <<get>>
+    + TimeAreaItem(style:GUIStyle, onDrag:Action<double>)
+    + Draw(rect:Rect, state:WindowState, time:double) : void
+}
+Manipulator <|-- PlayheadContextMenu
+Manipulator <|-- TimeAreaContextMenu
+Manipulator <|-- Scrub
+Control <|-- TimeAreaItem
+@enduml

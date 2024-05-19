@@ -1,0 +1,8 @@
+@startuml
+class DDYNode {
+    + DDYNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    - Unity_DDY(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- DDYNode
+@enduml

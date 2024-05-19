@@ -1,0 +1,73 @@
+@startuml
+enum SRPLensFlareBlendMode {
+    Additive,
+    Screen,
+    Premultiply,
+    Lerp,
+}
+enum SRPLensFlareDistribution {
+    Uniform,
+    Curve,
+    Random,
+}
+enum SRPLensFlareType {
+    Image,
+    Circle,
+    Polygon,
+}
+class LensFlareDataElementSRP <<sealed>> {
+    + LensFlareDataElementSRP()
+    + visible : bool
+    + position : float
+    + positionOffset : Vector2
+    + angularOffset : float
+    + translationScale : Vector2
+    - m_LocalIntensity : float
+    + localIntensity : float <<get>> <<set>>
+    + lensFlareTexture : Texture
+    + uniformScale : float
+    + sizeXY : Vector2
+    + allowMultipleElement : bool
+    - m_Count : int
+    + count : int <<get>> <<set>>
+    + preserveAspectRatio : bool
+    + rotation : float
+    + tint : Color
+    + blendMode : SRPLensFlareBlendMode
+    + autoRotate : bool
+    + flareType : SRPLensFlareType
+    + modulateByLightColor : bool
+    - isFoldOpened : bool
+    + distribution : SRPLensFlareDistribution
+    + lengthSpread : float
+    + positionCurve : AnimationCurve
+    + scaleCurve : AnimationCurve
+    + seed : int
+    + colorGradient : Gradient
+    - m_IntensityVariation : float
+    + intensityVariation : float <<get>> <<set>>
+    + positionVariation : Vector2
+    + scaleVariation : float
+    + rotationVariation : float
+    + enableRadialDistortion : bool
+    + targetSizeDistortion : Vector2
+    + distortionCurve : AnimationCurve
+    + distortionRelativeToCenter : bool
+    - m_FallOff : float
+    + fallOff : float <<get>> <<set>>
+    - m_EdgeOffset : float
+    + edgeOffset : float <<get>> <<set>>
+    - m_SideCount : int
+    + sideCount : int <<get>> <<set>>
+    - m_SdfRoundness : float
+    + sdfRoundness : float <<get>> <<set>>
+    + inverseSDF : bool
+    + uniformAngle : float
+    + uniformAngleCurve : AnimationCurve
+}
+class LensFlareDataSRP <<sealed>> {
+    + LensFlareDataSRP()
+    + elements : LensFlareDataElementSRP[]
+}
+ScriptableObject <|-- LensFlareDataSRP
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class VideoPlayableAsset {
+    + videoClip : VideoClip
+    + mute : bool
+    + loop : bool = true
+    + preloadTime : double = 0.3
+    + aspectRatio : VideoAspectRatio
+    + renderMode : RenderMode
+    + targetCamera : ExposedReference<Camera>
+    + audioSource : ExposedReference<AudioSource>
+    + clipInTime : double <<get>> <<set>>
+    + startTime : double <<get>> <<set>>
+    + <<override>> CreatePlayable(graph:PlayableGraph, go:GameObject) : Playable
+    + <<override>> duration : double <<get>>
+    + clipCaps : ClipCaps <<get>>
+    - CreateVideoPlayer(camera:Camera, targetAudioSource:AudioSource) : VideoPlayer
+}
+enum RenderMode {
+    CameraFarPlane,
+    CameraNearPlane,
+}
+PlayableAsset <|-- VideoPlayableAsset
+ITimelineClipAsset <|-- VideoPlayableAsset
+VideoPlayableAsset +-- RenderMode
+@enduml

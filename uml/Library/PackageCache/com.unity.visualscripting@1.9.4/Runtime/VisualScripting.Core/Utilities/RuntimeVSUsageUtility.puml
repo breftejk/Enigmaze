@@ -1,0 +1,5 @@
+@startuml
+class RuntimeVSUsageUtility <<static>> {
+    - {static} RuntimeInitializeOnLoadBeforeSceneLoad() : void
+}
+@enduml

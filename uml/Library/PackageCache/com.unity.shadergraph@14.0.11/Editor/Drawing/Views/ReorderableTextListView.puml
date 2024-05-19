@@ -1,0 +1,28 @@
+@startuml
+class "ReorderableListView`1"<T> {
+    - m_DataList : List<T>
+    - m_GetDisplayTextFunc : Func<T, string>
+    <<readonly>> - m_AllowReorder : bool
+    - m_ReorderableList : ReorderableList
+    - m_TextList : List<string>
+    - m_Container : IMGUIContainer
+    - m_LabelStyle : GUIStyle
+    - m_SelectedIndex : int
+    - m_HeaderLabel : string
+    + GetAddMenuOptions : GetAddMenuOptionsDelegate
+    + OnAddMenuItemCallback : OnAddMenuItemDelegate
+    + RemoveItemCallback : RemoveItemDelegate
+    + OnListReorderedCallback : ListReorderedDelegate
+    <<internal>> ReorderableListView(dataList:List<T>, header:string, allowReorder:bool, getDisplayText:Func<T, string>)
+    - RebuildTextList() : void
+    <<internal>> RecreateList(dataList:List<T>) : void
+    - OnGUIHandler() : void
+    - AddCallbacks() : void
+    - SelectEntry(list:ReorderableList) : void
+    - ReorderEntries(list:ReorderableList) : void
+    - OnAddDropdownMenu(buttonRect:Rect, list:ReorderableList) : void
+    - OnAddMenuClicked(optionIndex:int, optionText:string) : void
+    - OnRemove(list:ReorderableList) : void
+}
+VisualElement <|-- "ReorderableListView`1"
+@enduml

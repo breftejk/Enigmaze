@@ -1,0 +1,10 @@
+@startuml
+class AudioTrack {
+    - m_TrackProperties : AudioMixerProperties
+    + CreateClip(clip:AudioClip) : TimelineClip
+    <<internal>> <<override>> CompileClips(graph:PlayableGraph, go:GameObject, timelineClips:IList<TimelineClip>, tree:IntervalTree<RuntimeElement>) : Playable
+    + <<override>> outputs : IEnumerable<PlayableBinding> <<get>>
+    - OnValidate() : void
+}
+TrackAsset <|-- AudioTrack
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class TMP_RuntimeTests {
+    - m_TextComponent : TextMeshPro
+    - <<const>> m_TextBlock_00 : string = "A simple line of text."
+    - <<const>> m_TextBlock_01 : string = "Unity 2017 introduces new features that help teams of artists and developers build experiences together."
+    - <<const>> m_TextBlock_02 : string
+    - <<const>> m_TextBlock_03 : string
+    - <<const>> m_TextBlock_04 : string
+    - <<const>> m_TextBlock_05 : string = "This block of text contains <b>bold</b> and <i>italicized</i> characters."
+    - <<const>> m_TextBlock_06 : string
+    - <<readonly>> testStrings : string[]
+    + Setup() : void
+    + {static} TestCases_Parsing_TextInfo_WordWrapDisabled() : IEnumerable<object[]>
+    + Parsing_TextInfo_WordWrapDisabled(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + {static} TestCases_Parsing_TextInfo_WordWrapEnabled() : IEnumerable<object[]>
+    + Parsing_TextInfo_WordWrapEnabled(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + {static} TestCases_Parsing_TextInfo_AlignmentTopJustified() : IEnumerable<object[]>
+    + Parsing_TextInfo_AlignmentTopJustified(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+    + {static} TestCases_Parsing_TextInfo_RichText() : IEnumerable<object[]>
+    + Parsing_TextInfo_RichText(sourceTextIndex:int, characterCount:int, spaceCount:int, wordCount:int, lineCount:int) : void
+}
+@enduml

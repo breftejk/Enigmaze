@@ -1,0 +1,51 @@
+@startuml
+class SpritePostProcess {
+    - OnPreprocessAsset() : void
+    - OnPostprocessSprites(texture:Texture2D, sprites:Sprite[]) : void
+    {static} - InjectMainSkeletonBones(dataProvider:ISpriteEditorDataProvider) : void
+    {static} - RemapCharacterPartsToNewBones(skinningCache:SkinningCache, newBones:SpriteBone[]) : void
+    {static} - RefreshSpriteSkinCache() : void
+    {static} - CalculateLocaltoWorldMatrix(i:int, spriteRect:SpriteRect, definitionScale:float, pixelsPerUnit:float, spriteBone:List<UnityEngine.U2D.SpriteBone>, outpriteBone:UnityEngine.U2D.SpriteBone?[], bindPose:NativeArray<Matrix4x4>) : void
+    {static} - PostProcessBoneData(spriteDataProvider:ISpriteEditorDataProvider, definitionScale:float, sprites:Sprite[]) : bool
+    {static} - PostProcessSpriteMeshData(spriteDataProvider:ISpriteEditorDataProvider, definitionScale:float, sprites:Sprite[]) : bool
+    {static} - CalculateDefinitionScale(texture:Texture2D, dataProvider:ITextureDataProvider) : float
+    {static} - GetSpriteEditorDataProvider(assetPath:string) : ISpriteEditorDataProvider
+}
+class SkinningCachePersistentStateTemp {
+    - _lastSpriteId : string
+    - _lastUsedTool : Tools
+    - _lastBoneSelectionIds : List<int> = null
+    - _lastTexture : Texture2D = null
+    - _lastPreviewPose : SerializableDictionary<int, BonePose> = null
+    - _lastBoneVisibility : SerializableDictionary<int, bool> = null
+    - _lastBoneExpansion : SerializableDictionary<int, bool> = null
+    - _lastSpriteVisibility : SerializableDictionary<string, bool> = null
+    - _lastGroupVisibility : SerializableDictionary<int, bool> = null
+    - _lastMode : SkinningMode
+    - _lastVisibilityToolActive : bool
+    - _lastVisibilityToolIndex : int
+    - _lastVertexSelection : IndexedSelection = null
+    - _lastBrushSize : float
+    - _lastBrushHardness : float
+    - _lastBrushStep : float
+    - lastSpriteId : string <<get>> <<set>>
+    - lastUsedTool : Tools <<get>> <<set>>
+    - lastBoneSelectionIds : List<int> <<get>>
+    - lastTexture : Texture2D <<get>> <<set>>
+    - lastPreviewPose : SerializableDictionary<int, BonePose> <<get>>
+    - lastBoneVisibility : SerializableDictionary<int, bool> <<get>>
+    - lastBoneExpansion : SerializableDictionary<int, bool> <<get>>
+    - lastSpriteVisibility : SerializableDictionary<string, bool> <<get>>
+    - lastGroupVisibility : SerializableDictionary<int, bool> <<get>>
+    - lastMode : SkinningMode <<get>> <<set>>
+    - lastVisibilityToolActive : bool <<get>> <<set>>
+    - lastVisibilityToolIndex : int <<get>> <<set>>
+    - lastVertexSelection : IndexedSelection <<get>>
+    - lastBrushSize : float <<get>> <<set>>
+    - lastBrushHardness : float <<get>> <<set>>
+    - lastBrushStep : float <<get>> <<set>>
+}
+AssetPostprocessor <|-- SpritePostProcess
+SpritePostProcess +-- SkinningCachePersistentStateTemp
+ISkinningCachePersistentState <|-- SkinningCachePersistentStateTemp
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+class RandomBrush {
+    + randomTileSetSize : Vector3Int
+    + randomTileSets : RandomTileSet[]
+    + randomTileChangeDataSets : RandomTileChangeDataSet[]
+    + pickRandomTiles : bool
+    + addToRandomTiles : bool
+    - OnEnable() : void
+    + <<override>> Paint(grid:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<override>> Pick(gridLayout:GridLayout, brushTarget:GameObject, bounds:BoundsInt, pickStart:Vector3Int) : void
+}
+class RandomBrushEditor {
+    - randomBrush : RandomBrush <<get>>
+    - lastBrushTarget : GameObject
+    + <<override>> PaintPreview(grid:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<override>> ClearPreview() : void
+    + <<override>> OnPaintInspectorGUI() : void
+}
+struct SizeEnumerator {
+    - <<readonly>> _min : Vector3Int
+    - <<readonly>> _max : Vector3Int
+    - <<readonly>> _delta : Vector3Int
+    - _current : Vector3Int
+    + SizeEnumerator(min:Vector3Int, max:Vector3Int, delta:Vector3Int)
+    + GetEnumerator() : SizeEnumerator
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : Vector3Int <<get>>
+    - Current : object <<get>>
+    - Dispose() : void
+}
+struct RandomTileSet {
+    + randomTiles : TileBase[]
+}
+struct RandomTileChangeDataSet {
+    + randomTileChangeData : TileChangeData[]
+}
+GridBrush <|-- RandomBrush
+GridBrushEditor <|-- RandomBrushEditor
+RandomBrush +-- SizeEnumerator
+"IEnumerator`1" "<Vector3Int>" <|-- SizeEnumerator
+RandomBrush +-- RandomTileSet
+RandomBrush +-- RandomTileChangeDataSet
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TMP_SerializedPropertyHolder {
+    + fontAsset : TMP_FontAsset
+    + firstCharacter : uint
+    + secondCharacter : uint
+    + glyphPairAdjustmentRecord : TMP_GlyphPairAdjustmentRecord
+}
+ScriptableObject <|-- TMP_SerializedPropertyHolder
+@enduml

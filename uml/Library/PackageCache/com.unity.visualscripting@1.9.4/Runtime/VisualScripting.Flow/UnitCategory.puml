@@ -1,0 +1,16 @@
+@startuml
+class UnitCategory {
+    + UnitCategory(fullName:string)
+    + root : UnitCategory <<get>>
+    + parent : UnitCategory <<get>>
+    + fullName : string <<get>>
+    + name : string <<get>>
+    + isRoot : bool <<get>>
+    + ancestors : IEnumerable<UnitCategory> <<get>>
+    + AndAncestors() : IEnumerable<UnitCategory>
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+Attribute <|-- UnitCategory
+@enduml

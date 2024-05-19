@@ -1,0 +1,9 @@
+@startuml
+class DecalUpdateCulledSystem {
+    - m_EntityManager : DecalEntityManager
+    - m_Sampler : ProfilingSampler
+    + DecalUpdateCulledSystem(entityManager:DecalEntityManager)
+    + Execute() : void
+    - Execute(culledChunk:DecalCulledChunk, count:int) : void
+}
+@enduml

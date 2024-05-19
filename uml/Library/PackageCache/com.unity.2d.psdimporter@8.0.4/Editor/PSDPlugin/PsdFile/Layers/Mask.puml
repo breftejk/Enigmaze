@@ -1,0 +1,29 @@
+@startuml
+class Mask {
+    + Layer : Layer <<get>>
+    + Rect : Rectangle <<get>> <<set>>
+    - backgroundColor : byte
+    + BackgroundColor : byte <<get>> <<set>>
+    - {static} positionVsLayerBit : int
+    - {static} disabledBit : int
+    - {static} invertOnBlendBit : int
+    - flags : BitVector32
+    + Flags : BitVector32 <<get>>
+    + PositionVsLayer : bool <<get>> <<set>>
+    + Disabled : bool <<get>> <<set>>
+    + InvertOnBlend : bool <<get>> <<set>>
+    + ImageData : NativeArray<byte> <<get>> <<set>>
+    + Mask(layer:Layer)
+    + Mask(layer:Layer, rect:Rectangle, color:byte, flags:BitVector32)
+}
+class MaskInfo {
+    - {static} s_UserMaskDensityBit : int
+    - {static} s_UserMaskFeatherBit : int
+    - {static} s_VectorMaskDensityBit : int
+    - {static} s_VectorMaskFeatherBit : int
+    + LayerMask : Mask <<get>> <<set>>
+    + UserMask : Mask <<get>> <<set>>
+    + MaskInfo()
+    + MaskInfo(reader:PsdBinaryReader, layer:Layer)
+}
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+class GraphClipboard <<static>> {
+    {static} - GraphClipboard()
+    - {static} e : Event <<get>>
+    - {static} OnContextChange(context:IGraphContext) : void
+    - {static} context : IGraphContext
+    - {static} reference : GraphReference <<get>>
+    - {static} graph : IGraph <<get>>
+    - {static} canvas : ICanvas <<get>>
+    - {static} selection : GraphSelection <<get>>
+    + {static} singleClipboard : Clipboard <<get>>
+    + {static} groupClipboard : Clipboard <<get>>
+    + {static} canCopySelection : bool <<get>>
+    + {static} canPaste : bool <<get>>
+    + {static} canPasteOutside : bool <<get>>
+    + {static} canDuplicateSelection : bool <<get>>
+    - {static} GetCopyGroup(elements:IEnumerable<IGraphElement>) : HashSet<IGraphElement>
+    - {static} GetPasteGroup() : List<IGraphElement>
+    + {static} CopyElement(element:IGraphElement) : void
+    + {static} CopySelection() : void
+    + {static} Paste(position:Vector2?) : void
+    + {static} CanPasteInside(element:IGraphElement) : bool
+    + {static} PasteInside(element:IGraphElement) : void
+    + {static} PasteOutside(reposition:bool, position:Vector2?) : void
+    + {static} CutSelection() : void
+    + {static} DuplicateSelection() : void
+}
+@enduml

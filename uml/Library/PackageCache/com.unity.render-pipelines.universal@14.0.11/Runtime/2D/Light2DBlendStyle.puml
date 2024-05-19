@@ -1,0 +1,42 @@
+@startuml
+struct Light2DBlendStyle {
+    + name : string
+    <<internal>> maskTextureChannel : TextureChannel
+    <<internal>> blendMode : BlendMode
+    <<internal>> blendFactors : Vector2 <<get>>
+    <<internal>> maskTextureChannelFilter : MaskChannelFilter <<get>>
+    <<internal>> isDirty : bool <<get>> <<set>>
+    <<internal>> hasRenderTarget : bool <<get>> <<set>>
+    <<internal>> renderTargetHandleId : int
+    <<internal>> renderTargetHandle : RTHandle
+}
+enum TextureChannel {
+    None= 0,
+    R= 1,
+    G= 2,
+    B= 3,
+    A= 4,
+    OneMinusR= 5,
+    OneMinusG= 6,
+    OneMinusB= 7,
+    OneMinusA= 8,
+}
+struct MaskChannelFilter {
+    + mask : Vector4 <<get>>
+    + inverted : Vector4 <<get>>
+    + MaskChannelFilter(m:Vector4, i:Vector4)
+}
+enum BlendMode {
+    Additive= 0,
+    Multiply= 1,
+    Subtractive= 2,
+}
+struct BlendFactors {
+    + multiplicative : float
+    + additive : float
+}
+Light2DBlendStyle +-- TextureChannel
+Light2DBlendStyle +-- MaskChannelFilter
+Light2DBlendStyle +-- BlendMode
+Light2DBlendStyle +-- BlendFactors
+@enduml

@@ -1,0 +1,142 @@
+@startuml
+class ScreenSpaceAmbientOcclusionSettings {
+    <<internal>> AOMethod : AOMethodOptions
+    <<internal>> Downsample : bool = false
+    <<internal>> AfterOpaque : bool = false
+    <<internal>> Source : DepthSource
+    <<internal>> NormalSamples : NormalQuality
+    <<internal>> Intensity : float = 3.0f
+    <<internal>> DirectLightingStrength : float = 0.25f
+    <<internal>> Radius : float = 0.035f
+    <<internal>> Samples : AOSampleOption
+    <<internal>> BlurQuality : BlurQualityOptions
+    <<internal>> Falloff : float = 100f
+    <<internal>> SampleCount : int
+}
+class ScreenSpaceAmbientOcclusion {
+    - m_Settings : ScreenSpaceAmbientOcclusionSettings
+    <<internal>> m_BlueNoise256Textures : Texture2D[]
+    - m_Shader : Shader
+    - m_Material : Material
+    - m_SSAOPass : ScreenSpaceAmbientOcclusionPass = null
+    <<internal>> settings : ref ScreenSpaceAmbientOcclusionSettings <<get>>
+    <<internal>> <<const>> k_AOInterleavedGradientKeyword : string = "_INTERLEAVED_GRADIENT"
+    <<internal>> <<const>> k_AOBlueNoiseKeyword : string = "_BLUE_NOISE"
+    <<internal>> <<const>> k_OrthographicCameraKeyword : string = "_ORTHOGRAPHIC"
+    <<internal>> <<const>> k_SourceDepthLowKeyword : string = "_SOURCE_DEPTH_LOW"
+    <<internal>> <<const>> k_SourceDepthMediumKeyword : string = "_SOURCE_DEPTH_MEDIUM"
+    <<internal>> <<const>> k_SourceDepthHighKeyword : string = "_SOURCE_DEPTH_HIGH"
+    <<internal>> <<const>> k_SourceDepthNormalsKeyword : string = "_SOURCE_DEPTH_NORMALS"
+    <<internal>> <<const>> k_SampleCountLowKeyword : string = "_SAMPLE_COUNT_LOW"
+    <<internal>> <<const>> k_SampleCountMediumKeyword : string = "_SAMPLE_COUNT_MEDIUM"
+    <<internal>> <<const>> k_SampleCountHighKeyword : string = "_SAMPLE_COUNT_HIGH"
+    + <<override>> Create() : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+    - GetMaterials() : bool
+}
+enum DepthSource {
+    Depth= 0,
+    DepthNormals= 1,
+}
+enum NormalQuality {
+    Low,
+    Medium,
+    High,
+}
+enum AOSampleOption {
+    High,
+    Medium,
+    Low,
+}
+enum AOMethodOptions {
+    BlueNoise,
+    InterleavedGradient,
+}
+enum BlurQualityOptions {
+    High,
+    Medium,
+    Low,
+}
+class ScreenSpaceAmbientOcclusionPass {
+    - isRendererDeferred : bool <<get>>
+    <<internal>> profilerTag : string
+    - m_SupportsR8RenderTextureFormat : bool
+    - m_BlueNoiseTextureIndex : int = 0
+    - m_BlurRandomOffsetX : float = 0f
+    - m_BlurRandomOffsetY : float = 0f
+    - m_Material : Material
+    - m_BlueNoiseTextures : Texture2D[]
+    - m_CameraTopLeftCorner : Vector4[]
+    - m_CameraXExtent : Vector4[]
+    - m_CameraYExtent : Vector4[]
+    - m_CameraZExtent : Vector4[]
+    - m_SSAOTextures : RTHandle[]
+    - m_BlurType : BlurTypes
+    - m_CameraViewProjections : Matrix4x4[]
+    - m_ProfilingSampler : ProfilingSampler
+    - m_Renderer : ScriptableRenderer = null
+    - m_AOPassDescriptor : RenderTextureDescriptor
+    - m_CurrentSettings : ScreenSpaceAmbientOcclusionSettings
+    - <<const>> k_FinalTexID : int = 3
+    - <<const>> k_SSAOTextureName : string = "_ScreenSpaceOcclusionTexture"
+    - <<const>> k_AmbientOcclusionParamName : string = "_AmbientOcclusionParam"
+    <<internal>> {static} <<readonly>> s_AmbientOcclusionParamID : int
+    - {static} <<readonly>> s_SSAOParamsID : int
+    - {static} <<readonly>> s_SSAOBlueNoiseParamsID : int
+    - {static} <<readonly>> s_LastKawasePass : int
+    - {static} <<readonly>> s_BlueNoiseTextureID : int
+    - {static} <<readonly>> s_CameraViewXExtentID : int
+    - {static} <<readonly>> s_CameraViewYExtentID : int
+    - {static} <<readonly>> s_CameraViewZExtentID : int
+    - {static} <<readonly>> s_ProjectionParams2ID : int
+    - {static} <<readonly>> s_KawaseBlurIterationID : int
+    - {static} <<readonly>> s_CameraViewProjectionsID : int
+    - {static} <<readonly>> s_CameraViewTopLeftCornerID : int
+    - {static} <<readonly>> m_BilateralTexturesIndices : int[]
+    - {static} <<readonly>> m_BilateralPasses : ShaderPasses[]
+    - {static} <<readonly>> m_BilateralAfterOpaquePasses : ShaderPasses[]
+    - {static} <<readonly>> m_GaussianTexturesIndices : int[]
+    - {static} <<readonly>> m_GaussianPasses : ShaderPasses[]
+    - {static} <<readonly>> m_GaussianAfterOpaquePasses : ShaderPasses[]
+    - {static} <<readonly>> m_KawaseTexturesIndices : int[]
+    - {static} <<readonly>> m_KawasePasses : ShaderPasses[]
+    - {static} <<readonly>> m_KawaseAfterOpaquePasses : ShaderPasses[]
+    <<internal>> ScreenSpaceAmbientOcclusionPass()
+    <<internal>> Setup(featureSettings:ScreenSpaceAmbientOcclusionSettings, renderer:ScriptableRenderer, material:Material, blueNoiseTextures:Texture2D[]) : bool
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - {static} RenderAndSetBaseMap(cmd:CommandBuffer, renderingData:RenderingData, renderer:ScriptableRenderer, mat:Material, baseMap:RTHandle, target:RTHandle, pass:ShaderPasses) : void
+    - {static} GetPassOrder(blurType:BlurTypes, isAfterOpaque:bool, textureIndices:int[], shaderPasses:ShaderPasses[]) : void
+    - {static} IsAfterOpaquePass(pass:ShaderPasses) : bool
+    + <<override>> OnCameraCleanup(cmd:CommandBuffer) : void
+    + Dispose() : void
+}
+enum BlurTypes {
+    Bilateral,
+    Gaussian,
+    Kawase,
+}
+enum ShaderPasses {
+    AmbientOcclusion= 0,
+    BilateralBlurHorizontal= 1,
+    BilateralBlurVertical= 2,
+    BilateralBlurFinal= 3,
+    BilateralAfterOpaque= 4,
+    GaussianBlurHorizontal= 5,
+    GaussianBlurVertical= 6,
+    GaussianAfterOpaque= 7,
+    KawaseBlur= 8,
+    KawaseAfterOpaque= 9,
+}
+ScriptableRendererFeature <|-- ScreenSpaceAmbientOcclusion
+ScreenSpaceAmbientOcclusionSettings +-- DepthSource
+ScreenSpaceAmbientOcclusionSettings +-- NormalQuality
+ScreenSpaceAmbientOcclusionSettings +-- AOSampleOption
+ScreenSpaceAmbientOcclusionSettings +-- AOMethodOptions
+ScreenSpaceAmbientOcclusionSettings +-- BlurQualityOptions
+ScreenSpaceAmbientOcclusion +-- ScreenSpaceAmbientOcclusionPass
+ScriptableRenderPass <|-- ScreenSpaceAmbientOcclusionPass
+ScreenSpaceAmbientOcclusionPass +-- BlurTypes
+ScreenSpaceAmbientOcclusionPass +-- ShaderPasses
+@enduml

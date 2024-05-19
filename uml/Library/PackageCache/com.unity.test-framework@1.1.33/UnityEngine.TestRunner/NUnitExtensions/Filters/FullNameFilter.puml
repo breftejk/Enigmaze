@@ -1,0 +1,7 @@
+@startuml
+class FullNameFilter {
+    + FullNameFilter(expectedValue:string)
+    + <<override>> Match(test:ITest) : bool
+    # <<override>> ElementName : string <<get>>
+}
+@enduml

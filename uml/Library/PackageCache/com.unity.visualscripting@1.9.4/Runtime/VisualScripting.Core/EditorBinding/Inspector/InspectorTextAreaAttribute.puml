@@ -1,0 +1,11 @@
+@startuml
+class InspectorTextAreaAttribute <<sealed>> {
+    - _minLines : float?
+    - _maxLines : float?
+    + minLines : float <<get>> <<set>>
+    + hasMinLines : bool <<get>>
+    + maxLines : float <<get>> <<set>>
+    + hasMaxLines : bool <<get>>
+}
+Attribute <|-- InspectorTextAreaAttribute
+@enduml

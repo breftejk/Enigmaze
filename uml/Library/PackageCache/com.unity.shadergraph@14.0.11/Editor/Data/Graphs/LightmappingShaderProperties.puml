@@ -1,0 +1,13 @@
+@startuml
+class LightmappingShaderProperties <<static>> {
+    + {static} <<readonly>> kLightmapsArray : LightmapTextureArrayProperty
+    + {static} <<readonly>> kLightmapsIndirectionArray : LightmapTextureArrayProperty
+    + {static} <<readonly>> kShadowMasksArray : LightmapTextureArrayProperty
+}
+class LightmapTextureArrayProperty {
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+}
+LightmappingShaderProperties +-- LightmapTextureArrayProperty
+Texture2DArrayShaderProperty <|-- LightmapTextureArrayProperty
+@enduml

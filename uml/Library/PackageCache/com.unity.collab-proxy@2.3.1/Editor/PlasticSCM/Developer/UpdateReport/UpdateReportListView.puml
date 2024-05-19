@@ -1,0 +1,29 @@
+@startuml
+class UpdateReportListView {
+    <<internal>> UpdateReportListView(wkInfo:WorkspaceInfo, headerState:UpdateReportListHeaderState, onCheckedReportLineChanged:Action)
+    <<internal>> GetCheckedLines() : List<ReportLine>
+    <<internal>> IsAnyLineChecked() : bool
+    <<internal>> AreAllLinesChecked() : bool
+    <<internal>> CheckAllLines() : void
+    <<internal>> UnCheckAllLines() : void
+    <<internal>> BuildModel(reportLines:IList) : void
+    <<internal>> GetSelectedError() : ReportLine
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    {static} - GetSelectedErrors(listView:UpdateReportListView) : List<ReportLine>
+    {static} - RegenerateRows(listView:UpdateReportListView, reportLines:IList, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - UpdateReportListViewItemGUI(wkPath:string, item:UpdateReportLineListViewItem, args:RowGUIArgs, rowHeight:float, totalLinesCount:int, onCheckedReportLineChanged:Action, checkedLines:HashSet<UpdateReportLineListViewItem>) : void
+    {static} - UpdateReportListViewItemCellGUI(rect:Rect, wkPath:string, item:UpdateReportLineListViewItem, column:ErrorsListColumn, rowHeight:float, isSelected:bool, isFocused:bool, totalLinesCount:int, onCheckedReportLineChanged:Action, checkedLines:HashSet<UpdateReportLineListViewItem>) : void
+    {static} - UpdateCheckedState(checkedLines:HashSet<UpdateReportLineListViewItem>, item:UpdateReportLineListViewItem, isChecked:bool) : void
+    - mRows : List<TreeViewItem>
+    - mReportLines : IList
+    - mCheckedLines : HashSet<UpdateReportLineListViewItem>
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mOnCheckedReportLineChanged : Action
+}
+TreeView <|-- UpdateReportListView
+@enduml

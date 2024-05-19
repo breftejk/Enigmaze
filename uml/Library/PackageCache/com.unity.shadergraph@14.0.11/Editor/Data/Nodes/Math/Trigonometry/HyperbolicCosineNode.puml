@@ -1,0 +1,8 @@
+@startuml
+class HyperbolicCosineNode {
+    + HyperbolicCosineNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_HyperbolicCosine(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- HyperbolicCosineNode
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class InspectorActionDirectionAttribute <<sealed>> {
+    + InspectorActionDirectionAttribute(direction:ActionDirection)
+    + direction : ActionDirection <<get>>
+}
+Attribute <|-- InspectorActionDirectionAttribute
+@enduml

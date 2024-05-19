@@ -1,0 +1,8 @@
+@startuml
+class IconExportUtility <<static>> {
+    + {static} ExportTypeIcon() : void
+    + {static} ExportMessageIcon() : void
+    - {static} CreateReadableCopy(source:Texture2D) : Texture2D
+    + {static} ExportAllEditorIcon() : void
+}
+@enduml

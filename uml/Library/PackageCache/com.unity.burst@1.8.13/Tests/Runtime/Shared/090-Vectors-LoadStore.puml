@@ -1,0 +1,20 @@
+@startuml
+class VectorsLoadStore <<partial>> {
+    + {static} TestReturnFloat4(result:float4) : float
+    - {static} Process(vec:float4) : float4
+    + {static} FieldLoadStoreLocalFloat4() : float
+    + {static} FieldLoadStoreIndirectFloat4() : float
+    + {static} FieldLoadStoreLocalByRefFloat4() : float
+    - {static} ChangeFloat4(vect:float4) : void
+    + {static} FieldStoreByOutFloat4() : float
+    - {static} OutputFloat4(float4:float4) : void
+    + {static} FieldLoadStoreLocalByRefFloat3() : float
+    - {static} ChangeFloat3(vect:float3) : void
+    + {static} FieldLoadStoreByRefFloat3() : float
+    - {static} LoadAndChangeFloat3(vect:float3, result:float3) : void
+}
+struct StructWithFloat4 {
+    + Vec4 : float4
+}
+VectorsLoadStore +-- StructWithFloat4
+@enduml

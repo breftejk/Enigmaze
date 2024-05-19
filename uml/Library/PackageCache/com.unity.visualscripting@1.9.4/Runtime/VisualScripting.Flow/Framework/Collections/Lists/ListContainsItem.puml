@@ -1,0 +1,10 @@
+@startuml
+class ListContainsItem <<sealed>> {
+    + list : ValueInput <<get>>
+    + item : ValueInput <<get>>
+    + contains : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Contains(flow:Flow) : bool
+}
+Unit <|-- ListContainsItem
+@enduml

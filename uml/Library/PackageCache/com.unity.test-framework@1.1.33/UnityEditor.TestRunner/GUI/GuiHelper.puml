@@ -1,0 +1,16 @@
+@startuml
+class GuiHelper {
+    + GuiHelper(monoCecilHelper:IMonoCecilHelper, assetsDatabaseHelper:IAssetsDatabaseHelper)
+    <<internal>> GetCSFiles : Func<string, string, IEnumerable<string>>
+    # MonoCecilHelper : IMonoCecilHelper <<get>>
+    + AssetsDatabaseHelper : IAssetsDatabaseHelper <<get>>
+    + Editor : IExternalCodeEditor <<get>> <<internal set>>
+    - <<const>> FileExtension : string = ".cs"
+    + OpenScriptInExternalEditor(type:Type, method:MethodInfo) : void
+    + GetFileOpenInfo(type:Type, method:MethodInfo) : IFileOpenInfo
+    <<internal>> {static} GetTestFileName(type:Type) : string
+    + FilePathToAssetsRelativeAndUnified(filePath:string) : string
+    + OpenScriptInExternalEditor(stacktrace:string) : bool
+}
+IGuiHelper <|-- GuiHelper
+@enduml

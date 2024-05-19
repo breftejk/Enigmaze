@@ -1,0 +1,16 @@
+@startuml
+class ShaderPort <<sealed>> {
+    + {static} styleSheet : StyleSheet
+    - ShaderPort(portOrientation:Orientation, portDirection:Direction, portCapacity:Capacity, type:Type)
+    - m_Slot : MaterialSlot
+    + {static} Create(slot:MaterialSlot, connectorListener:IEdgeConnectorListener) : ShaderPort
+    + Dispose() : void
+    + slot : MaterialSlot <<get>> <<set>>
+    + OnDisconnect : Action<Port>
+    + <<override>> Disconnect(edge:Edge) : void
+}
+class ShaderPortExtensions <<static>> {
+    + {static} GetSlot(port:Port) : MaterialSlot
+}
+Port <|-- ShaderPort
+@enduml

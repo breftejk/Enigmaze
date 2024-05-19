@@ -1,0 +1,25 @@
+@startuml
+abstract class BinaryOperatorHandler {
+    # BinaryOperatorHandler(name:string, verb:string, symbol:string, customMethodName:string)
+    - <<readonly>> handlers : Dictionary<OperatorQuery, Func<object, object, object>>
+    - <<readonly>> userDefinedOperators : Dictionary<OperatorQuery, IOptimizedInvoker>
+    - <<readonly>> userDefinedOperandTypes : Dictionary<OperatorQuery, OperatorQuery>
+    + <<virtual>> Operate(leftOperand:object, rightOperand:object) : object
+    # <<virtual>> CustomHandling(leftOperand:object, rightOperand:object) : object
+    # <<virtual>> BothNullHandling() : object
+    # <<virtual>> SingleNullHandling() : object
+    # Handle(handler:Func<TLeft, TRight, object>, reverse:bool) : void
+    - {static} ResolveUserDefinedOperandTypes(userDefinedOperator:MethodInfo) : OperatorQuery
+}
+struct OperatorQuery {
+    + <<readonly>> leftType : Type
+    + <<readonly>> rightType : Type
+    + OperatorQuery(leftType:Type, rightType:Type)
+    + Equals(other:OperatorQuery) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+OperatorHandler <|-- BinaryOperatorHandler
+BinaryOperatorHandler +-- OperatorQuery
+"IEquatable`1" "<OperatorQuery>" <|-- OperatorQuery
+@enduml

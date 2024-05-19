@@ -1,0 +1,58 @@
+@startuml
+class TimelineWindowTimeControl {
+    <<const>> - k_SnapMode : AnimationWindowState.SnapMode
+    - m_ClipData : ClipData
+    - m_Clip : TimelineClip
+    - m_AnimWindowState : AnimationWindowState
+    - track : TrackAsset <<get>>
+    {static} - window : TimelineWindow <<get>>
+    {static} - state : WindowState <<get>>
+    - OnStateChange() : void
+    + Init(animState:AnimationWindowState, clip:TimelineClip) : void
+    + Init(animState:AnimationWindowState, clip:ClipData) : void
+    + <<override>> OnEnable() : void
+    + OnDisable() : void
+    + <<override>> time : AnimationKeyTime <<get>>
+    - ChangeTime(newTime:float) : void
+    {static} - ChangeFrame(frame:int) : void
+    + <<override>> GoToTime(newTime:float) : void
+    + <<override>> GoToFrame(frame:int) : void
+    + <<override>> StartScrubTime() : void
+    + <<override>> EndScrubTime() : void
+    + <<override>> ScrubTime(newTime:float) : void
+    + <<override>> GoToPreviousFrame() : void
+    + <<override>> GoToNextFrame() : void
+    - GetCurves() : AnimationWindowCurve[]
+    + <<override>> GoToPreviousKeyframe() : void
+    + <<override>> GoToNextKeyframe() : void
+    + <<override>> GoToFirstKeyframe() : void
+    + <<override>> GoToLastKeyframe() : void
+    + <<override>> canPlay : bool <<get>>
+    + <<override>> playing : bool <<get>>
+    {static} - SetPlaybackState(playbackState:bool) : void
+    + <<override>> StartPlayback() : bool
+    + <<override>> StopPlayback() : void
+    + <<override>> PlaybackUpdate() : bool
+    + <<override>> canRecord : bool <<get>>
+    + <<override>> recording : bool <<get>>
+    + <<override>> canPreview : bool <<get>>
+    + <<override>> previewing : bool <<get>>
+    + <<override>> StartRecording(targetObject:Object) : bool
+    + <<override>> StopRecording() : void
+    + <<override>> OnSelectionChanged() : void
+    + <<override>> ResampleAnimation() : void
+    + <<override>> StartPreview() : bool
+    + <<override>> StopPreview() : void
+    + <<override>> ProcessCandidates() : void
+    + <<override>> ClearCandidates() : void
+    - ToGlobalTime(localTime:float) : double
+    - ToAnimationClipTime(globalTime:double) : float
+}
+struct ClipData {
+    + start : double
+    + duration : double
+    + track : TrackAsset
+}
+IAnimationWindowControl <|-- TimelineWindowTimeControl
+TimelineWindowTimeControl +-- ClipData
+@enduml

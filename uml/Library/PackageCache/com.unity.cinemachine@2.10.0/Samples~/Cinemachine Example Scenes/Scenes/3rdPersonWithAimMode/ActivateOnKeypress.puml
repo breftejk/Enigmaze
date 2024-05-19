@@ -1,0 +1,12 @@
+@startuml
+class ActivateOnKeypress {
+    + ActivationKey : KeyCode
+    + PriorityBoostAmount : int = 10
+    + Reticle : GameObject
+    - vcam : Cinemachine.CinemachineVirtualCameraBase
+    - boosted : bool = false
+    - Start() : void
+    - Update() : void
+}
+MonoBehaviour <|-- ActivateOnKeypress
+@enduml

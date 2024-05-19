@@ -1,0 +1,11 @@
+@startuml
+class CinemachineTargetGroupEditor <<sealed>> {
+    - mTargetList : UnityEditorInternal.ReorderableList
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DisplayErrorMessageForDescendants() : void
+    - SetupTargetList() : void
+}
+"BaseEditor`1" "<CinemachineTargetGroup>" <|-- CinemachineTargetGroupEditor
+@enduml

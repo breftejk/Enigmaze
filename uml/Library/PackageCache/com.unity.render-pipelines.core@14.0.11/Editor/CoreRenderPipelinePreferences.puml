@@ -1,0 +1,10 @@
+@startuml
+class CoreRenderPipelinePreferences <<static>> {
+    + {static} <<readonly>> corePreferencePath : string = "Preferences/Core Render Pipeline"
+    - {static} <<readonly>> s_Providers : List<ICoreRenderPipelinePreferencesProvider>
+    {static} - InitPreferenceProviders() : void
+    {static} - PreferenceGUI() : SettingsProvider
+    - {static} FillKeywords(provider:SettingsProvider) : void
+    + {static} Open() : void
+}
+@enduml

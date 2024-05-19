@@ -1,0 +1,18 @@
+@startuml
+class ColorManager {
+    {static} - DefaultProvider : string
+    - m_Providers : List<IColorProvider>
+    - m_ActiveIndex : int = 0
+    + activeIndex : int <<get>>
+    + ColorManager(activeProvider:string)
+    + SetNodesDirty(nodeViews:IEnumerable<IShaderNodeView>) : void
+    + SetActiveProvider(newIndex:int, nodeViews:IEnumerable<IShaderNodeView>) : void
+    + UpdateNodeViews(nodeViews:IEnumerable<IShaderNodeView>) : void
+    + UpdateNodeView(nodeView:IShaderNodeView) : void
+    + providerNames : IEnumerable<string> <<get>>
+    + activeProviderName : string <<get>>
+    + activeSupportsCustom : bool <<get>>
+    - activeProvider : IColorProvider <<get>>
+    - IsValidIndex(index:int) : bool
+}
+@enduml

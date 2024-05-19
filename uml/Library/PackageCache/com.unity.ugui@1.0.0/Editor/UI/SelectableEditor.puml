@@ -1,0 +1,39 @@
+@startuml
+class SelectableEditor {
+    - m_Script : SerializedProperty
+    - m_InteractableProperty : SerializedProperty
+    - m_TargetGraphicProperty : SerializedProperty
+    - m_TransitionProperty : SerializedProperty
+    - m_ColorBlockProperty : SerializedProperty
+    - m_SpriteStateProperty : SerializedProperty
+    - m_AnimTriggerProperty : SerializedProperty
+    - m_NavigationProperty : SerializedProperty
+    - m_VisualizeNavigation : GUIContent
+    - m_ShowColorTint : AnimBool
+    - m_ShowSpriteTrasition : AnimBool
+    - m_ShowAnimTransition : AnimBool
+    - {static} s_Editors : List<SelectableEditor>
+    - {static} s_ShowNavigation : bool = false
+    - {static} s_ShowNavigationKey : string = "SelectableEditor.ShowNavigation"
+    - m_PropertyPathToExcludeForChildClasses : string[]
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    - RegisterStaticOnSceneGUI() : void
+    {static} - GetTransition(transition:SerializedProperty) : Selectable.Transition
+    + <<override>> OnInspectorGUI() : void
+    - ChildClassPropertiesGUI() : void
+    - IsDerivedSelectableEditor() : bool
+    - {static} GenerateSelectableAnimatorContoller(animationTriggers:AnimationTriggers, target:Selectable) : Animations.AnimatorController
+    - {static} GetSaveControllerPath(target:Selectable) : string
+    - {static} SetUpCurves(highlightedClip:AnimationClip, pressedClip:AnimationClip, animationPath:string) : void
+    - {static} BuildAnimationPath(target:Selectable) : string
+    - {static} GenerateTriggerableTransition(name:string, controller:Animations.AnimatorController) : AnimationClip
+    - {static} StaticOnSceneGUI(view:SceneView) : void
+    - {static} DrawNavigationForSelectable(sel:Selectable) : void
+    <<const>> - kArrowThickness : float = 2.5f
+    <<const>> - kArrowHeadSize : float = 1.2f
+    - {static} DrawNavigationArrow(direction:Vector2, fromObj:Selectable, toObj:Selectable) : void
+    - {static} GetPointOnRectEdge(rect:RectTransform, dir:Vector2) : Vector3
+}
+Editor <|-- SelectableEditor
+@enduml

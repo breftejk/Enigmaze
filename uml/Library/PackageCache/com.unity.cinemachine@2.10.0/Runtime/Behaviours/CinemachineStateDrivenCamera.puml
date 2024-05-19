@@ -1,0 +1,69 @@
+@startuml
+class CinemachineStateDrivenCamera {
+    + m_LookAt : Transform = null
+    + m_Follow : Transform = null
+    + m_AnimatedTarget : Animator
+    + m_LayerIndex : int
+    + m_ShowDebugText : bool = false
+    <<internal>> m_ChildCameras : CinemachineVirtualCameraBase[] = null
+    + m_Instructions : Instruction[]
+    + m_DefaultBlend : CinemachineBlendDefinition
+    + m_CustomBlends : CinemachineBlenderSettings = null
+    <<internal>> m_ParentHash : ParentHash[] = null
+    + <<override>> Description : string <<get>>
+    + LiveChild : ICinemachineCamera <<get>> <<set>>
+    + <<override>> IsLiveChild(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    + <<override>> State : CameraState <<get>>
+    <<override>> + LookAt : Transform <<get>> <<set>>
+    <<override>> + Follow : Transform <<get>> <<set>>
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    - m_TransitioningFrom : ICinemachineCamera
+    + <<override>> InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + OnTransformChildrenChanged() : void
+    - OnGuiHandler() : void
+    - m_State : CameraState
+    + ChildCameras : CinemachineVirtualCameraBase[] <<get>>
+    + IsBlending : bool <<get>>
+    + ActiveBlend : CinemachineBlend <<get>>
+    + {static} CreateFakeHash(parentHash:int, clip:AnimationClip) : int
+    - mHashCache : Dictionary<AnimationClip, List<HashPair>>
+    - LookupFakeHash(parentHash:int, clip:AnimationClip) : int
+    - mActivationTime : float = 0
+    - mActiveInstruction : Instruction
+    - mPendingActivationTime : float = 0
+    - mPendingInstruction : Instruction
+    - mActiveBlend : CinemachineBlend = null
+    - InvalidateListOfChildren() : void
+    - UpdateListOfChildren() : void
+    - mInstructionDictionary : Dictionary<int, int>
+    - mStateParentLookup : Dictionary<int, int>
+    <<internal>> ValidateInstructions() : void
+    - m_clipInfoList : List<AnimatorClipInfo>
+    - ChooseCurrentCamera() : CinemachineVirtualCameraBase
+    - GetClipHash(hash:int, clips:List<AnimatorClipInfo>) : int
+    - LookupBlend(fromKey:ICinemachineCamera, toKey:ICinemachineCamera) : CinemachineBlendDefinition
+}
+struct Instruction {
+    + m_FullHash : int
+    + m_VirtualCamera : CinemachineVirtualCameraBase
+    + m_ActivateAfter : float
+    + m_MinDuration : float
+}
+struct ParentHash {
+    + m_Hash : int
+    + m_ParentHash : int
+    + ParentHash(h:int, p:int)
+}
+struct HashPair {
+    + parentHash : int
+    + hash : int
+}
+CinemachineVirtualCameraBase <|-- CinemachineStateDrivenCamera
+CinemachineStateDrivenCamera +-- Instruction
+CinemachineStateDrivenCamera +-- ParentHash
+CinemachineStateDrivenCamera +-- HashPair
+@enduml

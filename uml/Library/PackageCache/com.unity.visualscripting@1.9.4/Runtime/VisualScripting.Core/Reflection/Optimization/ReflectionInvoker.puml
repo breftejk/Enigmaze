@@ -1,0 +1,17 @@
+@startuml
+class ReflectionInvoker {
+    + ReflectionInvoker(methodInfo:MethodInfo)
+    - <<readonly>> methodInfo : MethodInfo
+    + Compile() : void
+    + Invoke(target:object, args:object[]) : object
+    + Invoke(target:object) : object
+    + Invoke(target:object, arg0:object) : object
+    + Invoke(target:object, arg0:object, arg1:object) : object
+    + Invoke(target:object, arg0:object, arg1:object, arg2:object) : object
+    + Invoke(target:object, arg0:object, arg1:object, arg2:object, arg3:object) : object
+    + Invoke(target:object, arg0:object, arg1:object, arg2:object, arg3:object, arg4:object) : object
+    + GetParameterTypes() : Type[]
+    - {static} <<readonly>> EmptyObjects : object[]
+}
+IOptimizedInvoker <|-- ReflectionInvoker
+@enduml

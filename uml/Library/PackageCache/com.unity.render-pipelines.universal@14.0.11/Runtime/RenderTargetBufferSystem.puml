@@ -1,0 +1,30 @@
+@startuml
+class RenderTargetBufferSystem <<sealed>> {
+    - m_A : SwapBuffer
+    - m_B : SwapBuffer
+    {static} - m_AisBackBuffer : bool = true
+    {static} - m_Desc : RenderTextureDescriptor
+    - m_FilterMode : FilterMode
+    - m_AllowMSAA : bool = true
+    - backBuffer : ref SwapBuffer <<get>>
+    - frontBuffer : ref SwapBuffer <<get>>
+    + RenderTargetBufferSystem(name:string)
+    + Dispose() : void
+    + PeekBackBuffer() : RTHandle
+    + GetBackBuffer(cmd:CommandBuffer) : RTHandle
+    + GetFrontBuffer(cmd:CommandBuffer) : RTHandle
+    + Swap() : void
+    - ReAllocate(cmd:CommandBuffer) : void
+    + Clear() : void
+    + SetCameraSettings(desc:RenderTextureDescriptor, filterMode:FilterMode) : void
+    + GetBufferA() : RTHandle
+    + EnableMSAA(enable:bool) : void
+}
+struct SwapBuffer {
+    + rtMSAA : RTHandle
+    + rtResolve : RTHandle
+    + name : string
+    + msaa : int
+}
+RenderTargetBufferSystem +-- SwapBuffer
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class BurstDisassembler <<partial>> {
+}
+class ARM64InstructionInfo {
+    <<internal>> {static} GetARM64Info(instructionName:string, instructionInfo:string) : bool
+    - {static} TryFindInstructionInfo(instr:StringSlice, instructionInfo:string) : bool
+}
+BurstDisassembler +-- ARM64InstructionInfo
+@enduml

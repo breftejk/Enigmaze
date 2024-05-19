@@ -1,0 +1,137 @@
+@startuml
+class Light2DEditor {
+    <<const>> - k_GlobalLightGizmoSize : float = 1.2f
+    <<const>> - k_AngleCapSize : float
+    <<const>> - k_AngleCapOffset : float
+    <<const>> - k_AngleCapOffsetSecondary : float
+    <<const>> - k_RangeCapSize : float
+    <<const>> - k_InnerRangeCapSize : float
+    - m_LightType : SerializedProperty
+    - m_LightColor : SerializedProperty
+    - m_LightIntensity : SerializedProperty
+    - m_UseNormalMap : SerializedProperty
+    - m_ShadowIntensity : SerializedProperty
+    - m_ShadowIntensityEnabled : SerializedProperty
+    - m_ShadowVolumeIntensity : SerializedProperty
+    - m_ShadowVolumeIntensityEnabled : SerializedProperty
+    - m_ApplyToSortingLayers : SerializedProperty
+    - m_VolumetricIntensity : SerializedProperty
+    - m_VolumetricIntensityEnabled : SerializedProperty
+    - m_BlendStyleIndex : SerializedProperty
+    - m_FalloffIntensity : SerializedProperty
+    - m_NormalMapZDistance : SerializedProperty
+    - m_NormalMapQuality : SerializedProperty
+    - m_LightOrder : SerializedProperty
+    - m_OverlapOperation : SerializedProperty
+    - m_PointInnerAngle : SerializedProperty
+    - m_PointOuterAngle : SerializedProperty
+    - m_PointInnerRadius : SerializedProperty
+    - m_PointOuterRadius : SerializedProperty
+    - m_DeprecatedPointLightSprite : SerializedProperty
+    - m_ShapeLightParametricRadius : SerializedProperty
+    - m_ShapeLightFalloffSize : SerializedProperty
+    - m_ShapeLightParametricSides : SerializedProperty
+    - m_ShapeLightSprite : SerializedProperty
+    - m_BlendingSettingsFoldout : SavedBool
+    - m_ShadowsSettingsFoldout : SavedBool
+    - m_VolumetricSettingsFoldout : SavedBool
+    - m_NormalMapsSettingsFoldout : SavedBool
+    - m_BlendStyleIndices : int[]
+    - m_BlendStyleNames : GUIContent[]
+    - m_AnyBlendStyleEnabled : bool = false
+    - m_SortingLayerDropDown : SortingLayerDropDown
+    - lightObject : Light2D <<get>>
+    - m_Analytics : Analytics.Renderer2DAnalytics
+    - m_ModifiedLights : HashSet<Light2D>
+    - AnalyticsTrackChanges(serializedObject:SerializedObject) : void
+    - OnEnable() : void
+    <<internal>> SendModifiedAnalytics(analytics:Analytics.Renderer2DAnalytics, light:Light2D) : void
+    - OnDestroy() : void
+    - DrawBlendingGroup() : void
+    - DrawShadowsGroup() : void
+    - DrawVolumetricGroup() : void
+    - DrawNormalMapGroup() : void
+    - DrawFoldouts() : void
+    - DrawRadiusProperties(label:GUIContent, innerRadius:SerializedProperty, content1:GUIContent, outerRadius:SerializedProperty, content2:GUIContent) : void
+    - DrawToggleProperty(label:GUIContent, boolProperty:SerializedProperty, property:SerializedProperty) : void
+    + DrawInnerAndOuterSpotAngle(minProperty:SerializedProperty, maxProperty:SerializedProperty, label:GUIContent) : void
+    - DrawGlobalLight(serializedObject:SerializedObject) : void
+    - DrawParametricDeprecated(serializedObject:SerializedObject) : void
+    - DrawLightCommon() : bool
+    - DrawSpotLight(serializedObject:SerializedObject) : void
+    - DrawSpriteLight(serializedObject:SerializedObject) : void
+    - DrawShapeLight(serializedObject:SerializedObject) : void
+    - DrawAngleSlider2D(transform:Transform, rotation:Quaternion, radius:float, offset:float, capFunc:Handles.CapFunction, capSize:float, leftAngle:bool, drawLine:bool, useCapOffset:bool, angle:float) : Vector3
+    - DrawAngleHandle(transform:Transform, radius:float, offset:float, capLeft:Handles.CapFunction, capRight:Handles.CapFunction, angle:float) : float
+    - DrawRadiusArc(transform:Transform, radius:float, angle:float, steps:int, capFunc:Handles.CapFunction, capSize:float, even:bool) : void
+    - GetCapFunc(texture:Texture, isAngleHandle:bool) : Handles.CapFunction
+    - DrawAngleHandles(light:Light2D) : void
+    - DrawRangeHandles(light:Light2D) : void
+    - OnSceneGUI() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Light2DPostProcess {
+    - OnPostprocessSprites(texture:Texture2D, sprites:Sprite[]) : void
+}
+class FreeformShapeTool {
+    <<const>> - k_ShapePath : string = "m_ShapePath"
+    + <<override>> IsAvailable() : bool
+    # <<override>> GetShape(target:Object) : IShape
+    # <<override>> SetShape(shapeEditor:ScriptablePath, serializedObject:SerializedObject) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> InnerOuterSpotAngle : GUIContent
+    + {static} lightCapTopRight : Texture
+    + {static} lightCapTopLeft : Texture
+    + {static} lightCapBottomLeft : Texture
+    + {static} lightCapBottomRight : Texture
+    + {static} lightCapUp : Texture
+    + {static} lightCapDown : Texture
+    + {static} lightTypeFreeform : GUIContent
+    + {static} lightTypeSprite : GUIContent
+    + {static} lightTypePoint : GUIContent
+    + {static} lightTypeGlobal : GUIContent
+    + {static} lightTypeOptions : GUIContent[]
+    + {static} blendingSettingsFoldout : GUIContent
+    + {static} shadowsSettingsFoldout : GUIContent
+    + {static} volumetricSettingsFoldout : GUIContent
+    + {static} normalMapsSettingsFoldout : GUIContent
+    + {static} generalLightType : GUIContent
+    + {static} generalFalloffSize : GUIContent
+    + {static} generalFalloffIntensity : GUIContent
+    + {static} generalLightColor : GUIContent
+    + {static} generalLightIntensity : GUIContent
+    + {static} generalVolumeIntensity : GUIContent
+    + {static} generalBlendStyle : GUIContent
+    + {static} generalLightOverlapOperation : GUIContent
+    + {static} generalLightOrder : GUIContent
+    + {static} generalShadowIntensity : GUIContent
+    + {static} generalShadowVolumeIntensity : GUIContent
+    + {static} generalSortingLayerPrefixLabel : GUIContent
+    + {static} generalLightNoLightEnabled : GUIContent
+    + {static} generalNormalMapZDistance : GUIContent
+    + {static} generalNormalMapLightQuality : GUIContent
+    + {static} pointLightRadius : GUIContent
+    + {static} pointLightInner : GUIContent
+    + {static} pointLightOuter : GUIContent
+    + {static} pointLightSprite : GUIContent
+    + {static} shapeLightSprite : GUIContent
+    + {static} deprecatedParametricLightWarningSingle : GUIContent
+    + {static} deprecatedParametricLightWarningMulti : GUIContent
+    + {static} deprecatedParametricLightInstructions : GUIContent
+    + {static} deprecatedParametricLightButtonSingle : GUIContent
+    + {static} deprecatedParametricLightButtonMulti : GUIContent
+    + {static} renderPipelineUnassignedWarning : GUIContent
+    + {static} asset2DUnassignedWarning : GUIContent
+    + {static} deprecatedParametricLightDialogTextSingle : string = "The upgrade will convert the selected parametric light into a freeform light. You can't undo this operation."
+    + {static} deprecatedParametricLightDialogTextMulti : string = "The upgrade will convert the selected parametric lights into freeform lights. You can't undo this operation."
+    + {static} deprecatedParametricLightDialogTitle : string = "Parametric Light Upgrader"
+    + {static} deprecatedParametricLightDialogProceed : string = "Proceed"
+    + {static} deprecatedParametricLightDialogCancel : string = "Cancel"
+}
+"PathComponentEditor`1" "<ScriptablePath>" <|-- Light2DEditor
+AssetPostprocessor <|-- Light2DPostProcess
+Light2DEditor +-- FreeformShapeTool
+"PathEditorTool`1" "<ScriptablePath>" <|-- FreeformShapeTool
+Light2DEditor +-- Styles
+@enduml

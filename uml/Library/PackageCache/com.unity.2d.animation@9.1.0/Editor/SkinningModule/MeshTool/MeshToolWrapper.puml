@@ -1,0 +1,23 @@
+@startuml
+class MeshToolWrapper {
+    - m_MeshTool : MeshTool
+    - m_SkeletonTool : SkeletonTool
+    - m_MeshMode : SpriteMeshViewMode
+    - m_Disable : bool = false
+    - m_SkeletonMode : SkeletonMode
+    # m_MeshPreviewBehaviour : MeshPreviewBehaviour
+    + meshTool : MeshTool <<get>> <<set>>
+    + skeletonTool : SkeletonTool <<get>> <<set>>
+    + meshMode : SpriteMeshViewMode <<get>> <<set>>
+    + disableMeshEditor : bool <<get>> <<set>>
+    + skeletonMode : SkeletonMode <<get>> <<set>>
+    + <<override>> defaultControlID : int <<get>>
+    + <<override>> previewBehaviour : IMeshPreviewBehaviour <<get>>
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    # <<override>> OnGUI() : void
+    # DoSkeletonGUI() : void
+    # DoMeshGUI() : void
+}
+BaseTool <|-- MeshToolWrapper
+@enduml

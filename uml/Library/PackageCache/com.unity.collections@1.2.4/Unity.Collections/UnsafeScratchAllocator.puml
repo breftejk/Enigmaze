@@ -1,0 +1,11 @@
+@startuml
+struct UnsafeScratchAllocator {
+    - m_Pointer : void*
+    - m_LengthInBytes : int
+    <<readonly>> - m_CapacityInBytes : int
+    + UnsafeScratchAllocator(ptr:void*, capacityInBytes:int)
+    - CheckAllocationDoesNotExceedCapacity(requestedSize:ulong) : void
+    + Allocate(sizeInBytes:int, alignmentInBytes:int) : void*
+    + Allocate(count:int) : void*
+}
+@enduml

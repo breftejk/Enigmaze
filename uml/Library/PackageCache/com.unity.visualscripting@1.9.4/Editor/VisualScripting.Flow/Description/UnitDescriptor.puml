@@ -1,0 +1,57 @@
+@startuml
+class "UnitDescriptor`1"<TUnit> {
+    + UnitDescriptor(target:TUnit)
+    # unitType : Type <<get>>
+    + unit : TUnit <<get>>
+    - unit : IUnit <<get>>
+    - state : State <<get>>
+    {static} - UnitDescriptor()
+    + {static} FreeReflectedDescriptions() : void
+    # reflectedDescription : UnitDescription <<get>>
+    # ReflectedPortDescription(port:IUnitPort) : UnitPortDescription
+    - {static} <<readonly>> reflectedDescriptions : Dictionary<Type, UnitDescription>
+    - {static} <<readonly>> reflectedInputDescriptions : Dictionary<Type, Dictionary<string, UnitPortDescription>>
+    - {static} <<readonly>> reflectedOutputDescriptions : Dictionary<Type, Dictionary<string, UnitPortDescription>>
+    - {static} FetchReflectedDescription(unitType:Type) : UnitDescription
+    - {static} FetchReflectedPortDescriptions(unitType:Type) : Dictionary<string, UnitPortDescription>
+    - {static} FetchReflectedPortDescription(portMember:MemberInfo) : UnitPortDescription
+    + <<sealed>> <<override>> Title() : string
+    + ShortTitle() : string
+    + Surtitle() : string
+    + Subtitle() : string
+    + <<sealed>> <<override>> Summary() : string
+    + <<sealed>> <<override>> Icon() : EditorTexture
+    + Icons() : IEnumerable<EditorTexture>
+    # <<virtual>> DefinedTitle() : string
+    # <<virtual>> DefaultTitle() : string
+    # <<virtual>> ErrorTitle(exception:Exception) : string
+    # <<virtual>> DefinedShortTitle() : string
+    # <<virtual>> DefaultShortTitle() : string
+    # <<virtual>> ErrorShortTitle(exception:Exception) : string
+    # <<virtual>> DefinedSurtitle() : string
+    # <<virtual>> DefaultSurtitle() : string
+    # <<virtual>> ErrorSurtitle(exception:Exception) : string
+    # <<virtual>> DefinedSubtitle() : string
+    # <<virtual>> DefaultSubtitle() : string
+    # <<virtual>> ErrorSubtitle(exception:Exception) : string
+    # <<virtual>> DefinedSummary() : string
+    # <<virtual>> DefaultSummary() : string
+    # <<virtual>> ErrorSummary(exception:Exception) : string
+    # <<virtual>> DefinedIcon() : EditorTexture
+    # <<virtual>> DefaultIcon() : EditorTexture
+    # <<virtual>> ErrorIcon(exception:Exception) : EditorTexture
+    # <<virtual>> DefinedIcons() : IEnumerable<EditorTexture>
+    # <<virtual>> DefaultIcons() : IEnumerable<EditorTexture>
+    # <<virtual>> ErrorIcons(exception:Exception) : IEnumerable<EditorTexture>
+    + DescribePort(port:IUnitPort, description:UnitPortDescription) : void
+    # <<virtual>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+enum State {
+    Defined,
+    NotDefined,
+    FailedToDefine,
+}
+"Descriptor`2" "<TUnit,UnitDescription>" <|-- "UnitDescriptor`1"
+IUnitDescriptor <|-- "UnitDescriptor`1"
+"UnitDescriptor`1" +-- State
+@enduml

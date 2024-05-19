@@ -1,0 +1,13 @@
+@startuml
+class CustomFunctionNodePropertyDrawer {
+    - m_setNodesAsDirtyCallback : Action
+    - m_updateNodeViewsCallback : Action
+    - GetPropertyData(setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    - CreateGUI(node:CustomFunctionNode, attribute:InspectableAttribute, propertyVisualElement:VisualElement) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- CustomFunctionNodePropertyDrawer
+IGetNodePropertyDrawerPropertyData <|-- CustomFunctionNodePropertyDrawer
+@enduml

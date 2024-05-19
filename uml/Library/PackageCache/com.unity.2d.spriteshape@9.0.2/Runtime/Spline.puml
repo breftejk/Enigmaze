@@ -1,0 +1,36 @@
+@startuml
+struct SplinePointMetaData {
+    + height : float
+    + spriteIndex : uint
+    + cornerMode : int
+}
+class Spline {
+    - {static} <<readonly>> KErrorMessage : string = "Internal error: Point too close to neighbor"
+    - {static} <<readonly>> KEpsilon : float = 0.01f
+    - m_IsOpenEnded : bool
+    - m_ControlPoints : List<SplineControlPoint>
+    + isOpenEnded : bool <<get>> <<set>>
+    - IsPositionValid(index:int, next:int, point:Vector3) : bool
+    + Clear() : void
+    + GetPointCount() : int
+    + InsertPointAt(index:int, point:Vector3) : void
+    + RemovePointAt(index:int) : void
+    + GetPosition(index:int) : Vector3
+    + SetPosition(index:int, point:Vector3) : void
+    + GetLeftTangent(index:int) : Vector3
+    + SetLeftTangent(index:int, tangent:Vector3) : void
+    + GetRightTangent(index:int) : Vector3
+    + SetRightTangent(index:int, tangent:Vector3) : void
+    + GetTangentMode(index:int) : ShapeTangentMode
+    + SetTangentMode(index:int, mode:ShapeTangentMode) : void
+    + GetHeight(index:int) : float
+    + SetHeight(index:int, value:float) : void
+    + GetSpriteIndex(index:int) : int
+    + SetSpriteIndex(index:int, value:int) : void
+    + GetCorner(index:int) : bool
+    + SetCorner(index:int, value:bool) : void
+    <<internal>> SetCornerMode(index:int, value:Corner) : void
+    <<internal>> GetCornerMode(index:int) : Corner
+    + <<override>> GetHashCode() : int
+}
+@enduml

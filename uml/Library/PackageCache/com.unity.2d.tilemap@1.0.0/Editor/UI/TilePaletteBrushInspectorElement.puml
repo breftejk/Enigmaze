@@ -1,0 +1,16 @@
+@startuml
+class TilePaletteBrushInspectorElement {
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushinspector"
+    - m_BrushInspector : TilePaletteBrushInspector
+    + TilePaletteBrushInspectorElement()
+}
+class TilePaletteBrushInspectorElementFactory {
+}
+class TilePaletteBrushInspectorElementUxmlTraits {
+}
+IMGUIContainer <|-- TilePaletteBrushInspectorElement
+TilePaletteBrushInspectorElement +-- TilePaletteBrushInspectorElementFactory
+"UxmlFactory`2" "<TilePaletteBrushInspectorElement,TilePaletteBrushInspectorElementUxmlTraits>" <|-- TilePaletteBrushInspectorElementFactory
+TilePaletteBrushInspectorElement +-- TilePaletteBrushInspectorElementUxmlTraits
+UxmlTraits <|-- TilePaletteBrushInspectorElementUxmlTraits
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+struct UnsafeBitArray {
+    + Ptr : ulong*
+    + Length : int
+    + Allocator : AllocatorManager.AllocatorHandle
+    + <<unsafe>> UnsafeBitArray(ptr:void*, sizeInBytes:int, allocator:AllocatorManager.AllocatorHandle)
+    + UnsafeBitArray(numBits:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions)
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + Clear() : void
+    + Set(pos:int, value:bool) : void
+    + SetBits(pos:int, value:bool, numBits:int) : void
+    + SetBits(pos:int, value:ulong, numBits:int) : void
+    + GetBits(pos:int, numBits:int) : ulong
+    + IsSet(pos:int) : bool
+    <<internal>> CopyUlong(dstPos:int, srcBitArray:UnsafeBitArray, srcPos:int, numBits:int) : void
+    + Copy(dstPos:int, srcPos:int, numBits:int) : void
+    + Copy(dstPos:int, srcBitArray:UnsafeBitArray, srcPos:int, numBits:int) : void
+    + Find(pos:int, numBits:int) : int
+    + Find(pos:int, count:int, numBits:int) : int
+    + TestNone(pos:int, numBits:int) : bool
+    + TestAny(pos:int, numBits:int) : bool
+    + TestAll(pos:int, numBits:int) : bool
+    + CountBits(pos:int, numBits:int) : int
+    {static} - CheckSizeMultipleOf8(sizeInBytes:int) : void
+    - CheckArgs(pos:int, numBits:int) : void
+    - CheckArgsPosCount(begin:int, count:int, numBits:int) : void
+    - CheckArgsUlong(pos:int, numBits:int) : void
+    {static} - CheckArgsCopy(dstBitArray:UnsafeBitArray, dstPos:int, srcBitArray:UnsafeBitArray, srcPos:int, numBits:int) : void
+}
+class UnsafeBitArrayDebugView <<sealed>> {
+    - Data : UnsafeBitArray
+    + UnsafeBitArrayDebugView(data:UnsafeBitArray)
+    + Bits : bool[] <<get>>
+}
+INativeDisposable <|-- UnsafeBitArray
+@enduml

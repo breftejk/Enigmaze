@@ -1,0 +1,14 @@
+@startuml
+class CloningContext <<sealed>> {
+    + clonings : Dictionary<object, object> <<get>>
+    + fallbackCloner : ICloner <<get>>
+    + tryPreserveInstances : bool <<get>>
+    - disposed : bool
+    - New() : void
+    - Free() : void
+    + Dispose() : void
+    + {static} New(fallbackCloner:ICloner, tryPreserveInstances:bool) : CloningContext
+}
+IPoolable <|-- CloningContext
+IDisposable <|-- CloningContext
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class GenericControl {
+    + onBeginLayout : Func<IGUIState, LayoutData> = null
+    + onEndLayout : Action<IGUIState> = null
+    + onRepaint : Action<IGUIState, Control, int>
+    + count : Func<int>
+    + position : Func<int, Vector3>
+    + distance : Func<IGUIState, int, float>
+    + forward : Func<int, Vector3>
+    + up : Func<int, Vector3>
+    + right : Func<int, Vector3>
+    + userData : Func<int, object> = null
+    + GenericControl(name:string)
+    # <<override>> GetCount() : int
+    # <<override>> OnEndLayout(guiState:IGUIState) : void
+    # <<override>> OnRepaint(guiState:IGUIState, index:int) : void
+    # <<override>> OnBeginLayout(data:LayoutData, guiState:IGUIState) : LayoutData
+    # <<override>> GetPosition(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetDistance(guiState:IGUIState, index:int) : float
+    # <<override>> GetForward(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetUp(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetRight(guiState:IGUIState, index:int) : Vector3
+    # <<override>> GetUserData(guiState:IGUIState, index:int) : object
+}
+Control <|-- GenericControl
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+interface ISGControlledElement {
+    controller : SGController <<get>>
+    OnControllerChanged(e:SGControllerChangedEvent) : void
+    OnControllerEvent(e:SGControllerEvent) : void
+}
+interface "ISGControlledElement`1"<T> {
+    <<new>> controller : T <<get>>
+}
+ISGControlledElement <|-- "ISGControlledElement`1"
+@enduml

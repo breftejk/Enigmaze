@@ -1,0 +1,16 @@
+@startuml
+class BezierUtility <<static>> {
+    {static} - s_TempPoints : Vector3[]
+    + {static} BezierPoint(startRightTangent:Vector3, startPosition:Vector3, endPosition:Vector3, endLeftTangent:Vector3, t:float) : Vector3
+    <<internal>> {static} GetSpritePixelWidth(sprite:Sprite) : float
+    <<internal>> {static} BezierLength(shapePoints:NativeArray<ShapeControlPoint>, splineDetail:int, smallestSegment:float) : float
+    <<internal>> {static} ClosestPointOnCurve(point:Vector3, startPosition:Vector3, endPosition:Vector3, startTangent:Vector3, endTangent:Vector3, t:float) : Vector3
+    <<internal>> {static} ClosestPointOnCurveFast(point:Vector3, startPosition:Vector3, endPosition:Vector3, startTangent:Vector3, endTangent:Vector3, t:float) : Vector3
+    - {static} ClosestPointOnCurveIterative(point:Vector3, startPosition:Vector3, endPosition:Vector3, startTangent:Vector3, endTangent:Vector3, sqrError:float, startT:float, endT:float) : Vector3
+    <<internal>> {static} SplitBezier(t:float, startPosition:Vector3, endPosition:Vector3, startRightTangent:Vector3, endLeftTangent:Vector3, leftStartPosition:Vector3, leftEndPosition:Vector3, leftStartTangent:Vector3, leftEndTangent:Vector3, rightStartPosition:Vector3, rightEndPosition:Vector3, rightStartTangent:Vector3, rightEndTangent:Vector3) : void
+    - {static} ClosestPointToSegment(point:Vector3, segmentStart:Vector3, segmentEnd:Vector3, t:float) : Vector3
+    - {static} SqrDistanceToPolyLine(point:Vector3, points:Vector3[]) : float
+    - {static} SqrDistanceToSegment(point:Vector3, segmentStart:Vector3, segmentEnd:Vector3) : float
+    - {static} Colinear(v1:Vector3, v2:Vector3, error:float) : bool
+}
+@enduml

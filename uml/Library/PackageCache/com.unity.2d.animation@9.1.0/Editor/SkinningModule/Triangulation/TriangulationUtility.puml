@@ -1,0 +1,46 @@
+@startuml
+struct TriangulateJob {
+    <<internal>> inputVertices : NativeArray<float2>
+    <<internal>> inputEdges : NativeArray<int2>
+    <<internal>> outputIndices : NativeArray<int>
+    <<internal>> outputEdges : NativeArray<int2>
+    <<internal>> outputVertices : NativeArray<float2>
+    <<internal>> result : NativeArray<int4>
+    + Execute() : void
+}
+struct TessellateJob {
+    <<internal>> refineIterations : int
+    <<internal>> smoothIterations : int
+    <<internal>> minAngle : float
+    <<internal>> maxAngle : float
+    <<internal>> meshArea : float
+    <<internal>> targetArea : float
+    <<internal>> largestTriangleAreaFactor : float
+    <<internal>> inputVertices : NativeArray<float2>
+    <<internal>> inputEdges : NativeArray<int2>
+    <<internal>> outputIndices : NativeArray<int>
+    <<internal>> outputEdges : NativeArray<int2>
+    <<internal>> outputVertices : NativeArray<float2>
+    <<internal>> result : NativeArray<int4>
+    + Execute() : void
+}
+class TriangulationUtility {
+    {static} <<readonly>> - k_CollinearTolerance : float = 0.0001f
+    {static} <<unsafe>> - ValidateCollinear(points:float2*, pointCount:int, epsilon:float) : int
+    {static} <<unsafe>> - TessellateBurst(allocator:Allocator, points:float2*, pointCount:int, edges:int2*, edgeCount:int, outVertices:float2*, outIndices:int*, outEdges:int2*, arrayCount:int, result:int3*) : void
+    {static} <<unsafe>> - SubdivideBurst(allocator:Allocator, points:float2*, pointCount:int, edges:int2*, edgeCount:int, outVertices:float2*, outIndices:int*, outEdges:int2*, arrayCount:int, areaFactor:float, areaThreshold:float, refineIterations:int, smoothenIterations:int, result:int3*) : void
+    {static} - TessellateSafe(points:NativeArray<float2>, edges:NativeArray<int2>, outVertices:NativeArray<float2>, outVertexCount:int, outIndices:NativeArray<int>, outIndexCount:int, outEdges:NativeArray<int2>, outEdgeCount:int) : bool
+    {static} - SubdivideSafe(points:NativeArray<float2>, edges:NativeArray<int2>, outVertices:NativeArray<float2>, outVertexCount:int, outIndices:NativeArray<int>, outIndexCount:int, outEdges:NativeArray<int2>, outEdgeCount:int, areaFactor:float, areaThreshold:float, refineIterations:int, smoothenIterations:int) : bool
+    <<internal>> {static} Quad(vertices:IList<Vector2>, edges:IList<Vector2Int>, indices:IList<int>, allocator:Allocator) : void
+    <<internal>> {static} Triangulate(edges:int2[], vertices:float2[], indices:int[], allocator:Allocator) : void
+    <<internal>> {static} TriangulateSafe(vertices:float2[], edges:int2[], indices:int[]) : bool
+    + {static} Tessellate(minAngle:float, maxAngle:float, meshAreaFactor:float, largestTriangleAreaFactor:float, targetArea:float, refineIterations:int, smoothenIterations:int, vertices:float2[], edges:int2[], indices:int[], allocator:Allocator) : void
+    + {static} ScheduleTriangulate(vertices:float2[], edges:int2[], outputVertices:NativeArray<float2>, outputEdges:NativeArray<int2>, outputIndices:NativeArray<int>, result:NativeArray<int4>) : JobHandle
+    + {static} ScheduleTessellate(minAngle:float, maxAngle:float, meshAreaFactor:float, largestTriangleAreaFactor:float, targetArea:float, refineIterations:int, smoothenIterations:int, vertices:float2[], edges:int2[], outputVertices:NativeArray<float2>, outputEdges:NativeArray<int2>, outputIndices:NativeArray<int>, result:NativeArray<int4>) : JobHandle
+    + {static} TessellateSafe(largestTriangleAreaFactor:float, targetArea:float, refineIterations:int, smoothenIterations:int, vertices:float2[], edges:int2[], indices:int[]) : void
+    <<internal>> {static} TriangulateSamplers(samplers:float2[], triVertices:List<float2>, triIndices:List<int>) : void
+    <<internal>> {static} TriangulateInternal(internalIndices:int[], triVertices:float2[], triIndices:List<int>) : void
+}
+IJob <|-- TriangulateJob
+IJob <|-- TessellateJob
+@enduml

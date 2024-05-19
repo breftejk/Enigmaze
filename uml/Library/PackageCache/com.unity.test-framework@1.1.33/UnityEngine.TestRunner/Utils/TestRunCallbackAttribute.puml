@@ -1,0 +1,8 @@
+@startuml
+class TestRunCallbackAttribute {
+    - m_Type : Type
+    + TestRunCallbackAttribute(type:Type)
+    <<internal>> ConstructCallback() : ITestRunCallback
+}
+Attribute <|-- TestRunCallbackAttribute
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class "InstanceActionInvoker`6"<TTarget,TParam0,TParam1,TParam2,TParam3,TParam4> <<sealed>> {
+    + InstanceActionInvoker(methodInfo:MethodInfo)
+    - invoke : Action<TTarget, TParam0, TParam1, TParam2, TParam3, TParam4>
+    + <<override>> Invoke(target:object, args:object[]) : object
+    + <<override>> Invoke(target:object, arg0:object, arg1:object, arg2:object, arg3:object, arg4:object) : object
+    + InvokeUnsafe(target:object, arg0:object, arg1:object, arg2:object, arg3:object, arg4:object) : object
+    # <<override>> GetParameterTypes() : Type[]
+    # <<override>> CompileExpression(callExpression:MethodCallExpression, parameterExpressions:ParameterExpression[]) : void
+    # <<override>> CreateDelegate() : void
+}
+"InstanceActionInvokerBase`1" "<TTarget>" <|-- "InstanceActionInvoker`6"
+@enduml

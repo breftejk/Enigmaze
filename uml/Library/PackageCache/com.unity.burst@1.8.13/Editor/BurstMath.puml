@@ -1,0 +1,10 @@
+@startuml
+class BurstMath <<static>> {
+    - <<const>> HitBoxAdjust : float = 2f
+    <<internal>> {static} AnglePoint(angle:float, point:Vector2, pivotPoint:Vector2) : Vector2
+    <<internal>> {static} CalculateAngle(start:Vector2, end:Vector2) : float
+    <<internal>> {static} AdjustedContains(rect:Rect, point:Vector2) : bool
+    <<internal>> {static} WithinRange(endPoint1:float, endPoint2:float, num:float) : bool
+    <<internal>> {static} RoundDownToNearest(number:float, to:float) : float
+}
+@enduml

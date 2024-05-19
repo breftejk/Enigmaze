@@ -1,0 +1,84 @@
+@startuml
+class BurstInspectorGUITests {
+    - <<readonly>> _waitForInitialized : WaitUntil
+    - SelectJobAwaitLoad(assemblyName:string) : IEnumerator
+    + SetUp() : IEnumerator
+    + TestInspectorOpenDuringDomainReloadDoesNotLogErrors() : IEnumerator
+    + DisassemblerNotChangingUnexpectedlyTest() : IEnumerator
+    + InspectorStallingLoadTest() : IEnumerator
+    + FontStyleDuringDomainReloadTest() : IEnumerator
+    + BranchHoverTest() : IEnumerator
+    + ClickBranchTest() : IEnumerator
+    - SetupBranchTest() : InfoThingy
+    + {static} ValueSource : IEnumerable <<get>>
+    + FocusCodeTest(job:string) : IEnumerator
+    + {static} FocusCodeNotBranchesSource : IEnumerable <<get>>
+    + FocusCodeNotBranchesTest(input:(int, bool)) : IEnumerator
+    + SelectionNotOutsideBoundsTest() : IEnumerator
+    + SelectionInAssemblySearchBarTest() : IEnumerator
+    + GoToNextSearchTargetTest() : IEnumerator
+    + CorrectFormattingOfAssembly() : void
+    + FocusSpecialCharacterCode() : IEnumerator
+}
+struct InfoThingy {
+    + blockIdx : (int src, int dst)
+    + mousePos : Vector2
+}
+struct MyJob {
+    + Inpút : NativeArray<float>
+    + Output : NativeArray<float>
+    + Execute() : void
+}
+struct BranchArrows {
+    + Inpút : NativeArray<float>
+    + Output : NativeArray<float>
+    + Execute() : void
+}
+struct BranchArrows2 {
+    + Inpút : NativeArray<float>
+    + Output : NativeArray<float>
+    + Execute() : void
+}
+class BurstDisassemblerWithCopy {
+    + BlocksCopy : List<AsmBlock>
+    + IsColoredCopy : bool
+    + LinesCopy : List<AsmLine>
+    + TokensCopy : List<AsmToken>
+    + BurstDisassemblerWithCopy(disassembler:BurstDisassembler)
+    + Equals(other:BurstDisassembler) : bool
+}
+struct CustomJobWithSpecialCharacter {
+    + Execute(test:float) : void
+}
+interface "ICustomJob`1"<T> {
+    Execute(item:T) : void
+}
+class CustomJobExtensions <<static>> {
+}
+class CustomJobScheduler {
+    - ScheduleJob() : void
+}
+struct "JobStruct`2"<TJ,T> {
+    - {static} Execute(data:Data) : void
+}
+struct Data {
+    + additionalData : T
+    + job : TJ
+}
+BurstInspectorGUITests +-- InfoThingy
+BurstInspectorGUITests +-- MyJob
+IJob <|-- MyJob
+BurstInspectorGUITests +-- BranchArrows
+IJob <|-- BranchArrows
+BurstInspectorGUITests +-- BranchArrows2
+IJob <|-- BranchArrows2
+BurstInspectorGUITests +-- BurstDisassemblerWithCopy
+BurstDisassembler <|-- BurstDisassemblerWithCopy
+BurstInspectorGUITests +-- CustomJobWithSpecialCharacter
+"ICustomJob`1" "<float>" <|-- CustomJobWithSpecialCharacter
+BurstInspectorGUITests +-- "ICustomJob`1"
+BurstInspectorGUITests +-- CustomJobExtensions
+BurstInspectorGUITests +-- CustomJobScheduler
+CustomJobExtensions +-- "JobStruct`2"
+"JobStruct`2" +-- Data
+@enduml

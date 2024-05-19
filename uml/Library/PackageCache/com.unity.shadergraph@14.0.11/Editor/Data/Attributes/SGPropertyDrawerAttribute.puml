@@ -1,0 +1,7 @@
+@startuml
+class SGPropertyDrawerAttribute {
+    + propertyType : Type <<get>>
+    + SGPropertyDrawerAttribute(propertyType:Type)
+}
+Attribute <|-- SGPropertyDrawerAttribute
+@enduml

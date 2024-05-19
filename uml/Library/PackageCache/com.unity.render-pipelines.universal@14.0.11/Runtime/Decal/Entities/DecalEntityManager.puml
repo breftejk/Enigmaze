@@ -1,0 +1,71 @@
+@startuml
+class DecalEntityIndexer {
+    - m_Entities : List<DecalEntityItem>
+    - m_FreeIndices : Queue<int>
+    + IsValid(decalEntity:DecalEntity) : bool
+    + CreateDecalEntity(arrayIndex:int, chunkIndex:int) : DecalEntity
+    + DestroyDecalEntity(decalEntity:DecalEntity) : void
+    + GetItem(decalEntity:DecalEntity) : DecalEntityItem
+    + UpdateIndex(decalEntity:DecalEntity, newArrayIndex:int) : void
+    + RemapChunkIndices(remaper:List<int>) : void
+    + Clear() : void
+}
+struct DecalEntity {
+    + index : int
+    + version : int
+}
+class DecalEntityChunk {
+    + material : Material
+    + decalEntities : NativeArray<DecalEntity>
+    + decalProjectors : DecalProjector[]
+    + transformAccessArray : TransformAccessArray
+    + <<override>> Push() : void
+    + <<override>> RemoveAtSwapBack(entityIndex:int) : void
+    + <<override>> SetCapacity(newCapacity:int) : void
+    + <<override>> Dispose() : void
+}
+class DecalEntityManager {
+    + entityChunks : List<DecalEntityChunk>
+    + cachedChunks : List<DecalCachedChunk>
+    + culledChunks : List<DecalCulledChunk>
+    + drawCallChunks : List<DecalDrawCallChunk>
+    + chunkCount : int
+    - m_AddDecalSampler : ProfilingSampler
+    - m_ResizeChunks : ProfilingSampler
+    - m_SortChunks : ProfilingSampler
+    - m_DecalEntityIndexer : DecalEntityIndexer
+    - m_MaterialToChunkIndex : Dictionary<Material, int>
+    - m_CombinedChunks : List<CombinedChunks>
+    - m_CombinedChunkRemmap : List<int>
+    - m_ErrorMaterial : Material
+    + errorMaterial : Material <<get>>
+    - m_DecalProjectorMesh : Mesh
+    + decalProjectorMesh : Mesh <<get>>
+    + DecalEntityManager()
+    + IsValid(decalEntity:DecalEntity) : bool
+    + CreateDecalEntity(decalProjector:DecalProjector) : DecalEntity
+    - CreateChunkIndex(material:Material) : int
+    + UpdateAllDecalEntitiesData() : void
+    + UpdateDecalEntityData(decalEntity:DecalEntity, decalProjector:DecalProjector) : void
+    + DestroyDecalEntity(decalEntity:DecalEntity) : void
+    + Update() : void
+    + Dispose() : void
+}
+struct DecalEntityItem {
+    + chunkIndex : int
+    + arrayIndex : int
+    + version : int
+}
+struct CombinedChunks {
+    + entityChunk : DecalEntityChunk
+    + cachedChunk : DecalCachedChunk
+    + culledChunk : DecalCulledChunk
+    + drawCallChunk : DecalDrawCallChunk
+    + previousChunkIndex : int
+    + valid : bool
+}
+DecalChunk <|-- DecalEntityChunk
+IDisposable <|-- DecalEntityManager
+DecalEntityIndexer +-- DecalEntityItem
+DecalEntityManager +-- CombinedChunks
+@enduml

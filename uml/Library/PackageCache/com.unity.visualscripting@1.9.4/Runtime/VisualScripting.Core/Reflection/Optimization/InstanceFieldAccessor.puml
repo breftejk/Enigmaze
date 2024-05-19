@@ -1,0 +1,14 @@
+@startuml
+class "InstanceFieldAccessor`2"<TTarget,TField> {
+    + InstanceFieldAccessor(fieldInfo:FieldInfo)
+    - <<readonly>> fieldInfo : FieldInfo
+    - getter : Func<TTarget, TField>
+    - setter : Action<TTarget, TField>
+    + Compile() : void
+    + GetValue(target:object) : object
+    - GetValueUnsafe(target:object) : object
+    + SetValue(target:object, value:object) : void
+    - SetValueUnsafe(target:object, value:object) : void
+}
+IOptimizedAccessor <|-- "InstanceFieldAccessor`2"
+@enduml

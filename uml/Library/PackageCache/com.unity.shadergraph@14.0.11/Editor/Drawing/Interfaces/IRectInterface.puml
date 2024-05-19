@@ -1,0 +1,5 @@
+@startuml
+interface IRectInterface {
+    rect : Rect <<get>> <<internal set>>
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class SignalReceiverHeader {
+    + SignalReceiverHeader(state:MultiColumnHeaderState)
+    # <<override>> AddColumnHeaderContextMenuItems(menu:GenericMenu) : void
+}
+MultiColumnHeader <|-- SignalReceiverHeader
+@enduml

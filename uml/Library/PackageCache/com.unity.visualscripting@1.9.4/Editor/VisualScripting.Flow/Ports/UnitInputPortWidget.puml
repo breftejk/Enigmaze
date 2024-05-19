@@ -1,0 +1,7 @@
+@startuml
+abstract class "UnitInputPortWidget`1"<TPort> {
+    # UnitInputPortWidget(canvas:FlowCanvas, port:TPort)
+    # <<override>> edge : Edge <<get>>
+}
+"UnitPortWidget`1" "<TPort>" <|-- "UnitInputPortWidget`1"
+@enduml

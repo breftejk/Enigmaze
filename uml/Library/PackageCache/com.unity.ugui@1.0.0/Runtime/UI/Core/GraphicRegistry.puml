@@ -1,0 +1,18 @@
+@startuml
+class GraphicRegistry {
+    - {static} s_Instance : GraphicRegistry
+    - <<readonly>> m_Graphics : Dictionary<Canvas, IndexedSet<Graphic>>
+    - <<readonly>> m_RaycastableGraphics : Dictionary<Canvas, IndexedSet<Graphic>>
+    # GraphicRegistry()
+    + {static} instance : GraphicRegistry <<get>>
+    + {static} RegisterGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    + {static} RegisterRaycastGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    + {static} UnregisterGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    + {static} UnregisterRaycastGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    + {static} DisableGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    + {static} DisableRaycastGraphicForCanvas(c:Canvas, graphic:Graphic) : void
+    - {static} <<readonly>> s_EmptyList : List<Graphic>
+    + {static} GetGraphicsForCanvas(canvas:Canvas) : IList<Graphic>
+    + {static} GetRaycastableGraphicsForCanvas(canvas:Canvas) : IList<Graphic>
+}
+@enduml

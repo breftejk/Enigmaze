@@ -1,0 +1,7 @@
+@startuml
+class GraphInputWidget <<sealed>> {
+    + GraphInputWidget(canvas:FlowCanvas, unit:GraphInput)
+    # <<override>> baseColor : NodeColorMix <<get>>
+}
+"UnitWidget`1" "<GraphInput>" <|-- GraphInputWidget
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class SetMember <<sealed>> {
+    + SetMember()
+    + SetMember(member:Member)
+    + chainable : bool <<get>> <<set>>
+    + supportsChaining : bool <<get>>
+    + setter : Member <<get>> <<set>>
+    + assign : ControlInput <<get>>
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    + targetOutput : ValueOutput <<get>>
+    + assigned : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> IsMemberValid(member:Member) : bool
+    - GetAndChainTarget(flow:Flow) : object
+    - Assign(flow:Flow) : ControlOutput
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+MemberUnit <|-- SetMember
+@enduml

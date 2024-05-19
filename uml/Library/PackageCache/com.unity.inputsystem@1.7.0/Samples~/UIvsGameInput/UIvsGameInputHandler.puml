@@ -1,0 +1,68 @@
+@startuml
+class UIvsGameInputHandler {
+    + statusBarText : Text
+    + inGameUI : GameObject
+    + mainMenuUI : GameObject
+    + menuButton : GameObject
+    + firstButtonInMainMenu : GameObject
+    + firstNavigationSelection : GameObject
+    + playerInput : PlayerInput
+    + projectile : GameObject
+    + m_MouseLookSensitivity : float = 0.1f
+    + m_GamepadLookSpeed : float = 10f
+    - m_OpenMenuActionTriggered : bool
+    - m_ResetCameraActionTriggered : bool
+    - m_FireActionTriggered : bool
+    <<internal>> m_UIEngaged : bool
+    - m_Rotation : Vector2
+    - m_LookEngageAction : InputAction
+    - m_LookAction : InputAction
+    - m_CancelAction : InputAction
+    - m_UIEngageAction : InputAction
+    - m_LastNavigationSelection : GameObject
+    - m_Mouse : Mouse
+    - m_MousePositionToWarpToAfterCursorUnlock : Vector2?
+    <<internal>> m_State : State
+    <<internal>> m_ControlStyle : ControlStyle
+    + OnEnable() : void
+    + OnControlsChanged() : void
+    + Update() : void
+    - ProcessCameraLook() : void
+    - EngageCameraControl() : void
+    - DisengageCameraControl() : void
+    + OnTopLeftClicked() : void
+    + OnBottomLeftClicked() : void
+    + OnTopRightClicked() : void
+    + OnBottomRightClicked() : void
+    + OnMenuClicked() : void
+    + OnContinueClicked() : void
+    + OnExitClicked() : void
+    + OnMenu(context:InputAction.CallbackContext) : void
+    + OnResetCamera(context:InputAction.CallbackContext) : void
+    + OnUIEngage(context:InputAction.CallbackContext) : void
+    - SetUIEngaged(value:bool) : void
+    - SetPlayerActionsEnabled(value:bool) : void
+    + OnFire(context:InputAction.CallbackContext) : void
+    - IsRaycastHittingUIObject(position:Vector2) : bool
+    - m_PointerData : PointerEventData
+    - m_RaycastResults : List<RaycastResult>
+    - IsPointerOverUI() : bool
+    - IsPointerInsideScreen() : bool
+    - Fire() : void
+    - RepaintInspector() : void
+}
+enum State {
+    InGame,
+    InGameControllingCamera,
+    InMenu,
+}
+enum ControlStyle {
+    None,
+    KeyboardMouse,
+    Touch,
+    GamepadJoystick,
+}
+MonoBehaviour <|-- UIvsGameInputHandler
+UIvsGameInputHandler +-- State
+UIvsGameInputHandler +-- ControlStyle
+@enduml

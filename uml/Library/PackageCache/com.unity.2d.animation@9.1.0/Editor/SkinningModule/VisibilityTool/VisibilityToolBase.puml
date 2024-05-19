@@ -1,0 +1,48 @@
+@startuml
+interface IVisibilityTool {
+    view : VisualElement <<get>>
+    name : string <<get>>
+    Activate() : void
+    Deactivate() : void
+    isAvailable : bool <<get>>
+    SetAvailabilityChangeCallback(callback:Action) : void
+    Setup() : void
+    Dispose() : void
+}
+class VisibilityToolViewBase {
+    - m_Container : IMGUIContainer
+    - m_SearchField : SearchField
+    # m_TreeView : IMGUI.Controls.TreeView
+    # m_TreeViewState : TreeViewState
+    + SetOpacityValue : Action<float> = null
+    + GetOpacityValue : Func<float> = null
+    + VisibilityToolViewBase()
+    # SetupSearchField() : void
+    - DoSearchField() : void
+    - DoOpacitySlider() : void
+    - OnGUI() : void
+}
+class "TreeViewItemBase`1"<T> {
+    + customData : T
+    + TreeViewItemBase(id:int, depth:int, name:string, data:T)
+}
+class VisibilityTreeViewBase {
+    + VisibilityTreeViewBase(treeViewState:TreeViewState, multiColumn:MultiColumnHeader)
+    + VisibilityTreeViewBase(treeViewState:TreeViewState)
+    - Init() : void
+    # <<override>> BuildRoot() : TreeViewItem
+}
+class Styles <<static>> {
+    + {static} <<readonly>> preLabel : GUIStyle = "preLabel"
+    + {static} <<readonly>> preSlider : GUIStyle = "preSlider"
+    + {static} <<readonly>> preSliderThumb : GUIStyle = "preSliderThumb"
+}
+class VisibilityIconStyle <<static>> {
+    + {static} <<readonly>> visibilityOnIcon : GUIContent
+    + {static} <<readonly>> visibilityOffIcon : GUIContent
+}
+VisualElement <|-- VisibilityToolViewBase
+TreeViewItem <|-- "TreeViewItemBase`1"
+VisibilityToolViewBase +-- Styles
+VisibilityTreeViewBase +-- VisibilityIconStyle
+@enduml

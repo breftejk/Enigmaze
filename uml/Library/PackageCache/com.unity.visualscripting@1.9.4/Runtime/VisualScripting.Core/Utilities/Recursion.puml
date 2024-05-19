@@ -1,0 +1,30 @@
+@startuml
+class "Recursion`1"<T> {
+    # Recursion()
+    - <<readonly>> traversedOrder : Stack<T>
+    - <<readonly>> traversedCount : Dictionary<T, int>
+    - disposed : bool
+    # maxDepth : int
+    + Enter(o:T) : void
+    + TryEnter(o:T) : bool
+    + Exit(o:T) : void
+    + Dispose() : void
+    # <<virtual>> Free() : void
+    - New() : void
+    - Free() : void
+    + {static} New() : Recursion<T>
+    + {static} New(maxDepth:int) : Recursion<T>
+}
+class Recursion <<sealed>> {
+    - Recursion()
+    + {static} defaultMaxDepth : int <<get>> <<set>> = 100
+    + {static} safeMode : bool <<get>> <<set>>
+    <<internal>> {static} OnRuntimeMethodLoad() : void
+    # <<override>> Free() : void
+    + <<new>> {static} New() : Recursion
+    + <<new>> {static} New(maxDepth:int) : Recursion
+}
+IPoolable <|-- "Recursion`1"
+IDisposable <|-- "Recursion`1"
+"Recursion`1" "<object>" <|-- Recursion
+@enduml

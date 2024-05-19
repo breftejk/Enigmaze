@@ -1,0 +1,7 @@
+@startuml
+class TriggerStateTransitionWidget <<sealed>> {
+    + TriggerStateTransitionWidget(canvas:FlowCanvas, unit:TriggerStateTransition)
+    # <<override>> baseColor : NodeColorMix <<get>>
+}
+"UnitWidget`1" "<TriggerStateTransition>" <|-- TriggerStateTransitionWidget
+@enduml

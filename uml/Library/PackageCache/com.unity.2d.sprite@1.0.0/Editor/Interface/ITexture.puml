@@ -1,0 +1,35 @@
+@startuml
+abstract class ITexture2D {
+    + {abstract} width : int <<get>>
+    + {abstract} height : int <<get>>
+    + {abstract} format : TextureFormat <<get>>
+    + {abstract} GetPixels32() : Color32[]
+    + {abstract} filterMode : FilterMode <<get>> <<set>>
+    + {abstract} name : string <<get>>
+    + {abstract} SetPixels(c:Color[]) : void
+    + {abstract} Apply() : void
+    + {abstract} mipMapBias : float <<get>>
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+    # {abstract} ToUnityObject() : UnityEngine.Object
+    # {abstract} ToUnityTexture() : UnityEngine.Texture2D
+}
+class Texture2DWrapper {
+    - m_Texture : UnityTexture2D
+    + Texture2DWrapper(texture:UnityTexture2D)
+    + <<override>> width : int <<get>>
+    + <<override>> height : int <<get>>
+    + <<override>> format : TextureFormat <<get>>
+    + <<override>> GetPixels32() : Color32[]
+    + <<override>> filterMode : FilterMode <<get>> <<set>>
+    + <<override>> mipMapBias : float <<get>>
+    + <<override>> name : string <<get>>
+    + <<override>> Equals(other:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> SetPixels(c:Color[]) : void
+    + <<override>> Apply() : void
+    # <<override>> ToUnityObject() : UnityEngine.Object
+    # <<override>> ToUnityTexture() : UnityEngine.Texture2D
+}
+ITexture2D <|-- Texture2DWrapper
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class IdentifierControlAttribute {
+    - m_Label : string
+    + IdentifierControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class IdentifierControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    + IdentifierControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnChange(evt:ChangeEvent<string>) : void
+}
+Attribute <|-- IdentifierControlAttribute
+IControlAttribute <|-- IdentifierControlAttribute
+VisualElement <|-- IdentifierControlView
+@enduml

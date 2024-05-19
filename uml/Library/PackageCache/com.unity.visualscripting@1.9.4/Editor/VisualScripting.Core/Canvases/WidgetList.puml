@@ -1,0 +1,31 @@
+@startuml
+class "WidgetList`1"<TWidget> {
+    - version : uint
+    - <<readonly>> canvas : ICanvas
+    + WidgetList(canvas:ICanvas)
+    # <<override>> InsertItem(index:int, item:TWidget) : void
+    # <<override>> RemoveItem(index:int) : void
+    # <<override>> ClearItems() : void
+    + <<new>> GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator<TWidget>
+    - GetEnumerator() : IEnumerator
+}
+struct Enumerator {
+    - <<readonly>> list : WidgetList<TWidget>
+    - index : int
+    - current : TWidget
+    - invalid : bool
+    - <<readonly>> version : uint
+    - graph : IGraph
+    + Enumerator(list:WidgetList<TWidget>)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Current : TWidget <<get>>
+    - Current : object <<get>>
+    - Reset() : void
+}
+"Collection`1" "<TWidget>" <|-- "WidgetList`1"
+"IEnumerable`1" "<TWidget>" <|-- "WidgetList`1"
+"WidgetList`1" +-- Enumerator
+"IEnumerator`1" "<TWidget>" <|-- Enumerator
+@enduml

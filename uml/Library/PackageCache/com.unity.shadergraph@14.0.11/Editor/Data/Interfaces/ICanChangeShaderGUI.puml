@@ -1,0 +1,6 @@
+@startuml
+interface ICanChangeShaderGUI {
+    ShaderGUIOverride : string <<get>> <<set>>
+    OverrideEnabled : bool <<get>> <<set>>
+}
+@enduml

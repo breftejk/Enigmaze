@@ -1,0 +1,7 @@
+@startuml
+class TrackPropertyCurvesDataSource {
+    # <<override>> animationClip : AnimationClip <<get>>
+    + TrackPropertyCurvesDataSource(track:TrackAsset)
+}
+BasePropertyKeyDataSource <|-- TrackPropertyCurvesDataSource
+@enduml

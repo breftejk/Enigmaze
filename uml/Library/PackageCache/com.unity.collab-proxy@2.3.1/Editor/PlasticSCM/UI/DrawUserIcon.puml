@@ -1,0 +1,6 @@
+@startuml
+class DrawUserIcon <<static>> {
+    {static} <<internal>> ForPendingChangesTab(commentText:string) : void
+    {static} - BuildUserIconAreaRect(commentText:string, sizeOfImage:float) : Rect
+}
+@enduml

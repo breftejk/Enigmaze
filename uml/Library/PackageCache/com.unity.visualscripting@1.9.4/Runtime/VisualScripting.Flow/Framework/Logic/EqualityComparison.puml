@@ -1,0 +1,12 @@
+@startuml
+class EqualityComparison <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + equal : ValueOutput <<get>>
+    + notEqual : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Equal(flow:Flow) : bool
+    - NotEqual(flow:Flow) : bool
+}
+Unit <|-- EqualityComparison
+@enduml

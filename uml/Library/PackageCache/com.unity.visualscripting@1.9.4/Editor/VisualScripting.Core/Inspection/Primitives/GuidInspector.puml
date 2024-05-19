@@ -1,0 +1,13 @@
+@startuml
+class GuidInspector <<sealed>> {
+    + GuidInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> buttonWidth : float = 70
+    + {static} <<readonly>> buttonSpacing : float = 3
+}
+Inspector <|-- GuidInspector
+GuidInspector +-- Styles
+@enduml

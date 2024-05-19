@@ -1,0 +1,71 @@
+@startuml
+class DisallowMultipleComponent <<sealed>> {
+}
+class RequireComponent <<sealed>> {
+    + m_Type0 : Type
+    + m_Type1 : Type
+    + m_Type2 : Type
+    + RequireComponent(requiredComponent:Type)
+    + RequireComponent(requiredComponent:Type, requiredComponent2:Type)
+    + RequireComponent(requiredComponent:Type, requiredComponent2:Type, requiredComponent3:Type)
+}
+class AddComponentMenu <<sealed>> {
+    - m_AddComponentMenu : string
+    - m_Ordering : int
+    + AddComponentMenu(menuName:string)
+    + AddComponentMenu(menuName:string, order:int)
+    + componentMenu : string <<get>>
+    + componentOrder : int <<get>>
+}
+class CreateAssetMenuAttribute <<sealed>> {
+    + menuName : string <<get>> <<set>>
+    + fileName : string <<get>> <<set>>
+    + order : int <<get>> <<set>>
+}
+class ContextMenu <<sealed>> {
+    + ContextMenu(itemName:string)
+    + ContextMenu(itemName:string, isValidateFunction:bool)
+    + ContextMenu(itemName:string, isValidateFunction:bool, priority:int)
+    + <<readonly>> menuItem : string
+    + <<readonly>> validate : bool
+    + <<readonly>> priority : int
+}
+class ExecuteInEditMode <<sealed>> {
+}
+class ExecuteAlways <<sealed>> {
+}
+class HideInInspector <<sealed>> {
+}
+class HideInCallstackAttribute <<sealed>> {
+}
+class HelpURLAttribute {
+    + HelpURLAttribute(url:string)
+    <<internal>> HelpURLAttribute(defaultURL:string, dispatchingFieldName:string)
+    + <<virtual>> URL : string <<get>>
+    <<internal>> <<readonly>> m_Url : string
+    <<internal>> <<readonly>> m_Dispatcher : bool
+    <<internal>> <<readonly>> m_DispatchingFieldName : string
+}
+class DefaultExecutionOrder {
+    + DefaultExecutionOrder(order:int)
+    + order : int <<get>>
+    - m_Order : int
+}
+class AssemblyIsEditorAssembly {
+}
+class ExcludeFromPresetAttribute {
+}
+Attribute <|-- DisallowMultipleComponent
+Attribute <|-- RequireComponent
+Attribute <|-- AddComponentMenu
+Attribute <|-- CreateAssetMenuAttribute
+Attribute <|-- ContextMenu
+Attribute <|-- ExecuteInEditMode
+Attribute <|-- ExecuteAlways
+Attribute <|-- HideInInspector
+Attribute <|-- HideInCallstackAttribute
+Attribute <|-- HelpURLAttribute
+Attribute <|-- DefaultExecutionOrder
+Attribute <|-- AssemblyIsEditorAssembly
+Attribute <|-- ExcludeFromPresetAttribute
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+class TrackClipTypeAttribute {
+    + <<readonly>> inspectedType : Type
+    + <<readonly>> allowAutoCreate : bool
+    + TrackClipTypeAttribute(clipClass:Type)
+    + TrackClipTypeAttribute(clipClass:Type, allowAutoCreate:bool)
+}
+class NotKeyableAttribute {
+}
+enum TrackBindingFlags {
+    None= 0,
+    AllowCreateComponent= 1,
+    All= AllowCreateComponent,
+}
+class TrackBindingTypeAttribute {
+    + <<readonly>> type : Type
+    + <<readonly>> flags : TrackBindingFlags
+    + TrackBindingTypeAttribute(type:Type)
+    + TrackBindingTypeAttribute(type:Type, flags:TrackBindingFlags)
+}
+class SupportsChildTracksAttribute {
+    + <<readonly>> childType : Type
+    + <<readonly>> levels : int
+    + SupportsChildTracksAttribute(childType:Type, levels:int)
+}
+class IgnoreOnPlayableTrackAttribute {
+}
+class TimeFieldAttribute {
+    + useEditMode : UseEditMode <<get>>
+    + TimeFieldAttribute(useEditMode:UseEditMode)
+}
+class FrameRateFieldAttribute {
+}
+class HideInMenuAttribute {
+}
+class CustomStyleAttribute {
+    + <<readonly>> ussStyle : string
+    + CustomStyleAttribute(ussStyle:string)
+}
+class MenuCategoryAttribute {
+    + <<readonly>> category : string
+    + MenuCategoryAttribute(category:string)
+}
+enum UseEditMode {
+    None,
+    ApplyEditMode,
+}
+Attribute <|-- TrackClipTypeAttribute
+Attribute <|-- NotKeyableAttribute
+Attribute <|-- TrackBindingTypeAttribute
+Attribute <|-- SupportsChildTracksAttribute
+PropertyAttribute <|-- TimeFieldAttribute
+PropertyAttribute <|-- FrameRateFieldAttribute
+Attribute <|-- HideInMenuAttribute
+Attribute <|-- CustomStyleAttribute
+Attribute <|-- MenuCategoryAttribute
+TimeFieldAttribute +-- UseEditMode
+@enduml

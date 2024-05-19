@@ -1,0 +1,24 @@
+@startuml
+class DynamicValueMaterialSlot {
+    - m_Value : Matrix4x4
+    - m_DefaultValue : Matrix4x4
+    {static} <<readonly>> - k_Labels : string[]
+    - m_ConcreteValueType : ConcreteSlotValueType
+    + DynamicValueMaterialSlot()
+    + DynamicValueMaterialSlot(slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, value:Matrix4x4, stageCapability:ShaderStageCapability, hidden:bool)
+    + defaultValue : Matrix4x4 <<get>>
+    + value : Matrix4x4 <<get>> <<set>>
+    + <<override>> isDefaultValue : bool <<get>>
+    + <<override>> InstantiateControl() : VisualElement
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + SetConcreteType(valueType:ConcreteSlotValueType) : void
+    + <<override>> GetPreviewProperties(properties:List<PreviewProperty>, name:string) : void
+    # <<override>> ConcreteSlotValueAsVariable() : string
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + <<override>> CopyDefaultValue(other:MaterialSlot) : void
+}
+MaterialSlot <|-- DynamicValueMaterialSlot
+"IMaterialSlotHasValue`1" "<Matrix4x4>" <|-- DynamicValueMaterialSlot
+@enduml

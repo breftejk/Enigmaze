@@ -1,0 +1,23 @@
+@startuml
+interface ITestResultAdaptor {
+    Test : ITestAdaptor <<get>>
+    Name : string <<get>>
+    FullName : string <<get>>
+    ResultState : string <<get>>
+    TestStatus : TestStatus <<get>>
+    Duration : double <<get>>
+    StartTime : DateTime <<get>>
+    EndTime : DateTime <<get>>
+    Message : string <<get>>
+    StackTrace : string <<get>>
+    AssertCount : int <<get>>
+    FailCount : int <<get>>
+    PassCount : int <<get>>
+    SkipCount : int <<get>>
+    InconclusiveCount : int <<get>>
+    HasChildren : bool <<get>>
+    Children : IEnumerable<ITestResultAdaptor> <<get>>
+    Output : string <<get>>
+    ToXml() : TNode
+}
+@enduml

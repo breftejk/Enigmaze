@@ -1,0 +1,34 @@
+@startuml
+class MigrationDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    # <<override>> GetTitle() : string
+    # <<override>> OnModalGUI() : void
+    <<internal>> {static} Show(parentWindow:EditorWindow, unityAccessToken:string, projectPath:string, user:string, organizationName:string, repId:RepId, changesetId:long, branchId:long, afterWorkspaceMigratedAction:Action) : bool
+    - DoIconArea() : void
+    - DoContentArea() : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCloseButton() : void
+    - DoOpenPlasticButton() : void
+    - GetEventCloudOrganizationInfo() : EventCloudOrganizationInfo
+    - DoMigrateButton() : void
+    {static} - UpdateProgress(wkPath:string, progress:CreateWorkspaceFromCollab.Progress, progressControls:ProgressControlsForMigration, progressData:BuildProgressSpeedAndRemainingTime.ProgressData) : void
+    - LaunchMigration(unityAccessToken:string, projectPath:string, organizationName:string, repId:RepId, changesetId:long, branchId:long, afterWorkspaceMigratedAction:Action, progressControls:ProgressControlsForMigration) : void
+    - TrackWorkspaceMigrationFinishedFailureEvent(wkInfo:WorkspaceInfo) : void
+    {static} - DisplayException(progressControls:ProgressControlsForMigration, ex:Exception) : void
+    {static} - Create(unityAccessToken:string, projectPath:string, user:string, organizationName:string, repId:RepId, changesetId:long, branchId:long, afterWorkspaceMigratedAction:Action, progressControls:ProgressControlsForMigration) : MigrationDialog
+    - mIsMigrationCompleted : bool
+    - mProgressControls : ProgressControlsForMigration
+    - mAfterWorkspaceMigratedAction : Action
+    - mChangesetId : long
+    - mBranchId : long
+    - mRepId : RepId
+    - mOrganizationName : string
+    - mUser : string
+    - mProjectPath : string
+    - mUnityAccessToken : string
+    - mWorkspaceInfo : WorkspaceInfo
+    {static} <<readonly>> - mLog : ILog
+}
+PlasticDialog <|-- MigrationDialog
+@enduml

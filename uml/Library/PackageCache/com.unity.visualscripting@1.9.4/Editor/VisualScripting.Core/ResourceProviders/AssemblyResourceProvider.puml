@@ -1,0 +1,35 @@
+@startuml
+class AssemblyResourceProvider <<sealed>> {
+    + <<const>> DirectorySeparatorChar : char = '.'
+    + assembly : Assembly <<get>>
+    + root : string <<get>>
+    - <<readonly>> prefix : string
+    + AssemblyResourceProvider(assembly:Assembly, @namespace:string, root:string)
+    + GetAllFiles() : IEnumerable<string>
+    + GetFiles(path:string) : IEnumerable<string>
+    + GetDirectories(path:string) : IEnumerable<string>
+    + GetPersonalPath(path:string, width:float) : string
+    + GetProfessionalPath(path:string, width:float) : string
+    + FileExists(path:string) : bool
+    + DirectoryExists(path:string) : bool
+    - PreNormalizePath(path:string) : string
+    - NormalizeDirectoryPath(directoryPath:string) : string
+    - NormalizeFileName(fileName:string) : string
+    + DebugPath(path:string) : string
+    + LoadAsset(path:string) : T
+    + LoadTexture(path:string, options:CreateTextureOptions) : Texture2D
+    - Analyze() : void
+    - GetDirectory(normalizedDirectoryPath:string, throwOnFail:bool) : Directory
+    - <<readonly>> rootDirectory : Directory
+}
+class Directory {
+    + parent : Directory <<get>>
+    + name : string <<get>>
+    + path : string <<get>>
+    + <<readonly>> subDirectories : Dictionary<string, Directory>
+    + <<readonly>> files : List<string>
+    + Directory(parent:Directory, name:string)
+}
+IResourceProvider <|-- AssemblyResourceProvider
+AssemblyResourceProvider +-- Directory
+@enduml

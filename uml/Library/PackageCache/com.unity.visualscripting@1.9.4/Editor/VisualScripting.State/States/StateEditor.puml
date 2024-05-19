@@ -1,0 +1,8 @@
+@startuml
+class StateEditor {
+    + StateEditor(metadata:Metadata)
+    # state : IState <<get>>
+    # <<new>> description : StateDescription <<get>>
+}
+"GraphElementEditor`1" "<StateGraphContext>" <|-- StateEditor
+@enduml

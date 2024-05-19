@@ -1,0 +1,8 @@
+@startuml
+class CompensateRotationProcessor {
+    + <<override>> Process(value:Quaternion, control:InputControl) : Quaternion
+    + <<override>> ToString() : string
+    + <<override>> cachingPolicy : CachingPolicy <<get>>
+}
+"InputProcessor`1" "<Quaternion>" <|-- CompensateRotationProcessor
+@enduml

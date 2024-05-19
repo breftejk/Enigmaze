@@ -1,0 +1,11 @@
+@startuml
+class ScrollRectScale {
+    <<const>> - kPrefabPath : string = "Assets/Resources/ScrollRectScalePrefab.prefab"
+    + Setup() : void
+    - m_CanvasGO : GameObject
+    + TestSetup() : void
+    + SmallScaleDoesNotCauseInvalidContentPosition() : IEnumerator
+    + TearDown() : void
+}
+IPrebuildSetup <|-- ScrollRectScale
+@enduml

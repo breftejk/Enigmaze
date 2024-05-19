@@ -1,0 +1,19 @@
+@startuml
+class TMP_SpriteAssetImporter {
+    + {static} ShowFontAtlasCreatorWindow() : void
+    - m_SpriteAtlas : Texture2D
+    - m_SpriteDataFormat : SpriteAssetImportFormats
+    - m_JsonFile : TextAsset
+    - m_CreationFeedback : string
+    - m_SpriteAsset : TMP_SpriteAsset
+    - OnEnable() : void
+    + OnGUI() : void
+    - OnDisable() : void
+    - DrawEditorPanel() : void
+    - {static} PopulateSpriteTables(spriteDataObject:TexturePacker_JsonArray.SpriteDataObject, spriteCharacterTable:List<TMP_SpriteCharacter>, spriteGlyphTable:List<TMP_SpriteGlyph>) : void
+    - SaveSpriteAsset(filePath:string) : void
+    {static} - AddDefaultMaterial(spriteAsset:TMP_SpriteAsset) : void
+    - SetEditorWindowSize() : void
+}
+EditorWindow <|-- TMP_SpriteAssetImporter
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class AlignSceneView {
+    - Awake() : void
+    - {static} AlignCamera(target:Transform) : void
+}
+MonoBehaviour <|-- AlignSceneView
+@enduml

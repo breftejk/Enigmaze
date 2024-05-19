@@ -1,0 +1,8 @@
+@startuml
+class MergeLists <<sealed>> {
+    + list : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Merge(flow:Flow) : IList
+}
+"MultiInputUnit`1" "<IEnumerable>" <|-- MergeLists
+@enduml

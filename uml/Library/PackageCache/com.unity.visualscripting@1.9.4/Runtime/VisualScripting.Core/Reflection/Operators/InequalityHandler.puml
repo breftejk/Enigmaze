@@ -1,0 +1,9 @@
+@startuml
+class InequalityHandler {
+    + InequalityHandler()
+    # <<override>> BothNullHandling() : object
+    # <<override>> SingleNullHandling() : object
+    # <<override>> CustomHandling(leftOperand:object, rightOperand:object) : object
+}
+BinaryOperatorHandler <|-- InequalityHandler
+@enduml

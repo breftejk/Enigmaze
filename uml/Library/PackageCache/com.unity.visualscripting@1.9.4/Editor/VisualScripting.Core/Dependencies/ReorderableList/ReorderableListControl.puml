@@ -1,0 +1,147 @@
+@startuml
+class ReorderableListControl {
+    - {static} s_AnchorMouseOffset : float
+    - {static} s_AnchorIndex : int
+    - {static} s_TargetIndex : int
+    - {static} s_AutoFocusControlID : int = 0
+    - {static} s_AutoFocusIndex : int
+    - {static} s_CurrentListStack : Stack<ListInfo>
+    - {static} s_CurrentItemStack : Stack<ItemInfo>
+    + {static} CurrentListControlID : int <<get>>
+    + {static} CurrentListPosition : Rect <<get>>
+    <<internal>> {static} CurrentItemIndex : int <<get>>
+    + {static} CurrentItemTotalPosition : Rect <<get>>
+    + {static} <<readonly>> AnchorBackgroundColor : Color
+    + {static} <<readonly>> TargetBackgroundColor : Color
+    - {static} s_RightAlignedLabelStyle : GUIStyle
+    {static} - ReorderableListControl()
+    - {static} <<readonly>> s_ReorderableListControlHint : int
+    - {static} GetReorderableListControlID() : int
+    + {static} DrawControlFromState(adaptor:IReorderableListAdaptor, drawEmpty:DrawEmpty, flags:ReorderableListFlags) : void
+    + {static} DrawControlFromState(position:Rect, adaptor:IReorderableListAdaptor, drawEmpty:DrawEmptyAbsolute, flags:ReorderableListFlags) : void
+    - _flags : ReorderableListFlags
+    + Flags : ReorderableListFlags <<get>> <<set>>
+    - HasFooterControls : bool <<get>>
+    - HasSizeField : bool <<get>>
+    - HasAddButton : bool <<get>>
+    - HasAddMenuButton : bool <<get>> <<set>>
+    - HasRemoveButtons : bool <<get>>
+    - _verticalSpacing : float = 10f
+    - _containerStyle : GUIStyle
+    - _footerButtonStyle : GUIStyle
+    - _itemButtonStyle : GUIStyle
+    + VerticalSpacing : float <<get>> <<set>>
+    + ContainerStyle : GUIStyle <<get>> <<set>>
+    + FooterButtonStyle : GUIStyle <<get>> <<set>>
+    + ItemButtonStyle : GUIStyle <<get>> <<set>>
+    - _horizontalLineColor : Color
+    - _horizontalLineAtStart : bool = false
+    - _horizontalLineAtEnd : bool = false
+    + HorizontalLineColor : Color <<get>> <<set>>
+    + HorizontalLineAtStart : bool <<get>> <<set>>
+    + HorizontalLineAtEnd : bool <<get>> <<set>>
+    -  <<event>> _addMenuClicked : AddMenuClickedEventHandler 
+    - _addMenuClickedSubscriberCount : int = 0
+    # <<virtual>> OnAddMenuClicked(args:AddMenuClickedEventArgs) : void
+    +  <<event>> ItemInserted : ItemInsertedEventHandler 
+    # <<virtual>> OnItemInserted(args:ItemInsertedEventArgs) : void
+    +  <<event>> ItemRemoving : ItemRemovingEventHandler 
+    # <<virtual>> OnItemRemoving(args:ItemRemovingEventArgs) : void
+    +  <<event>> ItemMoving : ItemMovingEventHandler 
+    # <<virtual>> OnItemMoving(args:ItemMovingEventArgs) : void
+    +  <<event>> ItemMoved : ItemMovedEventHandler 
+    # <<virtual>> OnItemMoved(args:ItemMovedEventArgs) : void
+    + ReorderableListControl()
+    + ReorderableListControl(flags:ReorderableListFlags)
+    - _controlID : int
+    - _visibleRect : Rect
+    - _indexLabelWidth : float
+    - _tracking : bool
+    - _allowReordering : bool
+    - _allowDropInsertion : bool
+    - _insertionIndex : int
+    - _insertionPosition : float
+    - _newSizeInput : int
+    - PrepareState(controlID:int, adaptor:IReorderableListAdaptor) : void
+    - {static} CountDigits(number:int) : int
+    - {static} s_SimulateMouseDragControlID : int
+    - AutoFocusItem(controlID:int, itemIndex:int) : void
+    - DoRemoveButton(position:Rect, visible:bool) : bool
+    - {static} s_TrackingCancelBlockContext : bool
+    - {static} BeginTrackingReorderDrag(controlID:int, itemIndex:int) : void
+    - {static} StopTrackingReorderDrag() : void
+    - {static} IsTrackingControl(controlID:int) : bool
+    - AcceptReorderDrag(adaptor:IReorderableListAdaptor) : void
+    - {static} s_DragItemPosition : Rect
+    - {static} s_RemoveButtonPosition : Rect
+    - DrawListItem(position:Rect, adaptor:IReorderableListAdaptor, itemIndex:int) : void
+    - DrawFloatingListItem(adaptor:IReorderableListAdaptor, targetSlotPosition:float) : void
+    - {static} s_DropTargetNestedCounter : int = 0
+    - DrawListContainerAndItems(position:Rect, adaptor:IReorderableListAdaptor) : void
+    - {static} ContainsRect(a:Rect, b:Rect) : bool
+    - AutoScrollTowardsMouse() : void
+    - HandleDropInsertion(position:Rect, adaptor:IReorderableListAdaptor) : void
+    # <<virtual>> DrawDropIndicator(position:Rect) : void
+    - CheckForAutoFocusControl() : void
+    - DrawFooterControls(position:Rect, adaptor:IReorderableListAdaptor) : void
+    - DrawSizeFooterControl(position:Rect, adaptor:IReorderableListAdaptor) : void
+    - {static} s_ContainerHeightCache : Dictionary<int, float>
+    - GetListRectWithAutoLayout(adaptor:IReorderableListAdaptor, padding:float) : Rect
+    - DrawLayoutListField(adaptor:IReorderableListAdaptor, padding:float) : Rect
+    - DrawLayoutEmptyList(adaptor:IReorderableListAdaptor, drawEmpty:DrawEmpty) : Rect
+    - DrawEmptyListControl(position:Rect, drawEmpty:DrawEmptyAbsolute) : void
+    - FixStyles() : void
+    - Draw(controlID:int, adaptor:IReorderableListAdaptor, drawEmpty:DrawEmpty) : void
+    + Draw(adaptor:IReorderableListAdaptor, drawEmpty:DrawEmpty) : void
+    + Draw(adaptor:IReorderableListAdaptor) : void
+    - Draw(position:Rect, controlID:int, adaptor:IReorderableListAdaptor, drawEmpty:DrawEmptyAbsolute) : void
+    + Draw(position:Rect, adaptor:IReorderableListAdaptor, drawEmpty:DrawEmptyAbsolute) : void
+    + Draw(position:Rect, adaptor:IReorderableListAdaptor) : void
+    - {static} <<readonly>> s_Temp : GUIContent
+    - {static} <<readonly>> s_SizePrefixLabel : GUIContent
+    + DrawSizeField(position:Rect, label:GUIContent, adaptor:IReorderableListAdaptor) : void
+    + DrawSizeField(position:Rect, label:string, adaptor:IReorderableListAdaptor) : void
+    + DrawSizeField(position:Rect, adaptor:IReorderableListAdaptor) : void
+    + DrawSizeField(label:GUIContent, adaptor:IReorderableListAdaptor) : void
+    + DrawSizeField(label:string, adaptor:IReorderableListAdaptor) : void
+    + DrawSizeField(adaptor:IReorderableListAdaptor) : void
+    # {static} <<readonly>> CommandMoveToTop : GUIContent
+    # {static} <<readonly>> CommandMoveToBottom : GUIContent
+    # {static} <<readonly>> CommandInsertAbove : GUIContent
+    # {static} <<readonly>> CommandInsertBelow : GUIContent
+    # {static} <<readonly>> CommandDuplicate : GUIContent
+    # {static} <<readonly>> CommandRemove : GUIContent
+    # {static} <<readonly>> CommandClearAll : GUIContent
+    - {static} s_ContextControlID : int
+    - {static} s_ContextItemIndex : int
+    - {static} s_ContextCommandName : string
+    - ShowContextMenu(itemIndex:int, adaptor:IReorderableListAdaptor) : void
+    # {static} <<readonly>> DefaultContextHandler : GenericMenu.MenuFunction2
+    - {static} DefaultContextMenuHandler(userData:object) : void
+    # <<virtual>> AddItemsToMenu(menu:GenericMenu, itemIndex:int, adaptor:IReorderableListAdaptor) : void
+    # <<virtual>> HandleCommand(commandName:string, itemIndex:int, adaptor:IReorderableListAdaptor) : bool
+    + DoCommand(commandName:string, itemIndex:int, adaptor:IReorderableListAdaptor) : bool
+    + DoCommand(command:GUIContent, itemIndex:int, adaptor:IReorderableListAdaptor) : bool
+    + CalculateListHeight(adaptor:IReorderableListAdaptor) : float
+    + CalculateListHeight(itemCount:int, itemHeight:float) : float
+    # MoveItem(adaptor:IReorderableListAdaptor, sourceIndex:int, destIndex:int) : void
+    # AddItem(adaptor:IReorderableListAdaptor) : void
+    # InsertItem(adaptor:IReorderableListAdaptor, itemIndex:int) : void
+    # DuplicateItem(adaptor:IReorderableListAdaptor, itemIndex:int) : void
+    # RemoveItem(adaptor:IReorderableListAdaptor, itemIndex:int) : bool
+    # ClearAll(adaptor:IReorderableListAdaptor) : bool
+    # ResizeList(adaptor:IReorderableListAdaptor, newCount:int) : bool
+}
+struct ListInfo {
+    + ControlID : int
+    + Position : Rect
+    + ListInfo(controlID:int, position:Rect)
+}
+struct ItemInfo {
+    + ItemIndex : int
+    + ItemPosition : Rect
+    + ItemInfo(itemIndex:int, itemPosition:Rect)
+}
+ReorderableListControl +-- ListInfo
+ReorderableListControl +-- ItemInfo
+@enduml

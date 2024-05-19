@@ -1,0 +1,18 @@
+@startuml
+class Texture3DAssetNode {
+    + <<const>> OutputSlotId : int = 0
+    <<const>> - kOutputSlotName : string = "Out"
+    + Texture3DAssetNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_Texture : SerializableTexture
+    + texture : Texture3D <<get>> <<set>>
+    - GetTexturePropertyName() : string
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- Texture3DAssetNode
+IPropertyFromNode <|-- Texture3DAssetNode
+@enduml

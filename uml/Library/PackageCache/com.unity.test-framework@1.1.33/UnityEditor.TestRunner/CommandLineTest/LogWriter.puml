@@ -1,0 +1,15 @@
+@startuml
+class LogWriter {
+    - m_LogsDirectory : string
+    - m_DeviceID : string
+    - m_LogStreams : Dictionary<string, StreamWriter>
+    - m_Logger : DeploymentTargetLogger
+    <<internal>> LogWriter(logsDirectory:string, deviceID:string, logger:DeploymentTargetLogger)
+    - WriteLogToFile(id:string, logLine:string) : void
+    + Stop() : void
+    + Dispose() : void
+    - CreateLogFile(path:string) : StreamWriter
+    - GetLogFilePath(lgosDirectory:string, deviceID:string, logID:string) : string
+}
+IDisposable <|-- LogWriter
+@enduml

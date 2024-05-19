@@ -1,0 +1,9 @@
+@startuml
+class CachingTestListProvider {
+    - <<readonly>> m_InnerTestListProvider : ITestListProvider
+    - <<readonly>> m_TestListCache : ITestListCache
+    - <<readonly>> m_TestAdaptorFactory : ITestAdaptorFactory
+    + CachingTestListProvider(innerTestListProvider:ITestListProvider, testListCache:ITestListCache, testAdaptorFactory:ITestAdaptorFactory)
+    + GetTestListAsync(platform:TestPlatform) : IEnumerator<ITestAdaptor>
+}
+@enduml

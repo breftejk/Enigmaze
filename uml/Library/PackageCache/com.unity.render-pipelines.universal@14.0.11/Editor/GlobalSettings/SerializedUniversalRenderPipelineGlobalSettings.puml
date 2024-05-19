@@ -1,0 +1,19 @@
+@startuml
+class SerializedUniversalRenderPipelineGlobalSettings {
+    + serializedObject : SerializedObject <<get>>
+    + shaderVariantLogLevel : SerializedProperty <<get>>
+    + exportShaderVariants : SerializedProperty <<get>>
+    - serializedSettings : List<UniversalRenderPipelineGlobalSettings>
+    + renderingLayerNames : SerializedProperty
+    + stripDebugVariants : SerializedProperty
+    + stripUnusedPostProcessingVariants : SerializedProperty
+    + stripUnusedVariants : SerializedProperty
+    + stripScreenCoordOverrideVariants : SerializedProperty
+    + renderingLayerNameList : ReorderableList
+    + SerializedUniversalRenderPipelineGlobalSettings(serializedObject:SerializedObject)
+    - OnAddElement(list:ReorderableList) : void
+    - OnDrawElement(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - GetDefaultLayerName(index:int) : string
+}
+ISerializedRenderPipelineGlobalSettings <|-- SerializedUniversalRenderPipelineGlobalSettings
+@enduml

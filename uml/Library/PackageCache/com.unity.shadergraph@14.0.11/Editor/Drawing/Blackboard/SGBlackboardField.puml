@@ -1,0 +1,45 @@
+@startuml
+class SGBlackboardField {
+    {static} <<readonly>> - k_ExposedIcon : Texture2D
+    {static} <<readonly>> - k_UxmlTemplatePath : string = "UXML/Blackboard/SGBlackboardField"
+    {static} <<readonly>> - k_StyleSheetPath : string = "Styles/SGBlackboard"
+    - m_ViewModel : ShaderInputViewModel
+    - ViewModel : ShaderInputViewModel <<get>> <<set>>
+    - m_ContentItem : VisualElement
+    - m_Pill : Pill
+    - m_TypeLabel : Label
+    - m_TextField : TextField
+    <<internal>> textField : TextField <<get>>
+    - m_ResetReferenceNameTrigger : Action
+    - m_SelectedNodes : List<Node>
+    + text : string <<get>> <<set>>
+    + typeText : string <<get>> <<set>>
+    + icon : Texture <<get>> <<set>>
+    + highlighted : bool <<get>> <<set>>
+    <<internal>> SGBlackboardField(viewModel:ShaderInputViewModel)
+    - AddContextMenuOptions(evt:ContextualMenuPopulateEvent) : void
+    <<internal>> UpdateFromViewModel() : void
+    - m_Controller : ShaderInputViewController
+    + OnControllerChanged(e:SGControllerChangedEvent) : void
+    + OnControllerEvent(e:SGControllerEvent) : void
+    + controller : ShaderInputViewController <<get>> <<set>>
+    - controller : SGController <<get>>
+    + shaderInput : ShaderInput <<get>>
+    + inspectorTitle : string <<get>>
+    + GetObjectToInspect() : object
+    - m_InspectorUpdateDelegate : Action
+    + SupplyDataToPropertyDrawer(propertyDrawer:IPropertyDrawer, inspectorUpdateDelegate:Action) : void
+    - OnMouseDownEvent(e:MouseDownEvent) : void
+    - OnDragUpdatedEvent(evt:DragUpdatedEvent) : void
+    - OnMouseHover(evt:EventBase, input:ShaderInput) : void
+    - UpdateTypeText() : void
+    <<internal>> OpenTextEditor() : void
+    - OnEditTextFinished() : void
+    # <<virtual>> BuildFieldContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    + Dispose() : void
+}
+GraphElement <|-- SGBlackboardField
+IInspectable <|-- SGBlackboardField
+"ISGControlledElement`1" "<ShaderInputViewController>" <|-- SGBlackboardField
+IDisposable <|-- SGBlackboardField
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+abstract class "GraphContextExtension`1"<TGraphContext> {
+    # GraphContextExtension(context:TGraphContext)
+    + context : TGraphContext <<get>>
+    # reference : GraphReference <<get>>
+    # graph : IGraph <<get>>
+    # canvas : ICanvas <<get>>
+    # selection : GraphSelection <<get>>
+    + <<virtual>> contextMenuItems : IEnumerable<GraphContextMenuItem> <<get>>
+    + <<virtual>> dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + <<virtual>> AcceptsDragAndDrop() : bool
+    + <<virtual>> PerformDragAndDrop() : void
+    + <<virtual>> UpdateDragAndDrop() : void
+    + <<virtual>> DrawDragAndDropPreview() : void
+    + <<virtual>> ExitDragAndDrop() : void
+    # {static} e : Event <<get>>
+}
+IGraphContextExtension <|-- "GraphContextExtension`1"
+@enduml

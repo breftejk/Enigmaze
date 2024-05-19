@@ -1,0 +1,13 @@
+@startuml
+class LogMatch {
+    - m_UseRegex : bool
+    - m_Message : string
+    - m_MessageRegex : string
+    - m_LogType : string
+    + Message : string <<get>> <<set>>
+    + MessageRegex : Regex <<get>> <<set>>
+    + LogType : LogType? <<get>> <<set>>
+    + Matches(log:LogEvent) : bool
+    + <<override>> ToString() : string
+}
+@enduml

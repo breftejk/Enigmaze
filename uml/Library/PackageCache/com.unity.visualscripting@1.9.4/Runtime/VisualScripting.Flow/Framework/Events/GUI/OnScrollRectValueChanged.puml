@@ -1,0 +1,10 @@
+@startuml
+class OnScrollRectValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, value:Vector2) : void
+}
+"GameObjectEventUnit`1" "<Vector2>" <|-- OnScrollRectValueChanged
+@enduml

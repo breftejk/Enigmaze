@@ -1,0 +1,45 @@
+@startuml
+struct TilingJob {
+    + lights : NativeArray<VisibleLight>
+    + reflectionProbes : NativeArray<VisibleReflectionProbe>
+    + tileRanges : NativeArray<InclusiveRange>
+    + itemsPerTile : int
+    + rangesPerItem : int
+    + worldToViews : Fixed2<float4x4>
+    + tileScale : float2
+    + tileScaleInv : float2
+    + viewPlaneBottoms : Fixed2<float>
+    + viewPlaneTops : Fixed2<float>
+    + viewToViewportScaleBiases : Fixed2<float4>
+    + tileCount : int2
+    + near : float
+    + isOrthographic : bool
+    - m_TileYRange : InclusiveRange
+    - m_Offset : int
+    - m_ViewIndex : int
+    - m_CenterOffset : float2
+    + Execute(jobIndex:int) : void
+    - TileLight(lightIndex:int) : void
+    - TileLightOrthographic(lightIndex:int) : void
+    {static} <<readonly>> - k_CubePoints : float3[]
+    {static} <<readonly>> - k_CubeLineIndices : int4[]
+    - TileReflectionProbe(index:int) : void
+    - ViewToTileSpace(positionVS:float3) : float2
+    - ViewToTileSpaceOrthographic(positionVS:float3) : float2
+    - ExpandY(positionVS:float3) : void
+    - ExpandOrthographic(positionVS:float3) : void
+    - ExpandRangeOrthographic(range:InclusiveRange, xVS:float) : void
+    {static} - square(x:float) : float
+    {static} - GetSphereHorizon(center:float2, radius:float, near:float, clipRadius:float, p0:float2, p1:float2) : void
+    {static} - GetSphereYPlaneHorizon(center:float3, sphereRadius:float, near:float, clipRadius:float, y:float, left:float3, right:float3) : void
+    {static} - GetCircleClipPoints(circleCenter:float3, circleNormal:float3, circleRadius:float, near:float, p0:float3, p1:float3) : bool
+    {static} - IntersectEllipseLine(a:float, b:float, line:float3) : (float, float)
+    {static} - GetProjectedCircleHorizon(center:float2, radius:float, U:float2, V:float2, uv1:float2, uv2:float2) : void
+    {static} - IntersectCircleYPlane(y:float, circleCenter:float3, circleNormal:float3, circleU:float3, circleV:float3, circleRadius:float, p1:float3, p2:float3) : bool
+    {static} - GetConeSideTangentPoints(vertex:float3, axis:float3, cosHalfAngle:float, circleRadius:float, coneHeight:float, range:float, circleU:float3, circleV:float3, l1:float3, l2:float3) : void
+    {static} - EvaluateNearConic(near:float, o:float3, d:float3, r:float, u:float3, v:float3, theta:float) : float3
+    {static} - FindNearConicTangentTheta(o:float2, d:float2, r:float, u:float2, v:float2) : float2
+    {static} - FindNearConicYTheta(near:float, o:float3, d:float3, r:float, u:float3, v:float3, y:float) : float2
+}
+IJobFor <|-- TilingJob
+@enduml

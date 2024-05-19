@@ -1,0 +1,12 @@
+@startuml
+class FastMouse <<partial>> {
+    # <<new>> OnNextUpdate() : void
+    # <<new>> <<unsafe>> OnStateEvent(eventPtr:InputEventPtr) : void
+    - OnNextUpdate() : void
+    - OnStateEvent(eventPtr:InputEventPtr) : void
+    <<internal>> {static} <<unsafe>> MergeForward(currentEventPtr:InputEventPtr, nextEventPtr:InputEventPtr) : bool
+    - MergeForward(currentEventPtr:InputEventPtr, nextEventPtr:InputEventPtr) : bool
+}
+IInputStateCallbackReceiver <|-- FastMouse
+IEventMerger <|-- FastMouse
+@enduml

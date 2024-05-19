@@ -1,0 +1,15 @@
+@startuml
+interface IFunctionPointer {
+    FromIntPtr(ptr:IntPtr) : IFunctionPointer
+}
+struct "FunctionPointer`1"<T> {
+    - <<readonly>> _ptr : IntPtr
+    + FunctionPointer(ptr:IntPtr)
+    + Value : IntPtr <<get>>
+    - CheckIsCreated() : void
+    + Invoke : T <<get>>
+    + IsCreated : bool <<get>>
+    - FromIntPtr(ptr:IntPtr) : IFunctionPointer
+}
+IFunctionPointer <|-- "FunctionPointer`1"
+@enduml

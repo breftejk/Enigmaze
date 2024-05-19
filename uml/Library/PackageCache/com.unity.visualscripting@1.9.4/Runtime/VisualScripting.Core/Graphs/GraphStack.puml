@@ -1,0 +1,22 @@
+@startuml
+class GraphStack <<sealed>> {
+    - GraphStack()
+    - InitializeNoAlloc(root:IGraphRoot, parentElements:List<IGraphParentElement>, ensureValid:bool) : void
+    <<internal>> {static} New(root:IGraphRoot, parentElements:List<IGraphParentElement>) : GraphStack
+    <<internal>> {static} New(model:GraphPointer) : GraphStack
+    + Clone() : GraphStack
+    + Dispose() : void
+    - New() : void
+    - Free() : void
+    + <<override>> AsReference() : GraphReference
+    + ToReference() : GraphReference
+    <<internal>> ClearReference() : void
+    + <<new>> EnterParentElement(parentElement:IGraphParentElement) : void
+    + TryEnterParentElement(parentElement:IGraphParentElement) : bool
+    + TryEnterParentElementUnsafe(parentElement:IGraphParentElement) : bool
+    + <<new>> ExitParentElement() : void
+}
+GraphPointer <|-- GraphStack
+IPoolable <|-- GraphStack
+IDisposable <|-- GraphStack
+@enduml

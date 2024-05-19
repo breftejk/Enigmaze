@@ -1,0 +1,33 @@
+@startuml
+class SimpleLitGUI <<static>> {
+    + {static} Inputs(properties:SimpleLitProperties, materialEditor:MaterialEditor, material:Material) : void
+    + {static} Advanced(properties:SimpleLitProperties) : void
+    + {static} DoSpecularArea(properties:SimpleLitProperties, materialEditor:MaterialEditor, material:Material) : void
+    + {static} SetMaterialKeywords(material:Material) : void
+    - {static} UpdateMaterialSpecularSource(material:Material) : void
+}
+enum SpecularSource {
+    SpecularTextureAndColor,
+    NoSpecular,
+}
+enum SmoothnessMapChannel {
+    SpecularAlpha,
+    AlbedoAlpha,
+}
+class Styles <<static>> {
+    + {static} specularMapText : GUIContent
+}
+struct SimpleLitProperties {
+    + specColor : MaterialProperty
+    + specGlossMap : MaterialProperty
+    + specHighlights : MaterialProperty
+    + smoothnessMapChannel : MaterialProperty
+    + smoothness : MaterialProperty
+    + bumpMapProp : MaterialProperty
+    + SimpleLitProperties(properties:MaterialProperty[])
+}
+SimpleLitGUI +-- SpecularSource
+SimpleLitGUI +-- SmoothnessMapChannel
+SimpleLitGUI +-- Styles
+SimpleLitGUI +-- SimpleLitProperties
+@enduml

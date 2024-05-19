@@ -1,0 +1,40 @@
+@startuml
+enum WeightPainterMode {
+    Brush,
+    Slider,
+}
+class WeightPainterTool {
+    - m_WeightPainterPanel : WeightPainterPanel
+    - m_WeightEditor : WeightEditor
+    - m_Brush : Brush
+    - m_BrushSelection : ISelection<int>
+    - m_CircleVertexSelector : CircleVertexSelector
+    + paintMode : WeightPainterMode <<get>> <<set>>
+    + <<override>> defaultControlID : int <<get>>
+    <<internal>> <<override>> OnCreate() : void
+    + panelTitle : string <<set>>
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - OnBoneSelectionChanged() : void
+    - OnSelectedSpriteChanged(sprite:SpriteCache) : void
+    - OnSkinningModeChanged(mode:SkinningMode) : void
+    - GetSkeletonBonesNames() : string[]
+    - GetMeshBoneNames() : string[]
+    - GetUniqueBoneNames(bones:BoneCache[], skeleton:SkeletonCache) : string[]
+    - UpdatePanel() : void
+    - UpdateSelectedBone() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    <<internal>> SetWeightPainterPanelTitle(title:string) : void
+    - AssociateSelectedBoneToCharacterPart() : void
+    - EditStart(selection:ISelection<int>, relative:bool) : void
+    - EditWeights(hardness:float, emptySelectionEditsAll:bool) : void
+    - EditEnd() : void
+    - InvokeBoneSelectionChanged() : void
+    - ConvertBoneIndex(index:int) : int
+    - SetupWeightEditor(selection:ISelection<int>) : void
+    - UpdateBrushSelection(brush:Brush) : void
+    - DrawBrush(brush:Brush) : void
+    # <<override>> OnGUI() : void
+}
+MeshToolWrapper <|-- WeightPainterTool
+@enduml

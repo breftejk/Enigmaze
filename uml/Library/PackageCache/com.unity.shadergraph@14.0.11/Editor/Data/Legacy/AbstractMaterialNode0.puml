@@ -1,0 +1,9 @@
+@startuml
+class AbstractMaterialNode0 {
+    + m_GuidSerialized : string
+    + m_SerializableSlots : List<SerializationHelper.JSONSerializedElement>
+    + m_PropertyGuidSerialized : string
+    + m_KeywordGuidSerialized : string
+    + m_GroupGuidSerialized : string
+}
+@enduml

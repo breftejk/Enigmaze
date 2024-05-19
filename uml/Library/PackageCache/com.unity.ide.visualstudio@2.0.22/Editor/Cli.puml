@@ -1,0 +1,8 @@
+@startuml
+class Cli <<static>> {
+    <<internal>> {static} Log(message:string) : void
+    <<internal>> {static} GetInstallationDetails(installation:IVisualStudioInstallation) : string
+    <<internal>> {static} GenerateSolutionWith(vse:VisualStudioEditor, installationPath:string) : void
+    <<internal>> {static} GenerateSolution() : void
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class ErrorListViewItem {
+    <<internal>> ErrorMessage : ErrorMessage <<get>>
+    <<internal>> ErrorListViewItem(id:int, errorMessage:ErrorMessage)
+}
+TreeViewItem <|-- ErrorListViewItem
+@enduml

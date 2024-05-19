@@ -1,0 +1,17 @@
+@startuml
+class LayoutElementEditor {
+    - m_IgnoreLayout : SerializedProperty
+    - m_MinWidth : SerializedProperty
+    - m_MinHeight : SerializedProperty
+    - m_PreferredWidth : SerializedProperty
+    - m_PreferredHeight : SerializedProperty
+    - m_FlexibleWidth : SerializedProperty
+    - m_FlexibleHeight : SerializedProperty
+    - m_LayoutPriority : SerializedProperty
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - LayoutElementField(property:SerializedProperty, defaultValue:float) : void
+    - LayoutElementField(property:SerializedProperty, defaultValue:System.Func<RectTransform, float>) : void
+}
+Editor <|-- LayoutElementEditor
+@enduml

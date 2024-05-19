@@ -1,0 +1,6 @@
+@startuml
+abstract class WorkItemFactory {
+    + Create(loadedTest:ITest, filter:ITestFilter) : UnityWorkItem
+    # {abstract} Create(method:TestMethod, filter:ITestFilter, loadedTest:ITest) : UnityWorkItem
+}
+@enduml

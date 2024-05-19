@@ -1,0 +1,68 @@
+@startuml
+class GraphWindow <<sealed>> {
+    - {static} <<readonly>> defaultTitle : string = "Visual Scripting Graph"
+    - e : GUIEvent <<get>>
+    + {static} OpenTab() : void
+    + {static} OpenTab(reference:GraphReference) : void
+    + {static} OpenActive(reference:GraphReference) : void
+    + locked : bool <<get>> <<set>>
+    + graphInspectorEnabled : bool <<get>> <<set>> = true
+    + variablesInspectorEnabled : bool <<get>> <<set>> = true
+    + context : IGraphContext <<get>>
+    - referenceData : GraphPointerData
+    - _reference : GraphReference
+    + reference : GraphReference <<get>> <<set>>
+    - SetReference(value:GraphReference, exitGUI:bool) : void
+    + Validate() : void
+    + Clear() : void
+    + MatchSelection(IsOnHierarchyChange:bool) : void
+    - canvas : ICanvas <<get>>
+    - graph : IGraph <<get>>
+    - {static} <<readonly>> _tabs : HashSet<GraphWindow>
+    + {static} tabs : IEnumerable<GraphWindow> <<get>>
+    + {static} tabsNoAlloc : HashSet<GraphWindow> <<get>>
+    + isActive : bool <<get>>
+    - {static} _active : GraphWindow
+    + {static} active : GraphWindow <<get>> <<set>>
+    + {static} activeReference : GraphReference <<get>> <<set>>
+    - {static} lastActiveContext : IGraphContext
+    + {static} activeContext : IGraphContext <<get>>
+    + {static}  <<event>> activeContextChanged : Action<IGraphContext> 
+    - {static} CheckForActiveContextChange() : void
+    - <<readonly>> _frameLimiter : FrameLimiterUtility
+    - _OnSelectionChange() : void
+    - _OnProjectChange() : void
+    - _OnHierarchyChange() : void
+    - _OnModeChange() : void
+    - _OnUndoRedo() : void
+    - OnEnable() : void
+    - ValidateReloadScriptSettings() : void
+    - OnFocus() : void
+    - OnLostFocus() : void
+    - FixActive() : void
+    - OnContextChange() : void
+    - OnDisable() : void
+    # <<override>> Update() : void
+    - m_TabOffset : Vector2
+    - m_Scroll : Vector2
+    # <<override>> OnGUI() : void
+    - m_RectList : List<CursorRect>
+    + AddCursorRect(rect:Rect, cursor:MouseCursor) : void
+    - ToggleInspector(hidden:bool) : void
+    - sidebars : Sidebars
+    + showSidebars : bool <<get>>
+    - <<const>> disabledMessage : string = "Component graph editing is disabled on prefab instances."
+    - BeginDisabledGroup() : void
+    - EndDisabledGroup() : void
+    - DrawPrefabInstanceWarning() : void
+    - <<readonly>> _onItemAddedAction : Action<IGraphElement>
+    - <<readonly>> _onItemRemovedAction : Action<IGraphElement>
+}
+struct CursorRect {
+    + rect : Rect
+    + cursor : MouseCursor
+}
+LudiqEditorWindow <|-- GraphWindow
+ICanvasWindow <|-- GraphWindow
+GraphWindow +-- CursorRect
+@enduml

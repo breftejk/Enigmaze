@@ -1,0 +1,62 @@
+@startuml
+class VariablesPanel {
+    <<const>> - k_ObjectTabTitle : string = "Object Variables"
+    + context : IGraphContext <<get>>
+    + minSize : Vector2 <<get>>
+    + titleContent : GUIContent <<get>>
+    + sidebarControlHint : object <<get>>
+    + VariablesPanel(context:IGraphContext)
+    - OnPrefabInstanceUpdated(instance:GameObject) : void
+    - <<readonly>> tabs : List<Tab>
+    - _currentTab : Tab
+    - _currentSubTabIdentifier : string
+    + currentSubTabIdentifier : string <<get>> <<set>>
+    + GetHeight(width:float) : float
+    + OnGUI(position:Rect) : void
+    - GetTabBarHeight(width:float) : float
+    - ValidateTabHeader(tab:Tab) : void
+    - OnTabButtonGUI(position:Rect, tab:Tab) : void
+    - Graph(reference:GraphReference) : Tab
+    - Object(@object:GameObject) : Tab
+    {static} - OnObjectTabGUI(tab:Tab, gameObject:GameObject) : void
+    - Scene() : Tab
+    - Application() : Tab
+    - Saved() : Tab
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> tab : GUIStyle
+    + {static} <<readonly>> subTab : GUIStyle
+}
+class Tab {
+    + Tab(panel:VariablesPanel, shortTitle:string, title:string, description:string, icon:EditorTexture, subTabs:SubTab[])
+    + <<readonly>> panel : VariablesPanel
+    + <<readonly>> subTabs : List<SubTab>
+    + currentSubTab : SubTab <<get>> <<set>>
+    + label : GUIContent <<get>>
+    + header : GUIContent <<get>>
+    + enabled : bool <<get>>
+    + GetHeight(width:float) : float
+    + OnGUI(position:Rect, y:float) : void
+    - GetSubTabBarHeight(width:float) : float
+    - OnSubTabButtonGUI(position:Rect, subTab:SubTab) : void
+    + MakeFirstSubTabCurrent() : void
+}
+class SubTab {
+    + SubTab(identifier:string, tab:Tab, kind:VariableKind, declarations:VariableDeclarations, targetObject:UnityObject, save:Action, label:string, tooltip:string)
+    + identifier : string <<get>>
+    + tab : Tab <<get>>
+    - <<readonly>> metadata : Metadata
+    - <<readonly>> inspector : VariableDeclarationsInspector
+    - <<readonly>> targetObject : UnityObject
+    - <<readonly>> save : Action
+    + label : GUIContent <<get>>
+    + GetHeight(width:float) : float
+    + OnGUI(position:Rect, y:float) : void
+    - GetDeclarationsHeight(width:float) : float
+}
+ISidebarPanelContent <|-- VariablesPanel
+VariablesPanel +-- Styles
+VariablesPanel +-- Tab
+VariablesPanel +-- SubTab
+@enduml

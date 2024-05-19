@@ -1,0 +1,17 @@
+@startuml
+class UniversalMetadata <<sealed>> {
+    - m_ShaderID : ShaderUtils.ShaderID
+    - m_AllowMaterialOverride : bool
+    - m_SurfaceType : SurfaceType
+    - m_AlphaMode : AlphaMode
+    - m_CastShadows : bool
+    - m_IsVFXCompatible : bool
+    + shaderID : ShaderUtils.ShaderID <<get>> <<set>>
+    + allowMaterialOverride : bool <<get>> <<set>>
+    + surfaceType : SurfaceType <<get>> <<set>>
+    + alphaMode : AlphaMode <<get>> <<set>>
+    + castShadows : bool <<get>> <<set>>
+    + isVFXCompatible : bool <<get>> <<set>>
+}
+ScriptableObject <|-- UniversalMetadata
+@enduml

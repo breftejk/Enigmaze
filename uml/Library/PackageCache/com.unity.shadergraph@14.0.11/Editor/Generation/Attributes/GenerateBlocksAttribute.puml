@@ -1,0 +1,7 @@
+@startuml
+class GenerateBlocksAttribute {
+    <<internal>> path : string <<get>> <<set>>
+    + GenerateBlocksAttribute(path:string)
+}
+Attribute <|-- GenerateBlocksAttribute
+@enduml

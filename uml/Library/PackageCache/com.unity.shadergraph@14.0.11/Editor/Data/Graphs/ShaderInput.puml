@@ -1,0 +1,53 @@
+@startuml
+abstract class ShaderInput {
+    - m_Guid : SerializableGuid
+    <<internal>> guid : Guid <<get>>
+    <<internal>> OverrideGuid(namespaceId:string, name:string) : void
+    - m_Name : string
+    + displayName : string <<get>> <<set>>
+    <<internal>> AddObserver(observer:IShaderInputObserver) : void
+    <<internal>> RemoveObserver(observer:IShaderInputObserver) : void
+    <<internal>> ClearObservers() : void
+    <<internal>> InputObservers : HashSet<IShaderInputObserver> <<get>>
+    - m_InputObservers : HashSet<IShaderInputObserver>
+    <<internal>> SetDisplayNameAndSanitizeForGraph(graphData:GraphData, desiredName:string) : void
+    <<internal>> SetReferenceNameAndSanitizeForGraph(graphData:GraphData, desiredRefName:string) : void
+    <<internal>> ResetReferenceName(graphData:GraphData) : string
+    <<internal>> UpdateDefaultReferenceName(graphData:GraphData, forceSanitize:bool) : void
+    <<const>> - k_LatestDefaultRefNameVersion : int = 1
+    - m_DefaultRefNameVersion : int
+    - m_RefNameGeneratedByDisplayName : string
+    - m_DefaultReferenceName : string
+    + referenceName : string <<get>>
+    + <<virtual>> referenceNameForEditing : string <<get>>
+    + <<override>> OnBeforeDeserialize() : void
+    + <<virtual>> GetOldDefaultReferenceName() : string
+    + IsUsingOldDefaultRefName() : bool
+    + IsUsingNewDefaultRefName() : bool
+    <<internal>> UpgradeDefaultReferenceName(graphData:GraphData) : string
+    - m_OverrideReferenceName : string
+    <<internal>> overrideReferenceName : string <<get>> <<set>>
+    - m_GeneratePropertyBlock : bool = true
+    <<internal>> generatePropertyBlock : bool <<get>> <<set>>
+    <<internal>> isExposed : bool <<get>>
+    + <<virtual>> allowedInSubGraph : bool <<get>>
+    + <<virtual>> allowedInMainGraph : bool <<get>>
+    <<internal>> {abstract} concreteShaderValueType : ConcreteSlotValueType <<get>>
+    <<internal>> {abstract} isExposable : bool <<get>>
+    <<internal>> <<virtual>> isAlwaysExposed : bool <<get>>
+    <<internal>> {abstract} isRenamable : bool <<get>>
+    <<internal>> <<virtual>> isReferenceRenamable : bool <<get>>
+    <<internal>> <<virtual>> isCustomSlotAllowed : bool <<get>>
+    - m_UseCustomSlotLabel : bool = false
+    - m_CustomSlotLabel : string
+    <<internal>> useCustomSlotLabel : bool <<get>> <<set>>
+    <<internal>> customSlotLabel : string <<get>> <<set>>
+    # m_DismissedVersion : int = 0
+    + dismissedUpdateVersion : int <<get>> <<set>>
+    <<internal>> isConnectionTestable : bool <<get>>
+    {static} <<internal>> GetConnectionStateVariableName(variableName:string) : string
+    <<internal>> {abstract} Copy() : ShaderInput
+    <<internal>> <<virtual>> OnBeforePasteIntoGraph(graph:GraphData) : void
+}
+JsonObject <|-- ShaderInput
+@enduml

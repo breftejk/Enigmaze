@@ -1,0 +1,12 @@
+@startuml
+class LiteralWidget <<sealed>> {
+    + LiteralWidget(canvas:FlowCanvas, unit:Literal)
+    # <<override>> showHeaderAddon : bool <<get>>
+    + <<override>> foregroundRequiresInput : bool <<get>>
+    # <<override>> GetHeaderAddonWidth() : float
+    # <<override>> GetHeaderAddonHeight(width:float) : float
+    + <<override>> BeforeFrame() : void
+    # <<override>> DrawHeaderAddon() : void
+}
+"UnitWidget`1" "<Literal>" <|-- LiteralWidget
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class SerializationHelper <<static>> {
+    + {static} nullElement : JSONSerializedElement <<get>>
+    + {static} GetTypeSerializableAsString(type:Type) : TypeSerializationInfo
+    {static} - GetTypeFromSerializedString(typeInfo:TypeSerializationInfo) : Type
+    + {static} Serialize(item:T) : JSONSerializedElement
+    {static} - DoTypeRemap(info:TypeSerializationInfo, remapper:Dictionary<TypeSerializationInfo, TypeSerializationInfo>) : TypeSerializationInfo
+    + {static} Deserialize(item:JSONSerializedElement, remapper:Dictionary<TypeSerializationInfo, TypeSerializationInfo>, constructorArgs:object[]) : T
+    + {static} Serialize(list:IEnumerable<T>) : List<JSONSerializedElement>
+    + {static} Deserialize(list:IEnumerable<JSONSerializedElement>, remapper:Dictionary<TypeSerializationInfo, TypeSerializationInfo>, constructorArgs:object[]) : List<T>
+}
+struct TypeSerializationInfo {
+    + fullName : string
+    + IsValid() : bool
+}
+struct JSONSerializedElement {
+    + typeInfo : TypeSerializationInfo
+    + JSONnodeData : string
+}
+SerializationHelper +-- TypeSerializationInfo
+SerializationHelper +-- JSONSerializedElement
+@enduml

@@ -1,0 +1,75 @@
+@startuml
+class ProbeBrickIndex {
+    <<internal>> <<const>> kMaxSubdivisionLevels : int = 7
+    <<internal>> <<const>> kIndexChunkSize : int = 243
+    - m_IndexChunks : BitArray
+    - m_IndexInChunks : int
+    - m_NextFreeChunk : int
+    - m_AvailableChunkCount : int
+    - m_PhysicalIndexBuffer : ComputeBuffer
+    - m_PhysicalIndexBufferData : int[]
+    <<internal>> estimatedVMemCost : int <<get>>
+    - m_CenterRS : Vector3Int
+    - m_VoxelToBricks : Dictionary<Vector3Int, List<VoxelMeta>>
+    - m_BricksToVoxels : Dictionary<Cell, BrickMeta>
+    - m_BrickMetaPool : ObjectPool<BrickMeta>
+    - m_VoxelMetaListPool : ObjectPool<List<VoxelMeta>>
+    - m_VoxelMetaPool : ObjectPool<VoxelMeta>
+    - GetVoxelSubdivLevel() : int
+    - m_NeedUpdateIndexComputeBuffer : bool
+    - m_UpdateMinIndex : int
+    - m_UpdateMaxIndex : int
+    {static} - g_Cell : Cell = null
+    - SizeOfPhysicalIndexFromBudget(memoryBudget:ProbeVolumeTextureMemoryBudget) : int
+    <<internal>> ProbeBrickIndex(memoryBudget:ProbeVolumeTextureMemoryBudget)
+    + GetRemainingChunkCount() : int
+    <<internal>> UploadIndexData() : void
+    <<internal>> Clear() : void
+    - MapBrickToVoxels(brick:ProbeBrickIndex.Brick, voxels:HashSet<Vector3Int>) : void
+    - ClearVoxel(pos:Vector3Int, cellInfo:CellIndexUpdateInfo) : void
+    <<internal>> GetRuntimeResources(rr:ProbeReferenceVolume.RuntimeResources) : void
+    <<internal>> Cleanup() : void
+    - MergeIndex(index:int, size:int) : int
+    <<internal>> AssignIndexChunksToCell(bricksCount:int, cellUpdateInfo:CellIndexUpdateInfo, ignoreErrorLog:bool) : bool
+    + AddBricks(cell:Cell, bricks:NativeArray<Brick>, allocations:List<Chunk>, allocationSize:int, poolWidth:int, poolHeight:int, cellInfo:CellIndexUpdateInfo) : void
+    + RemoveBricks(cellInfo:CellInfo) : void
+    - UpdateIndexForVoxel(voxel:Vector3Int, cellInfo:CellIndexUpdateInfo) : void
+    - UpdatePhysicalIndex(brickMin:Vector3Int, brickMax:Vector3Int, value:int, cellInfo:CellIndexUpdateInfo) : void
+    - ClipToIndexSpace(pos:Vector3Int, subdiv:int, outMinpos:Vector3Int, outMaxpos:Vector3Int, cellInfo:CellIndexUpdateInfo) : void
+    - UpdateIndexForVoxel(voxel:Vector3Int, bricks:List<ReservedBrick>, indices:List<ushort>, cellInfo:CellIndexUpdateInfo) : void
+}
+struct Brick {
+    + position : Vector3Int
+    + subdivisionLevel : int
+    <<internal>> Brick(position:Vector3Int, subdivisionLevel:int)
+    + Equals(other:Brick) : bool
+}
+struct ReservedBrick {
+    + brick : Brick
+    + flattenedIdx : int
+}
+class VoxelMeta {
+    + cell : Cell
+    + brickIndices : List<ushort>
+    + Clear() : void
+}
+class BrickMeta {
+    + voxels : HashSet<Vector3Int>
+    + bricks : List<ReservedBrick>
+    + Clear() : void
+}
+struct CellIndexUpdateInfo {
+    + firstChunkIndex : int
+    + numberOfChunks : int
+    + minSubdivInCell : int
+    + minValidBrickIndexForCellAtMaxRes : Vector3Int
+    + maxValidBrickIndexForCellAtMaxResPlusOne : Vector3Int
+    + cellPositionInBricksAtMaxRes : Vector3Int
+}
+ProbeBrickIndex +-- Brick
+"IEquatable`1" "<Brick>" <|-- Brick
+ProbeBrickIndex +-- ReservedBrick
+ProbeBrickIndex +-- VoxelMeta
+ProbeBrickIndex +-- BrickMeta
+ProbeBrickIndex +-- CellIndexUpdateInfo
+@enduml

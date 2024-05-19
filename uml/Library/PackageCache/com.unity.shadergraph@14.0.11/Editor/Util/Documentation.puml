@@ -1,0 +1,9 @@
+@startuml
+class Documentation {
+    <<internal>> <<const>> baseURL : string = "https://docs.unity3d.com/Packages/com.unity.shadergraph@"
+    <<internal>> <<const>> subURL : string = "/manual/"
+    <<internal>> <<const>> endURL : string = ".html"
+    <<internal>> {static} GetPageLink(pageName:string) : string
+}
+DocumentationInfo <|-- Documentation
+@enduml

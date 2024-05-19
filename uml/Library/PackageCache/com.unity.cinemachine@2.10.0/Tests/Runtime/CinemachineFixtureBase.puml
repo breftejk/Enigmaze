@@ -1,0 +1,10 @@
+@startuml
+class CinemachineFixtureBase {
+    <<readonly>> - m_GameObjectsToDestroy : List<GameObject>
+    <<internal>> CreateGameObject(name:string, components:System.Type[]) : GameObject
+    <<internal>> CreatePrimitive(type:PrimitiveType) : GameObject
+    + <<virtual>> SetUp() : void
+    + <<virtual>> TearDown() : void
+    # {static} WaitForOnePhysicsFrame() : IEnumerator
+}
+@enduml

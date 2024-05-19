@@ -1,0 +1,9 @@
+@startuml
+class BasicCameraFollow {
+    + followTarget : GameObject
+    - targetPos : Vector3
+    + moveSpeed : float
+    - Update() : void
+}
+MonoBehaviour <|-- BasicCameraFollow
+@enduml

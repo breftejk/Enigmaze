@@ -1,0 +1,8 @@
+@startuml
+class TilingAndOffsetNode {
+    + TilingAndOffsetNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_TilingAndOffset(UV:Vector2, Tiling:Vector2, Offset:Vector2, Out:Vector2) : string
+}
+CodeFunctionNode <|-- TilingAndOffsetNode
+@enduml

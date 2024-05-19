@@ -1,0 +1,19 @@
+@startuml
+class ProgressOperationHandler {
+    <<internal>> ProgressOperationHandler(workspaceWindow:WorkspaceWindow)
+    <<internal>> IsOperationInProgress() : bool
+    <<internal>> CancelUpdateProgress() : void
+    - ShowProgress() : void
+    - RefreshProgress(progress:CheckinProgressData) : void
+    - EndProgress() : void
+    - ShowNoCancelableProgress() : void
+    - ShowCancelableProgress() : void
+    - RefreshProgress(updateProgress:Codice.Client.BaseCommands.UpdateProgress, updateProgressData:UpdateProgressData) : void
+    - EndProgress() : void
+    - mUpdateProgress : UpdateProgress
+    - mCheckinProgress : CheckinProgress
+    - mWorkspaceWindow : WorkspaceWindow
+}
+IUpdateProgress <|-- ProgressOperationHandler
+ICheckinProgress <|-- ProgressOperationHandler
+@enduml

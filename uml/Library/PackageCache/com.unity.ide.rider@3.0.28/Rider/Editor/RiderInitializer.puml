@@ -1,0 +1,6 @@
+@startuml
+class RiderInitializer {
+    + Initialize(editorPath:string) : void
+    - {static} LoadEditorPluginForDevEditor(editorPath:string) : void
+}
+@enduml

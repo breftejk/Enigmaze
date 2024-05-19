@@ -1,0 +1,8 @@
+@startuml
+class SineNode {
+    + SineNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Sine(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SineNode
+@enduml

@@ -1,0 +1,251 @@
+@startuml
+class AllocatorManager <<static>> {
+    <<internal>> {static} AllocateBlock(t:T, sizeOf:int, alignOf:int, items:int) : Block
+    <<internal>> {static} AllocateBlock(t:T, u:U, items:int) : Block
+    <<internal>> {static} <<unsafe>> Allocate(t:T, sizeOf:int, alignOf:int, items:int) : void*
+    <<internal>> {static} <<unsafe>> Allocate(t:T, u:U, items:int) : U*
+    <<internal>> {static} <<unsafe>> AllocateStruct(t:T, u:U, items:int) : void*
+    <<internal>> {static} <<unsafe>> FreeBlock(t:T, block:Block) : void
+    <<internal>> {static} <<unsafe>> Free(t:T, pointer:void*, sizeOf:int, alignOf:int, items:int) : void
+    <<internal>> {static} <<unsafe>> Free(t:T, pointer:U*, items:int) : void
+    + <<unsafe>> {static} Allocate(handle:AllocatorHandle, itemSizeInBytes:int, alignmentInBytes:int, items:int) : void*
+    + <<unsafe>> {static} Allocate(handle:AllocatorHandle, items:int) : T*
+    + <<unsafe>> {static} Free(handle:AllocatorHandle, pointer:void*, itemSizeInBytes:int, alignmentInBytes:int, items:int) : void
+    + <<unsafe>> {static} Free(handle:AllocatorHandle, pointer:void*) : void
+    + <<unsafe>> {static} Free(handle:AllocatorHandle, pointer:T*, items:int) : void
+    + {static} <<readonly>> Invalid : AllocatorHandle
+    + {static} <<readonly>> None : AllocatorHandle
+    + {static} <<readonly>> Temp : AllocatorHandle
+    + {static} <<readonly>> TempJob : AllocatorHandle
+    + {static} <<readonly>> Persistent : AllocatorHandle
+    + {static} <<readonly>> AudioKernel : AllocatorHandle
+    + <<const>> kErrorNone : int = 0
+    + <<const>> kErrorBufferOverflow : int
+    - {static} CheckDelegate(useDelegate:bool) : void
+    - {static} UseDelegate() : bool
+    - {static} allocate_block(block:Block) : int
+    - {static} forward_mono_allocate_block(block:Block, error:int) : void
+    <<internal>> {static} LegacyOf(handle:AllocatorHandle) : Allocator
+    {static} <<unsafe>> - TryLegacy(block:Block) : int
+    + {static} <<unsafe>> Try(block:Block) : int
+    + {static} Initialize() : void
+    <<internal>> {static} Install(handle:AllocatorHandle, allocatorState:IntPtr, functionPointer:FunctionPointer<TryFunction>, function:TryFunction) : void
+    <<internal>> {static} Install(handle:AllocatorHandle, allocatorState:IntPtr, function:TryFunction) : void
+    <<internal>> {static} Register(allocatorState:IntPtr, functionPointer:FunctionPointer<TryFunction>) : AllocatorHandle
+    + {static} <<unsafe>> Register(t:T) : void
+    + {static} UnmanagedUnregister(t:T) : void
+    + {static} Unregister(t:T) : void
+    <<internal>> {static} CreateAllocator(backingAllocator:AllocatorHandle) : ref T
+    <<internal>> {static} DestroyAllocator(t:T, backingAllocator:AllocatorHandle) : void
+    + {static} Shutdown() : void
+    + <<const>> FirstUserIndex : ushort = 64
+    <<internal>> {static} IsCustomAllocator(allocator:AllocatorHandle) : bool
+    <<internal>> {static} CheckFailedToAllocate(error:int) : void
+    <<internal>> {static} CheckFailedToFree(error:int) : void
+    <<internal>> {static} CheckValid(handle:AllocatorHandle) : void
+}
+struct "AllocatorHelper`1"<T> {
+    <<readonly>> - m_allocator : T*
+    - m_backingAllocator : AllocatorManager.AllocatorHandle
+    + Allocator : ref T <<get>>
+    + AllocatorHelper(backingAllocator:AllocatorManager.AllocatorHandle)
+    + Dispose() : void
+}
+struct AllocatorHandle {
+    <<internal>> TableEntry : ref TableEntry <<get>>
+    <<internal>> IsInstalled : bool <<get>>
+    <<internal>> IncrementVersion() : void
+    <<internal>> Rewind() : void
+    <<internal>> Install(tableEntry:TableEntry) : void
+    + Index : ushort
+    + Version : ushort
+    + Value : int <<get>>
+    + TryAllocateBlock(block:Block, items:int) : int
+    + AllocateBlock(items:int) : Block
+    {static} - CheckAllocatedSuccessfully(error:int) : void
+    + Function : TryFunction <<get>>
+    + Try(block:Block) : int
+    + Handle : AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    + Dispose() : void
+}
+struct BlockHandle {
+    + Value : ushort
+}
+struct Range {
+    + Pointer : IntPtr
+    + Items : int
+    + Allocator : AllocatorHandle
+    + Dispose() : void
+}
+struct Block {
+    + Range : Range
+    + BytesPerItem : int
+    + AllocatedItems : int
+    + Log2Alignment : byte
+    + Padding0 : byte
+    + Padding1 : ushort
+    + Padding2 : uint
+    + Bytes : long <<get>>
+    + AllocatedBytes : long <<get>>
+    + Alignment : int <<get>> <<set>>
+    + Dispose() : void
+    + TryAllocate() : int
+    + TryFree() : int
+    + Allocate() : void
+    + Free() : void
+    - CheckFailedToAllocate(error:int) : void
+    - CheckFailedToFree(error:int) : void
+}
+interface IAllocator {
+    Function : TryFunction <<get>>
+    Try(block:Block) : int
+    Handle : AllocatorHandle <<get>> <<set>>
+    ToAllocator : Allocator <<get>>
+    IsCustomAllocator : bool <<get>>
+}
+struct StackAllocator {
+    + Handle : AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    <<internal>> m_handle : AllocatorHandle
+    <<internal>> m_storage : Block
+    <<internal>> m_top : long
+    + Initialize(storage:Block) : void
+    + <<unsafe>> Try(block:Block) : int
+    + {static} <<unsafe>> Try(allocatorState:IntPtr, block:Block) : int
+    + Function : TryFunction <<get>>
+    + Dispose() : void
+}
+struct SlabAllocator {
+    + Handle : AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    <<internal>> m_handle : AllocatorHandle
+    <<internal>> Storage : Block
+    <<internal>> Log2SlabSizeInBytes : int
+    <<internal>> Occupied : FixedList4096Bytes<int>
+    <<internal>> budgetInBytes : long
+    <<internal>> allocatedBytes : long
+    + BudgetInBytes : long <<get>>
+    + AllocatedBytes : long <<get>>
+    <<internal>> SlabSizeInBytes : int <<get>> <<set>>
+    <<internal>> Slabs : int <<get>>
+    <<internal>> Initialize(storage:Block, slabSizeInBytes:int, budget:long) : void
+    + Try(block:Block) : int
+    + {static} <<unsafe>> Try(allocatorState:IntPtr, block:Block) : int
+    + Function : TryFunction <<get>>
+    + Dispose() : void
+}
+struct TableEntry {
+    <<internal>> function : IntPtr
+    <<internal>> state : IntPtr
+}
+struct "Array16`1"<T> {
+    <<internal>> f0 : T
+    <<internal>> f1 : T
+    <<internal>> f2 : T
+    <<internal>> f3 : T
+    <<internal>> f4 : T
+    <<internal>> f5 : T
+    <<internal>> f6 : T
+    <<internal>> f7 : T
+    <<internal>> f8 : T
+    <<internal>> f9 : T
+    <<internal>> f10 : T
+    <<internal>> f11 : T
+    <<internal>> f12 : T
+    <<internal>> f13 : T
+    <<internal>> f14 : T
+    <<internal>> f15 : T
+}
+struct "Array256`1"<T> {
+    <<internal>> f0 : Array16<T>
+    <<internal>> f1 : Array16<T>
+    <<internal>> f2 : Array16<T>
+    <<internal>> f3 : Array16<T>
+    <<internal>> f4 : Array16<T>
+    <<internal>> f5 : Array16<T>
+    <<internal>> f6 : Array16<T>
+    <<internal>> f7 : Array16<T>
+    <<internal>> f8 : Array16<T>
+    <<internal>> f9 : Array16<T>
+    <<internal>> f10 : Array16<T>
+    <<internal>> f11 : Array16<T>
+    <<internal>> f12 : Array16<T>
+    <<internal>> f13 : Array16<T>
+    <<internal>> f14 : Array16<T>
+    <<internal>> f15 : Array16<T>
+}
+struct "Array4096`1"<T> {
+    <<internal>> f0 : Array256<T>
+    <<internal>> f1 : Array256<T>
+    <<internal>> f2 : Array256<T>
+    <<internal>> f3 : Array256<T>
+    <<internal>> f4 : Array256<T>
+    <<internal>> f5 : Array256<T>
+    <<internal>> f6 : Array256<T>
+    <<internal>> f7 : Array256<T>
+    <<internal>> f8 : Array256<T>
+    <<internal>> f9 : Array256<T>
+    <<internal>> f10 : Array256<T>
+    <<internal>> f11 : Array256<T>
+    <<internal>> f12 : Array256<T>
+    <<internal>> f13 : Array256<T>
+    <<internal>> f14 : Array256<T>
+    <<internal>> f15 : Array256<T>
+}
+struct "Array32768`1"<T> {
+    <<internal>> f0 : Array4096<T>
+    <<internal>> f1 : Array4096<T>
+    <<internal>> f2 : Array4096<T>
+    <<internal>> f3 : Array4096<T>
+    <<internal>> f4 : Array4096<T>
+    <<internal>> f5 : Array4096<T>
+    <<internal>> f6 : Array4096<T>
+    <<internal>> f7 : Array4096<T>
+    + Length : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+}
+class SharedStatics <<sealed>> {
+}
+class Managed <<static>> {
+    <<internal>> <<const>> kMaxNumCustomAllocator : int = 32768
+    <<internal>> {static} TryFunctionDelegates : TryFunction[]
+    + {static} RegisterDelegate(index:int, function:TryFunction) : void
+    + {static} UnregisterDelegate(index:int) : void
+}
+class IsInstalled <<sealed>> {
+    <<internal>> {static} <<readonly>> Ref : SharedStatic<Long1024>
+}
+class TableEntry <<sealed>> {
+    <<internal>> {static} <<readonly>> Ref : SharedStatic<Array32768<AllocatorManager.TableEntry>>
+}
+IDisposable <|-- "AllocatorHelper`1"
+AllocatorManager +-- AllocatorHandle
+IAllocator <|-- AllocatorHandle
+AllocatorManager +-- BlockHandle
+AllocatorManager +-- Range
+IDisposable <|-- Range
+AllocatorManager +-- Block
+IDisposable <|-- Block
+AllocatorManager +-- IAllocator
+IDisposable <|-- IAllocator
+AllocatorManager +-- StackAllocator
+IAllocator <|-- StackAllocator
+IDisposable <|-- StackAllocator
+AllocatorManager +-- SlabAllocator
+IAllocator <|-- SlabAllocator
+IDisposable <|-- SlabAllocator
+AllocatorManager +-- TableEntry
+AllocatorManager +-- "Array16`1"
+AllocatorManager +-- "Array256`1"
+AllocatorManager +-- "Array4096`1"
+AllocatorManager +-- "Array32768`1"
+"IIndexable`1" "<T>" <|-- "Array32768`1"
+AllocatorManager +-- SharedStatics
+AllocatorManager +-- Managed
+SharedStatics +-- IsInstalled
+SharedStatics +-- TableEntry
+@enduml

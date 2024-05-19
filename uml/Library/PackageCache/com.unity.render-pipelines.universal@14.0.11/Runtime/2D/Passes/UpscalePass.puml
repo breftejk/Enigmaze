@@ -1,0 +1,13 @@
+@startuml
+class UpscalePass {
+    - {static} <<readonly>> m_ProfilingScope : ProfilingSampler
+    - m_Source : RTHandle
+    - m_UpscaleHandle : RTHandle
+    {static} - m_BlitMaterial : Material
+    + UpscalePass(evt:RenderPassEvent, blitMaterial:Material)
+    + Setup(colorTargetHandle:RTHandle, width:int, height:int, mode:FilterMode, renderingData:RenderingData, upscaleHandle:RTHandle) : void
+    + Dispose() : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRenderPass <|-- UpscalePass
+@enduml

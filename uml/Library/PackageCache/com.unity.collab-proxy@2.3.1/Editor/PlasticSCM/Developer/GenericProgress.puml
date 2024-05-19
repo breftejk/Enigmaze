@@ -1,0 +1,7 @@
+@startuml
+class GenericProgress {
+    <<internal>> GenericProgress(workspaceWindow:WorkspaceWindow)
+    <<internal>> RefreshProgress(progressData:ProgressData) : void
+    - mWorkspaceWindow : WorkspaceWindow
+}
+@enduml

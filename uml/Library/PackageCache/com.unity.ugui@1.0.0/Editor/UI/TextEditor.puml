@@ -1,0 +1,9 @@
+@startuml
+class TextEditor {
+    - m_Text : SerializedProperty
+    - m_FontData : SerializedProperty
+    # <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+GraphicEditor <|-- TextEditor
+@enduml

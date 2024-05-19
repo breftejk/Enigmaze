@@ -1,0 +1,8 @@
+@startuml
+class CommandBufferPool <<static>> {
+    {static} - s_BufferPool : ObjectPool<CommandBuffer>
+    + {static} Get() : CommandBuffer
+    + {static} Get(name:string) : CommandBuffer
+    + {static} Release(buffer:CommandBuffer) : void
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class PlayerConnectionMessageIds <<static>> {
+    + {static} runStartedMessageId : Guid <<get>>
+    + {static} runFinishedMessageId : Guid <<get>>
+    + {static} testStartedMessageId : Guid <<get>>
+    + {static} testFinishedMessageId : Guid <<get>>
+    + {static} quitPlayerMessageId : Guid <<get>>
+    + {static} playerAliveHeartbeat : Guid <<get>>
+}
+@enduml

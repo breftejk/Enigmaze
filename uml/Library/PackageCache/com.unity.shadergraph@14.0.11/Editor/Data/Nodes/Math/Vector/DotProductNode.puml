@@ -1,0 +1,8 @@
+@startuml
+class DotProductNode {
+    + DotProductNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_DotProduct(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:Vector1) : string
+}
+CodeFunctionNode <|-- DotProductNode
+@enduml

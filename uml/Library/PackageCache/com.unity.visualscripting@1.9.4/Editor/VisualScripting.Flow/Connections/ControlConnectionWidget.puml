@@ -1,0 +1,11 @@
+@startuml
+class ControlConnectionWidget <<sealed>> {
+    + ControlConnectionWidget(canvas:FlowCanvas, connection:ControlConnection)
+    + <<override>> color : Color <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+    # <<override>> showDroplets : bool <<get>>
+    # <<override>> GetDropletSize() : Vector2
+    # <<override>> DrawDroplet(position:Rect) : void
+}
+"UnitConnectionWidget`1" "<ControlConnection>" <|-- ControlConnectionWidget
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class Vector2Inspector {
+    + Vector2Inspector(metadata:Metadata)
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> OnEditorPrefGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+VectorInspector <|-- Vector2Inspector
+@enduml

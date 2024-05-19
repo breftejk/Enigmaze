@@ -1,0 +1,26 @@
+@startuml
+class DecalCulledChunk {
+    + cameraPosition : Vector3
+    + sceneCullingMask : ulong
+    + cullingMask : int
+    + cullingGroups : CullingGroup
+    + visibleDecalIndexArray : int[]
+    + visibleDecalIndices : NativeArray<int>
+    + visibleDecalCount : int
+    + <<override>> RemoveAtSwapBack(entityIndex:int) : void
+    + <<override>> SetCapacity(newCapacity:int) : void
+    + <<override>> Dispose() : void
+}
+class DecalUpdateCullingGroupSystem {
+    + boundingDistance : float <<get>> <<set>>
+    - m_BoundingDistance : float[]
+    - m_Camera : Camera
+    - m_EntityManager : DecalEntityManager
+    - m_Sampler : ProfilingSampler
+    + DecalUpdateCullingGroupSystem(entityManager:DecalEntityManager, drawDistance:float)
+    + Execute(camera:Camera) : void
+    + Execute(cachedChunk:DecalCachedChunk, culledChunk:DecalCulledChunk, count:int) : void
+    <<internal>> {static} GetSceneCullingMaskFromCamera(camera:Camera) : UInt64
+}
+DecalChunk <|-- DecalCulledChunk
+@enduml

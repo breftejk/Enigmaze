@@ -1,0 +1,23 @@
+@startuml
+class ConvertToPropertyAction {
+    - ConvertToProperty(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + inlinePropertiesToConvert : IList<IPropertyFromNode> <<get>> <<set>>
+    + convertedPropertyReferences : IList<AbstractShaderProperty> <<get>> <<set>>
+    + nodePsition : Vector2 <<get>> <<set>>
+}
+class ConvertToInlineAction {
+    - ConvertToInline(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + propertyNodesToConvert : IEnumerable<PropertyNode> <<get>> <<set>>
+}
+class DragGraphInputAction {
+    - DragGraphInput(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    + graphInputBeingDraggedIn : ShaderInput <<get>> <<set>>
+    + nodePosition : Vector2 <<get>> <<set>>
+}
+IGraphDataAction <|-- ConvertToPropertyAction
+IGraphDataAction <|-- ConvertToInlineAction
+IGraphDataAction <|-- DragGraphInputAction
+@enduml

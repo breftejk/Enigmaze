@@ -1,0 +1,25 @@
+@startuml
+class EvaluationVisitor {
+    + EvaluationVisitor(flow:Flow, options:EvaluateOptions)
+    +  <<event>> EvaluateFunction : EvaluateFunctionHandler 
+    +  <<event>> EvaluateParameter : EvaluateParameterHandler 
+    - <<readonly>> flow : Flow
+    - <<readonly>> options : EvaluateOptions
+    - IgnoreCase : bool <<get>>
+    + Result : object <<get>>
+    + Parameters : Dictionary<string, object> <<get>> <<set>>
+    - Evaluate(expression:LogicalExpression) : object
+    + <<override>> Visit(ternary:TernaryExpression) : void
+    + <<override>> Visit(binary:BinaryExpression) : void
+    + <<override>> Visit(unary:UnaryExpression) : void
+    + <<override>> Visit(value:ValueExpression) : void
+    + <<override>> Visit(function:FunctionExpression) : void
+    - CheckCase(function:FunctionExpression, reference:string) : void
+    - OnEvaluateFunction(name:string, args:FunctionArgs) : void
+    + <<override>> Visit(identifier:IdentifierExpression) : void
+    - OnEvaluateParameter(name:string, args:ParameterArgs) : void
+    + {static} CheckExactArgumentCount(function:FunctionExpression, count:int) : void
+    + {static} CheckMinArgumentCount(function:FunctionExpression, count:int) : void
+}
+LogicalExpressionVisitor <|-- EvaluationVisitor
+@enduml

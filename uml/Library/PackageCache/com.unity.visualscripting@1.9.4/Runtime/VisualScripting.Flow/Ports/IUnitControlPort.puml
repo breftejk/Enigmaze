@@ -1,0 +1,7 @@
+@startuml
+interface IUnitControlPort {
+    isPredictable : bool <<get>>
+    couldBeEntered : bool <<get>>
+}
+IUnitPort <|-- IUnitControlPort
+@enduml

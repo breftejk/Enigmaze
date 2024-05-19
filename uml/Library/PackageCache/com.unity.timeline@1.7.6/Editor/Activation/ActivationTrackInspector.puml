@@ -1,0 +1,12 @@
+@startuml
+class ActivationTrackInspector {
+    - m_PostPlaybackProperty : SerializedProperty
+    + <<override>> OnInspectorGUI() : void
+    + <<override>> OnEnable() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> PostPlaybackStateText : GUIContent
+}
+TrackAssetInspector <|-- ActivationTrackInspector
+ActivationTrackInspector +-- Styles
+@enduml

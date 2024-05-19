@@ -1,0 +1,5 @@
+@startuml
+class CloseWindowIfOpened <<static>> {
+    <<internal>> {static} Plastic() : void
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class Control {
+    <<readonly>> - m_Manipulators : List<Manipulator>
+    + HandleManipulatorsEvents(state:WindowState) : bool
+    + AddManipulator(m:Manipulator) : void
+}
+@enduml

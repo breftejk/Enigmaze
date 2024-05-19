@@ -1,0 +1,22 @@
+@startuml
+class BurstDisassemblerTests {
+    - _disassembler : BurstDisassembler
+    + SetUp() : void
+    - {static} GetThisFilePath(path:string) : string
+    + GetBlockIdxFromTextIdxTest() : void
+    + InstantiateRegistersUsedTest() : void
+    + CleanRegisterListTest() : void
+    + IndexOfRegisterTest() : void
+    + RegisterEqualityTest(assemblyName:string, assemblyLine:string[], register:string) : void
+    + RegisterEqualTest() : void
+    + InstructionAlignmentTest() : void
+    + X86AsmTokenProviderSimdKindTest() : void
+    + ARMAsmTokenProviderSimdKindTest() : void
+    - GetFirstColorTag(line:string) : string
+    - <<const>> ARMsimdAssembly : string
+    - <<const>> X86SimdAssembly : string
+    + AssemblyColouringSmellTest(asm:string, asmkind:int, colorTag:string, lineIdx:int) : void
+    - expected : List<(int lineNr, List<string>)>
+    - simpleAssembly : string
+}
+@enduml

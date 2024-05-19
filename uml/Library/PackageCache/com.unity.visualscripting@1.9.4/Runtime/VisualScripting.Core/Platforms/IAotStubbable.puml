@@ -1,0 +1,5 @@
+@startuml
+interface IAotStubbable {
+    GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+}
+@enduml

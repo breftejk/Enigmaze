@@ -1,0 +1,7 @@
+@startuml
+class RepositoryListViewItem {
+    <<internal>> Repository : RepositoryInfo <<get>>
+    <<internal>> RepositoryListViewItem(id:int, repository:RepositoryInfo)
+}
+TreeViewItem <|-- RepositoryListViewItem
+@enduml

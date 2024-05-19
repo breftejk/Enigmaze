@@ -1,0 +1,17 @@
+@startuml
+class KeyValuePairInspector <<sealed>> {
+    + KeyValuePairInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    - GetKeyHeight(width:float) : float
+    - GetValueHeight(width:float) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + OnKeyGUI(keyPosition:Rect) : void
+    + OnValueGUI(valuePosition:Rect) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> topPadding : float = 2
+    + {static} <<readonly>> spacing : float = 5
+}
+Inspector <|-- KeyValuePairInspector
+KeyValuePairInspector +-- Styles
+@enduml

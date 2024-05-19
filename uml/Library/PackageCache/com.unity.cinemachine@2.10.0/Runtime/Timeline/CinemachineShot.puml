@@ -1,0 +1,10 @@
+@startuml
+class CinemachineShot <<sealed>> {
+    + DisplayName : string
+    + VirtualCamera : ExposedReference<CinemachineVirtualCameraBase>
+    + <<override>> CreatePlayable(graph:PlayableGraph, owner:GameObject) : Playable
+    + GatherProperties(director:PlayableDirector, driver:IPropertyCollector) : void
+}
+PlayableAsset <|-- CinemachineShot
+IPropertyPreview <|-- CinemachineShot
+@enduml

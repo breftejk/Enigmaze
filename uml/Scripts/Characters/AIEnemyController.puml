@@ -1,0 +1,15 @@
+@startuml
+class AIEnemyController {
+    + target : Transform
+    + stopDistance : float = 0.1f
+    + obstacleDetectionDistance : float = 1f
+    + sideDetectionAngle : float = 45f
+    + detectionRadius : float = 5f
+    + attackComponent : Attack
+    - Awake() : void
+    - FixedUpdate() : void
+    - AvoidObstacles(direction:Vector2) : Vector2
+    - UpdateAnimation(direction:Vector2) : void
+}
+CharacterBaseController <|-- AIEnemyController
+@enduml

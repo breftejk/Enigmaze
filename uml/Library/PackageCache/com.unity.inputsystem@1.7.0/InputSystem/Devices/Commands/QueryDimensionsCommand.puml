@@ -1,0 +1,11 @@
+@startuml
+struct QueryDimensionsCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + outDimensions : Vector2
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : QueryDimensionsCommand
+}
+IInputDeviceCommandInfo <|-- QueryDimensionsCommand
+@enduml

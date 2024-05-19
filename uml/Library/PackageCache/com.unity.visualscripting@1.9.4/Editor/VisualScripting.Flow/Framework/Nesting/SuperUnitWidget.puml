@@ -1,0 +1,14 @@
+@startuml
+class SuperUnitWidget {
+    + SuperUnitWidget(canvas:FlowCanvas, unit:SubgraphUnit)
+    # <<override>> baseColor : NodeColorMix <<get>>
+    + dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + AcceptsDragAndDrop() : bool
+    + PerformDragAndDrop() : void
+    + UpdateDragAndDrop() : void
+    + DrawDragAndDropPreview() : void
+    + ExitDragAndDrop() : void
+}
+"NestrerUnitWidget`1" "<SubgraphUnit>" <|-- SuperUnitWidget
+IDragAndDropHandler <|-- SuperUnitWidget
+@enduml

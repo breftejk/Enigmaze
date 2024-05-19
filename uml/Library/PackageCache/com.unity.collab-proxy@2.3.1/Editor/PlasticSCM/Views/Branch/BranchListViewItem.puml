@@ -1,0 +1,7 @@
+@startuml
+class BranchListViewItem {
+    <<internal>> ObjectInfo : object <<get>>
+    <<internal>> BranchListViewItem(id:int, objectInfo:object)
+}
+TreeViewItem <|-- BranchListViewItem
+@enduml

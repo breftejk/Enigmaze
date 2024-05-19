@@ -1,0 +1,10 @@
+@startuml
+class PSDImporterAssetPostProcessor {
+    {static} - s_AssetImporter : List<PSDImporter>
+    + <<override>> GetPostprocessOrder() : int
+    - OnPreprocessAsset() : void
+    <<internal>> {static} ContainsImporter(importer:PSDImporter) : bool
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+}
+AssetPostprocessor <|-- PSDImporterAssetPostProcessor
+@enduml

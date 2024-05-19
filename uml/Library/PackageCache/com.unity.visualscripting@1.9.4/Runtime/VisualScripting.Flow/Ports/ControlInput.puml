@@ -1,0 +1,27 @@
+@startuml
+class ControlInput <<sealed>> {
+    + ControlInput(key:string, action:Func<Flow, ControlOutput>)
+    + ControlInput(key:string, coroutineAction:Func<Flow, IEnumerator>)
+    + ControlInput(key:string, action:Func<Flow, ControlOutput>, coroutineAction:Func<Flow, IEnumerator>)
+    + supportsCoroutine : bool <<get>>
+    + requiresCoroutine : bool <<get>>
+    <<internal>> <<readonly>> action : Func<Flow, ControlOutput>
+    <<internal>> <<readonly>> coroutineAction : Func<Flow, IEnumerator>
+    + <<override>> validConnections : IEnumerable<ControlConnection> <<get>>
+    + <<override>> invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    + <<override>> validConnectedPorts : IEnumerable<ControlOutput> <<get>>
+    + <<override>> invalidConnectedPorts : IEnumerable<IUnitOutputPort> <<get>>
+    + isPredictable : bool <<get>>
+    + IsPredictable(recursion:Recursion) : bool
+    + couldBeEntered : bool <<get>>
+    + <<override>> CanConnectToValid(port:ControlOutput) : bool
+    + <<override>> ConnectToValid(port:ControlOutput) : void
+    + <<override>> ConnectToInvalid(port:IUnitOutputPort) : void
+    + <<override>> DisconnectFromValid(port:ControlOutput) : void
+    + <<override>> DisconnectFromInvalid(port:IUnitOutputPort) : void
+    + <<override>> CompatiblePort(unit:IUnit) : IUnitPort
+}
+"UnitPort`3" "<ControlOutput,IUnitOutputPort,ControlConnection>" <|-- ControlInput
+IUnitControlPort <|-- ControlInput
+IUnitInputPort <|-- ControlInput
+@enduml

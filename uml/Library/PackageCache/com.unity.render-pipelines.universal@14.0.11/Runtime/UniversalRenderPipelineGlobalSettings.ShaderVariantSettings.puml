@@ -1,0 +1,9 @@
+@startuml
+class UniversalRenderPipelineGlobalSettings <<partial>> {
+    <<internal>> m_ShaderVariantLogLevel : Rendering.ShaderVariantLogLevel
+    + shaderVariantLogLevel : Rendering.ShaderVariantLogLevel <<get>> <<set>>
+    <<internal>> m_ExportShaderVariants : bool = true
+    + exportShaderVariants : bool <<get>> <<set>>
+}
+IShaderVariantSettings <|-- UniversalRenderPipelineGlobalSettings
+@enduml

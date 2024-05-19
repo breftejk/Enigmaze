@@ -1,0 +1,12 @@
+@startuml
+class Throw <<sealed>> {
+    + custom : bool <<get>> <<set>>
+    + enter : ControlInput <<get>>
+    + message : ValueInput <<get>>
+    + exception : ValueInput <<get>>
+    # <<override>> Definition() : void
+    - ThrowCustom(flow:Flow) : ControlOutput
+    - ThrowMessage(flow:Flow) : ControlOutput
+}
+Unit <|-- Throw
+@enduml

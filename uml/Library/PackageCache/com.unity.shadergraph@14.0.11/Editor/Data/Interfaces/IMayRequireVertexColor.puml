@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireVertexColor {
+    RequiresVertexColor(stageCapability:ShaderStageCapability) : bool
+}
+class MayRequireVertexColorExtensions <<static>> {
+    + {static} RequiresVertexColor(slot:MaterialSlot) : bool
+}
+@enduml

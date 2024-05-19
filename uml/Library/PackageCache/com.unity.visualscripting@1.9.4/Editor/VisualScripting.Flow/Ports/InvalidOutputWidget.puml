@@ -1,0 +1,10 @@
+@startuml
+class InvalidOutputWidget {
+    + InvalidOutputWidget(canvas:FlowCanvas, port:InvalidOutput)
+    # <<override>> handleTextureConnected : Texture <<get>>
+    # <<override>> handleTextureUnconnected : Texture <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+    # <<override>> canStartConnection : bool <<get>>
+}
+"UnitOutputPortWidget`1" "<InvalidOutput>" <|-- InvalidOutputWidget
+@enduml

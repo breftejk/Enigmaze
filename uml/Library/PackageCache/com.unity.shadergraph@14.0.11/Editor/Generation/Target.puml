@@ -1,0 +1,20 @@
+@startuml
+abstract class Target {
+    + displayName : string <<get>> <<set>>
+    + isHidden : bool <<get>> <<set>>
+    <<internal>> <<virtual>> ignoreCustomInterpolators : bool <<get>>
+    <<internal>> <<virtual>> padCustomInterpolatorLimit : int <<get>>
+    <<internal>> <<virtual>> prefersSpritePreview : bool <<get>>
+    + {abstract} IsActive() : bool
+    + {abstract} Setup(context:TargetSetupContext) : void
+    + {abstract} GetFields(context:TargetFieldContext) : void
+    + {abstract} GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + {abstract} GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<string>) : void
+    + <<virtual>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<virtual>> ProcessPreviewMaterial(material:Material) : void
+    + <<virtual>> saveContext : object <<get>>
+    + <<virtual>> IsNodeAllowedByTarget(nodeType:Type) : bool
+    + {abstract} WorksWithSRP(scriptableRenderPipeline:RenderPipelineAsset) : bool
+}
+JsonObject <|-- Target
+@enduml

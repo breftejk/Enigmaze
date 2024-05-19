@@ -1,0 +1,23 @@
+@startuml
+abstract class Solver2DEditor {
+    - m_ConstrainRotationProperty : SerializedProperty
+    - m_SolveFromDefaultPoseProperty : SerializedProperty
+    - m_WeightProperty : SerializedProperty
+    - m_SolverColorProperty : SerializedProperty
+    - SetupProperties() : void
+    # DrawCommonSolverInspector() : void
+    - EnableRestoreDefaultPose() : bool
+    - EnableCreateTarget() : bool
+    - DoRestoreDefaultPoseButton() : void
+    - DoCreateTargetButton() : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> constrainRotationLabel : GUIContent
+    + {static} <<readonly>> solveFromDefaultPoseLabel : GUIContent
+    + {static} <<readonly>> weightLabel : GUIContent
+    + {static} <<readonly>> restoreDefaultPoseString : string = "Restore Default Pose"
+    + {static} <<readonly>> createTargetString : string = "Create Target"
+}
+Editor <|-- Solver2DEditor
+Solver2DEditor +-- Contents
+@enduml

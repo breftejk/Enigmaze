@@ -1,0 +1,5 @@
+@startuml
+class GUISpace <<static>> {
+    <<internal>> {static} ForToolbar() : void
+}
+@enduml

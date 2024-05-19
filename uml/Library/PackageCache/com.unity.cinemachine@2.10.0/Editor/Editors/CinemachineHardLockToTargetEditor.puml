@@ -1,0 +1,6 @@
+@startuml
+class CinemachineHardLockToTargetEditor <<sealed>> {
+    + <<override>> OnInspectorGUI() : void
+}
+"BaseEditor`1" "<CinemachineHardLockToTarget>" <|-- CinemachineHardLockToTargetEditor
+@enduml

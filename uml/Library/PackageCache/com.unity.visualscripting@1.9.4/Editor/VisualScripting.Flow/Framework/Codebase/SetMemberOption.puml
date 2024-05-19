@@ -1,0 +1,9 @@
+@startuml
+class SetMemberOption {
+    + SetMemberOption()
+    + SetMemberOption(unit:SetMember)
+    # <<override>> direction : ActionDirection <<get>>
+    # <<override>> ShowValueOutputsInFooter() : bool
+}
+"MemberUnitOption`1" "<SetMember>" <|-- SetMemberOption
+@enduml

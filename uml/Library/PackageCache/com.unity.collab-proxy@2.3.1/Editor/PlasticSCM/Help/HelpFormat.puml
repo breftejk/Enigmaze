@@ -1,0 +1,13 @@
+@startuml
+class HelpFormat {
+    <<internal>> Position : int
+    <<internal>> Length : int
+    <<internal>> Type : FormatType
+}
+enum FormatType {
+    Title,
+    Bold,
+    Underline,
+}
+HelpFormat +-- FormatType
+@enduml

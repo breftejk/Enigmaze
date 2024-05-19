@@ -1,0 +1,38 @@
+@startuml
+interface IEvent {
+    type : EventType <<get>>
+    commandName : string <<get>>
+    control : bool <<get>>
+    alt : bool <<get>>
+    shift : bool <<get>>
+    keyCode : KeyCode <<get>>
+    mousePosition : Vector2 <<get>>
+    button : int <<get>>
+    modifiers : EventModifiers <<get>>
+    GetTypeForControl(id:int) : EventType
+    Use() : void
+}
+class Event {
+    - m_Event : UnityEvent
+    + Event()
+    + type : EventType <<get>>
+    + commandName : string <<get>>
+    + control : bool <<get>>
+    + alt : bool <<get>>
+    + shift : bool <<get>>
+    + keyCode : KeyCode <<get>>
+    + mousePosition : Vector2 <<get>>
+    + button : int <<get>>
+    + Use() : void
+    + modifiers : EventModifiers <<get>>
+    + GetTypeForControl(id:int) : EventType
+}
+interface IEventSystem {
+    current : IEvent <<get>>
+}
+class EventSystem {
+    + current : IEvent <<get>>
+}
+IEvent <|-- Event
+IEventSystem <|-- EventSystem
+@enduml

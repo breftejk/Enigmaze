@@ -1,0 +1,122 @@
+@startuml
+class FuzzyWindow <<sealed>> {
+    - {static} <<readonly>> lightSkinColor : Color
+    - {static} backgroundWindowColor : Color
+    + Populate(node:FuzzyOptionNode, childrenValues:IEnumerable<object>, cancellation:CancellationToken?) : void
+    {static} - FuzzyWindow()
+    + {static} defaultOptionStyle : GUIStyle <<get>>
+    - {static} e : Event <<get>>
+    - callback : Action<IFuzzyOption>
+    + {static} instance : FuzzyWindow <<get>>
+    - tree : IFuzzyOptionTree
+    - requireRepaint : bool
+    + {static} Show(activatorPosition:Rect, optionTree:IFuzzyOptionTree, callback:Action<IFuzzyOption>) : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    - CreateWindow(activatorPosition:Rect) : void
+    - Initialize(optionTree:IFuzzyOptionTree, callback:Action<IFuzzyOption>) : void
+    - root : FuzzyOptionNode
+    - searchRoot : FuzzyOptionNode
+    - stack : Stack<FuzzyOptionNode>
+    - activeRoot : FuzzyOptionNode <<get>>
+    - activeParent : FuzzyOptionNode <<get>>
+    - activeSelectedIndex : int <<get>> <<set>>
+    - activeNodes : IList<FuzzyOptionNode> <<get>>
+    - activeNode : FuzzyOptionNode <<get>>
+    - GetLevelRelative(levelOffset:int) : FuzzyOptionNode
+    - SelectParent() : void
+    - EnterChild(node:FuzzyOptionNode) : void
+    - SelectChild(node:FuzzyOptionNode) : void
+    - minSearchLength : int = 2
+    - query : string
+    - delayedQuery : string
+    - letQueryClear : bool
+    - searchFieldName : string = "FuzzySearch"
+    - {static} searchHeader : string = "Search"
+    - searchCancellationTokenSource : CancellationTokenSource
+    - hasSearch : bool <<get>>
+    - hasSufficientSearch : bool <<get>>
+    - Search() : void
+    - favoritesRoot : FuzzyOptionNode
+    - UpdateFavorites() : void
+    - anim : float = 1
+    - animTarget : int = 1
+    - animationSpeed : float = 4
+    - lastRepaintTime : DateTime
+    + repaintDeltaTime : float <<get>>
+    - isAnimating : bool <<get>>
+    - {static} <<readonly>> ShowAsDropDownFitToScreen : MethodInfo
+    - maxHeight : float = 320
+    - height : float = 320
+    - minWidth : float = 200
+    - minOptionWidth : float
+    - headerWidth : float
+    - footerHeight : float
+    - activatorPosition : Rect
+    - scrollToSelected : bool
+    - initialY : float
+    - initialYSet : bool
+    - OnPositioning() : void
+    - OnGUI() : void
+    - OnSearchGUI(position:Rect, query:string) : string
+    - OnHeaderGUI(parent:FuzzyOptionNode, headerPosition:Rect) : void
+    - OnLevelGUI(anim:float, parent:FuzzyOptionNode, grandParent:FuzzyOptionNode) : void
+    - lastMouseMovePosition : Vector2
+    - OnOptionsGUI(parent:FuzzyOptionNode, scrollViewHeight:float) : void
+    <<const>> - footerWidthMargin : int = 2
+    - OnFooterGUI() : void
+    - HandleKeyboard() : void
+    - <<readonly>> guiLock : object
+    - ExecuteTask(task:Action) : void
+    - <<readonly>> queue : ConcurrentQueue<Action>
+    - workerThread : Thread
+    - Work() : void
+    - progressText : string
+    - progress : float
+    - showProgress : bool
+    + DisplayProgressBar(text:string, progress:float) : void
+    + DisplayProgressBar(progress:float) : void
+    + {static} ClearProgressBar() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> header : GUIStyle
+    + {static} <<readonly>> footerBackground : GUIStyle
+    + {static} <<readonly>> optionWithIcon : GUIStyle
+    + {static} <<readonly>> optionWithoutIcon : GUIStyle
+    + {static} <<readonly>> optionWithIconDim : GUIStyle
+    + {static} <<readonly>> optionWithoutIconDim : GUIStyle
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> rightArrow : GUIStyle
+    + {static} <<readonly>> leftArrow : GUIStyle
+    + {static} <<readonly>> searchField : GUIStyle
+    + {static} <<readonly>> searchFieldCancelButton : GUIStyle
+    + {static} <<readonly>> searchFieldCancelButtonEmpty : GUIStyle
+    + {static} <<readonly>> insufficientSearch : GUIStyle
+    + {static} <<readonly>> check : GUIStyle
+    + {static} <<readonly>> star : GUIStyle
+    + {static} <<readonly>> favoritesIcon : EditorTexture
+    + {static} <<readonly>> searchFieldHeight : float = 20
+    + {static} <<readonly>> headerHeight : float = 25
+    + {static} <<readonly>> optionHeight : float = 20
+    + {static} <<readonly>> maxOptionWidth : float = 800
+}
+class Root {
+    + Root(header:GUIContent)
+}
+class SearchRoot {
+    + SearchRoot()
+}
+class FavoritesRoot {
+    + FavoritesRoot()
+}
+EditorWindow <|-- FuzzyWindow
+FuzzyWindow +-- Styles
+FuzzyWindow +-- Root
+"FuzzyOption`1" "<object>" <|-- Root
+FuzzyWindow +-- SearchRoot
+"FuzzyOption`1" "<object>" <|-- SearchRoot
+FuzzyWindow +-- FavoritesRoot
+"FuzzyOption`1" "<object>" <|-- FavoritesRoot
+@enduml

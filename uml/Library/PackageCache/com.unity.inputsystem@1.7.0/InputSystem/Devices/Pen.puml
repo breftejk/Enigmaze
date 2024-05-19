@@ -1,0 +1,44 @@
+@startuml
+struct PenState {
+    + {static} Format : FourCC <<get>>
+    + position : Vector2
+    + delta : Vector2
+    + tilt : Vector2
+    + pressure : float
+    + twist : float
+    + buttons : ushort
+    - displayIndex : ushort
+    + WithButton(button:PenButton, state:bool) : PenState
+    + format : FourCC <<get>>
+}
+enum PenButton {
+    Tip,
+    Eraser,
+    BarrelFirst,
+    BarrelSecond,
+    InRange,
+    BarrelThird,
+    BarrelFourth,
+    Barrel1= BarrelFirst,
+    Barrel2= BarrelSecond,
+    Barrel3= BarrelThird,
+    Barrel4= BarrelFourth,
+}
+class Pen {
+    + tip : ButtonControl <<get>> <<protected set>>
+    + eraser : ButtonControl <<get>> <<protected set>>
+    + firstBarrelButton : ButtonControl <<get>> <<protected set>>
+    + secondBarrelButton : ButtonControl <<get>> <<protected set>>
+    + thirdBarrelButton : ButtonControl <<get>> <<protected set>>
+    + fourthBarrelButton : ButtonControl <<get>> <<protected set>>
+    + inRange : ButtonControl <<get>> <<protected set>>
+    + tilt : Vector2Control <<get>> <<protected set>>
+    + twist : AxisControl <<get>> <<protected set>>
+    + <<new>> {static} current : Pen <<get>> <<internal set>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+IInputStateTypeInfo <|-- PenState
+Pointer <|-- Pen
+@enduml

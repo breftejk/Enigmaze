@@ -1,0 +1,17 @@
+@startuml
+class TimelineWindow <<partial>> {
+    - m_PlayableLookup : PlayableLookup
+}
+class PlayableLookup {
+    <<const>> - k_InitialDictionarySize : int = 10
+    <<readonly>> - m_AnimationClipToPlayable : Dictionary<AnimationClip, Playable>
+    <<readonly>> - m_AnimationClipToTimelineClip : Dictionary<AnimationClip, TimelineClip>
+    + UpdatePlayableLookup(clip:TimelineClip, go:GameObject, p:Playable) : void
+    + UpdatePlayableLookup(track:TrackAsset, go:GameObject, p:Playable) : void
+    - UpdatePlayableLookup(timelineAsset:TimelineAsset, curvesOwner:ICurvesOwner, go:GameObject, p:Playable) : void
+    + GetPlayableFromAnimClip(clip:AnimationClip, p:Playable) : bool
+    + GetTimelineClipFromCurves(clip:AnimationClip) : TimelineClip
+    + ClearPlayableLookup() : void
+}
+TimelineWindow +-- PlayableLookup
+@enduml

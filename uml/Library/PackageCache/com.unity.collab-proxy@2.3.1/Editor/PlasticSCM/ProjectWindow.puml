@@ -1,0 +1,5 @@
+@startuml
+class ProjectWindow {
+    <<internal>> {static} Repaint() : void
+}
+@enduml

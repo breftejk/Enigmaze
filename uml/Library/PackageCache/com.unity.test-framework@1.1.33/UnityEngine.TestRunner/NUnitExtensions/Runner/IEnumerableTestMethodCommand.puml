@@ -1,0 +1,5 @@
+@startuml
+interface IEnumerableTestMethodCommand {
+    ExecuteEnumerable(context:ITestExecutionContext) : IEnumerable
+}
+@enduml

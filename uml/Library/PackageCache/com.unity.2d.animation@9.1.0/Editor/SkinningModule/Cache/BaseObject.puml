@@ -1,0 +1,9 @@
+@startuml
+class BaseObject {
+    + {static} DestroyImmediate(o:object) : void
+    + {static} InstanceIDToObject(instanceID:int) : BaseObject
+    <<internal>> <<virtual>> OnEnable() : void
+    <<internal>> <<virtual>> OnDestroy() : void
+}
+ScriptableObject <|-- BaseObject
+@enduml

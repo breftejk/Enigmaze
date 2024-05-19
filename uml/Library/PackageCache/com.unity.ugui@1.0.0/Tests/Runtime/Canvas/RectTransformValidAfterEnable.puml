@@ -1,0 +1,10 @@
+@startuml
+class RectTransformValidAfterEnable {
+    <<const>> - kSceneName : string = "DisabledCanvasScene"
+    <<const>> - kGameObjectName : string = "DisabledCanvas"
+    + Setup() : void
+    + CheckRectTransformValidAfterEnable() : IEnumerator
+    + TearDown() : void
+}
+IPrebuildSetup <|-- RectTransformValidAfterEnable
+@enduml

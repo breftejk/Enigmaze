@@ -1,0 +1,83 @@
+@startuml
+enum DebugWireframeMode {
+    None,
+    Wireframe,
+    SolidWireframe,
+    ShadedWireframe,
+}
+class DebugDisplaySettingsRendering {
+    - m_WireframeMode : DebugWireframeMode
+    + wireframeMode : DebugWireframeMode <<get>> <<set>>
+    - m_Overdraw : bool = false
+    + overdraw : bool <<get>> <<set>>
+    - m_OverdrawMode : DebugOverdrawMode
+    + overdrawMode : DebugOverdrawMode <<get>> <<set>>
+    + maxOverdrawCount : int <<get>> <<set>> = 10
+    - UpdateDebugSceneOverrideMode() : void
+    + fullScreenDebugMode : DebugFullScreenMode <<get>> <<set>>
+    + fullScreenDebugModeOutputSizeScreenPercent : int <<get>> <<set>> = 50
+    <<internal>> sceneOverrideMode : DebugSceneOverrideMode <<get>> <<set>>
+    <<internal>> mipInfoMode : DebugMipInfoMode <<get>> <<set>>
+    + postProcessingDebugMode : DebugPostProcessingMode <<get>> <<set>>
+    + enableMsaa : bool <<get>> <<set>> = true
+    + enableHDR : bool <<get>> <<set>> = true
+    + taaDebugMode : TaaDebugMode <<get>> <<set>>
+    + validationMode : DebugValidationMode <<get>> <<set>>
+    + validationChannels : PixelValidationChannels <<get>> <<set>>
+    + validationRangeMin : float <<get>> <<set>> = 0.0f
+    + validationRangeMax : float <<get>> <<set>> = 1.0f
+    + AreAnySettingsActive : bool <<get>>
+    + IsPostProcessingAllowed : bool <<get>>
+    + IsLightingActive : bool <<get>>
+    + TryGetScreenClearColor(color:Color) : bool
+    - CreatePanel() : IDebugDisplaySettingsPanelDisposable
+}
+enum TaaDebugMode {
+    None= 0,
+    ShowRawFrame,
+    ShowRawFrameNoJitter,
+    ShowClampedHistory,
+}
+class Strings <<static>> {
+    + <<const>> RangeValidationSettingsContainerName : string = "Pixel Range Settings"
+    + {static} <<readonly>> MapOverlays : NameAndTooltip
+    + {static} <<readonly>> MapSize : NameAndTooltip
+    + {static} <<readonly>> AdditionalWireframeModes : NameAndTooltip
+    + {static} <<readonly>> WireframeNotSupportedWarning : NameAndTooltip
+    + {static} <<readonly>> OverdrawMode : NameAndTooltip
+    + {static} <<readonly>> MaxOverdrawCount : NameAndTooltip
+    + {static} <<readonly>> PostProcessing : NameAndTooltip
+    + {static} <<readonly>> MSAA : NameAndTooltip
+    + {static} <<readonly>> HDR : NameAndTooltip
+    + {static} <<readonly>> TaaDebugMode : NameAndTooltip
+    + {static} <<readonly>> PixelValidationMode : NameAndTooltip
+    + {static} <<readonly>> Channels : NameAndTooltip
+    + {static} <<readonly>> ValueRangeMin : NameAndTooltip
+    + {static} <<readonly>> ValueRangeMax : NameAndTooltip
+}
+class WidgetFactory <<static>> {
+    <<internal>> {static} CreateMapOverlays(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMapOverlaySize(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAdditionalWireframeShaderViews(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateWireframeNotSupportedWarning(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateOverdrawMode(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMaxOverdrawCount(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreatePostProcessing(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMSAA(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateHDR(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateTaaDebugMode(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreatePixelValidationMode(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreatePixelValidationChannels(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreatePixelValueRangeMin(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreatePixelValueRangeMax(panel:SettingsPanel) : DebugUI.Widget
+}
+class SettingsPanel {
+    + SettingsPanel(data:DebugDisplaySettingsRendering)
+}
+IDebugDisplaySettingsData <|-- DebugDisplaySettingsRendering
+DebugDisplaySettingsRendering +-- TaaDebugMode
+DebugDisplaySettingsRendering +-- Strings
+DebugDisplaySettingsRendering +-- WidgetFactory
+DebugDisplaySettingsRendering +-- SettingsPanel
+"DebugDisplaySettingsPanel`1" "<DebugDisplaySettingsRendering>" <|-- SettingsPanel
+@enduml

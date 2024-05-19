@@ -1,0 +1,12 @@
+@startuml
+class BlitToRTHandleRendererFeature {
+    - m_CopyColorPass : BlitToRTHandlePass
+    - m_CopyColorEvent : RenderPassEvent
+    + blitMaterial : Material
+    + <<override>> Create() : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    + <<override>> SetupRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+}
+ScriptableRendererFeature <|-- BlitToRTHandleRendererFeature
+@enduml

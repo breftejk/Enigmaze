@@ -1,0 +1,17 @@
+@startuml
+class AnnotationMarkerEditor {
+    <<const>> - k_LineOverlayWidth : float = 6.0f
+    <<const>> - k_OverlayPath : string = "timeline_annotation_overlay"
+    <<const>> - k_OverlaySelectedPath : string = "timeline_annotation_overlay_selected"
+    <<const>> - k_OverlayCollapsedPath : string = "timeline_annotation_overlay_collapsed"
+    {static} - s_OverlayTexture : Texture2D
+    {static} - s_OverlaySelectedTexture : Texture2D
+    {static} - s_OverlayCollapsedTexture : Texture2D
+    {static} - AnnotationMarkerEditor()
+    + <<override>> DrawOverlay(marker:IMarker, uiState:MarkerUIStates, region:MarkerOverlayRegion) : void
+    + <<override>> GetMarkerOptions(marker:IMarker) : MarkerDrawOptions
+    {static} - DrawLineOverlay(color:Color, region:MarkerOverlayRegion) : void
+    {static} - DrawColorOverlay(region:MarkerOverlayRegion, color:Color, state:MarkerUIStates) : void
+}
+MarkerEditor <|-- AnnotationMarkerEditor
+@enduml

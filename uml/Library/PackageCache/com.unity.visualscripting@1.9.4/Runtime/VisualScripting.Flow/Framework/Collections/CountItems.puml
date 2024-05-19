@@ -1,0 +1,9 @@
+@startuml
+class CountItems <<sealed>> {
+    + collection : ValueInput <<get>>
+    + count : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Count(flow:Flow) : int
+}
+Unit <|-- CountItems
+@enduml

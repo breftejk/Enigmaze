@@ -1,0 +1,16 @@
+@startuml
+abstract class SearcherDatabaseBase {
+    # <<const>> k_SerializedJsonFile : string = "/SerializedDatabase.json"
+    + DatabaseDirectory : string <<get>> <<set>>
+    + ItemList : IList<SearcherItem> <<get>>
+    # m_ItemList : List<SearcherItem>
+    # SearcherDatabaseBase(databaseDirectory:string)
+    + <<virtual>> BuildIndex() : void
+    + {abstract} Search(query:string, localMaxScore:float) : List<SearcherItem>
+    <<internal>> OverwriteId(newId:int) : void
+    <<internal>> Id : int <<get>>
+    # LoadFromFile() : void
+    # SerializeToFile() : void
+    # AddItemToIndex(item:SearcherItem, lastId:int, action:Action<SearcherItem>) : void
+}
+@enduml

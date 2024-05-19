@@ -1,0 +1,16 @@
+@startuml
+class Migration_1_5_1_to_1_5_2 {
+    <<internal>> Migration_1_5_1_to_1_5_2(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + <<override>> Run() : void
+    - {static} MigrateProjectSettings() : void
+}
+class DeprecatedSavedVersionLoader_1_5_1 {
+    <<internal>> DeprecatedSavedVersionLoader_1_5_1(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> Run(savedVersion:SemanticVersion) : bool
+}
+PluginMigration <|-- Migration_1_5_1_to_1_5_2
+PluginDeprecatedSavedVersionLoader <|-- DeprecatedSavedVersionLoader_1_5_1
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class EnumerableCloner <<sealed>> {
+    + <<override>> Handles(type:Type) : bool
+    + <<override>> FillClone(type:Type, clone:IEnumerable, original:IEnumerable, context:CloningContext) : void
+    - <<readonly>> addMethods : Dictionary<Type, IOptimizedInvoker>
+    - GetAddMethod(type:Type) : IOptimizedInvoker
+}
+"Cloner`1" "<IEnumerable>" <|-- EnumerableCloner
+@enduml

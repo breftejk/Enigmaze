@@ -1,0 +1,17 @@
+@startuml
+class Finger {
+    + screen : Touchscreen <<get>>
+    + index : int <<get>>
+    + isActive : bool <<get>>
+    + screenPosition : Vector2 <<get>>
+    + lastTouch : Touch <<get>>
+    + currentTouch : Touch <<get>>
+    + touchHistory : TouchHistory <<get>>
+    <<internal>> <<readonly>> m_StateHistory : InputStateHistory<TouchState>
+    <<internal>> Finger(screen:Touchscreen, index:int, updateMask:InputUpdateType)
+    - {static} <<unsafe>> ShouldRecordTouch(control:InputControl, time:double, eventPtr:InputEventPtr) : bool
+    - <<unsafe>> OnTouchRecorded(record:InputStateHistory.Record) : void
+    - <<unsafe>> FindTouch(uniqueId:uint) : Touch
+    <<internal>> <<unsafe>> GetTouchHistory(touch:Touch) : TouchHistory
+}
+@enduml

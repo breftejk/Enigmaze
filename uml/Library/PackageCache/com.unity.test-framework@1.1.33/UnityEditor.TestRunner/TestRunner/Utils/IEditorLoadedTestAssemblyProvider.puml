@@ -1,0 +1,6 @@
+@startuml
+interface IEditorLoadedTestAssemblyProvider {
+    GetAssembliesGroupedByType(mode:TestPlatform) : List<IAssemblyWrapper>
+    GetAssembliesGroupedByTypeAsync(mode:TestPlatform) : IEnumerator<IDictionary<TestPlatform, List<IAssemblyWrapper>>>
+}
+@enduml

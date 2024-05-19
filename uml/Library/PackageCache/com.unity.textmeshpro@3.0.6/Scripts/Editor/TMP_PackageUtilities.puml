@@ -1,0 +1,130 @@
+@startuml
+struct AssetConversionRecord {
+    + referencedResource : string
+    + target : string
+    + replacement : string
+}
+class AssetConversionData {
+    + assetRecords : List<AssetConversionRecord>
+}
+class TMP_ProjectTextSpacingConversionTool {
+    {static} - ShowConverterWindow() : void
+    - {static} m_ProjectPath : string
+    - m_ProjectFolderToScan : string
+    - {static} m_IsAlreadyScanningProject : bool
+    - {static} m_CancelScanProcess : bool
+    - {static} k_ProjectScanReportDefaultText : string
+    - m_OutputWindowStyle : GUIStyle
+    - m_OutputWindowMonospacedFont : Font
+    - {static} k_ProjectScanLabelPrefix : string = "Scanning: "
+    - {static} m_ProjectScanResults : string
+    - {static} m_ProjectScanResultScrollPosition : Vector2
+    - {static} m_ProgressPercentage : float = 0
+    - {static} m_ScanningTotalFiles : int
+    - {static} m_ScanningCurrentFileIndex : int
+    - {static} m_ScanningCurrentFileName : string
+    - {static} k_TextMeshProScriptID : string = "m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3&#125;"
+    - {static} k_TextMeshProUGUIScriptID : string = "m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3&#125;"
+    - {static} k_FontAssetProperty : string = "m_fontAsset: "
+    - {static} k_FontSizeProperty : string = "m_fontSize: "
+    - {static} k_LineSpacingProperty : string = "m_lineSpacing: "
+    - {static} k_CharacterSpacingProperty : string = "m_characterSpacing: "
+    - {static} k_WordSpacingProperty : string = "m_wordSpacing: "
+    - {static} k_ParagraphSpacingProperty : string = "m_paragraphSpacing: "
+    - {static} m_ConversionData : AssetConversionData
+    - {static} <<readonly>> m_ModifiedAssetList : List<AssetModificationRecord>
+    - OnEnable() : void
+    - OnGUI() : void
+    - OnInspectorUpdate() : void
+    - SetEditorWindowSize() : void
+    - ScanProjectFiles() : IEnumerator
+    {static} - ScanProjectFile(fileRecord:AssetFileRecord) : void
+    - {static} ResetScanProcess() : void
+    - {static} UpdateProjectFiles() : void
+    - {static} CheckProjectSerializationAndSourceControlModes() : bool
+}
+class TMP_ProjectConversionUtility {
+    {static} - ShowConverterWindow() : void
+    - {static} m_IgnoreAssetTypes : HashSet<Type>
+    - {static} m_ProjectPath : string
+    - {static} m_ProjectFolderToScan : string
+    - {static} m_IsAlreadyScanningProject : bool
+    - {static} m_CancelScanProcess : bool
+    - {static} k_ProjectScanReportDefaultText : string = "<color=#FFFF80><b>Project Scan Results</b></color>\n"
+    - {static} k_ProjectScanLabelPrefix : string = "Scanning: "
+    - {static} m_ProjectScanResults : string
+    - {static} m_ProjectScanResultScrollPosition : Vector2
+    - {static} m_ProgressPercentage : float = 0
+    - {static} m_ScanningTotalFiles : int
+    - {static} m_RemainingFilesToScan : int
+    - {static} m_ScanningCurrentFileIndex : int
+    - {static} m_ScanningCurrentFileName : string
+    - {static} m_ConversionData : AssetConversionData
+    - {static} m_ModifiedAssetList : List<AssetModificationRecord>
+    - OnEnable() : void
+    - OnGUI() : void
+    - OnInspectorUpdate() : void
+    - SetEditorWindowSize() : void
+    - {static} ShouldIgnoreFile(filePath:string) : bool
+    - ScanProjectFiles() : IEnumerator
+    {static} - ScanProjectFileAsync(fileRecord:AssetFileRecord) : void
+    - {static} ResetScanProcess() : void
+    - {static} UpdateProjectFiles() : void
+    - {static} CheckProjectSerializationAndSourceControlModes() : bool
+}
+class TMP_PackageUtilities {
+    - {static} m_ProjectAssetSerializationMode : SerializationMode
+    - {static} m_ProjectExternalVersionControl : string
+    + {static} ImportProjectResourcesMenu() : void
+    + {static} ImportExamplesContentMenu() : void
+    - {static} GetVersionInfo() : void
+    - {static} ImportExamplesAndExtras() : void
+    - {static} k_SettingsFilePath : string
+    - {static} k_SettingsBackup : byte[]
+    - {static} ImportEssentialResources() : void
+    - {static} RegisterResourceImportCallback() : void
+    - {static} ImportCallback(packageName:string) : void
+}
+struct AssetModificationRecord {
+    + assetFilePath : string
+    + assetDataFile : string
+}
+struct AssetFileRecord {
+    + assetFilePath : string
+    + AssetFileRecord(filePath:string, metaFilePath:string)
+}
+struct AssetModificationRecord {
+    + assetFilePath : string
+    + assetDataFile : string
+}
+struct AssetFileRecord {
+    + assetFilePath : string
+    + assetMetaFilePath : string
+    + AssetFileRecord(filePath:string, metaFilePath:string)
+}
+enum SaveAssetDialogueOptions {
+    Unset= 0,
+    Save= 1,
+    SaveAll= 2,
+    DoNotSave= 3,
+}
+struct AssetRemappingRecord {
+    + oldGuid : string
+    + newGuid : string
+    + assetPath : string
+}
+struct AssetModificationRecord {
+    + assetFilePath : string
+    + assetDataFile : string
+}
+EditorWindow <|-- TMP_ProjectTextSpacingConversionTool
+EditorWindow <|-- TMP_ProjectConversionUtility
+Editor <|-- TMP_PackageUtilities
+TMP_ProjectTextSpacingConversionTool +-- AssetModificationRecord
+TMP_ProjectTextSpacingConversionTool +-- AssetFileRecord
+TMP_ProjectConversionUtility +-- AssetModificationRecord
+TMP_ProjectConversionUtility +-- AssetFileRecord
+TMP_PackageUtilities +-- SaveAssetDialogueOptions
+TMP_PackageUtilities +-- AssetRemappingRecord
+TMP_PackageUtilities +-- AssetModificationRecord
+@enduml

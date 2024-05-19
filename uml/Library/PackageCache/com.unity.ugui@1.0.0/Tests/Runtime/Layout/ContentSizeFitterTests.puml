@@ -1,0 +1,16 @@
+@startuml
+class ContentSizeFitterTests {
+    <<const>> - kPrefabPath : string = "Assets/Resources/ContentSizeFitterTests.prefab"
+    - m_PrefabRoot : GameObject
+    - m_ContentSizeFitter : ContentSizeFitter
+    - m_RectTransform : RectTransform
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    + TestFitModeUnconstrained() : void
+    + TestFitModeMinSize() : void
+    + TestFitModePreferredSize() : void
+}
+IPrebuildSetup <|-- ContentSizeFitterTests
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class SerializableCubemap <<sealed>> {
+    - m_SerializedCubemap : string
+    - m_Guid : string
+    - m_Cubemap : Cubemap
+    <<internal>> guid : string <<get>>
+    + cubemap : Cubemap <<get>> <<set>>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+class CubemapHelper {
+    + cubemap : Cubemap
+}
+class MinimalCubemapHelper {
+    + cubemap : MinimalTextureRef
+}
+struct MinimalTextureRef {
+    + guid : string
+}
+ISerializationCallbackReceiver <|-- SerializableCubemap
+SerializableCubemap +-- CubemapHelper
+SerializableCubemap +-- MinimalCubemapHelper
+MinimalCubemapHelper +-- MinimalTextureRef
+@enduml

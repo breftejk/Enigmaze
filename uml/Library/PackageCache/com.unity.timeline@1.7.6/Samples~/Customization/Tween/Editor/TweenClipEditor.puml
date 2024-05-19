@@ -1,0 +1,9 @@
+@startuml
+class TweenClipEditor {
+    {static} - s_StartTextStyle : GUIStyle
+    {static} - s_EndTextStyle : GUIStyle
+    {static} - TweenClipEditor()
+    + <<override>> DrawBackground(clip:TimelineClip, region:ClipBackgroundRegion) : void
+}
+ClipEditor <|-- TweenClipEditor
+@enduml

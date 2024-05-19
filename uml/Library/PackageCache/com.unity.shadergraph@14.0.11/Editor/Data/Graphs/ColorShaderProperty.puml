@@ -1,0 +1,27 @@
+@startuml
+class ColorShaderProperty <<sealed>> {
+    + <<override>> latestVersion : int <<get>>
+    + <<const>> deprecatedVersion : int = 2
+    <<internal>> ColorShaderProperty()
+    <<internal>> ColorShaderProperty(version:int)
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> isMainColor : bool = false
+    <<internal>> hdrTagString : string <<get>>
+    <<internal>> mainColorString : string <<get>>
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    + <<override>> GetOldDefaultReferenceName() : string
+    - m_ColorMode : ColorMode
+    + colorMode : ColorMode <<get>> <<set>>
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> OnAfterDeserialize(json:string) : void
+    <<internal>> <<override>> OnBeforePasteIntoGraph(graph:GraphData) : void
+}
+"AbstractShaderProperty`1" "<Color>" <|-- ColorShaderProperty
+@enduml

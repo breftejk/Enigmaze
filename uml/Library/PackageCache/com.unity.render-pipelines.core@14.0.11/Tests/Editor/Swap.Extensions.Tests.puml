@@ -1,0 +1,8 @@
+@startuml
+class SwapExtensionsTests {
+    {static} - s_ListTestsCaseDatas : TestCaseData[]
+    + TrySwap(ints:int[], from:int, to:int) : int[]
+    {static} - s_ListTestsCaseDatasExceptions : TestCaseData[]
+    + ExceptionsAreCorrect(ints:int[], from:int, to:int) : Type
+}
+@enduml

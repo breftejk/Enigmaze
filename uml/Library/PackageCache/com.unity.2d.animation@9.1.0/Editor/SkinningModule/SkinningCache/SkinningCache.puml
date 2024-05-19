@@ -1,0 +1,118 @@
+@startuml
+class SkinningObject {
+    + skinningCache : SkinningCache <<get>>
+}
+class SkinningCache {
+    - m_Events : SkinningEvents
+    - m_Tools : List<BaseTool>
+    - m_SpriteMap : SpriteMap
+    - m_MeshMap : MeshMap
+    - m_MeshPreviewMap : MeshPreviewMap
+    - m_SkeletonMap : SkeletonMap
+    - m_CharacterPartMap : CharacterPartMap
+    - m_ToolMap : ToolMap
+    - m_SelectionTool : SelectionTool
+    - m_Character : CharacterCache
+    - m_BonesReadOnly : bool
+    - m_Mode : SkinningMode
+    - m_SelectedTool : BaseTool
+    - m_SelectedSprite : SpriteCache
+    - m_SkeletonSelection : SkeletonSelection
+    - m_State : ISkinningCachePersistentState
+    - m_StringBuilder : StringBuilder
+    + selectedTool : BaseTool <<get>> <<set>>
+    + <<virtual>> mode : SkinningMode <<get>> <<set>>
+    + selectedSprite : SpriteCache <<get>> <<set>>
+    + brushSize : float <<get>> <<set>>
+    + brushHardness : float <<get>> <<set>>
+    + brushStep : float <<get>> <<set>>
+    + visibilityToolIndex : int <<get>> <<set>>
+    + skeletonSelection : SkeletonSelection <<get>>
+    + vertexSelection : IndexedSelection <<get>>
+    + events : SkinningEvents <<get>>
+    + selectionTool : SelectionTool <<get>>
+    + GetSprites() : SpriteCache[]
+    + <<virtual>> character : CharacterCache <<get>>
+    + hasCharacter : bool <<get>>
+    + bonesReadOnly : bool <<get>>
+    + applyingChanges : bool <<get>> <<set>>
+    - CheckModeConsistency(skinningMode:SkinningMode) : SkinningMode
+    + Create(spriteEditor:ISpriteEditorDataProvider, state:ISkinningCachePersistentState) : void
+    + CreateToolCache(spriteEditor:ISpriteEditor, layoutOverlay:LayoutOverlay) : void
+    + RestoreFromPersistentState() : void
+    + RestoreToolStateFromPersistentState() : void
+    - UpdatePoseFromPersistentState(skeleton:SkeletonCache, sprite:SpriteCache) : void
+    - UpdateVisibilityFromPersistentState(skeleton:SkeletonCache, sprite:SpriteCache) : void
+    <<const>> - k_NameSeparator : string = "/"
+    - GetBoneNameHash(sb:StringBuilder, bone:BoneCache, sprite:SpriteCache) : int
+    {static} - BuildBoneName(sb:StringBuilder, bone:BoneCache) : void
+    {static} - GetCharacterGroupHash(sb:StringBuilder, characterGroup:CharacterGroupCache, characterCache:CharacterCache) : int
+    {static} - BuildGroupName(sb:StringBuilder, group:CharacterGroupCache, characterCache:CharacterCache) : void
+    - BoneSelectionChanged() : void
+    - SkeletonPreviewPoseChanged(sc:SkeletonCache) : void
+    - StorePersistentStatePoseForSkeleton(skeleton:SkeletonCache, sprite:SpriteCache) : void
+    <<internal>> Revert() : void
+    <<internal>> BoneVisibilityChanged() : void
+    - StorePersistentStateVisibilityForSkeleton(skeleton:SkeletonCache, sprite:SpriteCache) : void
+    <<internal>> BoneExpansionChanged(boneCaches:BoneCache[]) : void
+    <<internal>> GetExpandedBones() : BoneCache[]
+    <<internal>> SpriteVisibilityChanged(cc:CharacterPartCache) : void
+    <<internal>> GroupVisibilityChanged(gc:CharacterGroupCache) : void
+    - Clear() : void
+    + GetSprite(id:string) : SpriteCache
+    + <<virtual>> GetMesh(sprite:SpriteCache) : MeshCache
+    + <<virtual>> GetMeshPreview(sprite:SpriteCache) : MeshPreviewCache
+    + GetSkeleton(sprite:SpriteCache) : SkeletonCache
+    + <<virtual>> GetCharacterPart(sprite:SpriteCache) : CharacterPartCache
+    + GetEffectiveSkeleton(sprite:SpriteCache) : SkeletonCache
+    + GetTool(tool:Tools) : BaseTool
+    + <<override>> BeginUndoOperation(operationName:string) : void
+    + UndoScope(operationName:string, incrementGroup:bool) : UndoScope
+    + DisableUndoScope() : DisableUndoScope
+    + CreateTool() : T
+    - UpdateCharacterPart(characterPart:CharacterPartCache) : void
+    + CreateSpriteSheetSkeletons() : void
+    + SyncSpriteSheetSkeletons() : void
+    + CreateSpriteSheetSkeleton(characterPart:CharacterPartCache) : void
+    - CreateSpriteCache(spriteRect:SpriteRect) : SpriteCache
+    - CreateSkeletonCache(sprite:SpriteCache, boneProvider:ISpriteBoneDataProvider) : void
+    - CreateMeshCache(sprite:SpriteCache, meshProvider:ISpriteMeshDataProvider, textureDataProvider:ITextureDataProvider) : void
+    {static} - GenerateOutline(sprite:SpriteCache, textureDataProvider:ITextureDataProvider, vertices:Vector2[], indices:int[], edges:int2[]) : void
+    - CreateMeshPreviewCache(sprite:SpriteCache) : void
+    - CreateCharacter(spriteEditor:ISpriteEditorDataProvider) : void
+    - CreateSkeletonTool(skeletonTool:SkeletonTool, skeletonMode:SkeletonMode, editBindPose:bool, layoutOverlay:LayoutOverlay) : T
+    - CreateWeightTools(skeletonTool:SkeletonTool, meshTool:MeshTool, layoutOverlay:LayoutOverlay) : void
+    - CreateMeshTool(skeletonTool:SkeletonTool, meshTool:MeshTool, meshViewMode:SpriteMeshViewMode, skeletonMode:SkeletonMode, layoutOverlay:LayoutOverlay) : T
+    + RestoreBindPose() : void
+    + UndoRedoPerformed() : void
+    + CreateBoneCacheFromSpriteBones(spriteBones:UnityEngine.U2D.SpriteBone[], scale:float) : BoneCache[]
+    + IsOnVisualElement() : bool
+    - ToolChanged(tool:ITool) : void
+}
+class SpriteMap {
+}
+class MeshMap {
+}
+class SkeletonMap {
+}
+class ToolMap {
+}
+class MeshPreviewMap {
+}
+class CharacterPartMap {
+}
+CacheObject <|-- SkinningObject
+Cache <|-- SkinningCache
+SkinningCache +-- SpriteMap
+"SerializableDictionary`2" "<string,SpriteCache>" <|-- SpriteMap
+SkinningCache +-- MeshMap
+"SerializableDictionary`2" "<SpriteCache,MeshCache>" <|-- MeshMap
+SkinningCache +-- SkeletonMap
+"SerializableDictionary`2" "<SpriteCache,SkeletonCache>" <|-- SkeletonMap
+SkinningCache +-- ToolMap
+"SerializableDictionary`2" "<Tools,BaseTool>" <|-- ToolMap
+SkinningCache +-- MeshPreviewMap
+"SerializableDictionary`2" "<SpriteCache,MeshPreviewCache>" <|-- MeshPreviewMap
+SkinningCache +-- CharacterPartMap
+"SerializableDictionary`2" "<SpriteCache,CharacterPartCache>" <|-- CharacterPartMap
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class GraphPointerData <<sealed>> {
+    - rootObjectInstanceID : int
+    - parentElementGuids : Guid[]
+    - GraphPointerData(pointer:GraphPointer)
+    + {static} FromPointer(pointer:GraphPointer) : GraphPointerData
+    + ToReference(ensureValid:bool) : GraphReference
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class LocksSelector <<sealed>> {
+    <<internal>> LocksSelector(treeView:TreeView, listViewItemIds:ListViewItemIds<LockInfo>)
+    <<internal>> SaveSelectedLocks() : void
+    <<internal>> GetSelectedLocks() : List<LockInfo>
+    <<internal>> RestoreSelectedLocks() : void
+    - SelectLockItems(locksToSelect:List<LockInfo>) : void
+    - GetTreeIdForItem(lockInfo:LockInfo) : int
+    - mSelectedLocks : List<LockInfo>
+    <<readonly>> - mTreeView : TreeView
+    <<readonly>> - mListViewItemIds : ListViewItemIds<LockInfo>
+}
+@enduml

@@ -1,0 +1,64 @@
+@startuml
+class SerializedUniversalRenderPipelineAsset {
+    + rendererDataProp : SerializedProperty <<get>>
+    + defaultRendererProp : SerializedProperty <<get>>
+    + requireDepthTextureProp : SerializedProperty <<get>>
+    + requireOpaqueTextureProp : SerializedProperty <<get>>
+    + opaqueDownsamplingProp : SerializedProperty <<get>>
+    + supportsTerrainHolesProp : SerializedProperty <<get>>
+    + enableLODCrossFadeProp : SerializedProperty <<get>>
+    + lodCrossFadeDitheringTypeProp : SerializedProperty <<get>>
+    + storeActionsOptimizationProperty : SerializedProperty <<get>>
+    + hdr : SerializedProperty <<get>>
+    + hdrColorBufferPrecisionProp : SerializedProperty <<get>>
+    + msaa : SerializedProperty <<get>>
+    + renderScale : SerializedProperty <<get>>
+    + upscalingFilter : SerializedProperty <<get>>
+    + fsrOverrideSharpness : SerializedProperty <<get>>
+    + fsrSharpness : SerializedProperty <<get>>
+    + mainLightRenderingModeProp : SerializedProperty <<get>>
+    + mainLightShadowsSupportedProp : SerializedProperty <<get>>
+    + mainLightShadowmapResolutionProp : SerializedProperty <<get>>
+    + shEvalModeProp : SerializedProperty <<get>>
+    + additionalLightsRenderingModeProp : SerializedProperty <<get>>
+    + additionalLightsPerObjectLimitProp : SerializedProperty <<get>>
+    + additionalLightShadowsSupportedProp : SerializedProperty <<get>>
+    + additionalLightShadowmapResolutionProp : SerializedProperty <<get>>
+    + additionalLightsShadowResolutionTierLowProp : SerializedProperty <<get>>
+    + additionalLightsShadowResolutionTierMediumProp : SerializedProperty <<get>>
+    + additionalLightsShadowResolutionTierHighProp : SerializedProperty <<get>>
+    + additionalLightCookieResolutionProp : SerializedProperty <<get>>
+    + additionalLightCookieFormatProp : SerializedProperty <<get>>
+    + reflectionProbeBlendingProp : SerializedProperty <<get>>
+    + reflectionProbeBoxProjectionProp : SerializedProperty <<get>>
+    + shadowDistanceProp : SerializedProperty <<get>>
+    + shadowCascadeCountProp : SerializedProperty <<get>>
+    + shadowCascade2SplitProp : SerializedProperty <<get>>
+    + shadowCascade3SplitProp : SerializedProperty <<get>>
+    + shadowCascade4SplitProp : SerializedProperty <<get>>
+    + shadowCascadeBorderProp : SerializedProperty <<get>>
+    + shadowDepthBiasProp : SerializedProperty <<get>>
+    + shadowNormalBiasProp : SerializedProperty <<get>>
+    + softShadowsSupportedProp : SerializedProperty <<get>>
+    + softShadowQualityProp : SerializedProperty <<get>>
+    + conservativeEnclosingSphereProp : SerializedProperty <<get>>
+    + srpBatcher : SerializedProperty <<get>>
+    + supportsDynamicBatching : SerializedProperty <<get>>
+    + mixedLightingSupportedProp : SerializedProperty <<get>>
+    + useRenderingLayers : SerializedProperty <<get>>
+    + supportsLightCookies : SerializedProperty <<get>>
+    + debugLevelProp : SerializedProperty <<get>>
+    + enableRenderGraph : SerializedProperty <<get>>
+    + volumeFrameworkUpdateModeProp : SerializedProperty <<get>>
+    + colorGradingMode : SerializedProperty <<get>>
+    + colorGradingLutSize : SerializedProperty <<get>>
+    + useFastSRGBLinearConversion : SerializedProperty <<get>>
+    + supportDataDrivenLensFlare : SerializedProperty <<get>>
+    + asset : UniversalRenderPipelineAsset <<get>>
+    + serializedObject : SerializedObject <<get>>
+    + state : EditorPrefBoolFlags<EditorUtils.Unit>
+    + SerializedUniversalRenderPipelineAsset(serializedObject:SerializedObject)
+    + Update() : void
+    + Apply() : void
+}
+@enduml

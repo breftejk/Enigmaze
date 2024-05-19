@@ -1,0 +1,14 @@
+@startuml
+struct SpriteState {
+    - m_HighlightedSprite : Sprite
+    - m_PressedSprite : Sprite
+    - m_SelectedSprite : Sprite
+    - m_DisabledSprite : Sprite
+    + highlightedSprite : Sprite <<get>> <<set>>
+    + pressedSprite : Sprite <<get>> <<set>>
+    + selectedSprite : Sprite <<get>> <<set>>
+    + disabledSprite : Sprite <<get>> <<set>>
+    + Equals(other:SpriteState) : bool
+}
+"IEquatable`1" "<SpriteState>" <|-- SpriteState
+@enduml

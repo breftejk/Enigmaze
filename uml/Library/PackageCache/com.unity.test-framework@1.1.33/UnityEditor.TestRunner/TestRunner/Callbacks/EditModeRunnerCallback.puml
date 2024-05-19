@@ -1,0 +1,28 @@
+@startuml
+class EditModeRunnerCallback {
+    - m_Settings : EditModeLauncherContextSettings
+    + previousSceneSetup : SceneSetup[]
+    + runner : EditModeRunner
+    - m_Canceled : bool
+    - m_CurrentTest : ITest
+    - m_TotalTests : int
+    - m_PendingTests : List<string>
+    - m_LastCountedTestName : string
+    - m_RunRestarted : bool
+    + OnDestroy() : void
+    + RunStarted(testsToRun:ITest) : void
+    + OnEnable() : void
+    - Setup() : void
+    - BeforeAssemblyReload() : void
+    - DisplayProgressBar() : void
+    - {static} LogReceived(message:string, stacktrace:string, type:LogType) : void
+    - {static} WaitForExitPlaymode(state:PlayModeStateChange) : void
+    + RunFinished(result:ITestResult) : void
+    - CleanUp() : void
+    + TestStarted(test:ITest) : void
+    + TestFinished(result:ITestResult) : void
+    - {static} GetTestsExpectedToRun(test:ITest, filter:ITestFilter) : List<string>
+}
+ScriptableObject <|-- EditModeRunnerCallback
+ITestRunnerListener <|-- EditModeRunnerCallback
+@enduml

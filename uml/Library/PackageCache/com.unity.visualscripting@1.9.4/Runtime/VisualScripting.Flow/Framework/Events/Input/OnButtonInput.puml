@@ -1,0 +1,10 @@
+@startuml
+class OnButtonInput <<sealed>> {
+    # <<override>> hookName : string <<get>>
+    + buttonName : ValueInput <<get>>
+    + action : ValueInput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> ShouldTrigger(flow:Flow, args:EmptyEventArgs) : bool
+}
+"MachineEventUnit`1" "<EmptyEventArgs>" <|-- OnButtonInput
+@enduml

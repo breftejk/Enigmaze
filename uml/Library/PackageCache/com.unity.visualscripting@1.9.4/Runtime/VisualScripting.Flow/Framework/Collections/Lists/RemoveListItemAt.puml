@@ -1,0 +1,12 @@
+@startuml
+class RemoveListItemAt <<sealed>> {
+    + enter : ControlInput <<get>>
+    + listInput : ValueInput <<get>>
+    + listOutput : ValueOutput <<get>>
+    + index : ValueInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    + RemoveAt(flow:Flow) : ControlOutput
+}
+Unit <|-- RemoveListItemAt
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+struct ObjectReferenceField {
+    + propertyPath : string
+    + isSceneReference : bool
+    + type : System.Type
+    - <<readonly>> {static} None : ObjectReferenceField[]
+    - <<readonly>> {static} s_Cache : Dictionary<System.Type, ObjectReferenceField[]>
+    + {static} FindObjectReferences(type:System.Type) : ObjectReferenceField[]
+    + {static} FindObjectReferences() : ObjectReferenceField[]
+    - {static} SearchForFields(t:System.Type) : ObjectReferenceField[]
+    - {static} GetTypeFromPath(baseType:System.Type, path:string) : System.Type
+    + Find(sourceObject:ScriptableObject, context:Object) : Object
+    + IsAssignable(obj:Object) : bool
+    + Assign(scriptableObject:ScriptableObject, value:Object, exposedTable:IExposedPropertyTable) : bool
+}
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+class ShadowsMidtonesHighlightsEditor <<sealed>> {
+    - m_Shadows : SerializedDataParameter
+    - m_Midtones : SerializedDataParameter
+    - m_Highlights : SerializedDataParameter
+    - m_ShadowsStart : SerializedDataParameter
+    - m_ShadowsEnd : SerializedDataParameter
+    - m_HighlightsStart : SerializedDataParameter
+    - m_HighlightsEnd : SerializedDataParameter
+    <<const>> - k_ShaderName : string = "Hidden/Universal Render Pipeline/Editor/Shadows Midtones Highlights Curve"
+    {static} - s_Material : Material
+    <<readonly>> - m_TrackballUIDrawer : TrackballUIDrawer
+    - m_CurveRect : Rect
+    - m_CurveTex : RenderTexture
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - CheckCurveRT(width:int, height:int) : void
+    {static} - GetWheelValue(v:Vector4) : Vector3
+    - CheckMaterialAndShader() : bool
+}
+class Styles <<static>> {
+    + {static} <<readonly>> shadowsLabel : GUIContent
+    + {static} <<readonly>> midtonesLabel : GUIContent
+    + {static} <<readonly>> highlightsLabel : GUIContent
+}
+VolumeComponentEditor <|-- ShadowsMidtonesHighlightsEditor
+ShadowsMidtonesHighlightsEditor +-- Styles
+@enduml

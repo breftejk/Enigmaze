@@ -1,0 +1,30 @@
+@startuml
+class TestRunnerUIFilter {
+    - m_PassedCount : int
+    - m_FailedCount : int
+    - m_NotRunCount : int
+    - m_InconclusiveCount : int
+    - m_SkippedCount : int
+    + PassedCount : int <<get>>
+    + FailedCount : int <<get>>
+    + NotRunCount : int <<get>>
+    + PassedHidden : bool
+    + FailedHidden : bool
+    + NotRunHidden : bool
+    - m_SearchString : string
+    - selectedCategoryMask : int
+    + availableCategories : string[]
+    - m_SucceededBtn : GUIContent
+    - m_FailedBtn : GUIContent
+    - m_NotRunBtn : GUIContent
+    + RebuildTestList : Action
+    + SearchStringChanged : Action<string>
+    + SearchStringCleared : Action
+    + IsFiltering : bool <<get>>
+    + CategoryFilter : string[] <<get>>
+    + UpdateCounters(resultList:List<TestRunnerResult>) : void
+    + Draw() : void
+    - {static} GetMaxWidth(count:int) : int
+    + Clear() : void
+}
+@enduml

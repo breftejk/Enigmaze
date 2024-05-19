@@ -1,0 +1,70 @@
+@startuml
+class CustomDrawer {
+    - m_Drawer : IDrawer
+    - m_SpriteShapeController : SpriteShapeController
+    + CustomDrawer(spriteShapeController:SpriteShapeController)
+    - GetSubDivisionCount() : int
+    - DrawBezier(p1:Vector3, p2:Vector3, p3:Vector3, p4:Vector3, width:float, color:Color) : void
+    - DrawCreatePointPreview(position:Vector3, color:Color) : void
+    - DrawLine(p1:Vector3, p2:Vector3, width:float, color:Color) : void
+    - DrawPoint(position:Vector3, color:Color) : void
+    - DrawPointHovered(position:Vector3, color:Color) : void
+    - DrawPointSelected(position:Vector3, color:Color) : void
+    - DrawTangent(position:Vector3, tangent:Vector3, color:Color) : void
+}
+class SpriteShapeData {
+    + height : float = 1f
+    + spriteIndex : int
+    + corner : int = 1
+    + cornerMode : int = 1
+}
+class ScriptableSpriteShapeData {
+}
+class SpriteShapeDataInspector {
+    - m_Data : SerializedProperty
+    - m_HeightProperty : SerializedProperty
+    - m_CornerProperty : SerializedProperty
+    - m_CornerModeProperty : SerializedProperty
+    - OnEnable() : void
+    <<internal>> OnHeightChanged(targets:UnityEngine.Object[], height:float) : void
+    <<internal>> OnCornerModeChanged(targets:UnityEngine.Object[], cornerValue:int) : void
+    + <<override>> OnInspectorGUI() : void
+}
+class CustomPath {
+}
+class CustomPathInspector {
+}
+class SpriteShapeEditorTool {
+    - {static} m_ShortcutContext : InternalEditorBridge.ShortcutContext
+    + {static} activeSpriteShapeEditorTool : SpriteShapeEditorTool <<get>>
+    # <<override>> GetLinearTangentIsZero(target:UnityEngine.Object) : bool
+    # <<override>> GetCustomDrawer(target:UnityEngine.Object) : IDrawer
+    # <<override>> GetShape(target:UnityEngine.Object) : IShape
+    # <<override>> Initialize(shapeEditor:CustomPath, serializedObject:SerializedObject) : void
+    # <<override>> SetShape(shapeEditor:CustomPath, serializedObject:SerializedObject) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - CycleSpriteIndex() : void
+    - {static} SlopeAngle(start:Vector2, end:Vector2) : float
+    - RegisterShortcuts() : void
+    - UnregisterShortcuts() : void
+    + <<override>> OnActivated() : void
+    + <<override>> OnWillBeDeactivated() : void
+    - {static} ShortcutCycleTangentMode(args:ShortcutArguments) : void
+    - {static} ShortcutCycleSpriteIndex(args:ShortcutArguments) : void
+    - {static} ShortcutCycleMirrorTangent(args:ShortcutArguments) : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> heightLabel : GUIContent
+    + {static} <<readonly>> cornerLabel : GUIContent
+    + {static} <<readonly>> cornerValues : int[]
+    + {static} <<readonly>> cornerOptions : GUIContent[]
+}
+IDrawer <|-- CustomDrawer
+"ScriptableData`1" "<SpriteShapeData>" <|-- ScriptableSpriteShapeData
+Editor <|-- SpriteShapeDataInspector
+"GenericScriptablePath`1" "<SpriteShapeData>" <|-- CustomPath
+"GenericScriptablePathInspector`2" "<ScriptableSpriteShapeData,SpriteShapeData>" <|-- CustomPathInspector
+"PathEditorTool`1" "<CustomPath>" <|-- SpriteShapeEditorTool
+SpriteShapeDataInspector +-- Contents
+@enduml

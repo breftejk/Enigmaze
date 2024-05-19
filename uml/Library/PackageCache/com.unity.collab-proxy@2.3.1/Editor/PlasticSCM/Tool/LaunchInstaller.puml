@@ -1,0 +1,5 @@
+@startuml
+class LaunchInstaller <<static>> {
+    <<internal>> {static} ForPlatform(installerPath:string) : Process
+}
+@enduml

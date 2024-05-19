@@ -1,0 +1,8 @@
+@startuml
+class SpriteShapeEditorAnalytics {
+    - m_Analytics : SpriteShapeAnalytics = null
+    <<internal>> eventBus : SpriteShapeAnalyticsEvents <<get>>
+    - analytics : SpriteShapeAnalytics <<get>>
+}
+"ScriptableSingleton`1" "<SpriteShapeEditorAnalytics>" <|-- SpriteShapeEditorAnalytics
+@enduml

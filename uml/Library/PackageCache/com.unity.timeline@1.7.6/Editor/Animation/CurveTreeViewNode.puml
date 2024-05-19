@@ -1,0 +1,11 @@
+@startuml
+class CurveTreeViewNode {
+    + forceGroup : bool <<get>>
+    + iconType : System.Type <<get>>
+    + iconOverlay : GUIContent <<get>>
+    - m_Bindings : EditorCurveBinding[]
+    + bindings : EditorCurveBinding[] <<get>>
+    + CurveTreeViewNode(id:int, parent:TreeViewItem, displayName:string, bindings:EditorCurveBinding[], _forceGroup:bool)
+}
+TreeViewItem <|-- CurveTreeViewNode
+@enduml

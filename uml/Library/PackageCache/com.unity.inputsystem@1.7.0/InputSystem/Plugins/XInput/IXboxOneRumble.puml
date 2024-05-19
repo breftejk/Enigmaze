@@ -1,0 +1,6 @@
+@startuml
+interface IXboxOneRumble {
+    SetMotorSpeeds(lowFrequency:float, highFrequency:float, leftTrigger:float, rightTrigger:float) : void
+}
+IDualMotorRumble <|-- IXboxOneRumble
+@enduml

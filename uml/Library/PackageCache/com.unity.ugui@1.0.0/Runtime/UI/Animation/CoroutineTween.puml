@@ -1,0 +1,66 @@
+@startuml
+interface ITweenValue {
+    TweenValue(floatPercentage:float) : void
+    ignoreTimeScale : bool <<get>>
+    duration : float <<get>>
+    ValidTarget() : bool
+}
+struct ColorTween {
+    - m_Target : ColorTweenCallback
+    - m_StartColor : Color
+    - m_TargetColor : Color
+    - m_TweenMode : ColorTweenMode
+    - m_Duration : float
+    - m_IgnoreTimeScale : bool
+    + startColor : Color <<get>> <<set>>
+    + targetColor : Color <<get>> <<set>>
+    + tweenMode : ColorTweenMode <<get>> <<set>>
+    + duration : float <<get>> <<set>>
+    + ignoreTimeScale : bool <<get>> <<set>>
+    + TweenValue(floatPercentage:float) : void
+    + AddOnChangedCallback(callback:UnityAction<Color>) : void
+    + GetIgnoreTimescale() : bool
+    + GetDuration() : float
+    + ValidTarget() : bool
+}
+struct FloatTween {
+    - m_Target : FloatTweenCallback
+    - m_StartValue : float
+    - m_TargetValue : float
+    - m_Duration : float
+    - m_IgnoreTimeScale : bool
+    + startValue : float <<get>> <<set>>
+    + targetValue : float <<get>> <<set>>
+    + duration : float <<get>> <<set>>
+    + ignoreTimeScale : bool <<get>> <<set>>
+    + TweenValue(floatPercentage:float) : void
+    + AddOnChangedCallback(callback:UnityAction<float>) : void
+    + GetIgnoreTimescale() : bool
+    + GetDuration() : float
+    + ValidTarget() : bool
+}
+class "TweenRunner`1"<T> {
+    # m_CoroutineContainer : MonoBehaviour
+    # m_Tween : IEnumerator
+    - {static} Start(tweenInfo:T) : IEnumerator
+    + Init(coroutineContainer:MonoBehaviour) : void
+    + StartTween(info:T) : void
+    + StopTween() : void
+}
+enum ColorTweenMode {
+    All,
+    RGB,
+    Alpha,
+}
+class ColorTweenCallback {
+}
+class FloatTweenCallback {
+}
+ITweenValue <|-- ColorTween
+ITweenValue <|-- FloatTween
+ColorTween +-- ColorTweenMode
+ColorTween +-- ColorTweenCallback
+"UnityEvent`1" "<Color>" <|-- ColorTweenCallback
+FloatTween +-- FloatTweenCallback
+"UnityEvent`1" "<float>" <|-- FloatTweenCallback
+@enduml

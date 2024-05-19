@@ -1,0 +1,66 @@
+@startuml
+class ProbeVolumeSceneData {
+    {static} - s_SceneGUID : PropertyInfo
+    {static} <<internal>> GetSceneGUID(scene:Scene) : string
+    - serializedBounds : List<SerializableBoundItem>
+    - serializedHasVolumes : List<SerializableHasPVItem>
+    - serializedProfiles : List<SerializablePVProfile>
+    - serializedBakeSettings : List<SerializablePVBakeSettings>
+    - serializedBakingSets : List<BakingSet>
+    <<internal>> parentAsset : Object = null
+    <<internal>> parentSceneDataPropertyName : string
+    + sceneBounds : Dictionary<string, Bounds>
+    <<internal>> hasProbeVolumes : Dictionary<string, bool>
+    <<internal>> sceneProfiles : Dictionary<string, ProbeReferenceVolumeProfile>
+    <<internal>> sceneBakingSettings : Dictionary<string, ProbeVolumeBakingProcessSettings>
+    <<internal>> bakingSets : List<BakingSet>
+    - m_LightingScenario : string
+    - m_OtherScenario : string = null
+    - m_ScenarioBlendingFactor : float = 0.0f
+    <<internal>> lightingScenario : string <<get>>
+    <<internal>> otherScenario : string <<get>>
+    <<internal>> scenarioBlendingFactor : float <<get>>
+    <<internal>> SetActiveScenario(scenario:string) : void
+    <<internal>> BlendLightingScenario(otherScenario:string, blendingFactor:float) : void
+    + ProbeVolumeSceneData(parentAsset:Object, parentSceneDataPropertyName:string)
+    + SetParentObject(parent:Object, parentSceneDataPropertyName:string) : void
+    + OnAfterDeserialize() : void
+    - UpdateBakingSets() : void
+    + OnBeforeSerialize() : void
+    <<internal>> CreateNewBakingSet(name:string) : BakingSet
+    - InitializeBakingSet(set:BakingSet, name:string) : void
+    - InitializeScenarios(set:BakingSet) : void
+    <<internal>> SyncBakingSetSettings() : void
+}
+struct SerializableBoundItem {
+    + sceneGUID : string
+    + bounds : Bounds
+}
+struct SerializableHasPVItem {
+    + sceneGUID : string
+    + hasProbeVolumes : bool
+}
+struct SerializablePVProfile {
+    + sceneGUID : string
+    + profile : ProbeReferenceVolumeProfile
+}
+struct SerializablePVBakeSettings {
+    + sceneGUID : string
+    + settings : ProbeVolumeBakingProcessSettings
+}
+class BakingSet {
+    + name : string
+    + sceneGUIDs : List<string>
+    + settings : ProbeVolumeBakingProcessSettings
+    + profile : ProbeReferenceVolumeProfile
+    + lightingScenarios : List<string>
+    <<internal>> CreateScenario(name:string) : string
+    <<internal>> RemoveScenario(name:string) : bool
+}
+ISerializationCallbackReceiver <|-- ProbeVolumeSceneData
+ProbeVolumeSceneData +-- SerializableBoundItem
+ProbeVolumeSceneData +-- SerializableHasPVItem
+ProbeVolumeSceneData +-- SerializablePVProfile
+ProbeVolumeSceneData +-- SerializablePVBakeSettings
+ProbeVolumeSceneData +-- BakingSet
+@enduml

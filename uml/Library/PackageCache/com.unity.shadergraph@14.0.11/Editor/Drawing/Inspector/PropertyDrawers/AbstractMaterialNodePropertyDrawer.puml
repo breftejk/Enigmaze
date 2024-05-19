@@ -1,0 +1,18 @@
+@startuml
+interface IGetNodePropertyDrawerPropertyData {
+    GetPropertyData(setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+}
+class AbstractMaterialNodePropertyDrawer {
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    - m_setNodesAsDirtyCallback : Action
+    - m_updateNodeViewsCallback : Action
+    + GetPropertyData(setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    <<internal>> <<virtual>> AddCustomNodeProperties(parentElement:VisualElement, node:AbstractMaterialNode, setNodesAsDirtyCallback:Action, updateNodeViewsCallback:Action) : void
+    - CreateGUI(node:AbstractMaterialNode, attribute:InspectableAttribute, propertyVisualElement:VisualElement) : VisualElement
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    <<internal>> <<virtual>> DisposePropertyDrawer() : void
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- AbstractMaterialNodePropertyDrawer
+IGetNodePropertyDrawerPropertyData <|-- AbstractMaterialNodePropertyDrawer
+@enduml

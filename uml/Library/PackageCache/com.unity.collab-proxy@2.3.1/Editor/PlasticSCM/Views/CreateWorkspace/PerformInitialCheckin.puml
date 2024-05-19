@@ -1,0 +1,11 @@
+@startuml
+class PerformInitialCheckin <<static>> {
+    <<internal>> {static} IfRepositoryIsEmpty(wkInfo:WorkspaceInfo, repository:string, isGluonWorkspace:bool, plasticApi:IPlasticAPI, progressControls:IProgressControls, createWorkspaceListener:CreateWorkspaceView.ICreateWorkspaceListener, plasticWindow:PlasticWindow) : void
+    {static} - CheckinPackagesAndProjectSettingsFolders(wkInfo:WorkspaceInfo, isGluonWorkspace:bool, plasticApi:IPlasticAPI, progressControls:IProgressControls, createWorkspaceListener:CreateWorkspaceView.ICreateWorkspaceListener) : void
+    <<internal>> {static} PerformCheckinPackagesAndProjectSettingsFolders(wkInfo:WorkspaceInfo, isGluonWorkspace:bool, plasticApi:IPlasticAPI) : void
+    {static} - PerformAdd(paths:List<string>, plasticApi:IPlasticAPI) : void
+    {static} - PerformCheckinForMode(wkInfo:WorkspaceInfo, paths:List<string>, comment:string, isGluonWorkspace:bool) : void
+    {static} - IsMergeNeededException(exception:Exception) : bool
+    {static} - DisplayException(progressControls:IProgressControls, ex:Exception) : void
+}
+@enduml

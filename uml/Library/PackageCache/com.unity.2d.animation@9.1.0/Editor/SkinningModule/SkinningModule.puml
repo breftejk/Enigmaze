@@ -1,0 +1,59 @@
+@startuml
+class SkinningModule <<partial>> {
+    - m_SkinningCache : SkinningCache
+    - m_PrevNearestControl : int
+    - m_SpriteOutlineRenderer : SpriteOutlineRenderer
+    - m_MeshPreviewTool : MeshPreviewTool
+    - m_PreviousSkinningMode : SkinningMode
+    - m_CharacterSpriteTool : SpriteBoneInfluenceTool
+    - m_HorizontalToggleTools : HorizontalToggleTools
+    - m_Analytics : AnimationAnalytics
+    - m_ModuleToolGroup : ModuleToolGroup
+    - m_MeshPreviewBehaviourOverride : IMeshPreviewBehaviour = null
+    - m_CollapseToolbar : bool
+    - m_HasUnsavedChanges : bool = false
+    - m_WorkspaceBackgroundTexture : Texture2D
+    <<internal>> skinningCache : SkinningCache <<get>>
+    - currentTool : BaseTool <<get>> <<set>>
+    - previousTool : BaseTool <<get>> <<set>>
+    + <<override>> moduleName : string <<get>>
+    + <<override>> OnModuleActivate() : void
+    + <<override>> OnModuleDeactivate() : void
+    - PlayModeStateChanged(newState:PlayModeStateChange) : void
+    - UpdateCollapseToolbar() : void
+    - OnBoneNameChanged(bone:BoneCache) : void
+    - OnBoneDepthChanged(bone:BoneCache) : void
+    - OnBoneColorChanged(bone:BoneCache) : void
+    - OnMeshChanged(mesh:MeshCache) : void
+    - OnPivotChanged() : void
+    - DataModified() : void
+    - OnViewModeChanged(mode:SkinningMode) : void
+    - SetupSpriteEditor(setPreviewTexture:bool) : void
+    - RestoreSpriteEditor() : void
+    + <<override>> CanBeActivated() : bool
+    + <<override>> DoPostGUI() : void
+    + <<override>> DoMainGUI() : void
+    + <<override>> DoToolbarGUI(drawArea:Rect) : void
+    - DoCopyPasteKeyboardEventHandling() : void
+    - DrawRectGizmos() : void
+    - UndoRedoPerformed() : void
+    - SkeletonPreviewPoseChanged(skeleton:SkeletonCache) : void
+    - SkeletonBindPoseChanged(skeleton:SkeletonCache) : void
+    - SkeletonTopologyChanged(skeleton:SkeletonCache) : void
+    - CharacterPartChanged(characterPart:CharacterPartCache) : void
+    - FindSpriteFromSkeleton(skeleton:SkeletonCache) : SpriteCache
+    + <<override>> ApplyRevert(apply:bool) : bool
+    <<internal>> {static} ApplyChanges(skinningCache:SkinningCache, dataProvider:ISpriteEditorDataProvider) : void
+    - DoApplyAnalytics() : void
+    {static} - ApplyBone(skinningCache:SkinningCache, dataProvider:ISpriteEditorDataProvider) : void
+    {static} - ApplyMesh(skinningCache:SkinningCache, dataProvider:ISpriteEditorDataProvider) : void
+    {static} - ApplyCharacter(skinningCache:SkinningCache, dataProvider:ISpriteEditorDataProvider) : void
+    - OnMeshPreviewBehaviourChange(meshPreviewBehaviour:IMeshPreviewBehaviour) : void
+    - SetupModuleToolGroup() : void
+}
+class Styles <<static>> {
+    + {static} moduleName : string
+}
+SpriteEditorModuleBase <|-- SkinningModule
+SkinningModule +-- Styles
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class Shadow {
+    - m_EffectColor : Color
+    - m_EffectDistance : Vector2
+    - m_UseGraphicAlpha : bool = true
+    - <<const>> kMaxEffectDistance : float = 600f
+    # Shadow()
+    + effectColor : Color <<get>> <<set>>
+    + effectDistance : Vector2 <<get>> <<set>>
+    + useGraphicAlpha : bool <<get>> <<set>>
+    # ApplyShadowZeroAlloc(verts:List<UIVertex>, color:Color32, start:int, end:int, x:float, y:float) : void
+    # ApplyShadow(verts:List<UIVertex>, color:Color32, start:int, end:int, x:float, y:float) : void
+    + <<override>> ModifyMesh(vh:VertexHelper) : void
+}
+BaseMeshEffect <|-- Shadow
+@enduml

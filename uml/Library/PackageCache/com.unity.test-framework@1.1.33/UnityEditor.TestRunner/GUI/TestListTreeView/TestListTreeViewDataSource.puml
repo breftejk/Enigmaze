@@ -1,0 +1,16 @@
+@startuml
+class TestListTreeViewDataSource {
+    - m_ExpandTreeOnCreation : bool
+    - <<readonly>> m_TestListGUI : TestListGUI
+    - m_RootTest : ITestAdaptor
+    + TestListTreeViewDataSource(testListTree:TreeViewController, testListGUI:TestListGUI, rootTest:ITestAdaptor)
+    + UpdateRootTest(rootTest:ITestAdaptor) : void
+    + <<override>> FetchData() : void
+    + <<override>> IsRenamingItemAllowed(item:TreeViewItem) : bool
+    + ExpandTreeOnCreation() : void
+    + <<override>> IsExpandable(item:TreeViewItem) : bool
+    # <<override>> Search(rootItem:TreeViewItem, search:string) : List<TreeViewItem>
+    # SearchTestTree(item:TreeViewItem, search:string, searchResult:IList<TreeViewItem>) : void
+}
+TreeViewDataSource <|-- TestListTreeViewDataSource
+@enduml

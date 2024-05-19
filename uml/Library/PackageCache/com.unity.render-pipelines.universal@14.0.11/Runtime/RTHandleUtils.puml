@@ -1,0 +1,18 @@
+@startuml
+class RTHandleResourcePool {
+    # m_ResourcePool : Dictionary<int, SortedList<int, (RTHandle resource, int frameIndex)>>
+    # m_RemoveList : List<int>
+    # {static} s_CurrentStaleResourceCount : int = 0
+    # {static} s_StaleResourceLifetime : int = 3
+    # {static} s_StaleResourceMaxCapacity : int = 32
+    <<internal>> staleResourceCapacity : int <<get>> <<set>>
+    <<internal>> AddResourceToPool(texDesc:TextureDesc, resource:RTHandle, currentFrameIndex:int) : bool
+    <<internal>> TryGetResource(texDesc:TextureDesc, resource:RTHandle, usepool:bool) : bool
+    <<internal>> Cleanup() : void
+    {static} # ShouldReleaseResource(lastUsedFrameIndex:int, currentFrameIndex:int) : bool
+    <<internal>> PurgeUnusedResources(currentFrameIndex:int) : void
+    <<internal>> LogDebugInfo() : void
+    <<internal>> GetHashCodeWithNameHash(texDesc:TextureDesc) : int
+    <<internal>> {static} CreateTextureDesc(desc:RenderTextureDescriptor, textureSizeMode:TextureSizeMode, anisoLevel:int, mipMapBias:float, filterMode:FilterMode, wrapMode:TextureWrapMode, name:string) : TextureDesc
+}
+@enduml

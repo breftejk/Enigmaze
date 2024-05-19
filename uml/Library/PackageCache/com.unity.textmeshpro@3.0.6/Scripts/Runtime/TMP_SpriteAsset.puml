@@ -1,0 +1,39 @@
+@startuml
+class TMP_SpriteAsset {
+    <<internal>> m_NameLookup : Dictionary<int, int>
+    <<internal>> m_GlyphIndexLookup : Dictionary<uint, int>
+    + version : string <<get>> <<internal set>>
+    - m_Version : string
+    + faceInfo : FaceInfo <<get>> <<internal set>>
+    <<internal>> m_FaceInfo : FaceInfo
+    + spriteSheet : Texture
+    + spriteCharacterTable : List<TMP_SpriteCharacter> <<get>> <<internal set>>
+    - m_SpriteCharacterTable : List<TMP_SpriteCharacter>
+    + spriteCharacterLookupTable : Dictionary<uint, TMP_SpriteCharacter> <<get>> <<internal set>>
+    <<internal>> m_SpriteCharacterLookup : Dictionary<uint, TMP_SpriteCharacter>
+    + spriteGlyphTable : List<TMP_SpriteGlyph> <<get>> <<internal set>>
+    - m_SpriteGlyphTable : List<TMP_SpriteGlyph>
+    <<internal>> m_SpriteGlyphLookup : Dictionary<uint, TMP_SpriteGlyph>
+    + spriteInfoList : List<TMP_Sprite>
+    + fallbackSpriteAssets : List<TMP_SpriteAsset>
+    <<internal>> m_IsSpriteAssetLookupTablesDirty : bool = false
+    - Awake() : void
+    - GetDefaultSpriteMaterial() : Material
+    + UpdateLookupTables() : void
+    + GetSpriteIndexFromHashcode(hashCode:int) : int
+    + GetSpriteIndexFromUnicode(unicode:uint) : int
+    + GetSpriteIndexFromName(name:string) : int
+    - {static} k_searchedSpriteAssets : HashSet<int>
+    + {static} SearchForSpriteByUnicode(spriteAsset:TMP_SpriteAsset, unicode:uint, includeFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    - {static} SearchForSpriteByUnicodeInternal(spriteAssets:List<TMP_SpriteAsset>, unicode:uint, includeFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    - {static} SearchForSpriteByUnicodeInternal(spriteAsset:TMP_SpriteAsset, unicode:uint, includeFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    + {static} SearchForSpriteByHashCode(spriteAsset:TMP_SpriteAsset, hashCode:int, includeFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    - {static} SearchForSpriteByHashCodeInternal(spriteAssets:List<TMP_SpriteAsset>, hashCode:int, searchFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    - {static} SearchForSpriteByHashCodeInternal(spriteAsset:TMP_SpriteAsset, hashCode:int, searchFallbacks:bool, spriteIndex:int) : TMP_SpriteAsset
+    + SortGlyphTable() : void
+    <<internal>> SortCharacterTable() : void
+    <<internal>> SortGlyphAndCharacterTables() : void
+    - UpgradeSpriteAsset() : void
+}
+TMP_Asset <|-- TMP_SpriteAsset
+@enduml

@@ -1,0 +1,171 @@
+@startuml
+interface IShapeEditorFactory {
+    CreateShapeEditor() : ShapeEditor
+}
+class ShapeEditorFactory {
+    + CreateShapeEditor() : ShapeEditor
+}
+class ShapeEditor {
+    + GetPointPosition : Func<int, Vector3>
+    + SetPointPosition : Action<int, Vector3>
+    + GetPointLTangent : Func<int, Vector3>
+    + SetPointLTangent : Action<int, Vector3>
+    + GetPointRTangent : Func<int, Vector3>
+    + SetPointRTangent : Action<int, Vector3>
+    + GetTangentMode : Func<int, TangentMode>
+    + SetTangentMode : Action<int, TangentMode>
+    + InsertPointAt : Action<int, Vector3>
+    + RemovePointAt : Action<int>
+    + GetPointsCount : Func<int>
+    + ScreenToLocal : Func<Vector2, Vector3>
+    + LocalToScreen : Func<Vector3, Vector2>
+    + LocalToWorldMatrix : Func<Matrix4x4>
+    + DistanceToRectangle : Func<DistanceToControl>
+    + DistanceToDiamond : Func<DistanceToControl>
+    + DistanceToCircle : Func<DistanceToControl>
+    + Repaint : Action
+    + RecordUndo : Action
+    + Snap : Func<Vector3, Vector3>
+    + Frame : Action<Bounds>
+    + OnPointClick : Action<int>
+    + OpenEnded : Func<bool>
+    + GetHandleSize : Func<float>
+    + lineTexture : ITexture2D <<get>> <<set>>
+    + activePoint : int <<get>> <<set>>
+    + selectedPoints : HashSet<int> <<get>>
+    + inEditMode : bool <<get>> <<set>>
+    + activeEdge : int <<get>> <<set>>
+    + delayedReset : bool <<set>>
+    - m_Selection : ShapeEditorSelection
+    - m_MousePositionLastMouseDown : Vector2
+    - m_ActivePointOnLastMouseDown : int
+    - m_NewPointIndex : int
+    - m_EdgeDragStartMousePosition : Vector3
+    - m_EdgeDragStartP0 : Vector3
+    - m_EdgeDragStartP1 : Vector3
+    - m_NewPointDragFinished : bool
+    - m_ActiveEdge : int
+    - m_DelayedReset : bool = false
+    - m_ShapeEditorListeners : HashSet<ShapeEditor>
+    - m_RectSelectionTool : ShapeEditorRectSelectionTool
+    - m_MouseClosestEdge : int
+    - m_MouseClosestEdgeDist : float
+    - m_ShapeEditorRegisteredTo : int = 0
+    - m_ShapeEditorUpdateDone : int = 0
+    - {static} handleOutlineColor : Color <<get>> <<set>>
+    - {static} handleFillColor : Color <<get>> <<set>>
+    - handleMatrixrotation : Quaternion <<get>>
+    - guiUtility : IGUIUtility <<get>> <<set>>
+    - eventSystem : IEventSystem <<get>> <<set>>
+    - currentEvent : IEvent <<get>> <<set>>
+    - glSystem : IGL <<get>> <<set>>
+    - handles : IHandles <<get>> <<set>>
+    - m_DrawBatch : Dictionary<DrawBatchDataKey, List<Vector3>>
+    - m_EdgePoints : Vector3[][]
+    - {static} <<readonly>> k_OutlineColor : Color[]
+    {static} <<readonly>> - k_FillColor : Color[]
+    - {static} <<readonly>> k_TangentColor : Color
+    - {static} <<readonly>> k_TangentColorAlternative : Color
+    - <<const>> k_EdgeHoverDistance : float = 9f
+    - <<const>> k_EdgeWidth : float = 2f
+    - <<const>> k_ActiveEdgeWidth : float = 6f
+    - <<const>> k_MinExistingPointDistanceForInsert : float = 20f
+    - <<readonly>> k_CreatorID : int
+    - <<readonly>> k_EdgeID : int
+    - <<readonly>> k_RightTangentID : int
+    - <<readonly>> k_LeftTangentID : int
+    - <<const>> k_BezierPatch : int = 40
+    + ShapeEditor(gu:IGUIUtility, es:IEventSystem)
+    + SetRectSelectionTool(sers:ShapeEditorRectSelectionTool) : void
+    + OnDisable() : void
+    - PrepareDrawBatch() : void
+    - DrawBatch() : void
+    - GetDrawBatchList(key:DrawBatchDataKey) : List<Vector3>
+    + OnGUI() : void
+    - Framing() : void
+    - PrepareEdgePointList() : void
+    - DistancePointEdge(point:Vector3, edge:Vector3[]) : float
+    - GetMouseClosestEdgeDistance() : float
+    + Edges() : void
+    + Tangents() : void
+    + Points() : void
+    + HandlePointInsertToEdge(closestEdge:int, closestEdgeDist:float) : void
+    - HandleEdgeDragging(closestEdge:int) : void
+    - DoTangent(p0:Vector3, t0:Vector3, cid:int, pointIndex:int, color:Color) : Vector3
+    + HandlePointClick(pointIndex:int) : void
+    + CycleTangentMode() : void
+    + {static} GetNextTangentMode(current:TangentMode) : TangentMode
+    + RefreshTangentsAfterModeChange(pointIndex:int, oldMode:TangentMode, newMode:TangentMode) : void
+    - GetColorForPoint(pointIndex:int, handleID:int) : ColorEnum
+    - FromAllZeroToTangents(pointIndex:int) : void
+    - GetCapForTangent(index:int) : Handles.CapFunction
+    - GetDistanceFuncForTangent(index:int) : DistanceToControl
+    - GetCapForPoint(index:int) : Handles.CapFunction
+    - {static} DistanceToCircleInternal(position:Vector3, rotation:Quaternion, size:float) : float
+    - GetHandleSizeForPoint(index:int) : float
+    - GetTangentSizeForPoint(index:int) : float
+    - RefreshTangents(index:int, rightIsActive:bool) : void
+    - StoreMouseDownState() : void
+    - DelayedResetIfNecessary() : void
+    + FindClosestPointOnEdge(edgeIndex:int, position:Vector3, iterations:int) : Vector3
+    - GetPositionByIndex(index:float) : Vector3
+    - {static} GetPoint(startPosition:Vector3, endPosition:Vector3, startTangent:Vector3, endTangent:Vector3, t:float) : Vector3
+    - FindClosestPointToMouse() : int
+    - MouseDistanceToClosestTangent() : float
+    - FindClosestPointIndex(position:Vector3) : int
+    - GetDistanceFuncForPoint(index:int) : DistanceToControl
+    - MouseDistanceToPoint(index:int) : float
+    - EdgeDragModifiersActive() : bool
+    - {static} DoSlider(id:int, position:Vector3, slide1:Vector3, slide2:Vector3, s:float, cap:Handles.CapFunction) : Vector3
+    + RectCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + CircleCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    + DiamondCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, eventType:EventType) : void
+    - {static} NextIndex(index:int, total:int) : int
+    - {static} PreviousIndex(index:int, total:int) : int
+    - {static} mod(x:int, m:int) : int
+    - {static} ProjectPointOnPlane(planeNormal:Vector3, planePoint:Vector3, point:Vector3) : Vector3
+    + RegisterToShapeEditor(se:ShapeEditor) : void
+    + UnregisterFromShapeEditor(se:ShapeEditor) : void
+    - OnShapeEditorUpdateDone() : void
+    - ClearSelectedPoints() : void
+    - SelectPointsInRect(r:Rect, st:SelectionType) : void
+    - DeleteSelections() : void
+    - MoveSelections(distance:Vector2) : void
+    - SelectPoint(index:int, st:SelectionType) : void
+}
+enum SelectionType {
+    Normal,
+    Additive,
+    Subtractive,
+}
+enum Tool {
+    Edit,
+    Create,
+    Break,
+}
+enum TangentMode {
+    Linear,
+    Continuous,
+    Broken,
+}
+enum ColorEnum {
+    EUnselected,
+    EUnselectedHovered,
+    ESelected,
+    ESelectedHovered,
+}
+class DrawBatchDataKey {
+    + color : Color <<get>>
+    + glMode : int <<get>>
+    - m_Hash : int
+    + DrawBatchDataKey(c:Color, mode:int)
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+}
+IShapeEditorFactory <|-- ShapeEditorFactory
+ShapeEditor +-- SelectionType
+ShapeEditor +-- Tool
+ShapeEditor +-- TangentMode
+ShapeEditor +-- ColorEnum
+ShapeEditor +-- DrawBatchDataKey
+@enduml

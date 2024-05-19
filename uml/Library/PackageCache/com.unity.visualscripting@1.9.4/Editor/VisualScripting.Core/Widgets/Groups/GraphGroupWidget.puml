@@ -1,0 +1,43 @@
+@startuml
+class GraphGroupWidget {
+    + GraphGroupWidget(canvas:ICanvas, group:GraphGroup)
+    - group : GraphGroup <<get>>
+    - elements : IEnumerable<IGraphElement> <<get>>
+    + <<override>> CacheItem() : void
+    + <<override>> foregroundRequiresInput : bool <<get>>
+    - {static} <<readonly>> maxHeadLabelSizeContent : GUIContent
+    - <<readonly>> labelContent : GUIContent
+    # <<override>> snapToGrid : bool <<get>>
+    + <<override>> zIndex : float <<get>> <<set>>
+    + <<override>> position : Rect <<get>> <<set>>
+    + labelPosition : Rect <<get>>
+    + <<override>> hotArea : Rect <<get>>
+    + <<override>> CachePosition() : void
+    + <<override>> OnViewportChange() : void
+    - AdjustLabelFontSize() : void
+    + <<override>> DrawForeground() : void
+    + <<override>> DrawBackground() : void
+    + <<override>> canDelete : bool <<get>>
+    + <<override>> canAlignAndDistribute : bool <<get>>
+    + <<override>> canResizeHorizontal : bool <<get>>
+    + <<override>> canResizeVertical : bool <<get>>
+    - shouldFocusLabel : bool
+    + <<override>> canSelect : bool <<get>>
+    + FocusLabel() : void
+    - SelectElements() : void
+    # <<override>> OnDoubleClick() : void
+    + <<override>> canDrag : bool <<get>>
+    + <<override>> ExpandDragGroup(dragGroup:HashSet<IGraphElement>) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> headerFontSize : float = 14
+    + {static} <<readonly>> group : GUIStyle
+    + {static} <<readonly>> label : GUIStyle
+    + {static} <<readonly>> labelSelected : GUIStyle
+    + {static} headerHeight : float <<get>>
+    + {static} AdjustColor(color:Color, selected:bool) : Color
+}
+"GraphElementWidget`2" "<ICanvas,GraphGroup>" <|-- GraphGroupWidget
+GraphGroupWidget +-- Styles
+@enduml

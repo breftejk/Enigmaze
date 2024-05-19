@@ -1,0 +1,7 @@
+@startuml
+class TypeMapping {
+    + fromType : Type <<get>>
+    + toType : Type <<get>>
+    + TypeMapping(fromType:Type, toType:Type)
+}
+@enduml

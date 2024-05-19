@@ -1,0 +1,7 @@
+@startuml
+class AsepriteImporterEditorExternalData {
+    + platformSettings : List<TextureImporterPlatformSettings>
+    + Init(importer:AsepriteImporter, platformSettingsNeeded:IList<TextureImporterPlatformSettings>) : void
+}
+ScriptableObject <|-- AsepriteImporterEditorExternalData
+@enduml

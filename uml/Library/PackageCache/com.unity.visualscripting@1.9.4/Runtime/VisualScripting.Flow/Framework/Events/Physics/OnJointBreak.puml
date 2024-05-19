@@ -1,0 +1,10 @@
+@startuml
+class OnJointBreak <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + breakForce : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, breakForce:float) : void
+}
+"GameObjectEventUnit`1" "<float>" <|-- OnJointBreak
+@enduml

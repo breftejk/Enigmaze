@@ -1,0 +1,10 @@
+@startuml
+class SpriteShapeEditorGUI {
+    - <<const>> kSpacingSubLabel : float = 2.0f
+    - <<const>> kMiniLabelW : float = 13
+    - <<const>> kVerticalSpacingMultiField : int = 0
+    - <<const>> kIndentPerLevel : float = 15
+    + {static} s_FoldoutHash : int
+    + {static} MultiDelayedIntField(position:Rect, subLabels:GUIContent[], values:int[], labelWidth:float) : void
+}
+@enduml

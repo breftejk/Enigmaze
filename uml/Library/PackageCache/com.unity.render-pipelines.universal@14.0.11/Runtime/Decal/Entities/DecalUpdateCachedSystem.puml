@@ -1,0 +1,58 @@
+@startuml
+class DecalCachedChunk {
+    + propertyBlock : MaterialPropertyBlock
+    + passIndexDBuffer : int
+    + passIndexEmissive : int
+    + passIndexScreenSpace : int
+    + passIndexGBuffer : int
+    + drawOrder : int
+    + isCreated : bool
+    + decalToWorlds : NativeArray<float4x4>
+    + normalToWorlds : NativeArray<float4x4>
+    + sizeOffsets : NativeArray<float4x4>
+    + drawDistances : NativeArray<float2>
+    + angleFades : NativeArray<float2>
+    + uvScaleBias : NativeArray<float4>
+    + layerMasks : NativeArray<int>
+    + sceneLayerMasks : NativeArray<ulong>
+    + fadeFactors : NativeArray<float>
+    + boundingSpheres : NativeArray<BoundingSphere>
+    + scaleModes : NativeArray<DecalScaleMode>
+    + renderingLayerMasks : NativeArray<uint>
+    + positions : NativeArray<float3>
+    + rotation : NativeArray<quaternion>
+    + scales : NativeArray<float3>
+    + dirty : NativeArray<bool>
+    + boundingSphereArray : BoundingSphere[]
+    + <<override>> RemoveAtSwapBack(entityIndex:int) : void
+    + <<override>> SetCapacity(newCapacity:int) : void
+    + <<override>> Dispose() : void
+}
+class DecalUpdateCachedSystem {
+    - m_EntityManager : DecalEntityManager
+    - m_Sampler : ProfilingSampler
+    - m_SamplerJob : ProfilingSampler
+    + DecalUpdateCachedSystem(entityManager:DecalEntityManager)
+    + Execute() : void
+    - Execute(entityChunk:DecalEntityChunk, cachedChunk:DecalCachedChunk, count:int) : void
+}
+struct UpdateTransformsJob {
+    - {static} <<readonly>> k_MinusYtoZRotation : quaternion
+    + positions : NativeArray<float3>
+    + rotations : NativeArray<quaternion>
+    + scales : NativeArray<float3>
+    + dirty : NativeArray<bool>
+    + scaleModes : NativeArray<DecalScaleMode>
+    + sizeOffsets : NativeArray<float4x4>
+    + decalToWorlds : NativeArray<float4x4>
+    + normalToWorlds : NativeArray<float4x4>
+    + boundingSpheres : NativeArray<BoundingSphere>
+    + minDistance : float
+    - DistanceBetweenQuaternions(a:quaternion, b:quaternion) : float
+    + Execute(index:int, transform:TransformAccess) : void
+    - GetDecalProjectBoundingSphere(decalToWorld:Matrix4x4) : BoundingSphere
+}
+DecalChunk <|-- DecalCachedChunk
+DecalUpdateCachedSystem +-- UpdateTransformsJob
+IJobParallelForTransform <|-- UpdateTransformsJob
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+class TestLaunchFailedException {
+    + TestLaunchFailedException()
+    + TestLaunchFailedException(message:string)
+}
+class PlayerLauncher {
+    - <<readonly>> m_TargetPlatform : BuildTarget
+    - m_OverloadTestRunSettings : ITestRunSettings
+    - m_SceneName : string
+    - m_HeartbeatTimeout : int
+    - m_PlayerWithTestsPath : string
+    + PlayerLauncher(settings:PlaymodeTestsControllerSettings, targetPlatform:BuildTarget?, overloadTestRunSettings:ITestRunSettings, heartbeatTimeout:int, playerWithTestsPath:string)
+    # <<override>> TestTargetPlatform : RuntimePlatform? <<get>>
+    + <<override>> Run() : void
+    + PrepareScene(sceneName:string) : Scene
+    - {static} BuildAndRunPlayer(buildOptions:PlayerLauncherBuildOptions) : bool
+    <<internal>> GetBuildOptions(scenePath:string) : PlayerLauncherBuildOptions
+    - ModifyBuildOptions(buildOptions:BuildPlayerOptions) : BuildPlayerOptions
+    - {static} ShouldReduceBuildLocationPathLength(target:BuildTarget) : bool
+}
+Exception <|-- TestLaunchFailedException
+RuntimeTestLauncherBase <|-- PlayerLauncher
+@enduml

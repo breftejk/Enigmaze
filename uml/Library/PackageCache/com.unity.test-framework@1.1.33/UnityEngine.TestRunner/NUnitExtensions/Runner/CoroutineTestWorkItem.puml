@@ -1,0 +1,10 @@
+@startuml
+class CoroutineTestWorkItem {
+    - {static} m_MonoBehaviourCoroutineRunner : MonoBehaviour
+    - m_Command : TestCommand
+    + {static} monoBehaviourCoroutineRunner : MonoBehaviour <<get>> <<set>>
+    + CoroutineTestWorkItem(test:TestMethod, filter:ITestFilter)
+    # <<override>> PerformWork() : IEnumerable
+}
+UnityWorkItem <|-- CoroutineTestWorkItem
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class CSharpToHLSL {
+    + {static} <<async>> GenerateAll() : Task
+    - {static} <<async>> GenerateAsync(targetFilename:string, targetCustomFilename:string, generators:List<ShaderTypeGenerator>) : Task
+}
+@enduml

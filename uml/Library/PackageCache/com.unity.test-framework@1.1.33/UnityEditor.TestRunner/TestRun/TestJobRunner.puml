@@ -1,0 +1,19 @@
+@startuml
+class TestJobRunner {
+    - {static} GetTaskList(settings:ExecutionSettings) : IEnumerable<TestTaskBase>
+    <<internal>> SavedTestJobData : List<TestJobData>
+    <<internal>> SubscribeCallback : Action<EditorApplication.CallbackFunction>
+    <<internal>> UnsubscribeCallback : Action<EditorApplication.CallbackFunction>
+    <<internal>> PcHelper : TestCommandPcHelper
+    <<internal>> GetTasks : Func<ExecutionSettings, IEnumerable<TestTaskBase>>
+    <<internal>> LogException : Action<Exception>
+    <<internal>> LogError : Action<string>
+    <<internal>> ReportRunFailed : Action<string>
+    - m_JobData : TestJobData
+    - Tasks : TestTaskBase[]
+    - m_Enumerator : IEnumerator = null
+    + RunJob(data:TestJobData) : string
+    - ExecuteStep() : void
+    - StopRun() : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class MainLightDirectionNode {
+    + MainLightDirectionNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - MainLightDirection(Direction:Vector3) : string
+}
+CodeFunctionNode <|-- MainLightDirectionNode
+@enduml

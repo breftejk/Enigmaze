@@ -1,0 +1,28 @@
+@startuml
+enum DepthOfFieldMode {
+    Off,
+    Gaussian,
+    Bokeh,
+}
+class DepthOfField <<sealed>> {
+    + mode : DepthOfFieldModeParameter
+    + gaussianStart : MinFloatParameter
+    + gaussianEnd : MinFloatParameter
+    + gaussianMaxRadius : ClampedFloatParameter
+    + highQualitySampling : BoolParameter
+    + focusDistance : MinFloatParameter
+    + aperture : ClampedFloatParameter
+    + focalLength : ClampedFloatParameter
+    + bladeCount : ClampedIntParameter
+    + bladeCurvature : ClampedFloatParameter
+    + bladeRotation : ClampedFloatParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+class DepthOfFieldModeParameter <<sealed>> {
+    + DepthOfFieldModeParameter(value:DepthOfFieldMode, overrideState:bool)
+}
+VolumeComponent <|-- DepthOfField
+IPostProcessComponent <|-- DepthOfField
+"VolumeParameter`1" "<DepthOfFieldMode>" <|-- DepthOfFieldModeParameter
+@enduml

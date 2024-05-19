@@ -1,0 +1,10 @@
+@startuml
+class MacroEditor {
+    + MacroEditor(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - GetButtonHeight(width:float) : float
+    - OnButtonGUI(sourcePosition:Rect) : void
+}
+Inspector <|-- MacroEditor
+@enduml

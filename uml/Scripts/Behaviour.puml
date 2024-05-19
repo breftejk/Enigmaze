@@ -1,0 +1,19 @@
+@startuml
+abstract class Behaviour {
+    + enabled : bool <<get>> <<set>>
+    <<internal>> GetEnabled() : bool
+    <<internal>> SetEnabled(value:bool) : void
+    <<internal>> <<override>> Deactivate() : void
+    - m_Enabled : bool = true
+    - m_IsAdded : bool
+    - IsAddedToManager() : bool
+    {abstract} <<internal>> AddToManager() : void
+    {abstract} <<internal>> RemoveFromManager() : void
+    - UpdateEnabledState(active:bool) : void
+    <<internal>> <<override>> AwakeFromLoad(awakeMode:AwakeFromLoadMode) : void
+    <<internal>> <<virtual>> __Update() : void
+    <<internal>> <<virtual>> __FixedUpdate() : void
+    <<internal>> <<virtual>> __LateUpdate() : void
+}
+Component <|-- Behaviour
+@enduml

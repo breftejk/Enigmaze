@@ -1,0 +1,41 @@
+@startuml
+class GridLayoutGroup {
+    # m_StartCorner : Corner
+    + startCorner : Corner <<get>> <<set>>
+    # m_StartAxis : Axis
+    + startAxis : Axis <<get>> <<set>>
+    # m_CellSize : Vector2
+    + cellSize : Vector2 <<get>> <<set>>
+    # m_Spacing : Vector2
+    + spacing : Vector2 <<get>> <<set>>
+    # m_Constraint : Constraint
+    + constraint : Constraint <<get>> <<set>>
+    # m_ConstraintCount : int = 2
+    + constraintCount : int <<get>> <<set>>
+    # GridLayoutGroup()
+    + <<override>> CalculateLayoutInputHorizontal() : void
+    + <<override>> CalculateLayoutInputVertical() : void
+    + <<override>> SetLayoutHorizontal() : void
+    + <<override>> SetLayoutVertical() : void
+    - SetCellsAlongAxis(axis:int) : void
+}
+enum Corner {
+    UpperLeft= 0,
+    UpperRight= 1,
+    LowerLeft= 2,
+    LowerRight= 3,
+}
+enum Axis {
+    Horizontal= 0,
+    Vertical= 1,
+}
+enum Constraint {
+    Flexible= 0,
+    FixedColumnCount= 1,
+    FixedRowCount= 2,
+}
+LayoutGroup <|-- GridLayoutGroup
+GridLayoutGroup +-- Corner
+GridLayoutGroup +-- Axis
+GridLayoutGroup +-- Constraint
+@enduml

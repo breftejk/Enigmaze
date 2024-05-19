@@ -1,0 +1,28 @@
+@startuml
+class StateCanvas <<sealed>> {
+    + StateCanvas(graph:StateGraph)
+    # <<override>> shouldEdgePan : bool <<get>>
+    # <<override>> DrawBackground() : void
+    + <<override>> ShrinkCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    + <<override>> OnToolbarGUI() : void
+    # <<override>> OnContext() : void
+    # <<override>> GetContextOptions() : IEnumerable<DropdownOption>
+    - CreateFlowState(position:Vector2) : void
+    - CreateSuperState(position:Vector2) : void
+    - CreateAnyState(position:Vector2) : void
+    - NewSticky(position:Vector2) : void
+    + AddState(state:IState, position:Vector2) : void
+    + <<override>> Close() : void
+    # <<override>> HandleHighPriorityInput() : void
+    + CompleteTransitionToNewState() : void
+    + <<override>> AcceptsDragAndDrop() : bool
+    + <<override>> PerformDragAndDrop() : void
+    + <<override>> DrawDragAndDropPreview() : void
+    + transitionSource : IState <<get>> <<set>>
+    + isCreatingTransition : bool <<get>>
+    + StartTransition(source:IState) : void
+    + EndTransition(destination:IState) : void
+    + CancelTransition() : void
+}
+"VisualScriptingCanvas`1" "<StateGraph>" <|-- StateCanvas
+@enduml

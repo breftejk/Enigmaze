@@ -1,0 +1,8 @@
+@startuml
+class SerializationOperation {
+    + SerializationOperation()
+    + serializer : fsSerializer <<get>>
+    + objectReferences : List<UnityObject> <<get>>
+    + Reset() : void
+}
+@enduml

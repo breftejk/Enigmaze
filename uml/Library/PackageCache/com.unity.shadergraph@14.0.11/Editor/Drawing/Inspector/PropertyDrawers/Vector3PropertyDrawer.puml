@@ -1,0 +1,16 @@
+@startuml
+class Vector3PropertyDrawer {
+    + preValueChangeCallback : Action <<get>> <<set>>
+    + postValueChangeCallback : Action <<get>> <<set>>
+    - m_KeyDownCallback : EventCallback<KeyDownEvent>
+    - m_FocusOutCallback : EventCallback<FocusOutEvent>
+    + mUndoGroup : int <<get>> <<set>>
+    - CreateCallbacks() : void
+    + Vector3PropertyDrawer()
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:Vector3, labelName:string, propertyVec3Field:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- Vector3PropertyDrawer
+@enduml

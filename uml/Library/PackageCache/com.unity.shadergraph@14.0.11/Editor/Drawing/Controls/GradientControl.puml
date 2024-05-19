@@ -1,0 +1,23 @@
+@startuml
+class GradientControlAttribute {
+    - m_Label : string
+    + GradientControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class GradientObject {
+    + gradient : Gradient
+}
+class GradientControlView {
+    - m_Label : GUIContent
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_GradientObject : GradientObject
+    - m_SerializedObject : SerializedObject
+    + GradientControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnValueChanged(evt:ChangeEvent<Gradient>) : void
+}
+Attribute <|-- GradientControlAttribute
+IControlAttribute <|-- GradientControlAttribute
+ScriptableObject <|-- GradientObject
+VisualElement <|-- GradientControlView
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+abstract class UnaryOperatorHandler {
+    # UnaryOperatorHandler(name:string, verb:string, symbol:string, customMethodName:string)
+    - <<readonly>> manualHandlers : Dictionary<Type, Func<object, object>>
+    - <<readonly>> userDefinedOperators : Dictionary<Type, IOptimizedInvoker>
+    - <<readonly>> userDefinedOperandTypes : Dictionary<Type, Type>
+    + Operate(operand:object) : object
+    # <<virtual>> CustomHandling(operand:object) : object
+    # Handle(handler:Func<T, object>) : void
+    - {static} ResolveUserDefinedOperandType(userDefinedOperator:MethodInfo) : Type
+}
+OperatorHandler <|-- UnaryOperatorHandler
+@enduml

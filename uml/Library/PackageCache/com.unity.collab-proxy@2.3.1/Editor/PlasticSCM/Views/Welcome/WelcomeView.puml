@@ -1,0 +1,40 @@
+@startuml
+class WelcomeView {
+    <<internal>> WelcomeView(parentWindow:PlasticWindow, createWorkspaceListener:CreateWorkspaceView.ICreateWorkspaceListener, plasticApi:IPlasticAPI, plasticWebRestApi:IPlasticWebRestApi, cmConnection:CmConnection)
+    <<internal>> Update() : void
+    <<internal>> OnGUI(clientNeedsConfiguration:bool) : void
+    <<internal>> OnUserClosedConfigurationWindow() : void
+    - DoContentViewArea(clientNeedsConfiguration:bool, isCreateWorkspaceButtonClicked:bool, installerFile:string, guiMessage:GuiMessage.IGuiMessage, configureProgress:ProgressControlsForViews) : void
+    - DoSetupViewArea(clientNeedsConfiguration:bool, installerFile:string, guiMessage:GuiMessage.IGuiMessage, configureProgress:ProgressControlsForViews) : void
+    - DoActionButtonsArea(isStep1Completed:bool, installerFile:string, guiMessage:GuiMessage.IGuiMessage, configureProgress:ProgressControlsForViews) : void
+    - DoActionButton(isStep1Completed:bool, installerFile:string, guiMessage:GuiMessage.IGuiMessage, configureProgress:ProgressControlsForViews) : void
+    - DoConfigureButton(configureProgress:ProgressControlsForViews) : void
+    {static} - DoStepsArea(isStep1Completed:bool, configureProgressData:ProgressControlsForViews.Data) : void
+    {static} - DoLoginOrSignUpStep(isStep1Completed:bool, progressData:ProgressControlsForViews.Data) : void
+    {static} - DoCreatePlasticWorkspaceStep() : void
+    {static} - DoStepLabel(text:string, image:Texture2D, style:GUIStyle) : void
+    {static} - DoTitleLabel() : void
+    {static} - DoNotificationArea(configureProgressData:ProgressControlsForViews.Data) : void
+    {static} - GetConfigurationStepText(progressData:ProgressControlsForViews.Data, isStep1Completed:bool) : string
+    - GetCreateWorkspaceView() : CreateWorkspaceView
+    <<internal>> autoLoginState : AutoLogin.State
+    - mInstallerFile : string
+    - mIsCreateWorkspaceButtonClicked : bool = false
+    - mCreateWorkspaceView : CreateWorkspaceView
+    <<readonly>> - mConfigureProgress : ProgressControlsForViews
+    <<readonly>> - mGuiMessage : GuiMessage.IGuiMessage
+    <<readonly>> - mCmConnection : CmConnection
+    <<readonly>> - mPlasticApi : IPlasticAPI
+    <<readonly>> - mPlasticWebRestApi : IPlasticWebRestApi
+    <<readonly>> - mCreateWorkspaceListener : CreateWorkspaceView.ICreateWorkspaceListener
+    <<readonly>> - mParentWindow : PlasticWindow
+    <<const>> - LEFT_MARGIN : int = 30
+    <<const>> - TOP_MARGIN : int = 20
+    <<const>> - STEPS_TOP_MARGIN : int = 5
+    <<const>> - STEPS_LEFT_MARGIN : int = 12
+    <<const>> - BUTTON_MARGIN : int = 10
+    <<const>> - STEP_LABEL_HEIGHT : int = 20
+    <<const>> - BUTTON_WIDTH : int = 170
+    <<const>> - DOWNLOAD_URL : string = @"https://www.plasticscm.com/download"
+}
+@enduml

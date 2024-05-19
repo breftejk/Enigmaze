@@ -1,0 +1,9 @@
+@startuml
+class GetPlasticShortcut <<static>> {
+    <<internal>> {static} ForOpen() : string
+    <<internal>> {static} ForDelete() : string
+    <<internal>> {static} ForDiff() : string
+    <<internal>> {static} ForAssetDiff() : string
+    <<internal>> {static} ForHistory() : string
+}
+@enduml

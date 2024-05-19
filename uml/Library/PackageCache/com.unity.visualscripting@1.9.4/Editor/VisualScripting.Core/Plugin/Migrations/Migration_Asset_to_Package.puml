@@ -1,0 +1,35 @@
+@startuml
+class MigrationUtility_Asset_to_Package {
+    + {static} GetLegacyProjectSettingsAsset(pluginId:string) : DictionaryAsset
+    + {static} GetLegacyIconMapAssetPath(pluginId:string) : string
+    + {static} GetLegacyRootPath(pluginId:string) : string
+    + {static} TryManualParseSavedVersion(pluginId:string) : SemanticVersion
+    <<internal>> {static} GetEditorPrefMigrationsForPlugin(p:Plugin) : IEnumerable<KeyValuePair<string, string>>
+    <<internal>> {static} MigrateEditorPref(fromKey:string, toKey:string) : void
+    + {static} MigrateEditorPreferences(p:Plugin) : void
+}
+class Migration_Asset_to_Package {
+    + Migration_Asset_to_Package(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + <<override>> Run() : void
+    - {static} RemoveLegacyPackageFiles() : void
+    - {static} MigrateProjectSettings() : void
+    - {static} MigrateVariablesAssets() : void
+}
+class Migration_Asset_to_Package_Post {
+    + Migration_Asset_to_Package_Post(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + <<override>> Run() : void
+    - {static} CleanupLegacyUserFiles() : void
+}
+class DeprecatedSavedVersionLoader_Bolt_AssetStore {
+    + DeprecatedSavedVersionLoader_Bolt_AssetStore(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> Run(savedVersion:SemanticVersion) : bool
+}
+PluginMigration <|-- Migration_Asset_to_Package
+PluginMigration <|-- Migration_Asset_to_Package_Post
+PluginDeprecatedSavedVersionLoader <|-- DeprecatedSavedVersionLoader_Bolt_AssetStore
+@enduml

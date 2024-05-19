@@ -1,0 +1,18 @@
+@startuml
+class BackupPage {
+    + BackupPage()
+    # createdBackup : bool <<get>>
+    # <<virtual>> incentive : string <<get>> = "We strongly suggest that you create frequent backups of your project if you don't use version control."
+    # <<virtual>> OnCloseButtonGUI() : void
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> createBackupButton : GUIStyle
+    + {static} <<readonly>> backupCreatedLabel : GUIStyle
+    + {static} <<readonly>> closeButton : GUIStyle
+}
+Page <|-- BackupPage
+BackupPage +-- Styles
+@enduml

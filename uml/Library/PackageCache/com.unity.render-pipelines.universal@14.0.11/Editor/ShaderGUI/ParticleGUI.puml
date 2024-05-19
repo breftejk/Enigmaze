@@ -1,0 +1,63 @@
+@startuml
+class ParticleGUI <<static>> {
+    - {static} vertexStreamList : ReorderableList
+    + {static} SetupMaterialWithColorMode(material:Material) : void
+    + {static} FadingOptions(material:Material, materialEditor:MaterialEditor, properties:ParticleProperties) : void
+    + {static} DoVertexStreamsArea(material:Material, renderers:List<ParticleSystemRenderer>, useLighting:bool) : void
+    - {static} CompareVertexStreams(a:IEnumerable<ParticleSystemVertexStream>, b:IEnumerable<ParticleSystemVertexStream>) : bool
+    + {static} SetMaterialKeywords(material:Material) : void
+}
+enum ColorMode {
+    Multiply,
+    Additive,
+    Subtractive,
+    Overlay,
+    Color,
+    Difference,
+}
+class Styles <<static>> {
+    + {static} colorMode : GUIContent
+    + {static} flipbookMode : GUIContent
+    + {static} softParticlesEnabled : GUIContent
+    + {static} softParticlesFadeText : GUIContent
+    + {static} softParticlesNearFadeDistanceText : GUIContent
+    + {static} softParticlesFarFadeDistanceText : GUIContent
+    + {static} cameraFadingEnabled : GUIContent
+    + {static} cameraFadingDistanceText : GUIContent
+    + {static} cameraNearFadeDistanceText : GUIContent
+    + {static} cameraFarFadeDistanceText : GUIContent
+    + {static} distortionEnabled : GUIContent
+    + {static} distortionStrength : GUIContent
+    + {static} distortionBlend : GUIContent
+    + {static} VertexStreams : GUIContent
+    + {static} streamPositionText : string = "Position (POSITION.xyz)"
+    + {static} streamNormalText : string = "Normal (NORMAL.xyz)"
+    + {static} streamColorText : string = "Color (COLOR.xyzw)"
+    + {static} streamColorInstancedText : string = "Color (INSTANCED0.xyzw)"
+    + {static} streamUVText : string = "UV (TEXCOORD0.xy)"
+    + {static} streamUV2Text : string = "UV2 (TEXCOORD0.zw)"
+    + {static} streamAnimBlendText : string = "AnimBlend (TEXCOORD1.x)"
+    + {static} streamAnimFrameText : string = "AnimFrame (INSTANCED1.x)"
+    + {static} streamTangentText : string = "Tangent (TANGENT.xyzw)"
+    + {static} streamApplyToAllSystemsText : GUIContent
+    + {static} undoApplyCustomVertexStreams : string
+    + {static} vertexStreamIcon : GUIStyle
+}
+struct ParticleProperties {
+    + colorMode : MaterialProperty
+    + flipbookMode : MaterialProperty
+    + softParticlesEnabled : MaterialProperty
+    + cameraFadingEnabled : MaterialProperty
+    + distortionEnabled : MaterialProperty
+    + softParticlesNearFadeDistance : MaterialProperty
+    + softParticlesFarFadeDistance : MaterialProperty
+    + cameraNearFadeDistance : MaterialProperty
+    + cameraFarFadeDistance : MaterialProperty
+    + distortionBlend : MaterialProperty
+    + distortionStrength : MaterialProperty
+    + ParticleProperties(properties:MaterialProperty[])
+}
+ParticleGUI +-- ColorMode
+ParticleGUI +-- Styles
+ParticleGUI +-- ParticleProperties
+@enduml

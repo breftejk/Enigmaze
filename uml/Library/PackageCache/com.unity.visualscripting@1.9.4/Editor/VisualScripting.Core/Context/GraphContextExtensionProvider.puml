@@ -1,0 +1,10 @@
+@startuml
+class GraphContextExtensionProvider {
+    {static} - GraphContextExtensionProvider()
+    + {static} instance : GraphContextExtensionProvider <<get>>
+}
+class XCanvasExtensionProvider <<static>> {
+    + {static} Extensions(context:IGraphContext) : IEnumerable<IGraphContextExtension>
+}
+"MultiDecoratorProvider`3" "<IGraphContext,IGraphContextExtension,GraphContextExtensionAttribute>" <|-- GraphContextExtensionProvider
+@enduml

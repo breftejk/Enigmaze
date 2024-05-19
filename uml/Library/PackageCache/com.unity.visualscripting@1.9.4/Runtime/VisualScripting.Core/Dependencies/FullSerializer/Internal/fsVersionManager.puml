@@ -1,0 +1,10 @@
+@startuml
+class fsVersionManager <<static>> {
+    - {static} <<readonly>> _cache : Dictionary<Type, fsOption<fsVersionedType>>
+    + {static} GetVersionImportPath(currentVersion:string, targetVersion:fsVersionedType, path:List<fsVersionedType>) : fsResult
+    - {static} GetVersionImportPathRecursive(path:List<fsVersionedType>, currentVersion:string, current:fsVersionedType) : bool
+    + {static} GetVersionedType(type:Type) : fsOption<fsVersionedType>
+    - {static} VerifyConstructors(type:fsVersionedType) : void
+    - {static} VerifyUniqueVersionStrings(type:fsVersionedType) : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireNormal {
+    RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+class MayRequireNormalExtensions <<static>> {
+    + {static} RequiresNormal(slot:MaterialSlot) : NeededCoordinateSpace
+}
+@enduml

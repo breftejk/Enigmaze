@@ -1,0 +1,28 @@
+@startuml
+interface IImagePackNodeVisitor {
+    Visit(node:ImagePackNode) : void
+}
+class CollectEmptyNodePositionVisitor {
+    + emptyAreas : List<RectInt>
+    + Visit(node:ImagePackNode) : void
+}
+class CollectPackNodePositionVisitor {
+    + CollectPackNodePositionVisitor()
+    + Visit(node:ImagePackNode) : void
+    + positions : Vector2Int[] <<get>>
+}
+class ImagePackNode {
+    + left : ImagePackNode
+    + right : ImagePackNode
+    + rect : RectInt
+    + imageWidth : Vector2Int
+    + imageId : int
+    + AcceptVisitor(visitor:IImagePackNodeVisitor) : void
+    + AdjustSize(oriWidth:int, oriHeight:int, deltaW:int, deltaH:int, adjustx:int, adjusty:int) : void
+    + TryInsert(insert:ImagePacker.ImagePackRect, padding:int, remainingSpace:Vector2Int) : bool
+    {static} - SplitRects(node:ImagePackNode, insert:ImagePacker.ImagePackRect, padding:int, left:ImagePackNode, right:ImagePackNode) : bool
+    + Insert(insert:ImagePacker.ImagePackRect, padding:int) : bool
+}
+IImagePackNodeVisitor <|-- CollectEmptyNodePositionVisitor
+IImagePackNodeVisitor <|-- CollectPackNodePositionVisitor
+@enduml

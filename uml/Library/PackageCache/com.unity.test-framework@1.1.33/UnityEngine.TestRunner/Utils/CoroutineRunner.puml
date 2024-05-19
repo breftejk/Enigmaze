@@ -1,0 +1,18 @@
+@startuml
+class CoroutineRunner {
+    - m_Running : bool
+    - m_Timeout : bool
+    - <<readonly>> m_Controller : MonoBehaviour
+    - <<readonly>> m_Context : UnityTestExecutionContext
+    - m_TimeOutCoroutine : Coroutine
+    - m_TestCoroutine : IEnumerator
+    <<internal>> <<const>> k_DefaultTimeout : int
+    + CoroutineRunner(playmodeTestsController:MonoBehaviour, context:UnityTestExecutionContext)
+    + HandleEnumerableTest(testEnumerator:IEnumerator) : IEnumerator
+    - StopAllRunningCoroutines() : void
+    - ExMethod(e:IEnumerator, timeout:int) : IEnumerator
+    - StartTimer(coroutineToBeKilled:IEnumerator, timeout:int, onTimeout:Action) : IEnumerator
+    + HasFailedWithTimeout() : bool
+    + GetDefaultTimeout() : int
+}
+@enduml

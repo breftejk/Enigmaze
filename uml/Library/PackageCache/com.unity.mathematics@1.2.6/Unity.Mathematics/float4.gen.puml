@@ -1,0 +1,406 @@
+@startuml
+struct float4 {
+    + x : float
+    + y : float
+    + z : float
+    + w : float
+    + {static} <<readonly>> zero : float4
+    + float4(x:float, y:float, z:float, w:float)
+    + float4(x:float, y:float, zw:float2)
+    + float4(x:float, yz:float2, w:float)
+    + float4(x:float, yzw:float3)
+    + float4(xy:float2, z:float, w:float)
+    + float4(xy:float2, zw:float2)
+    + float4(xyz:float3, w:float)
+    + float4(xyzw:float4)
+    + float4(v:float)
+    + float4(v:bool)
+    + float4(v:bool4)
+    + float4(v:int)
+    + float4(v:int4)
+    + float4(v:uint)
+    + float4(v:uint4)
+    + float4(v:half)
+    + float4(v:half4)
+    + float4(v:double)
+    + float4(v:double4)
+    + xxxx : float4 <<get>>
+    + xxxy : float4 <<get>>
+    + xxxz : float4 <<get>>
+    + xxxw : float4 <<get>>
+    + xxyx : float4 <<get>>
+    + xxyy : float4 <<get>>
+    + xxyz : float4 <<get>>
+    + xxyw : float4 <<get>>
+    + xxzx : float4 <<get>>
+    + xxzy : float4 <<get>>
+    + xxzz : float4 <<get>>
+    + xxzw : float4 <<get>>
+    + xxwx : float4 <<get>>
+    + xxwy : float4 <<get>>
+    + xxwz : float4 <<get>>
+    + xxww : float4 <<get>>
+    + xyxx : float4 <<get>>
+    + xyxy : float4 <<get>>
+    + xyxz : float4 <<get>>
+    + xyxw : float4 <<get>>
+    + xyyx : float4 <<get>>
+    + xyyy : float4 <<get>>
+    + xyyz : float4 <<get>>
+    + xyyw : float4 <<get>>
+    + xyzx : float4 <<get>>
+    + xyzy : float4 <<get>>
+    + xyzz : float4 <<get>>
+    + xyzw : float4 <<get>> <<set>>
+    + xywx : float4 <<get>>
+    + xywy : float4 <<get>>
+    + xywz : float4 <<get>> <<set>>
+    + xyww : float4 <<get>>
+    + xzxx : float4 <<get>>
+    + xzxy : float4 <<get>>
+    + xzxz : float4 <<get>>
+    + xzxw : float4 <<get>>
+    + xzyx : float4 <<get>>
+    + xzyy : float4 <<get>>
+    + xzyz : float4 <<get>>
+    + xzyw : float4 <<get>> <<set>>
+    + xzzx : float4 <<get>>
+    + xzzy : float4 <<get>>
+    + xzzz : float4 <<get>>
+    + xzzw : float4 <<get>>
+    + xzwx : float4 <<get>>
+    + xzwy : float4 <<get>> <<set>>
+    + xzwz : float4 <<get>>
+    + xzww : float4 <<get>>
+    + xwxx : float4 <<get>>
+    + xwxy : float4 <<get>>
+    + xwxz : float4 <<get>>
+    + xwxw : float4 <<get>>
+    + xwyx : float4 <<get>>
+    + xwyy : float4 <<get>>
+    + xwyz : float4 <<get>> <<set>>
+    + xwyw : float4 <<get>>
+    + xwzx : float4 <<get>>
+    + xwzy : float4 <<get>> <<set>>
+    + xwzz : float4 <<get>>
+    + xwzw : float4 <<get>>
+    + xwwx : float4 <<get>>
+    + xwwy : float4 <<get>>
+    + xwwz : float4 <<get>>
+    + xwww : float4 <<get>>
+    + yxxx : float4 <<get>>
+    + yxxy : float4 <<get>>
+    + yxxz : float4 <<get>>
+    + yxxw : float4 <<get>>
+    + yxyx : float4 <<get>>
+    + yxyy : float4 <<get>>
+    + yxyz : float4 <<get>>
+    + yxyw : float4 <<get>>
+    + yxzx : float4 <<get>>
+    + yxzy : float4 <<get>>
+    + yxzz : float4 <<get>>
+    + yxzw : float4 <<get>> <<set>>
+    + yxwx : float4 <<get>>
+    + yxwy : float4 <<get>>
+    + yxwz : float4 <<get>> <<set>>
+    + yxww : float4 <<get>>
+    + yyxx : float4 <<get>>
+    + yyxy : float4 <<get>>
+    + yyxz : float4 <<get>>
+    + yyxw : float4 <<get>>
+    + yyyx : float4 <<get>>
+    + yyyy : float4 <<get>>
+    + yyyz : float4 <<get>>
+    + yyyw : float4 <<get>>
+    + yyzx : float4 <<get>>
+    + yyzy : float4 <<get>>
+    + yyzz : float4 <<get>>
+    + yyzw : float4 <<get>>
+    + yywx : float4 <<get>>
+    + yywy : float4 <<get>>
+    + yywz : float4 <<get>>
+    + yyww : float4 <<get>>
+    + yzxx : float4 <<get>>
+    + yzxy : float4 <<get>>
+    + yzxz : float4 <<get>>
+    + yzxw : float4 <<get>> <<set>>
+    + yzyx : float4 <<get>>
+    + yzyy : float4 <<get>>
+    + yzyz : float4 <<get>>
+    + yzyw : float4 <<get>>
+    + yzzx : float4 <<get>>
+    + yzzy : float4 <<get>>
+    + yzzz : float4 <<get>>
+    + yzzw : float4 <<get>>
+    + yzwx : float4 <<get>> <<set>>
+    + yzwy : float4 <<get>>
+    + yzwz : float4 <<get>>
+    + yzww : float4 <<get>>
+    + ywxx : float4 <<get>>
+    + ywxy : float4 <<get>>
+    + ywxz : float4 <<get>> <<set>>
+    + ywxw : float4 <<get>>
+    + ywyx : float4 <<get>>
+    + ywyy : float4 <<get>>
+    + ywyz : float4 <<get>>
+    + ywyw : float4 <<get>>
+    + ywzx : float4 <<get>> <<set>>
+    + ywzy : float4 <<get>>
+    + ywzz : float4 <<get>>
+    + ywzw : float4 <<get>>
+    + ywwx : float4 <<get>>
+    + ywwy : float4 <<get>>
+    + ywwz : float4 <<get>>
+    + ywww : float4 <<get>>
+    + zxxx : float4 <<get>>
+    + zxxy : float4 <<get>>
+    + zxxz : float4 <<get>>
+    + zxxw : float4 <<get>>
+    + zxyx : float4 <<get>>
+    + zxyy : float4 <<get>>
+    + zxyz : float4 <<get>>
+    + zxyw : float4 <<get>> <<set>>
+    + zxzx : float4 <<get>>
+    + zxzy : float4 <<get>>
+    + zxzz : float4 <<get>>
+    + zxzw : float4 <<get>>
+    + zxwx : float4 <<get>>
+    + zxwy : float4 <<get>> <<set>>
+    + zxwz : float4 <<get>>
+    + zxww : float4 <<get>>
+    + zyxx : float4 <<get>>
+    + zyxy : float4 <<get>>
+    + zyxz : float4 <<get>>
+    + zyxw : float4 <<get>> <<set>>
+    + zyyx : float4 <<get>>
+    + zyyy : float4 <<get>>
+    + zyyz : float4 <<get>>
+    + zyyw : float4 <<get>>
+    + zyzx : float4 <<get>>
+    + zyzy : float4 <<get>>
+    + zyzz : float4 <<get>>
+    + zyzw : float4 <<get>>
+    + zywx : float4 <<get>> <<set>>
+    + zywy : float4 <<get>>
+    + zywz : float4 <<get>>
+    + zyww : float4 <<get>>
+    + zzxx : float4 <<get>>
+    + zzxy : float4 <<get>>
+    + zzxz : float4 <<get>>
+    + zzxw : float4 <<get>>
+    + zzyx : float4 <<get>>
+    + zzyy : float4 <<get>>
+    + zzyz : float4 <<get>>
+    + zzyw : float4 <<get>>
+    + zzzx : float4 <<get>>
+    + zzzy : float4 <<get>>
+    + zzzz : float4 <<get>>
+    + zzzw : float4 <<get>>
+    + zzwx : float4 <<get>>
+    + zzwy : float4 <<get>>
+    + zzwz : float4 <<get>>
+    + zzww : float4 <<get>>
+    + zwxx : float4 <<get>>
+    + zwxy : float4 <<get>> <<set>>
+    + zwxz : float4 <<get>>
+    + zwxw : float4 <<get>>
+    + zwyx : float4 <<get>> <<set>>
+    + zwyy : float4 <<get>>
+    + zwyz : float4 <<get>>
+    + zwyw : float4 <<get>>
+    + zwzx : float4 <<get>>
+    + zwzy : float4 <<get>>
+    + zwzz : float4 <<get>>
+    + zwzw : float4 <<get>>
+    + zwwx : float4 <<get>>
+    + zwwy : float4 <<get>>
+    + zwwz : float4 <<get>>
+    + zwww : float4 <<get>>
+    + wxxx : float4 <<get>>
+    + wxxy : float4 <<get>>
+    + wxxz : float4 <<get>>
+    + wxxw : float4 <<get>>
+    + wxyx : float4 <<get>>
+    + wxyy : float4 <<get>>
+    + wxyz : float4 <<get>> <<set>>
+    + wxyw : float4 <<get>>
+    + wxzx : float4 <<get>>
+    + wxzy : float4 <<get>> <<set>>
+    + wxzz : float4 <<get>>
+    + wxzw : float4 <<get>>
+    + wxwx : float4 <<get>>
+    + wxwy : float4 <<get>>
+    + wxwz : float4 <<get>>
+    + wxww : float4 <<get>>
+    + wyxx : float4 <<get>>
+    + wyxy : float4 <<get>>
+    + wyxz : float4 <<get>> <<set>>
+    + wyxw : float4 <<get>>
+    + wyyx : float4 <<get>>
+    + wyyy : float4 <<get>>
+    + wyyz : float4 <<get>>
+    + wyyw : float4 <<get>>
+    + wyzx : float4 <<get>> <<set>>
+    + wyzy : float4 <<get>>
+    + wyzz : float4 <<get>>
+    + wyzw : float4 <<get>>
+    + wywx : float4 <<get>>
+    + wywy : float4 <<get>>
+    + wywz : float4 <<get>>
+    + wyww : float4 <<get>>
+    + wzxx : float4 <<get>>
+    + wzxy : float4 <<get>> <<set>>
+    + wzxz : float4 <<get>>
+    + wzxw : float4 <<get>>
+    + wzyx : float4 <<get>> <<set>>
+    + wzyy : float4 <<get>>
+    + wzyz : float4 <<get>>
+    + wzyw : float4 <<get>>
+    + wzzx : float4 <<get>>
+    + wzzy : float4 <<get>>
+    + wzzz : float4 <<get>>
+    + wzzw : float4 <<get>>
+    + wzwx : float4 <<get>>
+    + wzwy : float4 <<get>>
+    + wzwz : float4 <<get>>
+    + wzww : float4 <<get>>
+    + wwxx : float4 <<get>>
+    + wwxy : float4 <<get>>
+    + wwxz : float4 <<get>>
+    + wwxw : float4 <<get>>
+    + wwyx : float4 <<get>>
+    + wwyy : float4 <<get>>
+    + wwyz : float4 <<get>>
+    + wwyw : float4 <<get>>
+    + wwzx : float4 <<get>>
+    + wwzy : float4 <<get>>
+    + wwzz : float4 <<get>>
+    + wwzw : float4 <<get>>
+    + wwwx : float4 <<get>>
+    + wwwy : float4 <<get>>
+    + wwwz : float4 <<get>>
+    + wwww : float4 <<get>>
+    + xxx : float3 <<get>>
+    + xxy : float3 <<get>>
+    + xxz : float3 <<get>>
+    + xxw : float3 <<get>>
+    + xyx : float3 <<get>>
+    + xyy : float3 <<get>>
+    + xyz : float3 <<get>> <<set>>
+    + xyw : float3 <<get>> <<set>>
+    + xzx : float3 <<get>>
+    + xzy : float3 <<get>> <<set>>
+    + xzz : float3 <<get>>
+    + xzw : float3 <<get>> <<set>>
+    + xwx : float3 <<get>>
+    + xwy : float3 <<get>> <<set>>
+    + xwz : float3 <<get>> <<set>>
+    + xww : float3 <<get>>
+    + yxx : float3 <<get>>
+    + yxy : float3 <<get>>
+    + yxz : float3 <<get>> <<set>>
+    + yxw : float3 <<get>> <<set>>
+    + yyx : float3 <<get>>
+    + yyy : float3 <<get>>
+    + yyz : float3 <<get>>
+    + yyw : float3 <<get>>
+    + yzx : float3 <<get>> <<set>>
+    + yzy : float3 <<get>>
+    + yzz : float3 <<get>>
+    + yzw : float3 <<get>> <<set>>
+    + ywx : float3 <<get>> <<set>>
+    + ywy : float3 <<get>>
+    + ywz : float3 <<get>> <<set>>
+    + yww : float3 <<get>>
+    + zxx : float3 <<get>>
+    + zxy : float3 <<get>> <<set>>
+    + zxz : float3 <<get>>
+    + zxw : float3 <<get>> <<set>>
+    + zyx : float3 <<get>> <<set>>
+    + zyy : float3 <<get>>
+    + zyz : float3 <<get>>
+    + zyw : float3 <<get>> <<set>>
+    + zzx : float3 <<get>>
+    + zzy : float3 <<get>>
+    + zzz : float3 <<get>>
+    + zzw : float3 <<get>>
+    + zwx : float3 <<get>> <<set>>
+    + zwy : float3 <<get>> <<set>>
+    + zwz : float3 <<get>>
+    + zww : float3 <<get>>
+    + wxx : float3 <<get>>
+    + wxy : float3 <<get>> <<set>>
+    + wxz : float3 <<get>> <<set>>
+    + wxw : float3 <<get>>
+    + wyx : float3 <<get>> <<set>>
+    + wyy : float3 <<get>>
+    + wyz : float3 <<get>> <<set>>
+    + wyw : float3 <<get>>
+    + wzx : float3 <<get>> <<set>>
+    + wzy : float3 <<get>> <<set>>
+    + wzz : float3 <<get>>
+    + wzw : float3 <<get>>
+    + wwx : float3 <<get>>
+    + wwy : float3 <<get>>
+    + wwz : float3 <<get>>
+    + www : float3 <<get>>
+    + xx : float2 <<get>>
+    + xy : float2 <<get>> <<set>>
+    + xz : float2 <<get>> <<set>>
+    + xw : float2 <<get>> <<set>>
+    + yx : float2 <<get>> <<set>>
+    + yy : float2 <<get>>
+    + yz : float2 <<get>> <<set>>
+    + yw : float2 <<get>> <<set>>
+    + zx : float2 <<get>> <<set>>
+    + zy : float2 <<get>> <<set>>
+    + zz : float2 <<get>>
+    + zw : float2 <<get>> <<set>>
+    + wx : float2 <<get>> <<set>>
+    + wy : float2 <<get>> <<set>>
+    + wz : float2 <<get>> <<set>>
+    + ww : float2 <<get>>
+    + Equals(rhs:float4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} float4(x:float, y:float, z:float, w:float) : float4
+    + {static} float4(x:float, y:float, zw:float2) : float4
+    + {static} float4(x:float, yz:float2, w:float) : float4
+    + {static} float4(x:float, yzw:float3) : float4
+    + {static} float4(xy:float2, z:float, w:float) : float4
+    + {static} float4(xy:float2, zw:float2) : float4
+    + {static} float4(xyz:float3, w:float) : float4
+    + {static} float4(xyzw:float4) : float4
+    + {static} float4(v:float) : float4
+    + {static} float4(v:bool) : float4
+    + {static} float4(v:bool4) : float4
+    + {static} float4(v:int) : float4
+    + {static} float4(v:int4) : float4
+    + {static} float4(v:uint) : float4
+    + {static} float4(v:uint4) : float4
+    + {static} float4(v:half) : float4
+    + {static} float4(v:half4) : float4
+    + {static} float4(v:double) : float4
+    + {static} float4(v:double4) : float4
+    + {static} hash(v:float4) : uint
+    + {static} hashwide(v:float4) : uint4
+    + {static} shuffle(left:float4, right:float4, x:ShuffleComponent) : float
+    + {static} shuffle(left:float4, right:float4, x:ShuffleComponent, y:ShuffleComponent) : float2
+    + {static} shuffle(left:float4, right:float4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : float3
+    + {static} shuffle(left:float4, right:float4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : float4
+    <<internal>> {static} select_shuffle_component(a:float4, b:float4, component:ShuffleComponent) : float
+}
+class DebuggerProxy <<sealed>> {
+    + x : float
+    + y : float
+    + z : float
+    + w : float
+    + DebuggerProxy(v:float4)
+}
+IFormattable <|-- float4
+float4 +-- DebuggerProxy
+@enduml

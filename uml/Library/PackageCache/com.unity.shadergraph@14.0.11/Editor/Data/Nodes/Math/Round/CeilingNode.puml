@@ -1,0 +1,8 @@
+@startuml
+class CeilingNode {
+    + CeilingNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Ceiling(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- CeilingNode
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class AsyncOperation <<partial>> {
+    - {static} <<extern>> InternalDestroy(ptr:IntPtr) : void
+    - {static} <<extern>> InternalSetManagedObject(ptr:IntPtr, self:AsyncOperation) : void
+    + AsyncOperation()
+    # AsyncOperation(ptr:IntPtr)
+    + <<extern>> isDone : bool <<get>>
+    + <<extern>> progress : float <<get>>
+    + <<extern>> priority : int <<get>> <<set>>
+    + <<extern>> allowSceneActivation : bool <<get>> <<set>>
+}
+class BindingsMarshaller <<static>> {
+    + {static} ConvertToManaged(ptr:IntPtr) : AsyncOperation
+    + {static} ConvertToNative(asyncOperation:AsyncOperation) : IntPtr
+}
+YieldInstruction <|-- AsyncOperation
+AsyncOperation +-- BindingsMarshaller
+@enduml

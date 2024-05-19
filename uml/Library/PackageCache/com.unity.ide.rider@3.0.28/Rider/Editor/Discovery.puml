@@ -1,0 +1,21 @@
+@startuml
+interface IDiscovery {
+    PathCallback() : CodeEditor.Installation[]
+}
+class Discovery {
+    + {static} <<readonly>> RiderPathLocator : RiderPathLocator
+    + {static} <<readonly>> RiderFileOpener : RiderFileOpener
+    {static} - Discovery()
+    + PathCallback() : CodeEditor.Installation[]
+}
+class RiderLocatorEnvironment {
+    + CurrentOS : OS <<get>>
+    + FromJson(json:string) : T
+    + Verbose(message:string, e:Exception) : void
+    + Info(message:string, e:Exception) : void
+    + Warn(message:string, e:Exception) : void
+    + Error(message:string, e:Exception) : void
+}
+IDiscovery <|-- Discovery
+IRiderLocatorEnvironment <|-- RiderLocatorEnvironment
+@enduml

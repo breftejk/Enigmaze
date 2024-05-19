@@ -1,0 +1,9 @@
+@startuml
+class MatrixTransposeNode {
+    + MatrixTransposeNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_MatrixTranspose(In:DynamicDimensionMatrix, Out:DynamicDimensionMatrix) : string
+}
+CodeFunctionNode <|-- MatrixTransposeNode
+@enduml

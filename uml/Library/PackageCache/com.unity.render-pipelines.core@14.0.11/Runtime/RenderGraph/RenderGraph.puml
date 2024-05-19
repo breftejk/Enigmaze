@@ -1,0 +1,212 @@
+@startuml
+enum DepthAccess {
+    Read= 1 << 0,
+    Write= 1 << 1,
+    ReadWrite= Read | Write,
+}
+class RenderGraphContext {
+    + renderContext : ScriptableRenderContext
+    + cmd : CommandBuffer
+    + renderGraphPool : RenderGraphObjectPool
+    + defaultResources : RenderGraphDefaultResources
+}
+struct RenderGraphParameters {
+    + executionName : string
+    + currentFrameIndex : int
+    + rendererListCulling : bool
+    + scriptableRenderContext : ScriptableRenderContext
+    + commandBuffer : CommandBuffer
+}
+struct RenderGraphExecution {
+    - renderGraph : RenderGraph
+    <<internal>> RenderGraphExecution(renderGraph:RenderGraph)
+    + Dispose() : void
+}
+class RenderGraphDebugParams {
+    - m_DebugItems : DebugUI.Widget[]
+    - m_DebugPanel : DebugUI.Panel
+    + clearRenderTargetsAtCreation : bool
+    + clearRenderTargetsAtRelease : bool
+    + disablePassCulling : bool
+    + immediateMode : bool
+    + enableLogging : bool
+    + logFrameInformation : bool
+    + logResources : bool
+    + RegisterDebug(name:string, debugPanel:DebugUI.Panel) : void
+    + UnRegisterDebug(name:string) : void
+}
+class RenderGraphDebugData {
+    + passList : List<PassDebugData>
+    + resourceLists : List<ResourceDebugData>[]
+    + Clear() : void
+}
+class RenderGraph {
+    + {static} <<readonly>> kMaxMRTCount : int = 8
+    - m_Resources : RenderGraphResourceRegistry
+    - m_RenderGraphPool : RenderGraphObjectPool
+    - m_RenderPasses : List<RenderGraphPass>
+    - m_RendererLists : List<RendererListHandle>
+    - m_DebugParameters : RenderGraphDebugParams
+    - m_FrameInformationLogger : RenderGraphLogger
+    - m_DefaultResources : RenderGraphDefaultResources
+    - m_DefaultProfilingSamplers : Dictionary<int, ProfilingSampler>
+    - m_ExecutionExceptionWasRaised : bool
+    - m_RenderGraphContext : RenderGraphContext
+    - m_PreviousCommandBuffer : CommandBuffer
+    - m_CurrentImmediatePassIndex : int
+    - m_ImmediateModeResourceList : List<int>[]
+    - m_CompiledResourcesInfos : DynamicArray<CompiledResourceInfo>[]
+    - m_CompiledPassInfos : DynamicArray<CompiledPassInfo>
+    - m_CullingStack : Stack<int>
+    - m_ExecutionCount : int
+    - m_CurrentFrameIndex : int
+    - m_HasRenderGraphBegun : bool
+    - m_CurrentExecutionName : string
+    - m_RendererListCulling : bool
+    - m_DebugData : Dictionary<string, RenderGraphDebugData>
+    {static} - s_RegisteredGraphs : List<RenderGraph>
+    + name : string <<get>> = "RenderGraph"
+    <<internal>> {static} requireDebugData : bool <<get>> <<set>> = false
+    + defaultResources : RenderGraphDefaultResources <<get>>
+    + RenderGraph(name:string)
+    + Cleanup() : void
+    + RegisterDebug(panel:DebugUI.Panel) : void
+    + UnRegisterDebug() : void
+    + {static} GetRegisteredRenderGraphs() : List<RenderGraph>
+    <<internal>> GetDebugData(executionName:string) : RenderGraphDebugData
+    + EndFrame() : void
+    + ImportTexture(rt:RTHandle) : TextureHandle
+    + ImportBackbuffer(rt:RenderTargetIdentifier) : TextureHandle
+    + CreateTexture(desc:TextureDesc) : TextureHandle
+    + CreateSharedTexture(desc:TextureDesc, explicitRelease:bool) : TextureHandle
+    + RefreshSharedTextureDesc(handle:TextureHandle, desc:TextureDesc) : void
+    + ReleaseSharedTexture(texture:TextureHandle) : void
+    + CreateTexture(texture:TextureHandle) : TextureHandle
+    + CreateTextureIfInvalid(desc:TextureDesc, texture:TextureHandle) : void
+    + GetTextureDesc(texture:TextureHandle) : TextureDesc
+    + CreateRendererList(desc:CoreRendererListDesc) : RendererListHandle
+    + ImportComputeBuffer(computeBuffer:ComputeBuffer) : ComputeBufferHandle
+    + CreateComputeBuffer(desc:ComputeBufferDesc) : ComputeBufferHandle
+    + CreateComputeBuffer(computeBuffer:ComputeBufferHandle) : ComputeBufferHandle
+    + GetComputeBufferDesc(computeBuffer:ComputeBufferHandle) : ComputeBufferDesc
+    + AddRenderPass(passName:string, passData:PassData, sampler:ProfilingSampler) : RenderGraphBuilder
+    + AddRenderPass(passName:string, passData:PassData) : RenderGraphBuilder
+    + RecordAndExecute(parameters:RenderGraphParameters) : RenderGraphExecution
+    <<internal>> Execute() : void
+    + BeginProfilingSampler(sampler:ProfilingSampler) : void
+    + EndProfilingSampler(sampler:ProfilingSampler) : void
+    <<internal>> GetCompiledPassInfos() : DynamicArray<CompiledPassInfo>
+    <<internal>> ClearCompiledGraph() : void
+    - InvalidateContext() : void
+    <<internal>> OnPassAdded(pass:RenderGraphPass) : void
+    <<internal>> {static}  <<event>> onGraphRegistered : OnGraphRegisteredDelegate 
+    <<internal>> {static}  <<event>> onGraphUnregistered : OnGraphRegisteredDelegate 
+    <<internal>> {static}  <<event>> onExecutionRegistered : OnExecutionRegisteredDelegate 
+    <<internal>> {static}  <<event>> onExecutionUnregistered : OnExecutionRegisteredDelegate 
+    - InitResourceInfosData(resourceInfos:DynamicArray<CompiledResourceInfo>, count:int) : void
+    - InitializeCompilationData() : void
+    - CountReferences() : void
+    - CullUnusedPasses() : void
+    - UpdatePassSynchronization(currentPassInfo:CompiledPassInfo, producerPassInfo:CompiledPassInfo, currentPassIndex:int, lastProducer:int, intLastSyncIndex:int) : void
+    - UpdateResourceSynchronization(lastGraphicsPipeSync:int, lastComputePipeSync:int, currentPassIndex:int, resource:CompiledResourceInfo) : void
+    - GetFirstValidConsumerIndex(passIndex:int, info:CompiledResourceInfo) : int
+    - FindTextureProducer(consumerPass:int, info:CompiledResourceInfo, index:int) : int
+    - GetLatestProducerIndex(passIndex:int, info:CompiledResourceInfo) : int
+    - GetLatestValidReadIndex(info:CompiledResourceInfo) : int
+    - GetFirstValidWriteIndex(info:CompiledResourceInfo) : int
+    - GetLatestValidWriteIndex(info:CompiledResourceInfo) : int
+    - CreateRendererLists() : void
+    <<internal>> GetImportedFallback(desc:TextureDesc, fallback:TextureHandle) : bool
+    - AllocateCulledPassResources(passInfo:CompiledPassInfo, passIndex:int) : void
+    - UpdateResourceAllocationAndSynchronization() : void
+    - AreRendererListsEmpty(rendererLists:List<RendererListHandle>) : bool
+    - TryCullPassAtIndex(passIndex:int) : void
+    - CullRendererLists() : void
+    <<internal>> CompileRenderGraph() : void
+    - CompilePassImmediatly(pass:RenderGraphPass) : ref CompiledPassInfo
+    - ExecutePassImmediatly(pass:RenderGraphPass) : void
+    - ExecuteCompiledPass(passInfo:CompiledPassInfo, passIndex:int) : void
+    - ExecuteRenderGraph() : void
+    - PreRenderPassSetRenderTargets(passInfo:CompiledPassInfo, rgContext:RenderGraphContext) : void
+    - PreRenderPassExecute(passInfo:CompiledPassInfo, rgContext:RenderGraphContext) : void
+    - PostRenderPassExecute(passInfo:CompiledPassInfo, rgContext:RenderGraphContext) : void
+    - ClearRenderPasses() : void
+    - ReleaseImmediateModeResources() : void
+    - LogFrameInformation() : void
+    - LogRendererListsCreation() : void
+    - LogRenderPassBegin(passInfo:CompiledPassInfo) : void
+    - LogCulledPasses() : void
+    - GetDefaultProfilingSampler(name:string) : ProfilingSampler
+    - UpdateImportedResourceLifeTime(data:RenderGraphDebugData.ResourceDebugData, passList:List<int>) : void
+    - GenerateDebugData() : void
+    - CleanupDebugData() : void
+}
+struct RenderGraphProfilingScope {
+    - m_Disposed : bool
+    - m_Sampler : ProfilingSampler
+    - m_RenderGraph : RenderGraph
+    + RenderGraphProfilingScope(renderGraph:RenderGraph, sampler:ProfilingSampler)
+    + Dispose() : void
+    - Dispose(disposing:bool) : void
+}
+class Strings <<static>> {
+    + {static} <<readonly>> ClearRenderTargetsAtCreation : NameAndTooltip
+    + {static} <<readonly>> DisablePassCulling : NameAndTooltip
+    + {static} <<readonly>> ImmediateMode : NameAndTooltip
+    + {static} <<readonly>> EnableLogging : NameAndTooltip
+    + {static} <<readonly>> LogFrameInformation : NameAndTooltip
+    + {static} <<readonly>> LogResources : NameAndTooltip
+}
+struct PassDebugData {
+    + name : string
+    + resourceReadLists : List<int>[]
+    + resourceWriteLists : List<int>[]
+    + culled : bool
+    + async : bool
+    + syncToPassIndex : int
+    + syncFromPassIndex : int
+    + generateDebugData : bool
+}
+struct ResourceDebugData {
+    + name : string
+    + imported : bool
+    + creationPassIndex : int
+    + releasePassIndex : int
+    + consumerList : List<int>
+    + producerList : List<int>
+}
+struct CompiledResourceInfo {
+    + producers : List<int>
+    + consumers : List<int>
+    + refCount : int
+    + imported : bool
+    + Reset() : void
+}
+struct CompiledPassInfo {
+    + pass : RenderGraphPass
+    + resourceCreateList : List<int>[]
+    + resourceReleaseList : List<int>[]
+    + refCount : int
+    + culled : bool
+    + culledByRendererList : bool
+    + hasSideEffect : bool
+    + syncToPassIndex : int
+    + syncFromPassIndex : int
+    + needGraphicsFence : bool
+    + fence : GraphicsFence
+    + enableAsyncCompute : bool
+    + allowPassCulling : bool <<get>>
+    + Reset(pass:RenderGraphPass) : void
+}
+class ProfilingScopePassData {
+    + sampler : ProfilingSampler
+}
+IDisposable <|-- RenderGraphExecution
+IDisposable <|-- RenderGraphProfilingScope
+RenderGraphDebugParams +-- Strings
+RenderGraphDebugData +-- PassDebugData
+RenderGraphDebugData +-- ResourceDebugData
+RenderGraph +-- CompiledResourceInfo
+RenderGraph +-- CompiledPassInfo
+RenderGraph +-- ProfilingScopePassData
+@enduml

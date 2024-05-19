@@ -1,0 +1,95 @@
+@startuml
+interface IActiveFields {
+    fields : IEnumerable<FieldDescriptor> <<get>>
+    Add(field:FieldDescriptor) : bool
+    Contains(field:FieldDescriptor) : bool
+    Contains(value:string) : bool
+}
+interface IActiveFieldsSet {
+    AddAll(field:FieldDescriptor) : void
+}
+class FieldNamePairStorage {
+    - m_fieldDescriptors : HashSet<FieldDescriptor>
+    - m_fieldNames : HashSet<string>
+    + fields : IEnumerable<FieldDescriptor> <<get>>
+    + FieldNamePairStorage()
+    + Union(other:FieldNamePairStorage) : IEnumerable<FieldDescriptor>
+    + Contains(fieldDescriptor:FieldDescriptor) : bool
+    + Contains(fieldName:string) : bool
+    + Add(fieldDescriptor:FieldDescriptor) : bool
+}
+class ActiveFields <<sealed>> {
+    # <<override>> CreateAllSmartPointer() : All
+    # <<override>> CreateAllPermutationsSmartPointer() : AllPermutations
+    # <<override>> CreateForPermutationSmartPointer(index:int) : ForPermutationIndex
+    # <<override>> CreateBaseSmartPointer() : Base
+}
+struct ForPermutationIndex {
+    - m_Source : ActiveFields
+    - m_PermutationIndex : int
+    + type : KeywordDependentCollection.KeywordPermutationInstanceType <<get>>
+    + instances : IEnumerable<IActiveFields> <<get>>
+    + fields : IEnumerable<FieldDescriptor> <<get>>
+    + instanceCount : int <<get>>
+    + permutationIndex : int <<get>>
+    <<internal>> ForPermutationIndex(source:ActiveFields, index:int)
+    + Add(field:FieldDescriptor) : bool
+    + Contains(field:FieldDescriptor) : bool
+    + Contains(value:string) : bool
+    + AddAll(field:FieldDescriptor) : void
+}
+struct Base {
+    - m_Source : ActiveFields
+    + fields : IEnumerable<FieldDescriptor> <<get>>
+    + instanceCount : int <<get>>
+    + permutationIndex : int <<get>>
+    + type : KeywordDependentCollection.KeywordPermutationInstanceType <<get>>
+    + instances : IEnumerable<IActiveFields> <<get>>
+    <<internal>> Base(source:ActiveFields)
+    + Add(field:FieldDescriptor) : bool
+    + Contains(field:FieldDescriptor) : bool
+    + Contains(value:string) : bool
+    + AddAll(field:FieldDescriptor) : void
+}
+struct All {
+    - m_Source : ActiveFields
+    + instanceCount : int <<get>>
+    <<internal>> All(source:ActiveFields)
+    + AddAll(field:FieldDescriptor) : void
+    + instances : IEnumerable<IActiveFields> <<get>>
+}
+struct AllPermutations {
+    - m_Source : ActiveFields
+    + instanceCount : int <<get>>
+    <<internal>> AllPermutations(source:ActiveFields)
+    + AddAll(field:FieldDescriptor) : void
+    + instances : IEnumerable<IActiveFields> <<get>>
+}
+struct NoPermutation {
+    - m_Source : ActiveFields
+    + fields : IEnumerable<FieldDescriptor> <<get>>
+    + instanceCount : int <<get>>
+    + permutationIndex : int <<get>>
+    + type : KeywordDependentCollection.KeywordPermutationInstanceType <<get>>
+    <<internal>> NoPermutation(source:ActiveFields)
+    + Add(field:FieldDescriptor) : bool
+    + Contains(field:FieldDescriptor) : bool
+    + Contains(value:string) : bool
+    + AddAll(field:FieldDescriptor) : void
+    + instances : IEnumerable<IActiveFields> <<get>>
+}
+"KeywordDependentCollection`7" "<FieldNamePairStorage,ActiveFields.All,ActiveFields.AllPermutations,ActiveFields.ForPermutationIndex,ActiveFields.Base,IActiveFields,IActiveFieldsSet>" <|-- ActiveFields
+ActiveFields +-- ForPermutationIndex
+IActiveFields <|-- ForPermutationIndex
+IActiveFieldsSet <|-- ForPermutationIndex
+ActiveFields +-- Base
+IActiveFields <|-- Base
+IActiveFieldsSet <|-- Base
+ActiveFields +-- All
+IActiveFieldsSet <|-- All
+ActiveFields +-- AllPermutations
+IActiveFieldsSet <|-- AllPermutations
+ActiveFields +-- NoPermutation
+IActiveFields <|-- NoPermutation
+IActiveFieldsSet <|-- NoPermutation
+@enduml

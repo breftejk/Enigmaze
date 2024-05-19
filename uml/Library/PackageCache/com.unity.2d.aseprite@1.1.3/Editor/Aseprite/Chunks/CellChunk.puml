@@ -1,0 +1,29 @@
+@startuml
+enum CellTypes {
+    RawImage= 0,
+    LinkedCell= 1,
+    CompressedImage= 2,
+    CompressedTileMap= 3,
+}
+class CellChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    <<internal>> CellChunk(chunkSize:uint, colorDepth:ushort, paletteEntries:ReadOnlyCollection<PaletteEntry>, alphaPaletteEntry:byte)
+    <<readonly>> - m_ColorDepth : ushort
+    <<readonly>> - m_PaletteEntries : ReadOnlyCollection<PaletteEntry>
+    <<readonly>> - m_AlphaPaletteEntry : byte
+    + layerIndex : ushort <<get>>
+    + posX : short <<get>>
+    + posY : short <<get>>
+    + opacity : byte <<get>>
+    + cellType : CellTypes <<get>>
+    <<internal>> zIndex : short <<get>>
+    + linkedToFrame : int <<get>>
+    + width : ushort <<get>>
+    + height : ushort <<get>>
+    + image : NativeArray<Color32> <<get>>
+    + dataChunk : UserDataChunk <<get>> <<set>>
+    # <<override>> InternalRead(reader:BinaryReader) : void
+    + <<override>> Dispose() : void
+}
+BaseChunk <|-- CellChunk
+@enduml

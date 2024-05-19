@@ -1,0 +1,15 @@
+@startuml
+class TilemapEditorToolbarStrip {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-toolbar-strip"
+    <<internal>> <<const>> k_ToolbarId : string = "Tools/Tile Palette Tools"
+    - {static} <<readonly>> k_Name : string
+    - isUpdating : bool
+    + TilemapEditorToolbarStrip()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - OnTilemapEditorToolsChanged() : void
+    - UpdateTilemapEditorTools() : void
+    - RemoveTilemapEditorTools() : void
+}
+VisualElement <|-- TilemapEditorToolbarStrip
+@enduml

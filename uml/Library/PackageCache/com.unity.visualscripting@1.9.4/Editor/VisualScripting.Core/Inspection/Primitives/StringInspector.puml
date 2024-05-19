@@ -1,0 +1,11 @@
+@startuml
+class StringInspector {
+    + StringInspector(metadata:Metadata)
+    # <<override>> cacheHeight : bool <<get>>
+    - GetFieldHeight(width:float, label:GUIContent) : float
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- StringInspector
+@enduml

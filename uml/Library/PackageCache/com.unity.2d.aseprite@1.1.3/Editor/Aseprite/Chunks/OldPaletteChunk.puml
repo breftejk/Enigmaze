@@ -1,0 +1,11 @@
+@startuml
+class OldPaletteChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + entries : ReadOnlyCollection<PaletteEntry> <<get>>
+    - m_Entries : PaletteEntry[]
+    <<internal>> OldPaletteChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- OldPaletteChunk
+IPaletteProvider <|-- OldPaletteChunk
+@enduml

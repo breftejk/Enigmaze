@@ -1,0 +1,5 @@
+@startuml
+class RepaintInspector <<static>> {
+    <<internal>> {static} All() : void
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class StickyNoteEditor <<sealed>> {
+    + StickyNoteEditor(metadata:Metadata)
+    - titleMetadata : Metadata <<get>>
+    - bodyMetadata : Metadata <<get>>
+    - icon : EditorTexture <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    - GetHeaderHeight(width:float) : float
+    - GetInspectorHeight(width:float) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - OnHeaderGUI(position:Rect) : void
+    - OnInspectorGUI(inspectorPosition:Rect) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> inspectorPadding : RectOffset
+}
+Inspector <|-- StickyNoteEditor
+StickyNoteEditor +-- Styles
+@enduml

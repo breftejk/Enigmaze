@@ -1,0 +1,8 @@
+@startuml
+class Ray2DConverter {
+    # <<override>> DoSerialize(model:Ray2D, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:Ray2D) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<Ray2D>" <|-- Ray2DConverter
+@enduml

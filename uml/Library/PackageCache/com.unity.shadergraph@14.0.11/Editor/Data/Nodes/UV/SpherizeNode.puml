@@ -1,0 +1,8 @@
+@startuml
+class SpherizeNode {
+    + SpherizeNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Spherize(UV:Vector2, Center:Vector2, Strength:Vector2, Offset:Vector2, Out:Vector2) : string
+}
+CodeFunctionNode <|-- SpherizeNode
+@enduml

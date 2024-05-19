@@ -1,0 +1,11 @@
+@startuml
+class SpriteLibraryAssetPostprocessor {
+    + {static}  <<event>> OnImported : Action<string> 
+    + {static}  <<event>> OnDeleted : Action<string> 
+    + {static}  <<event>> OnMovedAssetFromTo : Action<string, string> 
+    <<const>> - k_SpriteLibExtension : string = ".spriteLib"
+    {static} - IsPathSpriteLibrary(assetPath:string) : bool
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+}
+AssetPostprocessor <|-- SpriteLibraryAssetPostprocessor
+@enduml

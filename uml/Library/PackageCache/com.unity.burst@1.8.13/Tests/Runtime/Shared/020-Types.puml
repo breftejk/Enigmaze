@@ -1,0 +1,139 @@
+@startuml
+class Types <<partial>> {
+    + {static} Bool() : int
+    + {static} BoolArgAndReturn(value:bool) : bool
+    - {static} BoolArgAndReturnSubFunction(value:bool) : bool
+    + {static} BoolArgAndReturnCall(value:bool) : bool
+    - {static} BoolMarshalAsU1(b:bool) : bool
+    + {static} BoolMarshalAsU1Call(value:bool) : bool
+    - {static} BoolMarshalAsI1(b:bool) : bool
+    + {static} BoolMarshalAsI1Call(value:bool) : bool
+    - {static} BoolMarshalAsR4(b:bool) : bool
+    + {static} BoolMarshalAsR4Call(value:bool) : bool
+    - {static} BoolMarshalAsU1Param(b:bool) : bool
+    + {static} BoolMarshalAsU1CallParam(value:bool) : bool
+    - {static} BoolMarshalAsI1Param(b:bool) : bool
+    + {static} BoolMarshalAsI1CallParam(value:bool) : bool
+    - {static} BoolMarshalAsR4Param(b:bool) : bool
+    + {static} BoolMarshalAsR4CallParam(value:bool) : bool
+    - {static} BoolMarshalAsU1AndI1Param(b:bool) : bool
+    + {static} BoolMarshalAsU1AndI1CallParam(value:bool) : bool
+    - {static} BoolMarshalAsI1AndU1Param(b:bool) : bool
+    + {static} BoolMarshalAsI1AndU1CallParam(value:bool) : bool
+    + {static} Char() : int
+    + {static} Int8() : int
+    + {static} Int16() : int
+    + {static} Int32() : int
+    + {static} Int64() : int
+    + {static} UInt8() : int
+    + {static} UInt16() : int
+    + {static} UInt32() : int
+    + {static} UInt64() : int
+    + {static} EnumSizeOf() : int
+    + {static} EnumByteSizeOf() : int
+    + {static} CheckEnumByte(value:MyEnumByte) : MyEnumByte
+    + {static} EnumByParam(value:MyEnum) : int
+    + {static} Struct() : float
+    + {static} StructAccess() : long
+    + {static} StructWithBool(value:bool) : bool
+    + {static} TestUsingReferenceType() : int
+    - {static} ReturnValueTuple1() : ValueTuple<int>
+    + {static} TestValueTuple1Return() : long
+    - {static} ReturnValueTuple2() : (int, uint)
+    + {static} TestValueTuple2Return() : long
+    - {static} ReturnValueTuple3() : (int, uint, byte)
+    + {static} TestValueTuple3Return() : long
+    - {static} ReturnValueTuple4() : (int, uint, byte, sbyte)
+    + {static} TestValueTuple4Return() : long
+    - {static} ReturnValueTuple5() : (int, uint, byte, sbyte, long)
+    + {static} TestValueTuple5Return() : long
+    - {static} ReturnValueTuple6() : (int, uint, byte, sbyte, long, SomeStruct)
+    + {static} TestValueTuple6Return() : long
+    - {static} ReturnValueTuple7() : (int, uint, byte, sbyte, long, SomeStruct, short)
+    + {static} TestValueTuple7Return() : long
+    - {static} ReturnValueTuple8() : (int, uint, byte, sbyte, long, SomeStruct, short, int)
+    + {static} TestValueTuple8Return() : long
+    - {static} ReturnValueTuple9() : (int, uint, byte, sbyte, long, SomeStruct, short, int, long)
+    + {static} TestValueTuple9Return() : long
+    - {static} ValueTuple1Arg(tuple:ValueTuple<int>) : long
+    + {static} TestValueTuple1Arg() : long
+    - {static} ValueTuple2Arg(tuple:(int, uint)) : long
+    + {static} TestValueTuple2Arg() : long
+    - {static} ValueTuple3Arg(tuple:(int, uint, byte)) : long
+    + {static} TestValueTuple3Arg() : long
+    - {static} ValueTuple4Arg(tuple:(int, uint, byte, sbyte)) : long
+    + {static} TestValueTuple4Arg() : long
+    - {static} ValueTuple5Arg(tuple:(int, uint, byte, sbyte, long)) : long
+    + {static} TestValueTuple5Arg() : long
+    - {static} ValueTuple6Arg(tuple:(int, uint, byte, sbyte, long, SomeStruct)) : long
+    + {static} TestValueTuple6Arg() : long
+    - {static} ValueTuple7Arg(tuple:(int, uint, byte, sbyte, long, SomeStruct, short)) : long
+    + {static} TestValueTuple7Arg() : long
+    - {static} ValueTuple8Arg(tuple:(int, uint, byte, sbyte, long, SomeStruct, short, int)) : long
+    + {static} TestValueTuple8Arg() : long
+    - {static} ValueTuple9Arg(tuple:(int, uint, byte, sbyte, long, SomeStruct, short, int, long)) : long
+    + {static} TestValueTuple9Arg() : long
+}
+struct MyStruct {
+    + MyStruct(x:float, y:float, z:float, w:float)
+    + x : float
+    + y : float
+    + z : float
+    + w : float
+}
+struct BoolStruct {
+    + b1 : bool
+    + b2 : bool
+}
+struct BoolFixedStruct {
+    + <<fixed>> Values : bool
+}
+struct InterleavedBoolStruct {
+    + b1 : bool
+    + i2 : int
+    + b3 : bool
+    + b4 : bool
+    + i5 : long
+    + e6 : MyEnum
+}
+enum MyEnum {
+    Value1= 1,
+    Value15= 15,
+}
+struct ExplicitLayoutStruct {
+    + FieldA : int
+    + FieldB : int
+}
+struct StructWithSize {
+    + FieldA : int
+    + FieldB : int
+}
+struct EmptyStruct {
+}
+enum MyEnumByte {
+    Tada1= 1,
+    Tada2= 2,
+}
+struct SomeStruct {
+    + X : int
+}
+struct SomeStructWithValueTuple {
+    + X : ValueTuple<int, float>
+}
+struct Provider {
+    + Value : object <<get>>
+}
+Types +-- MyStruct
+Types +-- BoolStruct
+Types +-- BoolFixedStruct
+Types +-- InterleavedBoolStruct
+Types +-- MyEnum
+Types +-- ExplicitLayoutStruct
+Types +-- StructWithSize
+Types +-- EmptyStruct
+Types +-- MyEnumByte
+Types +-- SomeStruct
+Types +-- SomeStructWithValueTuple
+SomeStructWithValueTuple +-- Provider
+IArgumentProvider <|-- Provider
+@enduml

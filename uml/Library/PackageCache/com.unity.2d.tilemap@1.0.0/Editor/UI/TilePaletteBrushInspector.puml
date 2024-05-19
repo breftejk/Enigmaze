@@ -1,0 +1,12 @@
+@startuml
+class TilePaletteBrushInspector {
+    - m_Scroll : Vector2
+    + OnGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> lockZPosition : GUIContent
+    + {static} <<readonly>> zPosition : GUIContent
+    + {static} <<readonly>> resetZPosition : GUIContent
+}
+TilePaletteBrushInspector +-- Styles
+@enduml

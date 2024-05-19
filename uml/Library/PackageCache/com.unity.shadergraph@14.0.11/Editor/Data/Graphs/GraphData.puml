@@ -1,0 +1,229 @@
+@startuml
+class GraphData <<sealed>> <<partial>> {
+    + <<override>> latestVersion : int <<get>>
+    + owner : GraphObject <<get>> <<set>>
+    <<internal>> graphIsConcretizing : bool = false
+    - m_Properties : List<JsonData<AbstractShaderProperty>>
+    + properties : DataValueEnumerable<AbstractShaderProperty> <<get>>
+    - m_Keywords : List<JsonData<ShaderKeyword>>
+    + keywords : DataValueEnumerable<ShaderKeyword> <<get>>
+    - m_Dropdowns : List<JsonData<ShaderDropdown>>
+    + dropdowns : DataValueEnumerable<ShaderDropdown> <<get>>
+    - m_AddedInputs : List<ShaderInput>
+    + addedInputs : IEnumerable<ShaderInput> <<get>>
+    - m_RemovedInputs : List<ShaderInput>
+    + removedInputs : IEnumerable<ShaderInput> <<get>>
+    - m_MovedInputs : List<ShaderInput>
+    + movedInputs : IEnumerable<ShaderInput> <<get>>
+    - m_AddedCategories : List<CategoryData>
+    + addedCategories : IEnumerable<CategoryData> <<get>>
+    - m_RemovedCategories : List<CategoryData>
+    + removedCategories : IEnumerable<CategoryData> <<get>>
+    - m_MovedCategories : List<CategoryData>
+    + movedCategories : IEnumerable<CategoryData> <<get>>
+    - m_MovedContexts : bool = false
+    + movedContexts : bool <<get>>
+    + assetGuid : string <<get>> <<set>>
+    - m_CategoryData : List<JsonData<CategoryData>>
+    + categories : DataValueEnumerable<CategoryData> <<get>>
+    - m_Nodes : List<JsonData<AbstractMaterialNode>>
+    - m_NodeDictionary : Dictionary<string, AbstractMaterialNode>
+    - m_LegacyUpdateDictionary : Dictionary<string, AbstractMaterialNode>
+    + GetNodes() : IEnumerable<T>
+    - m_AddedNodes : List<AbstractMaterialNode>
+    + addedNodes : IEnumerable<AbstractMaterialNode> <<get>>
+    - m_RemovedNodes : List<AbstractMaterialNode>
+    + removedNodes : IEnumerable<AbstractMaterialNode> <<get>>
+    - m_PastedNodes : List<AbstractMaterialNode>
+    + pastedNodes : IEnumerable<AbstractMaterialNode> <<get>>
+    - m_GroupDatas : List<JsonData<GroupData>>
+    + groups : DataValueEnumerable<GroupData> <<get>>
+    - m_AddedGroups : List<GroupData>
+    + addedGroups : IEnumerable<GroupData> <<get>>
+    - m_RemovedGroups : List<GroupData>
+    + removedGroups : IEnumerable<GroupData> <<get>>
+    - m_PastedGroups : List<GroupData>
+    + pastedGroups : IEnumerable<GroupData> <<get>>
+    - m_ParentGroupChanges : List<ParentGroupChange>
+    + parentGroupChanges : IEnumerable<ParentGroupChange> <<get>>
+    - m_MostRecentlyCreatedGroup : GroupData
+    + mostRecentlyCreatedGroup : GroupData <<get>>
+    - m_GroupItems : Dictionary<JsonRef<GroupData>, List<IGroupItem>>
+    + GetItemsInGroup(groupData:GroupData) : IEnumerable<IGroupItem>
+    - m_StickyNoteDatas : List<JsonData<StickyNoteData>>
+    + stickyNotes : DataValueEnumerable<StickyNoteData> <<get>>
+    - m_AddedStickyNotes : List<StickyNoteData>
+    + addedStickyNotes : List<StickyNoteData> <<get>>
+    - m_RemovedNotes : List<StickyNoteData>
+    + removedNotes : IEnumerable<StickyNoteData> <<get>>
+    - m_PastedStickyNotes : List<StickyNoteData>
+    + pastedStickyNotes : IEnumerable<StickyNoteData> <<get>>
+    - m_Edges : List<Edge>
+    + edges : IEnumerable<Edge> <<get>>
+    - m_NodeEdges : Dictionary<string, List<IEdge>>
+    - m_AddedEdges : List<IEdge>
+    + addedEdges : IEnumerable<IEdge> <<get>>
+    - m_RemovedEdges : List<IEdge>
+    + removedEdges : IEnumerable<IEdge> <<get>>
+    - m_VertexContext : ContextData
+    - m_FragmentContext : ContextData
+    - m_BlockFieldDescriptors : List<BlockFieldDescriptor>
+    + vertexContext : ContextData <<get>>
+    + fragmentContext : ContextData <<get>>
+    + blockFieldDescriptors : List<BlockFieldDescriptor> <<get>>
+    - m_PreviewData : InspectorPreviewData
+    + previewData : InspectorPreviewData <<get>> <<set>>
+    - m_Path : string
+    + path : string <<get>> <<set>>
+    + messageManager : MessageManager <<get>> <<set>>
+    + isSubGraph : bool <<get>> <<set>>
+    - m_GraphPrecision : GraphPrecision
+    + graphDefaultPrecision : GraphPrecision <<get>>
+    + graphDefaultConcretePrecision : ConcretePrecision <<get>>
+    <<internal>> checkAutoAddRemoveBlocks : bool <<get>> <<set>>
+    + SetGraphDefaultPrecision(newGraphDefaultPrecision:GraphPrecision) : void
+    - m_PreviewMode : PreviewMode
+    + previewMode : PreviewMode <<get>> <<set>>
+    - m_OutputNode : JsonRef<AbstractMaterialNode>
+    + outputNode : AbstractMaterialNode <<get>> <<set>>
+    <<internal>> {static} onSaveGraph : SaveGraphDelegate
+    <<internal>> m_SubDatas : List<JsonData<AbstractShaderGraphDataExtension>>
+    + SubDatas : DataValueEnumerable<AbstractShaderGraphDataExtension> <<get>>
+    <<internal>> m_ActiveTargets : List<JsonData<Target>>
+    + activeTargets : DataValueEnumerable<Target> <<get>>
+    - m_AllPotentialTargets : List<PotentialTarget>
+    + allPotentialTargets : IEnumerable<Target> <<get>>
+    + GetTargetIndexByKnownType(targetType:Type) : int
+    + GetTargetIndex(t:Target) : int
+    + GetPotentialTargetDisplayNames() : List<string>
+    + SetTargetActive(target:Target, skipSortAndUpdate:bool) : void
+    + SetTargetActive(targetIndex:int, skipSortAndUpdate:bool) : void
+    + SetTargetInactive(target:Target, skipSortAndUpdate:bool) : void
+    - m_UnsupportedTargets : List<Target>
+    + unsupportedTargets : List<Target> <<get>>
+    - targetComparison : Comparison<Target>
+    + SortActiveTargets() : void
+    + hasVFXCompatibleTarget : bool <<get>>
+    + isVFXTarget : bool <<get>>
+    + isOnlyVFXTarget : bool <<get>>
+    + GraphData()
+    + InitializeOutputs(targets:Target[], blockDescriptors:BlockFieldDescriptor[]) : void
+    - GetBlockFieldDescriptors() : void
+    - AddKnownTargetsToPotentialTargets() : void
+    + SortAndUpdateActiveTargets() : void
+    + ClearChanges() : void
+    + AddNode(node:AbstractMaterialNode) : void
+    + CreateGroup(groupData:GroupData) : void
+    - AddGroup(groupData:GroupData) : bool
+    + RemoveGroup(groupData:GroupData) : void
+    - RemoveGroupNoValidate(group:GroupData) : void
+    + AddStickyNote(stickyNote:StickyNoteData) : void
+    - RemoveNoteNoValidate(stickyNote:StickyNoteData) : void
+    + RemoveStickyNote(stickyNote:StickyNoteData) : void
+    + SetGroup(node:IGroupItem, group:GroupData) : void
+    + AddContexts() : void
+    + AddBlock(blockNode:BlockNode, contextData:ContextData, index:int) : void
+    - AddBlockNoValidate(blockNode:BlockNode, contextData:ContextData, index:int) : void
+    + GetActiveBlocksForAllActiveTargets() : List<BlockFieldDescriptor>
+    + UpdateActiveBlocks(activeBlockDescriptors:List<BlockFieldDescriptor>) : void
+    + AddRemoveBlocksFromActiveList(activeBlockDescriptors:List<BlockFieldDescriptor>) : void
+    - AddNodeNoValidate(node:AbstractMaterialNode) : void
+    + RemoveNode(node:AbstractMaterialNode) : void
+    - RemoveNodeNoValidate(node:AbstractMaterialNode) : void
+    - AddEdgeToNodeEdges(edge:IEdge) : void
+    - ConnectNoValidate(fromSlotRef:SlotReference, toSlotRef:SlotReference, assumeBatchSafety:bool) : IEdge
+    + Connect(fromSlotRef:SlotReference, toSlotRef:SlotReference) : IEdge
+    <<internal>> UnnotifyAddedEdge(edge:IEdge) : void
+    + RemoveEdge(e:IEdge) : void
+    + RemoveElements(nodes:AbstractMaterialNode[], edges:IEdge[], groups:GroupData[], notes:StickyNoteData[]) : void
+    - RemoveEdgeNoValidate(e:IEdge, reevaluateActivity:bool) : void
+    + GetNodeFromId(nodeId:string) : AbstractMaterialNode
+    + GetNodeFromId(nodeId:string) : T
+    <<internal>> GetMainTexture() : Texture2DShaderProperty
+    <<internal>> GetMainColor() : ColorShaderProperty
+    + ContainsCategory(categoryData:CategoryData) : bool
+    + ContainsInput(shaderInput:ShaderInput) : bool
+    + ContainsNode(node:AbstractMaterialNode) : bool
+    + GetEdges(s:SlotReference, foundEdges:List<IEdge>) : void
+    + GetEdges(s:SlotReference) : IEnumerable<IEdge>
+    + GetEdges(node:AbstractMaterialNode, foundEdges:List<IEdge>) : void
+    + GetEdges(node:AbstractMaterialNode) : IEnumerable<IEdge>
+    + ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    + CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + CollectShaderKeywords(collector:KeywordCollector, generationMode:GenerationMode) : void
+    + IsInputAllowedInGraph(input:ShaderInput) : bool
+    + IsInputAllowedInGraph(node:AbstractMaterialNode) : bool
+    + AddGraphInput(input:ShaderInput, index:int) : void
+    <<internal>> AddGraphInputNoSanitization(input:ShaderInput, index:int) : void
+    + BuildPropertyDisplayNameList(ignoreProperty:AbstractShaderProperty, ignoreName:string) : List<string>
+    + BuildPropertyReferenceNameList(ignoreProperty:AbstractShaderProperty, ignoreName:string) : List<string>
+    + SanitizeGraphInputName(input:ShaderInput, desiredName:string) : string
+    + SanitizeGraphInputReferenceName(input:ShaderInput, desiredName:string) : string
+    + AddCopyOfShaderInput(source:ShaderInput, insertIndex:int) : ShaderInput
+    + RemoveGraphInput(input:ShaderInput) : void
+    + MoveCategory(category:CategoryData, newIndex:int) : void
+    + MoveItemInCategory(itemToMove:ShaderInput, newIndex:int, associatedCategoryGuid:string) : void
+    + GetGraphInputIndex(input:ShaderInput) : int
+    - RemoveGraphInputNoValidate(shaderInput:ShaderInput) : void
+    {static} - s_TempEdges : List<IEdge>
+    + ReplacePropertyNodeWithConcreteNode(propertyNode:PropertyNode) : void
+    - ReplacePropertyNodeWithConcreteNodeNoValidate(propertyNode:PropertyNode, deleteNodeIfNoConcreteFormExists:bool) : void
+    + AddCategory(categoryDataReference:CategoryData) : void
+    + FindCategoryForInput(input:ShaderInput) : string
+    + ChangeCategoryName(categoryGUID:string, newName:string) : void
+    + InsertItemIntoCategory(categoryGUID:string, itemToAdd:ShaderInput, insertionIndex:int) : void
+    + RemoveItemFromCategory(categoryGUID:string, itemToRemove:ShaderInput) : void
+    + RemoveCategory(categoryGUID:string) : void
+    + CopyCategory(categoryToCopy:CategoryData) : CategoryData
+    + OnKeywordChanged() : void
+    + OnKeywordChangedNoValidate() : void
+    + OnDropdownChanged() : void
+    + OnDropdownChangedNoValidate() : void
+    + CleanupGraph() : void
+    - DirtyAll(modificationScope:ModificationScope) : void
+    + ValidateGraph() : void
+    + AddValidationError(id:string, errorMessage:string, severity:ShaderCompilerMessageSeverity) : void
+    + AddSetupError(id:string, errorMessage:string, severity:ShaderCompilerMessageSeverity) : void
+    + AddConcretizationError(id:string, errorMessage:string, severity:ShaderCompilerMessageSeverity) : void
+    + ClearErrorsForNode(node:AbstractMaterialNode) : void
+    <<internal>> replaceInProgress : bool = false
+    + ReplaceWith(other:GraphData) : void
+    <<internal>> PasteGraph(graphToPaste:CopyPasteGraph, remappedNodes:List<AbstractMaterialNode>, remappedEdges:List<Edge>) : void
+    + <<override>> OnBeforeSerialize() : void
+    {static} - DeserializeLegacy(typeString:string, json:string, overrideObjectId:Guid?) : T
+    {static} - DeserializeLegacyNode(typeString:string, json:string, overrideObjectId:Guid?) : AbstractMaterialNode
+    + <<override>> OnAfterDeserialize(json:string) : void
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    - ReplaceNodeWithNode(nodeToReplace:LegacyUnknownTypeNode, nodeReplacement:AbstractMaterialNode) : void
+    + OnEnable() : void
+    + OnDisable() : void
+    <<internal>> ValidateCustomBlockLimit() : void
+    - ValidateContextBlocks() : void
+    - FindAndReportSlotErrors(initialSlot:MaterialSlot, expectedShaderStage:ShaderStage) : void
+}
+class InspectorPreviewData {
+    + serializedMesh : SerializableMesh
+    + preventRotation : bool
+    + rotation : Quaternion
+    + scale : float = 1f
+}
+class PotentialTarget {
+    - m_Target : Target
+    - m_KnownType : Type
+    - m_UnknownTarget : MultiJsonInternal.UnknownTargetType
+    + PotentialTarget(target:Target)
+    + IsUnknown() : bool
+    + GetUnknown() : MultiJsonInternal.UnknownTargetType
+    + knownType : Type <<get>>
+    + Is(t:Target) : bool
+    + GetDisplayName() : string
+    + ReplaceStoredTarget(t:Target) : void
+    + GetTarget() : Target
+}
+class OldGraphDataReadConcretePrecision {
+    + m_ConcretePrecision : ConcretePrecision
+}
+JsonObject <|-- GraphData
+GraphData +-- PotentialTarget
+GraphData +-- OldGraphDataReadConcretePrecision
+@enduml

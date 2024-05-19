@@ -1,0 +1,18 @@
+@startuml
+class AnimationClipConverter <<sealed>> {
+    + <<override>> name : string <<get>>
+    + <<override>> info : string <<get>>
+    + <<override>> category : string <<get>>
+    + <<override>> container : Type <<get>>
+    - m_AssetsToConvert : List<GlobalObjectId>
+    - m_ClipData : IDictionary<AnimationClipUpgrader.IAnimationClip, (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)>
+    + <<override>> OnInitialize(ctx:InitializeConverterContext, callback:Action) : void
+    + <<override>> OnPreRun() : void
+    - m_Upgraded : HashSet<(AnimationClipUpgrader.IAnimationClip Clip, ClipPath Path, SerializedShaderPropertyUsage Usage)>
+    - m_NotUpgraded : HashSet<(AnimationClipUpgrader.IAnimationClip Clip, ClipPath Path, SerializedShaderPropertyUsage Usage)>
+    - m_TempClipData : IDictionary<AnimationClipUpgrader.IAnimationClip, (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)>
+    + <<override>> OnRun(ctx:RunItemContext) : void
+    + <<override>> OnClicked(index:int) : void
+}
+RenderPipelineConverter <|-- AnimationClipConverter
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+class LudiqEditorUtility <<static>> {
+    + {static} editedObject : OverrideStack<UnityObject> <<get>>
+}
+@enduml

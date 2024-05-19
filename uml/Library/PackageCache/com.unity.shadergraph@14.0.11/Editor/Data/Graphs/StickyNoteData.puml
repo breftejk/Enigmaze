@@ -1,0 +1,22 @@
+@startuml
+class StickyNoteData {
+    - m_Title : string
+    + title : string <<get>> <<set>>
+    - m_Content : string
+    + content : string <<get>> <<set>>
+    - m_TextSize : int
+    + textSize : int <<get>> <<set>>
+    - m_Theme : int
+    + theme : int <<get>> <<set>>
+    - m_Position : Rect
+    + position : Rect <<get>> <<set>>
+    - rect : Rect <<get>> <<set>>
+    - m_Group : JsonRef<GroupData> = null
+    + group : GroupData <<get>> <<set>>
+    + StickyNoteData()
+    + StickyNoteData(title:string, content:string, position:Rect)
+}
+JsonObject <|-- StickyNoteData
+IGroupItem <|-- StickyNoteData
+IRectInterface <|-- StickyNoteData
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+class ApiRestrictions {
+    <<extern>> {static} <<internal>> PushDisableApiInternal(contextApi:ContextRestrictions, context:Object, globalApi:GlobalRestrictions) : void
+    <<extern>> {static} <<internal>> PopDisableApiInternal(contextApi:ContextRestrictions, context:Object, globalApi:GlobalRestrictions) : void
+    <<extern>> {static} <<internal>> TryApiInternal(contextApi:ContextRestrictions, context:Object, globalApi:GlobalRestrictions, allowErrorLogging:bool) : bool
+    {static} <<internal>> PushDisableApi(api:ContextRestrictions, owner:Object) : void
+    {static} <<internal>> PushDisableApi(api:GlobalRestrictions) : void
+    {static} <<internal>> PopDisableApi(api:ContextRestrictions, context:Object) : void
+    {static} <<internal>> PopDisableApi(api:GlobalRestrictions) : void
+    {static} <<internal>> TryApi(api:ContextRestrictions, context:Object, allowErrorLogging:bool) : bool
+    {static} <<internal>> TryApi(api:GlobalRestrictions, allowErrorLogging:bool) : bool
+}
+struct DisableApiScope {
+    + DisableApiScope(api:ApiRestrictions.ContextRestrictions, context:Object)
+    + DisableApiScope(api:ApiRestrictions.GlobalRestrictions)
+    + Dispose() : void
+    - <<readonly>> m_ContextApi : ApiRestrictions.ContextRestrictions
+    - <<readonly>> m_GlobalApi : ApiRestrictions.GlobalRestrictions
+    - <<readonly>> m_Context : Object
+}
+struct EnableApiScope {
+    + EnableApiScope(api:ApiRestrictions.ContextRestrictions, context:Object)
+    + EnableApiScope(api:ApiRestrictions.GlobalRestrictions)
+    + Dispose() : void
+    - <<readonly>> m_ContextApi : ApiRestrictions.ContextRestrictions
+    - <<readonly>> m_GlobalApi : ApiRestrictions.GlobalRestrictions
+    - <<readonly>> m_Context : Object
+}
+enum GlobalRestrictions {
+    OBJECT_DESTROYIMMEDIATE= 0,
+    OBJECT_SENDMESSAGE= 1,
+    OBJECT_RENDERING= 2,
+    GLOBALCOUNT,
+}
+enum ContextRestrictions {
+    RENDERERSCENE_ADDREMOVE= 0,
+    OBJECT_ADDCOMPONENTTRANSFORM= 1,
+    CONTEXTCOUNT,
+}
+IDisposable <|-- DisableApiScope
+IDisposable <|-- EnableApiScope
+ApiRestrictions +-- GlobalRestrictions
+ApiRestrictions +-- ContextRestrictions
+@enduml

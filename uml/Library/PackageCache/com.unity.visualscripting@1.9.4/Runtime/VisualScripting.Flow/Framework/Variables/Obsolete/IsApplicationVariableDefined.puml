@@ -1,0 +1,9 @@
+@startuml
+class IsApplicationVariableDefined <<sealed>> {
+    + IsApplicationVariableDefined()
+    + IsApplicationVariableDefined(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+IsVariableDefinedUnit <|-- IsApplicationVariableDefined
+IApplicationVariableUnit <|-- IsApplicationVariableDefined
+@enduml

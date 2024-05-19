@@ -1,0 +1,21 @@
+@startuml
+class SpriteSelectorWidget {
+    - m_SpriteList : Sprite[]
+    - m_SpritePreviews : Texture2D[]
+    - m_SpritePreviewNeedFetching : List<int>
+    - m_ScrollPos : Vector2
+    - m_Style : Styles
+    <<const>> - kTargetPreviewSize : int = 64
+    + SpriteSelectorWidget()
+    + UpdateContents(sprites:Sprite[]) : void
+    + ShowGUI(selectedIndex:int) : int
+    {static} - GetRowColumnCount(drawWidth:float, size:int, contentCount:int, column:int, row:int, columnf:float) : void
+    + NeedUpdatePreview() : bool
+    - UpdateSpritePreviews() : void
+}
+class Styles {
+    + gridListStyle : GUIStyle
+    + Styles()
+}
+SpriteSelectorWidget +-- Styles
+@enduml

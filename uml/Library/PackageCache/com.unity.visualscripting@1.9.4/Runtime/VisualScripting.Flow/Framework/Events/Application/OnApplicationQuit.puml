@@ -1,0 +1,6 @@
+@startuml
+class OnApplicationQuit <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"GlobalEventUnit`1" "<EmptyEventArgs>" <|-- OnApplicationQuit
+@enduml

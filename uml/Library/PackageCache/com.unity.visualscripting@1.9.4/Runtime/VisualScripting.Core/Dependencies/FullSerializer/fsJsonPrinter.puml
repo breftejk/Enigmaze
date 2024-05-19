@@ -1,0 +1,13 @@
+@startuml
+class fsJsonPrinter <<static>> {
+    - {static} InsertSpacing(stream:TextWriter, count:int) : void
+    - {static} EscapeString(str:string) : string
+    - {static} BuildCompressedString(data:fsData, stream:TextWriter) : void
+    - {static} BuildPrettyString(data:fsData, stream:TextWriter, depth:int) : void
+    + {static} PrettyJson(data:fsData, outputStream:TextWriter) : void
+    + {static} PrettyJson(data:fsData) : string
+    + {static} CompressedJson(data:fsData, outputStream:StreamWriter) : void
+    + {static} CompressedJson(data:fsData) : string
+    - {static} ConvertDoubleToString(d:double) : string
+}
+@enduml

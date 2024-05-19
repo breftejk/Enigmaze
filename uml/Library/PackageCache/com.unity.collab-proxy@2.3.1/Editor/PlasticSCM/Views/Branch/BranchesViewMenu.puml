@@ -1,0 +1,23 @@
+@startuml
+class BranchesViewMenu {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> BranchesViewMenu(branchMenuOperations:IBranchMenuOperations)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - CreateBranchMenuItem_Click() : void
+    - SwitchToBranchMenuItem_Click() : void
+    - RenameBranchMenuItem_Click() : void
+    - DeleteBranchMenuItem_Click() : void
+    <<internal>> UpdateMenuItems(menu:GenericMenu) : void
+    {static} - AddBranchMenuItem(menuItemContent:GUIContent, menu:GenericMenu, operations:BranchMenuOperations, operationsToCheck:BranchMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - ProcessMenuOperation(operationToExecute:BranchMenuOperations, branchMenuOperations:IBranchMenuOperations) : void
+    {static} - GetMenuOperations(e:Event) : BranchMenuOperations
+    - BuildComponents() : void
+    - mMenu : GenericMenu
+    - mCreateBranchMenuItemContent : GUIContent
+    - mSwitchToBranchMenuItemContent : GUIContent
+    - mRenameBranchMenuItemContent : GUIContent
+    - mDeleteBranchMenuItemContent : GUIContent
+    <<readonly>> - mBranchMenuOperations : IBranchMenuOperations
+}
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class GraphReference <<sealed>> {
+    {static} - GraphReference()
+    - GraphReference()
+    + {static} New(root:IGraphRoot, ensureValid:bool) : GraphReference
+    + {static} New(root:IGraphRoot, parentElements:IEnumerable<IGraphParentElement>, ensureValid:bool) : GraphReference
+    + {static} New(rootObject:UnityObject, parentElementGuids:IEnumerable<Guid>, ensureValid:bool) : GraphReference
+    - {static} New(model:GraphPointer) : GraphReference
+    + <<override>> CopyFrom(other:GraphPointer) : void
+    + Clone() : GraphReference
+    + <<override>> AsReference() : GraphReference
+    + ToStackPooled() : GraphStack
+    <<internal>> Release() : void
+    + CreateGraphData() : void
+    + FreeGraphData() : void
+    - hashCode : int
+    + <<override>> Equals(obj:object) : bool
+    - Hash() : void
+    + <<override>> GetHashCode() : int
+    + ParentReference(ensureValid:bool) : GraphReference
+    + ChildReference(parentElement:IGraphParentElement, ensureValid:bool, maxRecursionDepth:int?) : GraphReference
+    + Revalidate(ensureValid:bool) : GraphReference
+    + GetBreadcrumbs() : IEnumerable<GraphReference>
+    - {static} <<readonly>> internPool : Dictionary<int, List<GraphReference>>
+    + {static} Intern(pointer:GraphPointer) : GraphReference
+    <<internal>> {static} ClearIntern(pointer:GraphPointer) : void
+    + {static} FreeInvalidInterns() : void
+}
+GraphPointer <|-- GraphReference
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+struct IMECompositionEvent {
+    <<internal>> <<const>> kIMECharBufferSize : int = 64
+    + <<const>> Type : int = 0x494D4553
+    + baseEvent : InputEvent
+    + compositionString : IMECompositionString
+    + typeStatic : FourCC <<get>>
+    + {static} Create(deviceId:int, compositionString:string, time:double) : IMECompositionEvent
+}
+struct IMECompositionString {
+    + Count : int <<get>>
+    - size : int
+    <<fixed>> - buffer : char
+    + IMECompositionString(characters:string)
+    + <<override>> ToString() : string
+    + GetEnumerator() : IEnumerator<char>
+    - GetEnumerator() : IEnumerator
+}
+struct Enumerator {
+    - m_CompositionString : IMECompositionString
+    - m_CurrentCharacter : char
+    - m_CurrentIndex : int
+    + Enumerator(compositionString:IMECompositionString)
+    + MoveNext() : bool
+    + Reset() : void
+    + Dispose() : void
+    + Current : char <<get>>
+    - Current : object <<get>>
+}
+IInputEventTypeInfo <|-- IMECompositionEvent
+"IEnumerable`1" "<char>" <|-- IMECompositionString
+IMECompositionString +-- Enumerator
+"IEnumerator`1" "<char>" <|-- Enumerator
+@enduml

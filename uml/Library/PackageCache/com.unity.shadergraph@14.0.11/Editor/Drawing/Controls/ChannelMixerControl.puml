@@ -1,0 +1,33 @@
+@startuml
+class ChannelMixerControlAttribute {
+    - m_Label : string
+    - m_Minimum : float
+    - m_Maximum : float
+    + ChannelMixerControlAttribute(label:string, minimum:float, maximum:float)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class ChannelMixerControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_ChannelMixer : ChannelMixerNode.ChannelMixer
+    - m_OutChannel : int
+    - m_RedSlider : Slider
+    - m_GreenSlider : Slider
+    - m_BlueSlider : Slider
+    - m_RedInputField : FloatField
+    - m_GreenInputField : FloatField
+    - m_BlueInputField : FloatField
+    - m_Minimum : float
+    - m_Maximum : float
+    - m_Initialized : bool
+    + ChannelMixerControlView(label:string, minimum:float, maximum:float, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - ResetSliders() : void
+    - OnChangeSlider(value:float, inChannel:int) : void
+    - OnChangeInputField(evt:ChangeEvent<double>, inChannel:int) : void
+    - OnClickButton(outChannel:int) : void
+    - GetOutputChannel() : Vector3
+}
+Attribute <|-- ChannelMixerControlAttribute
+IControlAttribute <|-- ChannelMixerControlAttribute
+VisualElement <|-- ChannelMixerControlView
+@enduml

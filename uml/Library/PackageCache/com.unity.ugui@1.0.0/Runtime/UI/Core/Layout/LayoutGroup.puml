@@ -1,0 +1,50 @@
+@startuml
+abstract class LayoutGroup {
+    # m_Padding : RectOffset
+    + padding : RectOffset <<get>> <<set>>
+    # m_ChildAlignment : TextAnchor
+    + childAlignment : TextAnchor <<get>> <<set>>
+    - m_Rect : RectTransform
+    # rectTransform : RectTransform <<get>>
+    # m_Tracker : DrivenRectTransformTracker
+    - m_TotalMinSize : Vector2
+    - m_TotalPreferredSize : Vector2
+    - m_TotalFlexibleSize : Vector2
+    - m_RectChildren : List<RectTransform>
+    # rectChildren : List<RectTransform> <<get>>
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + {abstract} CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+    + {abstract} SetLayoutHorizontal() : void
+    + {abstract} SetLayoutVertical() : void
+    # LayoutGroup()
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    # GetTotalMinSize(axis:int) : float
+    # GetTotalPreferredSize(axis:int) : float
+    # GetTotalFlexibleSize(axis:int) : float
+    # GetStartOffset(axis:int, requiredSpaceWithoutPadding:float) : float
+    # GetAlignmentOnAxis(axis:int) : float
+    # SetLayoutInputForAxis(totalMin:float, totalPreferred:float, totalFlexible:float, axis:int) : void
+    # SetChildAlongAxis(rect:RectTransform, axis:int, pos:float) : void
+    # SetChildAlongAxisWithScale(rect:RectTransform, axis:int, pos:float, scaleFactor:float) : void
+    # SetChildAlongAxis(rect:RectTransform, axis:int, pos:float, size:float) : void
+    # SetChildAlongAxisWithScale(rect:RectTransform, axis:int, pos:float, size:float, scaleFactor:float) : void
+    - isRootLayoutGroup : bool <<get>>
+    # <<override>> OnRectTransformDimensionsChange() : void
+    # <<virtual>> OnTransformChildrenChanged() : void
+    # SetProperty(currentValue:T, newValue:T) : void
+    # SetDirty() : void
+    - DelayedSetDirty(rectTransform:RectTransform) : IEnumerator
+}
+UIBehaviour <|-- LayoutGroup
+ILayoutElement <|-- LayoutGroup
+ILayoutGroup <|-- LayoutGroup
+@enduml

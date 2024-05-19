@@ -1,0 +1,33 @@
+@startuml
+abstract class "VolumeDebugSettings`1"<T> <<partial>> {
+    + selectedComponent : int <<get>> <<set>> = 0
+    - m_SelectedCamera : Camera
+    + selectedCamera : Camera <<get>>
+    # m_SelectedCameraIndex : int
+    + selectedCameraIndex : int <<get>> <<set>>
+    - m_CamerasArray : Camera[]
+    - m_Cameras : List<Camera>
+    + cameras : IEnumerable<Camera> <<get>>
+    + {abstract} selectedCameraVolumeStack : VolumeStack <<get>>
+    + {abstract} selectedCameraLayerMask : LayerMask <<get>>
+    + {abstract} selectedCameraPosition : Vector3 <<get>>
+    + selectedComponentType : Type <<get>> <<set>>
+    {static} - s_ComponentPathAndType : List<(string, Type)>
+    + volumeComponentsPathAndType : List<(string, Type)> <<get>>
+    + {abstract} targetRenderPipeline : Type <<get>>
+    <<internal>> GetParameter(component:VolumeComponent, field:FieldInfo) : VolumeParameter
+    <<internal>> GetParameter(field:FieldInfo) : VolumeParameter
+    <<internal>> GetParameter(volume:Volume, field:FieldInfo) : VolumeParameter
+    - weights : float[] = null
+    - ComputeWeight(volume:Volume, triggerPos:Vector3) : float
+    - volumes : Volume[] = null
+    + GetVolumes() : Volume[]
+    - savedStates : VolumeParameter[,] = null
+    - GetStates() : VolumeParameter[,]
+    - ChangedStates(newStates:VolumeParameter[,]) : bool
+    + RefreshVolumes(newVolumes:Volume[]) : bool
+    + GetVolumeWeight(volume:Volume) : float
+    + VolumeHasInfluence(volume:Volume) : bool
+}
+IVolumeDebugSettings2 <|-- "VolumeDebugSettings`1"
+@enduml

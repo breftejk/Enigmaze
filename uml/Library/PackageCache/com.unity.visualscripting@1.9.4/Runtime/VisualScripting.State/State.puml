@@ -1,0 +1,45 @@
+@startuml
+abstract class State {
+    + CreateData() : IGraphElementData
+    + CreateDebugData() : IGraphElementDebugData
+    + isStart : bool <<get>> <<set>>
+    + <<virtual>> canBeSource : bool <<get>>
+    + <<virtual>> canBeDestination : bool <<get>>
+    + <<override>> BeforeRemove() : void
+    + <<override>> Instantiate(instance:GraphReference) : void
+    + <<override>> Uninstantiate(instance:GraphReference) : void
+    # CopyFrom(source:State) : void
+    + outgoingTransitions : IEnumerable<IStateTransition> <<get>>
+    + incomingTransitions : IEnumerable<IStateTransition> <<get>>
+    # outgoingTransitionsNoAlloc : List<IStateTransition> <<get>>
+    + transitions : IEnumerable<IStateTransition> <<get>>
+    + Disconnect() : void
+    + <<virtual>> OnEnter(flow:Flow, reason:StateEnterReason) : void
+    + <<virtual>> OnExit(flow:Flow, reason:StateExitReason) : void
+    # <<virtual>> OnEnterImplementation(flow:Flow) : void
+    # <<virtual>> UpdateImplementation(flow:Flow) : void
+    # <<virtual>> FixedUpdateImplementation(flow:Flow) : void
+    # <<virtual>> LateUpdateImplementation(flow:Flow) : void
+    # <<virtual>> OnExitImplementation(flow:Flow) : void
+    + <<virtual>> OnBranchTo(flow:Flow, destination:IState) : void
+    + <<const>> DefaultWidth : float = 170
+    + position : Vector2 <<get>> <<set>>
+    + width : float <<get>> <<set>>
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+class Data {
+    + isActive : bool
+    + hasEntered : bool
+}
+class DebugData {
+    + lastEnterFrame : int <<get>> <<set>>
+    + lastExitTime : float <<get>> <<set>>
+    + runtimeException : Exception <<get>> <<set>>
+}
+"GraphElement`1" "<StateGraph>" <|-- State
+IState <|-- State
+State +-- Data
+IGraphElementData <|-- Data
+State +-- DebugData
+IStateDebugData <|-- DebugData
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class OverlayRect {
+    <<internal>> {static} GetOverlayRect(selectionRect:Rect, iconOffset:float) : Rect
+    <<internal>> {static} GetCenteredRect(selectionRect:Rect) : Rect
+    {static} - GetOverlayRectForSmallestSize(selectionRect:Rect) : Rect
+    {static} - GetOverlayRectForOtherSizes(selectionRect:Rect, iconOffset:float) : Rect
+    <<const>> - UNITY_STANDARD_ICON_SIZE : int = 32
+}
+@enduml

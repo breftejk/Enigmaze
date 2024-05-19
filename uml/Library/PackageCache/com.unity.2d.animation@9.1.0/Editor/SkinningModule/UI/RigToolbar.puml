@@ -1,0 +1,26 @@
+@startuml
+class RigToolbar {
+    - <<const>> k_UxmlPath : string = "SkinningModule/RigToolbar.uxml"
+    - <<const>> k_UssPath : string = "SkinningModule/RigToolbarStyle.uss"
+    - <<const>> k_ToolbarId : string = "RigToolbar"
+    - <<const>> k_CopyRigId : string = "CopyRig"
+    - <<const>> k_PasteRigId : string = "PasteRig"
+    +  <<event>> ActivateCopyTool : Action 
+    +  <<event>> TogglePasteTool : Action 
+    + skinningCache : SkinningCache <<get>> <<set>>
+    - m_CopyBtn : Button
+    - m_PasteBtn : Button
+    + {static} GenerateFromUXML() : RigToolbar
+    + RigToolbar()
+    - BindElements() : void
+    - SetupShortcutUtility() : void
+    + UpdatePasteButtonCheckedState() : void
+    + UpdatePasteButtonEnabledState() : void
+    - AddShortcutsToToolTips() : void
+}
+class CustomUXMLFactor {
+}
+Toolbar <|-- RigToolbar
+RigToolbar +-- CustomUXMLFactor
+"UxmlFactory`2" "<RigToolbar,UxmlTraits>" <|-- CustomUXMLFactor
+@enduml

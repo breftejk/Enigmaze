@@ -1,0 +1,8 @@
+@startuml
+class CosineNode {
+    + CosineNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Cosine(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- CosineNode
+@enduml

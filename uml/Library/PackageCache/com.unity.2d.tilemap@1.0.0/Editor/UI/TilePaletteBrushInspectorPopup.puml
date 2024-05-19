@@ -1,0 +1,24 @@
+@startuml
+class TilePaletteBrushInspectorPopup {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushinspectorpopup"
+    - {static} <<readonly>> horizontalClassName : string
+    - trigger : BaseField<bool>
+    - isLocked : bool
+    - screenRect : Rect
+    - size : Vector2
+    + CreateGUI() : void
+    # <<override>> OnEnable() : void
+    - DuringSceneGui(obj:SceneView) : void
+    # <<override>> OnDisable() : void
+}
+class TilePaletteBrushInspectorLockToggle <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Brush Inspector Lock"
+    - <<const>> k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} k_TooltipText : string
+    + ToggleChanged : Action<bool>
+    + TilePaletteBrushInspectorLockToggle()
+    # <<override>> ToggleValue() : void
+}
+BoolFieldOverlayPopupWindow <|-- TilePaletteBrushInspectorPopup
+EditorToolbarToggle <|-- TilePaletteBrushInspectorLockToggle
+@enduml

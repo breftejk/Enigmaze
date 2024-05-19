@@ -1,0 +1,12 @@
+@startuml
+class ParentCanvasIsSane {
+    - rootCanvas : GameObject
+    - rootObject : GameObject
+    - child1 : GameObject
+    - c1CanvasGroup : CanvasGroup
+    - child2 : GameObject
+    - child3 : GameObject
+    + TestSetup() : void
+    + RecalculatingAlphaOnReparentedInactiveObjectsDoesNotCrash() : IEnumerator
+}
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+class TimelineMarkerGUI {
+    +  <<event>> onStartDrag : System.Action 
+    - m_ProjectedClipHash : int
+    - m_MarkerHash : int
+    - m_Selectable : bool
+    - m_MarkerDrawOptions : MarkerDrawOptions
+    - m_Editor : MarkerEditor
+    - marker : IMarker <<get>>
+    - selectable : bool <<get>>
+    + time : double <<get>>
+    + <<override>> start : double <<get>>
+    + <<override>> end : double <<get>>
+    + <<override>> Select() : void
+    + <<override>> IsSelected() : bool
+    + <<override>> Deselect() : void
+    + <<override>> item : ITimelineItem <<get>>
+    - zOrderProvider : IZOrderProvider <<get>>
+    + TimelineMarkerGUI(theMarker:IMarker, parent:IRowGUI, provider:IZOrderProvider)
+    - ComputeDirtyHash() : int
+    {static} - DrawMarker(drawRect:Rect, type:Type, isSelected:bool, isCollapsed:bool, options:MarkerDrawOptions) : void
+    - UpdateDrawData() : void
+    + <<override>> Draw(trackRect:Rect, trackRectChanged:bool, state:WindowState) : void
+    + QueueOverlay(rect:Rect, isSelected:bool, isCollapsed:bool) : void
+    + <<override>> StartDrag() : void
+    - CalculateClipRectangle(trackRect:Rect, state:WindowState, projectedClipHash:int, trackRectChanged:bool) : void
+    + <<override>> RectToTimeline(trackRect:Rect, state:WindowState) : Rect
+    + SnappableEdgesFor(attractable:IAttractable, manipulateEdges:ManipulateEdges) : IEnumerable<Edge>
+    + ShouldSnapTo(snappable:ISnappable) : bool
+}
+TimelineItemGUI <|-- TimelineMarkerGUI
+ISnappable <|-- TimelineMarkerGUI
+IAttractable <|-- TimelineMarkerGUI
+@enduml

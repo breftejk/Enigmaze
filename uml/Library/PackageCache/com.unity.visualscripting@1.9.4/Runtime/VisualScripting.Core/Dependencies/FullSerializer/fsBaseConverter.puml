@@ -1,0 +1,16 @@
+@startuml
+abstract class fsBaseConverter {
+    + Serializer : fsSerializer
+    + <<virtual>> CreateInstance(data:fsData, storageType:Type) : object
+    + <<virtual>> RequestCycleSupport(storageType:Type) : bool
+    + <<virtual>> RequestInheritanceSupport(storageType:Type) : bool
+    + {abstract} TrySerialize(instance:object, serialized:fsData, storageType:Type) : fsResult
+    + {abstract} TryDeserialize(data:fsData, instance:object, storageType:Type) : fsResult
+    # FailExpectedType(data:fsData, types:fsDataType[]) : fsResult
+    # CheckType(data:fsData, type:fsDataType) : fsResult
+    # CheckKey(data:fsData, key:string, subitem:fsData) : fsResult
+    # CheckKey(data:Dictionary<string, fsData>, key:string, subitem:fsData) : fsResult
+    # SerializeMember(data:Dictionary<string, fsData>, overrideConverterType:Type, name:string, value:T) : fsResult
+    # DeserializeMember(data:Dictionary<string, fsData>, overrideConverterType:Type, name:string, value:T) : fsResult
+}
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+class NativeQueueTests_InJobs {
+    + Enqueue() : void
+    + EnqueueDequeueMultipleQueuesInMultipleJobs() : void
+    + ToArray_WorksFromJobs() : void
+    + NativeQueue_ParallelWriter() : void
+}
+struct ConcurrentEnqueue {
+    + queue : NativeQueue<int>.ParallelWriter
+    + result : NativeArray<int>
+    + StartIndex : int
+    + Execute(index:int) : void
+}
+struct EnqueueDequeueJob {
+    + queue : NativeQueue<int>
+    + arr : NativeArray<int>
+    + val : int
+    + Execute() : void
+}
+struct EnqueueJob {
+    + Queue : NativeQueue<int>.ParallelWriter
+    + Execute(index:int) : void
+}
+CollectionsTestCommonBase <|-- NativeQueueTests_InJobs
+NativeQueueTests_InJobs +-- ConcurrentEnqueue
+IJobParallelFor <|-- ConcurrentEnqueue
+NativeQueueTests_InJobs +-- EnqueueDequeueJob
+IJob <|-- EnqueueDequeueJob
+NativeQueueTests_InJobs +-- EnqueueJob
+IJobParallelFor <|-- EnqueueJob
+@enduml

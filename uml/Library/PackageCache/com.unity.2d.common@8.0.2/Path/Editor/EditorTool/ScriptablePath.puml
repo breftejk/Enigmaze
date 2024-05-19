@@ -1,0 +1,29 @@
+@startuml
+class ScriptablePath {
+    - m_EditablePath : EditablePath
+    - m_Modified : bool = false
+    <<internal>> modified : bool <<get>>
+    <<internal>> owner : UnityObject <<get>> <<set>>
+    + shapeType : ShapeType <<get>> <<set>>
+    + undoObject : IUndoObject <<get>> <<set>>
+    + selection : ISelection<int> <<get>>
+    + localToWorldMatrix : Matrix4x4 <<get>> <<set>>
+    + forward : Vector3 <<get>> <<set>>
+    + up : Vector3 <<get>> <<set>>
+    + right : Vector3 <<get>> <<set>>
+    + isOpenEnded : bool <<get>> <<set>>
+    + pointCount : int <<get>>
+    + Select(selector:ISelector<Vector3>) : bool
+    + <<virtual>> Clear() : void
+    + <<virtual>> GetPointLocal(index:int) : ControlPoint
+    + <<virtual>> GetPoint(index:int) : ControlPoint
+    + <<virtual>> SetPoint(index:int, controlPoint:ControlPoint) : void
+    + <<virtual>> AddPoint(controlPoint:ControlPoint) : void
+    + <<virtual>> InsertPoint(index:int, controlPoint:ControlPoint) : void
+    + <<virtual>> RemovePoint(index:int) : void
+    - RegisterUndo(name:string) : void
+}
+ScriptableObject <|-- ScriptablePath
+IEditablePath <|-- ScriptablePath
+IUndoObject <|-- ScriptablePath
+@enduml

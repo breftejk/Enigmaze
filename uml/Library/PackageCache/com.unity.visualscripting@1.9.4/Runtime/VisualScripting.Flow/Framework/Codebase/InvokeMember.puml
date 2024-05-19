@@ -1,0 +1,28 @@
+@startuml
+class InvokeMember <<sealed>> {
+    + InvokeMember()
+    + InvokeMember(member:Member)
+    - useExpandedParameters : bool
+    + chainable : bool <<get>> <<set>>
+    + supportsChaining : bool <<get>>
+    + invocation : Member <<get>> <<set>>
+    + enter : ControlInput <<get>>
+    + inputParameters : Dictionary<int, ValueInput> <<get>>
+    + targetOutput : ValueOutput <<get>>
+    + result : ValueOutput <<get>>
+    + outputParameters : Dictionary<int, ValueOutput> <<get>>
+    + exit : ControlOutput <<get>>
+    - parameterCount : int
+    - parameterNames : List<string>
+    + <<override>> HandleDependencies() : bool
+    # <<override>> Definition() : void
+    - PostDeserializeRemapParameterNames() : void
+    # <<override>> IsMemberValid(member:Member) : bool
+    - Invoke(target:object, flow:Flow) : object
+    - GetAndChainTarget(flow:Flow) : object
+    - Result(flow:Flow) : object
+    - Enter(flow:Flow) : ControlOutput
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+MemberUnit <|-- InvokeMember
+@enduml

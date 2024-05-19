@@ -1,0 +1,10 @@
+@startuml
+class InvalidInputWidget {
+    + InvalidInputWidget(canvas:FlowCanvas, port:InvalidInput)
+    # <<override>> handleTextureConnected : Texture <<get>>
+    # <<override>> handleTextureUnconnected : Texture <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+    # <<override>> canStartConnection : bool <<get>>
+}
+"UnitInputPortWidget`1" "<InvalidInput>" <|-- InvalidInputWidget
+@enduml

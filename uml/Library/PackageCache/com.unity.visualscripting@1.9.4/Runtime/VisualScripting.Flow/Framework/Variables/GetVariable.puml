@@ -1,0 +1,11 @@
+@startuml
+class GetVariable <<sealed>> {
+    + value : ValueOutput <<get>>
+    + fallback : ValueInput <<get>>
+    + specifyFallback : bool <<get>> <<set>> = false
+    # <<override>> Definition() : void
+    - IsDefined(flow:Flow) : bool
+    - Get(flow:Flow) : object
+}
+UnifiedVariableUnit <|-- GetVariable
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class CreateStructOption {
+    + CreateStructOption()
+    + CreateStructOption(unit:CreateStruct)
+    + structType : Type <<get>>
+    # <<override>> FillFromUnit() : void
+    # <<override>> Label(human:bool) : string
+    # <<override>> Haystack(human:bool) : string
+    + <<override>> SearchResultLabel(query:string) : string
+    # <<override>> Order() : int
+    # <<override>> FavoriteKey() : string
+    + <<override>> Deserialize(row:UnitOptionRow) : void
+    + <<override>> Serialize() : UnitOptionRow
+}
+"UnitOption`1" "<CreateStruct>" <|-- CreateStructOption
+@enduml

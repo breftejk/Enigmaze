@@ -1,0 +1,24 @@
+@startuml
+class TemperatureSlider {
+    - m_ExponentialConstraints : Vector3
+    - m_Settings : LightEditor.Settings
+    - {static} s_KelvinGradientTexture : Texture2D
+    - PrepareExponentialConstraints(lo:float, mi:float, hi:float) : void
+    # ValueToSlider(x:float) : float
+    # SliderToValue(x:float) : float
+    # <<override>> GetPositionOnSlider(value:float, valueRange:Vector2) : float
+    {static} - GetKelvinGradientTexture(settings:LightEditor.Settings) : Texture2D
+    + TemperatureSlider(descriptor:LightUnitSliderUIDescriptor)
+    + Setup(settings:LightEditor.Settings) : void
+    # <<override>> SetValueToPreset(value:SerializedProperty, preset:LightUnitSliderUIRange) : void
+    # <<override>> DoSlider(rect:Rect, value:float, sliderRange:Vector2) : void
+    - SliderWithTextureNoTextField(rect:Rect, value:float, range:Vector2, settings:LightEditor.Settings) : void
+}
+class TemperatureSliderUIDrawer {
+    {static} - k_TemperatureSlider : TemperatureSlider
+    {static} - TemperatureSliderUIDrawer()
+    + {static} Draw(settings:LightEditor.Settings, serializedObject:SerializedObject, value:SerializedProperty, rect:Rect) : void
+    + {static} ClampValue(value:SerializedProperty) : void
+}
+LightUnitSlider <|-- TemperatureSlider
+@enduml

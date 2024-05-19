@@ -1,0 +1,7 @@
+@startuml
+class OnBeginDrag <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+PointerEventUnit <|-- OnBeginDrag
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class Vector4ComparerWithEqualsOperator {
+    - {static} <<readonly>> m_Instance : Vector4ComparerWithEqualsOperator
+    + {static} Instance : Vector4ComparerWithEqualsOperator <<get>>
+    - Vector4ComparerWithEqualsOperator()
+    + Equals(expected:Vector4, actual:Vector4) : bool
+    + GetHashCode(vec4:Vector4) : int
+}
+"IEqualityComparer`1" "<Vector4>" <|-- Vector4ComparerWithEqualsOperator
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+interface IUnitConnectionWidget {
+    color : Color <<get>>
+}
+IGraphElementWidget <|-- IUnitConnectionWidget
+@enduml

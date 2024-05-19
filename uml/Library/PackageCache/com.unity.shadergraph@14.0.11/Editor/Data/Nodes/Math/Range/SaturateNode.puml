@@ -1,0 +1,8 @@
+@startuml
+class SaturateNode {
+    + SaturateNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Saturate(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SaturateNode
+@enduml

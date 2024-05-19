@@ -1,0 +1,11 @@
+@startuml
+abstract class VectorShaderProperty {
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<virtual>> vectorDimension : int <<get>>
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+}
+"AbstractShaderProperty`1" "<Vector4>" <|-- VectorShaderProperty
+@enduml

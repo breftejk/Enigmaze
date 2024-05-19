@@ -1,0 +1,16 @@
+@startuml
+class CubemapControlAttribute {
+    - m_Label : string
+    + CubemapControlAttribute(label:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class CubemapControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    + CubemapControlView(label:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnChange(evt:ChangeEvent<UnityEngine.Object>) : void
+}
+Attribute <|-- CubemapControlAttribute
+IControlAttribute <|-- CubemapControlAttribute
+VisualElement <|-- CubemapControlView
+@enduml

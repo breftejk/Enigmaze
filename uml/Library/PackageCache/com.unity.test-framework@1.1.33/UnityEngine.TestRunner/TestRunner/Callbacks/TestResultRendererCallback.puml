@@ -1,0 +1,12 @@
+@startuml
+class TestResultRendererCallback {
+    - m_ResultRenderer : TestResultRenderer
+    + RunStarted(testsToRun:ITest) : void
+    + RunFinished(testResults:ITestResult) : void
+    + OnGUI() : void
+    + TestStarted(test:ITest) : void
+    + TestFinished(result:ITestResult) : void
+}
+MonoBehaviour <|-- TestResultRendererCallback
+ITestRunnerListener <|-- TestResultRendererCallback
+@enduml

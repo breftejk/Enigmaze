@@ -1,0 +1,32 @@
+@startuml
+class TimelineGroupGUI {
+    # m_Styles : DirectorStyles
+    # m_TreeViewRect : Rect
+    # m_ProblemIcon : GUIContent
+    - m_MustRecomputeUnions : bool = true
+    - m_GroupDepth : int
+    <<readonly>> - m_IsReferencedTrack : bool
+    <<readonly>> - m_Unions : List<TimelineClipUnion>
+    + <<override>> boundingRect : Rect <<get>>
+    + ToWindowSpace(localRect:Rect) : Rect
+    + <<override>> expandable : bool <<get>>
+    + expandedRect : Rect <<get>> <<set>>
+    + rowRect : Rect <<get>> <<set>>
+    + dropRect : Rect <<get>> <<set>>
+    + TimelineGroupGUI(treeview:TreeViewController, treeviewGUI:TimelineTreeViewGUI, id:int, depth:int, parent:TreeViewItem, displayName:string, trackAsset:TrackAsset, isRoot:bool)
+    + <<virtual>> GetHeight(state:WindowState) : float
+    + <<override>> OnGraphRebuilt() : void
+    {static} - CalculateGroupDepth(parent:TreeViewItem) : int
+    - DrawTrackButtons(headerRect:Rect, state:WindowState) : void
+    + SetExpanded(expanded:bool) : void
+    + <<override>> Draw(headerRect:Rect, contentRect:Rect, state:WindowState) : void
+    - DrawName(rect:Rect, isSelected:bool) : void
+    # IsSubTrack() : bool
+    # ParentTrack() : TrackAsset
+    - IsTrackRecording(state:WindowState) : bool
+    - RecomputeRectUnions() : void
+    {static} - AllChildrenMuted(groupGui:TimelineGroupGUI) : bool
+    # {static} DrawButtonSuite(numberOfButtons:int, buttonRect:Rect) : float
+}
+TimelineTrackBaseGUI <|-- TimelineGroupGUI
+@enduml

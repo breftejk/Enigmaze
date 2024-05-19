@@ -1,0 +1,28 @@
+@startuml
+class TilePaletteClipboardElement {
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-clipboard-element"
+    - {static} <<readonly>> k_Name : string
+    - m_TilePaletteClipboard : GridPaintPaletteClipboard
+    - m_Window : EditorWindow
+    + clipboardUnlocked : bool <<get>> <<set>>
+    +  <<event>> clipboardUnlockedChanged : Action<bool> 
+    <<internal>> clipboardView : GridPaintPaletteClipboard <<get>>
+    + TilePaletteClipboardElement()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - UnlockChanged(unlocked:bool) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - Cleanup() : void
+    - BeforePaletteChanged() : void
+    - PaletteChanged(palette:GameObject) : void
+    - OnClipboardGUI() : void
+}
+class TilePaletteClipboardElementFactory {
+}
+class TilePaletteClipboardElementUxmlTraits {
+}
+IMGUIContainer <|-- TilePaletteClipboardElement
+TilePaletteClipboardElement +-- TilePaletteClipboardElementFactory
+"UxmlFactory`2" "<TilePaletteClipboardElement,TilePaletteClipboardElementUxmlTraits>" <|-- TilePaletteClipboardElementFactory
+TilePaletteClipboardElement +-- TilePaletteClipboardElementUxmlTraits
+UxmlTraits <|-- TilePaletteClipboardElementUxmlTraits
+@enduml

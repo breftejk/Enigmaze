@@ -1,0 +1,9 @@
+@startuml
+class SpriteSkinUpdateHelper {
+    + onDestroyingComponent : System.Action<GameObject> <<get>> <<set>>
+    - m_ProfilerMarker : ProfilerMarker
+    - OnDestroy() : void
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- SpriteSkinUpdateHelper
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class UnityThreadWaiterBuilder {
+    - GetWaiter() : IThreadWaiter
+    - GetWaiter(timerIntervalMilliseconds:int) : IThreadWaiter
+    - GetModalWaiter() : IThreadWaiter
+    - GetModalWaiter(timerIntervalMilliseconds:int) : IThreadWaiter
+    - GetTimer(timerIntervalMilliseconds:int, timerTickDelegate:ThreadWaiter.TimerTick) : IPlasticTimer
+    {static} - mPlasticTimerBuilder : IPlasticTimerBuilder
+}
+class UnityThreadWaiter {
+    - Exception : Exception <<get>>
+    <<internal>> UnityThreadWaiter(timerBuilder:IPlasticTimerBuilder, bModalMode:bool)
+    <<internal>> UnityThreadWaiter(timerBuilder:IPlasticTimerBuilder, bModalMode:bool, timerIntervalMilliseconds:int)
+    - Execute(threadOperationDelegate:PlasticThread.Operation, afterOperationDelegate:PlasticThread.Operation) : void
+    - Execute(threadOperationDelegate:PlasticThread.Operation, afterOperationDelegate:PlasticThread.Operation, timerTickDelegate:PlasticThread.Operation) : void
+    - Cancel() : void
+    - OnTimerTick() : void
+    - mbCancelled : bool = false
+    - mPlasticTimer : IPlasticTimer
+    - mThreadOperation : PlasticThread
+    - mTimerTickDelegate : PlasticThread.Operation
+    - mAfterOperationDelegate : PlasticThread.Operation
+}
+IThreadWaiterBuilder <|-- UnityThreadWaiterBuilder
+IThreadWaiter <|-- UnityThreadWaiter
+@enduml

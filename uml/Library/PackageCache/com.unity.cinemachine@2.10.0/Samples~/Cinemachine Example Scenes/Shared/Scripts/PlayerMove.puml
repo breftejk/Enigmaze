@@ -1,0 +1,25 @@
+@startuml
+class PlayerMove {
+    + Speed : float
+    + VelocityDamping : float
+    + JumpTime : float
+    + InputForward : ForwardMode
+    + RotatePlayer : bool = true
+    + SpaceAction : Action
+    + EnterAction : Action
+    - m_currentVleocity : Vector3
+    - m_currentJumpSpeed : float
+    - m_restY : float
+    - Reset() : void
+    - OnEnable() : void
+    - Update() : void
+    + Jump() : void
+}
+enum ForwardMode {
+    Camera,
+    Player,
+    World,
+}
+MonoBehaviour <|-- PlayerMove
+PlayerMove +-- ForwardMode
+@enduml

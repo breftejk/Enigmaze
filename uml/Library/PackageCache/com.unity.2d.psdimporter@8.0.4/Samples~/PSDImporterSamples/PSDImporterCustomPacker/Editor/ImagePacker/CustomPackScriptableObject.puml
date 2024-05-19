@@ -1,0 +1,9 @@
+@startuml
+class CustomPackScriptableObject {
+    - m_ObjectsToApply : Object[]
+    - m_ObjectsAppliedPreviously : Object[]
+    - PackImage(buffers:NativeArray<Color32>[], width:int[], height:int[], padding:int, spriteSizeExpand:uint, outPackedBuffer:NativeArray<Color32>, outPackedBufferWidth:int, outPackedBufferHeight:int, outPackedRect:RectInt[], outUVTransform:Vector2Int[], requireSquarePOT:bool) : void
+    + ApplyPipeline() : void
+}
+ScriptableObject <|-- CustomPackScriptableObject
+@enduml

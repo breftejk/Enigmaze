@@ -1,0 +1,10 @@
+@startuml
+abstract class "Sum`1"<T> {
+    + sum : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + {abstract} Operation(a:T, b:T) : T
+    + {abstract} Operation(values:IEnumerable<T>) : T
+    + Operation(flow:Flow) : T
+}
+"MultiInputUnit`1" "<T>" <|-- "Sum`1"
+@enduml

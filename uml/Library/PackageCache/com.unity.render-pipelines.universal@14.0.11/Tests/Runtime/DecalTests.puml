@@ -1,0 +1,11 @@
+@startuml
+class DecalTests {
+    - m_DecalProjector : GameObject
+    - m_DecalProjector2 : GameObject
+    - m_EntityManager : DecalEntityManager
+    - m_Shader : Shader
+    + Setup() : void
+    + Cleanup() : void
+    + DecalDestroyEmptyChunk() : void
+}
+@enduml

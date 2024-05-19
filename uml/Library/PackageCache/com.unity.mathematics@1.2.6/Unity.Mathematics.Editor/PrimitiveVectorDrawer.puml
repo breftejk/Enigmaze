@@ -1,0 +1,40 @@
+@startuml
+class PrimitiveVectorDrawer {
+    - _PropertyType : string
+    - GetPropertyType(property:SerializedProperty) : string
+    + <<override>> CanCacheInspectorGUI(property:SerializedProperty) : bool
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - MultiPropertyField(position:Rect, subLabels:GUIContent[], valuesIterator:SerializedProperty, label:GUIContent) : void
+}
+class EditorGUICopy {
+    <<internal>> <<const>> kSpacingSubLabel : float = 4
+    - <<const>> kIndentPerLevel : float = 15
+    <<internal>> <<const>> kPrefixPaddingRight : float = 2
+    <<internal>> {static} indentLevel : int = 0
+    - {static} <<readonly>> s_FoldoutHash : int
+    <<internal>> <<const>> kVerticalSpacingMultiField : float = 2
+    + {static} MultiPropertyField(position:Rect, subLabels:GUIContent[], valuesIterator:SerializedProperty, label:GUIContent) : void
+    <<internal>> {static} BeginDisabled(disabled:bool) : void
+    <<internal>> {static} EndDisabled() : void
+    <<internal>> {static} CalcPrefixLabelWidth(label:GUIContent, style:GUIStyle) : float
+    <<internal>> {static} MultiPropertyFieldInternal(position:Rect, subLabels:GUIContent[], valuesIterator:SerializedProperty, visibility:PropertyVisibility, disabledMask:bool[], prefixLabelWidth:float) : void
+    <<internal>> {static} LabelHasContent(label:GUIContent) : bool
+    <<internal>> {static} indent : float <<get>>
+    <<internal>> {static} MultiFieldPrefixLabel(totalPosition:Rect, id:int, label:GUIContent, columns:int) : Rect
+}
+class Content <<static>> {
+    + {static} <<readonly>> doNotNormalizeCompatibility : string
+    + {static} <<readonly>> doNotNormalizeTooltip : string
+    + {static} <<readonly>> labels2 : GUIContent[]
+    + {static} <<readonly>> labels3 : GUIContent[]
+    + {static} <<readonly>> labels4 : GUIContent[]
+}
+enum PropertyVisibility {
+    All,
+    OnlyVisible,
+}
+PropertyDrawer <|-- PrimitiveVectorDrawer
+PrimitiveVectorDrawer +-- Content
+EditorGUICopy +-- PropertyVisibility
+@enduml

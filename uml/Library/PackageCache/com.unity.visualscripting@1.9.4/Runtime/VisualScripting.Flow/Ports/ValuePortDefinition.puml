@@ -1,0 +1,9 @@
+@startuml
+abstract class ValuePortDefinition {
+    - _type : Type <<get>> <<set>>
+    + <<virtual>> type : Type <<get>> <<set>>
+    + <<override>> isValid : bool <<get>>
+}
+UnitPortDefinition <|-- ValuePortDefinition
+IUnitValuePortDefinition <|-- ValuePortDefinition
+@enduml

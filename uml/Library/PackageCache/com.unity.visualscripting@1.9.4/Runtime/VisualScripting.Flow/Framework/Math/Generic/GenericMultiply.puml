@@ -1,0 +1,6 @@
+@startuml
+class GenericMultiply <<sealed>> {
+    + <<override>> Operation(a:object, b:object) : object
+}
+"Multiply`1" "<object>" <|-- GenericMultiply
+@enduml

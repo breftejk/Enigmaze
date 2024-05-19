@@ -1,0 +1,6 @@
+@startuml
+class CurvesOwnerInspectorHelper <<static>> {
+    + {static} PreparePlayableAsset(wrapper:ICurvesOwnerInspectorWrapper) : void
+    {static} - SetAnimatedValue(clip:ICurvesOwner, property:SerializedProperty, path:string, localTime:double) : void
+}
+@enduml

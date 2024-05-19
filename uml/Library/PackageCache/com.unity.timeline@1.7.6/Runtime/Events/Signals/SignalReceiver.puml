@@ -1,0 +1,31 @@
+@startuml
+class SignalReceiver {
+    - m_Events : EventKeyValue
+    + OnNotify(origin:Playable, notification:INotification, context:object) : void
+    + AddReaction(asset:SignalAsset, reaction:UnityEvent) : void
+    + AddEmptyReaction(reaction:UnityEvent) : int
+    + Remove(asset:SignalAsset) : void
+    + GetRegisteredSignals() : IEnumerable<SignalAsset>
+    + GetReaction(key:SignalAsset) : UnityEvent
+    + Count() : int
+    + ChangeSignalAtIndex(idx:int, newKey:SignalAsset) : void
+    + RemoveAtIndex(idx:int) : void
+    + ChangeReactionAtIndex(idx:int, reaction:UnityEvent) : void
+    + GetReactionAtIndex(idx:int) : UnityEvent
+    + GetSignalAssetAtIndex(idx:int) : SignalAsset
+    - OnEnable() : void
+}
+class EventKeyValue {
+    - m_Signals : List<SignalAsset>
+    - m_Events : List<UnityEvent>
+    + TryGetValue(key:SignalAsset, value:UnityEvent) : bool
+    + Append(key:SignalAsset, value:UnityEvent) : void
+    + Remove(idx:int) : void
+    + Remove(key:SignalAsset) : void
+    + signals : List<SignalAsset> <<get>>
+    + events : List<UnityEvent> <<get>>
+}
+MonoBehaviour <|-- SignalReceiver
+INotificationReceiver <|-- SignalReceiver
+SignalReceiver +-- EventKeyValue
+@enduml

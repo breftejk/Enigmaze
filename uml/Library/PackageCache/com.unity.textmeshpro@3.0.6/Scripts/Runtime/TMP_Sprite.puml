@@ -1,0 +1,10 @@
+@startuml
+class TMP_Sprite {
+    + name : string
+    + hashCode : int
+    + unicode : int
+    + pivot : Vector2
+    + sprite : Sprite
+}
+TMP_TextElement_Legacy <|-- TMP_Sprite
+@enduml

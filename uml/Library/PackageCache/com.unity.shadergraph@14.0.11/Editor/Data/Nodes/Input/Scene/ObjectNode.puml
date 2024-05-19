@@ -1,0 +1,20 @@
+@startuml
+class ObjectNode <<sealed>> {
+    <<const>> - kOutputSlotName : string = "Position"
+    <<const>> - kOutputSlot1Name : string = "Scale"
+    <<const>> - kOutputSlot2Name : string = "World Bounds Min"
+    <<const>> - kOutputSlot3Name : string = "World Bounds Max"
+    <<const>> - kOutputSlot4Name : string = "Bounds Size"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> OutputSlot1Id : int = 1
+    + <<const>> OutputSlot2Id : int = 2
+    + <<const>> OutputSlot3Id : int = 3
+    + <<const>> OutputSlot4Id : int = 4
+    + ObjectNode()
+    + <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresTransform(stageCapability:ShaderStageCapability) : NeededTransform[]
+}
+AbstractMaterialNode <|-- ObjectNode
+IMayRequireTransform <|-- ObjectNode
+@enduml

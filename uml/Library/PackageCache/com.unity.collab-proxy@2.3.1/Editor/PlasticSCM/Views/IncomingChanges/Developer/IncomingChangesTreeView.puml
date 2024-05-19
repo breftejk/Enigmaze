@@ -1,0 +1,43 @@
+@startuml
+class IncomingChangesTreeView {
+    <<internal>> IncomingChangesTreeView(wkInfo:WorkspaceInfo, headerState:IncomingChangesTreeHeaderState, columnNames:List<string>, menu:IncomingChangesViewMenu)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> CanChangeExpandedState(item:TreeViewItem) : bool
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> CommandEventHandling() : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> SelectFirstUnsolvedDirectoryConflict() : void
+    <<internal>> BuildModel(tree:UnityIncomingChangesTree) : void
+    <<internal>> Sort() : void
+    <<internal>> UpdateSolvedFileConflicts(solvedFileConflicts:MergeSolvedFileConflicts) : void
+    <<internal>> GetMetaChange(change:MergeChangeInfo) : MergeChangeInfo
+    <<internal>> FillWithMeta(changes:List<MergeChangeInfo>) : void
+    <<internal>> SelectionHasMeta() : bool
+    <<internal>> GetSelectedIncomingChange() : MergeChangeInfo
+    <<internal>> GetSelectedIncomingChanges() : List<MergeChangeInfo>
+    <<internal>> GetSelectedFileConflicts() : List<MergeChangeInfo>
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - RegenerateRows(incomingChangesTree:UnityIncomingChangesTree, treeViewItemIds:TreeViewItemIds<MergeChangesCategory, MergeChangeInfo>, treeView:IncomingChangesTreeView, rootItem:TreeViewItem, rows:List<TreeViewItem>, expandCategories:bool) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - CategoryTreeViewItemGUI(rowRect:Rect, item:ChangeCategoryTreeViewItem, solvedChildrenCount:int, isSelected:bool, isFocused:bool) : void
+    {static} - IncomingChangeTreeViewItemGUI(wkPath:string, incomingChangesTree:UnityIncomingChangesTree, treeView:IncomingChangesTreeView, item:ChangeTreeViewItem, args:RowGUIArgs, isCurrentConflict:bool, isSolvedConflict:bool) : void
+    {static} - IncomingChangeTreeViewItemCellGUI(wkPath:string, rect:Rect, rowHeight:float, incomingChangesTree:UnityIncomingChangesTree, treeView:IncomingChangesTreeView, item:ChangeTreeViewItem, column:IncomingChangesTreeColumn, isSelected:bool, isFocused:bool, isCurrentConflict:bool, isSolvedConflict:bool) : void
+    {static} - GetIcon(wkPath:string, incomingChange:MergeChangeInfo) : Texture
+    {static} - GetCategoryStyle(category:MergeChangesCategory, solvedChildrenCount:int, isSelected:bool) : GUIStyle
+    {static} - ShouldExpandCategory(treeView:IncomingChangesTreeView, categoryTreeViewItem:ChangeCategoryTreeViewItem, expandCategories:bool, categoriesCount:int) : bool
+    {static} - GetSolvedChildrenCount(category:MergeChangesCategory, solvedFileConflicts:MergeSolvedFileConflicts) : int
+    - mExpandCategories : bool
+    - mTreeViewItemIds : TreeViewItemIds<MergeChangesCategory, MergeChangeInfo>
+    - mRows : List<TreeViewItem>
+    - mSolvedFileConflicts : MergeSolvedFileConflicts
+    - mIncomingChangesTree : UnityIncomingChangesTree
+    <<readonly>> - mMenu : IncomingChangesViewMenu
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<const>> - NODES_TO_EXPAND_CATEGORY : int = 10
+}
+TreeView <|-- IncomingChangesTreeView
+@enduml

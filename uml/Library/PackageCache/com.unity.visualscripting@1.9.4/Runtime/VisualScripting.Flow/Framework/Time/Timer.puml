@@ -1,0 +1,43 @@
+@startuml
+class Timer <<sealed>> {
+    + start : ControlInput <<get>>
+    + pause : ControlInput <<get>>
+    + resume : ControlInput <<get>>
+    + toggle : ControlInput <<get>>
+    + duration : ValueInput <<get>>
+    + unscaledTime : ValueInput <<get>>
+    + started : ControlOutput <<get>>
+    + tick : ControlOutput <<get>>
+    + completed : ControlOutput <<get>>
+    + elapsedSeconds : ValueOutput <<get>>
+    + elapsedRatio : ValueOutput <<get>>
+    + remainingSeconds : ValueOutput <<get>>
+    + remainingRatio : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + CreateData() : IGraphElementData
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    - TriggerUpdate(reference:GraphReference) : void
+    - Start(flow:Flow) : ControlOutput
+    - Pause(flow:Flow) : ControlOutput
+    - Resume(flow:Flow) : ControlOutput
+    - Toggle(flow:Flow) : ControlOutput
+    - AssignMetrics(flow:Flow, data:Data) : void
+    + Update(flow:Flow) : void
+}
+class Data <<sealed>> {
+    + elapsed : float
+    + duration : float
+    + active : bool
+    + paused : bool
+    + unscaled : bool
+    + update : Delegate
+    + isListening : bool
+}
+Unit <|-- Timer
+IGraphElementWithData <|-- Timer
+IGraphEventListener <|-- Timer
+Timer +-- Data
+IGraphElementData <|-- Data
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+class ClipCurveEditor {
+    {static} <<readonly>> - s_RemoveCurveContent : GUIContent
+    {static} <<readonly>> - s_RemoveCurvesContent : GUIContent
+    <<internal>> <<readonly>> m_CurveEditor : CurveEditor
+    {static} <<readonly>> - s_CurveEditorSettings : CurveEditorSettings
+    {static} <<readonly>> - s_GridLabelWidth : float = 40.0f
+    <<readonly>> - m_BindingHierarchy : BindingSelector
+    + bindingHierarchy : BindingSelector <<get>>
+    + shownAreaInsideMargins : Rect <<get>>
+    - m_ScrollPosition : Vector2
+    <<readonly>> - m_DataSource : CurveDataSource
+    - m_LastFrameRate : float = 30.0f
+    - m_LastClipVersion : UInt64
+    - m_ViewModel : TrackViewModelData
+    - m_ShouldRestoreShownArea : bool
+    - isNewSelection : bool <<get>>
+    <<internal>> curveEditor : CurveEditor <<get>>
+    + ClipCurveEditor(dataSource:CurveDataSource, parentWindow:TimelineWindow, hostTrack:TrackAsset)
+    + SelectAllKeys() : void
+    + FrameClip() : void
+    + dataSource : CurveDataSource <<get>>
+    <<internal>> OnCurvesUpdated() : void
+    + DrawHeader(headerRect:Rect) : void
+    - ContextClickItemCallback(obj:int) : void
+    - GenerateContextMenu(obj:int) : void
+    + GetSelectedProperties(useForcedGroups:bool) : IEnumerable<EditorCurveBinding>
+    + RemoveCurves(bindings:IEnumerable<EditorCurveBinding>) : void
+    - UpdateCurveEditorIfNeeded(state:WindowState) : void
+    + DrawCurveEditor(rect:Rect, state:WindowState, clipRange:Vector2, loop:bool, selected:bool) : void
+    {static} - CalculateCurveVisibleTimeRange(timeAreaShownRange:Vector2, curve:CurveDataSource) : Vector2
+    - SetupMarginsAndRect(rect:Rect, state:WindowState) : void
+    - RestoreShownArea() : void
+    {static} - DrawCurveEditorBackground(rect:Rect) : void
+    {static} - CalculateTopMargin(height:float) : float
+    {static} - DrawOutline(rect:Rect, thickness:float) : void
+    {static} - DrawOverlay(rect:Rect, clipRange:Vector2, color:Color) : void
+    - DrawGrid(rect:Rect, curveXPosition:float) : void
+}
+class CurveEditorState {
+    + timeFormat : TimeArea.TimeFormat <<get>> <<set>>
+    + timeRange : Vector2 <<get>>
+    + rippleTime : bool <<get>>
+}
+ClipCurveEditor +-- CurveEditorState
+ICurveEditorState <|-- CurveEditorState
+@enduml

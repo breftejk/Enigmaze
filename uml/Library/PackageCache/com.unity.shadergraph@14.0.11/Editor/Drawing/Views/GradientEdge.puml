@@ -1,0 +1,14 @@
+@startuml
+class GradientEdge {
+    <<readonly>> - k_InputColorProperty : CustomStyleProperty<Color>
+    <<readonly>> - k_OutputColorProperty : CustomStyleProperty<Color>
+    - m_InputColor : Color
+    - m_OutputColor : Color
+    + inputColor : Color <<get>>
+    + outputColor : Color <<get>>
+    + GradientEdge()
+    + UpdateClasses(outputType:ConcreteSlotValueType, inputType:ConcreteSlotValueType) : void
+    - OnCustomStyleResolved(e:CustomStyleResolvedEvent) : void
+}
+Edge <|-- GradientEdge
+@enduml

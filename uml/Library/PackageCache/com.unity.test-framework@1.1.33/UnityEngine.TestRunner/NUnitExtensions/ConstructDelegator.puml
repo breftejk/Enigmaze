@@ -1,0 +1,19 @@
+@startuml
+class ConstructDelegator {
+    - m_RequestedType : Type
+    - m_Arguments : object[]
+    - m_CurrentRunningTest : ScriptableObject
+    - <<readonly>> m_StateSerializer : IStateSerializer
+    # m_Exception : Exception
+    # m_Result : object
+    # m_Context : ITestExecutionContext
+    + ConstructDelegator(stateSerializer:IStateSerializer)
+    # HandleResult() : object
+    # SetCurrentTestContext() : void
+    + Delegate(type:Type, arguments:object[]) : object
+    - AssertState() : void
+    + HasAction() : bool
+    + Execute(logScope:LogScope) : void
+    + DestroyCurrentTestObjectIfExists() : void
+}
+@enduml

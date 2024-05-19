@@ -1,0 +1,42 @@
+@startuml
+class TestRunnerResult {
+    + id : string
+    + uniqueId : string
+    + name : string
+    + fullName : string
+    + resultStatus : ResultStatus
+    + duration : float
+    + messages : string
+    + output : string
+    + stacktrace : string
+    + notRunnable : bool
+    + ignoredOrSkipped : bool
+    + description : string
+    + isSuite : bool
+    + categories : List<string>
+    + parentId : string
+    + parentUniqueId : string
+    + notOutdated : bool
+    # m_OnResultUpdate : Action<TestRunnerResult>
+    <<internal>> TestRunnerResult(test:ITestAdaptor)
+    <<internal>> TestRunnerResult(testResult:ITestResultAdaptor)
+    + Update(result:TestRunnerResult) : void
+    + SetResultChangedCallback(resultUpdated:Action<TestRunnerResult>) : void
+    - {static} ParseNUnitResultStatus(status:TestStatus) : ResultStatus
+    + <<override>> ToString() : string
+    + Id : string <<get>>
+    + FullName : string <<get>>
+    + ParentId : string <<get>>
+    + IsSuite : bool <<get>>
+    + Categories : List<string> <<get>>
+    + Clear() : void
+}
+enum ResultStatus {
+    NotRun,
+    Passed,
+    Failed,
+    Inconclusive,
+    Skipped,
+}
+TestRunnerResult +-- ResultStatus
+@enduml

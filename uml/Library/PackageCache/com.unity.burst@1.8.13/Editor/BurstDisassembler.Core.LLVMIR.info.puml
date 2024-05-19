@@ -1,0 +1,8 @@
+@startuml
+class BurstDisassembler <<partial>> {
+}
+class LLVMIRInstructionInfo {
+    <<internal>> {static} GetLLVMIRInfo(instructionName:string, instructionInfo:string) : bool
+}
+BurstDisassembler +-- LLVMIRInstructionInfo
+@enduml

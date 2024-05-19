@@ -1,0 +1,8 @@
+@startuml
+class ShadowCaster2DShapeTool {
+    <<const>> - k_ShapePath : string = "m_ShapePath"
+    # <<override>> GetShape(target:Object) : IShape
+    # <<override>> SetShape(shapeEditor:ShadowCasterPath, serializedObject:SerializedObject) : void
+}
+"PathEditorTool`1" "<ShadowCasterPath>" <|-- ShadowCaster2DShapeTool
+@enduml

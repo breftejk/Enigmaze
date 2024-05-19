@@ -1,0 +1,14 @@
+@startuml
+class TestingHelpData <<static>> {
+    <<internal>> {static} GetSample1() : HelpData
+    <<internal>> {static} GetSample2() : HelpData
+}
+class HelpLinkData {
+    <<internal>> {static} AsString(linkType:HelpLink.LinkType, linkContent:string) : string
+    <<const>> - ACTION : string = "action"
+    <<const>> - HELP : string = "help"
+    <<const>> - LINK : string = "link"
+    <<const>> - SEPARATOR : string = ":"
+}
+TestingHelpData +-- HelpLinkData
+@enduml

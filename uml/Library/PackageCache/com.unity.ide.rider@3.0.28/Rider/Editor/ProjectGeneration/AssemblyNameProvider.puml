@@ -1,0 +1,28 @@
+@startuml
+class AssemblyNameProvider {
+    - <<readonly>> m_PackageInfoCache : Dictionary<string, PackageInfo>
+    - <<readonly>> m_ResponseFilesCache : Dictionary<string, ResponseFileData>
+    - m_ProjectGenerationFlag : ProjectGenerationFlag
+    + ProjectSupportedExtensions : string[] <<get>>
+    + ProjectGenerationRootNamespace : string <<get>>
+    - m_AllEditorAssemblies : Assembly[]
+    - m_AllPlayerAssemblies : Assembly[]
+    - m_AllAssemblies : Assembly[]
+    + ProjectGenerationFlag : ProjectGenerationFlag <<get>>
+    + GetAssemblyNameFromScriptPath(path:string) : string
+    + GetAllAssemblies() : Assembly[]
+    - {static} GetAssembliesByType(type:AssembliesType) : Assembly[]
+    + GetNamedAssembly(name:string) : Assembly
+    + GetProjectName(name:string, defines:string[]) : string
+    + GetAllAssetPaths() : IEnumerable<string>
+    - {static} GetPackageRootDirectoryName(assetPath:string) : string
+    + GetPackageInfoForAssetPath(assetPath:string) : PackageInfo
+    + ResetCaches() : void
+    + IsInternalizedPackagePath(path:string) : bool
+    + ParseResponseFile(responseFilePath:string, projectDirectory:string, apiCompatibilityLevel:ApiCompatibilityLevel) : ResponseFileData
+    + GetRoslynAnalyzerPaths() : IEnumerable<string>
+    + ToggleProjectGeneration(preference:ProjectGenerationFlag) : void
+    + ResetProjectGenerationFlag() : void
+}
+IAssemblyNameProvider <|-- AssemblyNameProvider
+@enduml

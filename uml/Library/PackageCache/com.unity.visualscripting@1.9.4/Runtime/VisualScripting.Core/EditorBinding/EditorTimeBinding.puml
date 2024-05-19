@@ -1,0 +1,9 @@
+@startuml
+class EditorTimeBinding <<static>> {
+    + {static} frameBinding : Func<int>
+    + {static} timeBinding : Func<float>
+    + {static} frame : int <<get>>
+    + {static} time : float <<get>>
+    {static} - EditorTimeBinding()
+}
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class UnityAPICompatibilityVersionAttribute {
+    + UnityAPICompatibilityVersionAttribute(version:string)
+    + UnityAPICompatibilityVersionAttribute(version:string, checkOnlyUnityVersion:bool)
+    + UnityAPICompatibilityVersionAttribute(version:string, configurationAssembliesHashes:string[])
+    + version : string <<get>>
+    <<internal>> configurationAssembliesHashes : string[] <<get>>
+    - _version : string
+    - _configurationAssembliesHashes : string[]
+}
+Attribute <|-- UnityAPICompatibilityVersionAttribute
+@enduml

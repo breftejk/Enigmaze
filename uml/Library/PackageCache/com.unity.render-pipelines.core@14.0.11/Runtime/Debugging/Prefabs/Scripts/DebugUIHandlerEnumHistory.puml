@@ -1,0 +1,10 @@
+@startuml
+class DebugUIHandlerEnumHistory {
+    - historyValues : Text[]
+    <<const>> - k_XOffset : float = 230f
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> UpdateValueLabel() : void
+    - RefreshAfterSanitization() : IEnumerator
+}
+DebugUIHandlerEnumField <|-- DebugUIHandlerEnumHistory
+@enduml

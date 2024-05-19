@@ -1,0 +1,36 @@
+@startuml
+class FastMouse <<partial>> {
+    + <<const>> metadata : string = "AutoWindowSpace;Vector2;Delta;Button;Axis;Digital;Integer;Mouse;Pointer"
+    + FastMouse()
+    - Initialize_ctrlMouseposition(kVector2Layout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.Vector2Control
+    - Initialize_ctrlMousedelta(kDeltaLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.DeltaControl
+    - Initialize_ctrlMousescroll(kDeltaLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.DeltaControl
+    - Initialize_ctrlMousepress(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMouseleftButton(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMouserightButton(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMousemiddleButton(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMouseforwardButton(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMousebackButton(kButtonLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.ButtonControl
+    - Initialize_ctrlMousepressure(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMouseradius(kVector2Layout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.Vector2Control
+    - Initialize_ctrlMousepointerId(kDigitalLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.IntegerControl
+    - Initialize_ctrlMousedisplayIndex(kIntegerLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.IntegerControl
+    - Initialize_ctrlMouseclickCount(kIntegerLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.IntegerControl
+    - Initialize_ctrlMousepositionx(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousepositiony(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltaup(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltadown(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltaleft(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltaright(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltax(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousedeltay(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrollup(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrolldown(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrollleft(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrollright(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrollx(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMousescrolly(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMouseradiusx(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+    - Initialize_ctrlMouseradiusy(kAxisLayout:InternedString, parent:InputControl) : UnityEngine.InputSystem.Controls.AxisControl
+}
+@enduml

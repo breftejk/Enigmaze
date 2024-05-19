@@ -1,0 +1,13 @@
+@startuml
+class TestRunCallbackListener {
+    - m_Callbacks : ITestRunCallback[]
+    + RunStarted(testsToRun:ITest) : void
+    - {static} GetAllCallbacks() : ITestRunCallback[]
+    - InvokeAllCallbacks(invoker:Action<ITestRunCallback>) : void
+    + RunFinished(testResults:ITestResult) : void
+    + TestStarted(test:ITest) : void
+    + TestFinished(result:ITestResult) : void
+}
+ScriptableObject <|-- TestRunCallbackListener
+ITestRunnerListener <|-- TestRunCallbackListener
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+class TextureXR <<static>> {
+    - {static} m_MaxViews : int = 1
+    + {static} maxViews : int <<set>>
+    + {static} slices : int <<get>>
+    + {static} useTexArray : bool <<get>>
+    + {static} dimension : TextureDimension <<get>>
+    {static} - m_BlackUIntTexture2DArray : Texture
+    {static} - m_BlackUIntTexture : Texture
+    {static} - m_BlackUIntTexture2DArrayRTH : RTHandle
+    {static} - m_BlackUIntTextureRTH : RTHandle
+    + {static} GetBlackUIntTexture() : RTHandle
+    {static} - m_ClearTexture2DArray : Texture2DArray
+    {static} - m_ClearTexture : Texture2D
+    {static} - m_ClearTexture2DArrayRTH : RTHandle
+    {static} - m_ClearTextureRTH : RTHandle
+    + {static} GetClearTexture() : RTHandle
+    {static} - m_MagentaTexture2DArray : Texture2DArray
+    {static} - m_MagentaTexture : Texture2D
+    {static} - m_MagentaTexture2DArrayRTH : RTHandle
+    {static} - m_MagentaTextureRTH : RTHandle
+    + {static} GetMagentaTexture() : RTHandle
+    {static} - m_BlackTexture : Texture2D
+    {static} - m_BlackTexture3D : Texture3D
+    {static} - m_BlackTexture2DArray : Texture2DArray
+    {static} - m_BlackTexture2DArrayRTH : RTHandle
+    {static} - m_BlackTextureRTH : RTHandle
+    {static} - m_BlackTexture3DRTH : RTHandle
+    + {static} GetBlackTexture() : RTHandle
+    + {static} GetBlackTextureArray() : RTHandle
+    + {static} GetBlackTexture3D() : RTHandle
+    {static} - m_WhiteTexture2DArray : Texture2DArray
+    {static} - m_WhiteTexture2DArrayRTH : RTHandle
+    {static} - m_WhiteTextureRTH : RTHandle
+    + {static} GetWhiteTexture() : RTHandle
+    + {static} Initialize(cmd:CommandBuffer, clearR32_UIntShader:ComputeShader) : void
+    {static} - CreateTexture2DArrayFromTexture2D(source:Texture2D, name:string) : Texture2DArray
+    {static} - CreateBlackUIntTextureArray(cmd:CommandBuffer, clearR32_UIntShader:ComputeShader) : Texture
+    {static} - CreateBlackUintTexture(cmd:CommandBuffer, clearR32_UIntShader:ComputeShader) : Texture
+    {static} - CreateBlackTexture3D(name:string) : Texture3D
+}
+@enduml

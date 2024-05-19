@@ -1,0 +1,11 @@
+@startuml
+class RenderingDebuggerTests <<partial>> {
+    - m_Panel : DebugUI.Panel
+    + Setup() : void
+    + TearDown() : void
+    {static} - s_TestCaseDatasGetItem : TestCaseData[]
+    + GetItemTestFlags(widget:DebugUI.Widget, flags:DebugUI.Flags) : string[]
+    {static} - s_TestCaseDatasGetItemQueryPath : TestCaseData[]
+    + GetItemTestQueryPath(widget:DebugUI.Widget, queryPath:string) : string
+}
+@enduml

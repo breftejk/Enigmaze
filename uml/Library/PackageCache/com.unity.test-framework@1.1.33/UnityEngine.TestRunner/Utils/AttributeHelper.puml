@@ -1,0 +1,6 @@
+@startuml
+class AttributeHelper <<static>> {
+    <<internal>> {static} GetTargetClassFromName(targetClassName:string, attributeInterface:Type) : Type
+    - {static} ValidateTargetClass(targetClass:Type, attributeInterface:Type) : void
+}
+@enduml

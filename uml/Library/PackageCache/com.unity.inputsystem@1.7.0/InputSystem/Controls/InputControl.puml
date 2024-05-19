@@ -1,0 +1,131 @@
+@startuml
+abstract class InputControl {
+    + name : string <<get>>
+    + displayName : string <<get>> <<protected set>>
+    + shortDisplayName : string <<get>> <<protected set>>
+    + path : string <<get>>
+    + layout : string <<get>>
+    + variants : string <<get>>
+    + device : InputDevice <<get>>
+    + parent : InputControl <<get>>
+    + children : ReadOnlyArray<InputControl> <<get>>
+    + usages : ReadOnlyArray<InternedString> <<get>>
+    + aliases : ReadOnlyArray<InternedString> <<get>>
+    + stateBlock : InputStateBlock <<get>>
+    + noisy : bool <<get>> <<internal set>>
+    + synthetic : bool <<get>> <<internal set>>
+    + {abstract} valueType : Type <<get>>
+    + {abstract} valueSizeInBytes : int <<get>>
+    + magnitude : float <<get>>
+    + <<override>> ToString() : string
+    - DebuggerDisplay() : string
+    + <<unsafe>> EvaluateMagnitude() : float
+    + <<virtual>> <<unsafe>> EvaluateMagnitude(statePtr:void*) : float
+    + {abstract} <<unsafe>> ReadValueFromBufferAsObject(buffer:void*, bufferSize:int) : object
+    + {abstract} <<unsafe>> ReadValueFromStateAsObject(statePtr:void*) : object
+    + {abstract} <<unsafe>> ReadValueFromStateIntoBuffer(statePtr:void*, bufferPtr:void*, bufferSize:int) : void
+    + <<virtual>> <<unsafe>> WriteValueFromBufferIntoState(bufferPtr:void*, bufferSize:int, statePtr:void*) : void
+    + <<virtual>> <<unsafe>> WriteValueFromObjectIntoState(value:object, statePtr:void*) : void
+    + {abstract} <<unsafe>> CompareValue(firstStatePtr:void*, secondStatePtr:void*) : bool
+    + TryGetChildControl(path:string) : InputControl
+    + TryGetChildControl(path:string) : TControl
+    + GetChildControl(path:string) : InputControl
+    + GetChildControl(path:string) : TControl
+    # InputControl()
+    # <<virtual>> FinishSetup() : void
+    # RefreshConfigurationIfNeeded() : void
+    # <<virtual>> RefreshConfiguration() : void
+    # <<internal>> m_StateBlock : InputStateBlock
+    # <<internal>> <<unsafe>> currentStatePtr : void* <<get>>
+    # <<internal>> <<unsafe>> previousFrameStatePtr : void* <<get>>
+    # <<internal>> <<unsafe>> defaultStatePtr : void* <<get>>
+    # <<internal>> <<unsafe>> noiseMaskPtr : void* <<get>>
+    # <<internal>> stateOffsetRelativeToDeviceRoot : uint <<get>>
+    <<internal>> m_Name : InternedString
+    <<internal>> m_Path : string
+    <<internal>> m_DisplayName : string
+    <<internal>> m_DisplayNameFromLayout : string
+    <<internal>> m_ShortDisplayName : string
+    <<internal>> m_ShortDisplayNameFromLayout : string
+    <<internal>> m_Layout : InternedString
+    <<internal>> m_Variants : InternedString
+    <<internal>> m_Device : InputDevice
+    <<internal>> m_Parent : InputControl
+    <<internal>> m_UsageCount : int
+    <<internal>> m_UsageStartIndex : int
+    <<internal>> m_AliasCount : int
+    <<internal>> m_AliasStartIndex : int
+    <<internal>> m_ChildCount : int
+    <<internal>> m_ChildStartIndex : int
+    <<internal>> m_ControlFlags : ControlFlags
+    <<internal>> m_CachedValueIsStale : bool = true
+    <<internal>> m_UnprocessedCachedValueIsStale : bool = true
+    <<internal>> m_DefaultState : PrimitiveValue
+    <<internal>> m_MinValue : PrimitiveValue
+    <<internal>> m_MaxValue : PrimitiveValue
+    <<internal>> m_OptimizedControlDataType : FourCC
+    + optimizedControlDataType : FourCC <<get>>
+    # <<virtual>> CalculateOptimizedControlDataType() : FourCC
+    + ApplyParameterChanges() : void
+    - SetOptimizedControlDataType() : void
+    <<internal>> SetOptimizedControlDataTypeRecursively() : void
+    <<internal>> EnsureOptimizationTypeHasNotChanged() : void
+    <<internal>> isSetupFinished : bool <<get>> <<set>>
+    <<internal>> isButton : bool <<get>> <<set>>
+    <<internal>> isConfigUpToDate : bool <<get>> <<set>>
+    <<internal>> dontReset : bool <<get>> <<set>>
+    <<internal>> usesStateFromOtherControl : bool <<get>> <<set>>
+    <<internal>> hasDefaultState : bool <<get>>
+    <<internal>> CallFinishSetupRecursive() : void
+    <<internal>> MakeChildPath(path:string) : string
+    <<internal>> BakeOffsetIntoStateBlockRecursive(offset:uint) : void
+    <<internal>> GetDeviceIndex() : int
+    <<internal>> IsValueConsideredPressed(value:float) : bool
+    <<internal>> <<virtual>> AddProcessor(first:object) : void
+    <<internal>> MarkAsStale() : void
+    <<internal>> MarkAsStaleRecursively() : void
+}
+abstract class "InputControl`1"<TValue> {
+    + <<override>> valueType : Type <<get>>
+    + <<override>> valueSizeInBytes : int <<get>>
+    + value : ref readonly TValue <<get>>
+    <<internal>> <<unsafe>> unprocessedValue : ref readonly TValue <<get>>
+    + ReadValue() : TValue
+    + ReadValueFromPreviousFrame() : TValue
+    + ReadDefaultValue() : TValue
+    + <<unsafe>> ReadValueFromState(statePtr:void*) : TValue
+    + <<unsafe>> ReadValueFromStateWithCaching(statePtr:void*) : TValue
+    + <<unsafe>> ReadUnprocessedValueFromStateWithCaching(statePtr:void*) : TValue
+    + ReadUnprocessedValue() : TValue
+    + {abstract} <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : TValue
+    + <<override>> <<unsafe>> ReadValueFromStateAsObject(statePtr:void*) : object
+    + <<override>> <<unsafe>> ReadValueFromStateIntoBuffer(statePtr:void*, bufferPtr:void*, bufferSize:int) : void
+    + <<override>> <<unsafe>> WriteValueFromBufferIntoState(bufferPtr:void*, bufferSize:int, statePtr:void*) : void
+    + <<override>> <<unsafe>> WriteValueFromObjectIntoState(value:object, statePtr:void*) : void
+    + <<virtual>> <<unsafe>> WriteValueIntoState(value:TValue, statePtr:void*) : void
+    + <<override>> <<unsafe>> ReadValueFromBufferAsObject(buffer:void*, bufferSize:int) : object
+    - {static} <<unsafe>> CompareValue(firstValue:TValue, secondValue:TValue) : bool
+    + <<override>> <<unsafe>> CompareValue(firstStatePtr:void*, secondStatePtr:void*) : bool
+    + ProcessValue(value:TValue) : TValue
+    + ProcessValue(value:TValue) : void
+    <<internal>> m_ProcessorStack : InlinedArray<InputProcessor<TValue>>
+    - m_CachedValue : TValue
+    - m_UnprocessedCachedValue : TValue
+    <<internal>> TryGetProcessor() : TProcessor
+    <<internal>> <<override>> AddProcessor(processor:object) : void
+    <<internal>> evaluateProcessorsEveryRead : bool = false
+    # <<override>> FinishSetup() : void
+    <<internal>> processors : InputProcessor<TValue>[] <<get>>
+}
+enum ControlFlags {
+    ConfigUpToDate= 1 << 0,
+    IsNoisy= 1 << 1,
+    IsSynthetic= 1 << 2,
+    IsButton= 1 << 3,
+    DontReset= 1 << 4,
+    SetupFinished= 1 << 5,
+    UsesStateFromOtherControl= 1 << 6,
+}
+InputControl <|-- "InputControl`1"
+InputControl +-- ControlFlags
+@enduml

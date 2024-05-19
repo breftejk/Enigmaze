@@ -1,0 +1,26 @@
+@startuml
+class "SerializableDictionary`2"<TKey,TValue> {
+    - m_Keys : List<TKey>
+    - m_Values : List<TValue>
+    - m_Dictionary : Dictionary<TKey, TValue>
+    + Keys : ICollection<TKey> <<get>>
+    + Values : ICollection<TValue> <<get>>
+    + Add(key:TKey, value:TValue) : void
+    + ContainsKey(key:TKey) : bool
+    + Remove(key:TKey) : bool
+    + TryGetValue(key:TKey, value:TValue) : bool
+    + Clear() : void
+    + Count : int <<get>>
+    - IsReadOnly : bool <<get>>
+    - Add(item:KeyValuePair<TKey, TValue>) : void
+    - Contains(item:KeyValuePair<TKey, TValue>) : bool
+    - CopyTo(array:KeyValuePair<TKey, TValue>[], arrayIndex:int) : void
+    - Remove(item:KeyValuePair<TKey, TValue>) : bool
+    - GetEnumerator() : IEnumerator<KeyValuePair<TKey, TValue>>
+    + GetEnumerator() : IEnumerator
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+"IDictionary`2" "<TKey,TValue>" <|-- "SerializableDictionary`2"
+ISerializationCallbackReceiver <|-- "SerializableDictionary`2"
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class MaskChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    <<internal>> MaskChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- MaskChunk
+@enduml

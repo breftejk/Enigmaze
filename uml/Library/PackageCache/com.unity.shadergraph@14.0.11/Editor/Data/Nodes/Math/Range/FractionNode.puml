@@ -1,0 +1,8 @@
+@startuml
+class FractionNode {
+    + FractionNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Fraction(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- FractionNode
+@enduml

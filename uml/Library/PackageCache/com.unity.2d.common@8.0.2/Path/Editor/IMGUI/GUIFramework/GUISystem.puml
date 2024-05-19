@@ -1,0 +1,18 @@
+@startuml
+class GUISystem {
+    - <<readonly>> kControlIDCheckHashCode : int
+    - m_Controls : List<Control>
+    - m_Actions : List<GUIAction>
+    - m_GUIState : IGUIState
+    - m_PrevNearestControl : int
+    - m_PrevNearestLayoutData : LayoutData
+    - m_ControlIDCheck : int
+    + GUISystem(guiState:IGUIState)
+    + AddControl(control:Control) : void
+    + RemoveControl(control:Control) : void
+    + AddAction(action:GUIAction) : void
+    + RemoveAction(action:GUIAction) : void
+    + OnGUI() : void
+    - IsMouseMoveEvent() : bool
+}
+@enduml

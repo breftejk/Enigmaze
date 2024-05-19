@@ -1,0 +1,8 @@
+@startuml
+class RandomRangeNode {
+    + RandomRangeNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_RandomRange(Seed:Vector2, Min:Vector1, Max:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- RandomRangeNode
+@enduml

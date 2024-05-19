@@ -1,0 +1,6 @@
+@startuml
+interface IAddDeleteItemMode {
+    InsertItemsAtTime(itemsGroups:IEnumerable<ItemsPerTrack>, requestedTime:double) : void
+    RemoveItems(itemsGroups:IEnumerable<ItemsPerTrack>) : void
+}
+@enduml

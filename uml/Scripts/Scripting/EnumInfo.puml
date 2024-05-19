@@ -1,0 +1,9 @@
+@startuml
+class EnumInfo {
+    + names : string[]
+    + values : int[]
+    + annotations : string[]
+    + isFlags : bool
+    <<internal>> {static} CreateEnumInfoFromNativeEnum(names:string[], values:int[], annotations:string[], isFlags:bool) : EnumInfo
+}
+@enduml

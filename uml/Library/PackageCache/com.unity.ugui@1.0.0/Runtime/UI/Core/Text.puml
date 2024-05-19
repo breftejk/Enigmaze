@@ -1,0 +1,49 @@
+@startuml
+class Text {
+    - m_FontData : FontData
+    # m_Text : string
+    - m_TextCache : TextGenerator
+    - m_TextCacheForLayout : TextGenerator
+    {static} # s_DefaultText : Material = null
+    # m_DisableFontTextureRebuiltCallback : bool = false
+    # Text()
+    + cachedTextGenerator : TextGenerator <<get>>
+    + cachedTextGeneratorForLayout : TextGenerator <<get>>
+    + <<override>> mainTexture : Texture <<get>>
+    + FontTextureChanged() : void
+    + font : Font <<get>> <<set>>
+    + <<virtual>> text : string <<get>> <<set>>
+    + supportRichText : bool <<get>> <<set>>
+    + resizeTextForBestFit : bool <<get>> <<set>>
+    + resizeTextMinSize : int <<get>> <<set>>
+    + resizeTextMaxSize : int <<get>> <<set>>
+    + alignment : TextAnchor <<get>> <<set>>
+    + alignByGeometry : bool <<get>> <<set>>
+    + fontSize : int <<get>> <<set>>
+    + horizontalOverflow : HorizontalWrapMode <<get>> <<set>>
+    + verticalOverflow : VerticalWrapMode <<get>> <<set>>
+    + lineSpacing : float <<get>> <<set>>
+    + fontStyle : FontStyle <<get>> <<set>>
+    + pixelsPerUnit : float <<get>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> UpdateGeometry() : void
+    <<internal>> AssignDefaultFont() : void
+    <<internal>> AssignDefaultFontIfNecessary() : void
+    + GetGenerationSettings(extents:Vector2) : TextGenerationSettings
+    {static} + GetTextAnchorPivot(anchor:TextAnchor) : Vector2
+    <<readonly>> - m_TempVerts : UIVertex[]
+    # <<override>> OnPopulateMesh(toFill:VertexHelper) : void
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+}
+MaskableGraphic <|-- Text
+ILayoutElement <|-- Text
+@enduml

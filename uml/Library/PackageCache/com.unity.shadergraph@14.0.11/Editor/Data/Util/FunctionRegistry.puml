@@ -1,0 +1,23 @@
+@startuml
+class FunctionSource {
+    + code : string
+    + nodes : HashSet<AbstractMaterialNode>
+    + isGeneric : bool
+    + graphPrecisionFlags : int
+    + concretePrecisionFlags : int
+}
+class FunctionRegistry {
+    - m_Sources : Dictionary<string, FunctionSource>
+    - m_Validate : bool = false
+    - m_Builder : ShaderStringBuilder
+    - m_Includes : IncludeCollection
+    + FunctionRegistry(builder:ShaderStringBuilder, includes:IncludeCollection, validate:bool)
+    <<internal>> builder : ShaderStringBuilder <<get>>
+    + sources : Dictionary<string, FunctionSource> <<get>>
+    + RequiresIncludes(includes:IncludeCollection) : void
+    + RequiresIncludePath(includePath:string, shouldIncludeWithPragmas:bool) : void
+    + names : List<string> <<get>>
+    + ProvideFunction(name:string, graphPrecision:GraphPrecision, concretePrecision:ConcretePrecision, generator:Action<ShaderStringBuilder>) : void
+    + ProvideFunction(name:string, generator:Action<ShaderStringBuilder>) : void
+}
+@enduml

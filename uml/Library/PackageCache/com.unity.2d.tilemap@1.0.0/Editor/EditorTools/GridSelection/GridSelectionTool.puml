@@ -1,0 +1,18 @@
+@startuml
+abstract class GridSelectionTool {
+    - m_SelectionTiles : TileBase[]
+    - m_SelectionColors : Color[]
+    - m_SelectionMatrices : Matrix4x4[]
+    - m_SelectionFlagsArray : TileFlags[]
+    - m_SelectionSprites : Sprite[]
+    - m_SelectionColliderTypes : Tile.ColliderType[]
+    - m_FirstCellWithTile : int
+    - selectionCellCount : int <<get>>
+    + <<override>> OnToolGUI(window:EditorWindow) : void
+    <<internal>> OnToolGUI() : void
+    + {abstract} HandleTool(position:Vector3, rotation:Quaternion, scale:Vector3) : void
+    <<internal>> {static} IsActive() : bool
+    - UpdateSelection(tilemap:Tilemap) : void
+}
+EditorTool <|-- GridSelectionTool
+@enduml

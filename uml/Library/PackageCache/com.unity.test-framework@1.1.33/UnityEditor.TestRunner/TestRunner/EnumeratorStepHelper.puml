@@ -1,0 +1,9 @@
+@startuml
+class EnumeratorStepHelper {
+    - {static} m_PC : int
+    + {static} SetEnumeratorPC(pc:int) : void
+    + {static} GetEnumeratorPC(enumerator:IEnumerator) : int
+    + {static} UpdateEnumeratorPcIfNeeded(enumerator:IEnumerator) : bool
+    - {static} GetPCFieldInfo(enumerator:IEnumerator) : FieldInfo
+}
+@enduml

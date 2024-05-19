@@ -1,0 +1,15 @@
+@startuml
+class SceneColorNode <<sealed>> {
+    <<const>> - kScreenPositionSlotName : string = "UV"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<const>> ScreenPositionSlotId : int = 0
+    + <<const>> OutputSlotId : int = 1
+    + SceneColorNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SceneColor(UV:Vector4, Out:Vector3) : string
+    + RequiresCameraOpaqueTexture(stageCapability:ShaderStageCapability) : bool
+}
+CodeFunctionNode <|-- SceneColorNode
+IMayRequireCameraOpaqueTexture <|-- SceneColorNode
+@enduml

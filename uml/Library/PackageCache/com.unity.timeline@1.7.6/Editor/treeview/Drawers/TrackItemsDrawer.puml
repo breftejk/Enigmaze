@@ -1,0 +1,10 @@
+@startuml
+struct TrackItemsDrawer {
+    - m_Layers : List<ILayer>
+    - m_ClipsLayer : ClipsLayer
+    + clips : List<TimelineClipGUI> <<get>>
+    + TrackItemsDrawer(parent:IRowGUI)
+    - BuildGUICache(parent:IRowGUI) : void
+    + Draw(rect:Rect, state:WindowState) : void
+}
+@enduml

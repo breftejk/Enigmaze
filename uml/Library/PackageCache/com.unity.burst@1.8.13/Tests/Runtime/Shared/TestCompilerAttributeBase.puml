@@ -1,0 +1,111 @@
+@startuml
+struct ReturnBox {
+}
+interface IFunctionPointerProvider {
+    FromIntPtr(ptr:IntPtr) : object
+}
+interface TestCompilerBaseExtensions {
+    SkipTest(method:MethodInfo) : (bool shouldSkip, string skipReason)
+    FetchAlternateDelegate(isInRegistry:bool, caller:Func<object, object[], object>) : Type
+    ProcessNativeArgsForDelegateCaller(nativeArgs:object[], methodInfo:MethodInfo) : object[]
+}
+abstract class TestCompilerAttributeBase {
+    - <<readonly>> _builder : NUnitTestCaseBuilder
+    + <<const>> GoldFolder : string = "gold/x86"
+    + <<const>> GoldFolderArm : string = "gold/arm"
+    + <<const>> GeneratedFolder : string = "generated/x86"
+    + <<const>> GeneratedFolderArm : string = "generated/arm"
+    + TestCompilerAttributeBase(arguments:object[])
+    + CompileOnly : bool <<get>> <<set>>
+    + ExpectedException : Type <<get>> <<set>>
+    + ExpectCompilerException : bool <<get>> <<set>>
+    + DisableGold : bool <<get>> <<set>>
+    + ExpectedDiagnosticId : DiagnosticId <<get>> <<set>>
+    + ExpectedDiagnosticIds : DiagnosticId[] <<get>> <<set>>
+    + FastMath : bool <<get>> <<set>>
+    + OverrideResultOnMono : object <<get>> <<set>>
+    + OverrideManagedResult : object <<get>> <<set>>
+    + OverrideOn32BitNative : object <<get>> <<set>>
+    + IgnoreOnPlatform : object <<get>> <<set>>
+    + IgnoreOnNetFramework : bool <<get>> <<set>>
+    + IgnoreOnNetCore : bool <<get>> <<set>>
+    + IsDeterministic : bool? <<get>> <<set>>
+    + SkipForILInterpreter : bool <<get>> <<set>>
+    # <<virtual>> SupportException : bool <<get>>
+    + IgnoreExceptionMessages : bool <<get>> <<set>>
+    + DisableStringInterpolationInExceptionMessages : bool <<get>> <<set>>
+    - BuildFrom(method:IMethodInfo, suite:Test) : IEnumerable<TestMethod>
+    - {static} CreatePermutation(index:int, args:object[], parameters:IParameterInfo[]) : IEnumerable<object[]>
+    - Wrap(command:TestCommand) : TestCommand
+    # {abstract} IsCommandLine() : bool
+    # {abstract} IsMono() : bool
+    # {abstract} GetTestCommand(attribute:TestCompilerAttributeBase, test:Test, originalMethod:TestMethod) : TestCompilerCommandBase
+}
+abstract class TestCompilerCommandBase {
+    # <<readonly>> _originalMethod : TestMethod
+    - <<readonly>> _compileOnly : bool
+    - <<readonly>> _expectedException : Type
+    - <<readonly>> _ignoreExceptionMessages : bool
+    - <<readonly>> _disableStringInterpolationInExceptionMessages : bool
+    # <<readonly>> _expectCompilerException : bool
+    - <<readonly>> _expectedDiagnosticIds : DiagnosticId[]
+    # <<virtual>> TestInterpreter : bool <<get>>
+    # TestCompilerCommandBase(attribute:TestCompilerAttributeBase, test:Test, originalMethod:TestMethod)
+    + Attribute : TestCompilerAttributeBase <<get>>
+    + <<override>> Execute(context:ExecutionContext) : TestResult
+    # <<virtual>> CreateNativeDelegateType(returnType:Type, arguments:Type[], isInRegistry:bool, caller:Func<object, object[], object>) : Type
+    - {static} StaticDynamicDelegateCaller : Func<object, object[], object>
+    - {static} <<readonly>> MaxReturnBoxSize : int = 512
+    # RunManagedBeforeNative : bool <<get>> <<set>>
+    # {static} <<readonly>> BailedTests : Dictionary<string, string>
+    - ExpectedExceptionMessage : string = null
+    - <<unsafe>> ZeroMemory(ptr:byte*, size:int) : void
+    - <<unsafe>> ExecuteMethod(context:ExecutionContext) : TestResult
+    # <<virtual>> RunNativeCode(nativeDelegateCaller:Func<object,object[],object>, compiledFunction:Delegate, nativeArgs:object[]) : object
+    # <<virtual>> PostAssert(context:ExecutionContext) : void
+    # <<virtual>> ProcessNativeResult(method:TestMethod, result:object) : void
+    # <<virtual>> GetLinesFromDeterminismLog() : string
+    # <<virtual>> IsDeterministicTest(method:TestMethod) : bool
+    - {static} DisposeObjects(arguments:object[]) : void
+    - CloneArguments(arguments:object[]) : object[]
+    # <<unsafe>> TransformArguments(method:MethodInfo, args:object[], nativeArgs:object[], nativeArgTypes:Type[], returnBox:byte*, returnBoxType:Type) : void
+    - {static} ConvertToNativeArray(array:T[]) : NativeArray<T>
+    # TryExpectedException(context:ExecutionContext, action:Action, contextName:string, expectedException:Func<Type, bool>, expectedExceptionName:string, isTargetException:bool, requireException:bool) : TryExpectedExceptionResult
+    - {static} GetDiagnosticIds(diagnosticIds:IEnumerable<DiagnosticId>) : string
+    + {static} ReportBailedTests(writer:TextWriter) : void
+    # CheckExpectedDiagnostics(context:ExecutionContext, contextName:string) : bool
+    # <<virtual>> GetLoggedDiagnosticIds() : IEnumerable<DiagnosticId>
+    # <<virtual>> GetExpectedDiagnosticIds() : IEnumerable<DiagnosticId>
+    # RunDeterminismValidation(method:TestMethod, resultNative:object) : void
+    # {abstract} GetRunCount() : int
+    # {abstract} CompleteTest(context:ExecutionContext) : void
+    # {abstract} GetULP() : int
+    # {abstract} GetArgumentsArray(method:TestMethod) : object[]
+    # {abstract} <<unsafe>> CompileDelegate(context:ExecutionContext, methodInfo:MethodInfo, delegateType:Type, returnBox:byte*, returnBoxType:Type, interpretDelegate:Delegate) : Delegate
+    # {abstract} InterpretMethod(interpretDelegate:Delegate, methodInfo:MethodInfo, args:object[], returnType:Type, reason:string, result:object) : bool
+    # {abstract} GoldFileTestForOtherPlatforms(methodInfo:MethodInfo, testWasRun:bool) : void
+    # {abstract} TestOnCurrentHostEnvironment(methodInfo:MethodInfo) : bool
+    # {abstract} CompileFunctionPointer(methodInfo:MethodInfo, functionType:Type) : object
+    # {abstract} Setup() : void
+    # {abstract} HandleCompilerException(context:ExecutionContext, methodInfo:MethodInfo) : TestResult
+    # {abstract} GetExtension() : TestCompilerBaseExtensions
+    # {abstract} TargetIs32Bit() : bool
+}
+class IntRangeAttribute <<sealed>> {
+    + <<readonly>> Lo : int
+    + <<readonly>> Hi : int
+    + IntRangeAttribute(hi:int)
+    + IntRangeAttribute(lo:int, hi:int)
+}
+enum TryExpectedExceptionResult {
+    ThrewExpectedException,
+    ThrewUnexpectedException,
+    DidNotThrowException,
+}
+TestCaseAttribute <|-- TestCompilerAttributeBase
+ITestBuilder <|-- TestCompilerAttributeBase
+IWrapTestMethod <|-- TestCompilerAttributeBase
+TestCommand <|-- TestCompilerCommandBase
+Attribute <|-- IntRangeAttribute
+TestCompilerCommandBase +-- TryExpectedExceptionResult
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+struct Size {
+    + {static} <<readonly>> Empty : Size
+    - width : int
+    - height : int
+    + Size(width:int, height:int)
+    + IsEmpty : bool <<get>>
+    + Width : int <<get>> <<set>>
+    + Height : int <<get>> <<set>>
+}
+@enduml

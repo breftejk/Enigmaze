@@ -1,0 +1,27 @@
+@startuml
+class ContentSizeFitter {
+    # m_HorizontalFit : FitMode
+    + horizontalFit : FitMode <<get>> <<set>>
+    # m_VerticalFit : FitMode
+    + verticalFit : FitMode <<get>> <<set>>
+    - m_Rect : RectTransform
+    - rectTransform : RectTransform <<get>>
+    - m_Tracker : DrivenRectTransformTracker
+    # ContentSizeFitter()
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    - HandleSelfFittingAlongAxis(axis:int) : void
+    + <<virtual>> SetLayoutHorizontal() : void
+    + <<virtual>> SetLayoutVertical() : void
+    # SetDirty() : void
+}
+enum FitMode {
+    Unconstrained,
+    MinSize,
+    PreferredSize,
+}
+UIBehaviour <|-- ContentSizeFitter
+ILayoutSelfController <|-- ContentSizeFitter
+ContentSizeFitter +-- FitMode
+@enduml

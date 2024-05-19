@@ -1,0 +1,12 @@
+@startuml
+class TimelineNavigator <<sealed>> {
+    - m_Impl : TimelineWindow.TimelineNavigatorImpl
+    <<internal>> TimelineNavigator(windowState:IWindowStateProvider)
+    + GetCurrentContext() : SequenceContext
+    + GetParentContext() : SequenceContext
+    + GetRootContext() : SequenceContext
+    + GetChildContexts() : IEnumerable<SequenceContext>
+    + GetBreadcrumbs() : IEnumerable<SequenceContext>
+    + NavigateTo(context:SequenceContext) : void
+}
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+class GridBrushesDropdown {
+    {static} - s_Styles : Styles
+    - m_ItemProvider : MenuItemProvider
+    - m_ModifyItemUI : FlexibleMenuModifyItemUI
+    <<readonly>> - m_ItemClickedCallback : Action<int, object>
+    - m_ScrollPosition : Vector2
+    - m_ShowAddNewPresetItem : bool
+    - m_HoverIndex : int
+    - m_SeperatorIndices : int[]
+    - m_CachedWidth : float
+    - m_MinTextWidth : float = 200f
+    <<const>> - LineHeight : float = 18f
+    <<const>> - SeparatorHeight : float = 8f
+    - maxIndex : int <<get>>
+    + selectedIndex : int <<get>> <<set>>
+    # minTextWidth : float <<get>> <<set>>
+    + GridBrushesDropdown(itemClickedCallback:Action<int, object>, minWidth:float)
+    + <<override>> GetWindowSize() : Vector2
+    + <<override>> OnGUI(rect:Rect) : void
+    - SelectItem(index:int) : void
+    # CalcSize() : Vector2
+    - ClearCachedWidth() : void
+    - CalcWidth() : float
+    - Repaint() : void
+}
+class Styles {
+    + menuItem : GUIStyle = "MenuItem"
+}
+class MenuItemProvider {
+    + Count() : int
+    + GetItem(index:int) : object
+    + Add(obj:object) : int
+    + Replace(index:int, newPresetObject:object) : void
+    + Remove(index:int) : void
+    + Create() : object
+    + Move(index:int, destIndex:int, insertAfterDestIndex:bool) : void
+    + GetName(index:int) : string
+    + GetTooltip(index:int) : string
+    + IsModificationAllowed(index:int) : bool
+    + GetSeperatorIndices() : int[]
+}
+PopupWindowContent <|-- GridBrushesDropdown
+GridBrushesDropdown +-- Styles
+GridBrushesDropdown +-- MenuItemProvider
+IFlexibleMenuItemProvider <|-- MenuItemProvider
+@enduml

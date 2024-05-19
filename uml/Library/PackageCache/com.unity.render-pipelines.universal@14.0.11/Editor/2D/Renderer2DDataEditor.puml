@@ -1,0 +1,69 @@
+@startuml
+class Renderer2DDataEditor {
+    - m_TransparencySortMode : SerializedProperty
+    - m_TransparencySortAxis : SerializedProperty
+    - m_HDREmulationScale : SerializedProperty
+    - m_LightRenderTextureScale : SerializedProperty
+    - m_LightBlendStyles : SerializedProperty
+    - m_LightBlendStylePropsArray : LightBlendStyleProps[]
+    - m_UseDepthStencilBuffer : SerializedProperty
+    - m_DefaultMaterialType : SerializedProperty
+    - m_DefaultCustomMaterial : SerializedProperty
+    - m_MaxLightRenderTextureCount : SerializedProperty
+    - m_MaxShadowRenderTextureCount : SerializedProperty
+    - m_PostProcessData : SerializedProperty
+    - m_UseCameraSortingLayersTexture : SerializedProperty
+    - m_CameraSortingLayersTextureBound : SerializedProperty
+    - m_CameraSortingLayerDownsamplingMethod : SerializedProperty
+    - m_GeneralFoldout : SavedBool
+    - m_LightRenderTexturesFoldout : SavedBool
+    - m_LightBlendStylesFoldout : SavedBool
+    - m_CameraSortingLayerTextureFoldout : SavedBool
+    - m_PostProcessingFoldout : SavedBool
+    - m_Analytics : Analytics.Renderer2DAnalytics
+    - m_Renderer2DData : Renderer2DData
+    - m_WasModified : bool
+    - SendModifiedAnalytics(analytics:Analytics.IAnalytics) : void
+    - OnEnable() : void
+    - OnDestroy() : void
+    + <<override>> OnInspectorGUI() : void
+    + DrawCameraSortingLayerTexture() : void
+    - DrawGeneral() : void
+    - DrawLightRenderTextures() : void
+    - DrawLightBlendStyles() : void
+    - DrawPostProcessing() : void
+}
+class Styles {
+    + {static} <<readonly>> generalHeader : GUIContent
+    + {static} <<readonly>> lightRenderTexturesHeader : GUIContent
+    + {static} <<readonly>> lightBlendStylesHeader : GUIContent
+    + {static} <<readonly>> postProcessHeader : GUIContent
+    + {static} <<readonly>> transparencySortMode : GUIContent
+    + {static} <<readonly>> transparencySortAxis : GUIContent
+    + {static} <<readonly>> hdrEmulationScale : GUIContent
+    + {static} <<readonly>> lightRTScale : GUIContent
+    + {static} <<readonly>> maxLightRTCount : GUIContent
+    + {static} <<readonly>> maxShadowRTCount : GUIContent
+    + {static} <<readonly>> defaultMaterialType : GUIContent
+    + {static} <<readonly>> defaultCustomMaterial : GUIContent
+    + {static} <<readonly>> name : GUIContent
+    + {static} <<readonly>> maskTextureChannel : GUIContent
+    + {static} <<readonly>> blendMode : GUIContent
+    + {static} <<readonly>> useDepthStencilBuffer : GUIContent
+    + {static} <<readonly>> postProcessIncluded : GUIContent
+    + {static} <<readonly>> postProcessData : GUIContent
+    + {static} <<readonly>> cameraSortingLayerTextureHeader : GUIContent
+    + {static} <<readonly>> cameraSortingLayerTextureBound : GUIContent
+    + {static} <<readonly>> cameraSortingLayerDownsampling : GUIContent
+}
+struct LightBlendStyleProps {
+    + name : SerializedProperty
+    + maskTextureChannel : SerializedProperty
+    + blendMode : SerializedProperty
+    + blendFactorMultiplicative : SerializedProperty
+    + blendFactorAdditive : SerializedProperty
+}
+ScriptableRendererDataEditor <|-- Renderer2DDataEditor
+Renderer2DDataEditor +-- Styles
+Renderer2DDataEditor +-- LightBlendStyleProps
+@enduml

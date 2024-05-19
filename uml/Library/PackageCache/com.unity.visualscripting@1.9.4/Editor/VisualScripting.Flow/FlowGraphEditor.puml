@@ -1,0 +1,18 @@
+@startuml
+class FlowGraphEditor {
+    + FlowGraphEditor(metadata:Metadata)
+    - <<new>> graph : FlowGraph <<get>>
+    - controlInputDefinitionsMetadata : Metadata <<get>>
+    - controlOutputDefinitionsMetadata : Metadata <<get>>
+    - valueInputDefinitionsMetadata : Metadata <<get>>
+    - valueOutputDefinitionsMetadata : Metadata <<get>>
+    - warnings : IEnumerable<Warning> <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - GetControlInputDefinitionsHeight(width:float) : float
+    - GetControlOutputDefinitionsHeight(width:float) : float
+    - GetValueInputDefinitionsHeight(width:float) : float
+    - GetValueOutputDefinitionsHeight(width:float) : float
+}
+GraphEditor <|-- FlowGraphEditor
+@enduml

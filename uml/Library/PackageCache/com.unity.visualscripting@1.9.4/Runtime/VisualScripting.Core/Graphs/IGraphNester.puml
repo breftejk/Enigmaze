@@ -1,0 +1,8 @@
+@startuml
+interface IGraphNester {
+    nest : IGraphNest <<get>>
+    InstantiateNest() : void
+    UninstantiateNest() : void
+}
+IGraphParent <|-- IGraphNester
+@enduml

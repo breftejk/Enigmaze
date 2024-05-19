@@ -1,0 +1,278 @@
+@startuml
+struct KeyboardState {
+    + {static} Format : FourCC <<get>>
+    - <<const>> kSizeInBits : int
+    <<internal>> <<const>> kSizeInBytes : int
+    + <<fixed>> keys : byte
+    + KeyboardState(pressedKeys:Key[])
+    + Set(key:Key, state:bool) : void
+    + Press(key:Key) : void
+    + Release(key:Key) : void
+    + format : FourCC <<get>>
+}
+enum Key {
+    None,
+    Space,
+    Enter,
+    Tab,
+    Backquote,
+    Quote,
+    Semicolon,
+    Comma,
+    Period,
+    Slash,
+    Backslash,
+    LeftBracket,
+    RightBracket,
+    Minus,
+    Equals,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+    I,
+    J,
+    K,
+    L,
+    M,
+    N,
+    O,
+    P,
+    Q,
+    R,
+    S,
+    T,
+    U,
+    V,
+    W,
+    X,
+    Y,
+    Z,
+    Digit1,
+    Digit2,
+    Digit3,
+    Digit4,
+    Digit5,
+    Digit6,
+    Digit7,
+    Digit8,
+    Digit9,
+    Digit0,
+    LeftShift,
+    RightShift,
+    LeftAlt,
+    RightAlt,
+    AltGr= RightAlt,
+    LeftCtrl,
+    RightCtrl,
+    LeftMeta,
+    RightMeta,
+    LeftWindows= LeftMeta,
+    RightWindows= RightMeta,
+    LeftApple= LeftMeta,
+    RightApple= RightMeta,
+    LeftCommand= LeftMeta,
+    RightCommand= RightMeta,
+    ContextMenu,
+    Escape,
+    LeftArrow,
+    RightArrow,
+    UpArrow,
+    DownArrow,
+    Backspace,
+    PageDown,
+    PageUp,
+    Home,
+    End,
+    Insert,
+    Delete,
+    CapsLock,
+    NumLock,
+    PrintScreen,
+    ScrollLock,
+    Pause,
+    NumpadEnter,
+    NumpadDivide,
+    NumpadMultiply,
+    NumpadPlus,
+    NumpadMinus,
+    NumpadPeriod,
+    NumpadEquals,
+    Numpad0,
+    Numpad1,
+    Numpad2,
+    Numpad3,
+    Numpad4,
+    Numpad5,
+    Numpad6,
+    Numpad7,
+    Numpad8,
+    Numpad9,
+    F1,
+    F2,
+    F3,
+    F4,
+    F5,
+    F6,
+    F7,
+    F8,
+    F9,
+    F10,
+    F11,
+    F12,
+    OEM1,
+    OEM2,
+    OEM3,
+    OEM4,
+    OEM5,
+    IMESelected,
+}
+class Keyboard {
+    + <<const>> KeyCount : int
+    + SetIMEEnabled(enabled:bool) : void
+    + SetIMECursorPosition(position:Vector2) : void
+    + keyboardLayout : string <<get>> <<protected set>>
+    + anyKey : AnyKeyControl <<get>> <<protected set>>
+    + spaceKey : KeyControl <<get>>
+    + enterKey : KeyControl <<get>>
+    + tabKey : KeyControl <<get>>
+    + backquoteKey : KeyControl <<get>>
+    + quoteKey : KeyControl <<get>>
+    + semicolonKey : KeyControl <<get>>
+    + commaKey : KeyControl <<get>>
+    + periodKey : KeyControl <<get>>
+    + slashKey : KeyControl <<get>>
+    + backslashKey : KeyControl <<get>>
+    + leftBracketKey : KeyControl <<get>>
+    + rightBracketKey : KeyControl <<get>>
+    + minusKey : KeyControl <<get>>
+    + equalsKey : KeyControl <<get>>
+    + aKey : KeyControl <<get>>
+    + bKey : KeyControl <<get>>
+    + cKey : KeyControl <<get>>
+    + dKey : KeyControl <<get>>
+    + eKey : KeyControl <<get>>
+    + fKey : KeyControl <<get>>
+    + gKey : KeyControl <<get>>
+    + hKey : KeyControl <<get>>
+    + iKey : KeyControl <<get>>
+    + jKey : KeyControl <<get>>
+    + kKey : KeyControl <<get>>
+    + lKey : KeyControl <<get>>
+    + mKey : KeyControl <<get>>
+    + nKey : KeyControl <<get>>
+    + oKey : KeyControl <<get>>
+    + pKey : KeyControl <<get>>
+    + qKey : KeyControl <<get>>
+    + rKey : KeyControl <<get>>
+    + sKey : KeyControl <<get>>
+    + tKey : KeyControl <<get>>
+    + uKey : KeyControl <<get>>
+    + vKey : KeyControl <<get>>
+    + wKey : KeyControl <<get>>
+    + xKey : KeyControl <<get>>
+    + yKey : KeyControl <<get>>
+    + zKey : KeyControl <<get>>
+    + digit1Key : KeyControl <<get>>
+    + digit2Key : KeyControl <<get>>
+    + digit3Key : KeyControl <<get>>
+    + digit4Key : KeyControl <<get>>
+    + digit5Key : KeyControl <<get>>
+    + digit6Key : KeyControl <<get>>
+    + digit7Key : KeyControl <<get>>
+    + digit8Key : KeyControl <<get>>
+    + digit9Key : KeyControl <<get>>
+    + digit0Key : KeyControl <<get>>
+    + leftShiftKey : KeyControl <<get>>
+    + rightShiftKey : KeyControl <<get>>
+    + leftAltKey : KeyControl <<get>>
+    + rightAltKey : KeyControl <<get>>
+    + leftCtrlKey : KeyControl <<get>>
+    + rightCtrlKey : KeyControl <<get>>
+    + leftMetaKey : KeyControl <<get>>
+    + rightMetaKey : KeyControl <<get>>
+    + leftWindowsKey : KeyControl <<get>>
+    + rightWindowsKey : KeyControl <<get>>
+    + leftAppleKey : KeyControl <<get>>
+    + rightAppleKey : KeyControl <<get>>
+    + leftCommandKey : KeyControl <<get>>
+    + rightCommandKey : KeyControl <<get>>
+    + contextMenuKey : KeyControl <<get>>
+    + escapeKey : KeyControl <<get>>
+    + leftArrowKey : KeyControl <<get>>
+    + rightArrowKey : KeyControl <<get>>
+    + upArrowKey : KeyControl <<get>>
+    + downArrowKey : KeyControl <<get>>
+    + backspaceKey : KeyControl <<get>>
+    + pageDownKey : KeyControl <<get>>
+    + pageUpKey : KeyControl <<get>>
+    + homeKey : KeyControl <<get>>
+    + endKey : KeyControl <<get>>
+    + insertKey : KeyControl <<get>>
+    + deleteKey : KeyControl <<get>>
+    + capsLockKey : KeyControl <<get>>
+    + scrollLockKey : KeyControl <<get>>
+    + numLockKey : KeyControl <<get>>
+    + printScreenKey : KeyControl <<get>>
+    + pauseKey : KeyControl <<get>>
+    + numpadEnterKey : KeyControl <<get>>
+    + numpadDivideKey : KeyControl <<get>>
+    + numpadMultiplyKey : KeyControl <<get>>
+    + numpadMinusKey : KeyControl <<get>>
+    + numpadPlusKey : KeyControl <<get>>
+    + numpadPeriodKey : KeyControl <<get>>
+    + numpadEqualsKey : KeyControl <<get>>
+    + numpad0Key : KeyControl <<get>>
+    + numpad1Key : KeyControl <<get>>
+    + numpad2Key : KeyControl <<get>>
+    + numpad3Key : KeyControl <<get>>
+    + numpad4Key : KeyControl <<get>>
+    + numpad5Key : KeyControl <<get>>
+    + numpad6Key : KeyControl <<get>>
+    + numpad7Key : KeyControl <<get>>
+    + numpad8Key : KeyControl <<get>>
+    + numpad9Key : KeyControl <<get>>
+    + f1Key : KeyControl <<get>>
+    + f2Key : KeyControl <<get>>
+    + f3Key : KeyControl <<get>>
+    + f4Key : KeyControl <<get>>
+    + f5Key : KeyControl <<get>>
+    + f6Key : KeyControl <<get>>
+    + f7Key : KeyControl <<get>>
+    + f8Key : KeyControl <<get>>
+    + f9Key : KeyControl <<get>>
+    + f10Key : KeyControl <<get>>
+    + f11Key : KeyControl <<get>>
+    + f12Key : KeyControl <<get>>
+    + oem1Key : KeyControl <<get>>
+    + oem2Key : KeyControl <<get>>
+    + oem3Key : KeyControl <<get>>
+    + oem4Key : KeyControl <<get>>
+    + oem5Key : KeyControl <<get>>
+    + shiftKey : ButtonControl <<get>> <<protected set>>
+    + ctrlKey : ButtonControl <<get>> <<protected set>>
+    + altKey : ButtonControl <<get>> <<protected set>>
+    + imeSelected : ButtonControl <<get>> <<protected set>>
+    + allKeys : ReadOnlyArray<KeyControl> <<get>>
+    + {static} current : Keyboard <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+    # <<override>> RefreshConfiguration() : void
+    + OnTextInput(character:char) : void
+    + FindKeyOnCurrentKeyboardLayout(displayName:string) : KeyControl
+    + OnIMECompositionChanged(compositionString:IMECompositionString) : void
+    - m_TextInputListeners : InlinedArray<Action<char>>
+    - m_KeyboardLayoutName : string
+    - m_Keys : KeyControl[]
+    - m_ImeCompositionListeners : InlinedArray<Action<IMECompositionString>>
+    # keys : KeyControl[] <<get>> <<set>>
+}
+IInputStateTypeInfo <|-- KeyboardState
+InputDevice <|-- Keyboard
+ITextInputReceiver <|-- Keyboard
+@enduml

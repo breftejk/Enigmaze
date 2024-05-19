@@ -1,0 +1,11 @@
+@startuml
+class CinemachineHardLockToTarget {
+    + m_Damping : float = 0
+    - m_PreviousTargetPosition : Vector3
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    + <<override>> GetMaxDampTime() : float
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+}
+CinemachineComponentBase <|-- CinemachineHardLockToTarget
+@enduml

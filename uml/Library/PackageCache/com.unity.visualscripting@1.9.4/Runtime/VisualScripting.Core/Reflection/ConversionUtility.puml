@@ -1,0 +1,76 @@
+@startuml
+class ConversionUtility <<static>> {
+    - <<const>> UserDefinedBindingFlags : BindingFlags
+    - {static} <<readonly>> conversionTypesCache : Dictionary<ConversionQuery, ConversionType>
+    - {static} <<readonly>> userConversionMethodsCache : Dictionary<ConversionQuery, MethodInfo[]>
+    - {static} RespectsIdentity(source:Type, destination:Type) : bool
+    - {static} IsUpcast(source:Type, destination:Type) : bool
+    - {static} IsDowncast(source:Type, destination:Type) : bool
+    - {static} ExpectsString(source:Type, destination:Type) : bool
+    + {static} HasImplicitNumericConversion(source:Type, destination:Type) : bool
+    + {static} HasExplicitNumericConversion(source:Type, destination:Type) : bool
+    + {static} HasNumericConversion(source:Type, destination:Type) : bool
+    - {static} FindUserDefinedConversionMethods(query:ConversionQuery) : IEnumerable<MethodInfo>
+    - {static} GetUserDefinedConversionMethods(source:Type, destination:Type) : MethodInfo[]
+    - {static} GetUserDefinedConversionType(source:Type, destination:Type) : ConversionType
+    - {static} HasEnumerableToArrayConversion(source:Type, destination:Type) : bool
+    - {static} HasEnumerableToListConversion(source:Type, destination:Type) : bool
+    - {static} HasUnityHierarchyConversion(source:Type, destination:Type) : bool
+    - {static} IsValidConversion(conversionType:ConversionType, guaranteed:bool) : bool
+    + {static} CanConvert(value:object, type:Type, guaranteed:bool) : bool
+    + {static} CanConvert(source:Type, destination:Type, guaranteed:bool) : bool
+    + {static} Convert(value:object, type:Type) : object
+    + {static} Convert(value:object) : T
+    + {static} TryConvert(value:object, type:Type, result:object, guaranteed:bool) : bool
+    + {static} TryConvert(value:object, result:T, guaranteed:bool) : bool
+    + {static} IsConvertibleTo(source:Type, destination:Type, guaranteed:bool) : bool
+    + {static} IsConvertibleTo(source:object, type:Type, guaranteed:bool) : bool
+    + {static} IsConvertibleTo(source:object, guaranteed:bool) : bool
+    + {static} ConvertTo(source:object, type:Type) : object
+    + {static} ConvertTo(source:object) : T
+    + {static} GetRequiredConversion(source:Type, destination:Type) : ConversionType
+    - {static} DetermineConversionType(query:ConversionQuery) : ConversionType
+    + {static} GetRequiredConversion(value:object, type:Type) : ConversionType
+    - {static} NumericConversion(value:object, type:Type) : object
+    - {static} UserDefinedConversion(conversion:ConversionType, value:object, type:Type) : object
+    - {static} EnumerableToArrayConversion(value:object, arrayType:Type) : object
+    - {static} EnumerableToListConversion(value:object, listType:Type) : object
+    - {static} UnityHierarchyConversion(value:object, type:Type) : object
+    - {static} Convert(value:object, type:Type, conversionType:ConversionType) : object
+    - {static} <<readonly>> implicitNumericConversions : Dictionary<Type, HashSet<Type>>
+    - {static} <<readonly>> explicitNumericConversions : Dictionary<Type, HashSet<Type>>
+}
+enum ConversionType {
+    Impossible,
+    Identity,
+    Upcast,
+    Downcast,
+    NumericImplicit,
+    NumericExplicit,
+    UserDefinedImplicit,
+    UserDefinedExplicit,
+    UserDefinedThenNumericImplicit,
+    UserDefinedThenNumericExplicit,
+    UnityHierarchy,
+    EnumerableToArray,
+    EnumerableToList,
+    ToString,
+}
+struct ConversionQuery {
+    + <<readonly>> source : Type
+    + <<readonly>> destination : Type
+    + ConversionQuery(source:Type, destination:Type)
+    + Equals(other:ConversionQuery) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+struct ConversionQueryComparer {
+    + Equals(x:ConversionQuery, y:ConversionQuery) : bool
+    + GetHashCode(obj:ConversionQuery) : int
+}
+ConversionUtility +-- ConversionType
+ConversionUtility +-- ConversionQuery
+"IEquatable`1" "<ConversionQuery>" <|-- ConversionQuery
+ConversionUtility +-- ConversionQueryComparer
+"IEqualityComparer`1" "<ConversionQuery>" <|-- ConversionQueryComparer
+@enduml

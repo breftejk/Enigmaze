@@ -1,0 +1,11 @@
+@startuml
+abstract class "GraphInspector`1"<TGraphContext> {
+    # GraphInspector(metadata:Metadata)
+    # context : TGraphContext <<get>>
+    # reference : GraphReference <<get>>
+    # graph : IGraph <<get>>
+    # canvas : ICanvas <<get>>
+    # selection : GraphSelection <<get>>
+}
+Inspector <|-- "GraphInspector`1"
+@enduml

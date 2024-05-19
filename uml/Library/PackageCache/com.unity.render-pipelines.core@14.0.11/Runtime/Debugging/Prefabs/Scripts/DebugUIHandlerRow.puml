@@ -1,0 +1,11 @@
+@startuml
+class DebugUIHandlerRow {
+    - m_Timer : float
+    # <<override>> OnEnable() : void
+    - GetChild(index:int) : GameObject
+    - TryGetChild(index:int, child:GameObject) : bool
+    - IsActive(table:DebugUI.Table, index:int, child:GameObject) : bool
+    # Update() : void
+}
+DebugUIHandlerFoldout <|-- DebugUIHandlerRow
+@enduml

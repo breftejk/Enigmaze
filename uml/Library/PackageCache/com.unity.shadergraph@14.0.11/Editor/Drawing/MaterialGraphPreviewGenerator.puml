@@ -1,0 +1,20 @@
+@startuml
+class MaterialGraphPreviewGenerator {
+    - <<readonly>> m_Scene : Scene
+    {static} - s_Quad : Mesh
+    - m_Camera : Camera
+    - Light0 : Light <<get>> <<set>>
+    - Light1 : Light <<get>> <<set>>
+    - m_CheckerboardMaterial : Material
+    - {static} <<readonly>> s_Meshes : Mesh[]
+    - {static} <<readonly>> s_MeshIcons : GUIContent[]
+    - {static} <<readonly>> s_LightIcons : GUIContent[]
+    - {static} <<readonly>> s_TimeIcons : GUIContent[]
+    # {static} CreateLight() : GameObject
+    + MaterialGraphPreviewGenerator()
+    + {static} quad : Mesh <<get>>
+    + DoRenderPreview(renderTexture:RenderTexture, mat:Material, mesh:Mesh, mode:PreviewMode, allowSRP:bool, time:float, properties:MaterialPropertyBlock) : void
+    + Dispose() : void
+}
+IDisposable <|-- MaterialGraphPreviewGenerator
+@enduml

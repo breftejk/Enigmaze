@@ -1,0 +1,29 @@
+@startuml
+class SetAdditionalPropertiesVisibilityAttribute <<sealed>> {
+}
+class AdditionalPropertiesPreferences {
+    {static} - s_VolumeComponentEditorTypes : List<Type>
+    {static} - s_AdditionalPropertiesVisibilityMethods : TypeCache.MethodCollection
+    {static} - s_ShowAllAdditionalProperties : bool = false
+    {static} - AdditionalPropertiesPreferences()
+    {static} - InitializeIfNeeded() : void
+    {static} - showAllAdditionalProperties : bool <<get>> <<set>>
+    {static} - s_SearchKeywords : List<string>
+    + keywords : List<string> <<get>>
+    + header : GUIContent <<get>>
+    + PreferenceGUI() : void
+    {static} - ShowAllAdditionalProperties(value:bool) : void
+}
+class Styles {
+    + {static} <<readonly>> additionalPropertiesLabel : GUIContent
+    + {static} <<readonly>> additionalPropertiesNames : GUIContent[]
+    + {static} <<readonly>> additionalPropertiesValues : int[]
+}
+class Keys <<static>> {
+    <<internal>> <<const>> showAllAdditionalProperties : string = "General.ShowAllAdditionalProperties"
+}
+Attribute <|-- SetAdditionalPropertiesVisibilityAttribute
+ICoreRenderPipelinePreferencesProvider <|-- AdditionalPropertiesPreferences
+AdditionalPropertiesPreferences +-- Styles
+AdditionalPropertiesPreferences +-- Keys
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class RotateAboutAxisNode {
+    - m_Unit : RotationUnit
+    + unit : RotationUnit <<get>> <<set>>
+    + RotateAboutAxisNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Rotate_About_Axis_Degrees(In:Vector3, Axis:Vector3, Rotation:Vector1, Out:Vector3) : string
+    {static} - Unity_Rotate_About_Axis_Radians(In:Vector3, Axis:Vector3, Rotation:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- RotateAboutAxisNode
+@enduml

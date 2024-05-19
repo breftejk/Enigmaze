@@ -1,0 +1,38 @@
+@startuml
+class TypeName {
+    + AssemblyDescription : string <<get>>
+    + AssemblyName : string <<get>>
+    + AssemblyVersion : string <<get>>
+    + AssemblyCulture : string <<get>>
+    + AssemblyPublicKeyToken : string <<get>>
+    + GenericParameters : List<TypeName> <<get>>
+    - <<readonly>> names : List<string>
+    - <<readonly>> genericarities : List<int>
+    + Name : string <<get>>
+    + IsArray : bool <<get>>
+    + LastName : string <<get>>
+    + {static} Parse(s:string) : TypeName
+    - TypeName(s:string, index:int)
+    - {static} LookForPairThenRemove(strings:List<string>, Name:string) : string
+    + ReplaceNamespace(oldNamespace:string, newNamespace:string) : void
+    + ReplaceAssembly(oldAssembly:string, newAssembly:string) : void
+    + ReplaceName(oldTypeName:string, newType:Type) : void
+    + ReplaceName(oldTypeName:string, newTypeName:string, newAssemblyName:AssemblyName) : void
+    {static} - ToElementTypeName(s:string) : string
+    {static} - ToArrayOrType(oldType:string, newType:string) : string
+    + SetAssemblyName(newAssemblyName:AssemblyName) : void
+    - UpdateName() : void
+    + ToString(specification:TypeNameDetail, genericsSpecification:TypeNameDetail) : string
+    + <<override>> ToString() : string
+    + ToLooseString() : string
+    + {static} Simplify(typeName:string) : string
+    + {static} SimplifyFast(typeName:string) : string
+}
+enum ParseState {
+    Name,
+    Array,
+    Generics,
+    Assembly,
+}
+TypeName +-- ParseState
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CheckWorkspaceTreeNodeStatus <<static>> {
+    <<internal>> {static} IsPrivate(node:WorkspaceTreeNode) : bool
+    <<internal>> {static} IsCheckedOut(node:WorkspaceTreeNode) : bool
+    <<internal>> {static} IsAdded(node:WorkspaceTreeNode) : bool
+    <<internal>> {static} IsDirectory(node:WorkspaceTreeNode) : bool
+}
+@enduml

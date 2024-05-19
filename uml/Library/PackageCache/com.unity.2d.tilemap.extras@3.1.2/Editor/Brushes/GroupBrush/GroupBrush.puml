@@ -1,0 +1,20 @@
+@startuml
+class GroupBrush {
+    + gap : Vector3Int <<get>> <<set>>
+    + limit : Vector3Int <<get>> <<set>>
+    - visitedLocationsSize : int <<get>>
+    - m_Gap : Vector3Int
+    - m_Limit : Vector3Int
+    - m_VisitedLocations : BitArray
+    - m_NextPosition : Stack<Vector3Int>
+    - OnValidate() : void
+    + <<override>> Pick(grid:GridLayout, brushTarget:GameObject, position:BoundsInt, pickStart:Vector3Int) : void
+    - Encapsulate(bounds:BoundsInt, position:Vector3Int) : void
+    - GetIndex(position:Vector3Int, origin:Vector3Int, size:Vector3Int) : int
+    - PickCell(position:Vector3Int, brushPosition:Vector3Int, tilemap:Tilemap) : void
+}
+class GroupBrushEditor {
+}
+GridBrush <|-- GroupBrush
+GridBrushEditor <|-- GroupBrushEditor
+@enduml

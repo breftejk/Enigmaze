@@ -1,0 +1,30 @@
+@startuml
+class ScriptablePathInspector {
+    - m_Paths : List<ScriptablePath> = null
+    - m_Dragged : bool = false
+    # paths : List<ScriptablePath> <<get>>
+    + <<override>> OnInspectorGUI() : void
+    # DoTangentModeInspector() : void
+    # DoPositionInspector() : void
+    - DoToggle(value:bool, icon:GUIContent) : bool
+    - GetToggleStateFromTangentMode(mode:TangentMode) : bool
+    - SetMixedTangentMode(tangentMode:TangentMode) : void
+    - GetMixedPosition(position:Vector3) : bool
+    - SetMixedDeltaPosition(delta:Vector3) : void
+    - IsAnyShapeType(shapeType:ShapeType) : bool
+    # IsAnyPointSelected() : bool
+}
+class Contents <<static>> {
+    + {static} <<readonly>> linearIcon : GUIContent
+    + {static} <<readonly>> continuousIcon : GUIContent
+    + {static} <<readonly>> brokenIcon : GUIContent
+    + {static} <<readonly>> positionLabel : GUIContent
+    + {static} <<readonly>> enableSnapLabel : GUIContent
+    + {static} <<readonly>> tangentModeLabel : GUIContent
+    + {static} <<readonly>> pointLabel : GUIContent
+    - {static} IconContent(name:string, tooltip:string) : GUIContent
+    - {static} IconContent(personal:string, pro:string, tooltip:string) : GUIContent
+}
+Editor <|-- ScriptablePathInspector
+ScriptablePathInspector +-- Contents
+@enduml

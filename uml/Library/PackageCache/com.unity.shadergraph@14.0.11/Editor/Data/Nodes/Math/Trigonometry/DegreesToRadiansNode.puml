@@ -1,0 +1,8 @@
+@startuml
+class DegreesToRadiansNode {
+    + DegreesToRadiansNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_DegreesToRadians(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- DegreesToRadiansNode
+@enduml

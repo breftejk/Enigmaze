@@ -1,0 +1,31 @@
+@startuml
+class CinemachinePOV {
+    + m_RecenterTarget : RecenterTargetMode
+    + m_VerticalAxis : AxisState
+    + m_VerticalRecentering : AxisState.Recentering
+    + m_HorizontalAxis : AxisState
+    + m_HorizontalRecentering : AxisState.Recentering
+    + m_ApplyBeforeBody : bool
+    - m_PreviousCameraRotation : Quaternion
+    + <<override>> IsValid : bool <<get>>
+    + <<override>> Stage : CinemachineCore.Stage <<get>>
+    - OnValidate() : void
+    - OnEnable() : void
+    + UpdateInputAxisProvider() : void
+    + <<override>> PrePipelineMutateCameraState(state:CameraState, deltaTime:float) : void
+    + <<override>> MutateCameraState(curState:CameraState, deltaTime:float) : void
+    + GetRecenterTarget() : Vector2
+    {static} - NormalizeAngle(angle:float) : float
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float, transitionParams:CinemachineVirtualCameraBase.TransitionParams) : bool
+    + <<override>> RequiresUserInput : bool <<get>>
+    - SetAxesForRotation(targetRot:Quaternion) : void
+}
+enum RecenterTargetMode {
+    None,
+    FollowTargetForward,
+    LookAtTargetForward,
+}
+CinemachineComponentBase <|-- CinemachinePOV
+CinemachinePOV +-- RecenterTargetMode
+@enduml

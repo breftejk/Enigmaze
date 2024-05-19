@@ -1,0 +1,7 @@
+@startuml
+class ReflectionMethodsCache {
+    + ReflectionMethodsCache()
+    - {static} s_ReflectionMethodsCache : ReflectionMethodsCache = null
+    + {static} Singleton : ReflectionMethodsCache <<get>>
+}
+@enduml

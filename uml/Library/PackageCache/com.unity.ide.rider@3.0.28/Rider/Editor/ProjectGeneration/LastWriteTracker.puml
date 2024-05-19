@@ -1,0 +1,7 @@
+@startuml
+class LastWriteTracker <<static>> {
+    <<internal>> {static} HasLastWriteTimeChanged() : bool
+    <<internal>> {static} UpdateLastWriteIfNeeded(path:string) : void
+    <<internal>> {static} IsUnityCompatible() : bool
+}
+@enduml

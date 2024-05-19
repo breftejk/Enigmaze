@@ -1,0 +1,5 @@
+@startuml
+class RequireImplementorsAttribute {
+}
+Attribute <|-- RequireImplementorsAttribute
+@enduml

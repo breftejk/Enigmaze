@@ -1,0 +1,10 @@
+@startuml
+class ProjectViewAssetSelection {
+    <<internal>> ProjectViewAssetSelection(assetSelectionChangedAction:Action)
+    <<internal>> Dispose() : void
+    - SelectionChanged() : void
+    - GetSelectedAssets() : AssetList
+    - HasSelectedAssets() : bool
+    - mAssetSelectionChangedAction : Action
+}
+@enduml

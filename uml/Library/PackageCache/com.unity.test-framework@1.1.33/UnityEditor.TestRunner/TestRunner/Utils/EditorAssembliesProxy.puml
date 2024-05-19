@@ -1,0 +1,6 @@
+@startuml
+class EditorAssembliesProxy {
+    + loadedAssemblies : IAssemblyWrapper[] <<get>>
+}
+IEditorAssembliesProxy <|-- EditorAssembliesProxy
+@enduml

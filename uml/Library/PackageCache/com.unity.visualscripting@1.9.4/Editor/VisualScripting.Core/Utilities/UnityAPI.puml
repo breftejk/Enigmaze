@@ -1,0 +1,15 @@
+@startuml
+class UnityAPI <<static>> {
+    <<internal>> {static} Initialize() : void
+    - {static} <<readonly>> defaultTimeout : TimeSpan
+    - {static} queue : ConcurrentQueue<Action>
+    + {static} ProcessDelegates() : void
+    + {static} Async(action:Action) : void
+    + {static} Await(action:Action) : void
+    + {static} AwaitForever(action:Action) : void
+    - {static} Await(action:Action, timeout:TimeSpan?) : void
+    + {static} Await(func:Func<T>) : T
+    + {static} AwaitForever(func:Func<T>) : T
+    + {static} Await(func:Func<T>, timeout:TimeSpan?) : T
+}
+@enduml

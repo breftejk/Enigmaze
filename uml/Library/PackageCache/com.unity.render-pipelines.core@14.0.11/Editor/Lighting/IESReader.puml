@@ -1,0 +1,32 @@
+@startuml
+class IESReader {
+    - m_FileFormatVersion : string
+    + FileFormatVersion : string <<get>>
+    - m_TotalLumens : float
+    + TotalLumens : float <<get>>
+    - m_MaxCandelas : float
+    + MaxCandelas : float <<get>>
+    - m_PhotometricType : int
+    + PhotometricType : int <<get>>
+    - m_KeywordDictionary : Dictionary<string, string>
+    - m_VerticalAngleCount : int
+    - m_HorizontalAngleCount : int
+    - m_VerticalAngles : float[]
+    - m_HorizontalAngles : float[]
+    - m_CandelaValues : float[]
+    - m_MinDeltaVerticalAngle : float
+    - m_MinDeltaHorizontalAngle : float
+    - m_FirstHorizontalAngle : float
+    - m_LastHorizontalAngle : float
+    + ReadFile(iesFilePath:string) : string
+    <<internal>> GetKeywordValue(keyword:string) : string
+    <<internal>> GetMinVerticalSampleCount() : int
+    <<internal>> GetMinHorizontalSampleCount() : int
+    <<internal>> ComputeVerticalAnglePosition(angle:float) : float
+    <<internal>> ComputeTypeAorBHorizontalAnglePosition(angle:float) : float
+    <<internal>> ComputeTypeCHorizontalAnglePosition(angle:float) : float
+    <<internal>> ComputeAnglePosition(value:float, angles:float[]) : float
+    <<internal>> InterpolateBilinear(x:float, y:float) : float
+    <<internal>> InterpolatePoint(x:int, y:int) : float
+}
+@enduml

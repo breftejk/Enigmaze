@@ -1,0 +1,44 @@
+@startuml
+class SpriteResolverInspector {
+    - m_SpriteHash : SerializedProperty
+    - m_SpriteKey : SerializedProperty
+    - m_LabelHash : SerializedProperty
+    - m_CategoryHash : SerializedProperty
+    - m_SpriteSkin : SpriteSkin
+    - m_SpriteLibSelection : Dictionary<string, SpriteCategorySelectionList>
+    - m_CategorySelection : string[]
+    - m_CategorySelectionIndex : int = 0
+    - m_LabelSelectionIndex : int = 0
+    - m_PreviousCategoryValue : string
+    - m_PreviousLabelValue : string
+    - m_IgnoreNextDeserializeCallback : bool
+    - m_ReInitOnNextGUI : bool
+    - m_SpriteSelectorWidget : SpriteSelectorWidget
+    + OnEnable() : void
+    - OnDisable() : void
+    - SpriteResolverDeserializedCallback() : void
+    - spriteResolver : SpriteResolver <<get>>
+    - IsSpriteHashAssigned : bool <<get>>
+    - OnEditorFocusChanged(focused:bool) : void
+    - GetCategoryAndLabelStringValue(categoryName:string, labelName:string) : void
+    - UpdateSpriteLibrary() : void
+    - ValidateCategorySelectionIndexValue() : void
+    + <<override>> OnInspectorGUI() : void
+    - ApplyModifiedProperty() : void
+}
+class Style <<static>> {
+    + {static} categoryLabel : GUIContent
+    + {static} labelLabel : GUIContent
+    + {static} categoryIsEmptyLabel : GUIContent
+    + {static} noCategory : GUIContent
+    + {static} emptyCategoryDropDownOption : string[]
+}
+struct SpriteCategorySelectionList {
+    + categoryName : string
+    + entryNames : string[]
+    + sprites : Sprite[]
+}
+Editor <|-- SpriteResolverInspector
+SpriteResolverInspector +-- Style
+SpriteResolverInspector +-- SpriteCategorySelectionList
+@enduml

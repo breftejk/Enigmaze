@@ -1,0 +1,9 @@
+@startuml
+class CategoryColors {
+    + <<override>> GetTitle() : string
+    + <<override>> AllowCustom() : bool
+    + <<override>> ClearOnDirty() : bool
+    # <<override>> GetClassFromNode(node:AbstractMaterialNode, ussClass:string) : bool
+}
+ColorProviderFromStyleSheet <|-- CategoryColors
+@enduml

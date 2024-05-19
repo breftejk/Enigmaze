@@ -1,0 +1,9 @@
+@startuml
+class "IsometricRuleTile`1"<T> {
+    + <<sealed>> <<override>> m_NeighborType : Type <<get>>
+}
+class IsometricRuleTile {
+}
+IsometricRuleTile <|-- "IsometricRuleTile`1"
+RuleTile <|-- IsometricRuleTile
+@enduml

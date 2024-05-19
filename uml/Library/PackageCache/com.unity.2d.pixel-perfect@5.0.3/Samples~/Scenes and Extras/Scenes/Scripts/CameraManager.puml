@@ -1,0 +1,11 @@
+@startuml
+class CameraManager {
+    + ordinaryCamera : Camera
+    + pixelPerfectCamera : PixelPerfectCamera
+    - isPixelPerfect : bool
+    - Awake() : void
+    + TogglePixelPerfect(value:bool) : void
+    + ValidateCameras(value:bool) : void
+}
+MonoBehaviour <|-- CameraManager
+@enduml

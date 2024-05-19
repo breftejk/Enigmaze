@@ -1,0 +1,15 @@
+@startuml
+class NamingSchemePage {
+    + NamingSchemePage()
+    # <<override>> OnContentGUI() : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> modeButton : GUIStyle
+    + {static} <<readonly>> modeBox : GUIStyle
+    + {static} <<readonly>> example : GUIStyle
+}
+Page <|-- NamingSchemePage
+NamingSchemePage +-- Styles
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class AssemblyOptionsSettings {
+    - <<const>> CompleteLabel : string = "Regenerate Nodes"
+    - <<readonly>> _assemblyOptionsMetadata : PluginConfigurationItemMetadata
+    - _showAssembly : bool = false
+    - <<const>> TitleAssembly : string = "Node Library"
+    - <<const>> DescriptionAssembly : string
+    - _assemblyOptionsInspector : ProjectAssemblyOptionsListInspector
+    + AssemblyOptionsSettings(coreConfig:BoltCoreConfiguration)
+    + OnGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> defaultsButton : GUIStyle
+    + <<const>> OptionsWidth : float = 250
+    {static} - Styles()
+}
+AssemblyOptionsSettings +-- Styles
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class "UnifiedVariableUnitDescriptor`1"<TVariableUnit> {
+    + UnifiedVariableUnitDescriptor(unit:TVariableUnit)
+    # <<override>> DefinedIcon() : EditorTexture
+}
+"UnitDescriptor`1" "<TVariableUnit>" <|-- "UnifiedVariableUnitDescriptor`1"
+@enduml

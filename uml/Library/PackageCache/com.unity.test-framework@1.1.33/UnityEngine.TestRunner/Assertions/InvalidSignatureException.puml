@@ -1,0 +1,7 @@
+@startuml
+class InvalidSignatureException {
+    + InvalidSignatureException(message:string)
+    + <<override>> ResultState : ResultState <<get>>
+}
+ResultStateException <|-- InvalidSignatureException
+@enduml

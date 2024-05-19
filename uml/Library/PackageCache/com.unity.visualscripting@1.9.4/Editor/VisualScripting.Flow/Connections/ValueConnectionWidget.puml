@@ -1,0 +1,20 @@
+@startuml
+class ValueConnectionWidget <<sealed>> {
+    + ValueConnectionWidget(canvas:FlowCanvas, connection:ValueConnection)
+    - <<new>> ConnectionDebugData : ValueConnection.DebugData <<get>>
+    + <<override>> color : Color <<get>>
+    # <<override>> colorIfActive : bool <<get>>
+    + <<override>> DrawForeground() : void
+    + {static} DetermineColor(source:Type, destination:Type) : Color
+    + {static} DetermineColor(type:Type) : Color
+    # <<override>> showDroplets : bool <<get>>
+    # <<override>> GetDropletSize() : Vector2
+    # <<override>> DrawDroplet(position:Rect) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> prediction : GUIStyle
+}
+"UnitConnectionWidget`1" "<ValueConnection>" <|-- ValueConnectionWidget
+ValueConnectionWidget +-- Styles
+@enduml

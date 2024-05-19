@@ -1,0 +1,9 @@
+@startuml
+class RequireApiProfileAttribute {
+    + apiProfiles : ApiCompatibilityLevel[] <<get>>
+    + RequireApiProfileAttribute(apiProfiles:ApiCompatibilityLevel[])
+    - ApplyToTest(test:Test) : void
+}
+NUnitAttribute <|-- RequireApiProfileAttribute
+IApplyToTest <|-- RequireApiProfileAttribute
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+enum SpriteSkinValidationResult {
+    SpriteNotFound,
+    SpriteHasNoSkinningInformation,
+    SpriteHasNoWeights,
+    RootTransformNotFound,
+    InvalidTransformArray,
+    InvalidTransformArrayLength,
+    TransformArrayContainsNull,
+    InvalidBoneWeights,
+    Ready,
+}
+class NativeByteArray {
+    + Length : int <<get>>
+    + IsCreated : bool <<get>>
+    + array : NativeArray<byte> <<get>>
+    + NativeByteArray(array:NativeArray<byte>)
+    + Dispose() : void
+}
+class SpriteSkinUtility <<static>> {
+    <<internal>> {static} Validate(spriteSkin:SpriteSkin) : SpriteSkinValidationResult
+    <<internal>> {static} CreateBoneHierarchy(spriteSkin:SpriteSkin) : void
+    <<internal>> {static} GetVertexStreamSize(sprite:Sprite) : int
+    <<internal>> {static} GetVertexStreamOffset(sprite:Sprite, channel:Rendering.VertexAttribute) : int
+    {static} - CreateGameObject(index:int, spriteBones:SpriteBone[], transforms:Transform[], root:Transform) : void
+    <<internal>> {static} ResetBindPose(spriteSkin:SpriteSkin) : void
+    {static} - GetHash(matrix:Matrix4x4) : int
+    <<internal>> {static} CalculateTransformHash(spriteSkin:SpriteSkin) : int
+    <<internal>> <<unsafe>> {static} Deform(sprite:Sprite, rootInv:Matrix4x4, vertices:NativeSlice<Vector3>, tangents:NativeSlice<Vector4>, boneWeights:NativeSlice<BoneWeight>, boneTransforms:NativeArray<Matrix4x4>, bindPoses:NativeSlice<Matrix4x4>, deformableVertices:NativeArray<byte>) : void
+    <<internal>> {static} Deform(rootInv:float4x4, vertices:NativeSlice<float3>, boneWeights:NativeSlice<BoneWeight>, boneTransforms:NativeArray<float4x4>, bindPoses:NativeSlice<float4x4>, deformed:NativeSlice<float3>) : void
+    <<internal>> {static} Deform(rootInv:float4x4, vertices:NativeSlice<float3>, tangents:NativeSlice<float4>, boneWeights:NativeSlice<BoneWeight>, boneTransforms:NativeArray<float4x4>, bindPoses:NativeSlice<float4x4>, deformed:NativeSlice<float3>, deformedTangents:NativeSlice<float4>) : void
+    <<internal>> {static} Deform(sprite:Sprite, invRoot:Matrix4x4, boneTransformsArray:Transform[], deformVertexData:NativeArray<byte>) : void
+    <<internal>> {static} Bake(spriteSkin:SpriteSkin, deformVertexData:NativeArray<byte>) : void
+    <<internal>> {static} <<unsafe>> CalculateBounds(spriteSkin:SpriteSkin) : void
+    <<internal>> {static} CalculateSpriteSkinBounds(deformablePositions:NativeSlice<float3>) : Bounds
+    <<internal>> {static} <<unsafe>> UpdateBounds(spriteSkin:SpriteSkin, deformedVertices:NativeArray<byte>) : void
+}
+class BurstedSpriteSkinUtilities <<static>> {
+    <<internal>> {static} ValidateBoneWeights(boneWeights:NativeCustomSlice<BoneWeight>, bindPoseCount:int) : bool
+}
+@enduml

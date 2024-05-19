@@ -1,0 +1,26 @@
+@startuml
+class PendingChangesTab <<partial>> {
+    <<internal>> UndoForMode(wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    - UndoChangesForMode(wkInfo:WorkspaceInfo, isGluonMode:bool, changesToUndo:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    - CheckinForMode(wkInfo:WorkspaceInfo, isGluonMode:bool, keepItemsLocked:bool) : void
+    - CheckinChangesForMode(changesToCheckin:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>, wkInfo:WorkspaceInfo, isGluonMode:bool, keepItemsLocked:bool) : void
+    - PartialCheckin(keepItemsLocked:bool) : void
+    - PartialCheckinChanges(changesToCheckin:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>, keepItemsLocked:bool) : void
+    - Checkin() : void
+    - CheckinChanges(changesToCheckin:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    - ShelveChanges(changesToShelve:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>, wkInfo:WorkspaceInfo) : void
+    - ShelveChanges(changesToShelve:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    - PartialUndo() : void
+    - PartialUndoChanges(changesToUndo:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    - Undo() : void
+    - UndoChanges(changesToUndo:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    - EndCheckin() : void
+    - ShowCheckinSuccess() : void
+    - ShowShelveSuccess(checkinResult:CheckinResult) : void
+    - DelayedClearCheckinSuccess() : void
+    - RequestOrganizationToInviteUsers(server:string) : void
+    {static} - CheckEmptyOperation(elements:List<ChangeInfo>) : bool
+    {static} - CheckEmptyOperation(elements:List<ChangeInfo>, bHasPendingMergeLinks:bool) : bool
+    {static} - UserWantsShelveWithPendingMergeLinks(guiMessage:GuiMessage.IGuiMessage) : bool
+}
+@enduml

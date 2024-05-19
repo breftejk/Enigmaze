@@ -1,0 +1,6 @@
+@startuml
+class DisableGizmos {
+    - Awake() : void
+}
+MonoBehaviour <|-- DisableGizmos
+@enduml

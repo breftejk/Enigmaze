@@ -1,0 +1,8 @@
+@startuml
+class LoadSwapDLC {
+    <<const>> - k_AssetBundleName : string = "2DAnimationSampleAssetBundles"
+    + swapFullSkin : SwapFullSkin[]
+    + LoadAssetBundle() : void
+}
+MonoBehaviour <|-- LoadSwapDLC
+@enduml

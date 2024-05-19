@@ -1,0 +1,10 @@
+@startuml
+class AlphaChannelNames {
+    + <<override>> ID : ResourceID <<get>>
+    - channelNames : List<string>
+    + ChannelNames : List<string> <<get>>
+    + AlphaChannelNames()
+    + AlphaChannelNames(reader:PsdBinaryReader, name:string, resourceDataLength:int)
+}
+ImageResource <|-- AlphaChannelNames
+@enduml

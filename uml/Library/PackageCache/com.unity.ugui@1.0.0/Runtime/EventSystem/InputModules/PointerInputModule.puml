@@ -1,0 +1,48 @@
+@startuml
+abstract class PointerInputModule {
+    + <<const>> kMouseLeftId : int
+    + <<const>> kMouseRightId : int
+    + <<const>> kMouseMiddleId : int
+    + <<const>> kFakeTouchesId : int
+    # m_PointerData : Dictionary<int, PointerEventData>
+    # GetPointerData(id:int, data:PointerEventData, create:bool) : bool
+    # RemovePointerData(data:PointerEventData) : void
+    # GetTouchPointerEventData(input:Touch, pressed:bool, released:bool) : PointerEventData
+    # CopyFromTo(@from:PointerEventData, @to:PointerEventData) : void
+    # StateForMouseButton(buttonId:int) : PointerEventData.FramePressState
+    - <<readonly>> m_MouseState : MouseState
+    # <<virtual>> GetMousePointerEventData() : MouseState
+    # <<virtual>> GetMousePointerEventData(id:int) : MouseState
+    # GetLastPointerEventData(id:int) : PointerEventData
+    - {static} ShouldStartDrag(pressPos:Vector2, currentPos:Vector2, threshold:float, useDragThreshold:bool) : bool
+    # <<virtual>> ProcessMove(pointerEvent:PointerEventData) : void
+    # <<virtual>> ProcessDrag(pointerEvent:PointerEventData) : void
+    + <<override>> IsPointerOverGameObject(pointerId:int) : bool
+    # ClearSelection() : void
+    + <<override>> ToString() : string
+    # DeselectIfSelectionChanged(currentOverGo:GameObject, pointerEvent:BaseEventData) : void
+}
+class ButtonState {
+    - m_Button : PointerEventData.InputButton
+    + eventData : MouseButtonEventData <<get>> <<set>>
+    + button : PointerEventData.InputButton <<get>> <<set>>
+    - m_EventData : MouseButtonEventData
+}
+class MouseState {
+    - m_TrackedButtons : List<ButtonState>
+    + AnyPressesThisFrame() : bool
+    + AnyReleasesThisFrame() : bool
+    + GetButtonState(button:PointerEventData.InputButton) : ButtonState
+    + SetButtonState(button:PointerEventData.InputButton, stateForMouseButton:PointerEventData.FramePressState, data:PointerEventData) : void
+}
+class MouseButtonEventData {
+    + buttonState : PointerEventData.FramePressState
+    + buttonData : PointerEventData
+    + PressedThisFrame() : bool
+    + ReleasedThisFrame() : bool
+}
+BaseInputModule <|-- PointerInputModule
+PointerInputModule +-- ButtonState
+PointerInputModule +-- MouseState
+PointerInputModule +-- MouseButtonEventData
+@enduml

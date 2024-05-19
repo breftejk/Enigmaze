@@ -1,0 +1,18 @@
+@startuml
+class Physics2DRaycasterTests {
+    - m_CamGO : GameObject
+    - m_RedSprite : SpriteRenderer
+    - m_BlueSprite : SpriteRenderer
+    - m_GreenSprite : SpriteRenderer
+    - m_EventSystem : EventSystem
+    + TestSetup() : void
+    {static} - CreateTestSprite(name:string, color:Color, sprite:Sprite) : SpriteRenderer
+    + TearDown() : void
+    {static} - AssertRaycastResultsOrder(results:List<RaycastResult>, expectedOrder:SpriteRenderer[]) : void
+    - PerformRaycast() : List<RaycastResult>
+    + RaycastAllResultsAreSortedByRendererSortingOrder() : void
+    + RaycastAllResultsAreSortedBySortGroupOrder() : void
+    + RaycastAllResultsAreSortedBySortGroupOrderAndSortingOrder() : void
+    + RaycastAllResultsAreSortedBySortGroupDistanceAlongRay() : void
+}
+@enduml

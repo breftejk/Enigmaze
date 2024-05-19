@@ -1,0 +1,28 @@
+@startuml
+class ChannelMixerNode {
+    + ChannelMixerNode()
+    <<const>> - InputSlotId : int = 0
+    <<const>> - OutputSlotId : int = 1
+    <<const>> - kInputSlotName : string = "In"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_ChannelMixer : ChannelMixer
+    + channelMixer : ChannelMixer <<get>> <<set>>
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+}
+struct ChannelMixer {
+    + outRed : Vector3
+    + outGreen : Vector3
+    + outBlue : Vector3
+    + ChannelMixer(red:Vector3, green:Vector3, blue:Vector3)
+}
+AbstractMaterialNode <|-- ChannelMixerNode
+IGeneratesBodyCode <|-- ChannelMixerNode
+IGeneratesFunction <|-- ChannelMixerNode
+ChannelMixerNode +-- ChannelMixer
+@enduml

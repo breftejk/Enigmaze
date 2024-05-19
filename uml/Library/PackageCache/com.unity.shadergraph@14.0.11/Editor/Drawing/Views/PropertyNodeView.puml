@@ -1,0 +1,41 @@
+@startuml
+class PropertyNodeView <<sealed>> {
+    {static} <<readonly>> - exposedIcon : Texture2D
+    + {static} styleSheet : StyleSheet
+    - m_TriggerInspectorUpdate : Action
+    - m_ResetReferenceNameAction : Action
+    + PropertyNodeView(node:PropertyNode, edgeConnectorListener:EdgeConnectorListener)
+    - UpdateDisplayName() : void
+    + gvNode : Node <<get>>
+    + node : AbstractMaterialNode <<get>>
+    + colorElement : VisualElement <<get>>
+    + inspectorTitle : string <<get>>
+    - property : AbstractShaderProperty <<get>>
+    + GetObjectToInspect() : object
+    + SupplyDataToPropertyDrawer(propertyDrawer:IPropertyDrawer, inspectorUpdateDelegate:Action) : void
+    - RequestModelChange(changeAction:IGraphDataAction) : void
+    <<internal>> {static} AddMainColorMenuOptions(evt:ContextualMenuPopulateEvent, colorProp:ColorShaderProperty, graphData:GraphData, inspectorUpdateAction:Action) : void
+    <<internal>> {static} AddMainTextureMenuOptions(evt:ContextualMenuPopulateEvent, texProp:Texture2DShaderProperty, graphData:GraphData, inspectorUpdateAction:Action) : void
+    - AddContextMenuOptions(evt:ContextualMenuPopulateEvent) : void
+    - OnDisplayNameUpdated(triggerPropertyViewUpdate:bool, modificationScope:ModificationScope) : void
+    - DirtyNodes(modificationScope:ModificationScope) : void
+    + SetColor(newColor:Color) : void
+    + ResetColor() : void
+    + UpdatePortInputTypes() : void
+    + UpdateDropdownEntries() : void
+    + FindPort(slot:SlotReference, port:ShaderPort) : bool
+    - UpdateIcon() : void
+    + OnModified(scope:ModificationScope) : void
+    + SetActive(state:bool) : void
+    + AttachMessage(errString:string, severity:ShaderCompilerMessageSeverity) : void
+    + ClearMessage() : void
+    - GetAssociatedBlackboardRow() : SGBlackboardRow
+    - OnMouseHover(evt:EventBase) : void
+    + Dispose() : void
+    + OnShaderInputUpdated(modificationScope:ModificationScope) : void
+}
+TokenNode <|-- PropertyNodeView
+IShaderNodeView <|-- PropertyNodeView
+IInspectable <|-- PropertyNodeView
+IShaderInputObserver <|-- PropertyNodeView
+@enduml

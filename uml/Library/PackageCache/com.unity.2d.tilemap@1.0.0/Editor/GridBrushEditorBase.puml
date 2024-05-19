@@ -1,0 +1,29 @@
+@startuml
+class GridBrushEditorBase {
+    + <<virtual>> tooltip : string <<get>>
+    + <<virtual>> icon : Texture2D <<get>>
+    + <<virtual>> canChangeZPosition : bool <<get>> <<set>>
+    + <<virtual>> OnPaintSceneGUI(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, tool:GridBrushBase.Tool, executing:bool) : void
+    + <<virtual>> OnPaintInspectorGUI() : void
+    + <<virtual>> OnSelectionInspectorGUI() : void
+    + <<virtual>> OnSelectionSceneGUI(gridLayout:GridLayout, brushTarget:GameObject) : void
+    + <<virtual>> OnSceneGUI(gridLayout:GridLayout, brushTarget:GameObject) : void
+    + <<virtual>> OnMouseLeave() : void
+    + <<virtual>> OnMouseEnter() : void
+    + <<virtual>> OnToolActivated(tool:GridBrushBase.Tool) : void
+    + <<virtual>> OnToolDeactivated(tool:GridBrushBase.Tool) : void
+    + <<virtual>> RegisterUndo(brushTarget:GameObject, tool:GridBrushBase.Tool) : void
+    + <<virtual>> validTargets : GameObject[] <<get>>
+    <<internal>> OnEditStart(gridLayout:GridLayout, brushTarget:GameObject) : void
+    <<internal>> OnEditEnd(gridLayout:GridLayout, brushTarget:GameObject) : void
+    - SetBufferSyncTile(brushTarget:GameObject, active:bool) : void
+    <<internal>> {static} OnSceneGUIInternal(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, tool:GridBrushBase.Tool, executing:bool) : void
+    <<internal>> {static} OnPaintSceneGUIInternal(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, tool:GridBrushBase.Tool, executing:bool) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> activeColor : Color
+    + {static} <<readonly>> executingColor : Color
+}
+Editor <|-- GridBrushEditorBase
+GridBrushEditorBase +-- Styles
+@enduml

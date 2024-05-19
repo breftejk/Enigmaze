@@ -1,0 +1,15 @@
+@startuml
+class TypeMapper {
+    <<readonly>> - m_FromBaseType : Type
+    <<readonly>> - m_ToBaseType : Type
+    <<readonly>> - m_FallbackType : Type
+    <<readonly>> - m_Mappings : Dictionary<Type, Type>
+    + TypeMapper(fromBaseType:Type, toBaseType:Type, fallbackType:Type)
+    + Add(mapping:TypeMapping) : void
+    + Add(fromType:Type, toType:Type) : void
+    + MapType(fromType:Type) : Type
+    + GetEnumerator() : IEnumerator<TypeMapping>
+    - GetEnumerator() : IEnumerator
+}
+"IEnumerable`1" "<TypeMapping>" <|-- TypeMapper
+@enduml

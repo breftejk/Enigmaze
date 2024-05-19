@@ -1,0 +1,32 @@
+@startuml
+class CanvasScalerEditor {
+    - m_UiScaleMode : SerializedProperty
+    - m_ScaleFactor : SerializedProperty
+    - m_ReferenceResolution : SerializedProperty
+    - m_ScreenMatchMode : SerializedProperty
+    - m_MatchWidthOrHeight : SerializedProperty
+    - m_PhysicalUnit : SerializedProperty
+    - m_FallbackScreenDPI : SerializedProperty
+    - m_DefaultSpriteDPI : SerializedProperty
+    - m_DynamicPixelsPerUnit : SerializedProperty
+    - m_ReferencePixelsPerUnit : SerializedProperty
+    - m_PresetInfoIsWorld : SerializedProperty
+    <<const>> - kSliderEndpointLabelsHeight : int = 12
+    - {static} s_Styles : Styles
+    - bIsPreset : bool
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DualLabeledSlider(position:Rect, property:SerializedProperty, mainLabel:GUIContent, labelLeft:GUIContent, labelRight:GUIContent) : void
+}
+class Styles {
+    + matchContent : GUIContent
+    + widthContent : GUIContent
+    + heightContent : GUIContent
+    + uiScaleModeContent : GUIContent
+    + leftAlignedLabel : GUIStyle
+    + rightAlignedLabel : GUIStyle
+    + Styles()
+}
+Editor <|-- CanvasScalerEditor
+CanvasScalerEditor +-- Styles
+@enduml

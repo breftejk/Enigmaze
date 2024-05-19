@@ -1,0 +1,8 @@
+@startuml
+class ConflictResolutionState {
+    <<internal>> ResolveAction : DirectoryConflictResolveActions <<get>> <<set>>
+    <<internal>> RenameValue : string <<get>> <<set>>
+    <<internal>> IsApplyActionsForNextConflictsChecked : bool <<get>> <<set>>
+    <<internal>> {static} Build(directoryConflict:DirectoryConflict, conflictActions:DirectoryConflictAction[]) : ConflictResolutionState
+}
+@enduml

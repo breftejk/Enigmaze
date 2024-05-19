@@ -1,0 +1,8 @@
+@startuml
+class DivideNode {
+    + DivideNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Divide(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- DivideNode
+@enduml

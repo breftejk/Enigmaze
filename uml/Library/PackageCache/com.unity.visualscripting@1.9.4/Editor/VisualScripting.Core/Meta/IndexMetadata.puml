@@ -1,0 +1,17 @@
+@startuml
+class IndexMetadata <<sealed>> {
+    + IndexMetadata(index:int, parent:Metadata)
+    + index : int <<get>>
+    + mode : Mode <<get>>
+    # <<override>> rawValue : object <<get>> <<set>>
+    # <<override>> OnParentValueTypeChange(previousType:Type) : void
+    - Reflect(throwOnFail:bool) : void
+    + <<override>> GetCustomAttributes(inherit:bool) : Attribute[]
+}
+enum Mode {
+    List,
+    Enumerable,
+}
+Metadata <|-- IndexMetadata
+IndexMetadata +-- Mode
+@enduml

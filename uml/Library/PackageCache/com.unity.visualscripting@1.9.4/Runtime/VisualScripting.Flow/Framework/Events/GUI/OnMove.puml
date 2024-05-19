@@ -1,0 +1,10 @@
+@startuml
+class OnMove <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + data : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, data:AxisEventData) : void
+}
+"GameObjectEventUnit`1" "<AxisEventData>" <|-- OnMove
+@enduml

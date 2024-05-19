@@ -1,0 +1,28 @@
+@startuml
+class SequencerContextMenu <<static>> {
+    + {static} ShowNewTracksContextMenu(tracks:ICollection<TrackAsset>, state:WindowState) : void
+    + {static} ShowNewTracksContextMenu(tracks:ICollection<TrackAsset>, state:WindowState, rect:Rect) : void
+    + {static} ShowTrackContextMenu(mousePosition:Vector2?) : void
+    + {static} ShowItemContextMenu(mousePosition:Vector2) : void
+    + {static} BuildItemContextMenu(items:List<MenuActionItem>, mousePosition:Vector2) : void
+    + {static} BuildNewTracksContextMenu(menuItems:List<MenuActionItem>, parentTracks:ICollection<TrackAsset>, state:WindowState, format:string) : void
+    + {static} BuildTrackContextMenu(items:List<MenuActionItem>, mousePosition:Vector2?) : void
+    {static} - AddLayeredTrackCommands(menuItems:List<MenuActionItem>, tracks:ICollection<TrackAsset>) : void
+    {static} - AddClipMenuCommands(menuItems:List<MenuActionItem>, tracks:ICollection<TrackAsset>, candidateTime:double) : void
+    {static} - AddMarkerMenuCommands(menu:List<MenuActionItem>, markerTypes:IEnumerable<Type>, addMarkerCommand:Action<Type, Object>, enabled:bool) : void
+    {static} - AddMarkerMenuCommands(menuItems:List<MenuActionItem>, tracks:ICollection<TrackAsset>, candidateTime:double) : void
+    {static} - AddMarkerMenuCommands(menuItems:List<MenuActionItem>, tracks:ICollection<TrackAsset>, command:Action<Type, Object>, enabled:bool) : void
+    {static} - AddMarkersCallback(targets:ICollection<TrackAsset>, markerType:Type, time:double, obj:Object) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> addItemFromAssetTemplate : string
+    + {static} <<readonly>> addSingleItemFromAssetTemplate : string
+    + {static} <<readonly>> addItemTemplate : string
+    + {static} <<readonly>> typeSelectorTemplate : string
+    + {static} <<readonly>> trackGroup : string
+    + {static} <<readonly>> trackSubGroup : string
+    + {static} <<readonly>> addTrackLayer : string
+    + {static} <<readonly>> layerName : string
+}
+SequencerContextMenu +-- Styles
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+abstract class "Subtract`1"<T> {
+    + minuend : ValueInput <<get>>
+    + subtrahend : ValueInput <<get>>
+    + difference : ValueOutput <<get>>
+    # <<virtual>> defaultMinuend : T <<get>>
+    # <<virtual>> defaultSubtrahend : T <<get>>
+    # <<override>> Definition() : void
+    + {abstract} Operation(a:T, b:T) : T
+    + Operation(flow:Flow) : T
+}
+Unit <|-- "Subtract`1"
+@enduml

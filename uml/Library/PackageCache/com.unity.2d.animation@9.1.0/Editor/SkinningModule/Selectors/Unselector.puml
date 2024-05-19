@@ -1,0 +1,7 @@
+@startuml
+class "Unselector`1"<T> {
+    + selection : ISelection<T> <<get>> <<set>>
+    + Select() : void
+}
+"ISelector`1" "<T>" <|-- "Unselector`1"
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+interface IVertexModifier {
+    ModifyVertices(verts:List<UIVertex>) : void
+}
+interface IMeshModifier {
+    ModifyMesh(mesh:Mesh) : void
+    ModifyMesh(verts:VertexHelper) : void
+}
+@enduml

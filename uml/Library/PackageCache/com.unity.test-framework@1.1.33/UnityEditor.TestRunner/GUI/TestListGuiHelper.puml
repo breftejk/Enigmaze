@@ -1,0 +1,20 @@
+@startuml
+class TestListGUIHelper {
+    - <<const>> kResourcesTemplatePath : string = "Resources/ScriptTemplates"
+    - <<const>> kAssemblyDefinitionTestTemplate : string = "92-Assembly Definition-NewTestAssembly.asmdef.txt"
+    - <<const>> kAssemblyDefinitionEditModeTestTemplate : string = "92-Assembly Definition-NewEditModeTestAssembly.asmdef.txt"
+    - <<const>> kTestScriptTemplate : string = "83-C# Script-NewTestScript.cs.txt"
+    - <<const>> kNewTestScriptName : string = "NewTestScript.cs"
+    - <<const>> kNunit : string = "nunit.framework.dll"
+    + {static} MenuItemAddFolderAndAsmDefForTesting() : void
+    + {static} MenuItemAddFolderAndAsmDefForTestingWithValidation() : bool
+    + {static} AddFolderAndAsmDefForTesting(isEditorOnly:bool) : void
+    + {static} SelectedFolderContainsTestAssembly() : bool
+    + {static} AddTest() : void
+    + {static} CanAddScriptAndItWillCompile() : bool
+    + {static} CanAddEditModeTestScriptAndItWillCompile() : bool
+    + {static} CanAddPlayModeTestScriptAndItWillCompile() : bool
+    + {static} GetActiveFolderPath() : string
+    - {static} GetTheNearestCustomScriptAssembly() : CustomScriptAssembly
+}
+@enduml

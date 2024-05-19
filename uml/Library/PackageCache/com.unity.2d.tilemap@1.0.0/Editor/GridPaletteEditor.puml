@@ -1,0 +1,17 @@
+@startuml
+class GridPaletteEditor {
+    - m_CellSizing : SerializedProperty
+    - m_TransparencySortMode : SerializedProperty
+    - m_TransparencySortAxis : SerializedProperty
+    - m_CustomAxisIndex : int
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> cellSizingLabel : GUIContent
+    + {static} <<readonly>> transparencySortModeLabel : GUIContent
+    + {static} <<readonly>> transparencySortAxisLabel : GUIContent
+}
+Editor <|-- GridPaletteEditor
+GridPaletteEditor +-- Styles
+@enduml

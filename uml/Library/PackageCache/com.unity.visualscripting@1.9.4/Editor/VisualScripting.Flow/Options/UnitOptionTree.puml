@@ -1,0 +1,62 @@
+@startuml
+class UnitOptionTree {
+    + UnitOptionTree(label:GUIContent)
+    + <<override>> Option(item:object) : IFuzzyOption
+    + <<override>> Prewarm() : void
+    - options : HashSet<IUnitOption>
+    - typesWithMembers : HashSet<Type>
+    + filter : UnitOptionFilter <<get>> <<set>>
+    + reference : GraphReference <<get>> <<set>>
+    + includeNone : bool <<get>> <<set>>
+    + surfaceCommonTypeLiterals : bool <<get>> <<set>>
+    + rootOverride : object[] <<get>> <<set>>
+    + graph : FlowGraph <<get>>
+    + self : GameObject <<get>>
+    + direction : ActionDirection <<get>> <<set>>
+    - <<readonly>> enumsGroup : FuzzyGroup
+    - <<readonly>> selfGroup : FuzzyGroup
+    - SpecialCategories() : IEnumerable<UnitCategory>
+    + <<override>> Root() : IEnumerable<object>
+    + <<override>> Children(parent:object) : IEnumerable<object>
+    - SelfChildren() : IEnumerable<object>
+    - CodebaseChildren() : IEnumerable<object>
+    - MathChildren() : IEnumerable<object>
+    - TimeChildren() : IEnumerable<object>
+    - NestingChildren() : IEnumerable<object>
+    - MacroChildren() : IEnumerable<object>
+    - VariablesChildren() : IEnumerable<object>
+    - VariableKindChildren(kind:VariableKind) : IEnumerable<object>
+    - NamespaceChildren(@namespace:Namespace) : IEnumerable<object>
+    - GetChildrenNamespaces(@namespace:Namespace) : IEnumerable<Namespace>
+    - GetNamespaceTypes(@namespace:Namespace) : IEnumerable<Type>
+    - TypeChildren(type:Type) : IEnumerable<object>
+    - GetMembers(type:Type) : IEnumerable<IUnitOption>
+    - EnumsChildren() : IEnumerable<object>
+    - CategoryChildren(category:UnitCategory, subCategories:bool) : IEnumerable<object>
+    - EventsChildren(category:UnitCategory) : IEnumerable<object>
+    + <<override>> searchable : bool <<get>> = true
+    + <<override>> SearchResults(query:string, cancellation:CancellationToken) : IEnumerable<ISearchResult>
+    + <<override>> SearchResultLabel(item:object, query:string) : string
+    + <<override>> favorites : ICollection<object> <<get>>
+    + <<override>> CanFavorite(item:object) : bool
+    + <<override>> FavoritesLabel(item:object) : string
+    + <<override>> OnFavoritesChange() : void
+}
+class Favorites {
+    + Favorites(tree:UnitOptionTree)
+    - tree : UnitOptionTree <<get>>
+    - options : IEnumerable<IUnitOption> <<get>>
+    + IsReadOnly : bool <<get>>
+    + Count : int <<get>>
+    + GetEnumerator() : IEnumerator<object>
+    - GetEnumerator() : IEnumerator
+    + Contains(item:object) : bool
+    + Add(item:object) : void
+    + Remove(item:object) : bool
+    + Clear() : void
+    + CopyTo(array:object[], arrayIndex:int) : void
+}
+ExtensibleFuzzyOptionTree <|-- UnitOptionTree
+UnitOptionTree +-- Favorites
+"ICollection`1" "<object>" <|-- Favorites
+@enduml

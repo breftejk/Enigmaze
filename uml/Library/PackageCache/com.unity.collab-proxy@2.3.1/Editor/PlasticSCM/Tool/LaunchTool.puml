@@ -1,0 +1,40 @@
+@startuml
+class LaunchTool <<static>> {
+    <<internal>> {static} OpenGUIForMode(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    <<internal>> {static} OpenBranchExplorer(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    <<internal>> {static} OpenChangesetDiffs(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, repSpec:RepositorySpec, fullChangesetSpec:string, isGluonMode:bool) : void
+    <<internal>> {static} OpenSelectedChangesetsDiffs(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, repSpec:RepositorySpec, srcFullChangesetSpec:string, dstFullChangesetSpec:string, isGluonMode:bool) : void
+    <<internal>> {static} OpenBranchDiffs(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, repSpec:RepositorySpec, fullBranchSpec:string, isGluonMode:bool) : void
+    <<internal>> {static} OpenWorkspaceConfiguration(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    <<internal>> {static} OpenMerge(showDownloadPlasticExeWindow:IShowDownloadPlasticExeWindow, processExecutor:IProcessExecutor, wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    {static} - mPlasticProcessId : int
+    {static} - mGluonProcessId : int
+    {static} - mBrexProcessId : int
+    {static} <<readonly>> - mLog : ILog
+}
+interface IShowDownloadPlasticExeWindow {
+    Show(wkInfo:WorkspaceInfo, isGluonMode:bool, installCloudFrom:string, installEnterpriseFrom:string, cancelInstallFrom:string) : bool
+    Show(repSpec:RepositorySpec, isGluonMode:bool, installCloudFrom:string, installEnterpriseFrom:string, cancelInstallFrom:string) : bool
+}
+interface IProcessExecutor {
+    ExecuteGUI(program:string, args:string, commandFileArg:string, commandFileName:string, processId:int) : Process
+    ExecuteWindowsGUI(program:string, args:string, processId:int) : Process
+    ExecuteProcess(program:string, args:string) : Process
+}
+class ShowDownloadPlasticExeWindow {
+    - Show(wkInfo:WorkspaceInfo, isGluonMode:bool, installCloudFrom:string, installEnterpriseFrom:string, cancelInstallFrom:string) : bool
+    - Show(repSpec:RepositorySpec, isGluonMode:bool, installCloudFrom:string, installEnterpriseFrom:string, cancelInstallFrom:string) : bool
+}
+class ProcessExecutor {
+    - ExecuteGUI(program:string, args:string, commandFileArg:string, commandFileName:string, processId:int) : Process
+    - ExecuteWindowsGUI(program:string, args:string, processId:int) : Process
+    - ExecuteProcess(program:string, args:string) : Process
+    - BuildProcess(program:string, args:string) : Process
+    - GetGUIProcess(program:string, processId:int) : Process
+    <<readonly>> - mLog : ILog
+}
+LaunchTool +-- IShowDownloadPlasticExeWindow
+LaunchTool +-- IProcessExecutor
+LaunchTool +-- ShowDownloadPlasticExeWindow
+LaunchTool +-- ProcessExecutor
+@enduml

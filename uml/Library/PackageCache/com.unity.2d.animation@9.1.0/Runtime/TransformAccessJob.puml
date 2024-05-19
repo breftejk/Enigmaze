@@ -1,0 +1,39 @@
+@startuml
+class TransformAccessJob {
+    - m_Transform : Transform[]
+    - m_TransformAccessArray : TransformAccessArray
+    - m_TransformData : NativeHashMap<int, TransformData>
+    - m_TransformMatrix : NativeArray<float4x4>
+    - m_Dirty : bool
+    - m_JobHandle : JobHandle
+    + TransformAccessJob()
+    + Destroy() : void
+    + transformData : NativeHashMap<int, TransformData> <<get>>
+    + transformMatrix : NativeArray<float4x4> <<get>>
+    + AddTransform(t:Transform) : void
+    {static} - ArrayAdd(array:T[], item:T) : void
+    {static} - ArrayRemoveAt(array:T[], index:int) : void
+    - UpdateTransformIndex() : void
+    + StartLocalToWorldJob() : JobHandle
+    + StartWorldToLocalJob() : JobHandle
+    <<internal>> GetDebugLog() : string
+    <<internal>> RemoveTransformsByIds(idsToRemove:IList<int>) : void
+    <<internal>> RemoveTransformById(transformId:int) : void
+}
+struct LocalToWorldTransformAccessJob {
+    + outMatrix : NativeArray<float4x4>
+    + Execute(index:int, transform:TransformAccess) : void
+}
+struct WorldToLocalTransformAccessJob {
+    + outMatrix : NativeArray<float4x4>
+    + Execute(index:int, transform:TransformAccess) : void
+}
+struct TransformData {
+    + transformIndex : int
+    + refCount : int
+    + TransformData(index:int)
+}
+IJobParallelForTransform <|-- LocalToWorldTransformAccessJob
+IJobParallelForTransform <|-- WorldToLocalTransformAccessJob
+TransformAccessJob +-- TransformData
+@enduml

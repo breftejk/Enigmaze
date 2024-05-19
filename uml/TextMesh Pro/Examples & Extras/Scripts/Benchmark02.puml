@@ -1,0 +1,10 @@
+@startuml
+class Benchmark02 {
+    + SpawnType : int = 0
+    + NumberOfNPC : int = 12
+    + IsTextObjectScaleStatic : bool
+    - floatingText_Script : TextMeshProFloatingText
+    - Start() : void
+}
+MonoBehaviour <|-- Benchmark02
+@enduml

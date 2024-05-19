@@ -1,0 +1,14 @@
+@startuml
+struct "EditorPrefBoolFlags`1"<T> {
+    <<readonly>> - m_Key : string
+    + value : T <<get>> <<set>>
+    + rawValue : uint <<get>> <<set>>
+    + EditorPrefBoolFlags(key:string)
+    + Equals(other:T) : bool
+    + Equals(other:EditorPrefBoolFlags<T>) : bool
+    + HasFlag(v:T) : bool
+    + SetFlag(f:T, v:bool) : void
+}
+"IEquatable`1" "<T>" <|-- "EditorPrefBoolFlags`1"
+"IEquatable`1" "<EditorPrefBoolFlags<T>>" <|-- "EditorPrefBoolFlags`1"
+@enduml

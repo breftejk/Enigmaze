@@ -1,0 +1,14 @@
+@startuml
+struct UpdateBoundJob {
+    + rootTransformId : NativeArray<int>
+    + rootBoneTransformId : NativeArray<int>
+    + rootTransform : NativeArray<float4x4>
+    + boneTransform : NativeArray<float4x4>
+    + rootTransformIndex : NativeHashMap<int, TransformAccessJob.TransformData>
+    + boneTransformIndex : NativeHashMap<int, TransformAccessJob.TransformData>
+    + spriteSkinBound : NativeArray<Bounds>
+    + bounds : NativeArray<Bounds>
+    + Execute(i:int) : void
+}
+IJobParallelFor <|-- UpdateBoundJob
+@enduml

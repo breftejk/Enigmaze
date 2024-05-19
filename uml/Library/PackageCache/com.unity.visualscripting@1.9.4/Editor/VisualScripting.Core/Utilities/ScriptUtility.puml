@@ -1,0 +1,21 @@
+@startuml
+class ScriptUtility <<static>> {
+    - {static} guids : HashSet<string>
+    - {static} guidTimestamps : Dictionary<string, DateTime>
+    - {static} typesToGuids : Dictionary<Type, HashSet<string>>
+    - {static} guidsToTypes : Dictionary<string, HashSet<Type>>
+    - {static} analyzed : bool
+    - {static} EnsureAnalyzed() : void
+    - {static} Analyze() : void
+    + {static} GetScriptGuid(type:Type) : string
+    + {static} GetScriptGuids(type:Type) : IEnumerable<string>
+    - {static} GetScriptGuids(recursion:Recursion, type:Type) : IEnumerable<string>
+    + {static} GetScriptTypes(guid:string) : IEnumerable<Type>
+    + {static} GetAllScriptGuids() : IEnumerable<string>
+    + {static} GetModifiedScriptGuids(sinceUtc:DateTime) : IEnumerable<string>
+    + <<const>> CsFileID : int = 11500000
+    + {static} GetFileID(type:Type) : int
+    + {static} GetDllFileID(type:Type) : int
+    + {static} GetDllFileID(@namespace:string, name:string) : int
+}
+@enduml

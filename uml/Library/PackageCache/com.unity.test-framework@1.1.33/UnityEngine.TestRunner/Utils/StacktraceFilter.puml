@@ -1,0 +1,7 @@
+@startuml
+class StackTraceFilter <<static>> {
+    - {static} <<readonly>> s_FilteredLogMessages : string[]
+    - {static} <<readonly>> s_LastMessages : string[]
+    + {static} Filter(inputStackTrace:string) : string
+}
+@enduml

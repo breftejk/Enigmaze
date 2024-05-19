@@ -1,0 +1,7 @@
+@startuml
+class ChangeCategoryTreeViewItem {
+    <<internal>> Category : ChangeCategory <<get>>
+    <<internal>> ChangeCategoryTreeViewItem(id:int, depth:int, category:ChangeCategory)
+}
+TreeViewItem <|-- ChangeCategoryTreeViewItem
+@enduml

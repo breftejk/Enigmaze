@@ -1,0 +1,24 @@
+@startuml
+class RemoteTestResultData {
+    + testId : string
+    + name : string
+    + fullName : string
+    + resultState : string
+    + testStatus : TestStatus
+    + duration : double
+    + startTime : DateTime
+    + endTime : DateTime
+    + message : string
+    + stackTrace : string
+    + assertCount : int
+    + failCount : int
+    + passCount : int
+    + skipCount : int
+    + inconclusiveCount : int
+    + hasChildren : bool
+    + output : string
+    + xml : string
+    + childrenIds : string[]
+    <<internal>> RemoteTestResultData(result:ITestResult, isTopLevel:bool)
+}
+@enduml

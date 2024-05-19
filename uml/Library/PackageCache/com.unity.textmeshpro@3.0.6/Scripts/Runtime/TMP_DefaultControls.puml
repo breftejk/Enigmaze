@@ -1,0 +1,33 @@
+@startuml
+class TMP_DefaultControls <<static>> {
+    - <<const>> kWidth : float = 160f
+    - <<const>> kThickHeight : float = 30f
+    - <<const>> kThinHeight : float = 20f
+    - {static} s_TextElementSize : Vector2
+    - {static} s_ThickElementSize : Vector2
+    - {static} s_ThinElementSize : Vector2
+    - {static} s_DefaultSelectableColor : Color
+    - {static} s_TextColor : Color
+    - {static} CreateUIElementRoot(name:string, size:Vector2) : GameObject
+    {static} - CreateUIObject(name:string, parent:GameObject) : GameObject
+    - {static} SetDefaultTextValues(lbl:TMP_Text) : void
+    - {static} SetDefaultColorTransitionValues(slider:Selectable) : void
+    - {static} SetParentAndAlign(child:GameObject, parent:GameObject) : void
+    - {static} SetLayerRecursively(go:GameObject, layer:int) : void
+    + {static} CreateScrollbar(resources:Resources) : GameObject
+    + {static} CreateButton(resources:Resources) : GameObject
+    + {static} CreateText(resources:Resources) : GameObject
+    + {static} CreateInputField(resources:Resources) : GameObject
+    + {static} CreateDropdown(resources:Resources) : GameObject
+}
+struct Resources {
+    + standard : Sprite
+    + background : Sprite
+    + inputField : Sprite
+    + knob : Sprite
+    + checkmark : Sprite
+    + dropdown : Sprite
+    + mask : Sprite
+}
+TMP_DefaultControls +-- Resources
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+class SpriteSkinEditor {
+    - m_RootBoneProperty : SerializedProperty
+    - m_BoneTransformsProperty : SerializedProperty
+    - m_AlwaysUpdateProperty : SerializedProperty
+    - m_AutoRebindProperty : SerializedProperty
+    - m_SpriteSkins : SpriteSkin[]
+    - m_CurrentSprites : Sprite[]
+    - m_ReorderableList : ReorderableList
+    - m_NeedsRebind : bool = false
+    - m_BoneFold : bool = true
+    - OnEnable() : void
+    - OnDestroy() : void
+    - UndoRedoPerformed() : void
+    - UpdateSpriteCache() : void
+    + <<override>> OnInspectorGUI() : void
+    - HasAnySpriteChanged() : bool
+    - DoBoneFoldout() : void
+    - InitializeBoneTransformArray() : void
+    - SetupReorderableList() : void
+    - Rebind() : void
+    - ResetBounds(undoName:string) : void
+    {static} - ResetBoundsIfNeeded(spriteSkin:SpriteSkin) : void
+    - EnableCreateBones() : bool
+    - EnableSetBindPose() : bool
+    - IsAnyTargetValid() : bool
+    - DoGenerateBonesButton() : void
+    - DoResetBindPoseButton() : void
+    - DoValidationWarnings() : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> listHeaderLabel : GUIContent
+    + {static} <<readonly>> rootBoneLabel : GUIContent
+    + {static} <<readonly>> spriteNotFound : string
+    + {static} <<readonly>> spriteHasNoSkinningInformation : string
+    + {static} <<readonly>> spriteHasNoWeights : string
+    + {static} <<readonly>> rootTransformNotFound : string
+    + {static} <<readonly>> invalidTransformArray : string
+    + {static} <<readonly>> invalidBoneWeights : string
+    + {static} <<readonly>> transformArrayContainsNull : string
+    + {static} <<readonly>> invalidTransformArrayLength : string
+    + {static} <<readonly>> alwaysUpdate : GUIContent
+    + {static} <<readonly>> autoRebind : GUIContent
+}
+Editor <|-- SpriteSkinEditor
+SpriteSkinEditor +-- Contents
+@enduml

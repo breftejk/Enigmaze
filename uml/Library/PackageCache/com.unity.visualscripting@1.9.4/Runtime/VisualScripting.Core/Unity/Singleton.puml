@@ -1,0 +1,20 @@
+@startuml
+class "Singleton`1"<T> <<static>> {
+    {static} - Singleton()
+    - {static} <<readonly>> attribute : SingletonAttribute
+    - {static} persistent : bool <<get>>
+    - {static} automatic : bool <<get>>
+    - {static} name : string <<get>>
+    - {static} hideFlags : HideFlags <<get>>
+    - {static} <<readonly>> _lock : object
+    - {static} <<readonly>> awoken : HashSet<T>
+    - {static} _instance : T
+    + {static} instantiated : bool <<get>>
+    + {static} instance : T <<get>>
+    - {static} FindObjectsOfType() : T[]
+    - {static} FindInstances() : T[]
+    + {static} Instantiate() : T
+    + {static} Awake(instance:T) : void
+    + {static} OnDestroy(instance:T) : void
+}
+@enduml

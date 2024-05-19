@@ -1,0 +1,10 @@
+@startuml
+struct RequestSyncCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : RequestSyncCommand
+}
+IInputDeviceCommandInfo <|-- RequestSyncCommand
+@enduml

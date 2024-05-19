@@ -1,0 +1,9 @@
+@startuml
+struct LightMinMaxZJob {
+    + worldToViews : Fixed2<float4x4>
+    + lights : NativeArray<VisibleLight>
+    + minMaxZs : NativeArray<float2>
+    + Execute(index:int) : void
+}
+IJobFor <|-- LightMinMaxZJob
+@enduml

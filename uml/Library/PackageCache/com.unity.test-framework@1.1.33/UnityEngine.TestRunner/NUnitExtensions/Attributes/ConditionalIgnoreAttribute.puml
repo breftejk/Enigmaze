@@ -1,0 +1,12 @@
+@startuml
+class ConditionalIgnoreAttribute {
+    - m_ConditionKey : string
+    - m_IgnoreReason : string
+    + ConditionalIgnoreAttribute(conditionKey:string, ignoreReason:string)
+    + ApplyToTest(test:Test) : void
+    {static} - m_ConditionMap : Dictionary<string, bool>
+    + {static} AddConditionalIgnoreMapping(key:string, value:bool) : void
+}
+NUnitAttribute <|-- ConditionalIgnoreAttribute
+IApplyToTest <|-- ConditionalIgnoreAttribute
+@enduml

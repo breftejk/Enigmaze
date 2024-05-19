@@ -1,0 +1,8 @@
+@startuml
+class CinemachineColliderEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DrawColliderGizmos(collider:CinemachineCollider, type:GizmoType) : void
+}
+"BaseEditor`1" "<CinemachineCollider>" <|-- CinemachineColliderEditor
+@enduml

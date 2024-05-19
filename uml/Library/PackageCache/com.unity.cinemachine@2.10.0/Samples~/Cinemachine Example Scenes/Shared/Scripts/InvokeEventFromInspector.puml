@@ -1,0 +1,7 @@
+@startuml
+class InvokeEventFromInspector {
+    + Event : UnityEvent
+    + Invoke() : void
+}
+MonoBehaviour <|-- InvokeEventFromInspector
+@enduml

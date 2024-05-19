@@ -1,0 +1,9 @@
+@startuml
+class ColorPropertyDrawer {
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:Color, labelName:string, propertyColorField:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+IPropertyDrawer <|-- ColorPropertyDrawer
+@enduml

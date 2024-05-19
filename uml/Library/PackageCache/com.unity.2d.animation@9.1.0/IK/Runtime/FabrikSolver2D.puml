@@ -1,0 +1,19 @@
+@startuml
+class FabrikSolver2D <<sealed>> {
+    <<const>> - k_MinTolerance : float = 0.001f
+    <<const>> - k_MinIterations : int = 1
+    - m_Chain : IKChain2D
+    - m_Iterations : int = 10
+    - m_Tolerance : float = 0.01f
+    - m_Lengths : float[]
+    - m_Positions : Vector2[]
+    - m_WorldPositions : Vector3[]
+    + iterations : int <<get>> <<set>>
+    + tolerance : float <<get>> <<set>>
+    # <<override>> GetChainCount() : int
+    + <<override>> GetChain(index:int) : IKChain2D
+    # <<override>> DoPrepare() : void
+    # <<override>> DoUpdateIK(targetPositions:List<Vector3>) : void
+}
+Solver2D <|-- FabrikSolver2D
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class UnityEditorInternals <<static>> {
+    {static} <<readonly>> - k_AllowAllObjectsValidator : EditorGUI.ObjectFieldValidator
+    + {static} DoObjectField(position:Rect, obj:Object, type:Type, controlId:int, allowScene:bool, allowAllObjects:bool) : Object
+}
+@enduml

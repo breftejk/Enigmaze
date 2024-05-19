@@ -1,0 +1,18 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Environment <<partial>> {
+    + {static} <<readonly>> Drawer : CED.IDrawer
+    {static} - GetBackgroundType(clearFlags:CameraClearFlags) : BackgroundType
+    {static} - Drawer_Environment_ClearFlags(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - Drawer_Environment_VolumeUpdate(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - Drawer_Environment_VolumeTrigger(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+}
+enum BackgroundType {
+    Skybox= 0,
+    SolidColor,
+    DontCare,
+}
+UniversalRenderPipelineCameraUI +-- Environment
+Environment +-- BackgroundType
+@enduml

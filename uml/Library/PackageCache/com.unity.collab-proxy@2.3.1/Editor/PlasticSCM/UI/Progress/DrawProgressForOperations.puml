@@ -1,0 +1,7 @@
+@startuml
+class DrawProgressForOperations <<static>> {
+    <<internal>> {static} For(workspaceWindow:WorkspaceWindow, operationProgressData:OperationProgressData, width:float) : void
+    {static} - DoProgressBar(message:string, progressPercent:float, canCancel:bool, width:float) : void
+    {static} - DoCancelButton(workspaceWindow:WorkspaceWindow) : void
+}
+@enduml

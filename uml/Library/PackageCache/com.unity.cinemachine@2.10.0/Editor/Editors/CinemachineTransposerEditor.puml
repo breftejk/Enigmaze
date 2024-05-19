@@ -1,0 +1,7 @@
+@startuml
+class CinemachineTransposerEditor {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+}
+"BaseEditor`1" "<CinemachineTransposer>" <|-- CinemachineTransposerEditor
+@enduml

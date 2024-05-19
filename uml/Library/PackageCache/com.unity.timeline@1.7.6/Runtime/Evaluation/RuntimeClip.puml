@@ -1,0 +1,20 @@
+@startuml
+class RuntimeClip {
+    - m_Clip : TimelineClip
+    - m_Playable : Playable
+    - m_ParentMixer : Playable
+    + <<override>> start : double <<get>>
+    + <<override>> duration : double <<get>>
+    + RuntimeClip(clip:TimelineClip, clipPlayable:Playable, parentMixer:Playable)
+    - Create(clip:TimelineClip, clipPlayable:Playable, parentMixer:Playable) : void
+    + clip : TimelineClip <<get>>
+    + mixer : Playable <<get>>
+    + playable : Playable <<get>>
+    + <<override>> enable : bool <<set>>
+    + SetTime(time:double) : void
+    + SetDuration(duration:double) : void
+    + <<override>> EvaluateAt(localTime:double, frameData:FrameData) : void
+    + <<override>> DisableAt(localTime:double, rootDuration:double, frameData:FrameData) : void
+}
+RuntimeClipBase <|-- RuntimeClip
+@enduml

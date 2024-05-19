@@ -1,0 +1,21 @@
+@startuml
+class PlayerLauncherContextSettings {
+    - m_OverloadSettings : ITestRunSettings
+    - m_EditorBuildSettings : EditorBuildSettingsScene[]
+    - m_DisplayResolutionDialog : ResolutionDialogSetting
+    - m_RunInBackground : bool
+    - m_FullScreenMode : FullScreenMode
+    - m_ResizableWindow : bool
+    - m_ShowUnitySplashScreen : bool
+    - m_OldproductName : string
+    - m_OldAotOptions : string
+    - m_OldLightmapping : Lightmapping.GIWorkflowMode
+    - m_explicitNullChecks : bool
+    - m_Disposed : bool
+    + PlayerLauncherContextSettings(overloadSettings:ITestRunSettings)
+    + Dispose() : void
+    - SetupProjectParameters() : void
+    - CleanupProjectParameters() : void
+}
+IDisposable <|-- PlayerLauncherContextSettings
+@enduml

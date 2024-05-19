@@ -1,0 +1,13 @@
+@startuml
+abstract class "Divide`1"<T> {
+    + dividend : ValueInput <<get>>
+    + divisor : ValueInput <<get>>
+    + quotient : ValueOutput <<get>>
+    # <<virtual>> defaultDivisor : T <<get>>
+    # <<virtual>> defaultDividend : T <<get>>
+    # <<override>> Definition() : void
+    + {abstract} Operation(divident:T, divisor:T) : T
+    + Operation(flow:Flow) : T
+}
+Unit <|-- "Divide`1"
+@enduml

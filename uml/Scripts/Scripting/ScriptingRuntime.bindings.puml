@@ -1,0 +1,5 @@
+@startuml
+class ScriptingRuntime <<partial>> {
+    + {static} <<extern>> GetAllUserAssemblies() : string[]
+}
+@enduml

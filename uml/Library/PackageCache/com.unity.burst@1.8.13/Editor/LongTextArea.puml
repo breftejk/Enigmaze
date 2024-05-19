@@ -1,0 +1,220 @@
+@startuml
+class LongTextArea {
+    <<internal>> <<const>> naturalEnhancedPad : float = 20f
+    - <<const>> kMaxFragment : int = 2048
+    <<internal>> fontHeight : float = 0.0f
+    <<internal>> fontWidth : float = 0.0f
+    + GetText : string <<get>>
+    - m_Text : string = ""
+    - _mTextLines : int = 0
+    - m_Fragments : List<Fragment> = null
+    - invalidated : bool = true
+    <<internal>> finalAreaSize : Vector2
+    - {static} <<readonly>> backgroundTexture : Texture2D
+    - {static} <<readonly>> textureStyle : GUIStyle
+    <<internal>> horizontalPad : float = 50.0f
+    <<internal>> lineDepth : int[] = null
+    <<internal>> _folded : bool[] = null
+    <<internal>> blockLine : int[] = null
+    - _blocksFragments : List<Fragment>[] = null
+    - _blocksFragmentsStart : Fragment[] = null
+    - GetFragmentStart(blockIdx:int) : Fragment
+    - _blocksFragmentsStartPlain : Fragment[] = null
+    - GetFragmentStartPlain(blockIdx:int) : Fragment
+    <<internal>> blocksFragmentsPlain : List<Fragment>[] = null
+    <<internal>> GetPlainFragments(blockIdx:int) : List<Fragment>
+    - _disassembler : BurstDisassembler
+    - _selectBlockStart : int
+    - _selectStartY : float
+    - _selectBlockEnd : int
+    - _selectEndY : float
+    - _renderStartY : float = 0.0f
+    - _renderBlockStart : int
+    <<internal>> _renderBlockEnd : int
+    - _initialLineCount : int
+    - _mouseDown : bool = false
+    - _mouseOutsideBounds : bool = true
+    <<internal>> selectPos : Vector2
+    <<internal>> selectDragPos : Vector2
+    + HasSelection : bool <<get>>
+    - _selectionColor : Color
+    - <<readonly>> _selectionColorDarkmode : Color
+    - <<readonly>> _selectionColorLightmode : Color
+    - <<readonly>> _lineHighlightColor : Color
+    - <<readonly>> _regsColourWheel : Color[]
+    - _hoverBoxColor : Color
+    - _hoverTextColor : Color
+    - <<readonly>> _hoverBoxColorDarkMode : Color
+    - <<readonly>> _hoverBoxColorLightMode : Color
+    - <<readonly>> _searchHitColor : Color
+    - _prevCriteria : SearchCriteria
+    <<internal>> _activeSearchHitIdx : int
+    <<internal>> <<readonly>> searchHits : Dictionary<int, List<(int startIdx, int endIdx, int nr)>>
+    - _nrSearchHits : int = 0
+    + NrSearchHits : int <<get>>
+    + ActiveSearchNr : int <<get>>
+    - <<readonly>> _colourWheel : Color[]
+    <<internal>> textSelectionIdx : (int idx, int length)
+    - _textSelectionIdxValid : bool = true
+    <<internal>> enhancedTextSelectionIdxStart : (int blockIdx, int textIdx)
+    <<internal>> enhancedTextSelectionIdxEnd : (int blockIdx, int textIdx)
+    <<internal>> CopyColorTags : bool <<get>> = true
+    - _oldShowBranchMarkers : bool = false
+    <<internal>> <<const>> regLineThickness : int = 2
+    - <<const>> highlightLineThickness : int = 3
+    - _verticalPad : float = 0
+    <<internal>> hoveredBranch : Branch
+    - _prevHoveredEdge : BurstDisassembler.AsmEdge
+    - _jobName : string
+    - _actualHorizontalPad : float = 0
+    <<internal>> MaxLineDepth : int
+    <<internal>> <<readonly>> GetEndIndexOfColoredLine : Func<string, int, (int total, int relative)>
+    <<internal>> <<readonly>> GetEndIndexOfPlainLine : Func<string, int, (int total, int relative)>
+    <<internal>> IsTextSet(jobName:string) : bool
+    + SetText(jobName:string, textToRender:string, isDarkMode:bool, disassembler:BurstDisassembler, useDisassembler:bool) : void
+    + ExpandAllBlocks() : void
+    - ClearLinePress() : void
+    + FocusCodeBlocks() : void
+    - ComputeInitialLineCount() : void
+    + SetDisassembler(disassembler:BurstDisassembler) : void
+    + Invalidate() : void
+    - hover : HoverBox
+    + Interact(workingArea:Rect, eventT:EventType) : void
+    - {static} DrawLine(start:Vector2, end:Vector2, width:int) : void
+    - DrawLine(line:Rect, angle:float) : void
+    - DrawHover(style:GUIStyle, workingArea:Rect) : void
+    - MakeBranchThin(branch:Branch) : void
+    - GetMousePosForHover() : Vector2
+    - CalculateBranch(edge:BurstDisassembler.AsmEdge, x:float, y1:float, y2:float, w:int) : Branch
+    - DrawBranch(branch:Branch, w:int, workingArea:Rect) : void
+    - DrawFold(x:float, y:float, state:bool, kind:BurstDisassembler.AsmBlockKind) : bool
+    <<internal>> Layout(style:GUIStyle, hPad:float) : void
+    <<internal>> GetFragNrFromBlockIdx(blockIdx:int, start:int, acc:int, positionY:float) : int
+    <<internal>> SearchText(searchCriteria:SearchCriteria, regx:Regex, workingArea:Rect, stopFirstMatch:bool, focusTop:bool) : bool
+    - SearchTextEnhanced(criteria:SearchCriteria, regx:Regex, workingArea:Rect, stopFirstMatch:bool, focusTop:bool) : bool
+    - SetScrollOnView(workingArea:Rect, text:string, lineNr:int, matchIdx:int, goToPosY:float) : bool
+    <<internal>> GetFragNrFromEnhancedTextIdx(goal:int, blockNrStart:int, fragNrStart:int, start:int, positionY:float) : (int fragNr, int idx, float positionY)
+    - GetFragNrFromPlainTextIdx(goal:int, fragNrStart:int, start:int, positionY:float) : (int fragNr, int idx)
+    - SearchTextPlain(criteria:SearchCriteria, regx:Regex, workingArea:Rect, stopFirstMatch:bool, focusTop:bool) : bool
+    - LayoutPlain(style:GUIStyle) : void
+    - AddFoldedStringColorless(blockIdx:int) : void
+    - AddFoldedString(blockIdx:int) : void
+    <<internal>> LayoutEnhanced(style:GUIStyle, workingArea:Rect, showBranchMarkers:bool) : void
+    <<internal>> GetStartingColorTag(blockIdx:int, textIdx:int) : string
+    <<internal>> GetEndingColorTag(blockIdx:int, textIdx:int) : string
+    <<internal>> ChangeCopyMode() : void
+    <<internal>> DoSelectionCopy() : void
+    <<internal>> SelectAll() : void
+    - ScrollDownToSelection(workingArea:Rect) : void
+    - ScrollUpToSelection(workingArea:Rect) : void
+    <<internal>> MoveSelectionLeft(workingArea:Rect, showBranchMarkers:bool) : void
+    <<internal>> MoveSelectionRight(workingArea:Rect, showBranchMarkers:bool) : void
+    <<internal>> MoveSelectionUp(workingArea:Rect, showBranchMarkers:bool) : void
+    <<internal>> MoveSelectionDown(workingArea:Rect, showBranchMarkers:bool) : void
+    <<internal>> MouseOutsideView(workingArea:Rect, mousePos:Vector2, controlID:int) : bool
+    - MouseClickAndClamp(showBranchMarkers:bool, mousePos:Vector2) : Vector2
+    - GetLineNumber(mousePos:Vector2) : int
+    <<internal>> MouseClicked(showBranchMarkers:bool, withShift:bool, mousePos:Vector2, controlID:int) : void
+    <<internal>> DragMouse(mousePos:Vector2, showBranchMarkers:bool) : void
+    <<internal>> MouseReleased() : void
+    <<internal>> DoScroll(workingArea:Rect, mouseRelMoveY:float) : void
+    + MoveView(dir:Direction, workingArea:Rect) : void
+    + StopSelection() : void
+    - RenderLineSelection(positionX:float, positionY:float, start:int, end:int, IsSelection:bool) : void
+    <<internal>> PrepareInfoForSelection(positionX:float, positionY:float, fragHeight:float, frag:Fragment, GetEndIndexOfLine:Func<string, int, (int total, int relative)>) : FragmentSelectionInfo
+    - SelectText(positionX:float, positionY:float, fragHeight:float, frag:Fragment, GetEndIndexOfLine:Func<string, int, (int total, int relative)>) : void
+    - UpdateSelectTextIdx(GetEndIndexOfLine:Func<string, int, (int total, int relative)>) : void
+    + NextSearchHit(shift:bool, workingArea:Rect) : void
+    + StopSearching() : void
+    - RenderMultipleLinesSelection(text:string, positionX:float, positionY:float, startIdx:int, endIdx:int, IsSelection:bool) : void
+    - RenderPlainOldFragments(style:GUIStyle, workingArea:Rect, doSearch:bool) : void
+    + Render(style:GUIStyle, workingArea:Rect, showBranchMarkers:bool, doSearch:bool, searchCriteria:SearchCriteria, regx:Regex) : bool
+    <<internal>> GetLinesBlockIdx(pressedLine:int) : int
+    <<internal>> GetLineHighlight(cache:LineRegRectsCache, hPad:float, pressedLine:int) : Rect
+    - RenderLineHighlight(hPad:float) : void
+    <<internal>> _lineRegCache : LineRegRectsCache
+    <<internal>> _pressedLine : int
+    - RenderRegisterHighlight(workingArea:Rect, hPad:float) : void
+    <<internal>> GetLineString(line:BurstDisassembler.AsmLine) : string
+    - FindBlockIdx(startBlock:int, firstLine:int, lastLine:int) : (int start, int end)
+    <<internal>> GetRegisterRects(hPad:float, cache:LineRegRectsCache, pressedLine:int, regs:List<string>) : List<Rect>[]
+    - TestSelUnderscore(style:GUIStyle, scrollPos:Vector2, workingArea:Rect) : void
+    <<internal>> RenderBranches(workingArea:Rect) : void
+    <<internal>> BumpSelectionXByColorTag(text:string, lineIdxTotal:int, charsIn:int) : int
+    <<internal>> UpdateEnhancedSelectTextIdx(hPad:float) : void
+    - UpdateSelectionByFolding(hPad:float, blockIdx:int, block:BurstDisassembler.AsmBlock, positionY:float) : void
+    - FoldUnfoldBlock(blockIdx:int) : void
+    - RenderEnhanced(style:GUIStyle, workingArea:Rect, showBranchMarkers:bool, hPad:float, doSearch:bool) : void
+    - RecomputeFragments(text:string) : List<Fragment>
+    - RecomputeFragmentsFromBlock(blockIdx:int, colored:bool) : List<Fragment>
+    <<internal>> RecomputeFragmentsFromBlock(blockIdx:int) : List<Fragment>
+    - {static} AddFragment(b:StringBuilder, lineCount:int, result:List<Fragment>) : void
+}
+struct Fragment {
+    + lineCount : int
+    + text : string
+}
+enum Direction {
+    Left,
+    Right,
+    Up,
+    Down,
+}
+struct Branch {
+    + Edge : BurstDisassembler.AsmEdge
+    + StartHorizontal : Rect
+    + VerticalLine : Rect
+    + EndHorizontal : Rect
+    + UpperLine : Rect
+    + LowerLine : Rect
+    + UpperAngle : float
+    + LowerAngle : float
+    + Branch(edge:BurstDisassembler.AsmEdge, startHorizontal:Rect, verticalLine:Rect, endHorizontal:Rect, upperLine:Rect, lowerLine:Rect, angle1:float, angle2:float)
+}
+struct HoverBox {
+    + box : Rect
+    + info : string
+    + columnRange : (int start, int end)
+    + lineNumber : int
+    + valid : bool
+}
+struct FragmentSelectionInfo {
+    + startY : float
+    + lastY : float
+    + botY : float
+    + startLineEndIdxRel : int
+    + startLine : int
+    + lastLine : int
+    + charsIn : int
+    + charsInDrag : int
+}
+struct LineRegRectsCache {
+    - _isCached : CachedItem
+    - _folded : bool
+    + startLine : int
+    + endLine : int
+    + chosenLine : int
+    + lineHighlight : Rect
+    + rects : List<Rect>[]
+    + LinesRegsCached(pressedLine:int) : bool
+    + IsRegisterCachedOrClear(pressedLine:int, firstLine:int, lastLine:int) : bool
+    + IsLineHighlightCached(linePressed:int, folded:bool) : bool
+    + IsRegistersCached(linePressed:int) : bool
+    - ShouldUpdateCache(viewLineStart:int, viewLineEnd:int) : bool
+    + UpdateRegisters(firstLine:int, lastLine:int, pressedLine:int, RegRects:List<Rect>[]) : void
+    + UpdateLineHighlight(pressedLine:int, rect:Rect, folded:bool) : void
+    + Clear() : void
+}
+enum CachedItem {
+    None= 0,
+    Line= 1,
+    Registers= 2,
+}
+LongTextArea +-- Fragment
+LongTextArea +-- Direction
+LongTextArea +-- Branch
+LongTextArea +-- HoverBox
+LongTextArea +-- FragmentSelectionInfo
+LongTextArea +-- LineRegRectsCache
+LineRegRectsCache +-- CachedItem
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+abstract class LoopUnit {
+    + enter : ControlInput <<get>>
+    + exit : ControlOutput <<get>>
+    + body : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    # {abstract} Loop(flow:Flow) : ControlOutput
+    # {abstract} LoopCoroutine(flow:Flow) : IEnumerator
+}
+Unit <|-- LoopUnit
+@enduml

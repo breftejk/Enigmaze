@@ -1,0 +1,162 @@
+@startuml
+struct BakingCell {
+    + position : Vector3Int
+    + index : int
+    + bricks : Brick[]
+    + probePositions : Vector3[]
+    + sh : SphericalHarmonicsL2[]
+    + validityNeighbourMask : byte[]
+    + validity : float[]
+    + offsetVectors : Vector3[]
+    + touchupVolumeInteraction : float[]
+    + minSubdiv : int
+    + indexChunkCount : int
+    + shChunkCount : int
+    + probeIndices : int[]
+    + bounds : Bounds
+    <<internal>> GetBakingHashCode() : int
+}
+class BakingBatch {
+    + index : int
+    + cellIndex2SceneReferences : Dictionary<int, HashSet<Scene>>
+    + cells : List<BakingCell>
+    + virtualOffsets : Vector3[]
+    + uniqueBrickSubdiv : Dictionary<int, int>
+    + invalidatedPositions : Dictionary<Vector3, bool>
+    - maxBrickCount : Vector3Int
+    - inverseScale : float
+    - BakingBatch()
+    + BakingBatch(index:int, cellCount:Vector3Int)
+    + Clear() : void
+    + GetProbePositionHash(position:Vector3) : int
+    + GetSubdivLevelAt(position:Vector3) : int
+    + uniqueProbeCount : int <<get>>
+}
+class ProbeGIBaking <<partial>> {
+    {static} - m_IsInit : bool = false
+    {static} - m_BakingBatch : BakingBatch
+    {static} - m_BakingProfile : ProbeReferenceVolumeProfile = null
+    {static} - m_BakingSettings : ProbeVolumeBakingProcessSettings
+    {static} - m_BakingBatchIndex : int = 0
+    {static} - globalBounds : Bounds
+    {static} - hasFoundBounds : bool = false
+    {static} - minCellPosition : Vector3Int
+    {static} - maxCellPosition : Vector3Int
+    {static} - cellCount : Vector3Int
+    {static} - currentBakingState : BakingStage
+    {static} - pvHashesAtBakeStart : int
+    {static} - m_CellPosToIndex : Dictionary<Vector3Int, int>
+    {static} - m_BakedCells : Dictionary<int, BakingCell>
+    <<internal>> {static} partialBakeSceneList : List<string>
+    <<internal>> {static} isBakingSceneSubset : bool <<get>>
+    <<internal>> {static} isFreezingPlacement : bool = false
+    {static} - m_NewlyBakedCells : HashSet<int>
+    <<internal>> {static} GetPerSceneDataList() : List<ProbeVolumePerSceneData>
+    <<internal>> {static} GetProbeVolumeList() : List<ProbeVolume>
+    {static} - ProbeGIBaking()
+    + {static} Init() : void
+    {static} - ClearBakingBatch() : void
+    {static} + Clear() : void
+    + {static} CanFreezePlacement() : bool
+    + {static} FindWorldBounds(hasFoundInvalidSetup:bool) : void
+    {static} - SetBakingContext(perSceneData:List<ProbeVolumePerSceneData>) : void
+    {static} - EnsurePerSceneDataInOpenScenes() : void
+    {static} - CachePVHashes(probeVolumes:List<ProbeVolume>) : void
+    {static} - CheckPVChanges() : void
+    {static} - OnBakeStarted() : void
+    {static} - CellCountInDirections(minCellPositionXYZ:Vector3Int, maxCellPositionXYZ:Vector3Int, cellSizeInMeters:float) : void
+    {static} - BrickCountInDirections(cellsInXYZ:Vector3Int, brickSizeInMeter:float) : void
+    <<internal>> {static} RevertDilation() : void
+    <<internal>> {static} PerformDilation() : void
+    {static} - OnAdditionalProbesBakeCompleted() : void
+    {static} - OnLightingDataCleared() : void
+    {static} - s_MaxSHValue : float = 65504
+    {static} - SHFloatToHalf(value:float) : ushort
+    {static} - SHHalfToFloat(value:ushort) : float
+    {static} - SHFloatToByte(value:float) : byte
+    {static} - SHByteToFloat(value:byte) : float
+    {static} - WriteToShaderCoeffsL0L1(sh:SphericalHarmonicsL2, shaderCoeffsL0L1Rx:NativeArray<ushort>, shaderCoeffsL1GL1Ry:NativeArray<byte>, shaderCoeffsL1BL1Rz:NativeArray<byte>, offset:int) : void
+    {static} - WriteToShaderCoeffsL2(sh:SphericalHarmonicsL2, shaderCoeffsL2_0:NativeArray<byte>, shaderCoeffsL2_1:NativeArray<byte>, shaderCoeffsL2_2:NativeArray<byte>, shaderCoeffsL2_3:NativeArray<byte>, offset:int) : void
+    {static} - ReadFromShaderCoeffsL0L1(sh:SphericalHarmonicsL2, shaderCoeffsL0L1Rx:NativeArray<ushort>, shaderCoeffsL1GL1Ry:NativeArray<byte>, shaderCoeffsL1BL1Rz:NativeArray<byte>, offset:int) : void
+    {static} - ReadFromShaderCoeffsL2(sh:SphericalHarmonicsL2, shaderCoeffsL2_0:NativeArray<byte>, shaderCoeffsL2_1:NativeArray<byte>, shaderCoeffsL2_2:NativeArray<byte>, shaderCoeffsL2_3:NativeArray<byte>, offset:int) : void
+    {static} - ReadFullFromShaderCoeffsL0L1L2(sh:SphericalHarmonicsL2, shaderCoeffsL0L1Rx:NativeArray<ushort>, shaderCoeffsL1GL1Ry:NativeArray<byte>, shaderCoeffsL1BL1Rz:NativeArray<byte>, shaderCoeffsL2_0:NativeArray<byte>, shaderCoeffsL2_1:NativeArray<byte>, shaderCoeffsL2_2:NativeArray<byte>, shaderCoeffsL2_3:NativeArray<byte>, probeIdx:int) : void
+    {static} - GetProbeGPUIndex(brickIndex:int, x:int, y:int, z:int, locSize:Vector3Int) : int
+    {static} - ConvertCellToBakingCell(cell:Cell) : BakingCell
+    {static} - MergeCells(dst:BakingCell, srcCell:BakingCell) : BakingCell
+    {static} - ExtractBakingCells() : void
+    {static} - AlignRemainder16(count:long) : long
+    {static} - WriteNativeArray(fs:System.IO.FileStream, array:NativeArray<T>) : void
+    <<unsafe>> {static} - WriteBakingCells(data:ProbeVolumePerSceneData, bakingCells:List<BakingCell>) : void
+    <<unsafe>> {static} - WriteDilatedCells(data:ProbeVolumePerSceneData, cells:List<Cell>) : void
+    - {static} DeduplicateProbePositions(probePositions:Vector3[], brickSubdivLevel:int[], positionToIndex:Dictionary<int, int>, batch:BakingBatch, positionList:List<Vector3>, indices:int[]) : void
+    + {static} OnBakeCompletedCleanup() : void
+    + {static} RunPlacement() : void
+    + {static} PrepareProbeSubdivisionContext() : ProbeSubdivisionContext
+    + {static} BakeBricks(ctx:ProbeSubdivisionContext) : ProbeSubdivisionResult
+    + {static} GetBricksFromLoaded() : ProbeSubdivisionResult
+    + {static} ModifyProfileFromLoadedData(profile:ProbeReferenceVolumeProfile) : bool
+    <<internal>> {static} ConvertBricksToPositions(cell:BakingCell, bricks:Brick[], outProbePositions:Vector3[], outBrickSubdiv:int[]) : void
+    {static} - PosToIndex(pos:Vector3Int) : int
+    + {static} ApplySubdivisionResults(results:ProbeSubdivisionResult, refToWS:Matrix4x4) : void
+}
+enum BakingStage {
+    NotStarted,
+    Started,
+    PlacementDone,
+    OnBakeCompletedStarted,
+    OnBakeCompletedFinished,
+}
+abstract class "BakingProfiling`1"<T> {
+    # <<virtual>> LogFile : string <<get>>
+    # prevStage : T
+    - disposed : bool = false
+    {static} - globalProgress : float = 0.0f
+    + GetProgress(stage:T) : float
+    - UpdateProgressBar(stage:T) : void
+    + {abstract} GetLastStep() : T
+    + BakingProfiling(stage:T, currentStage:T)
+    + OnDispose(currentStage:T) : void
+}
+class BakingSetupProfiling {
+    {static} - currentStage : Stages
+    + BakingSetupProfiling(stage:Stages)
+    + <<override>> GetLastStep() : Stages
+    + {static} GetProgressRange(progress0:float, progress1:float) : void
+    + Dispose() : void
+}
+class BakingCompleteProfiling {
+    {static} - currentStage : Stages
+    + BakingCompleteProfiling(stage:Stages)
+    + <<override>> GetLastStep() : Stages
+    + {static} GetProgressRange(progress0:float, progress1:float) : void
+    + Dispose() : void
+}
+enum Stages {
+    PrepareWorldSubdivision,
+    EnsurePerSceneDataInOpenScenes,
+    FindWorldBounds,
+    PlaceProbes,
+    BakeBricks,
+    ApplySubdivisionResults,
+    ApplyVirtualOffsets,
+    None,
+}
+enum Stages {
+    FinalizingBake,
+    AddOccluders,
+    FetchResults,
+    WriteBakedData,
+    PerformDilation,
+    None,
+}
+ProbeGIBaking +-- BakingStage
+ProbeGIBaking +-- "BakingProfiling`1"
+ProbeGIBaking +-- BakingSetupProfiling
+"BakingProfiling`1" "<BakingSetupProfiling.Stages>" <|-- BakingSetupProfiling
+IDisposable <|-- BakingSetupProfiling
+ProbeGIBaking +-- BakingCompleteProfiling
+"BakingProfiling`1" "<BakingCompleteProfiling.Stages>" <|-- BakingCompleteProfiling
+IDisposable <|-- BakingCompleteProfiling
+BakingSetupProfiling +-- Stages
+BakingCompleteProfiling +-- Stages
+@enduml

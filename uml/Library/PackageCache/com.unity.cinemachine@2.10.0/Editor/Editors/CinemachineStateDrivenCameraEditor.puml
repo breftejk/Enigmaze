@@ -1,0 +1,36 @@
+@startuml
+class CinemachineStateDrivenCameraEditor <<sealed>> {
+    - m_BlendsEditor : EmbeddeAssetEditor<CinemachineBlenderSettings>
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - mChildList : UnityEditorInternal.ReorderableList
+    - mInstructionList : UnityEditorInternal.ReorderableList
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - GetControllerFromAnimator(animator:Animator) : AnimatorController
+    - mLayerNames : string[]
+    - mTargetStates : int[]
+    - mTargetStateNames : string[]
+    - mStateIndexLookup : Dictionary<int, int>
+    - UpdateTargetStates() : void
+    - GetStateHashIndex(stateHash:int) : int
+    - mCameraCandidates : string[]
+    - mCameraIndexLookup : Dictionary<CinemachineVirtualCameraBase, int>
+    - UpdateCameraCandidates() : void
+    - GetCameraIndex(obj:Object) : int
+    - SetupInstructionList() : void
+    - SetupChildList() : void
+}
+class StateCollector {
+    + mStates : List<int>
+    + mStateNames : List<string>
+    + mStateIndexLookup : Dictionary<int, int>
+    + mStateParentLookup : Dictionary<int, int>
+    + CollectStates(ac:AnimatorController, layerIndex:int) : void
+    - CollectStatesFromFSM(fsm:AnimatorStateMachine, hashPrefix:string, parentHash:int, displayPrefix:string) : void
+    - CollectClips(motion:Motion) : List<AnimationClip>
+    - AddState(hash:int, parentHash:int, displayName:string) : int
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineStateDrivenCamera>" <|-- CinemachineStateDrivenCameraEditor
+CinemachineStateDrivenCameraEditor +-- StateCollector
+@enduml

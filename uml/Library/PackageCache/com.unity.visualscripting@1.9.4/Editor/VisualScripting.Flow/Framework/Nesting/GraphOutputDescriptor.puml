@@ -1,0 +1,7 @@
+@startuml
+class GraphOutputDescriptor {
+    + GraphOutputDescriptor(unit:GraphOutput)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<GraphOutput>" <|-- GraphOutputDescriptor
+@enduml

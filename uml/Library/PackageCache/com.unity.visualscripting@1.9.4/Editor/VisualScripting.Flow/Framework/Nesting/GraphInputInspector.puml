@@ -1,0 +1,13 @@
+@startuml
+class GraphInputInspector {
+    + GraphInputInspector(metadata:Metadata)
+    - graphMetadata : Metadata <<get>>
+    - controlInputDefinitionsMetadata : Metadata <<get>>
+    - valueInputDefinitionsMetadata : Metadata <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - GetControlInputDefinitionsHeight(width:float) : float
+    - GetValueInputDefinitionsHeight(width:float) : float
+}
+Inspector <|-- GraphInputInspector
+@enduml

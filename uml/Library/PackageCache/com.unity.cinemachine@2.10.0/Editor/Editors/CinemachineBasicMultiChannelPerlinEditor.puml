@@ -1,0 +1,7 @@
+@startuml
+class CinemachineBasicMultiChannelPerlinEditor <<sealed>> {
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+"BaseEditor`1" "<CinemachineBasicMultiChannelPerlin>" <|-- CinemachineBasicMultiChannelPerlinEditor
+@enduml

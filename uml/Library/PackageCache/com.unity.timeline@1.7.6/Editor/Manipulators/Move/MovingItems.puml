@@ -1,0 +1,22 @@
+@startuml
+class MovingItems {
+    - m_ReferenceTrack : TrackAsset
+    <<readonly>> - m_AllowTrackSwitch : bool
+    <<readonly>> - m_ItemsBoundsOnTrack : Rect[]
+    <<readonly>> - m_ItemsMouseOffsets : Vector2[]
+    {static} <<readonly>> - s_InvisibleBounds : Rect
+    + originalTrack : TrackAsset <<get>>
+    + <<override>> targetTrack : TrackAsset <<get>>
+    + canDrop : bool
+    + start : double <<get>> <<set>>
+    + end : double <<get>>
+    + onTrackItemsBounds : Rect[] <<get>>
+    + MovingItems(state:WindowState, parentTrack:TrackAsset, items:ITimelineItem[], referenceTrack:TrackAsset, mousePosition:Vector2, allowTrackSwitch:bool)
+    + SetReferenceTrack(track:TrackAsset) : void
+    + HasAnyDetachedParents() : bool
+    + RefreshBounds(state:WindowState, mousePosition:Vector2) : void
+    + Draw(isValid:bool) : void
+    {static} - DrawItemInternal(item:ITimelineItem, rect:Rect, isValid:bool) : void
+}
+ItemsPerTrack <|-- MovingItems
+@enduml

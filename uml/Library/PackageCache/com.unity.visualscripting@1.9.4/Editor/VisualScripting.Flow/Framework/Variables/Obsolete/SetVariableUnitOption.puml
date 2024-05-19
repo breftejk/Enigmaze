@@ -1,0 +1,9 @@
+@startuml
+class "SetVariableUnitOption`1"<TVariableUnit> {
+    + SetVariableUnitOption()
+    + SetVariableUnitOption(unit:TVariableUnit)
+    + <<override>> Kind() : string
+    # <<override>> DefaultNameLabel() : string
+}
+"VariableUnitOption`1" "<TVariableUnit>" <|-- "SetVariableUnitOption`1"
+@enduml

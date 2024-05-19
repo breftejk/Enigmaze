@@ -1,0 +1,9 @@
+@startuml
+class ReflectionProbeNode {
+    + ReflectionProbeNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_ReflectionProbe(ViewDir:Vector3, Normal:Vector3, LOD:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- ReflectionProbeNode
+@enduml

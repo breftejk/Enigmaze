@@ -1,0 +1,15 @@
+@startuml
+class GridPaletteUtility <<static>> {
+    <<internal>> {static} <<readonly>> defaultSortAxis : Vector3
+    <<internal>> {static} GetBounds(palette:GameObject) : RectInt
+    + {static} CreateNewPaletteAtCurrentFolder(name:string, layout:GridLayout.CellLayout, cellSizing:GridPalette.CellSizing, cellSize:Vector3, swizzle:GridLayout.CellSwizzle) : GameObject
+    + {static} CreateNewPaletteAtCurrentFolder(name:string, layout:GridLayout.CellLayout, cellSizing:GridPalette.CellSizing, cellSize:Vector3, swizzle:GridLayout.CellSwizzle, sortMode:TransparencySortMode, sortAxis:Vector3) : GameObject
+    + {static} CreateNewPalette(folderPath:string, name:string, layout:GridLayout.CellLayout, cellSizing:GridPalette.CellSizing, cellSize:Vector3, swizzle:GridLayout.CellSwizzle) : GameObject
+    + {static} CreateNewPalette(folderPath:string, name:string, layout:GridLayout.CellLayout, cellSizing:GridPalette.CellSizing, cellSize:Vector3, swizzle:GridLayout.CellSwizzle, sortMode:TransparencySortMode, sortAxis:Vector3) : GameObject
+    - {static} CreateNewLayer(paletteGO:GameObject, name:string, layout:GridLayout.CellLayout) : GameObject
+    <<internal>> {static} GetGridPaletteFromPaletteAsset(palette:Object) : GridPalette
+    <<internal>> {static} CreateGridPalette(cellSizing:GridPalette.CellSizing) : GridPalette
+    <<internal>> {static} CreateGridPalette(cellSizing:GridPalette.CellSizing, sortMode:TransparencySortMode, sortAxis:Vector3) : GridPalette
+    <<internal>> {static} CalculateAutoCellSize(grid:Grid, defaultValue:Vector3) : Vector3
+}
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class ResultsWriter {
+    - <<const>> k_nUnitVersion : string = "3.5.0.0"
+    - <<const>> k_TestRunNode : string = "test-run"
+    - <<const>> k_Id : string = "id"
+    - <<const>> k_Testcasecount : string = "testcasecount"
+    - <<const>> k_Result : string = "result"
+    - <<const>> k_Total : string = "total"
+    - <<const>> k_Passed : string = "passed"
+    - <<const>> k_Failed : string = "failed"
+    - <<const>> k_Inconclusive : string = "inconclusive"
+    - <<const>> k_Skipped : string = "skipped"
+    - <<const>> k_Asserts : string = "asserts"
+    - <<const>> k_EngineVersion : string = "engine-version"
+    - <<const>> k_ClrVersion : string = "clr-version"
+    - <<const>> k_StartTime : string = "start-time"
+    - <<const>> k_EndTime : string = "end-time"
+    - <<const>> k_Duration : string = "duration"
+    - <<const>> k_TimeFormat : string = "u"
+    + WriteResultToFile(result:ITestResultAdaptor, filePath:string) : void
+    - CreateDirectory(filePath:string) : void
+    + WriteResultToStream(result:ITestResultAdaptor, streamWriter:StreamWriter, settings:XmlWriterSettings) : void
+    - WriteResultsToXml(result:ITestResultAdaptor, xmlWriter:XmlWriter) : void
+}
+@enduml

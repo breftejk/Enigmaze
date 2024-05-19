@@ -1,0 +1,18 @@
+@startuml
+class GetChangesOverlayIcon <<static>> {
+    <<internal>> {static} ForPlasticIncomingChange(incomingChange:MergeChangeInfo, isSolvedConflict:bool) : Texture
+    <<internal>> {static} ForGluonIncomingChange(incomingChange:GluonIncomingChangeInfo, isSolvedConflict:bool) : Texture
+    <<internal>> {static} ForPendingChange(changeInfo:ChangeInfo, isConflict:bool) : Texture
+    {static} - ForConflict(isResolved:bool) : Texture
+    {static} - ForXLink() : Texture
+    {static} - ForIgnored() : Texture
+    {static} - ForPrivated() : Texture
+    {static} - ForAdded() : Texture
+    {static} - ForDeleted() : Texture
+    {static} - ForCheckedOut() : Texture
+    {static} - ForDeletedOnServer() : Texture
+    {static} - ForOutOfDate() : Texture
+    {static} - ForConflicted() : Texture
+    {static} - ForConflictResolved() : Texture
+}
+@enduml

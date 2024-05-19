@@ -1,0 +1,31 @@
+@startuml
+class UniversalRenderPipelineCameraEditor {
+    - m_LayerList : ReorderableList
+    + camera : Camera <<get>>
+    {static} - selectedCameraInStack : Camera
+    - validCameras : List<Camera>
+    - m_TypeErrorCameras : List<Camera>
+    - m_NotSupportedOverlayCameras : List<Camera>
+    - m_IncompatibleCameras : List<Camera>
+    - m_OutputWarningCameras : List<(Camera, UniversalRenderPipelineSerializedCamera)>
+    - m_SerializedCamera : UniversalRenderPipelineSerializedCamera
+    + <<new>> OnEnable() : void
+    - ReconstructReferenceToAdditionalDataSO() : void
+    - UpdateCameras() : void
+    - CanRemoveCamera(list:ReorderableList) : bool
+    - RemoveCamera(list:ReorderableList) : void
+    - SelectElement(list:ReorderableList) : void
+    - DrawElementCallback(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - FindCamerasToReference(gameObject:GameObject) : Camera[]
+    - AddCameraToCameraList(rect:Rect, list:ReorderableList) : void
+    - AddCameraToCameraListMenuSelected(userData:object, options:string[], selected:int) : void
+    + <<new>> OnDisable() : void
+    <<internal>> {static} IsPresetEditor(editor:UnityEditor.Editor) : bool
+    + <<override>> OnInspectorGUI() : void
+    - UpdateStackCameraToOverlay() : void
+    - UpdateStackCameraOutput(cam:Camera, serializedCamera:UniversalRenderPipelineSerializedCamera) : void
+    - IsStackCameraOutputDirty(cam:Camera, serializedCamera:UniversalRenderPipelineSerializedCamera) : bool
+    <<internal>> DrawStackSettings() : void
+}
+CameraEditor <|-- UniversalRenderPipelineCameraEditor
+@enduml

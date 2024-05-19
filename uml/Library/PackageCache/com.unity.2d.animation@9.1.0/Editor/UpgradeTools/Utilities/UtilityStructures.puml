@@ -1,0 +1,37 @@
+@startuml
+enum UpgradeMode {
+    SpriteLibrary,
+    AnimationClip,
+}
+enum UpgradeResult {
+    None= 0,
+    Successful= 1,
+    Warning= 2,
+    Error= 3,
+}
+struct ObjectIndexPair {
+    + Target : Object
+    + Index : int
+}
+struct UpgradeEntry {
+    + Target : Object
+    + Index : int
+    + Result : UpgradeResult
+    + Message : string
+}
+struct UpgradeReport {
+    + UpgradeEntries : List<UpgradeEntry>
+    + Log : string
+}
+class Logger {
+    - m_Log : StringBuilder
+    + Add(entry:string) : void
+    + AddLineBreak() : void
+    + Clear() : void
+    + GetLog() : string
+}
+class UpgradeUtilities <<static>> {
+    <<const>> - k_PsbImporterSignature : string = "UnityEditor.U2D.PSD.PSDImporter"
+    + {static} IsPsbImportedFile(path:string) : bool
+}
+@enduml

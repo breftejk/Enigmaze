@@ -1,0 +1,9 @@
+@startuml
+class FogNode {
+    + FogNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Fog(Position:Vector3, Color:Vector4, Density:Vector1) : string
+}
+CodeFunctionNode <|-- FogNode
+@enduml

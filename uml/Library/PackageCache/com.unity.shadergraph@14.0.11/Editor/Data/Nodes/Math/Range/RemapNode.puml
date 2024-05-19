@@ -1,0 +1,8 @@
+@startuml
+class RemapNode {
+    + RemapNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Remap(In:DynamicDimensionVector, InMinMax:Vector2, OutMinMax:Vector2, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- RemapNode
+@enduml

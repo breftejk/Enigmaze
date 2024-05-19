@@ -1,0 +1,11 @@
+@startuml
+abstract class GetVariableUnit {
+    # GetVariableUnit()
+    # GetVariableUnit(defaultName:string)
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<virtual>> IsDefined(flow:Flow) : bool
+    # <<virtual>> Get(flow:Flow) : object
+}
+VariableUnit <|-- GetVariableUnit
+@enduml

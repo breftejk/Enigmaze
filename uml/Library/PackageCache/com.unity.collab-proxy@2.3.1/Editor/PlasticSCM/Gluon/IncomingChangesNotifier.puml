@@ -1,0 +1,14 @@
+@startuml
+class IncomingChangesNotifier {
+    - HasNotification : bool <<get>>
+    - Notification : IncomingChangesNotification <<get>>
+    <<internal>> IncomingChangesNotifier(plasticWindow:PlasticWindow)
+    - Hide() : void
+    - Show(infoText:string, actionText:string, tooltipText:string, severity:CheckIncomingChanges.Severity) : void
+    {static} - UpdateData(data:IncomingChangesNotification, infoText:string, actionText:string, tooltipText:string, status:PlasticNotification.Status) : void
+    - mHasNotification : bool
+    - mNotification : IncomingChangesNotification
+    - mPlasticWindow : PlasticWindow
+}
+IIncomingChangesNotifier <|-- IncomingChangesNotifier
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class HealthBarFollow {
+    + target : Transform
+    + offset : Vector3
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- HealthBarFollow
+@enduml

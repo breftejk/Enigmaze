@@ -1,0 +1,7 @@
+@startuml
+class "Empty`1"<T> <<static>> {
+    + {static} <<readonly>> array : T[]
+    + {static} <<readonly>> list : List<T>
+    + {static} <<readonly>> hashSet : HashSet<T>
+}
+@enduml

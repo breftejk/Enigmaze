@@ -1,0 +1,9 @@
+@startuml
+class UnityEventAwaitableExtensions <<static>> {
+    + {static} GetAwaiter(ev:UnityEvent) : Awaitable.Awaiter
+    + {static} GetAwaiter(ev:UnityEvent<T>) : Awaitable<T>.Awaiter
+    + {static} GetAwaiter(ev:UnityEvent<T0, T1>) : Awaitable<(T0, T1)>.Awaiter
+    + {static} GetAwaiter(ev:UnityEvent<T0, T1, T2>) : Awaitable<(T0, T1, T2)>.Awaiter
+    + {static} GetAwaiter(ev:UnityEvent<T0, T1, T2, T3>) : Awaitable<(T0, T1, T2, T3)>.Awaiter
+}
+@enduml

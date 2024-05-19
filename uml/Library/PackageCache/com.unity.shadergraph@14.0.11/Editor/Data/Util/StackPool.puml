@@ -1,0 +1,7 @@
+@startuml
+class "StackPool`1"<T> <<static>> {
+    {static} <<readonly>> - k_StackPool : ObjectPool<Stack<T>>
+    + {static} Get() : Stack<T>
+    + {static} Release(toRelease:Stack<T>) : void
+}
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class UnityIncomingChangesTree {
+    <<internal>> {static} BuildIncomingChangeCategories(tree:MergeChangesTree) : UnityIncomingChangesTree
+    - UnityIncomingChangesTree(tree:MergeChangesTree)
+    <<internal>> GetNodes() : List<MergeChangesCategory>
+    <<internal>> HasMeta(changeInfo:MergeChangeInfo) : bool
+    <<internal>> GetMetaChange(change:MergeChangeInfo) : MergeChangeInfo
+    <<internal>> FillWithMeta(changes:List<MergeChangeInfo>) : void
+    <<internal>> Sort(key:string, isAscending:bool) : void
+    <<internal>> ResolveUserNames(resolveUserName:MergeChangesTree.ResolveUserName) : void
+    - mMetaCache : MetaCache
+    - mInnerTree : MergeChangesTree
+}
+class MetaCache {
+    <<internal>> ContainsMeta(changeInfo:MergeChangeInfo) : bool
+    <<internal>> GetExistingMeta(change:MergeChangeInfo) : MergeChangeInfo
+    <<internal>> GetExistingMeta(changes:List<MergeChangeInfo>) : List<MergeChangeInfo>
+    <<internal>> Build(incomingChangesCategories:List<MergeChangesCategory>) : void
+    {static} - ExtractMetaToCache(category:MergeChangesCategory, cache:Dictionary<string, MergeChangeInfo>) : void
+    {static} - BuildIndexedKeys(changes:List<MergeChangeInfo>) : HashSet<string>
+    - mCache : Dictionary<string, MergeChangeInfo>
+}
+class BuildKey <<static>> {
+    <<internal>> {static} ForChange(change:MergeChangeInfo) : string
+    <<internal>> {static} ForMetaChange(change:MergeChangeInfo) : string
+    <<internal>> {static} BuildCacheKey(type:MergeChangesCategory.Type, path:string) : string
+}
+UnityIncomingChangesTree +-- MetaCache
+MetaCache +-- BuildKey
+@enduml

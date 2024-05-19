@@ -1,0 +1,9 @@
+@startuml
+interface ICacheUndo {
+    undoOverride : IUndo <<get>> <<set>>
+    isUndoOperationSet : bool <<get>>
+    IncrementCurrentGroup() : void
+    BeginUndoOperation(name:string) : void
+    EndUndoOperation() : void
+}
+@enduml

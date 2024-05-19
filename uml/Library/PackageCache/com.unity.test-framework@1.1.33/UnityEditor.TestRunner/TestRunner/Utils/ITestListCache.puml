@@ -1,0 +1,6 @@
+@startuml
+interface ITestListCache {
+    CacheTest(platform:TestPlatform, test:ITest) : void
+    GetTestFromCacheAsync(platform:TestPlatform) : IEnumerator<ITestAdaptor>
+}
+@enduml

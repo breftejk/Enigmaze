@@ -1,0 +1,20 @@
+@startuml
+class ToggleGroupTests {
+    <<const>> - kPrefabToggleGroupPath : string = "Assets/Resources/TestToggleGroup.prefab"
+    # m_PrefabRoot : GameObject
+    # m_toggle : List<Toggle>
+    # {static} nbToggleInGroup : int = 2
+    - m_toggleGroup : TestableToggleGroup
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    + TogglingOneShouldDisableOthersInGroup() : void
+    + DisallowSwitchOffShouldKeepToggleOnWhenClicking() : void
+    + DisallowSwitchOffShouldDisableToggleWhenClicking() : void
+    + ReEnablingGameObjectWithToggleGroupRetainsPreviouslySelectedToggle(toggleIndex:int) : void
+    + ChangingToggleGroupUnregistersFromOriginalGroup() : void
+    + DisabledToggleGroupDoesntControlChildren() : void
+}
+IPrebuildSetup <|-- ToggleGroupTests
+@enduml

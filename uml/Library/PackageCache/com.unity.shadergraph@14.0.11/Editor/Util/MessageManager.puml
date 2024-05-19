@@ -1,0 +1,24 @@
+@startuml
+class MessageManager {
+    # m_Messages : Dictionary<object, Dictionary<string, List<ShaderMessage>>>
+    - m_Combined : Dictionary<string, List<ShaderMessage>>
+    + nodeMessagesChanged : bool <<get>>
+    - m_FoundMessages : Dictionary<string, List<ShaderMessage>>
+    + AddOrAppendError(errorProvider:object, nodeId:string, error:ShaderMessage) : void
+    {static} - CompareMessages(m1:ShaderMessage, m2:ShaderMessage) : int
+    + GetNodeMessages() : IEnumerable<KeyValuePair<string, List<ShaderMessage>>>
+    + RemoveNode(nodeId:string) : void
+    + ClearAllFromProvider(messageProvider:object) : void
+    + ClearNodesFromProvider(messageProvider:object, nodes:IEnumerable<AbstractMaterialNode>) : void
+    + ClearAll() : void
+    - DebugPrint() : void
+    + {static} Log(path:string, message:ShaderMessage, context:Object, log:IErrorLog) : void
+    + AnyError(nodeFilter:Func<string, bool>) : bool
+    + ErrorStrings(nodeFilter:Func<string, bool>, severity:ShaderCompilerMessageSeverity) : IEnumerable<string>
+}
+interface IErrorLog {
+    LogError(message:string, context:Object) : void
+    LogWarning(message:string, context:Object) : void
+}
+MessageManager +-- IErrorLog
+@enduml

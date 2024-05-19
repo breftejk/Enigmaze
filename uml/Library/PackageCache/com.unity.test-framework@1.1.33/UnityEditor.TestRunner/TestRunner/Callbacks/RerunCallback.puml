@@ -1,0 +1,14 @@
+@startuml
+class RerunCallback {
+    + {static} useMockRunFilter : bool = false
+    + {static} mockRunFilter : UITestRunnerFilter = null
+    + RunFinished(result:ITestResultAdaptor) : void
+    - {static} WaitForExitPlaymode(state:PlayModeStateChange) : void
+    - {static} ExecuteTestRunnerAPI() : void
+    + TestStarted(test:ITestAdaptor) : void
+    + TestFinished(result:ITestResultAdaptor) : void
+    + RunStarted(testsToRun:ITestAdaptor) : void
+}
+ScriptableObject <|-- RerunCallback
+ICallbacks <|-- RerunCallback
+@enduml

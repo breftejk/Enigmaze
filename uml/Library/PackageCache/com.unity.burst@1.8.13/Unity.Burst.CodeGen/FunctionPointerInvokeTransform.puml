@@ -1,0 +1,40 @@
+@startuml
+class FunctionPointerInvokeTransform {
+    - _needsNativeFunctionPointer : Dictionary<TypeReference, (MethodDefinition method, Instruction instruction)>
+    - _needsIl2cppInvoke : Dictionary<MethodDefinition, TypeReference>
+    - _capturedSets : Dictionary<MethodDefinition, List<CaptureInformation>>
+    - _monoPInvokeAttributeCtorDef : MethodDefinition
+    - _nativePInvokeAttributeCtorDef : MethodDefinition
+    - _unmanagedFunctionPointerAttributeCtorDef : MethodDefinition
+    - _burstFunctionPointerType : TypeReference
+    - _burstCompilerType : TypeReference
+    - _systemType : TypeReference
+    - _callingConventionType : TypeReference
+    - _debugLog : LogDelegate
+    - _logLevel : int
+    - _loader : AssemblyResolver
+    - _errorReport : ErrorDiagnosticDelegate
+    + <<readonly>> {static} enableInvokeAttribute : bool = true
+    + <<readonly>> {static} enableCalliOptimisation : bool = false
+    + <<readonly>> {static} enableUnmangedFunctionPointerInject : bool = true
+    + FunctionPointerInvokeTransform(loader:AssemblyResolver, error:ErrorDiagnosticDelegate, log:LogDelegate, logLevel:int)
+    - GetAsmDefinitionFromFile(loader:AssemblyResolver, assemblyName:string) : AssemblyDefinition
+    + Initialize(loader:AssemblyResolver, assemblyDefinition:AssemblyDefinition, typeSystem:TypeSystem) : void
+    + Run(assemblyDefinition:AssemblyDefinition) : bool
+    + CollectDelegateInvokesFromType(type:TypeDefinition) : void
+    - ProcessUnmanagedAttributeFixups() : bool
+    - ProcessIl2cppInvokeFixups() : bool
+    - ProcessFunctionPointerInvokes() : bool
+    + Finish() : bool
+    - IsBurstFunctionPointerMethod(methodRef:MethodReference, method:string, methodInstance:GenericInstanceType) : bool
+    - IsBurstCompilerMethod(methodRef:GenericInstanceMethod, method:string) : bool
+    - LocateFunctionPointerTCreation(m:MethodDefinition, i:Instruction) : void
+    + IsInstructionForFunctionPointerInvoke(m:MethodDefinition, i:Instruction) : bool
+    - CollectDelegateInvokes(m:MethodDefinition) : void
+}
+struct CaptureInformation {
+    + Operand : MethodReference
+    + Captured : List<Instruction>
+}
+FunctionPointerInvokeTransform +-- CaptureInformation
+@enduml

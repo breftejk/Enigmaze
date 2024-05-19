@@ -1,0 +1,43 @@
+@startuml
+class LocksListView <<sealed>> {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> EmptyStateMessage : string <<get>>
+    <<internal>> LocksListView(repSpec:RepositorySpec, headerState:LocksListHeaderState, columnNames:List<string>, menu:LocksViewMenu, selectionChangedAction:Action)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> OnDisable() : void
+    <<internal>> GetSelectedLocks() : List<LockInfo>
+    - ShowContentPanel() : void
+    - ShowEmptyStatePanel(explanationText:string) : void
+    - ShowErrorPanel(errorText:string) : void
+    - Fill(lockInfoList:LockInfoList, filter:Filter) : void
+    - Filter() : void
+    - Sort() : void
+    - DelayedSearchChanged() : void
+    - DelayedSelectionChanged() : void
+    - SortingChanged(header:MultiColumnHeader) : void
+    - SetupTreeView(headerState:LocksListHeaderState) : void
+    {static} - RegenerateRows(listViewItemIds:ListViewItemIds<LockInfo>, locksList:LockInfoList, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - LocksListViewItemGUI(repSpec:RepositorySpec, rowHeight:float, item:LockInfo, args:RowGUIArgs, avatarLoadedAction:Action) : void
+    - mListViewItemIds : ListViewItemIds<LockInfo>
+    - mRows : List<TreeViewItem>
+    - mLocksList : LockInfoList
+    - mEmptyStateMessage : string
+    <<readonly>> - mCooldownFilterAction : CooldownWindowDelayer
+    <<readonly>> - mCooldownSelectionAction : CooldownWindowDelayer
+    <<readonly>> - mLocksSelector : LocksSelector
+    <<readonly>> - mSelectionChangedAction : Action
+    <<readonly>> - mMenu : LocksViewMenu
+    <<readonly>> - mColumnNames : List<string>
+    <<readonly>> - mRepSpec : RepositorySpec
+}
+TreeView <|-- LocksListView
+@enduml

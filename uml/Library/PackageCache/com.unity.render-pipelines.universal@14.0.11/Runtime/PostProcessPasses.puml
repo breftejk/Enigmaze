@@ -1,0 +1,28 @@
+@startuml
+struct PostProcessParams {
+    + blitMaterial : Material
+    + requestHDRFormat : GraphicsFormat
+    + {static} Create() : PostProcessParams
+}
+struct PostProcessPasses {
+    - m_ColorGradingLutPass : ColorGradingLutPass
+    - m_PostProcessPass : PostProcessPass
+    - m_FinalPostProcessPass : PostProcessPass
+    <<internal>> m_AfterPostProcessColor : RTHandle
+    <<internal>> m_ColorGradingLut : RTHandle
+    - m_RendererPostProcessData : PostProcessData
+    - m_CurrentPostProcessData : PostProcessData
+    - m_BlitMaterial : Material
+    + colorGradingLutPass : ColorGradingLutPass <<get>>
+    + postProcessPass : PostProcessPass <<get>>
+    + finalPostProcessPass : PostProcessPass <<get>>
+    + afterPostProcessColor : RTHandle <<get>>
+    + colorGradingLut : RTHandle <<get>>
+    + isCreated : bool <<get>>
+    + PostProcessPasses(rendererPostProcessData:PostProcessData, postProcessParams:PostProcessParams)
+    + Recreate(data:PostProcessData, ppParams:PostProcessParams) : void
+    + Dispose() : void
+    <<internal>> ReleaseRenderTargets() : void
+}
+IDisposable <|-- PostProcessPasses
+@enduml

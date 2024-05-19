@@ -1,0 +1,5 @@
+@startuml
+interface ITestListProvider {
+    GetTestListAsync(platform:TestPlatform) : IEnumerator<ITest>
+}
+@enduml

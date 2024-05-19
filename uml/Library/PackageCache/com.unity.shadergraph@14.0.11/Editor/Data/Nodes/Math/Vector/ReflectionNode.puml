@@ -1,0 +1,8 @@
+@startuml
+class ReflectionNode {
+    + ReflectionNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Reflection(In:DynamicDimensionVector, Normal:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ReflectionNode
+@enduml

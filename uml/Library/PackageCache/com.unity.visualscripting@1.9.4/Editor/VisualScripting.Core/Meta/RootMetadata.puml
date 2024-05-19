@@ -1,0 +1,9 @@
+@startuml
+class RootMetadata <<sealed>> {
+    + RootMetadata()
+    # <<override>> isRoot : bool <<get>>
+    # <<override>> rawValue : object <<get>> <<set>>
+    + <<override>> GetCustomAttributes(inherit:bool) : Attribute[]
+}
+Metadata <|-- RootMetadata
+@enduml

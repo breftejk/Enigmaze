@@ -1,0 +1,25 @@
+@startuml
+class UnsafeMultiHashMapTests {
+    + UnsafeMultiHashMap_AddJob() : void
+    + UnsafeHashMap_RemoveOnEmptyMap_DoesNotThrow() : void
+    + UnsafeMultiHashMap_RemoveOnEmptyMap_DoesNotThrow() : void
+    + UnsafeMultiHashMap_ForEach_FixedStringInHashMap() : void
+    + UnsafeMultiHashMap_ForEach(n:int) : void
+    + UnsafeMultiHashMap_GetKeys() : void
+    + UnsafeMultiHashMap_CustomAllocatorTest() : void
+    + <<unsafe>> UnsafeMultiHashMap_BurstedCustomAllocatorTest() : void
+}
+struct UnsafeMultiHashMapAddJob {
+    + Writer : UnsafeMultiHashMap<int, int>.ParallelWriter
+    + Execute(index:int) : void
+}
+struct BurstedCustomAllocatorJob {
+    + <<unsafe>> Allocator : CustomAllocatorTests.CountingAllocator*
+    + Execute() : void
+}
+CollectionsTestCommonBase <|-- UnsafeMultiHashMapTests
+UnsafeMultiHashMapTests +-- UnsafeMultiHashMapAddJob
+IJobParallelFor <|-- UnsafeMultiHashMapAddJob
+UnsafeMultiHashMapTests +-- BurstedCustomAllocatorJob
+IJob <|-- BurstedCustomAllocatorJob
+@enduml

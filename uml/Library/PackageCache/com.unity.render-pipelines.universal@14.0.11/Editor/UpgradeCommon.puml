@@ -1,0 +1,32 @@
+@startuml
+enum UpgradeSurfaceType {
+    Opaque,
+    Transparent,
+}
+enum UpgradeBlendMode {
+    Alpha,
+    Premultiply,
+    Additive,
+    Multiply,
+}
+enum SpecularSource {
+    SpecularTextureAndColor,
+    NoSpecular,
+}
+enum SmoothnessSource {
+    SpecularAlpha,
+    BaseAlpha,
+}
+enum ReflectionSource {
+    NoReflection,
+    Cubemap,
+    ReflectionProbe,
+}
+struct UpgradeParams {
+    + surfaceType : UpgradeSurfaceType <<get>> <<set>>
+    + blendMode : UpgradeBlendMode <<get>> <<set>>
+    + alphaClip : bool <<get>> <<set>>
+    + specularSource : SpecularSource <<get>> <<set>>
+    + smoothnessSource : SmoothnessSource <<get>> <<set>>
+}
+@enduml

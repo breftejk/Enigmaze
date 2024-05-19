@@ -1,0 +1,41 @@
+@startuml
+class DecalProjectorScope {
+    + DecalProjectorScope()
+    # <<override>> CloseScope() : void
+}
+class DecalShaderGraphGUI {
+    + {static} isDecalProjectorGUI : bool <<get>> <<set>>
+    <<const>> - kDecalMeshBiasType : string = "_DecalMeshBiasType"
+    <<const>> - kDecalMeshDepthBias : string = "_DecalMeshDepthBias"
+    <<const>> - kDecalViewDepthBias : string = "_DecalMeshViewBias"
+    <<const>> - kDrawOrder : string = "_DrawOrder"
+    <<readonly>> - m_MaterialScopeList : MaterialHeaderScopeList
+    - m_MaterialEditor : MaterialEditor
+    - m_Properties : MaterialProperty[]
+    - decalMeshBiasType : MaterialProperty
+    - decalMeshDepthBias : MaterialProperty
+    - decalMeshViewBias : MaterialProperty
+    - drawOrder : MaterialProperty
+    + DecalShaderGraphGUI()
+    + <<override>> OnGUI(materialEditor:MaterialEditor, props:MaterialProperty[]) : void
+    - FindProperties(properties:MaterialProperty[]) : void
+    - DrawExposedProperties(material:Material) : void
+    - DrawSortingProperties(material:Material) : void
+    - DrawOrder() : void
+    - DecalMeshWarning() : void
+}
+class Styles {
+    + {static} inputs : GUIContent
+    + {static} advancedOptions : GUIContent
+    + {static} meshDecalBiasType : GUIContent
+    + {static} meshDecalDepthBiasText : GUIContent
+    + {static} meshDecalViewBiasText : GUIContent
+    + {static} drawOrderText : GUIContent
+}
+enum Expandable {
+    Inputs= 1 << 0,
+    Advanced= 1 << 1,
+}
+DecalShaderGraphGUI +-- Styles
+DecalShaderGraphGUI +-- Expandable
+@enduml

@@ -1,0 +1,82 @@
+@startuml
+struct double2 {
+    + x : double
+    + y : double
+    + {static} <<readonly>> zero : double2
+    + double2(x:double, y:double)
+    + double2(xy:double2)
+    + double2(v:double)
+    + double2(v:bool)
+    + double2(v:bool2)
+    + double2(v:int)
+    + double2(v:int2)
+    + double2(v:uint)
+    + double2(v:uint2)
+    + double2(v:half)
+    + double2(v:half2)
+    + double2(v:float)
+    + double2(v:float2)
+    + xxxx : double4 <<get>>
+    + xxxy : double4 <<get>>
+    + xxyx : double4 <<get>>
+    + xxyy : double4 <<get>>
+    + xyxx : double4 <<get>>
+    + xyxy : double4 <<get>>
+    + xyyx : double4 <<get>>
+    + xyyy : double4 <<get>>
+    + yxxx : double4 <<get>>
+    + yxxy : double4 <<get>>
+    + yxyx : double4 <<get>>
+    + yxyy : double4 <<get>>
+    + yyxx : double4 <<get>>
+    + yyxy : double4 <<get>>
+    + yyyx : double4 <<get>>
+    + yyyy : double4 <<get>>
+    + xxx : double3 <<get>>
+    + xxy : double3 <<get>>
+    + xyx : double3 <<get>>
+    + xyy : double3 <<get>>
+    + yxx : double3 <<get>>
+    + yxy : double3 <<get>>
+    + yyx : double3 <<get>>
+    + yyy : double3 <<get>>
+    + xx : double2 <<get>>
+    + xy : double2 <<get>> <<set>>
+    + yx : double2 <<get>> <<set>>
+    + yy : double2 <<get>>
+    + Equals(rhs:double2) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} double2(x:double, y:double) : double2
+    + {static} double2(xy:double2) : double2
+    + {static} double2(v:double) : double2
+    + {static} double2(v:bool) : double2
+    + {static} double2(v:bool2) : double2
+    + {static} double2(v:int) : double2
+    + {static} double2(v:int2) : double2
+    + {static} double2(v:uint) : double2
+    + {static} double2(v:uint2) : double2
+    + {static} double2(v:half) : double2
+    + {static} double2(v:half2) : double2
+    + {static} double2(v:float) : double2
+    + {static} double2(v:float2) : double2
+    + {static} hash(v:double2) : uint
+    + {static} hashwide(v:double2) : uint2
+    + {static} shuffle(left:double2, right:double2, x:ShuffleComponent) : double
+    + {static} shuffle(left:double2, right:double2, x:ShuffleComponent, y:ShuffleComponent) : double2
+    + {static} shuffle(left:double2, right:double2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : double3
+    + {static} shuffle(left:double2, right:double2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : double4
+    <<internal>> {static} select_shuffle_component(a:double2, b:double2, component:ShuffleComponent) : double
+}
+class DebuggerProxy <<sealed>> {
+    + x : double
+    + y : double
+    + DebuggerProxy(v:double2)
+}
+IFormattable <|-- double2
+double2 +-- DebuggerProxy
+@enduml

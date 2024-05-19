@@ -1,0 +1,23 @@
+@startuml
+abstract class ScriptableRendererData {
+    <<internal>> isInvalidated : bool <<get>> <<set>>
+    + debugShaders : DebugShaderResources
+    # {abstract} Create() : ScriptableRenderer
+    <<internal>> m_RendererFeatures : List<ScriptableRendererFeature>
+    <<internal>> m_RendererFeatureMap : List<long>
+    - m_UseNativeRenderPass : bool = false
+    + rendererFeatures : List<ScriptableRendererFeature> <<get>>
+    + <<new>> SetDirty() : void
+    <<internal>> InternalCreateRenderer() : ScriptableRenderer
+    # <<virtual>> OnValidate() : void
+    # <<virtual>> OnEnable() : void
+    + useNativeRenderPass : bool <<get>> <<set>>
+    <<internal>> TryGetRendererFeature(rendererFeature:T) : bool
+}
+class DebugShaderResources <<sealed>> {
+    + debugReplacementPS : Shader
+    + hdrDebugViewPS : Shader
+}
+ScriptableObject <|-- ScriptableRendererData
+ScriptableRendererData +-- DebugShaderResources
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+abstract class GUIAction {
+    - m_ID : int
+    + enable : Func<IGUIState, GUIAction, bool>
+    + enableRepaint : Func<IGUIState, GUIAction, bool>
+    + repaintOnMouseMove : Func<IGUIState, GUIAction, bool>
+    + onPreRepaint : Action<IGUIState, GUIAction>
+    + onRepaint : Action<IGUIState, GUIAction>
+    + ID : int <<get>>
+    + OnGUI(guiState:IGUIState) : void
+    + IsEnabled(guiState:IGUIState) : bool
+    + IsRepaintEnabled(guiState:IGUIState) : bool
+    + PreRepaint(guiState:IGUIState) : void
+    - Repaint(guiState:IGUIState) : void
+    <<internal>> IsRepaintOnMouseMoveEnabled(guiState:IGUIState) : bool
+    # {abstract} GetFinishContidtion(guiState:IGUIState) : bool
+    # {abstract} GetTriggerContidtion(guiState:IGUIState) : bool
+    # <<virtual>> CanTrigger(guiState:IGUIState) : bool
+    # <<virtual>> OnTrigger(guiState:IGUIState) : void
+    # <<virtual>> OnPerform(guiState:IGUIState) : void
+    # <<virtual>> OnFinish(guiState:IGUIState) : void
+}
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+class UnitBase <<static>> {
+    {static} - UnitBase()
+    - {static} <<readonly>> @lock : object
+    - {static} options : HashSet<IUnitOption>
+    - {static} AutoLoad() : void
+    - {static} Load() : void
+    - {static} IsUnitOptionsBuilt() : bool
+    + {static} Rebuild() : void
+    + {static} Build(initialBuild:bool) : void
+    + {static} Update() : void
+    + {static} Subset(filter:UnitOptionFilter, reference:GraphReference) : IEnumerable<IUnitOption>
+    - {static} codebase : CodebaseSubset
+    - {static} UpdateCodebase(typeSet:IEnumerable<Type>) : void
+    - {static} GetStaticOptions() : IEnumerable<IUnitOption>
+    - {static} GetIncrementalOptions(type:Type) : IEnumerable<IUnitOption>
+    - {static} GetTypeOptions(type:Type) : IEnumerable<IUnitOption>
+    - {static} GetMemberOptions(member:Member) : IEnumerable<IUnitOption>
+    - {static} GetDynamicOptions() : IEnumerable<IUnitOption>
+    - {static} GetContextualOptions(reference:GraphReference) : IEnumerable<IUnitOption>
+    - {static} typesToGuids : Dictionary<Type, HashSet<string>>
+    - {static} guidsToTypes : Dictionary<string, HashSet<Type>>
+    - {static} UpdateTypeMappings() : void
+    + {static} GetScriptGuids(type:Type) : IEnumerable<string>
+    - {static} GetScriptGuids(recursion:Recursion, type:Type) : IEnumerable<string>
+    + {static} GetScriptTypes(guid:string) : IEnumerable<Type>
+    - {static} requiresUpdate : bool <<get>>
+    - {static} GetModifiedScriptGuids() : IEnumerable<string>
+    - {static} GetDeletedScriptGuids() : IEnumerable<string>
+    + {static} staticUnitsExtensions : NonNullableList<Func<IEnumerable<IUnitOption>>> <<get>>
+    + {static} dynamicUnitsExtensions : NonNullableList<Func<IEnumerable<IUnitOption>>> <<get>>
+    + {static} contextualUnitsExtensions : NonNullableList<Func<GraphReference, IEnumerable<IUnitOption>>> <<get>>
+    + {static} WithoutInheritedDuplicates(items:IEnumerable<T>, optionSelector:Func<T, IUnitOption>, cancellation:CancellationToken) : IEnumerable<T>
+}
+@enduml

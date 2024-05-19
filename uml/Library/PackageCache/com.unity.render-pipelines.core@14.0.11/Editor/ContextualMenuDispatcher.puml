@@ -1,0 +1,5 @@
+@startuml
+class ContextualMenuDispatcher <<static>> {
+    {static} - RemoveComponentWithAdditionalData(command:MenuCommand) : void
+}
+@enduml

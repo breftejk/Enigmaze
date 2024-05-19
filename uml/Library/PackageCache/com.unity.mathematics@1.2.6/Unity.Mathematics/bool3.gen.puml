@@ -1,0 +1,154 @@
+@startuml
+struct bool3 {
+    + x : bool
+    + y : bool
+    + z : bool
+    + bool3(x:bool, y:bool, z:bool)
+    + bool3(x:bool, yz:bool2)
+    + bool3(xy:bool2, z:bool)
+    + bool3(xyz:bool3)
+    + bool3(v:bool)
+    + xxxx : bool4 <<get>>
+    + xxxy : bool4 <<get>>
+    + xxxz : bool4 <<get>>
+    + xxyx : bool4 <<get>>
+    + xxyy : bool4 <<get>>
+    + xxyz : bool4 <<get>>
+    + xxzx : bool4 <<get>>
+    + xxzy : bool4 <<get>>
+    + xxzz : bool4 <<get>>
+    + xyxx : bool4 <<get>>
+    + xyxy : bool4 <<get>>
+    + xyxz : bool4 <<get>>
+    + xyyx : bool4 <<get>>
+    + xyyy : bool4 <<get>>
+    + xyyz : bool4 <<get>>
+    + xyzx : bool4 <<get>>
+    + xyzy : bool4 <<get>>
+    + xyzz : bool4 <<get>>
+    + xzxx : bool4 <<get>>
+    + xzxy : bool4 <<get>>
+    + xzxz : bool4 <<get>>
+    + xzyx : bool4 <<get>>
+    + xzyy : bool4 <<get>>
+    + xzyz : bool4 <<get>>
+    + xzzx : bool4 <<get>>
+    + xzzy : bool4 <<get>>
+    + xzzz : bool4 <<get>>
+    + yxxx : bool4 <<get>>
+    + yxxy : bool4 <<get>>
+    + yxxz : bool4 <<get>>
+    + yxyx : bool4 <<get>>
+    + yxyy : bool4 <<get>>
+    + yxyz : bool4 <<get>>
+    + yxzx : bool4 <<get>>
+    + yxzy : bool4 <<get>>
+    + yxzz : bool4 <<get>>
+    + yyxx : bool4 <<get>>
+    + yyxy : bool4 <<get>>
+    + yyxz : bool4 <<get>>
+    + yyyx : bool4 <<get>>
+    + yyyy : bool4 <<get>>
+    + yyyz : bool4 <<get>>
+    + yyzx : bool4 <<get>>
+    + yyzy : bool4 <<get>>
+    + yyzz : bool4 <<get>>
+    + yzxx : bool4 <<get>>
+    + yzxy : bool4 <<get>>
+    + yzxz : bool4 <<get>>
+    + yzyx : bool4 <<get>>
+    + yzyy : bool4 <<get>>
+    + yzyz : bool4 <<get>>
+    + yzzx : bool4 <<get>>
+    + yzzy : bool4 <<get>>
+    + yzzz : bool4 <<get>>
+    + zxxx : bool4 <<get>>
+    + zxxy : bool4 <<get>>
+    + zxxz : bool4 <<get>>
+    + zxyx : bool4 <<get>>
+    + zxyy : bool4 <<get>>
+    + zxyz : bool4 <<get>>
+    + zxzx : bool4 <<get>>
+    + zxzy : bool4 <<get>>
+    + zxzz : bool4 <<get>>
+    + zyxx : bool4 <<get>>
+    + zyxy : bool4 <<get>>
+    + zyxz : bool4 <<get>>
+    + zyyx : bool4 <<get>>
+    + zyyy : bool4 <<get>>
+    + zyyz : bool4 <<get>>
+    + zyzx : bool4 <<get>>
+    + zyzy : bool4 <<get>>
+    + zyzz : bool4 <<get>>
+    + zzxx : bool4 <<get>>
+    + zzxy : bool4 <<get>>
+    + zzxz : bool4 <<get>>
+    + zzyx : bool4 <<get>>
+    + zzyy : bool4 <<get>>
+    + zzyz : bool4 <<get>>
+    + zzzx : bool4 <<get>>
+    + zzzy : bool4 <<get>>
+    + zzzz : bool4 <<get>>
+    + xxx : bool3 <<get>>
+    + xxy : bool3 <<get>>
+    + xxz : bool3 <<get>>
+    + xyx : bool3 <<get>>
+    + xyy : bool3 <<get>>
+    + xyz : bool3 <<get>> <<set>>
+    + xzx : bool3 <<get>>
+    + xzy : bool3 <<get>> <<set>>
+    + xzz : bool3 <<get>>
+    + yxx : bool3 <<get>>
+    + yxy : bool3 <<get>>
+    + yxz : bool3 <<get>> <<set>>
+    + yyx : bool3 <<get>>
+    + yyy : bool3 <<get>>
+    + yyz : bool3 <<get>>
+    + yzx : bool3 <<get>> <<set>>
+    + yzy : bool3 <<get>>
+    + yzz : bool3 <<get>>
+    + zxx : bool3 <<get>>
+    + zxy : bool3 <<get>> <<set>>
+    + zxz : bool3 <<get>>
+    + zyx : bool3 <<get>> <<set>>
+    + zyy : bool3 <<get>>
+    + zyz : bool3 <<get>>
+    + zzx : bool3 <<get>>
+    + zzy : bool3 <<get>>
+    + zzz : bool3 <<get>>
+    + xx : bool2 <<get>>
+    + xy : bool2 <<get>> <<set>>
+    + xz : bool2 <<get>> <<set>>
+    + yx : bool2 <<get>> <<set>>
+    + yy : bool2 <<get>>
+    + yz : bool2 <<get>> <<set>>
+    + zx : bool2 <<get>> <<set>>
+    + zy : bool2 <<get>> <<set>>
+    + zz : bool2 <<get>>
+    + Equals(rhs:bool3) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+}
+class math <<static>> <<partial>> {
+    + {static} bool3(x:bool, y:bool, z:bool) : bool3
+    + {static} bool3(x:bool, yz:bool2) : bool3
+    + {static} bool3(xy:bool2, z:bool) : bool3
+    + {static} bool3(xyz:bool3) : bool3
+    + {static} bool3(v:bool) : bool3
+    + {static} hash(v:bool3) : uint
+    + {static} hashwide(v:bool3) : uint3
+    + {static} shuffle(left:bool3, right:bool3, x:ShuffleComponent) : bool
+    + {static} shuffle(left:bool3, right:bool3, x:ShuffleComponent, y:ShuffleComponent) : bool2
+    + {static} shuffle(left:bool3, right:bool3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : bool3
+    + {static} shuffle(left:bool3, right:bool3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : bool4
+    <<internal>> {static} select_shuffle_component(a:bool3, b:bool3, component:ShuffleComponent) : bool
+}
+class DebuggerProxy <<sealed>> {
+    + x : bool
+    + y : bool
+    + z : bool
+    + DebuggerProxy(v:bool3)
+}
+bool3 +-- DebuggerProxy
+@enduml

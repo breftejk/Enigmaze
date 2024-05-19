@@ -1,0 +1,6 @@
+@startuml
+interface IReorderableListDropTarget {
+    CanDropInsert(insertionIndex:int) : bool
+    ProcessDropInsertion(insertionIndex:int) : void
+}
+@enduml

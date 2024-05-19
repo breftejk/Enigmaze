@@ -1,0 +1,34 @@
+@startuml
+class ModelPreviewer {
+    <<const>> - k_TimeControlRectHeight : float = 20
+    <<readonly>> - m_RenderUtility : PreviewRenderUtility
+    - m_Disposed : bool = false
+    - m_PreviewRect : Rect
+    - m_RenderableBounds : Bounds
+    - m_ActorSize : Vector2Int
+    - m_TimeControl : TimeControl
+    - m_Fps : int
+    - m_Animator : Animator
+    - m_Clips : AnimationClip[]
+    - m_SelectedClip : AnimationClip
+    - m_FrameTimings : List<float>
+    - m_ClipIndex : int = 0
+    - m_Renderers : SpriteRenderer[]
+    - m_Texture : Texture
+    - m_PreviewObject : GameObject
+    - m_ClipNames : GUIContent[]
+    - m_ClipIndices : int[]
+    + ModelPreviewer(assetPrefab:GameObject, clips:AnimationClip[])
+    - SetupAnimation(clips:AnimationClip[]) : void
+    - SelectClipFromIndex(index:int) : void
+    + DrawPreview(r:Rect, background:GUIStyle) : void
+    - UpdateAnimation(isRepainting:bool) : void
+    - UpdateActorSize() : void
+    - DrawTimeControlGUI(rect:Rect) : void
+    - DrawInfoText(rect:Rect) : void
+    - GetFrameFromTime(currentTime:float) : int
+    - DoRenderPreview() : void
+    {static} - GetRenderableBounds(renderers:SpriteRenderer[]) : Bounds
+    + Dispose() : void
+}
+@enduml

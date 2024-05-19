@@ -1,0 +1,7 @@
+@startuml
+class RunData {
+    + isRunning : bool
+    + executionSettings : ExecutionSettings
+}
+"ScriptableSingleton`1" "<RunData>" <|-- RunData
+@enduml

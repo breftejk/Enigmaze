@@ -1,0 +1,8 @@
+@startuml
+class AnimationCurveCloner <<sealed>> {
+    + <<override>> Handles(type:Type) : bool
+    + <<override>> ConstructClone(type:Type, original:AnimationCurve) : AnimationCurve
+    + <<override>> FillClone(type:Type, clone:AnimationCurve, original:AnimationCurve, context:CloningContext) : void
+}
+"Cloner`1" "<AnimationCurve>" <|-- AnimationCurveCloner
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+class LightBatchingDebugger {
+    - <<const>> ResourcePath : string = "Packages/com.unity.render-pipelines.universal/Editor/2D/LightBatchingDebugger/"
+    + {static} ShowExample() : void
+    - root : VisualElement <<get>>
+    - {static} batchColors : Color[]
+    - batchList : List<LayerBatch>
+    - selectedIndices : List<int>
+    - batchListView : ListView
+    - lightCount : int = 0
+    - shadowCount : int = 0
+    - doRefresh : bool
+    - cachedSceneHandle : int
+    - totalLightCount : int
+    - totalShadowCount : int
+    - cachedCamPos : Vector3
+    - lightCullResult : ILight2DCullResult <<get>>
+    - PopulateData() : bool
+    - MakePill(obj:UnityEngine.Object) : VisualElement
+    - GetInfoView() : VisualElement
+    - ViewBatch(index:int) : void
+    - CompareBatch(index1:int, index2:int) : void
+    - CreateGUI() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnPlayModeStateChanged(playModeState:PlayModeStateChange) : void
+    - DisplayInitialPrompt(display:bool) : void
+    - OnSelectionChanged() : void
+    - RefreshView() : void
+    - Update() : void
+    - IsDirty() : bool
+    - ResetDirty() : void
+    + QueueRefresh() : void
+}
+class LayerBatch {
+    + LayerNames : List<string>
+    + Lights : List<UnityEngine.Object>
+    + Shadows : List<UnityEngine.Object>
+    + batchId : int
+}
+EditorWindow <|-- LightBatchingDebugger
+LightBatchingDebugger +-- LayerBatch
+@enduml

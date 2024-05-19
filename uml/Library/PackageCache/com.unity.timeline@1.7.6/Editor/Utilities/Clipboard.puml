@@ -1,0 +1,34 @@
+@startuml
+class Clipboard {
+    {static} <<readonly>> - kListInitialSize : int = 10
+    <<readonly>> - m_ItemsData : List<ItemsPerTrack>
+    <<readonly>> - m_trackData : List<ClipboardTrackEntry>
+    - rootTimeline : TimelineAsset
+    + <<readonly>> exposedPropertyTable : IExposedPropertyTable
+    + Clipboard()
+    + CopyItems(items:IEnumerable<ITimelineItem>) : void
+    - CopyItem(clipItem:ClipItem) : ClipItem
+    {static} - CopyItem(markerItem:MarkerItem) : MarkerItem
+    + CopyTracks(tracks:IEnumerable<TrackAsset>) : void
+    + GetTracks() : IEnumerable<ClipboardTrackEntry>
+    + GetCopiedItems() : IEnumerable<ItemsPerTrack>
+    + Clear() : void
+    - OnPlayModeChanged(state:PlayModeStateChange) : void
+    {static} - CreateTimeline() : TimelineAsset
+}
+class ExposedReferenceTable {
+    - m_ReferenceTable : Dictionary<PropertyName, Object>
+    + SetReferenceValue(id:PropertyName, value:Object) : void
+    + GetReferenceValue(id:PropertyName, idValid:bool) : Object
+    + ClearReferenceValue(id:PropertyName) : void
+    + Clear() : void
+}
+struct ClipboardTrackEntry {
+    + item : TrackAsset
+    + parent : TrackAsset
+    + bindings : List<Object>
+}
+Clipboard +-- ExposedReferenceTable
+IExposedPropertyTable <|-- ExposedReferenceTable
+Clipboard +-- ClipboardTrackEntry
+@enduml

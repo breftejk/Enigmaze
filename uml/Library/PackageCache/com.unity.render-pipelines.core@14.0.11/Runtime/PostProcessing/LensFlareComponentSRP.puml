@@ -1,0 +1,28 @@
+@startuml
+class LensFlareComponentSRP <<sealed>> {
+    - m_LensFlareData : LensFlareDataSRP = null
+    + lensFlareData : LensFlareDataSRP <<get>> <<set>>
+    + intensity : float = 1.0f
+    + maxAttenuationDistance : float = 100.0f
+    + maxAttenuationScale : float = 100.0f
+    + distanceAttenuationCurve : AnimationCurve
+    + scaleByDistanceCurve : AnimationCurve
+    + attenuationByLightShape : bool = true
+    + radialScreenAttenuationCurve : AnimationCurve
+    + useOcclusion : bool = false
+    + occlusionRadius : float = 0.1f
+    + useBackgroundCloudOcclusion : bool = false
+    + sampleCount : uint = 32
+    + occlusionOffset : float = 0.05f
+    + scale : float = 1.0f
+    + allowOffScreen : bool = false
+    + volumetricCloudOcclusion : bool = false
+    - {static} sCelestialAngularRadius : float
+    + occlusionRemapCurve : TextureCurve
+    + celestialProjectedOcclusionRadius(mainCam:Camera) : float
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnValidate() : void
+}
+MonoBehaviour <|-- LensFlareComponentSRP
+@enduml

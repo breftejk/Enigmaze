@@ -1,0 +1,21 @@
+@startuml
+class Texture3DShaderProperty <<sealed>> {
+    <<internal>> Texture3DShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> modifiableTagString : string <<get>>
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> GetPropertyAsArgumentStringForVFX(precisionString:string) : string
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    - m_Modifiable : bool = true
+    + modifiable : bool <<get>> <<set>>
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+}
+"AbstractShaderProperty`1" "<SerializableTexture>" <|-- Texture3DShaderProperty
+@enduml

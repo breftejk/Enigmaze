@@ -1,0 +1,43 @@
+@startuml
+class VisualStudioCodeInstallation {
+    - {static} <<readonly>> _generator : IGenerator
+    + <<override>> SupportsAnalyzers : bool <<get>>
+    + <<override>> LatestLanguageVersionSupported : Version <<get>>
+    - GetExtensionPath() : string
+    + <<override>> GetAnalyzers() : string[]
+    + <<override>> ProjectGenerator : IGenerator <<get>>
+    - {static} IsCandidateForDiscovery(path:string) : bool
+    + {static} TryDiscoverInstallation(editorPath:string, installation:IVisualStudioInstallation) : bool
+    + {static} GetVisualStudioInstallations() : IEnumerable<IVisualStudioInstallation>
+    <<internal>> {static} GetRealPath(path:string) : string
+    + <<override>> CreateExtraFiles(projectDirectory:string) : void
+    - <<const>> DefaultLaunchFileContent : string = @"{
+    ""version"": ""0.2.0"",
+    ""configurations"": [
+        {
+            ""name"": ""Attach to Unity"",
+            ""type"": ""vstuc"",
+            ""request"": ""attach""
+        &#125;
+     ]
+&#125;"
+    - {static} CreateLaunchFile(vscodeDirectory:string, enablePatch:bool) : void
+    - {static} PatchLaunchFile(launchFile:string) : void
+    - CreateSettingsFile(vscodeDirectory:string, enablePatch:bool) : void
+    - PatchSettingsFile(settingsFile:string) : void
+    - <<const>> MicrosoftUnityExtensionId : string = "visualstudiotoolsforunity.vstuc"
+    - <<const>> DefaultRecommendedExtensionsContent : string
+    - {static} CreateRecommendedExtensionsFile(vscodeDirectory:string, enablePatch:bool) : void
+    - {static} PatchRecommendedExtensionsFile(extensionFile:string) : void
+    - {static} WriteAllTextFromJObject(file:string, node:JSONNode) : void
+    + <<override>> Open(path:string, line:int, column:int, solution:string) : bool
+    - {static} ProcessStartInfoFor(application:string, arguments:string) : ProcessStartInfo
+    + {static} Initialize() : void
+}
+class VisualStudioCodeManifest {
+    + name : string
+    + version : string
+}
+VisualStudioInstallation <|-- VisualStudioCodeInstallation
+VisualStudioCodeInstallation +-- VisualStudioCodeManifest
+@enduml

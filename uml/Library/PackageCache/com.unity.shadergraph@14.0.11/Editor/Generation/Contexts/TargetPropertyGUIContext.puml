@@ -1,0 +1,17 @@
+@startuml
+class TargetPropertyGUIContext {
+    <<const>> - kIndentWidthInPixel : int = 15
+    + globalIndentLevel : int <<get>> <<set>> = 0
+    + <<readonly>> graphValidation : Action
+    + TargetPropertyGUIContext(graphValidationCallback:Action)
+    + AddProperty(label:string, field:BaseField<T>, condition:bool, evt:EventCallback<ChangeEvent<T>>) : void
+    + AddProperty(label:string, indentLevel:int, field:BaseField<T>, condition:bool, evt:EventCallback<ChangeEvent<T>>) : void
+    + AddProperty(label:string, field:BaseField<T>, evt:EventCallback<ChangeEvent<T>>) : void
+    + AddProperty(label:string, indentLevel:int, field:BaseField<T>, evt:EventCallback<ChangeEvent<T>>) : void
+    + AddProperty(label:string, tooltip:string, indentLevel:int, field:BaseField<T>, evt:EventCallback<ChangeEvent<T>>) : void
+    + AddLabel(label:string, indentLevel:int) : void
+    + AddHelpBox(messageType:MessageType, messageText:string) : void
+    - ApplyPadding(row:PropertyRow, indentLevel:int) : void
+}
+VisualElement <|-- TargetPropertyGUIContext
+@enduml

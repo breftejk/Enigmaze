@@ -1,0 +1,37 @@
+@startuml
+struct ComputeBufferHandle {
+    - {static} s_NullHandle : ComputeBufferHandle
+    + {static} nullHandle : ComputeBufferHandle <<get>>
+    <<internal>> handle : ResourceHandle
+    <<internal>> ComputeBufferHandle(handle:int, shared:bool)
+    + IsValid() : bool
+}
+struct ComputeBufferDesc {
+    + count : int
+    + stride : int
+    + type : ComputeBufferType
+    + name : string
+    + ComputeBufferDesc(count:int, stride:int)
+    + ComputeBufferDesc(count:int, stride:int, type:ComputeBufferType)
+    + <<override>> GetHashCode() : int
+}
+class ComputeBufferResource {
+    + <<override>> GetName() : string
+    + <<override>> CreatePooledGraphicsResource() : void
+    + <<override>> ReleasePooledGraphicsResource(frameIndex:int) : void
+    + <<override>> CreateGraphicsResource(name:string) : void
+    + <<override>> ReleaseGraphicsResource() : void
+    + <<override>> LogCreation(logger:RenderGraphLogger) : void
+    + <<override>> LogRelease(logger:RenderGraphLogger) : void
+}
+class ComputeBufferPool {
+    # <<override>> ReleaseInternalResource(res:ComputeBuffer) : void
+    # <<override>> GetResourceName(res:ComputeBuffer) : string
+    # <<override>> GetResourceSize(res:ComputeBuffer) : long
+    <<override>> # GetResourceTypeName() : string
+    <<override>> # GetSortIndex(res:ComputeBuffer) : int
+    <<override>> + PurgeUnusedResources(currentFrameIndex:int) : void
+}
+"RenderGraphResource`2" "<ComputeBufferDesc,ComputeBuffer>" <|-- ComputeBufferResource
+"RenderGraphResourcePool`1" "<ComputeBuffer>" <|-- ComputeBufferPool
+@enduml

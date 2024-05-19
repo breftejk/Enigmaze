@@ -1,0 +1,15 @@
+@startuml
+class GridLayoutGroupEditor {
+    - m_Padding : SerializedProperty
+    - m_CellSize : SerializedProperty
+    - m_Spacing : SerializedProperty
+    - m_StartCorner : SerializedProperty
+    - m_StartAxis : SerializedProperty
+    - m_ChildAlignment : SerializedProperty
+    - m_Constraint : SerializedProperty
+    - m_ConstraintCount : SerializedProperty
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- GridLayoutGroupEditor
+@enduml

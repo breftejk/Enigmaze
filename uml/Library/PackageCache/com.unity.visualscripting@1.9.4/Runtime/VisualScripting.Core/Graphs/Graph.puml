@@ -1,0 +1,25 @@
+@startuml
+abstract class Graph {
+    # Graph()
+    + <<override>> ToString() : string
+    + {abstract} CreateData() : IGraphData
+    + <<virtual>> CreateDebugData() : IGraphDebugData
+    + <<virtual>> Instantiate(instance:GraphReference) : void
+    + <<virtual>> Uninstantiate(instance:GraphReference) : void
+    - _elements : List<IGraphElement>
+    + elements : MergedGraphElementCollection <<get>>
+    + title : string <<get>> <<set>>
+    + summary : string <<get>> <<set>>
+    + pan : Vector2 <<get>> <<set>>
+    + zoom : float <<get>> <<set>> = 1
+    + deserializationDependencies : IEnumerable<ISerializationDependency> <<get>>
+    + <<virtual>> OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    + <<virtual>> OnAfterDependenciesDeserialized() : void
+    + GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+    - prewarmed : bool
+    + Prewarm() : void
+    + <<virtual>> Dispose() : void
+}
+IGraph <|-- Graph
+@enduml

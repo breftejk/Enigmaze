@@ -1,0 +1,11 @@
+@startuml
+class DefineUtility <<static>> {
+    - {static} buildTargetGroups : IEnumerable<BuildTargetGroup> <<get>>
+    + {static} ToggleDefine(define:string, enable:bool) : bool
+    - {static} GetScriptingDefineSymbolsForGroup(targetGroup:BuildTargetGroup) : string
+    - {static} SetScriptingDefineSymbolsForGroup(targetGroup:BuildTargetGroup, defines:string) : void
+    + {static} AddDefine(define:string) : bool
+    + {static} RemoveDefine(define:string) : bool
+    + {static} ClearAllDefines() : void
+}
+@enduml

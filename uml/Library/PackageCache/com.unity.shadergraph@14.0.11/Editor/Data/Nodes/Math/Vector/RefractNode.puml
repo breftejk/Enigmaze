@@ -1,0 +1,31 @@
+@startuml
+enum RefractMode {
+    CriticalAngle,
+    Safe,
+}
+class RefractNode {
+    - m_RefractMode : RefractMode
+    <<const>> - kIncidentInputSlotId : int = 0
+    <<const>> - kIncidentInputSlotName : string = "Incident"
+    <<const>> - kNormalInputSlotId : int = 1
+    <<const>> - kNormalInputSlotName : string = "Normal"
+    <<const>> - kIORSourceInputSlotId : int = 2
+    <<const>> - kIORSourceInputSlotName : string = "IORSource"
+    <<const>> - kIORMediumInputSlotId : int = 3
+    <<const>> - kIORMediumInputSlotName : string = "IORMedium"
+    <<const>> - kRefractedOutputSlotId : int = 4
+    <<const>> - kRefractedOutputSlotName : string = "Refracted"
+    <<const>> - kIntensityOutputSlotId : int = 5
+    <<const>> - kIntensityOutputSlotName : string = "Intensity"
+    + refractMode : RefractMode <<get>> <<set>>
+    + RefractNode()
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - GetFunctionName() : string
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- RefractNode
+IGeneratesBodyCode <|-- RefractNode
+IGeneratesFunction <|-- RefractNode
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class SkeletonToolWrapper {
+    - m_SkeletonTool : SkeletonTool
+    - m_Mode : SkeletonMode
+    + skeletonTool : SkeletonTool <<get>> <<set>>
+    + mode : SkeletonMode <<get>> <<set>>
+    + editBindPose : bool <<get>> <<set>>
+    + <<override>> defaultControlID : int <<get>>
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    - OverrideMode() : SkeletonMode
+    # <<override>> OnGUI() : void
+}
+BaseTool <|-- SkeletonToolWrapper
+@enduml

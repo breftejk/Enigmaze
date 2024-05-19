@@ -1,0 +1,24 @@
+@startuml
+class TilePaletteBrushesLabel {
+    + {static} kNullBrushName : string
+    + {static} kLabelTooltip : string
+    - m_AppendSettings : bool
+    + appendSettings : bool <<get>> <<set>>
+    + <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushes-label"
+    + TilePaletteBrushesLabel()
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnBrushChanged(obj:GridBrushBase) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - FormatBrushName(brush:GridBrushBase) : string
+    - UpdateBrush() : void
+}
+class TilePaletteBrushesLabelFactory {
+}
+class TilePaletteBrushesLabelUxmlTraits {
+}
+TextElement <|-- TilePaletteBrushesLabel
+TilePaletteBrushesLabel +-- TilePaletteBrushesLabelFactory
+"UxmlFactory`2" "<TilePaletteBrushesLabel,TilePaletteBrushesLabelUxmlTraits>" <|-- TilePaletteBrushesLabelFactory
+TilePaletteBrushesLabel +-- TilePaletteBrushesLabelUxmlTraits
+UxmlTraits <|-- TilePaletteBrushesLabelUxmlTraits
+@enduml

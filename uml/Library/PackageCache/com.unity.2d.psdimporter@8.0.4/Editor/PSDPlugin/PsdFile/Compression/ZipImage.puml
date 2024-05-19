@@ -1,0 +1,13 @@
+@startuml
+class ZipImage {
+    - zipDataStream : MemoryStream
+    - zipStream : DeflateStream
+    # <<override>> AltersWrittenData : bool <<get>>
+    + ZipImage(data:byte[], size:Size, bitDepth:int)
+    - InitCompress() : void
+    - InitDecompress(data:byte[]) : void
+    <<internal>> <<override>> Read(buffer:byte[]) : void
+    + <<override>> ReadCompressed() : byte[]
+}
+ImageData <|-- ZipImage
+@enduml

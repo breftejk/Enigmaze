@@ -1,0 +1,9 @@
+@startuml
+class VariableNameAttributeInspector {
+    + VariableNameAttributeInspector(metadata:Metadata)
+    + direction : ActionDirection <<get>> <<set>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- VariableNameAttributeInspector
+@enduml

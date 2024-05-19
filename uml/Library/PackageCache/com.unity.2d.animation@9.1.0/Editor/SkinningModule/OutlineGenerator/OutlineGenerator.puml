@@ -1,0 +1,31 @@
+@startuml
+class OutlineGenerator {
+    <<const>> - kClipperScale : double = 1000.0
+    - <<const>> kEpsilon : float = 1.2e-12f
+    - <<const>> kMinLinearizeDistance : float = 5f
+    - m_CurrentTexture : Texture2D
+    - m_CurrentRect : Rect
+    - m_CurrentAlphaTolerance : byte
+    + GenerateOutline(textureDataProvider:ITextureDataProvider, rect:Rect, detail:float, alphaTolerance:byte, holeDetection:bool, paths:Vector2[][]) : void
+    - ClipPaths(paths:Vector2[][]) : void
+    - FilterNestedPaths(paths:Paths) : void
+    - IsPathContainedInOtherPath(path:Path, other:Path) : bool
+    - ToClipper(paths:Vector2[][]) : Paths
+    - ToClipper(path:Vector2[]) : Path
+    - ToVector2(paths:Paths) : Vector2[][]
+    - ToVector2(path:Path) : Vector2[]
+    - CalculatePathLength(path:Vector2[]) : float
+    - Linearize(src:List<Vector2>, pointDistance:float) : List<Vector2>
+    - EqualsOrClose(v1:Vector2, v2:Vector2) : bool
+    - SmoothPath(path:Vector2[], iterations:int, velocity:float, minAngle:float) : void
+    - ToVector2Int(v:Vector2) : Vector2Int
+    - IsLineOverImage(pointA:Vector2, pointB:Vector2) : bool
+    - IsPointOverImage(point:Vector2) : bool
+    - IsPointInRectEdge(point:Vector2) : bool
+    - GetPointsOnLine(x0:int, y0:int, x1:int, y1:int) : IEnumerable<Vector2Int>
+    - NextIndex(index:int, pointCount:int) : int
+    - PreviousIndex(index:int, pointCount:int) : int
+    - Mod(x:int, m:int) : int
+}
+IOutlineGenerator <|-- OutlineGenerator
+@enduml

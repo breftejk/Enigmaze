@@ -1,0 +1,76 @@
+@startuml
+class BuiltInLitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    - m_WorkflowMode : WorkflowMode
+    - m_NormalDropOffSpace : NormalDropOffSpace
+    + BuiltInLitSubTarget()
+    # <<override>> shaderID : ShaderID <<get>>
+    + workflowMode : WorkflowMode <<get>> <<set>>
+    + normalDropOffSpace : NormalDropOffSpace <<get>> <<set>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> ProcessPreviewMaterial(material:Material) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+}
+class SubShaders <<static>> {
+    - {static} PassVariant(source:PassDescriptor, pragmas:PragmaCollection) : PassDescriptor
+    - {static} PassVariant(source:PassDescriptor, vertexBlocks:BlockFieldDescriptor[], pixelBlocks:BlockFieldDescriptor[], pragmas:PragmaCollection, defines:DefineCollection) : PassDescriptor
+    + {static} Lit(target:BuiltInTarget, renderType:string, renderQueue:string) : SubShaderDescriptor
+}
+class LitPasses <<static>> {
+    + {static} Forward(target:BuiltInTarget) : PassDescriptor
+    + {static} ForwardAdd(target:BuiltInTarget) : PassDescriptor
+    + {static} ForwardOnly(target:BuiltInTarget) : PassDescriptor
+    + {static} Deferred(target:BuiltInTarget) : PassDescriptor
+    + {static} Meta(target:BuiltInTarget) : PassDescriptor
+    <<internal>> {static} AddForwardSurfaceControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddForwardAddControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddForwardOnlyControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddDeferredControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+    <<internal>> {static} AddMetaControlsToPass(pass:PassDescriptor, target:BuiltInTarget) : void
+}
+class LitBlockMasks <<static>> {
+    + {static} <<readonly>> FragmentLit : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentMeta : BlockFieldDescriptor[]
+    + {static} <<readonly>> FragmentDepthNormals : BlockFieldDescriptor[]
+}
+class LitRequiredFields <<static>> {
+    + {static} <<readonly>> Forward : FieldCollection
+    + {static} <<readonly>> GBuffer : FieldCollection
+    + {static} <<readonly>> DepthNormals : FieldCollection
+    + {static} <<readonly>> Meta : FieldCollection
+}
+class LitKeywords <<static>> {
+    + {static} <<readonly>> GBufferNormalsOct : KeywordDescriptor
+    + {static} <<readonly>> ScreenSpaceAmbientOcclusion : KeywordDescriptor
+    + {static} <<readonly>> Forward : KeywordCollection
+    + {static} <<readonly>> ForwardAdd : KeywordCollection
+    + {static} <<readonly>> Deferred : KeywordCollection
+    + {static} <<readonly>> Meta : KeywordCollection
+}
+class LitIncludes <<static>> {
+    <<const>> - kShadows : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/Shadows.hlsl"
+    <<const>> - kMetaInput : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/MetaInput.hlsl"
+    <<const>> - kForwardPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/PBRForwardPass.hlsl"
+    <<const>> - kForwardAddPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/PBRForwardAddPass.hlsl"
+    <<const>> - kDeferredPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/PBRDeferredPass.hlsl"
+    <<const>> - kGBuffer : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/ShaderLibrary/UnityGBuffer.hlsl"
+    <<const>> - kPBRGBufferPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/PBRGBufferPass.hlsl"
+    <<const>> - kLightingMetaPass : string = "Packages/com.unity.shadergraph/Editor/Generation/Targets/BuiltIn/Editor/ShaderGraph/Includes/LightingMetaPass.hlsl"
+    + {static} <<readonly>> Forward : IncludeCollection
+    + {static} <<readonly>> ForwardAdd : IncludeCollection
+    + {static} <<readonly>> Deferred : IncludeCollection
+    + {static} <<readonly>> GBuffer : IncludeCollection
+    + {static} <<readonly>> Meta : IncludeCollection
+}
+BuiltInSubTarget <|-- BuiltInLitSubTarget
+BuiltInLitSubTarget +-- SubShaders
+BuiltInLitSubTarget +-- LitPasses
+BuiltInLitSubTarget +-- LitBlockMasks
+BuiltInLitSubTarget +-- LitRequiredFields
+BuiltInLitSubTarget +-- LitKeywords
+BuiltInLitSubTarget +-- LitIncludes
+@enduml

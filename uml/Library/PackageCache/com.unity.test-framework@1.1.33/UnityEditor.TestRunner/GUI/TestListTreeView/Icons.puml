@@ -1,0 +1,11 @@
+@startuml
+class Icons <<static>> {
+    + {static} <<readonly>> s_FailImg : Texture2D
+    + {static} <<readonly>> s_IgnoreImg : Texture2D
+    + {static} <<readonly>> s_SuccessImg : Texture2D
+    + {static} <<readonly>> s_UnknownImg : Texture2D
+    + {static} <<readonly>> s_InconclusiveImg : Texture2D
+    + {static} <<readonly>> s_StopwatchImg : Texture2D
+    {static} - Icons()
+}
+@enduml

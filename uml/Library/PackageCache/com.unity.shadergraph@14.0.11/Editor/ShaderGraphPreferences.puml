@@ -1,0 +1,24 @@
+@startuml
+class ShaderGraphPreferences <<static>> {
+    {static} - m_Loaded : bool = false
+    <<internal>> {static} onVariantLimitChanged : PreferenceChangedDelegate
+    {static} - m_previewVariantLimit : int = 128
+    <<internal>> {static} onAllowDeprecatedChanged : PreferenceChangedDelegate
+    <<internal>> {static} previewVariantLimit : int <<get>> <<set>>
+    {static} - m_AutoAddRemoveBlocks : bool = true
+    <<internal>> {static} autoAddRemoveBlocks : bool <<get>> <<set>>
+    {static} - m_AllowDeprecatedBehaviors : bool = false
+    <<internal>> {static} allowDeprecatedBehaviors : bool <<get>> <<set>>
+    {static} - ShaderGraphPreferences()
+    {static} - PreferenceGUI() : SettingsProvider
+    {static} - OpenGUI() : void
+    {static} - Load() : void
+    {static} - TrySave(field:T, newValue:T, key:string) : void
+}
+class Keys <<static>> {
+    <<internal>> <<const>> variantLimit : string = "UnityEditor.ShaderGraph.VariantLimit"
+    <<internal>> <<const>> autoAddRemoveBlocks : string = "UnityEditor.ShaderGraph.AutoAddRemoveBlocks"
+    <<internal>> <<const>> allowDeprecatedBehaviors : string = "UnityEditor.ShaderGraph.AllowDeprecatedBehaviors"
+}
+ShaderGraphPreferences +-- Keys
+@enduml

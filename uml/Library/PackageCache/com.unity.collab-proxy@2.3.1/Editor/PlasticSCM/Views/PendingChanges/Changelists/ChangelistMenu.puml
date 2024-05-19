@@ -1,0 +1,27 @@
+@startuml
+class ChangelistMenu {
+    <<internal>> ChangelistMenu(changelistMenuOperations:IChangelistMenuOperations, isGluonMode:bool)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - CheckinChangelistMenuItem_Click() : void
+    - ShelveChangelistMenuItem_Click() : void
+    - UndoChangelistMenuItem_Click() : void
+    - CreateNewChangelistMenuItem_Click() : void
+    - EditChangelistMenuItem_Click() : void
+    - DeleteChangelistMenuItem_Click() : void
+    - UpdateMenuItems(menu:GenericMenu) : void
+    - GetNoActionMenuItemContent() : GUIContent
+    {static} - GetMenuOperations(e:Event) : ChangelistMenuOperations
+    {static} - ProcessMenuOperation(operationToExecute:ChangelistMenuOperations, changelistMenuOperations:IChangelistMenuOperations) : void
+    - BuildComponents(isGluonMode:bool) : void
+    - mNoActionMenuItemContent : GUIContent
+    - mCheckinChangelistMenuItemContent : GUIContent
+    - mShelveChangelistMenuItemContent : GUIContent
+    - mUndoChangelistMenuItemContent : GUIContent
+    - mCreateNewChangelistMenuItemContent : GUIContent
+    - mEditChangelistMenuItemContent : GUIContent
+    - mDeleteChangelistMenuItemContent : GUIContent
+    <<readonly>> - mChangelistMenuOperations : IChangelistMenuOperations
+    - mIsGluonMode : bool
+}
+@enduml

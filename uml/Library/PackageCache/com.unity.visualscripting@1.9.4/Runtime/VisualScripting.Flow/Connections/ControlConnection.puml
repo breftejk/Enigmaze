@@ -1,0 +1,14 @@
+@startuml
+class ControlConnection <<sealed>> {
+    + ControlConnection()
+    + ControlConnection(source:ControlOutput, destination:ControlInput)
+    + <<override>> source : ControlOutput <<get>>
+    + <<override>> destination : ControlInput <<get>>
+    - source : IUnitOutputPort <<get>>
+    - destination : IUnitInputPort <<get>>
+    + <<override>> sourceExists : bool <<get>>
+    + <<override>> destinationExists : bool <<get>>
+}
+"UnitConnection`2" "<ControlOutput,ControlInput>" <|-- ControlConnection
+IUnitConnection <|-- ControlConnection
+@enduml

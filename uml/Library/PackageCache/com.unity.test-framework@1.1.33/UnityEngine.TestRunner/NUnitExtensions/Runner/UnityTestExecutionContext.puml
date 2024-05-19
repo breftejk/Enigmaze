@@ -1,0 +1,39 @@
+@startuml
+class UnityTestExecutionContext {
+    - <<readonly>> _priorContext : UnityTestExecutionContext
+    - _currentResult : TestResult
+    - _assertCount : int
+    + {static} CurrentContext : UnityTestExecutionContext <<get>> <<set>>
+    + Context : UnityTestExecutionContext <<get>>
+    + CurrentTest : Test <<get>> <<set>>
+    + StartTime : DateTime <<get>> <<set>>
+    + StartTicks : long <<get>> <<set>>
+    + CurrentResult : TestResult <<get>> <<set>>
+    + TestObject : object <<get>> <<set>>
+    + WorkDirectory : string <<get>> <<set>>
+    - _executionStatus : TestExecutionStatus
+    + ExecutionStatus : TestExecutionStatus <<get>> <<set>>
+    + UpstreamActions : List<ITestAction> <<get>>
+    + TestCaseTimeout : int <<get>> <<set>>
+    + CurrentCulture : CultureInfo <<get>> <<set>>
+    + CurrentUICulture : CultureInfo <<get>> <<set>>
+    + Listener : ITestListener <<get>> <<set>>
+    + UnityTestExecutionContext()
+    + UnityTestExecutionContext(other:UnityTestExecutionContext)
+    + OutWriter : TextWriter <<get>>
+    + StopOnError : bool <<get>> <<set>>
+    + Dispatcher : IWorkItemDispatcher <<get>> <<set>>
+    + ParallelScope : ParallelScope <<get>> <<set>>
+    + WorkerId : string <<get>>
+    + RandomGenerator : Randomizer <<get>>
+    + CurrentValueFormatter : ValueFormatter <<get>>
+    + IsSingleThreaded : bool <<get>> <<set>>
+    + SetUpTearDownState : BeforeAfterTestCommandState <<get>> <<set>>
+    + OuterUnityTestActionState : BeforeAfterTestCommandState <<get>> <<set>>
+    + EnumerableTestState : EnumerableTestState <<get>> <<set>>
+    <<internal>> AssertCount : int <<get>>
+    + IncrementAssertCount() : void
+    + AddFormatter(formatterFactory:ValueFormatterFactory) : void
+}
+ITestExecutionContext <|-- UnityTestExecutionContext
+@enduml

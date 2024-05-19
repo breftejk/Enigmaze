@@ -1,0 +1,46 @@
+@startuml
+class FullscreenShaderGUI {
+    - m_FirstTimeApply : bool = true
+    <<readonly>> - m_MaterialScopeList : MaterialHeaderScopeList
+    - m_MaterialEditor : MaterialEditor
+    - m_Properties : MaterialProperty[]
+    - <<const>> queueOffsetRange : int = 50
+    <<override>> + OnGUI(materialEditor:MaterialEditor, properties:MaterialProperty[]) : void
+    + <<virtual>> OnOpenGUI(material:Material, materialEditor:MaterialEditor, properties:MaterialProperty[]) : void
+    + <<override>> AssignNewShaderToMaterial(material:Material, oldShader:Shader, newShader:Shader) : void
+    - ShaderPropertiesGUI(materialEditor:MaterialEditor, material:Material, properties:MaterialProperty[]) : void
+    # <<virtual>> DrawSurfaceOptions(material:Material) : void
+    # <<virtual>> DrawSurfaceInputs(material:Material) : void
+    {static} - DrawShaderGraphProperties(materialEditor:MaterialEditor, material:Material, properties:MaterialProperty[]) : void
+    + <<override>> ValidateMaterial(material:Material) : void
+    + {static} SetupSurface(material:Material) : void
+}
+enum Expandable {
+    SurfaceOptions= 1 << 0,
+    SurfaceInputs= 1 << 1,
+}
+class Styles {
+    + {static} <<readonly>> SurfaceOptions : GUIContent
+    + {static} <<readonly>> SurfaceInputs : GUIContent
+    + {static} <<readonly>> blendingMode : GUIContent
+    + {static} <<readonly>> srcColorBlendMode : GUIContent
+    + {static} <<readonly>> dstColorBlendMode : GUIContent
+    + {static} <<readonly>> colorBlendOperation : GUIContent
+    + {static} <<readonly>> srcAlphaBlendMode : GUIContent
+    + {static} <<readonly>> dstAlphaBlendMode : GUIContent
+    + {static} <<readonly>> alphaBlendOperation : GUIContent
+    + {static} <<readonly>> depthWrite : GUIContent
+    + {static} <<readonly>> depthTest : GUIContent
+    + {static} <<readonly>> stencil : GUIContent
+    + {static} <<readonly>> stencilRef : GUIContent
+    + {static} <<readonly>> stencilReadMask : GUIContent
+    + {static} <<readonly>> stencilWriteMask : GUIContent
+    + {static} <<readonly>> stencilComparison : GUIContent
+    + {static} <<readonly>> stencilPass : GUIContent
+    + {static} <<readonly>> stencilFail : GUIContent
+    + {static} <<readonly>> stencilDepthFail : GUIContent
+}
+ShaderGUI <|-- FullscreenShaderGUI
+FullscreenShaderGUI +-- Expandable
+FullscreenShaderGUI +-- Styles
+@enduml

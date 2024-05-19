@@ -1,0 +1,67 @@
+@startuml
+class GridBrush {
+    - m_Cells : BrushCell[]
+    - m_TileChangeDataList : List<TileChangeData>
+    - m_Size : Vector3Int
+    - m_Pivot : Vector3Int
+    - m_CanChangeZPosition : bool
+    - m_FloodFillContiguousOnly : bool = true
+    - m_StoredSize : Vector3Int
+    - m_StoredPivot : Vector3Int
+    - m_StoredCells : BrushCell[]
+    - {static} <<readonly>> s_Clockwise : Matrix4x4
+    - {static} <<readonly>> s_CounterClockwise : Matrix4x4
+    - {static} <<readonly>> s_180Rotate : Matrix4x4
+    + size : Vector3Int <<get>> <<set>>
+    + pivot : Vector3Int <<get>> <<set>>
+    + cells : BrushCell[] <<get>>
+    + cellCount : int <<get>>
+    + canChangeZPosition : bool <<get>> <<set>>
+    + GridBrush()
+    + Init(size:Vector3Int) : void
+    + Init(size:Vector3Int, pivot:Vector3Int) : void
+    + <<override>> Paint(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<override>> Erase(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<override>> BoxFill(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt) : void
+    + <<override>> BoxErase(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt) : void
+    + <<override>> FloodFill(gridLayout:GridLayout, brushTarget:GameObject, position:Vector3Int) : void
+    + <<override>> Rotate(direction:RotationDirection, layout:GridLayout.CellLayout) : void
+    - {static} RotateHexagonPosition(direction:RotationDirection, position:Vector3Int) : Vector3Int
+    - RotateHexagon(direction:RotationDirection) : void
+    - {static} HexagonToCube(position:Vector3Int) : Vector3Int
+    - {static} CubeToHexagon(position:Vector3Int) : Vector3Int
+    + <<override>> Flip(flip:FlipAxis, layout:Grid.CellLayout) : void
+    + <<override>> Pick(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt, pickStart:Vector3Int) : void
+    - PickCell(position:Vector3Int, brushPosition:Vector3Int, tilemap:Tilemap) : void
+    - StoreCells() : void
+    - RestoreCells() : void
+    + <<override>> MoveStart(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt) : void
+    + <<override>> MoveEnd(gridLayout:GridLayout, brushTarget:GameObject, position:BoundsInt) : void
+    + Reset() : void
+    - FlipX(layout:GridLayout.CellLayout) : void
+    - FlipY(layout:GridLayout.CellLayout) : void
+    - {static} FlipCells(cells:BrushCell[], scale:Vector3, skipRotation:bool) : void
+    + UpdateSizeAndPivot(size:Vector3Int, pivot:Vector3Int) : void
+    + SetTile(position:Vector3Int, tile:TileBase) : void
+    + SetMatrix(position:Vector3Int, matrix:Matrix4x4) : void
+    + SetColor(position:Vector3Int, color:Color) : void
+    + GetCellIndex(brushPosition:Vector3Int) : int
+    + GetCellIndex(x:int, y:int, z:int) : int
+    + GetCellIndex(x:int, y:int, z:int, sizex:int, sizey:int, sizez:int) : int
+    + GetCellIndexWrapAround(x:int, y:int, z:int) : int
+    - ValidateCellPosition(position:Vector3Int) : bool
+    - SizeUpdated() : void
+    + <<override>> GetHashCode() : int
+}
+class BrushCell {
+    + tile : TileBase <<get>> <<set>>
+    + matrix : Matrix4x4 <<get>> <<set>>
+    + color : Color <<get>> <<set>>
+    - m_Tile : TileBase
+    - m_Matrix : Matrix4x4
+    - m_Color : Color
+    + <<override>> GetHashCode() : int
+}
+GridBrushBase <|-- GridBrush
+GridBrush +-- BrushCell
+@enduml

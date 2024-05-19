@@ -1,0 +1,7 @@
+@startuml
+class OnPointerUp <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+PointerEventUnit <|-- OnPointerUp
+@enduml

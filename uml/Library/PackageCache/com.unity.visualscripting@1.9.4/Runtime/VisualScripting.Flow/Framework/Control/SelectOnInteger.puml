@@ -1,0 +1,5 @@
+@startuml
+class SelectOnInteger {
+}
+"SelectUnit`1" "<int>" <|-- SelectOnInteger
+@enduml

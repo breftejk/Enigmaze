@@ -1,0 +1,20 @@
+@startuml
+interface IDraggable {
+    IsMovableNow() : bool
+    UpdatePresenterPosition() : void
+}
+class Draggable {
+    - m_Start : Vector2
+    # m_Active : bool
+    + panSpeed : Vector2 <<get>> <<set>>
+    + clampToParentEdges : bool <<get>> <<set>>
+    + Draggable(clampToParentEdges:bool)
+    # CalculatePosition(x:float, y:float, width:float, height:float) : Rect
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    # OnMouseDown(e:MouseDownEvent) : void
+    # OnMouseMove(e:MouseMoveEvent) : void
+    # OnMouseUp(e:MouseUpEvent) : void
+}
+MouseManipulator <|-- Draggable
+@enduml

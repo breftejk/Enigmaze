@@ -1,0 +1,117 @@
+@startuml
+enum CameraOverrideOption {
+    Off,
+    On,
+    UsePipelineSettings,
+}
+enum RendererOverrideOption {
+    Custom,
+    UsePipelineSettings,
+}
+enum AntialiasingMode {
+    None,
+    FastApproximateAntialiasing,
+    SubpixelMorphologicalAntiAliasing,
+    TemporalAntiAliasing,
+}
+enum CameraRenderType {
+    Base,
+    Overlay,
+}
+enum AntialiasingQuality {
+    Low,
+    Medium,
+    High,
+}
+class CameraExtensions <<static>> {
+    + {static} GetUniversalAdditionalCameraData(camera:Camera) : UniversalAdditionalCameraData
+    + {static} GetVolumeFrameworkUpdateMode(camera:Camera) : VolumeFrameworkUpdateMode
+    + {static} SetVolumeFrameworkUpdateMode(camera:Camera, mode:VolumeFrameworkUpdateMode) : void
+    + {static} UpdateVolumeStack(camera:Camera) : void
+    + {static} UpdateVolumeStack(camera:Camera, cameraData:UniversalAdditionalCameraData) : void
+    + {static} DestroyVolumeStack(camera:Camera) : void
+    + {static} DestroyVolumeStack(camera:Camera, cameraData:UniversalAdditionalCameraData) : void
+    <<internal>> {static} GetVolumeLayerMaskAndTrigger(camera:Camera, cameraData:UniversalAdditionalCameraData, layerMask:LayerMask, trigger:Transform) : void
+}
+class CameraTypeUtility <<static>> {
+    {static} - s_CameraTypeNames : string[]
+    + {static} GetName(type:CameraRenderType) : string
+}
+class UniversalAdditionalCameraData {
+    <<const>> - k_GizmoPath : string = "Packages/com.unity.render-pipelines.universal/Editor/Gizmos/"
+    <<const>> - k_BaseCameraGizmoPath : string
+    <<const>> - k_OverlayCameraGizmoPath : string
+    <<const>> - k_PostProcessingGizmoPath : string
+    - m_RenderShadows : bool = true
+    - m_RequiresDepthTextureOption : CameraOverrideOption
+    - m_RequiresOpaqueTextureOption : CameraOverrideOption
+    - m_CameraType : CameraRenderType
+    - m_Cameras : List<Camera>
+    - m_RendererIndex : int
+    - m_VolumeLayerMask : LayerMask = 1
+    - m_VolumeTrigger : Transform = null
+    - m_VolumeFrameworkUpdateModeOption : VolumeFrameworkUpdateMode
+    - m_RenderPostProcessing : bool = false
+    - m_Antialiasing : AntialiasingMode
+    - m_AntialiasingQuality : AntialiasingQuality
+    - m_StopNaN : bool = false
+    - m_Dithering : bool = false
+    - m_ClearDepth : bool = true
+    - m_AllowXRRendering : bool = true
+    - m_AllowHDROutput : bool = true
+    - m_UseScreenCoordOverride : bool
+    - m_ScreenSizeOverride : Vector4
+    - m_ScreenCoordScaleBias : Vector4
+    - m_Camera : Camera
+    - m_RequiresDepthTexture : bool = false
+    - m_RequiresColorTexture : bool = false
+    - m_Version : float = 2
+    - m_MotionVectorsPersistentData : MotionVectorsPersistentData
+    - m_TaaPersistentData : TaaPersistentData
+    <<internal>> m_TaaSettings : TemporalAA.Settings
+    + version : float <<get>>
+    {static} - s_DefaultAdditionalCameraData : UniversalAdditionalCameraData = null
+    <<internal>> {static} defaultAdditionalCameraData : UniversalAdditionalCameraData <<get>>
+    <<internal>> camera : Camera <<get>>
+    + renderShadows : bool <<get>> <<set>>
+    + requiresDepthOption : CameraOverrideOption <<get>> <<set>>
+    + requiresColorOption : CameraOverrideOption <<get>> <<set>>
+    + renderType : CameraRenderType <<get>> <<set>>
+    + cameraStack : List<Camera> <<get>>
+    <<internal>> UpdateCameraStack() : void
+    + clearDepth : bool <<get>>
+    + requiresDepthTexture : bool <<get>> <<set>>
+    + requiresColorTexture : bool <<get>> <<set>>
+    + scriptableRenderer : ScriptableRenderer <<get>>
+    + SetRenderer(index:int) : void
+    + volumeLayerMask : LayerMask <<get>> <<set>>
+    + volumeTrigger : Transform <<get>> <<set>>
+    <<internal>> volumeFrameworkUpdateMode : VolumeFrameworkUpdateMode <<get>> <<set>>
+    + requiresVolumeFrameworkUpdate : bool <<get>>
+    - {static} s_CachedVolumeStacks : List<VolumeStack>
+    + volumeStack : VolumeStack <<get>> <<set>>
+    - m_VolumeStack : VolumeStack = null
+    <<internal>> GetOrCreateVolumeStack() : void
+    + renderPostProcessing : bool <<get>> <<set>>
+    + antialiasing : AntialiasingMode <<get>> <<set>>
+    + antialiasingQuality : AntialiasingQuality <<get>> <<set>>
+    + taaSettings : ref TemporalAA.Settings <<get>>
+    <<internal>> taaPersistentData : TaaPersistentData <<get>>
+    <<internal>> motionVectorsPersistentData : MotionVectorsPersistentData <<get>>
+    + resetHistory : bool <<get>> <<set>>
+    + stopNaN : bool <<get>> <<set>>
+    + dithering : bool <<get>> <<set>>
+    + allowXRRendering : bool <<get>> <<set>>
+    + useScreenCoordOverride : bool <<get>> <<set>>
+    + screenSizeOverride : Vector4 <<get>> <<set>>
+    + screenCoordScaleBias : Vector4 <<get>> <<set>>
+    + allowHDROutput : bool <<get>> <<set>>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    + OnDrawGizmos() : void
+    + OnDestroy() : void
+}
+MonoBehaviour <|-- UniversalAdditionalCameraData
+ISerializationCallbackReceiver <|-- UniversalAdditionalCameraData
+IAdditionalData <|-- UniversalAdditionalCameraData
+@enduml

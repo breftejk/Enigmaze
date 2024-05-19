@@ -1,0 +1,12 @@
+@startuml
+class TrackDrawer {
+    <<internal>> sequencerState : WindowState <<get>> <<set>>
+    + {static} CreateInstance(trackAsset:TrackAsset) : TrackDrawer
+    # track : TrackAsset <<get>>
+    + <<virtual>> HasCustomTrackHeaderButton() : bool
+    + <<virtual>> DrawTrackHeaderButton(rect:Rect, state:WindowState) : void
+    + <<virtual>> DrawTrack(trackRect:Rect, trackAsset:TrackAsset, visibleTime:Vector2, state:WindowState) : bool
+    + <<virtual>> DrawRecordingBackground(trackRect:Rect, trackAsset:TrackAsset, visibleTime:Vector2, state:WindowState) : void
+}
+GUIDrawer <|-- TrackDrawer
+@enduml

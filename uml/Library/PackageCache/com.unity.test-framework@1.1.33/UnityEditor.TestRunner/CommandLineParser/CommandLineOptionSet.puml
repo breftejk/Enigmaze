@@ -1,0 +1,8 @@
+@startuml
+class CommandLineOptionSet {
+    - m_Options : ICommandLineOption[]
+    + CommandLineOptionSet(options:ICommandLineOption[])
+    + Parse(args:string[]) : void
+    - ApplyValueToMatchingOptions(argName:string, value:string) : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ScreenPositionSlotControlView {
+    - m_Slot : ScreenPositionMaterialSlot
+    + ScreenPositionSlotControlView(slot:ScreenPositionMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Enum>) : void
+}
+VisualElement <|-- ScreenPositionSlotControlView
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CustomEventDescriptor {
+    + CustomEventDescriptor(@event:CustomEvent)
+    # <<override>> DefinedSubtitle() : string
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"EventUnitDescriptor`1" "<CustomEvent>" <|-- CustomEventDescriptor
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+class Component <<partial>> {
+    + <<extern>> transform : Transform <<get>>
+    + <<extern>> gameObject : GameObject <<get>>
+    + GetComponent(type:Type) : Component
+    <<internal>> <<extern>> GetComponentFastPath(type:System.Type, oneFurtherThanResultValue:IntPtr) : void
+    + <<unsafe>> GetComponent() : T
+    + TryGetComponent(type:Type, component:Component) : bool
+    + <<unsafe>> TryGetComponent(component:T) : bool
+    + <<extern>> GetComponent(type:string) : Component
+    + GetComponentInChildren(t:Type, includeInactive:bool) : Component
+    + GetComponentInChildren(t:Type) : Component
+    + GetComponentInChildren(includeInactive:bool) : T
+    + GetComponentInChildren() : T
+    + GetComponentsInChildren(t:Type, includeInactive:bool) : Component[]
+    + GetComponentsInChildren(t:Type) : Component[]
+    + GetComponentsInChildren(includeInactive:bool) : T[]
+    + GetComponentsInChildren(includeInactive:bool, result:List<T>) : void
+    + GetComponentsInChildren() : T[]
+    + GetComponentsInChildren(results:List<T>) : void
+    + GetComponentInParent(t:Type, includeInactive:bool) : Component
+    + GetComponentInParent(t:Type) : Component
+    + GetComponentInParent(includeInactive:bool) : T
+    + GetComponentInParent() : T
+    + GetComponentsInParent(t:Type, includeInactive:bool) : Component[]
+    + GetComponentsInParent(t:Type) : Component[]
+    + GetComponentsInParent(includeInactive:bool) : T[]
+    + GetComponentsInParent(includeInactive:bool, results:List<T>) : void
+    + GetComponentsInParent() : T[]
+    + GetComponents(type:Type) : Component[]
+    - <<extern>> GetComponentsForListInternal(searchType:Type, resultList:object) : void
+    + GetComponents(type:Type, results:List<Component>) : void
+    + GetComponents(results:List<T>) : void
+    + tag : string <<get>> <<set>>
+    + GetComponents() : T[]
+    + <<extern>> GetComponentIndex() : int
+    + CompareTag(tag:string) : bool
+    + CompareTag(tag:TagHandle) : bool
+    <<internal>> <<extern>> GetCoupledComponent() : Component
+    <<internal>> <<extern>> IsCoupledComponent() : bool
+    + <<extern>> SendMessageUpwards(methodName:string, value:object, options:SendMessageOptions) : void
+    + SendMessageUpwards(methodName:string, value:object) : void
+    + SendMessageUpwards(methodName:string) : void
+    + SendMessageUpwards(methodName:string, options:SendMessageOptions) : void
+    + SendMessage(methodName:string, value:object) : void
+    + SendMessage(methodName:string) : void
+    + <<extern>> SendMessage(methodName:string, value:object, options:SendMessageOptions) : void
+    + SendMessage(methodName:string, options:SendMessageOptions) : void
+    + <<extern>> BroadcastMessage(methodName:string, parameter:object, options:SendMessageOptions) : void
+    + BroadcastMessage(methodName:string, parameter:object) : void
+    + BroadcastMessage(methodName:string) : void
+    + BroadcastMessage(methodName:string, options:SendMessageOptions) : void
+}
+@enduml

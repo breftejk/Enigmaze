@@ -1,0 +1,8 @@
+@startuml
+class MinimalGraphData {
+    {static} - s_MinimalTypeMap : Dictionary<string, Type>
+    {static} - CreateMinimalTypeMap() : Dictionary<string, Type>
+    - m_SerializableNodes : List<SerializationHelper.JSONSerializedElement>
+    + {static} GatherMinimalDependenciesFromFile(assetPath:string, assetCollection:AssetCollection) : bool
+}
+@enduml

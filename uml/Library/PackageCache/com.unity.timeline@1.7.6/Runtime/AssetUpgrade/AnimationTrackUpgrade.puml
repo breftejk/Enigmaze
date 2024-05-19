@@ -1,0 +1,19 @@
+@startuml
+class AnimationTrack <<partial>> {
+    - m_OpenClipOffsetRotation : Quaternion
+    - m_Rotation : Quaternion
+    - m_ApplyOffsets : bool
+    + openClipOffsetPosition : Vector3 <<get>> <<set>>
+    + openClipOffsetRotation : Quaternion <<get>> <<set>>
+    + openClipOffsetEulerAngles : Vector3 <<get>> <<set>>
+    + openClipPreExtrapolation : TimelineClip.ClipExtrapolation <<get>> <<set>>
+    + openClipPostExtrapolation : TimelineClip.ClipExtrapolation <<get>> <<set>>
+    <<internal>> <<override>> OnUpgradeFromVersion(oldVersion:int) : void
+}
+class AnimationTrackUpgrade <<static>> {
+    + {static} ConvertRotationsToEuler(track:AnimationTrack) : void
+    + {static} ConvertRootMotion(track:AnimationTrack) : void
+    + {static} ConvertInfiniteTrack(track:AnimationTrack) : void
+}
+AnimationTrack +-- AnimationTrackUpgrade
+@enduml

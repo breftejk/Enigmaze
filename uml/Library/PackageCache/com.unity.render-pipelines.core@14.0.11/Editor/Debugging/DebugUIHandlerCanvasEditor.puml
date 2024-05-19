@@ -1,0 +1,13 @@
+@startuml
+class DebugUIHandlerCanvasEditor <<sealed>> {
+    - m_PanelPrefab : SerializedProperty
+    - m_Prefabs : SerializedProperty
+    - m_PrefabList : ReorderableList
+    {static} - s_Types : string[]
+    {static} - s_DisplayTypes : string[]
+    {static} - DebugUIHandlerCanvasEditor()
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- DebugUIHandlerCanvasEditor
+@enduml

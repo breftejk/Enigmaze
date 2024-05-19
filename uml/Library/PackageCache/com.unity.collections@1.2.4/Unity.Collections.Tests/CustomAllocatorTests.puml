@@ -1,0 +1,60 @@
+@startuml
+class CustomAllocatorTests {
+    + AllocatorHandleToAllocatorRoundTripWorks(i:int, v:int) : void
+    + AllocatorVersioningWorks() : void
+    + ReleasingChildHandlesWorks() : void
+    + <<unsafe>> ReleasingChildAllocatorsWorks() : void
+    + AllocatesAndFreesFromMono() : void
+    + AllocatesAndFreesFromBurst() : void
+    + UserDefinedAllocatorWorks() : void
+    + StackAllocatorWorks() : void
+    + CustomAllocatorNativeListWorksWithoutHandles() : void
+    + CustomAllocatorNativeListThrowsWhenAllocatorIsWrong() : void
+    + CustomAllocatorUnsafeListWorks() : void
+    + <<unsafe>> SlabAllocatorWorks() : void
+    + <<unsafe>> CollectionHelper_IsAligned() : void
+    + AllocatorManager_AllocateBlock_UsesAlignmentArgument() : void
+    + AllocatorManager_AllocateBlock_AlwaysCacheLineAligned() : void
+}
+struct AllocateJob {
+    + m_blocks : NativeArray<AllocatorManager.Block>
+    + Execute(index:int) : void
+}
+struct FreeJob {
+    + m_blocks : NativeArray<AllocatorManager.Block>
+    + Execute(index:int) : void
+}
+struct ClearToValueAllocator {
+    + Handle : AllocatorManager.AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    <<internal>> m_handle : AllocatorManager.AllocatorHandle
+    <<internal>> m_parent : AllocatorManager.AllocatorHandle
+    + m_clearValue : byte
+    + Initialize(ClearValue:byte, parent:T) : void
+    + <<unsafe>> Try(block:AllocatorManager.Block) : int
+    + {static} <<unsafe>> Try(state:IntPtr, block:AllocatorManager.Block) : int
+    + Function : AllocatorManager.TryFunction <<get>>
+    + Dispose() : void
+}
+struct CountingAllocator {
+    + Handle : AllocatorManager.AllocatorHandle <<get>> <<set>>
+    + ToAllocator : Allocator <<get>>
+    + IsCustomAllocator : bool <<get>>
+    + m_handle : AllocatorManager.AllocatorHandle
+    + AllocationCount : int
+    + WasUsed : bool <<get>>
+    + Initialize() : void
+    + Try(block:AllocatorManager.Block) : int
+    + {static} <<unsafe>> Try(state:IntPtr, block:AllocatorManager.Block) : int
+    + Function : AllocatorManager.TryFunction <<get>>
+    + Dispose() : void
+}
+CollectionsTestCommonBase <|-- CustomAllocatorTests
+CustomAllocatorTests +-- AllocateJob
+IJobParallelFor <|-- AllocateJob
+CustomAllocatorTests +-- FreeJob
+IJobParallelFor <|-- FreeJob
+CustomAllocatorTests +-- ClearToValueAllocator
+CustomAllocatorTests +-- CountingAllocator
+@enduml

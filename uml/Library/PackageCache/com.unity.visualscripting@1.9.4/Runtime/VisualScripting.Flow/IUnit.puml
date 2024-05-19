@@ -1,0 +1,37 @@
+@startuml
+interface IUnit {
+    <<new>> graph : FlowGraph <<get>>
+    canDefine : bool <<get>>
+    isDefined : bool <<get>>
+    failedToDefine : bool <<get>>
+    definitionException : Exception <<get>>
+    Define() : void
+    EnsureDefined() : void
+    RemoveUnconnectedInvalidPorts() : void
+    defaultValues : Dictionary<string, object> <<get>>
+    controlInputs : IUnitPortCollection<ControlInput> <<get>>
+    controlOutputs : IUnitPortCollection<ControlOutput> <<get>>
+    valueInputs : IUnitPortCollection<ValueInput> <<get>>
+    valueOutputs : IUnitPortCollection<ValueOutput> <<get>>
+    invalidInputs : IUnitPortCollection<InvalidInput> <<get>>
+    invalidOutputs : IUnitPortCollection<InvalidOutput> <<get>>
+    inputs : IEnumerable<IUnitInputPort> <<get>>
+    outputs : IEnumerable<IUnitOutputPort> <<get>>
+    validInputs : IEnumerable<IUnitInputPort> <<get>>
+    validOutputs : IEnumerable<IUnitOutputPort> <<get>>
+    ports : IEnumerable<IUnitPort> <<get>>
+    invalidPorts : IEnumerable<IUnitPort> <<get>>
+    validPorts : IEnumerable<IUnitPort> <<get>>
+    PortsChanged() : void
+     <<event>> onPortsChanged : Action 
+    relations : IConnectionCollection<IUnitRelation, IUnitPort, IUnitPort> <<get>>
+    connections : IEnumerable<IUnitConnection> <<get>>
+    isControlRoot : bool <<get>>
+    position : Vector2 <<get>> <<set>>
+}
+class XUnit <<static>> {
+    + {static} CompatibleValueInput(unit:IUnit, outputType:Type) : ValueInput
+    + {static} CompatibleValueOutput(unit:IUnit, inputType:Type) : ValueOutput
+}
+IGraphElementWithDebugData <|-- IUnit
+@enduml

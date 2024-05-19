@@ -1,0 +1,8 @@
+@startuml
+class BridgeScriptForRetainingObjects {
+    + <<const>> bridgeObjectName : string = "BridgeGameObject"
+    + canvasGO : GameObject
+    + nestedCanvasGO : GameObject
+}
+MonoBehaviour <|-- BridgeScriptForRetainingObjects
+@enduml

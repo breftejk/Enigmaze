@@ -1,0 +1,9 @@
+@startuml
+class CanvasWidthAssertionErrorWithRectTransform {
+    - m_CanvasMaster : GameObject
+    - m_CanvasChild : GameObject
+    + TestSetup() : void
+    + CanvasWidthAssertionErrorCheckOnModifyingRectTransform() : void
+    + TearDown() : void
+}
+@enduml

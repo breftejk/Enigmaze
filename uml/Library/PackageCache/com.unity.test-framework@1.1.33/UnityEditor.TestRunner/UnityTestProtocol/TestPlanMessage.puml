@@ -1,0 +1,7 @@
+@startuml
+class TestPlanMessage {
+    + tests : List<string>
+    + TestPlanMessage()
+}
+Message <|-- TestPlanMessage
+@enduml

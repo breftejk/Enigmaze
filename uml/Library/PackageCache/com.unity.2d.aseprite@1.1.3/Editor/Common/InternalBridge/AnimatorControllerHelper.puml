@@ -1,0 +1,5 @@
+@startuml
+class AnimatorControllerHelper <<static>> {
+    {static} - OnOpenAsset(instanceID:int, line:int) : bool
+}
+@enduml

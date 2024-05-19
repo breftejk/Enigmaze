@@ -1,0 +1,6 @@
+@startuml
+class FloatInspector {
+    + FloatInspector(metadata:Metadata)
+}
+"ContinuousNumberInspector`1" "<float>" <|-- FloatInspector
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+class DielectricSpecularControlAttribute {
+    + DielectricSpecularControlAttribute()
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class DielectricSpecularControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_DielectricMaterial : DielectricSpecularNode.DielectricMaterial
+    - m_RangePanel : VisualElement
+    - m_RangeSlider : Slider
+    - m_RangeField : FloatField
+    - m_IORPanel : VisualElement
+    - m_IORSlider : Slider
+    - m_IORField : FloatField
+    + DielectricSpecularControlView(node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnEnumChanged(evt:ChangeEvent<Enum>) : void
+    - OnChangeRangeSlider(newValue:float) : void
+    - OnChangeIORSlider(newValue:float) : void
+    - AddField(panel:VisualElement, slider:Slider, index:int, initMaterial:DielectricSpecularNode.DielectricMaterial) : FloatField
+    - RedrawRangeControls(value:float) : void
+    - RedrawIORControls(value:float) : void
+    - Repaint(evt:MouseEventBase<T>) : void
+}
+Attribute <|-- DielectricSpecularControlAttribute
+IControlAttribute <|-- DielectricSpecularControlAttribute
+VisualElement <|-- DielectricSpecularControlView
+@enduml

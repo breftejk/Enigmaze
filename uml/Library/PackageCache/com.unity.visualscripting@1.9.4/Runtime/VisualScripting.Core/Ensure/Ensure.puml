@@ -1,0 +1,10 @@
+@startuml
+class Ensure <<static>> {
+    - {static} <<readonly>> instance : EnsureThat
+    + {static} IsActive : bool <<get>> <<set>>
+    + {static} Off() : void
+    + {static} On() : void
+    + {static} That(paramName:string) : EnsureThat
+    <<internal>> {static} OnRuntimeMethodLoad() : void
+}
+@enduml

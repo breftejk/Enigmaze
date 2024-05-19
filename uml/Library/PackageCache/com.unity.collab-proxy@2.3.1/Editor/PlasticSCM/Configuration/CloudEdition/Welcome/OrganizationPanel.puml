@@ -1,0 +1,25 @@
+@startuml
+class OrganizationPanel {
+    <<internal>> OrganizationPanel(parentWindow:CloudEditionWelcomeWindow, restApi:IPlasticWebRestApi, title:string, organizations:List<string>)
+    <<internal>> Dispose() : void
+    - OnEditorActivated() : void
+    - ProcessOrganizations(organizations:List<string>) : void
+    - InitializeLayoutAndStyles() : void
+    - JoinOrganizationButton_clicked() : void
+    - OpenUnityDashboardButton_clicked() : void
+    - BuildComponents(title:string, organizations:List<string>) : void
+    - BuildSingleOrganizationSection(organizationName:string) : void
+    - BuildMultipleOrganizationsSection(organizationNames:List<string>) : void
+    - BuildNoOrganizationSection() : void
+    - mOrganizationToJoin : string = ""
+    - mReloadOrganizationsNeeded : bool
+    - mJoinSingleOrganizationButton : Button
+    - mJoinMultipleOrganizationsButton : Button
+    - mOpenUnityDashboardButton : Button
+    - mProgressContainer : VisualElement
+    - mProgressControls : IProgressControls
+    <<readonly>> - mParentWindow : CloudEditionWelcomeWindow
+    <<readonly>> - mRestApi : IPlasticWebRestApi
+}
+VisualElement <|-- OrganizationPanel
+@enduml

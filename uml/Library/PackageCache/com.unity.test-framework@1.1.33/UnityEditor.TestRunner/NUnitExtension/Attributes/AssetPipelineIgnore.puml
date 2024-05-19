@@ -1,0 +1,30 @@
+@startuml
+class AssetPipelineIgnore <<static>> {
+}
+enum AssetPipelineBackend {
+    V1,
+    V2,
+}
+class IgnoreInV1 {
+    + IgnoreInV1(ignoreReason:string)
+}
+class IgnoreInV2 {
+    + IgnoreInV2(ignoreReason:string)
+}
+class AssetPipelineIgnoreAttribute {
+    <<readonly>> - m_IgnoreReason : string
+    <<readonly>> - m_IgnoredBackend : AssetPipelineBackend
+    {static} <<readonly>> - k_ActiveBackend : AssetPipelineBackend
+    {static} - ActiveBackendName : string
+    + AssetPipelineIgnoreAttribute(backend:AssetPipelineBackend, ignoreReason:string)
+    + ApplyToTest(test:Test) : void
+}
+AssetPipelineIgnore +-- AssetPipelineBackend
+AssetPipelineIgnore +-- IgnoreInV1
+AssetPipelineIgnoreAttribute <|-- IgnoreInV1
+AssetPipelineIgnore +-- IgnoreInV2
+AssetPipelineIgnoreAttribute <|-- IgnoreInV2
+AssetPipelineIgnore +-- AssetPipelineIgnoreAttribute
+NUnitAttribute <|-- AssetPipelineIgnoreAttribute
+IApplyToTest <|-- AssetPipelineIgnoreAttribute
+@enduml

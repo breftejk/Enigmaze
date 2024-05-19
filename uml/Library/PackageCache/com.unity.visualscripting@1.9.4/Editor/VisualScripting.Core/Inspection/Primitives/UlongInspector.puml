@@ -1,0 +1,6 @@
+@startuml
+class UlongInspector {
+    + UlongInspector(metadata:Metadata)
+}
+"ContinuousNumberInspector`1" "<ulong>" <|-- UlongInspector
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class AssetUpgrader <<static>> {
+    {static} - s_Upgraders : Dictionary<UpgradeMode, BaseUpgrader>
+    <<internal>> {static} GetAllAssetsOfType(upgradeMode:UpgradeMode) : List<Object>
+    <<internal>> {static} UpgradeSelection(upgradeMode:UpgradeMode, selection:List<ObjectIndexPair>) : UpgradeReport
+}
+@enduml

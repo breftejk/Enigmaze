@@ -1,0 +1,8 @@
+@startuml
+class MetaPath <<static>> {
+    <<internal>> <<const>> META_EXTENSION : string = ".meta"
+    <<internal>> {static} IsMetaPath(path:string) : bool
+    <<internal>> {static} GetMetaPath(path:string) : string
+    <<internal>> {static} GetPathFromMetaPath(path:string) : string
+}
+@enduml

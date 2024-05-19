@@ -1,0 +1,16 @@
+@startuml
+class CinemachineFollowZoom {
+    + m_Width : float = 2f
+    + m_Damping : float = 1f
+    + m_MinFOV : float = 3f
+    + m_MaxFOV : float = 60f
+    - OnValidate() : void
+    + <<override>> GetMaxDampTime() : float
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+}
+class VcamExtraState {
+    + m_previousFrameZoom : float = 0
+}
+CinemachineExtension <|-- CinemachineFollowZoom
+CinemachineFollowZoom +-- VcamExtraState
+@enduml

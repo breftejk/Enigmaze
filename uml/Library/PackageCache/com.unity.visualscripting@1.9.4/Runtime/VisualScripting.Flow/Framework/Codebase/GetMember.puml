@@ -1,0 +1,13 @@
+@startuml
+class GetMember <<sealed>> {
+    + GetMember()
+    + GetMember(member:Member)
+    + getter : Member <<get>> <<set>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> IsMemberValid(member:Member) : bool
+    - Value(flow:Flow) : object
+    + <<override>> GetAnalyticsIdentifier() : AnalyticsIdentifier
+}
+MemberUnit <|-- GetMember
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+class Executer {
+    - m_TestRunnerApi : ITestRunnerApi
+    - m_SettingsBuilder : ISettingsBuilder
+    - m_LogErrorFormat : Action<string, object[]>
+    - m_LogException : Action<Exception>
+    - m_ExitEditorApplication : Action<int>
+    - m_ScriptCompilationFailedCheck : Func<bool>
+    + Executer(testRunnerApi:ITestRunnerApi, settingsBuilder:ISettingsBuilder, logErrorFormat:Action<string, object[]>, logException:Action<Exception>, exitEditorApplication:Action<int>, scriptCompilationFailedCheck:Func<bool>)
+    <<internal>> InitializeAndExecuteRun(commandLineArgs:string[]) : void
+    <<internal>> BuildExecutionSettings(commandLineArgs:string[]) : ExecutionSettings
+    <<internal>> SetUpCallbacks(executionSettings:ExecutionSettings) : void
+    <<internal>> ExitOnCompileErrors() : void
+    - HandleSetupException(exception:SetupException) : void
+    {static} - s_ExceptionHandlingMapping : ExceptionHandling[]
+    - {static} ExecutionSettingsToString(executionSettings:Api.ExecutionSettings) : string
+}
+enum ReturnCodes {
+    Ok= 0,
+    Failed= 2,
+    RunError= 3,
+    PlatformNotFoundReturnCode= 4,
+}
+class ExceptionHandling {
+    <<internal>> m_ExceptionType : SetupException.ExceptionType
+    <<internal>> m_Message : string
+    <<internal>> m_ReturnCode : int
+    + ExceptionHandling(exceptionType:SetupException.ExceptionType, message:string, returnCode:ReturnCodes)
+}
+Executer +-- ReturnCodes
+Executer +-- ExceptionHandling
+@enduml

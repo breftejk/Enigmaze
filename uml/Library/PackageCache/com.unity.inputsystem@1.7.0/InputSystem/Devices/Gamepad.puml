@@ -1,0 +1,84 @@
+@startuml
+struct GamepadState {
+    + {static} Format : FourCC <<get>>
+    <<internal>> <<const>> ButtonSouthShortDisplayName : string = "A"
+    <<internal>> <<const>> ButtonNorthShortDisplayName : string = "Y"
+    <<internal>> <<const>> ButtonWestShortDisplayName : string = "X"
+    <<internal>> <<const>> ButtonEastShortDisplayName : string = "B"
+    + buttons : uint
+    + leftStick : Vector2
+    + rightStick : Vector2
+    + leftTrigger : float
+    + rightTrigger : float
+    + format : FourCC <<get>>
+    + GamepadState(buttons:GamepadButton[])
+    + WithButton(button:GamepadButton, value:bool) : GamepadState
+}
+enum GamepadButton {
+    DpadUp= 0,
+    DpadDown= 1,
+    DpadLeft= 2,
+    DpadRight= 3,
+    North= 4,
+    East= 5,
+    South= 6,
+    West= 7,
+    LeftStick= 8,
+    RightStick= 9,
+    LeftShoulder= 10,
+    RightShoulder= 11,
+    Start= 12,
+    Select= 13,
+    LeftTrigger= 32,
+    RightTrigger= 33,
+    X= West,
+    Y= North,
+    A= South,
+    B= East,
+    Cross= South,
+    Square= West,
+    Triangle= North,
+    Circle= East,
+}
+class Gamepad {
+    + buttonWest : ButtonControl <<get>> <<protected set>>
+    + buttonNorth : ButtonControl <<get>> <<protected set>>
+    + buttonSouth : ButtonControl <<get>> <<protected set>>
+    + buttonEast : ButtonControl <<get>> <<protected set>>
+    + leftStickButton : ButtonControl <<get>> <<protected set>>
+    + rightStickButton : ButtonControl <<get>> <<protected set>>
+    + startButton : ButtonControl <<get>> <<protected set>>
+    + selectButton : ButtonControl <<get>> <<protected set>>
+    + dpad : DpadControl <<get>> <<protected set>>
+    + leftShoulder : ButtonControl <<get>> <<protected set>>
+    + rightShoulder : ButtonControl <<get>> <<protected set>>
+    + leftStick : StickControl <<get>> <<protected set>>
+    + rightStick : StickControl <<get>> <<protected set>>
+    + leftTrigger : ButtonControl <<get>> <<protected set>>
+    + rightTrigger : ButtonControl <<get>> <<protected set>>
+    + aButton : ButtonControl <<get>>
+    + bButton : ButtonControl <<get>>
+    + xButton : ButtonControl <<get>>
+    + yButton : ButtonControl <<get>>
+    + triangleButton : ButtonControl <<get>>
+    + squareButton : ButtonControl <<get>>
+    + circleButton : ButtonControl <<get>>
+    + crossButton : ButtonControl <<get>>
+    + {static} current : Gamepad <<get>>
+    + <<new>> {static} all : ReadOnlyArray<Gamepad> <<get>>
+    # <<override>> FinishSetup() : void
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnAdded() : void
+    # <<override>> OnRemoved() : void
+    + <<virtual>> PauseHaptics() : void
+    + <<virtual>> ResumeHaptics() : void
+    + <<virtual>> ResetHaptics() : void
+    + <<virtual>> SetMotorSpeeds(lowFrequency:float, highFrequency:float) : void
+    - m_Rumble : DualMotorRumble
+    - {static} s_GamepadCount : int
+    - {static} s_Gamepads : Gamepad[]
+}
+IInputStateTypeInfo <|-- GamepadState
+InputDevice <|-- Gamepad
+IDualMotorRumble <|-- Gamepad
+@enduml

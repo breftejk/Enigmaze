@@ -1,0 +1,52 @@
+@startuml
+class ILPostProcessingLegacy {
+    - _burstAssembly : AssemblyDefinition
+    - _burstCompilerTypeDefinition : TypeDefinition
+    - _burstCompilerIsEnabledMethodDefinition : MethodReference
+    - _burstCompilerCompileILPPMethod : MethodReference
+    - _burstCompilerGetILPPMethodFunctionPointer : MethodReference
+    - _burstDiscardAttributeConstructor : MethodReference
+    - _burstCompilerCompileUnsafeStaticMethodReinitialiseAttributeCtor : MethodReference
+    - _typeSystem : TypeSystem
+    - _systemType : TypeReference
+    - _systemDelegateType : TypeReference
+    - _systemASyncCallbackType : TypeReference
+    - _systemIASyncResultType : TypeReference
+    - _assemblyDefinition : AssemblyDefinition
+    - _modified : bool
+    - <<readonly>> _builder : StringBuilder
+    - <<readonly>> _instructionsToReplace : List<Instruction>
+    - <<readonly>> _directCallInitializeMethods : List<MethodDefinition>
+    - <<const>> PostfixBurstDirectCall : string = "$BurstDirectCall"
+    - <<const>> PostfixBurstDelegate : string = "$PostfixBurstDelegate"
+    - <<const>> PostfixManaged : string = "$BurstManaged"
+    - <<const>> GetFunctionPointerName : string = "GetFunctionPointer"
+    - <<const>> GetFunctionPointerDiscardName : string = "GetFunctionPointerDiscard"
+    - <<const>> InvokeName : string = "Invoke"
+    + ILPostProcessingLegacy(loader:AssemblyResolver, isForEditor:bool, error:ErrorDiagnosticDelegate, log:LogDelegate, logLevel:int, skipInitializeOnLoad:bool)
+    + _skipInitializeOnLoad : bool
+    + IsForEditor : bool <<get>>
+    - Loader : AssemblyResolver <<get>>
+    + Run(assemblyDefinition:AssemblyDefinition) : bool
+    - GenerateInitializeOnLoadMethod() : void
+    - {static} CanComputeCompileTimeHash(typeRef:TypeReference) : bool
+    - ProcessType(type:TypeDefinition) : void
+    - {static} HashStringWithFNV1A64(text:string) : long
+    - CalculateHashCode64(type:TypeReference) : long
+    - {static} TypeIsSharedStatic(typeRef:TypeReference) : bool
+    - {static} TypeHasSharedStaticInIt(typeDef:TypeDefinition) : bool
+    - InjectDelegate(declaringType:TypeDefinition, originalName:string, managed:MethodDefinition, uniqueSuffix:string) : TypeDefinition
+    - CreateGetFunctionPointerDiscardMethod(cls:TypeDefinition, pointerField:FieldDefinition, deferredCompilationField:FieldDefinition, managedFallbackMethod:MethodDefinition, injectedDelegate:TypeDefinition) : MethodDefinition
+    - CreateGetFunctionPointerMethod(cls:TypeDefinition, getFunctionPointerDiscardMethod:MethodDefinition) : MethodDefinition
+    - ProcessMethodForDirectCall(burstCompileMethod:MethodDefinition) : void
+    - {static} FixDebugInformation(method:MethodDefinition) : MethodDefinition
+    - GetAsmDefinitionFromFile(loader:AssemblyResolver, assemblyName:string) : AssemblyDefinition
+    - _unityEngineInitializeOnLoadAttributeCtor : MethodReference
+    - _unityEngineRuntimeInitializeLoadType : TypeReference
+    - _unityEngineRuntimeInitializeLoadAfterAssemblies : FieldDefinition
+    - _unityEditorInitilizeOnLoadAttributeCtor : MethodReference
+    - InitializeBurstAssembly(burstAssembly:AssemblyDefinition) : void
+    - {static} EmitArguments(processor:ILProcessor, method:MethodDefinition) : void
+    - {static} TryGetBurstCompilerAttribute(provider:ICustomAttributeProvider, customAttribute:CustomAttribute) : bool
+}
+@enduml

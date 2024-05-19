@@ -1,0 +1,23 @@
+@startuml
+class UniversalAnalytics {
+    {static} - s_EventRegistered : bool = false
+    <<const>> - k_MaxEventsPerHour : int = 1000
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.universal"
+    <<const>> - k_EventName : string = "uUniversalRenderPipelineUsage"
+    {static} - EnableAnalytics() : bool
+    {static} - SendUniversalEvent() : void
+    + callbackOrder : int <<get>>
+    + OnPostprocessBuild(report:BuildReport) : void
+}
+struct AnalyticsData {
+    + renderer_data : string[]
+    + renderer_data_amount : int
+    + renderer_features : string[]
+    + renderer_features_amount : int
+    + main_light_rendering_mode : string
+    + additional_light_rendering_mode : string
+}
+IPostprocessBuildWithReport <|-- UniversalAnalytics
+UniversalAnalytics +-- AnalyticsData
+@enduml

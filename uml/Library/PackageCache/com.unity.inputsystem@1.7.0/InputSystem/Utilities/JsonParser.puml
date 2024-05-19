@@ -1,0 +1,68 @@
+@startuml
+struct JsonParser {
+    + JsonParser(json:string)
+    + Reset() : void
+    + <<override>> ToString() : string
+    + NavigateToProperty(path:string) : bool
+    + CurrentPropertyHasValueEqualTo(expectedValue:JsonValue) : bool
+    + ParseToken(token:char) : bool
+    + ParseValue() : bool
+    + ParseValue(result:JsonValue) : bool
+    + ParseStringValue(result:JsonValue) : bool
+    + ParseArrayValue(result:JsonValue) : bool
+    + ParseObjectValue(result:JsonValue) : bool
+    + ParseNumber(result:JsonValue) : bool
+    + ParseBooleanValue(result:JsonValue) : bool
+    + ParseNullValue(result:JsonValue) : bool
+    + SkipToValue() : bool
+    - SkipString(text:string) : bool
+    - SkipWhitespace() : void
+    + isAtEnd : bool <<get>>
+    - <<readonly>> m_Text : string
+    - <<readonly>> m_Length : int
+    - m_Position : int
+    - m_MatchAnyElementInArray : bool
+    - m_DryRun : bool
+}
+enum JsonValueType {
+    None,
+    Bool,
+    Real,
+    Integer,
+    String,
+    Array,
+    Object,
+    Any,
+}
+struct JsonString {
+    + text : Substring
+    + hasEscapes : bool
+    + <<override>> ToString() : string
+    + Equals(other:JsonString) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+struct JsonValue {
+    + type : JsonValueType
+    + boolValue : bool
+    + realValue : double
+    + integerValue : long
+    + stringValue : JsonString
+    + arrayValue : List<JsonValue>
+    + objectValue : Dictionary<string, JsonValue>
+    + anyValue : object
+    + ToBoolean() : bool
+    + ToInteger() : long
+    + ToDouble() : double
+    + <<override>> ToString() : string
+    + Equals(other:JsonValue) : bool
+    - {static} Equals(obj:object, value:JsonValue) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+JsonParser +-- JsonValueType
+JsonParser +-- JsonString
+"IEquatable`1" "<JsonString>" <|-- JsonString
+JsonParser +-- JsonValue
+"IEquatable`1" "<JsonValue>" <|-- JsonValue
+@enduml

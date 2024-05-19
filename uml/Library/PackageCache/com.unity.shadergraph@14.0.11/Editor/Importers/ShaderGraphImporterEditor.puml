@@ -1,0 +1,12 @@
+@startuml
+class ShaderGraphImporterEditor {
+    # <<override>> needsApplyRevert : bool <<get>>
+    - materialEditor : MaterialEditor = null
+    + <<override>> OnInspectorGUI() : void
+    + <<override>> OnEnable() : void
+    + <<override>> OnDisable() : void
+    <<internal>> {static} ShowGraphEditWindow(path:string) : bool
+    + {static} OnOpenAsset(instanceID:int, line:int) : bool
+}
+ScriptedImporterEditor <|-- ShaderGraphImporterEditor
+@enduml

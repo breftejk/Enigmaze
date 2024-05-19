@@ -1,0 +1,11 @@
+@startuml
+class SketchupMaterialDescriptionPreprocessor {
+    {static} <<readonly>> - k_Version : uint = 2
+    {static} <<readonly>> - k_Order : int
+    + <<override>> GetVersion() : uint
+    + <<override>> GetPostprocessOrder() : int
+    + OnPreprocessMaterialDescription(description:MaterialDescription, material:Material, clips:AnimationClip[]) : void
+    {static} - SetMaterialTextureProperty(propertyName:string, material:Material, textureProperty:TexturePropertyDescription) : void
+}
+AssetPostprocessor <|-- SketchupMaterialDescriptionPreprocessor
+@enduml

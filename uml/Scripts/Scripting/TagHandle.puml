@@ -1,0 +1,9 @@
+@startuml
+struct TagHandle {
+    - _tagIndex : uint
+    + {static} GetExistingTag(tagName:string) : TagHandle
+    + <<override>> ToString() : string
+    - {static} <<extern>> ExtractTagThrowing(tagName:string) : uint
+    - {static} <<extern>> TagToString(tagIndex:uint) : string
+}
+@enduml

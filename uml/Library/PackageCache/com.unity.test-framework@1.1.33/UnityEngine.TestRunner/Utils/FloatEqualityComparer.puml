@@ -1,0 +1,13 @@
+@startuml
+class FloatEqualityComparer {
+    - <<const>> k_DefaultError : float = 0.0001f
+    - <<readonly>> AllowedError : float
+    - {static} <<readonly>> m_Instance : FloatEqualityComparer
+    + {static} Instance : FloatEqualityComparer <<get>>
+    - FloatEqualityComparer()
+    + FloatEqualityComparer(allowedError:float)
+    + Equals(expected:float, actual:float) : bool
+    + GetHashCode(value:float) : int
+}
+"IEqualityComparer`1" "<float>" <|-- FloatEqualityComparer
+@enduml

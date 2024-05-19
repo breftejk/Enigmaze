@@ -1,0 +1,82 @@
+@startuml
+class RenderGraphResourceRegistry {
+    <<const>> - kSharedResourceLifetime : int = 30
+    {static} - m_CurrentRegistry : RenderGraphResourceRegistry
+    <<internal>> {static} current : RenderGraphResourceRegistry <<get>> <<set>>
+    - m_RenderGraphResources : RenderGraphResourcesData[]
+    - m_RendererListResources : DynamicArray<RendererListResource>
+    - m_RenderGraphDebug : RenderGraphDebugParams
+    - m_ResourceLogger : RenderGraphLogger
+    - m_FrameInformationLogger : RenderGraphLogger
+    - m_CurrentFrameIndex : int
+    - m_ExecutionCount : int
+    - m_CurrentBackbuffer : RTHandle
+    <<const>> - kInitialRendererListCount : int = 256
+    - m_ActiveRendererLists : List<CoreRendererList>
+    <<internal>> GetTexture(handle:TextureHandle) : RTHandle
+    <<internal>> TextureNeedsFallback(handle:TextureHandle) : bool
+    <<internal>> GetRendererList(handle:RendererListHandle) : CoreRendererList
+    <<internal>> GetComputeBuffer(handle:ComputeBufferHandle) : ComputeBuffer
+    - RenderGraphResourceRegistry()
+    <<internal>> RenderGraphResourceRegistry(renderGraphDebug:RenderGraphDebugParams, frameInformationLogger:RenderGraphLogger)
+    <<internal>> BeginRenderGraph(executionCount:int) : void
+    <<internal>> BeginExecute(currentFrameIndex:int) : void
+    <<internal>> EndExecute() : void
+    - CheckHandleValidity(res:ResourceHandle) : void
+    - CheckHandleValidity(type:RenderGraphResourceType, index:int) : void
+    <<internal>> IncrementWriteCount(res:ResourceHandle) : void
+    <<internal>> GetRenderGraphResourceName(res:ResourceHandle) : string
+    <<internal>> GetRenderGraphResourceName(type:RenderGraphResourceType, index:int) : string
+    <<internal>> IsRenderGraphResourceImported(res:ResourceHandle) : bool
+    <<internal>> IsRenderGraphResourceShared(type:RenderGraphResourceType, index:int) : bool
+    <<internal>> IsGraphicsResourceCreated(res:ResourceHandle) : bool
+    <<internal>> IsRendererListCreated(res:RendererListHandle) : bool
+    <<internal>> IsRenderGraphResourceImported(type:RenderGraphResourceType, index:int) : bool
+    <<internal>> GetRenderGraphResourceTransientIndex(res:ResourceHandle) : int
+    <<internal>> ImportTexture(rt:RTHandle) : TextureHandle
+    <<internal>> CreateSharedTexture(desc:TextureDesc, explicitRelease:bool) : TextureHandle
+    <<internal>> RefreshSharedTextureDesc(texture:TextureHandle, desc:TextureDesc) : void
+    <<internal>> ReleaseSharedTexture(texture:TextureHandle) : void
+    <<internal>> ImportBackbuffer(rt:RenderTargetIdentifier) : TextureHandle
+    <<internal>> CreateTexture(desc:TextureDesc, transientPassIndex:int) : TextureHandle
+    <<internal>> GetResourceCount(type:RenderGraphResourceType) : int
+    <<internal>> GetTextureResourceCount() : int
+    <<internal>> GetTextureResource(handle:ResourceHandle) : TextureResource
+    <<internal>> GetTextureResourceDesc(handle:ResourceHandle) : TextureDesc
+    <<internal>> CreateRendererList(desc:CoreRendererListDesc) : RendererListHandle
+    <<internal>> ImportComputeBuffer(computeBuffer:ComputeBuffer) : ComputeBufferHandle
+    <<internal>> CreateComputeBuffer(desc:ComputeBufferDesc, transientPassIndex:int) : ComputeBufferHandle
+    <<internal>> GetComputeBufferResourceDesc(handle:ResourceHandle) : ComputeBufferDesc
+    <<internal>> GetComputeBufferResourceCount() : int
+    - GetComputeBufferResource(handle:ResourceHandle) : ComputeBufferResource
+    <<internal>> UpdateSharedResourceLastFrameIndex(type:int, index:int) : void
+    - ManageSharedRenderGraphResources() : void
+    <<internal>> CreatePooledResource(rgContext:RenderGraphContext, type:int, index:int) : void
+    <<internal>> CreatePooledResource(rgContext:RenderGraphContext, handle:ResourceHandle) : void
+    - CreateTextureCallback(rgContext:RenderGraphContext, res:IRenderGraphResource) : void
+    <<internal>> ReleasePooledResource(rgContext:RenderGraphContext, type:int, index:int) : void
+    <<internal>> ReleasePooledResource(rgContext:RenderGraphContext, handle:ResourceHandle) : void
+    - ReleaseTextureCallback(rgContext:RenderGraphContext, res:IRenderGraphResource) : void
+    - ValidateTextureDesc(desc:TextureDesc) : void
+    - ValidateRendererListDesc(desc:CoreRendererListDesc) : void
+    - ValidateComputeBufferDesc(desc:ComputeBufferDesc) : void
+    <<internal>> CreateRendererLists(rendererLists:List<RendererListHandle>, context:ScriptableRenderContext, manualDispatch:bool) : void
+    <<internal>> Clear(onException:bool) : void
+    <<internal>> PurgeUnusedGraphicsResources() : void
+    <<internal>> Cleanup() : void
+    <<internal>> FlushLogs() : void
+    - LogResources() : void
+}
+class RenderGraphResourcesData {
+    + resourceArray : DynamicArray<IRenderGraphResource>
+    + sharedResourcesCount : int
+    + pool : IRenderGraphResourcePool
+    + createResourceCallback : ResourceCallback
+    + releaseResourceCallback : ResourceCallback
+    + Clear(onException:bool, frameIndex:int) : void
+    + Cleanup() : void
+    + PurgeUnusedGraphicsResources(frameIndex:int) : void
+    + AddNewRenderGraphResource(outRes:ResType, pooledResource:bool) : int
+}
+RenderGraphResourceRegistry +-- RenderGraphResourcesData
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class UnitPortDescription <<sealed>> {
+    - _label : string
+    - _isLabelVisible : bool = true
+    <<internal>> portType : IUnitPort
+    + icon : EditorTexture <<get>> <<set>>
+    - _icon : EditorTexture
+    + fallbackLabel : string <<get>> <<set>>
+    + label : string <<get>> <<set>>
+    + showLabel : bool <<get>> <<set>>
+    - title : string <<get>>
+    + summary : string <<get>> <<set>>
+    + getMetadata : Func<Metadata, Metadata> <<get>> <<set>>
+    + CopyFrom(other:UnitPortDescription) : void
+    - {static} GetIcon(portType:IUnitPort) : EditorTexture
+}
+IDescription <|-- UnitPortDescription
+@enduml

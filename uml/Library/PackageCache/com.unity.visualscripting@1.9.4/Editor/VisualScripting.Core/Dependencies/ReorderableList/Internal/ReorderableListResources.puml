@@ -1,0 +1,33 @@
+@startuml
+enum ReorderableListTexture {
+    Icon_Add_Normal= 0,
+    Icon_Add_Active,
+    Icon_AddMenu_Normal,
+    Icon_AddMenu_Active,
+    Icon_Menu_Normal,
+    Icon_Menu_Active,
+    Icon_Remove_Normal,
+    Icon_Remove_Active,
+    Button_Normal,
+    Button_Active,
+    Button2_Normal,
+    Button2_Active,
+    TitleBackground,
+    ContainerBackground,
+    Container2Background,
+    GrabHandle,
+}
+class ReorderableListResources <<static>> {
+    {static} - ReorderableListResources()
+    - {static} s_LightSkin : string[]
+    - {static} s_DarkSkin : string[]
+    + {static} GetTexture(name:ReorderableListTexture) : Texture2D
+    + {static} texHighlightColor : Texture2D <<get>>
+    - {static} GenerateSpecialTextures() : void
+    + {static} CreatePixelTexture(name:string, color:Color) : Texture2D
+    - {static} s_Cached : Texture2D[]
+    - {static} LoadResourceAssets() : void
+    - {static} GetImageSize(imageData:byte[], width:int, height:int) : void
+    - {static} ReadInt(imageData:byte[], offset:int) : int
+}
+@enduml

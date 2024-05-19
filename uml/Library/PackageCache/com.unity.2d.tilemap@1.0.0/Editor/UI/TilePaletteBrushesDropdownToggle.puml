@@ -1,0 +1,14 @@
+@startuml
+class TilePaletteBrushesDropdownToggle {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Brushes Dropdown Toggle"
+    - <<new>> {static} <<readonly>> ussClassName : string = "unity-tilepalette-brushesdropdown-toggle"
+    - {static} <<readonly>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.BrushSettings.png"
+    - {static} <<readonly>> k_Tooltip : string
+    + TilePaletteBrushesDropdownToggle()
+    + <<override>> value : bool <<get>> <<set>>
+    - ClickEvent() : void
+    - CloseEvent() : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+}
+EditorToolbarToggle <|-- TilePaletteBrushesDropdownToggle
+@enduml

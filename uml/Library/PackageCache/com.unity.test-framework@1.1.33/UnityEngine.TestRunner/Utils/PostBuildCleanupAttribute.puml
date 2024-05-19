@@ -1,0 +1,8 @@
+@startuml
+class PostBuildCleanupAttribute {
+    + PostBuildCleanupAttribute(targetClass:Type)
+    + PostBuildCleanupAttribute(targetClassName:string)
+    <<internal>> TargetClass : Type <<get>>
+}
+Attribute <|-- PostBuildCleanupAttribute
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+struct QuerySamplingFrequencyCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + frequency : float
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : QuerySamplingFrequencyCommand
+}
+IInputDeviceCommandInfo <|-- QuerySamplingFrequencyCommand
+@enduml

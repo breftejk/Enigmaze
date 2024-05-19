@@ -1,0 +1,6 @@
+@startuml
+interface IVolume {
+    isGlobal : bool <<get>> <<set>>
+    colliders : List<Collider> <<get>>
+}
+@enduml

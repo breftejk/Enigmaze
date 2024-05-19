@@ -1,0 +1,11 @@
+@startuml
+class CreateStructDescriptor {
+    + CreateStructDescriptor(unit:CreateStruct)
+    # <<override>> DefinedTitle() : string
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedSurtitle() : string
+    # <<override>> DefinedSummary() : string
+    # <<override>> DefinedIcon() : EditorTexture
+}
+"UnitDescriptor`1" "<CreateStruct>" <|-- CreateStructDescriptor
+@enduml

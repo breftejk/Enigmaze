@@ -1,0 +1,65 @@
+@startuml
+struct half2 {
+    + x : half
+    + y : half
+    + {static} <<readonly>> zero : half2
+    + half2(x:half, y:half)
+    + half2(xy:half2)
+    + half2(v:half)
+    + half2(v:float)
+    + half2(v:float2)
+    + half2(v:double)
+    + half2(v:double2)
+    + xxxx : half4 <<get>>
+    + xxxy : half4 <<get>>
+    + xxyx : half4 <<get>>
+    + xxyy : half4 <<get>>
+    + xyxx : half4 <<get>>
+    + xyxy : half4 <<get>>
+    + xyyx : half4 <<get>>
+    + xyyy : half4 <<get>>
+    + yxxx : half4 <<get>>
+    + yxxy : half4 <<get>>
+    + yxyx : half4 <<get>>
+    + yxyy : half4 <<get>>
+    + yyxx : half4 <<get>>
+    + yyxy : half4 <<get>>
+    + yyyx : half4 <<get>>
+    + yyyy : half4 <<get>>
+    + xxx : half3 <<get>>
+    + xxy : half3 <<get>>
+    + xyx : half3 <<get>>
+    + xyy : half3 <<get>>
+    + yxx : half3 <<get>>
+    + yxy : half3 <<get>>
+    + yyx : half3 <<get>>
+    + yyy : half3 <<get>>
+    + xx : half2 <<get>>
+    + xy : half2 <<get>> <<set>>
+    + yx : half2 <<get>> <<set>>
+    + yy : half2 <<get>>
+    + Equals(rhs:half2) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} half2(x:half, y:half) : half2
+    + {static} half2(xy:half2) : half2
+    + {static} half2(v:half) : half2
+    + {static} half2(v:float) : half2
+    + {static} half2(v:float2) : half2
+    + {static} half2(v:double) : half2
+    + {static} half2(v:double2) : half2
+    + {static} hash(v:half2) : uint
+    + {static} hashwide(v:half2) : uint2
+}
+class DebuggerProxy <<sealed>> {
+    + x : half
+    + y : half
+    + DebuggerProxy(v:half2)
+}
+IFormattable <|-- half2
+half2 +-- DebuggerProxy
+@enduml

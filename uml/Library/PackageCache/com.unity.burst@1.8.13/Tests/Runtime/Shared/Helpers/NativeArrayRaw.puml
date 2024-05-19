@@ -1,0 +1,10 @@
+@startuml
+struct NativeArrayRaw {
+    <<internal>> m_Buffer : void*
+    <<internal>> m_Length : int
+    - m_AllocatorLabel : Allocator
+    + NativeArrayRaw(mBuffer:void*, mLength:int)
+    + Dispose() : void
+}
+IDisposable <|-- NativeArrayRaw
+@enduml

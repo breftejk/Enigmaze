@@ -1,0 +1,21 @@
+@startuml
+class ProbeReferenceVolumeProfile <<sealed>> {
+    - version : Version
+    <<internal>> freezePlacement : bool = false
+    + simplificationLevels : int = 3
+    + cellSizeInBricks : int <<get>>
+    + minDistanceBetweenProbes : float = 1.0f
+    + maxSubdivision : int <<get>>
+    + minBrickSize : float <<get>>
+    + cellSizeInMeters : float <<get>>
+    + renderersLayerMask : LayerMask
+    + minRendererVolumeSize : float = 0.1f
+    - OnEnable() : void
+    + IsEquivalent(otherProfile:ProbeReferenceVolumeProfile) : bool
+}
+enum Version {
+    Initial,
+}
+ScriptableObject <|-- ProbeReferenceVolumeProfile
+ProbeReferenceVolumeProfile +-- Version
+@enduml

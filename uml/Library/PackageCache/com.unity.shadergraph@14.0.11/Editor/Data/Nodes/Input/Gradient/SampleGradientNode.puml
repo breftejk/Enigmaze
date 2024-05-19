@@ -1,0 +1,11 @@
+@startuml
+class SampleGradient {
+    + <<override>> latestVersion : int <<get>>
+    + SampleGradient()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SampleGradientV0(Gradient:Gradient, Time:Vector1, Out:Vector4) : string
+    {static} - Unity_SampleGradientV1(Gradient:Gradient, Time:Vector1, Out:Vector4) : string
+}
+CodeFunctionNode <|-- SampleGradient
+@enduml

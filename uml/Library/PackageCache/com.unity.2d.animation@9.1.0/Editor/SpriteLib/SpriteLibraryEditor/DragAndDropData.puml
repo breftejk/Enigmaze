@@ -1,0 +1,11 @@
+@startuml
+enum SpriteSourceType {
+    Sprite,
+    Psb,
+}
+struct DragAndDropData {
+    + spriteSourceType : SpriteSourceType
+    + name : string
+    + sprites : List<Sprite>
+}
+@enduml

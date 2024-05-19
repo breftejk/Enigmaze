@@ -1,0 +1,11 @@
+@startuml
+class DecalSkipCulledSystem {
+    - m_EntityManager : DecalEntityManager
+    - m_Sampler : ProfilingSampler
+    - m_Camera : Camera
+    + DecalSkipCulledSystem(entityManager:DecalEntityManager)
+    + Execute(camera:Camera) : void
+    - Execute(culledChunk:DecalCulledChunk, count:int) : void
+    <<internal>> {static} GetSceneCullingMaskFromCamera(camera:Camera) : UInt64
+}
+@enduml

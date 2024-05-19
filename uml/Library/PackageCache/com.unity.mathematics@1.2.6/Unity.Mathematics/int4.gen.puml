@@ -1,0 +1,402 @@
+@startuml
+struct int4 {
+    + x : int
+    + y : int
+    + z : int
+    + w : int
+    + {static} <<readonly>> zero : int4
+    + int4(x:int, y:int, z:int, w:int)
+    + int4(x:int, y:int, zw:int2)
+    + int4(x:int, yz:int2, w:int)
+    + int4(x:int, yzw:int3)
+    + int4(xy:int2, z:int, w:int)
+    + int4(xy:int2, zw:int2)
+    + int4(xyz:int3, w:int)
+    + int4(xyzw:int4)
+    + int4(v:int)
+    + int4(v:bool)
+    + int4(v:bool4)
+    + int4(v:uint)
+    + int4(v:uint4)
+    + int4(v:float)
+    + int4(v:float4)
+    + int4(v:double)
+    + int4(v:double4)
+    + xxxx : int4 <<get>>
+    + xxxy : int4 <<get>>
+    + xxxz : int4 <<get>>
+    + xxxw : int4 <<get>>
+    + xxyx : int4 <<get>>
+    + xxyy : int4 <<get>>
+    + xxyz : int4 <<get>>
+    + xxyw : int4 <<get>>
+    + xxzx : int4 <<get>>
+    + xxzy : int4 <<get>>
+    + xxzz : int4 <<get>>
+    + xxzw : int4 <<get>>
+    + xxwx : int4 <<get>>
+    + xxwy : int4 <<get>>
+    + xxwz : int4 <<get>>
+    + xxww : int4 <<get>>
+    + xyxx : int4 <<get>>
+    + xyxy : int4 <<get>>
+    + xyxz : int4 <<get>>
+    + xyxw : int4 <<get>>
+    + xyyx : int4 <<get>>
+    + xyyy : int4 <<get>>
+    + xyyz : int4 <<get>>
+    + xyyw : int4 <<get>>
+    + xyzx : int4 <<get>>
+    + xyzy : int4 <<get>>
+    + xyzz : int4 <<get>>
+    + xyzw : int4 <<get>> <<set>>
+    + xywx : int4 <<get>>
+    + xywy : int4 <<get>>
+    + xywz : int4 <<get>> <<set>>
+    + xyww : int4 <<get>>
+    + xzxx : int4 <<get>>
+    + xzxy : int4 <<get>>
+    + xzxz : int4 <<get>>
+    + xzxw : int4 <<get>>
+    + xzyx : int4 <<get>>
+    + xzyy : int4 <<get>>
+    + xzyz : int4 <<get>>
+    + xzyw : int4 <<get>> <<set>>
+    + xzzx : int4 <<get>>
+    + xzzy : int4 <<get>>
+    + xzzz : int4 <<get>>
+    + xzzw : int4 <<get>>
+    + xzwx : int4 <<get>>
+    + xzwy : int4 <<get>> <<set>>
+    + xzwz : int4 <<get>>
+    + xzww : int4 <<get>>
+    + xwxx : int4 <<get>>
+    + xwxy : int4 <<get>>
+    + xwxz : int4 <<get>>
+    + xwxw : int4 <<get>>
+    + xwyx : int4 <<get>>
+    + xwyy : int4 <<get>>
+    + xwyz : int4 <<get>> <<set>>
+    + xwyw : int4 <<get>>
+    + xwzx : int4 <<get>>
+    + xwzy : int4 <<get>> <<set>>
+    + xwzz : int4 <<get>>
+    + xwzw : int4 <<get>>
+    + xwwx : int4 <<get>>
+    + xwwy : int4 <<get>>
+    + xwwz : int4 <<get>>
+    + xwww : int4 <<get>>
+    + yxxx : int4 <<get>>
+    + yxxy : int4 <<get>>
+    + yxxz : int4 <<get>>
+    + yxxw : int4 <<get>>
+    + yxyx : int4 <<get>>
+    + yxyy : int4 <<get>>
+    + yxyz : int4 <<get>>
+    + yxyw : int4 <<get>>
+    + yxzx : int4 <<get>>
+    + yxzy : int4 <<get>>
+    + yxzz : int4 <<get>>
+    + yxzw : int4 <<get>> <<set>>
+    + yxwx : int4 <<get>>
+    + yxwy : int4 <<get>>
+    + yxwz : int4 <<get>> <<set>>
+    + yxww : int4 <<get>>
+    + yyxx : int4 <<get>>
+    + yyxy : int4 <<get>>
+    + yyxz : int4 <<get>>
+    + yyxw : int4 <<get>>
+    + yyyx : int4 <<get>>
+    + yyyy : int4 <<get>>
+    + yyyz : int4 <<get>>
+    + yyyw : int4 <<get>>
+    + yyzx : int4 <<get>>
+    + yyzy : int4 <<get>>
+    + yyzz : int4 <<get>>
+    + yyzw : int4 <<get>>
+    + yywx : int4 <<get>>
+    + yywy : int4 <<get>>
+    + yywz : int4 <<get>>
+    + yyww : int4 <<get>>
+    + yzxx : int4 <<get>>
+    + yzxy : int4 <<get>>
+    + yzxz : int4 <<get>>
+    + yzxw : int4 <<get>> <<set>>
+    + yzyx : int4 <<get>>
+    + yzyy : int4 <<get>>
+    + yzyz : int4 <<get>>
+    + yzyw : int4 <<get>>
+    + yzzx : int4 <<get>>
+    + yzzy : int4 <<get>>
+    + yzzz : int4 <<get>>
+    + yzzw : int4 <<get>>
+    + yzwx : int4 <<get>> <<set>>
+    + yzwy : int4 <<get>>
+    + yzwz : int4 <<get>>
+    + yzww : int4 <<get>>
+    + ywxx : int4 <<get>>
+    + ywxy : int4 <<get>>
+    + ywxz : int4 <<get>> <<set>>
+    + ywxw : int4 <<get>>
+    + ywyx : int4 <<get>>
+    + ywyy : int4 <<get>>
+    + ywyz : int4 <<get>>
+    + ywyw : int4 <<get>>
+    + ywzx : int4 <<get>> <<set>>
+    + ywzy : int4 <<get>>
+    + ywzz : int4 <<get>>
+    + ywzw : int4 <<get>>
+    + ywwx : int4 <<get>>
+    + ywwy : int4 <<get>>
+    + ywwz : int4 <<get>>
+    + ywww : int4 <<get>>
+    + zxxx : int4 <<get>>
+    + zxxy : int4 <<get>>
+    + zxxz : int4 <<get>>
+    + zxxw : int4 <<get>>
+    + zxyx : int4 <<get>>
+    + zxyy : int4 <<get>>
+    + zxyz : int4 <<get>>
+    + zxyw : int4 <<get>> <<set>>
+    + zxzx : int4 <<get>>
+    + zxzy : int4 <<get>>
+    + zxzz : int4 <<get>>
+    + zxzw : int4 <<get>>
+    + zxwx : int4 <<get>>
+    + zxwy : int4 <<get>> <<set>>
+    + zxwz : int4 <<get>>
+    + zxww : int4 <<get>>
+    + zyxx : int4 <<get>>
+    + zyxy : int4 <<get>>
+    + zyxz : int4 <<get>>
+    + zyxw : int4 <<get>> <<set>>
+    + zyyx : int4 <<get>>
+    + zyyy : int4 <<get>>
+    + zyyz : int4 <<get>>
+    + zyyw : int4 <<get>>
+    + zyzx : int4 <<get>>
+    + zyzy : int4 <<get>>
+    + zyzz : int4 <<get>>
+    + zyzw : int4 <<get>>
+    + zywx : int4 <<get>> <<set>>
+    + zywy : int4 <<get>>
+    + zywz : int4 <<get>>
+    + zyww : int4 <<get>>
+    + zzxx : int4 <<get>>
+    + zzxy : int4 <<get>>
+    + zzxz : int4 <<get>>
+    + zzxw : int4 <<get>>
+    + zzyx : int4 <<get>>
+    + zzyy : int4 <<get>>
+    + zzyz : int4 <<get>>
+    + zzyw : int4 <<get>>
+    + zzzx : int4 <<get>>
+    + zzzy : int4 <<get>>
+    + zzzz : int4 <<get>>
+    + zzzw : int4 <<get>>
+    + zzwx : int4 <<get>>
+    + zzwy : int4 <<get>>
+    + zzwz : int4 <<get>>
+    + zzww : int4 <<get>>
+    + zwxx : int4 <<get>>
+    + zwxy : int4 <<get>> <<set>>
+    + zwxz : int4 <<get>>
+    + zwxw : int4 <<get>>
+    + zwyx : int4 <<get>> <<set>>
+    + zwyy : int4 <<get>>
+    + zwyz : int4 <<get>>
+    + zwyw : int4 <<get>>
+    + zwzx : int4 <<get>>
+    + zwzy : int4 <<get>>
+    + zwzz : int4 <<get>>
+    + zwzw : int4 <<get>>
+    + zwwx : int4 <<get>>
+    + zwwy : int4 <<get>>
+    + zwwz : int4 <<get>>
+    + zwww : int4 <<get>>
+    + wxxx : int4 <<get>>
+    + wxxy : int4 <<get>>
+    + wxxz : int4 <<get>>
+    + wxxw : int4 <<get>>
+    + wxyx : int4 <<get>>
+    + wxyy : int4 <<get>>
+    + wxyz : int4 <<get>> <<set>>
+    + wxyw : int4 <<get>>
+    + wxzx : int4 <<get>>
+    + wxzy : int4 <<get>> <<set>>
+    + wxzz : int4 <<get>>
+    + wxzw : int4 <<get>>
+    + wxwx : int4 <<get>>
+    + wxwy : int4 <<get>>
+    + wxwz : int4 <<get>>
+    + wxww : int4 <<get>>
+    + wyxx : int4 <<get>>
+    + wyxy : int4 <<get>>
+    + wyxz : int4 <<get>> <<set>>
+    + wyxw : int4 <<get>>
+    + wyyx : int4 <<get>>
+    + wyyy : int4 <<get>>
+    + wyyz : int4 <<get>>
+    + wyyw : int4 <<get>>
+    + wyzx : int4 <<get>> <<set>>
+    + wyzy : int4 <<get>>
+    + wyzz : int4 <<get>>
+    + wyzw : int4 <<get>>
+    + wywx : int4 <<get>>
+    + wywy : int4 <<get>>
+    + wywz : int4 <<get>>
+    + wyww : int4 <<get>>
+    + wzxx : int4 <<get>>
+    + wzxy : int4 <<get>> <<set>>
+    + wzxz : int4 <<get>>
+    + wzxw : int4 <<get>>
+    + wzyx : int4 <<get>> <<set>>
+    + wzyy : int4 <<get>>
+    + wzyz : int4 <<get>>
+    + wzyw : int4 <<get>>
+    + wzzx : int4 <<get>>
+    + wzzy : int4 <<get>>
+    + wzzz : int4 <<get>>
+    + wzzw : int4 <<get>>
+    + wzwx : int4 <<get>>
+    + wzwy : int4 <<get>>
+    + wzwz : int4 <<get>>
+    + wzww : int4 <<get>>
+    + wwxx : int4 <<get>>
+    + wwxy : int4 <<get>>
+    + wwxz : int4 <<get>>
+    + wwxw : int4 <<get>>
+    + wwyx : int4 <<get>>
+    + wwyy : int4 <<get>>
+    + wwyz : int4 <<get>>
+    + wwyw : int4 <<get>>
+    + wwzx : int4 <<get>>
+    + wwzy : int4 <<get>>
+    + wwzz : int4 <<get>>
+    + wwzw : int4 <<get>>
+    + wwwx : int4 <<get>>
+    + wwwy : int4 <<get>>
+    + wwwz : int4 <<get>>
+    + wwww : int4 <<get>>
+    + xxx : int3 <<get>>
+    + xxy : int3 <<get>>
+    + xxz : int3 <<get>>
+    + xxw : int3 <<get>>
+    + xyx : int3 <<get>>
+    + xyy : int3 <<get>>
+    + xyz : int3 <<get>> <<set>>
+    + xyw : int3 <<get>> <<set>>
+    + xzx : int3 <<get>>
+    + xzy : int3 <<get>> <<set>>
+    + xzz : int3 <<get>>
+    + xzw : int3 <<get>> <<set>>
+    + xwx : int3 <<get>>
+    + xwy : int3 <<get>> <<set>>
+    + xwz : int3 <<get>> <<set>>
+    + xww : int3 <<get>>
+    + yxx : int3 <<get>>
+    + yxy : int3 <<get>>
+    + yxz : int3 <<get>> <<set>>
+    + yxw : int3 <<get>> <<set>>
+    + yyx : int3 <<get>>
+    + yyy : int3 <<get>>
+    + yyz : int3 <<get>>
+    + yyw : int3 <<get>>
+    + yzx : int3 <<get>> <<set>>
+    + yzy : int3 <<get>>
+    + yzz : int3 <<get>>
+    + yzw : int3 <<get>> <<set>>
+    + ywx : int3 <<get>> <<set>>
+    + ywy : int3 <<get>>
+    + ywz : int3 <<get>> <<set>>
+    + yww : int3 <<get>>
+    + zxx : int3 <<get>>
+    + zxy : int3 <<get>> <<set>>
+    + zxz : int3 <<get>>
+    + zxw : int3 <<get>> <<set>>
+    + zyx : int3 <<get>> <<set>>
+    + zyy : int3 <<get>>
+    + zyz : int3 <<get>>
+    + zyw : int3 <<get>> <<set>>
+    + zzx : int3 <<get>>
+    + zzy : int3 <<get>>
+    + zzz : int3 <<get>>
+    + zzw : int3 <<get>>
+    + zwx : int3 <<get>> <<set>>
+    + zwy : int3 <<get>> <<set>>
+    + zwz : int3 <<get>>
+    + zww : int3 <<get>>
+    + wxx : int3 <<get>>
+    + wxy : int3 <<get>> <<set>>
+    + wxz : int3 <<get>> <<set>>
+    + wxw : int3 <<get>>
+    + wyx : int3 <<get>> <<set>>
+    + wyy : int3 <<get>>
+    + wyz : int3 <<get>> <<set>>
+    + wyw : int3 <<get>>
+    + wzx : int3 <<get>> <<set>>
+    + wzy : int3 <<get>> <<set>>
+    + wzz : int3 <<get>>
+    + wzw : int3 <<get>>
+    + wwx : int3 <<get>>
+    + wwy : int3 <<get>>
+    + wwz : int3 <<get>>
+    + www : int3 <<get>>
+    + xx : int2 <<get>>
+    + xy : int2 <<get>> <<set>>
+    + xz : int2 <<get>> <<set>>
+    + xw : int2 <<get>> <<set>>
+    + yx : int2 <<get>> <<set>>
+    + yy : int2 <<get>>
+    + yz : int2 <<get>> <<set>>
+    + yw : int2 <<get>> <<set>>
+    + zx : int2 <<get>> <<set>>
+    + zy : int2 <<get>> <<set>>
+    + zz : int2 <<get>>
+    + zw : int2 <<get>> <<set>>
+    + wx : int2 <<get>> <<set>>
+    + wy : int2 <<get>> <<set>>
+    + wz : int2 <<get>> <<set>>
+    + ww : int2 <<get>>
+    + Equals(rhs:int4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} int4(x:int, y:int, z:int, w:int) : int4
+    + {static} int4(x:int, y:int, zw:int2) : int4
+    + {static} int4(x:int, yz:int2, w:int) : int4
+    + {static} int4(x:int, yzw:int3) : int4
+    + {static} int4(xy:int2, z:int, w:int) : int4
+    + {static} int4(xy:int2, zw:int2) : int4
+    + {static} int4(xyz:int3, w:int) : int4
+    + {static} int4(xyzw:int4) : int4
+    + {static} int4(v:int) : int4
+    + {static} int4(v:bool) : int4
+    + {static} int4(v:bool4) : int4
+    + {static} int4(v:uint) : int4
+    + {static} int4(v:uint4) : int4
+    + {static} int4(v:float) : int4
+    + {static} int4(v:float4) : int4
+    + {static} int4(v:double) : int4
+    + {static} int4(v:double4) : int4
+    + {static} hash(v:int4) : uint
+    + {static} hashwide(v:int4) : uint4
+    + {static} shuffle(left:int4, right:int4, x:ShuffleComponent) : int
+    + {static} shuffle(left:int4, right:int4, x:ShuffleComponent, y:ShuffleComponent) : int2
+    + {static} shuffle(left:int4, right:int4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : int3
+    + {static} shuffle(left:int4, right:int4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : int4
+    <<internal>> {static} select_shuffle_component(a:int4, b:int4, component:ShuffleComponent) : int
+}
+class DebuggerProxy <<sealed>> {
+    + x : int
+    + y : int
+    + z : int
+    + w : int
+    + DebuggerProxy(v:int4)
+}
+IFormattable <|-- int4
+int4 +-- DebuggerProxy
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class TestListJob {
+    - m_TestListProvider : CachingTestListProvider
+    - m_Platform : TestPlatform
+    - m_Callback : Action<ITestAdaptor>
+    - m_ResultEnumerator : IEnumerator<ITestAdaptor>
+    + TestListJob(testListProvider:CachingTestListProvider, platform:TestPlatform, callback:Action<ITestAdaptor>)
+    + Start() : void
+    - EditorUpdate() : void
+}
+@enduml

@@ -1,0 +1,49 @@
+@startuml
+class TMP_InputFieldEditor {
+    - m_TextViewport : SerializedProperty
+    - m_TextComponent : SerializedProperty
+    - m_Text : SerializedProperty
+    - m_ContentType : SerializedProperty
+    - m_LineType : SerializedProperty
+    - m_LineLimit : SerializedProperty
+    - m_InputType : SerializedProperty
+    - m_CharacterValidation : SerializedProperty
+    - m_InputValidator : SerializedProperty
+    - m_RegexValue : SerializedProperty
+    - m_KeyboardType : SerializedProperty
+    - m_CharacterLimit : SerializedProperty
+    - m_CaretBlinkRate : SerializedProperty
+    - m_CaretWidth : SerializedProperty
+    - m_CaretColor : SerializedProperty
+    - m_CustomCaretColor : SerializedProperty
+    - m_SelectionColor : SerializedProperty
+    - m_HideMobileKeyboard : SerializedProperty
+    - m_HideMobileInput : SerializedProperty
+    - m_Placeholder : SerializedProperty
+    - m_VerticalScrollbar : SerializedProperty
+    - m_ScrollbarScrollSensitivity : SerializedProperty
+    - m_OnValueChanged : SerializedProperty
+    - m_OnEndEdit : SerializedProperty
+    - m_OnSelect : SerializedProperty
+    - m_OnDeselect : SerializedProperty
+    - m_ReadOnly : SerializedProperty
+    - m_RichText : SerializedProperty
+    - m_RichTextEditingAllowed : SerializedProperty
+    - m_ResetOnDeActivation : SerializedProperty
+    - m_RestoreOriginalTextOnEscape : SerializedProperty
+    - m_OnFocusSelectAll : SerializedProperty
+    - m_GlobalPointSize : SerializedProperty
+    - m_GlobalFontAsset : SerializedProperty
+    - m_CustomColor : AnimBool
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+struct m_foldout {
+    + {static} textInput : bool = true
+    + {static} fontSettings : bool = true
+    + {static} extraSettings : bool = true
+}
+SelectableEditor <|-- TMP_InputFieldEditor
+TMP_InputFieldEditor +-- m_foldout
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+class VertexHelper {
+    - m_Positions : List<Vector3>
+    - m_Colors : List<Color32>
+    - m_Uv0S : List<Vector4>
+    - m_Uv1S : List<Vector4>
+    - m_Uv2S : List<Vector4>
+    - m_Uv3S : List<Vector4>
+    - m_Normals : List<Vector3>
+    - m_Tangents : List<Vector4>
+    - m_Indices : List<int>
+    - {static} <<readonly>> s_DefaultTangent : Vector4
+    - {static} <<readonly>> s_DefaultNormal : Vector3
+    - m_ListsInitalized : bool = false
+    + VertexHelper()
+    + VertexHelper(m:Mesh)
+    - InitializeListIfRequired() : void
+    + Dispose() : void
+    + Clear() : void
+    + currentVertCount : int <<get>>
+    + currentIndexCount : int <<get>>
+    + PopulateUIVertex(vertex:UIVertex, i:int) : void
+    + SetUIVertex(vertex:UIVertex, i:int) : void
+    + FillMesh(mesh:Mesh) : void
+    + AddVert(position:Vector3, color:Color32, uv0:Vector4, uv1:Vector4, uv2:Vector4, uv3:Vector4, normal:Vector3, tangent:Vector4) : void
+    + AddVert(position:Vector3, color:Color32, uv0:Vector4, uv1:Vector4, normal:Vector3, tangent:Vector4) : void
+    + AddVert(position:Vector3, color:Color32, uv0:Vector4) : void
+    + AddVert(v:UIVertex) : void
+    + AddTriangle(idx0:int, idx1:int, idx2:int) : void
+    + AddUIVertexQuad(verts:UIVertex[]) : void
+    + AddUIVertexStream(verts:List<UIVertex>, indices:List<int>) : void
+    + AddUIVertexTriangleStream(verts:List<UIVertex>) : void
+    + GetUIVertexStream(stream:List<UIVertex>) : void
+}
+IDisposable <|-- VertexHelper
+@enduml

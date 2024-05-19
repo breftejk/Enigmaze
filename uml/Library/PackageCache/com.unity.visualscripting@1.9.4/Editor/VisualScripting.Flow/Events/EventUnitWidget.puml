@@ -1,0 +1,7 @@
+@startuml
+class EventUnitWidget <<sealed>> {
+    + EventUnitWidget(canvas:FlowCanvas, unit:IEventUnit)
+    # <<override>> baseColor : NodeColorMix <<get>>
+}
+"UnitWidget`1" "<IEventUnit>" <|-- EventUnitWidget
+@enduml

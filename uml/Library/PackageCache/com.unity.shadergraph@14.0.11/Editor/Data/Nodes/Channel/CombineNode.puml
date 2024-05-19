@@ -1,0 +1,8 @@
+@startuml
+class CombineNode {
+    + CombineNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Combine(R:Vector1, G:Vector1, B:Vector1, A:Vector1, RGBA:Vector4, RGB:Vector3, RG:Vector2) : string
+}
+CodeFunctionNode <|-- CombineNode
+@enduml

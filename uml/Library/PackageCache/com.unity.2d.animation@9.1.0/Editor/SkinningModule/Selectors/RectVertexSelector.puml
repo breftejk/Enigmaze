@@ -1,0 +1,9 @@
+@startuml
+class RectVertexSelector {
+    + selection : ISelection<int> <<get>> <<set>>
+    + spriteMeshData : BaseSpriteMeshData <<get>> <<set>>
+    + rect : Rect <<get>> <<set>>
+    + Select() : void
+}
+"IRectSelector`1" "<int>" <|-- RectVertexSelector
+@enduml

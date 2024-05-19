@@ -1,0 +1,20 @@
+@startuml
+class ErrorsListView {
+    <<internal>> ErrorsListView(headerState:ErrorsListHeaderState)
+    + <<override>> GetRows() : IList<TreeViewItem>
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    <<internal>> BuildModel(errorMessages:List<ErrorMessage>) : void
+    <<internal>> GetSelectedError() : ErrorMessage
+    {static} - GetSelectedErrors(listView:ErrorsListView) : List<ErrorMessage>
+    {static} - RegenerateRows(listView:ErrorsListView, errorMessages:List<ErrorMessage>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ErrorListViewItemGUI(item:ErrorListViewItem, args:RowGUIArgs) : void
+    {static} - ErrorListViewItemCellGUI(rect:Rect, item:ErrorListViewItem, column:ErrorsListColumn, isSelected:bool, isFocused:bool) : void
+    - mRows : List<TreeViewItem>
+    - mErrorMessages : List<ErrorMessage>
+}
+TreeView <|-- ErrorsListView
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class VisualStudioEditor {
+    - Installations : CodeEditor.Installation[] <<get>>
+    - {static} <<readonly>> _discoverInstallations : AsyncOperation<Dictionary<string, IVisualStudioInstallation>>
+    {static} - VisualStudioEditor()
+    - {static} DiscoverInstallations() : Dictionary<string, IVisualStudioInstallation>
+    <<internal>> {static} IsEnabled : bool <<get>>
+    + CreateIfDoesntExist() : void
+    + Initialize(editorInstallationPath:string) : void
+    <<internal>> <<virtual>> TryGetVisualStudioInstallationForPath(editorPath:string, lookupDiscoveredInstallations:bool, installation:IVisualStudioInstallation) : bool
+    + <<virtual>> TryGetInstallationForPath(editorPath:string, installation:CodeEditor.Installation) : bool
+    + OnGUI() : void
+    - {static} RegenerateProjectFiles(installation:IVisualStudioInstallation) : void
+    - {static} SettingsButton(preference:ProjectGenerationFlag, guiMessage:string, toolTip:string, installation:IVisualStudioInstallation) : void
+    + SyncIfNeeded(addedFiles:string[], deletedFiles:string[], movedFiles:string[], movedFromFiles:string[], importedFiles:string[]) : void
+    + SyncAll() : void
+    - {static} IsSupportedPath(path:string, generator:IGenerator) : bool
+    + OpenProject(path:string, line:int, column:int) : bool
+    - {static} GetProjectGenerationFlagDescription(flag:ProjectGenerationFlag) : string
+    - {static} IsProjectGeneratedFor(path:string, generator:IGenerator, missingFlag:ProjectGenerationFlag) : bool
+    - {static} GetOrGenerateSolutionFile(generator:IGenerator) : string
+}
+IExternalCodeEditor <|-- VisualStudioEditor
+@enduml

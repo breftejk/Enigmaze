@@ -1,0 +1,85 @@
+@startuml
+class DebugDisplaySettingsMaterial {
+    - m_AlbedoDebugValidationPresetData : AlbedoDebugValidationPresetData[]
+    - m_AlbedoValidationPreset : AlbedoDebugValidationPreset
+    + albedoValidationPreset : AlbedoDebugValidationPreset <<get>> <<set>>
+    + albedoMinLuminance : float <<get>> <<set>> = 0.01f
+    + albedoMaxLuminance : float <<get>> <<set>> = 0.90f
+    - m_AlbedoHueTolerance : float = 0.104f
+    + albedoHueTolerance : float <<get>> <<set>>
+    - m_AlbedoSaturationTolerance : float = 0.214f
+    + albedoSaturationTolerance : float <<get>> <<set>>
+    + albedoCompareColor : Color <<get>> <<set>>
+    + metallicMinValue : float <<get>> <<set>> = 0.0f
+    + metallicMaxValue : float <<get>> <<set>> = 0.9f
+    + materialValidationMode : DebugMaterialValidationMode <<get>> <<set>>
+    + materialDebugMode : DebugMaterialMode <<get>> <<set>>
+    + vertexAttributeDebugMode : DebugVertexAttributeMode <<get>> <<set>>
+    + AreAnySettingsActive : bool <<get>>
+    + IsPostProcessingAllowed : bool <<get>>
+    + IsLightingActive : bool <<get>>
+    + TryGetScreenClearColor(color:Color) : bool
+    - CreatePanel() : IDebugDisplaySettingsPanelDisposable
+}
+enum AlbedoDebugValidationPreset {
+    DefaultLuminance,
+    BlackAcrylicPaint,
+    DarkSoil,
+    WornAsphalt,
+    DryClaySoil,
+    GreenGrass,
+    OldConcrete,
+    RedClayTile,
+    DrySand,
+    NewConcrete,
+    WhiteAcrylicPaint,
+    FreshSnow,
+    BlueSky,
+    Foliage,
+    Custom,
+}
+struct AlbedoDebugValidationPresetData {
+    + name : string
+    + color : Color
+    + minLuminance : float
+    + maxLuminance : float
+}
+class Strings <<static>> {
+    + <<const>> AlbedoSettingsContainerName : string = "Albedo Settings"
+    + <<const>> MetallicSettingsContainerName : string = "Metallic Settings"
+    + {static} <<readonly>> MaterialOverride : NameAndTooltip
+    + {static} <<readonly>> VertexAttribute : NameAndTooltip
+    + {static} <<readonly>> MaterialValidationMode : NameAndTooltip
+    + {static} <<readonly>> ValidationPreset : NameAndTooltip
+    + {static} <<readonly>> AlbedoCustomColor : NameAndTooltip
+    + {static} <<readonly>> AlbedoMinLuminance : NameAndTooltip
+    + {static} <<readonly>> AlbedoMaxLuminance : NameAndTooltip
+    + {static} <<readonly>> AlbedoHueTolerance : NameAndTooltip
+    + {static} <<readonly>> AlbedoSaturationTolerance : NameAndTooltip
+    + {static} <<readonly>> MetallicMinValue : NameAndTooltip
+    + {static} <<readonly>> MetallicMaxValue : NameAndTooltip
+}
+class WidgetFactory <<static>> {
+    <<internal>> {static} CreateMaterialOverride(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateVertexAttribute(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMaterialValidationMode(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoPreset(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoCustomColor(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoMinLuminance(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoMaxLuminance(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoHueTolerance(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateAlbedoSaturationTolerance(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMetallicMinValue(panel:SettingsPanel) : DebugUI.Widget
+    <<internal>> {static} CreateMetallicMaxValue(panel:SettingsPanel) : DebugUI.Widget
+}
+class SettingsPanel {
+    + SettingsPanel(data:DebugDisplaySettingsMaterial)
+}
+IDebugDisplaySettingsData <|-- DebugDisplaySettingsMaterial
+DebugDisplaySettingsMaterial +-- AlbedoDebugValidationPreset
+DebugDisplaySettingsMaterial +-- AlbedoDebugValidationPresetData
+DebugDisplaySettingsMaterial +-- Strings
+DebugDisplaySettingsMaterial +-- WidgetFactory
+DebugDisplaySettingsMaterial +-- SettingsPanel
+"DebugDisplaySettingsPanel`1" "<DebugDisplaySettingsMaterial>" <|-- SettingsPanel
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class UICellLabelElement {
+    - m_Label : Label
+    - m_FolderIcon : VisualElement
+    + UICellLabelElement()
+    + text : string <<set>>
+    + EnableFolderIcon(v:Texture2D) : void
+}
+class UILayerNameColumn {
+    - m_TreeView : PSDImporterLayerManagementMultiColumnTreeView
+    + UILayerNameColumn(treeView:PSDImporterLayerManagementMultiColumnTreeView)
+    + <<virtual>> BindCell(e:VisualElement, index:int) : void
+}
+UICellElement <|-- UICellLabelElement
+UIColumn <|-- UILayerNameColumn
+@enduml

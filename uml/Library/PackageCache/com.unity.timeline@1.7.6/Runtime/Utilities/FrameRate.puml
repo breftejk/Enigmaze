@@ -1,0 +1,20 @@
+@startuml
+struct FrameRate {
+    + <<readonly>> rate : double
+    + {static} <<readonly>> k_23_976Fps : FrameRate
+    + {static} <<readonly>> k_24Fps : FrameRate
+    + {static} <<readonly>> k_25Fps : FrameRate
+    + {static} <<readonly>> k_30Fps : FrameRate
+    + {static} <<readonly>> k_29_97Fps : FrameRate
+    + {static} <<readonly>> k_50Fps : FrameRate
+    + {static} <<readonly>> k_59_94Fps : FrameRate
+    + {static} <<readonly>> k_60Fps : FrameRate
+    - FrameRate(framerate:double)
+    + IsValid() : bool
+    + Equals(other:FrameRate) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + {static} DoubleToFrameRate(rate:double) : FrameRate
+}
+"IEquatable`1" "<FrameRate>" <|-- FrameRate
+@enduml

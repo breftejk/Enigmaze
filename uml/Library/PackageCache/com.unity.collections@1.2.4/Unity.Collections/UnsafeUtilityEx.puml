@@ -1,0 +1,11 @@
+@startuml
+class UnsafeUtilityExtensions <<unsafe>> <<static>> {
+    <<internal>> {static} MemSwap(ptr:void*, otherPtr:void*, size:long) : void
+    + <<unsafe>> {static} ReadArrayElementBoundsChecked(source:void*, index:int, capacity:int) : T
+    + <<unsafe>> {static} WriteArrayElementBoundsChecked(destination:void*, index:int, value:T, capacity:int) : void
+    + {static} AddressOf(value:T) : void*
+    + {static} AsRef(value:T) : ref T
+    {static} <<unsafe>> - CheckMemSwapOverlap(dst:byte*, src:byte*, size:long) : void
+    {static} - CheckIndexRange(index:int, capacity:int) : void
+}
+@enduml

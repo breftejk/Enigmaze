@@ -1,0 +1,8 @@
+@startuml
+class CustomPackScriptableObjectInspector {
+    - m_ObjectsToApply : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- CustomPackScriptableObjectInspector
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class GuiEnabled {
+    <<internal>> GuiEnabled(enabled:bool)
+    - Dispose() : void
+    - mEnabled : bool
+}
+IDisposable <|-- GuiEnabled
+@enduml

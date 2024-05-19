@@ -1,0 +1,9 @@
+@startuml
+struct LayerMask {
+    - m_Mask : int
+    + value : int <<get>> <<set>>
+    <<extern>> + {static} LayerToName(layer:int) : string
+    <<extern>> + {static} NameToLayer(layerName:string) : int
+    + {static} GetMask(layerNames:string[]) : int
+}
+@enduml

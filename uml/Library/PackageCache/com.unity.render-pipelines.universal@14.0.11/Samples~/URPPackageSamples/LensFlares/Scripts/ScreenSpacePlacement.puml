@@ -1,0 +1,9 @@
+@startuml
+class ScreenSpacePlacement {
+    - m_Cam : Camera
+    - m_FlareObject : Transform
+    - m_MouseDown : bool
+    - OnGUI() : void
+}
+MonoBehaviour <|-- ScreenSpacePlacement
+@enduml

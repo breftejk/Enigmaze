@@ -1,0 +1,8 @@
+@startuml
+class LaunchDependenciesDialog {
+    <<internal>> LaunchDependenciesDialog(operation:string, parentWindow:EditorWindow)
+    - IncludeDependencies(wkInfo:WorkspaceInfo, dependencies:IList<ChangeDependencies<ChangeInfo>>) : bool
+    - mOperation : string
+    - mParentWindow : EditorWindow
+}
+@enduml

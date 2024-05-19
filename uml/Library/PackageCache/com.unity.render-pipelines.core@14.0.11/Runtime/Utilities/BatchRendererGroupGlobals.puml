@@ -1,0 +1,34 @@
+@startuml
+struct SHCoefficients {
+    + SHAr : Vector4
+    + SHAg : Vector4
+    + SHAb : Vector4
+    + SHBr : Vector4
+    + SHBg : Vector4
+    + SHBb : Vector4
+    + SHC : Vector4
+    + ProbesOcclusion : Vector4
+    + SHCoefficients(sh:SphericalHarmonicsL2)
+    + SHCoefficients(sh:SphericalHarmonicsL2, probesOcclusion:Vector4)
+    {static} - GetSHA(sh:SphericalHarmonicsL2, i:int) : Vector4
+    {static} - GetSHB(sh:SphericalHarmonicsL2, i:int) : Vector4
+    {static} - GetSHC(sh:SphericalHarmonicsL2) : Vector4
+    + Equals(other:SHCoefficients) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+struct BatchRendererGroupGlobals {
+    + <<const>> kGlobalsPropertyName : string = "unity_DOTSInstanceGlobalValues"
+    + {static} <<readonly>> kGlobalsPropertyId : int
+    + ProbesOcclusion : Vector4
+    + SpecCube0_HDR : Vector4
+    + SpecCube1_HDR : Vector4
+    + SHCoefficients : SHCoefficients
+    + {static} Default : BatchRendererGroupGlobals <<get>>
+    + Equals(other:BatchRendererGroupGlobals) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+}
+"IEquatable`1" "<SHCoefficients>" <|-- SHCoefficients
+"IEquatable`1" "<BatchRendererGroupGlobals>" <|-- BatchRendererGroupGlobals
+@enduml

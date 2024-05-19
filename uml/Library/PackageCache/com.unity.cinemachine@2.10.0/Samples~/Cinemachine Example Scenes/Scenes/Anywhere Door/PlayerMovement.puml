@@ -1,0 +1,8 @@
+@startuml
+class PlayerMovement {
+    + movementSpeed : float = 10f
+    + lookatspeed : float = 5f
+    - Update() : void
+}
+MonoBehaviour <|-- PlayerMovement
+@enduml

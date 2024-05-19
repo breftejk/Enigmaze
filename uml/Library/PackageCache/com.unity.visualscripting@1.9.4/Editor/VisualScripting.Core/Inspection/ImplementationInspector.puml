@@ -1,0 +1,41 @@
+@startuml
+class "ImplementationInspector`1"<T> {
+    + ImplementationInspector(metadata:Metadata)
+    - compactSelector : bool = false
+    - hideSelector : bool = false
+    - indentImplementation : bool = true
+    + implementationMetadata : Metadata <<get>>
+    # <<virtual>> nullSelectorLabel : GUIContent <<get>>
+    # <<virtual>> selectorLabel : GUIContent <<get>>
+    # <<virtual>> typeSelectorIcon : EditorTexture <<get>>
+    # <<sealed>> <<override>> GetHeight(width:float, label:GUIContent) : float
+    - GetNullSelectorHeight(width:float) : float
+    - GetSelectorHeight(width:float) : float
+    - GetCompactSelectorHeight() : float
+    - GetImplementationHeight(implementationWidth:float) : float
+    - GetCompactedImplementationWidth(width:float) : float
+    # <<sealed>> <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    - OnImplementationGUI(implementationPosition:Rect) : void
+    - OnNullSelectorGUI(nullSelectorPosition:Rect) : void
+    - OnSelectorGUI(selectorPosition:Rect) : void
+    - OnCompactSelectorGUI(selectorPosition:Rect) : void
+    - ChangeImplementation(newImplementation:object) : void
+    # <<virtual>> GetImplementationOptions() : IFuzzyOptionTree
+    # <<virtual>> CreateImplementation(option:object) : T
+    {static} - ImplementationInspector()
+    - {static} <<readonly>> implementors : List<Type>
+    - {static} compactSelectorWidth : float <<get>>
+    + {static} compactSelectorSubtractedWidth : float <<get>>
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> compactSelectorWithoutIcon : GUIStyle
+    + {static} <<readonly>> compactSelectorWithIcon : GUIStyle
+    + {static} <<readonly>> compactSelectorWithoutIconContent : GUIContent
+    + {static} <<readonly>> spaceAroundCompactSelector : int = 3
+    + {static} <<readonly>> showCompactSelectorIcon : bool = true
+    + {static} compactSelector : GUIStyle <<get>>
+}
+Inspector <|-- "ImplementationInspector`1"
+"ImplementationInspector`1" +-- Styles
+@enduml

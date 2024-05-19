@@ -1,0 +1,23 @@
+@startuml
+class CharacterMovement2D {
+    + sprintJoystick : KeyCode
+    + jumpJoystick : KeyCode
+    + sprintKeyboard : KeyCode
+    + jumpKeyboard : KeyCode
+    + jumpVelocity : float = 7f
+    + groundTolerance : float = 0.2f
+    + checkGroundForJump : bool = true
+    - speed : float = 0f
+    - isSprinting : bool = false
+    - anim : Animator
+    - input : Vector2
+    - velocity : float
+    - headingleft : bool = false
+    - targetrot : Quaternion
+    - rigbody : Rigidbody
+    - Start() : void
+    - Update() : void
+    + isGrounded() : bool
+}
+MonoBehaviour <|-- CharacterMovement2D
+@enduml

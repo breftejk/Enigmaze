@@ -1,0 +1,16 @@
+@startuml
+class "GenericScriptablePathInspector`2"<U,T> {
+    - m_DataObjects : List<U>
+    - m_SelectedDataObjects : List<U>
+    - m_CachedEditor : Editor = null
+    - OnEnable() : void
+    - OnDestroy() : void
+    + <<override>> OnInspectorGUI() : void
+    # DoCustomDataInspector() : void
+    - PrepareDataObjects() : void
+    - SetDataObjects() : void
+    - CreateDataObject() : U
+    - DestroyDataObjects() : void
+}
+ScriptablePathInspector <|-- "GenericScriptablePathInspector`2"
+@enduml

@@ -1,0 +1,170 @@
+@startuml
+class TestStructsLayout <<partial>> {
+}
+class TestGeneratorOverride32BitSizeAttribute <<sealed>> {
+    + <<readonly>> Size : int
+    + TestGeneratorOverride32BitSizeAttribute(size:int)
+}
+class TestGeneratorOverride32BitOffsetAttribute <<sealed>> {
+    + <<readonly>> Offset : int
+    + TestGeneratorOverride32BitOffsetAttribute(offset:int)
+}
+struct CheckHoleInner {
+    + m_Ptr : byte*
+}
+struct CheckHoleOuter {
+    + a : CheckHoleInner
+    + b : int
+    + c : CheckHoleInner
+}
+struct ExplicitStructWithoutSize2 {
+    + a : long
+    + b : sbyte
+    + c : int
+}
+struct ExplicitStructWithoutSize {
+    + a : int
+    + b : sbyte
+    + c : int
+}
+struct SequentialStructWithSize3 {
+    + a : int
+    + b : int
+    + c : sbyte
+}
+struct SequentialStructWithoutSize {
+    + a : int
+    + b : int
+    + c : sbyte
+}
+struct SequentialStructEmptyNoAttributes {
+}
+struct ExplicitStructWithEmptySequentialFields {
+    + FieldA : SequentialStructEmptyNoAttributes
+    + FieldB : SequentialStructEmptyNoAttributes
+}
+struct ExplicitStrictWithEmptyAndNonEmptySequentialFields {
+    + FieldA : SequentialStructEmptyNoAttributes
+    + FieldB : SequentialStructWithoutSize
+}
+struct StructWithPack8 {
+    + FieldA : int
+    + FieldB : int
+}
+struct StructPack2WithBytesAndInt {
+    + FieldA : byte
+    + FieldB : byte
+    + FieldC : int
+}
+struct StructPack2WithBytesAndInts {
+    + FieldA : byte
+    + FieldB : byte
+    + FieldC : int
+    + FieldD : int
+}
+struct StructPack1WithBytesAndInt {
+    + FieldA : byte
+    + FieldB : byte
+    + FieldC : int
+}
+struct StructPack1WithByteAndInt {
+    + FieldA : byte
+    + FieldB : int
+}
+struct StructPack1WithByteAndIntWrapper {
+    + FieldA : StructPack1WithByteAndInt
+    + FieldB : StructPack1WithByteAndInt
+}
+struct StructPack1WithByteAndIntWrapper2 {
+    + FieldA : StructPack1WithByteAndIntWrapper
+    + FieldB : StructPack1WithByteAndIntWrapper
+}
+struct StructWithSizeAndPack {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructWithSizeAndPackWrapper {
+    + FieldA : byte
+    + FieldB : StructWithSizeAndPack
+}
+struct StructWithSizeAndPack4 {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructWithSizeAndPack4Wrapper {
+    + FieldA : byte
+    + FieldB : StructWithSizeAndPack4
+}
+struct StructExplicitPack1WithByteAndInt {
+    + FieldA : byte
+    + FieldB : int
+}
+struct StructExplicitPack1WithByteAndIntWrapper {
+    + FieldA : StructExplicitPack1WithByteAndInt
+    + FieldB : StructExplicitPack1WithByteAndInt
+}
+struct StructExplicitPack1WithByteAndIntWrapper2 {
+    + FieldA : StructExplicitPack1WithByteAndIntWrapper
+    + FieldB : StructExplicitPack1WithByteAndIntWrapper
+}
+struct StructExplicitWithSizeAndPack {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeAndPackWrapper {
+    + FieldA : byte
+    + FieldB : StructExplicitWithSizeAndPack
+}
+struct StructExplicitWithSizeAndPack4 {
+    + FieldA : double
+    + FieldB : int
+}
+struct StructExplicitWithSizeAndPack4Wrapper {
+    + FieldA : byte
+    + FieldB : StructExplicitWithSizeAndPack4
+}
+struct Vector64Container {
+    + Byte : byte
+    + Vector : v64
+}
+struct Vector128Container {
+    + Byte : byte
+    + Vector : v128
+}
+struct Vector256Container {
+    + Byte : byte
+    + Vector : v256
+}
+Attribute <|-- TestGeneratorOverride32BitSizeAttribute
+Attribute <|-- TestGeneratorOverride32BitOffsetAttribute
+TestStructsLayout +-- CheckHoleInner
+TestStructsLayout +-- CheckHoleOuter
+TestStructsLayout +-- ExplicitStructWithoutSize2
+TestStructsLayout +-- ExplicitStructWithoutSize
+TestStructsLayout +-- SequentialStructWithSize3
+TestStructsLayout +-- SequentialStructWithoutSize
+TestStructsLayout +-- SequentialStructEmptyNoAttributes
+TestStructsLayout +-- ExplicitStructWithEmptySequentialFields
+TestStructsLayout +-- ExplicitStrictWithEmptyAndNonEmptySequentialFields
+TestStructsLayout +-- StructWithPack8
+TestStructsLayout +-- StructPack2WithBytesAndInt
+TestStructsLayout +-- StructPack2WithBytesAndInts
+TestStructsLayout +-- StructPack1WithBytesAndInt
+TestStructsLayout +-- StructPack1WithByteAndInt
+TestStructsLayout +-- StructPack1WithByteAndIntWrapper
+TestStructsLayout +-- StructPack1WithByteAndIntWrapper2
+TestStructsLayout +-- StructWithSizeAndPack
+TestStructsLayout +-- StructWithSizeAndPackWrapper
+TestStructsLayout +-- StructWithSizeAndPack4
+TestStructsLayout +-- StructWithSizeAndPack4Wrapper
+TestStructsLayout +-- StructExplicitPack1WithByteAndInt
+TestStructsLayout +-- StructExplicitPack1WithByteAndIntWrapper
+TestStructsLayout +-- StructExplicitPack1WithByteAndIntWrapper2
+TestStructsLayout +-- StructExplicitWithSizeAndPack
+TestStructsLayout +-- StructExplicitWithSizeAndPackWrapper
+TestStructsLayout +-- StructExplicitWithSizeAndPack4
+TestStructsLayout +-- StructExplicitWithSizeAndPack4Wrapper
+TestStructsLayout +-- Vector64Container
+TestStructsLayout +-- Vector128Container
+TestStructsLayout +-- Vector256Container
+@enduml

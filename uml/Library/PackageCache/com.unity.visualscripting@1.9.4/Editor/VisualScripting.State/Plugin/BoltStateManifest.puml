@@ -1,0 +1,10 @@
+@startuml
+class BoltStateManifest <<sealed>> {
+    - BoltStateManifest(plugin:BoltState)
+    + <<override>> name : string <<get>>
+    + <<override>> author : string <<get>>
+    + <<override>> description : string <<get>>
+    + <<override>> version : SemanticVersion <<get>>
+}
+PluginManifest <|-- BoltStateManifest
+@enduml

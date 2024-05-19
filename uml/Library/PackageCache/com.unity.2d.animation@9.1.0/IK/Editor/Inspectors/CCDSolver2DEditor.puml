@@ -1,0 +1,23 @@
+@startuml
+class CCDSolver2DEditor {
+    - m_TargetProperty : SerializedProperty
+    - m_EffectorProperty : SerializedProperty
+    - m_TransformCountProperty : SerializedProperty
+    - m_IterationsProperty : SerializedProperty
+    - m_ToleranceProperty : SerializedProperty
+    - m_VelocityProperty : SerializedProperty
+    - m_Solver : CCDSolver2D
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> effectorLabel : GUIContent
+    + {static} <<readonly>> targetLabel : GUIContent
+    + {static} <<readonly>> chainLengthLabel : GUIContent
+    + {static} <<readonly>> iterationsLabel : GUIContent
+    + {static} <<readonly>> toleranceLabel : GUIContent
+    + {static} <<readonly>> velocityLabel : GUIContent
+}
+Solver2DEditor <|-- CCDSolver2DEditor
+CCDSolver2DEditor +-- Contents
+@enduml

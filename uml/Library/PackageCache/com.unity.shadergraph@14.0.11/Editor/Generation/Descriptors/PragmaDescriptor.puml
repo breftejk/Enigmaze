@@ -1,0 +1,31 @@
+@startuml
+struct PragmaDescriptor {
+    + value : string
+}
+class Pragma <<static>> {
+    {static} - GetPlatformList(platforms:Platform[]) : string
+    + {static} Target(value:ShaderModel) : PragmaDescriptor
+    + {static} TargetForKeyword(value:ShaderModel, keyword:string) : PragmaDescriptor
+    + {static} Vertex(value:string) : PragmaDescriptor
+    + {static} Fragment(value:string) : PragmaDescriptor
+    + {static} Geometry(value:string) : PragmaDescriptor
+    + {static} Hull(value:string) : PragmaDescriptor
+    + {static} Domain(value:string) : PragmaDescriptor
+    + {static} Raytracing(value:string) : PragmaDescriptor
+    + {static} Kernel(value:string) : PragmaDescriptor
+    + {static} OnlyRenderers(renderers:Platform[]) : PragmaDescriptor
+    + {static} NeverUseDXC(renderers:Platform[]) : PragmaDescriptor
+    + {static} ExcludeRenderers(renderers:Platform[]) : PragmaDescriptor
+    + {static} PreferHlslCC(renderers:Platform[]) : PragmaDescriptor
+    + {static} InstancingOptions(value:InstancingOptions) : PragmaDescriptor
+    + {static} MultiCompileInstancing : PragmaDescriptor <<get>>
+    + {static} MultiCompileForwardBase : PragmaDescriptor <<get>>
+    + {static} MultiCompileForwardAddFullShadowsBase : PragmaDescriptor <<get>>
+    + {static} MultiCompilePrePassFinal : PragmaDescriptor <<get>>
+    + {static} MultiCompileShadowCaster : PragmaDescriptor <<get>>
+    + {static} DOTSInstancing : PragmaDescriptor <<get>>
+    + {static} MultiCompileFog : PragmaDescriptor <<get>>
+    + {static} EditorSyncCompilation : PragmaDescriptor <<get>>
+    + {static} SkipVariants(variants:string[]) : PragmaDescriptor
+}
+@enduml

@@ -1,0 +1,78 @@
+@startuml
+struct uint2 {
+    + x : uint
+    + y : uint
+    + {static} <<readonly>> zero : uint2
+    + uint2(x:uint, y:uint)
+    + uint2(xy:uint2)
+    + uint2(v:uint)
+    + uint2(v:bool)
+    + uint2(v:bool2)
+    + uint2(v:int)
+    + uint2(v:int2)
+    + uint2(v:float)
+    + uint2(v:float2)
+    + uint2(v:double)
+    + uint2(v:double2)
+    + xxxx : uint4 <<get>>
+    + xxxy : uint4 <<get>>
+    + xxyx : uint4 <<get>>
+    + xxyy : uint4 <<get>>
+    + xyxx : uint4 <<get>>
+    + xyxy : uint4 <<get>>
+    + xyyx : uint4 <<get>>
+    + xyyy : uint4 <<get>>
+    + yxxx : uint4 <<get>>
+    + yxxy : uint4 <<get>>
+    + yxyx : uint4 <<get>>
+    + yxyy : uint4 <<get>>
+    + yyxx : uint4 <<get>>
+    + yyxy : uint4 <<get>>
+    + yyyx : uint4 <<get>>
+    + yyyy : uint4 <<get>>
+    + xxx : uint3 <<get>>
+    + xxy : uint3 <<get>>
+    + xyx : uint3 <<get>>
+    + xyy : uint3 <<get>>
+    + yxx : uint3 <<get>>
+    + yxy : uint3 <<get>>
+    + yyx : uint3 <<get>>
+    + yyy : uint3 <<get>>
+    + xx : uint2 <<get>>
+    + xy : uint2 <<get>> <<set>>
+    + yx : uint2 <<get>> <<set>>
+    + yy : uint2 <<get>>
+    + Equals(rhs:uint2) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} uint2(x:uint, y:uint) : uint2
+    + {static} uint2(xy:uint2) : uint2
+    + {static} uint2(v:uint) : uint2
+    + {static} uint2(v:bool) : uint2
+    + {static} uint2(v:bool2) : uint2
+    + {static} uint2(v:int) : uint2
+    + {static} uint2(v:int2) : uint2
+    + {static} uint2(v:float) : uint2
+    + {static} uint2(v:float2) : uint2
+    + {static} uint2(v:double) : uint2
+    + {static} uint2(v:double2) : uint2
+    + {static} hash(v:uint2) : uint
+    + {static} hashwide(v:uint2) : uint2
+    + {static} shuffle(left:uint2, right:uint2, x:ShuffleComponent) : uint
+    + {static} shuffle(left:uint2, right:uint2, x:ShuffleComponent, y:ShuffleComponent) : uint2
+    + {static} shuffle(left:uint2, right:uint2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : uint3
+    + {static} shuffle(left:uint2, right:uint2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : uint4
+    <<internal>> {static} select_shuffle_component(a:uint2, b:uint2, component:ShuffleComponent) : uint
+}
+class DebuggerProxy <<sealed>> {
+    + x : uint
+    + y : uint
+    + DebuggerProxy(v:uint2)
+}
+IFormattable <|-- uint2
+uint2 +-- DebuggerProxy
+@enduml

@@ -1,0 +1,106 @@
+@startuml
+class PSDImporter <<partial>> {
+    - m_MappingCompare : IPSDLayerMappingStrategy[]
+    - m_TextureImporterSettings : TextureImporterSettings
+    - m_SpriteImportData : List<SpriteMetaData>
+    - m_MosaicSpriteImportData : List<SpriteMetaData>
+    - m_RigSpriteImportData : List<SpriteMetaData>
+    - m_CharacterData : CharacterData
+    - m_SharedRigSpriteImportData : List<SpriteMetaData>
+    - m_SharedRigCharacterData : CharacterData
+    - m_PlatformSettings : List<TextureImporterPlatformSettings>
+    - m_MosaicLayers : bool = true
+    - m_CharacterMode : bool = true
+    - m_DocumentPivot : Vector2
+    - m_DocumentAlignment : SpriteAlignment
+    - m_ImportHiddenLayers : bool = false
+    - m_LayerMappingOption : ELayerMappingOption
+    - m_GeneratePhysicsShape : bool = false
+    - m_PaperDollMode : bool = false
+    - m_KeepDupilcateSpriteName : bool = true
+    - m_SkeletonAssetReferenceID : string = null
+    - m_Pipeline : ScriptableObject
+    - m_PipelineVersion : string
+    - m_Padding : int = 4
+    - m_SpriteSizeExpand : ushort = 0
+    - m_SpriteCategoryList : SpriteCategoryList
+    - m_GameObjectFactory : GameObjectCreationFactory
+    - m_ImportData : PSDImportData
+    <<internal>> importData : PSDImportData <<get>>
+    <<internal>> textureActualWidth : int <<get>>
+    <<internal>> textureActualHeight : int <<get>>
+    - m_SpritePackingTag : string = ""
+    - m_ResliceFromLayer : bool = false
+    - m_MosaicPSDLayers : List<PSDLayer>
+    - m_RigPSDLayers : List<PSDLayer>
+    - m_SharedRigPSDLayers : List<PSDLayer>
+    - m_PSDLayerImportSetting : PSDLayerImportSetting[]
+    - m_ImportFileNodeState : bool = true
+    - m_PlatformSettingsDirtyTick : long
+    - m_SpriteSizeExpandChanged : bool = false
+    - m_GenerateGOHierarchy : bool = false
+    - m_TextureAssetName : string = null
+    - m_PrefabAssetName : string = null
+    - m_SpriteLibAssetName : string = null
+    - m_SkeletonAssetName : string = null
+    - m_SecondarySpriteTextures : SecondarySpriteTexture[]
+    - m_ExtractData : PSDExtractLayerData[]
+    <<internal>> isNPOT : bool <<get>>
+    - shouldProduceGameObject : bool <<get>>
+    - shouldResliceFromLayer : bool <<get>>
+    - inCharacterMode : bool <<get>>
+    - definitionScale : float <<get>>
+    <<internal>> secondaryTextures : SecondarySpriteTexture[] <<get>> <<set>>
+    <<internal>> mainSkeletonBones : SpriteBone[] <<get>>
+    + PSDImporter()
+    - PackImage(buffers:NativeArray<Color32>[], width:int[], height:int[], padding:int, spriteSizeExpand:uint, outPackedBuffer:NativeArray<Color32>, outPackedBufferWidth:int, outPackedBufferHeight:int, outPackedRect:RectInt[], outUVTransform:Vector2Int[], requireSquarePOT:bool) : void
+    + <<override>> OnImportAsset(ctx:AssetImportContext) : void
+    - ValidatePSDLayerId(doc:Document, layerMappingOption:ELayerMappingOption) : void
+    - ImportTexture(ctx:AssetImportContext, imageData:NativeArray<Color32>, textureWidth:int, textureHeight:int, sprites:SpriteMetaData[]) : TextureGenerationOutput
+    - SetDocumentImportData(layers:IEnumerable<BitmapLayer>, extractData:PSDExtractLayerData[], mappingStrategy:IPSDLayerMappingStrategy, psdLayers:List<PSDLayer>, parent:PSDExtractLayerData) : void
+    - SetDocumentImportData(doc:Document) : void
+    - ImportFlattenImage(doc:Document, ctx:AssetImportContext, singleSpriteMode:bool) : TextureGenerationOutput
+    - ImportFromLayers(ctx:AssetImportContext) : TextureGenerationOutput
+    - EnsureSingleSpriteExist() : void
+    - RegisterAssets(ctx:AssetImportContext, output:TextureGenerationOutput) : void
+    - RegisterTextureAsset(ctx:AssetImportContext, output:TextureGenerationOutput, assetName:string, mainAsset:UnityEngine.Object) : void
+    - RegisterSpriteLibraryAsset(ctx:AssetImportContext, output:TextureGenerationOutput, assetName:string) : void
+    - RegisterGameObjects(ctx:AssetImportContext, output:TextureGenerationOutput, mainAsset:UnityEngine.Object) : void
+    - RegisterSprites(ctx:AssetImportContext, output:TextureGenerationOutput, assetNameGenerator:UniqueNameGenerator) : void
+    - RegisterSkeletonAsset(ctx:AssetImportContext, output:TextureGenerationOutput, assetName:string) : void
+    - BuildGroupGameObject(psdGroup:List<PSDLayer>, index:int, root:Transform) : void
+    - CreateBoneGO(index:int, bones:SpriteBone[], bonesGO:BoneGO[], defaultRoot:Transform) : void
+    - CreateBonesGO(root:Transform) : BoneGO[]
+    - GetSpriteLibLabel(spriteId:string, category:string, label:string) : void
+    - OnProducePaperDollPrefab(assetName:string, sprites:Sprite[], spriteLib:SpriteLibraryAsset) : GameObject
+    <<internal>> SetPlatformTextureSettings(platformSettings:TextureImporterPlatformSettings) : void
+    <<internal>> GetAllPlatformSettings() : TextureImporterPlatformSettings[]
+    - OnProducePrefab(assetname:string, sprites:Sprite[], spriteLib:SpriteLibraryAsset) : GameObject
+    - spriteDataCount : int <<get>>
+    <<internal>> Apply() : void
+    - GetSpriteImportData() : List<SpriteMetaData>
+    - skeletonAsset : SkeletonAsset <<get>>
+    <<internal>> GetPSDLayers() : List<PSDLayer>
+    <<internal>> GetSpriteMetaData() : SpriteMetaData[]
+    <<internal>> GetSpriteDataFromAllMode(guid:GUID) : SpriteRect
+    <<internal>> GetSpriteData(guid:GUID) : SpriteRect
+    <<internal>> GetDocumentPivot() : Vector2
+    <<internal>> SetDocumentPivot(pivot:Vector2) : void
+    - inMosaicMode : bool <<get>>
+    - spriteImportModeToUse : SpriteImportMode <<get>>
+    <<internal>> characterData : CharacterData <<get>> <<set>>
+    <<internal>> canvasSize : Vector2Int <<get>>
+    - ProduceSpriteLibAsset(sprites:Sprite[]) : SpriteLibraryAsset
+    <<internal>> ReadTextureSettings(dest:TextureImporterSettings) : void
+    <<internal>> GetLayerMappingStrategy() : IPSDLayerMappingStrategy
+    {static} - SetPhysicsOutline(physicsOutlineDataProvider:ISpritePhysicsOutlineDataProvider, sprites:Sprite[], definitionScale:float, pixelsPerUnit:float, generatePhysicsShape:bool) : void
+}
+enum ELayerMappingOption {
+    UseLayerName,
+    UseLayerNameCaseSensitive,
+    UseLayerId,
+}
+ScriptedImporter <|-- PSDImporter
+ISpriteEditorDataProvider <|-- PSDImporter
+PSDImporter +-- ELayerMappingOption
+@enduml

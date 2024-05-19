@@ -1,0 +1,45 @@
+@startuml
+enum ResizeDirection {
+    Any,
+    Vertical,
+    Horizontal,
+}
+enum ResizeHandleAnchor {
+    Top,
+    TopRight,
+    Right,
+    BottomRight,
+    Bottom,
+    BottomLeft,
+    Left,
+    TopLeft,
+}
+class ResizeSideHandle {
+    - m_ResizeTarget : VisualElement
+    - m_Container : VisualElement
+    - m_WindowDockingLayout : WindowDockingLayout
+    - m_MaintainAspectRatio : bool
+    + maintainAspectRatio : bool <<get>> <<set>>
+    + OnResizeFinished : Action
+    - m_Dragging : bool
+    - m_ResizeBeginLayout : Rect
+    - m_ResizeBeginMousePosition : Vector2
+    - m_StyleWidget : GUIStyle
+    - m_StyleLabel : GUIStyle
+    - image : Texture <<get>> <<set>>
+    + ResizeSideHandle(resizeTarget:VisualElement, container:VisualElement, anchor:ResizeHandleAnchor)
+    - InitialLayoutSetup(evt:GeometryChangedEvent) : void
+    - HandleResizeFromTop(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromTopRight(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromRight(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromBottomRight(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromBottom(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromBottomLeft(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromLeft(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleResizeFromTopLeft(mouseMoveEvent:MouseMoveEvent) : void
+    - HandleMouseDown(mouseDownEvent:MouseDownEvent) : void
+    - HandleDraggableMouseUp(mouseUpEvent:MouseUpEvent) : void
+    # <<override>> ImmediateRepaint() : void
+}
+ImmediateModeElement <|-- ResizeSideHandle
+@enduml

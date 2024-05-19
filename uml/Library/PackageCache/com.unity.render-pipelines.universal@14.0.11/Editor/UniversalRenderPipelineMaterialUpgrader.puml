@@ -1,0 +1,82 @@
+@startuml
+class UniversalRenderPipelineMaterialUpgrader <<sealed>> {
+    + <<override>> name : string <<get>>
+    + <<override>> info : string <<get>>
+    + <<override>> priority : int <<get>>
+    + <<override>> container : Type <<get>>
+    - m_AssetsToConvert : List<string>
+    {static} - m_Upgraders : List<MaterialUpgrader>
+    - {static} m_ShaderNamesToIgnore : HashSet<string>
+    + upgraders : IReadOnlyList<MaterialUpgrader> <<get>>
+    {static} - UniversalRenderPipelineMaterialUpgrader()
+    - {static} UpgradeProjectMaterials() : void
+    {static} - MaterialValidate(command:MenuCommand) : bool
+    - {static} UpgradeSelectedMaterialsMenuItem() : void
+    - {static} UpgradeSelectedMaterials(UpgradeAnimationClips:bool) : void
+    - {static} GetShaderNamesToIgnore(shadersToIgnore:HashSet<string>) : void
+    - {static} GetUpgraders(upgraders:List<MaterialUpgrader>) : void
+    - IsMaterialPath(path:string) : bool
+    - ShouldUpgradeShader(material:Material, shaderNamesToIgnore:HashSet<string>) : bool
+    + <<override>> OnInitialize(context:InitializeConverterContext, callback:Action) : void
+    + <<override>> OnRun(context:RunItemContext) : void
+    + <<override>> OnClicked(index:int) : void
+}
+class SupportedUpgradeParams <<static>> {
+    + {static} diffuseOpaque : UpgradeParams
+    + {static} specularOpaque : UpgradeParams
+    + {static} diffuseAlpha : UpgradeParams
+    + {static} specularAlpha : UpgradeParams
+    + {static} diffuseAlphaCutout : UpgradeParams
+    + {static} specularAlphaCutout : UpgradeParams
+    + {static} diffuseCubemap : UpgradeParams
+    + {static} specularCubemap : UpgradeParams
+    + {static} diffuseCubemapAlpha : UpgradeParams
+    + {static} specularCubemapAlpha : UpgradeParams
+}
+class StandardUpgrader {
+    + {static} UpdateStandardMaterialKeywords(material:Material) : void
+    + {static} UpdateStandardSpecularMaterialKeywords(material:Material) : void
+    {static} - UpdateDetailScaleOffset(material:Material) : void
+    {static} - UpdateSurfaceTypeAndBlendMode(material:Material) : void
+    + StandardUpgrader(oldShaderName:string)
+}
+class StandardSimpleLightingUpgrader {
+    <<internal>> StandardSimpleLightingUpgrader(oldShaderName:string, upgradeParams:UpgradeParams)
+    <<internal>> {static} UpdateMaterialKeywords(material:Material) : void
+    - {static} UpdateMaterialSpecularSource(material:Material) : void
+}
+class TerrainUpgrader {
+    + TerrainUpgrader(oldShaderName:string)
+}
+class SpeedTreeUpgrader {
+    <<internal>> SpeedTreeUpgrader(oldShaderName:string)
+}
+class SpeedTreeBillboardUpgrader {
+    <<internal>> SpeedTreeBillboardUpgrader(oldShaderName:string)
+}
+class ParticleUpgrader {
+    + ParticleUpgrader(oldShaderName:string)
+    + {static} UpdateStandardSurface(material:Material) : void
+    + {static} UpdateUnlit(material:Material) : void
+    + {static} UpdateSurfaceBlendModes(material:Material) : void
+}
+class AutodeskInteractiveUpgrader {
+    + AutodeskInteractiveUpgrader(oldShaderName:string)
+    + <<override>> Convert(srcMaterial:Material, dstMaterial:Material) : void
+}
+enum LegacyRenderingMode {
+    Opaque,
+    Cutout,
+    Fade,
+    Transparent,
+}
+RenderPipelineConverter <|-- UniversalRenderPipelineMaterialUpgrader
+MaterialUpgrader <|-- StandardUpgrader
+MaterialUpgrader <|-- StandardSimpleLightingUpgrader
+MaterialUpgrader <|-- TerrainUpgrader
+MaterialUpgrader <|-- SpeedTreeUpgrader
+MaterialUpgrader <|-- SpeedTreeBillboardUpgrader
+MaterialUpgrader <|-- ParticleUpgrader
+MaterialUpgrader <|-- AutodeskInteractiveUpgrader
+StandardUpgrader +-- LegacyRenderingMode
+@enduml

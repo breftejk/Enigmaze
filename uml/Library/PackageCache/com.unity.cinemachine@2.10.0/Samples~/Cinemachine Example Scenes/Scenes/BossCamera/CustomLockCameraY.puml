@@ -1,0 +1,7 @@
+@startuml
+class CustomLockCameraY {
+    + m_YPosition : float = 10
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+}
+CinemachineExtension <|-- CustomLockCameraY
+@enduml

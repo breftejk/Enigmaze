@@ -1,0 +1,15 @@
+@startuml
+class ProbeGIBaking <<partial>> {
+    {static} - s_Validity_locData : DynamicArray<float>
+    {static} - s_ProbeIndices : DynamicArray<int>
+    {static} - s_ForceInvalidatedProbesAndTouchupVols : Dictionary<Vector3, Bounds>
+    <<internal>> {static} GetSampleOffset(i:int) : Vector3Int
+    <<const>> - k_MinValidityForLeaking : float = 0.05f
+    <<internal>> {static} PackValidity(validity:float[]) : int
+    {static} - StoreScratchData(x:int, y:int, z:int, dataWidth:int, dataHeight:int, value:float, probeIndex:int) : void
+    {static} - ReadValidity(x:int, y:int, z:int, dataWidth:int, dataHeight:int) : float
+    {static} - ReadProbeIndex(x:int, y:int, z:int, dataWidth:int, dataHeight:int) : int
+    {static} - NeighbourhoodIsEmptySpace(pos:Vector3, searchDistance:float, boundsToCheckAgainst:Bounds) : bool
+    {static} - ComputeValidityMasks(bakingCell:BakingCell) : void
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class OuterUnityTestActionCommand {
+    {static} <<readonly>> - m_TestActionsCache : Dictionary<MethodInfo, List<IOuterUnityTestAction>>
+    + OuterUnityTestActionCommand(innerCommand:TestCommand)
+    # <<override>> InvokeBefore(action:IOuterUnityTestAction, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> InvokeAfter(action:IOuterUnityTestAction, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> GetState(context:UnityTestExecutionContext) : BeforeAfterTestCommandState
+}
+"BeforeAfterTestCommandBase`1" "<IOuterUnityTestAction>" <|-- OuterUnityTestActionCommand
+@enduml

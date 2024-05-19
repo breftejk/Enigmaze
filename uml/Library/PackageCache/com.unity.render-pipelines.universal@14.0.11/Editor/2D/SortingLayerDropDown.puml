@@ -1,0 +1,28 @@
+@startuml
+class SortingLayerDropDown {
+    - m_AllSortingLayers : SortingLayer[]
+    - m_AllSortingLayerNames : GUIContent[]
+    - m_ApplyToSortingLayersList : List<int>
+    - m_ApplyToSortingLayers : SerializedProperty
+    + OnEnable(serializedObject:SerializedObject, propertyName:string) : void
+    - UpdateApplyToSortingLayersArray(layerSelectionDataObject:object) : void
+    - OnNoSortingLayerSelected(selectionData:object) : void
+    - OnAllSortingLayersSelected(selectionData:object) : void
+    - OnSortingLayerSelected(layerSelectionDataObject:object) : void
+    + OnTargetSortingLayers(serializedObject:SerializedObject, targets:Object[], labelContent:GUIContent, selectionChangedCallback:System.Action<SerializedObject>) : void
+}
+class LayerSelectionData {
+    + serializedObject : SerializedObject
+    + targets : Object[]
+    + layerID : int
+    + onSelectionChanged : System.Action<SerializedObject>
+    + LayerSelectionData(so:SerializedObject, lid:int, tgts:Object[], selectionChangedCallback:System.Action<SerializedObject>)
+}
+class Styles <<static>> {
+    + {static} sortingLayerAll : GUIContent
+    + {static} sortingLayerNone : GUIContent
+    + {static} sortingLayerMixed : GUIContent
+}
+SortingLayerDropDown +-- LayerSelectionData
+SortingLayerDropDown +-- Styles
+@enduml

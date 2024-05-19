@@ -1,0 +1,39 @@
+@startuml
+class NativeInputRuntime {
+    + {static} <<readonly>> instance : NativeInputRuntime
+    + AllocateDeviceId() : int
+    + Update(updateType:InputUpdateType) : void
+    + <<unsafe>> QueueEvent(ptr:InputEvent*) : void
+    + <<unsafe>> DeviceCommand(deviceId:int, commandPtr:InputDeviceCommand*) : long
+    + <<unsafe>> onUpdate : InputUpdateDelegate <<get>> <<set>>
+    + onBeforeUpdate : Action<InputUpdateType> <<get>> <<set>>
+    + onShouldRunUpdate : Func<InputUpdateType, bool> <<get>> <<set>>
+    + onDeviceDiscovered : Action<int, string> <<get>> <<set>>
+    + onShutdown : Action <<get>> <<set>>
+    + onPlayerFocusChanged : Action<bool> <<get>> <<set>>
+    + isPlayerFocused : bool <<get>>
+    + pollingFrequency : float <<get>> <<set>>
+    + currentTime : double <<get>>
+    + currentTimeForFixedUpdate : double <<get>>
+    + currentTimeOffsetToRealtimeSinceStartup : double <<get>>
+    + unscaledGameTime : float <<get>>
+    + runInBackground : bool <<get>> <<set>>
+    - m_RunInBackground : bool
+    - m_ShutdownMethod : Action
+    - m_OnUpdate : InputUpdateDelegate
+    - m_OnBeforeUpdate : Action<InputUpdateType>
+    - m_OnShouldRunUpdate : Func<InputUpdateType, bool>
+    - m_PollingFrequency : float = 60.0f
+    - m_DidCallOnShutdown : bool = false
+    - OnShutdown() : void
+    - OnWantsToShutdown() : bool
+    - m_FocusChangedMethod : Action<bool>
+    - OnFocusChanged(focus:bool) : void
+    + screenSize : Vector2 <<get>>
+    + screenOrientation : ScreenOrientation <<get>>
+    + isInBatchMode : bool <<get>>
+    + RegisterAnalyticsEvent(name:string, maxPerHour:int, maxPropertiesPerEvent:int) : void
+    + SendAnalyticsEvent(name:string, data:object) : void
+}
+IInputRuntime <|-- NativeInputRuntime
+@enduml

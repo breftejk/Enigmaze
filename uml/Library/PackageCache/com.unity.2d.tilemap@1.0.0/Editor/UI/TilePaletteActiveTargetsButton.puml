@@ -1,0 +1,9 @@
+@startuml
+class TilePaletteActiveTargetsButton {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Active Targets Button"
+    - <<const>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.ActiveTargetLayers.png"
+    + TilePaletteActiveTargetsButton()
+    - OnClicked() : void
+}
+EditorToolbarDropdown <|-- TilePaletteActiveTargetsButton
+@enduml

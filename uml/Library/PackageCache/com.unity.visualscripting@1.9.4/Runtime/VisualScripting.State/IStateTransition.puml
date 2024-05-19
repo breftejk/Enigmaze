@@ -1,0 +1,9 @@
+@startuml
+interface IStateTransition {
+    Branch(flow:Flow) : void
+    OnEnter(flow:Flow) : void
+    OnExit(flow:Flow) : void
+}
+IGraphElementWithDebugData <|-- IStateTransition
+"IConnection`2" "<IState,IState>" <|-- IStateTransition
+@enduml

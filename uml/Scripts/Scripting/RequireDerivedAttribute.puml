@@ -1,0 +1,5 @@
+@startuml
+class RequireDerivedAttribute {
+}
+Attribute <|-- RequireDerivedAttribute
+@enduml

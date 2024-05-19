@@ -1,0 +1,14 @@
+@startuml
+class LiteralInspector <<sealed>> {
+    + LiteralInspector(metadata:Metadata)
+    - typeMetadata : Metadata <<get>>
+    - valueMetadata : Metadata <<get>>
+    - typedValueMetadata : Metadata <<get>>
+    - hasType : bool <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> cacheHeight : bool <<get>>
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+Inspector <|-- LiteralInspector
+@enduml

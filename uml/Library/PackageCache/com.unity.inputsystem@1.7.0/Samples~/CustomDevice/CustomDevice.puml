@@ -1,0 +1,23 @@
+@startuml
+struct CustomDeviceState {
+    + format : FourCC <<get>>
+    + buttons : ushort
+    + x : byte
+    + y : byte
+}
+class CustomDevice {
+    - {static} Initialize() : void
+    + firstButton : ButtonControl <<get>> <<protected set>>
+    + secondButton : ButtonControl <<get>> <<protected set>>
+    + thirdButton : ButtonControl <<get>> <<protected set>>
+    + stick : StickControl <<get>> <<protected set>>
+    # <<override>> FinishSetup() : void
+    + {static} current : CustomDevice <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    + OnUpdate() : void
+}
+IInputStateTypeInfo <|-- CustomDeviceState
+InputDevice <|-- CustomDevice
+IInputUpdateCallbackReceiver <|-- CustomDevice
+@enduml

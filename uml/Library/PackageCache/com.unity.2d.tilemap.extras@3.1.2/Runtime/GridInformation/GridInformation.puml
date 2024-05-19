@@ -1,0 +1,60 @@
+@startuml
+enum GridInformationType {
+    Integer,
+    String,
+    Float,
+    Double,
+    UnityObject,
+    Color,
+}
+class GridInformation {
+    - m_PositionProperties : Dictionary<GridInformationKey, GridInformationValue>
+    <<internal>> PositionProperties : Dictionary<GridInformationKey, GridInformationValue> <<get>>
+    - m_PositionIntKeys : List<GridInformationKey>
+    - m_PositionIntValues : List<int>
+    - m_PositionStringKeys : List<GridInformationKey>
+    - m_PositionStringValues : List<String>
+    - m_PositionFloatKeys : List<GridInformationKey>
+    - m_PositionFloatValues : List<float>
+    - m_PositionDoubleKeys : List<GridInformationKey>
+    - m_PositionDoubleValues : List<Double>
+    - m_PositionObjectKeys : List<GridInformationKey>
+    - m_PositionObjectValues : List<Object>
+    - m_PositionColorKeys : List<GridInformationKey>
+    - m_PositionColorValues : List<Color>
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:T) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:int) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:string) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:float) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:double) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:UnityEngine.Object) : bool
+    + SetPositionProperty(position:Vector3Int, name:String, positionProperty:Color) : bool
+    - SetPositionProperty(position:Vector3Int, name:String, dataType:GridInformationType, positionProperty:System.Object) : bool
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:T) : T
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:int) : int
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:string) : string
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:float) : float
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:double) : double
+    + GetPositionProperty(position:Vector3Int, name:String, defaultValue:Color) : Color
+    + ErasePositionProperty(position:Vector3Int, name:String) : bool
+    + <<virtual>> Reset() : void
+    + GetAllPositions(propertyName:string) : Vector3Int[]
+}
+struct GridInformationValue {
+    + type : GridInformationType
+    + data : object
+}
+struct GridInformationKey {
+    + position : Vector3Int
+    + name : String
+    + Equals(key:GridInformationKey) : bool
+    + <<override>> GetHashCode() : int
+}
+MonoBehaviour <|-- GridInformation
+ISerializationCallbackReceiver <|-- GridInformation
+GridInformation +-- GridInformationValue
+GridInformation +-- GridInformationKey
+"IEquatable`1" "<GridInformationKey>" <|-- GridInformationKey
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+abstract class TestTaskBase {
+    + SupportsResumingEnumerator : bool
+    # TestTaskBase(supportsResumingEnumerator:bool)
+    + {abstract} Execute(testJobData:TestJobData) : IEnumerator
+}
+@enduml

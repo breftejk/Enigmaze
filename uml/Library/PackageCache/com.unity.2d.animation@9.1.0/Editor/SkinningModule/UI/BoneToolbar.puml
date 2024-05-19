@@ -1,0 +1,28 @@
+@startuml
+class BoneToolbar {
+    - <<const>> k_UxmlPath : string = "SkinningModule/BoneToolbar.uxml"
+    - <<const>> k_ToolbarId : string = "BoneToolbar"
+    - <<const>> k_EditJointsId : string = "EditJoints"
+    - <<const>> k_CreateBoneId : string = "CreateBone"
+    - <<const>> k_SplitBoneId : string = "SplitBone"
+    +  <<event>> SetSkeletonTool : Action<Tools> 
+    + skinningCache : SkinningCache <<get>>
+    + {static} GenerateFromUXML() : BoneToolbar
+    + BoneToolbar()
+    - BindElements() : void
+    - SetupShortcutUtility() : void
+    + Setup(s:SkinningCache) : void
+    - OnSkinningModeChange(mode:SkinningMode) : void
+    + UpdateToggleState() : void
+    - AddShortcutsToToolTips() : void
+}
+class BoneToolbarFactory {
+}
+class BoneToolbarUxmlTraits {
+}
+Toolbar <|-- BoneToolbar
+BoneToolbar +-- BoneToolbarFactory
+"UxmlFactory`2" "<BoneToolbar,BoneToolbarUxmlTraits>" <|-- BoneToolbarFactory
+BoneToolbar +-- BoneToolbarUxmlTraits
+UxmlTraits <|-- BoneToolbarUxmlTraits
+@enduml

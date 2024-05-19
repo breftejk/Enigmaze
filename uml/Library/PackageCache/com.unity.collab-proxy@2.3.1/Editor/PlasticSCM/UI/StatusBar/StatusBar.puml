@@ -1,0 +1,36 @@
+@startuml
+interface IIncomingChangesNotifier {
+    HasNotification : bool <<get>>
+    Notification : IncomingChangesNotification <<get>>
+}
+class StatusBar {
+    <<internal>> NotificationBar : NotificationBar <<get>>
+    <<internal>> StatusBar()
+    <<internal>> Notify(message:string, type:MessageType, image:Texture2D) : void
+    <<internal>> OnGUI(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:IGluonViewSwitcher, incomingChangesNotifier:IIncomingChangesNotifier, isGluonMode:bool) : void
+    - DelayedClearNotification() : void
+    {static} - DrawNotificationAvailablePanel(notificationBar:NotificationBar) : void
+    {static} - DrawIncomingChangesNotification(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:IGluonViewSwitcher, notification:IncomingChangesNotification, isGluonMode:bool) : void
+    {static} - DrawNotification(notification:Notification) : void
+    {static} - DrawWorkspaceStatus(status:WorkspaceStatusString.Data) : void
+    {static} - DrawIcon(icon:Texture2D) : void
+    {static} - DrawLabel(label:string) : void
+    {static} - DrawNotificationLabel(label:string) : void
+    {static} - DrawButton(label:string, tooltip:string) : bool
+    {static} - ShowIncomingChangesForMode(workspaceInfo:WorkspaceInfo, mergeViewLauncher:IMergeViewLauncher, gluonSwitcher:IGluonViewSwitcher, isGluonMode:bool) : void
+    {static} - BeginDrawBar() : void
+    {static} - EndDrawBar() : void
+    {static} - GetBarStyle() : GUIStyle
+    - mNotification : Notification
+    <<readonly>> - mCooldownNotificationClearAction : CooldownWindowDelayer
+    {static} - sBarTexture : Texture2D
+    {static} - sBarStyle : GUIStyle
+}
+class Notification {
+    <<internal>> Message : string <<get>>
+    <<internal>> MessageType : MessageType <<get>>
+    <<internal>> Image : Texture2D <<get>>
+    <<internal>> Notification(message:string, messageType:MessageType, image:Texture2D)
+}
+StatusBar +-- Notification
+@enduml

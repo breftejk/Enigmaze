@@ -1,0 +1,12 @@
+@startuml
+class TypeInspector <<sealed>> {
+    + TypeInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - typeFilter : TypeFilter
+    - GetOptions() : IFuzzyOptionTree
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    + <<override>> GetAdaptiveWidth() : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- TypeInspector
+@enduml

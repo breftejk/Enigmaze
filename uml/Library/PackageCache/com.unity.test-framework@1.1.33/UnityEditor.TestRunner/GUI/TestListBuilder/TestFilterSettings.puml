@@ -1,0 +1,23 @@
+@startuml
+class TestFilterSettings {
+    + showSucceeded : bool
+    + showFailed : bool
+    + showIgnored : bool
+    + showNotRun : bool
+    + filterByName : string
+    + filterByCategory : int
+    - m_SucceededBtn : GUIContent
+    - m_FailedBtn : GUIContent
+    - m_IgnoredBtn : GUIContent
+    - m_NotRunBtn : GUIContent
+    + availableCategories : string[]
+    - <<readonly>> m_PrefsKey : string
+    + TestFilterSettings(prefsKey:string)
+    + Load() : void
+    + Save() : void
+    + UpdateCounters(results:IEnumerable<TestRunnerResult>) : void
+    + GetSelectedCategories() : string[]
+    + OnGUI() : void
+    + BuildRenderingOptions() : RenderingOptions
+}
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class NodeUsageAnalytics <<static>> {
+    - <<const>> MaxEventsPerHour : int = 120
+    - <<const>> MaxNumberOfElements : int = 1000
+    - <<const>> VendorKey : string = "unity.visualscripting"
+    - <<const>> EventName : string = "VScriptNodeUsage"
+    - {static} _isRegistered : bool = false
+    - <<const>> NodeUseLimitBeforeSend : int = 100
+    - {static} _interruptEventsRegistered : bool = false
+    - {static} _collectedData : Data = null
+    - {static} <<readonly>> AllowedNamespaces : HashSet<string>
+    <<internal>> {static} NodeAdded(aid:AnalyticsIdentifier) : void
+    <<internal>> {static} NodeRemoved(aid:AnalyticsIdentifier) : void
+    - {static} GetNodeStringFromAnalyticsIdentifier(aid:AnalyticsIdentifier) : string
+    - {static} Send() : void
+    - {static} RegisterEvent() : bool
+    - {static} EnsureInterruptEventsRegistered() : void
+    - {static} EnsureCollectedDataInitialized() : void
+    - {static} ResetCollectedData() : void
+}
+class Data {
+    <<internal>> nodeUsageCount : List<NodeCount>
+}
+struct NodeCount {
+    <<internal>> node : string
+    <<internal>> count : int
+}
+NodeUsageAnalytics +-- Data
+NodeUsageAnalytics +-- NodeCount
+@enduml

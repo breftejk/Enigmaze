@@ -1,0 +1,10 @@
+@startuml
+class MotionBlurEditor <<sealed>> {
+    - m_Quality : SerializedDataParameter
+    - m_Intensity : SerializedDataParameter
+    - m_Clamp : SerializedDataParameter
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- MotionBlurEditor
+@enduml

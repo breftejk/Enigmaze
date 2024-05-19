@@ -1,0 +1,7 @@
+@startuml
+class SpriteLibCombineCache {
+    - m_Library : List<SpriteLibCategoryOverride>
+    + library : List<SpriteLibCategoryOverride> <<get>>
+}
+ScriptableObject <|-- SpriteLibCombineCache
+@enduml

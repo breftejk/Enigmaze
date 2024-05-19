@@ -1,0 +1,7 @@
+@startuml
+class SettingsProviderGUIScope {
+    - m_LabelWidth : float
+    + SettingsProviderGUIScope()
+    # <<override>> CloseScope() : void
+}
+@enduml

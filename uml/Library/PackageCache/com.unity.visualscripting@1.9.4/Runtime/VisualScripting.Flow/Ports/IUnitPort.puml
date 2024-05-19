@@ -1,0 +1,21 @@
+@startuml
+interface IUnitPort {
+    unit : IUnit <<get>> <<set>>
+    key : string <<get>>
+    relations : IEnumerable<IUnitRelation> <<get>>
+    validConnections : IEnumerable<IUnitConnection> <<get>>
+    invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    connections : IEnumerable<IUnitConnection> <<get>>
+    connectedPorts : IEnumerable<IUnitPort> <<get>>
+    hasAnyConnection : bool <<get>>
+    hasValidConnection : bool <<get>>
+    hasInvalidConnection : bool <<get>>
+    CanInvalidlyConnectTo(port:IUnitPort) : bool
+    CanValidlyConnectTo(port:IUnitPort) : bool
+    InvalidlyConnectTo(port:IUnitPort) : void
+    ValidlyConnectTo(port:IUnitPort) : void
+    Disconnect() : void
+    CompatiblePort(unit:IUnit) : IUnitPort
+}
+IGraphItem <|-- IUnitPort
+@enduml

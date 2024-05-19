@@ -1,0 +1,125 @@
+@startuml
+class InputEventTrace <<sealed>> <<unsafe>> {
+    - <<const>> kDefaultBufferSize : int
+    + {static} FrameMarkerEvent : FourCC <<get>>
+    + deviceId : int <<get>> <<set>>
+    + enabled : bool <<get>>
+    + recordFrameMarkers : bool <<get>> <<set>>
+    + eventCount : long <<get>>
+    + totalEventSizeInBytes : long <<get>>
+    + allocatedSizeInBytes : long <<get>>
+    + maxSizeInBytes : long <<get>>
+    + deviceInfos : ReadOnlyArray<DeviceInfo> <<get>>
+    + onFilterEvent : Func<InputEventPtr, InputDevice, bool> <<get>> <<set>>
+    + InputEventTrace(device:InputDevice, bufferSizeInBytes:long, growBuffer:bool, maxBufferSizeInBytes:long, growIncrementSizeInBytes:long)
+    + InputEventTrace(bufferSizeInBytes:long, growBuffer:bool, maxBufferSizeInBytes:long, growIncrementSizeInBytes:long)
+    + WriteTo(filePath:string) : void
+    + WriteTo(stream:Stream) : void
+    + ReadFrom(filePath:string) : void
+    + ReadFrom(stream:Stream) : void
+    + {static} LoadFrom(filePath:string) : InputEventTrace
+    + {static} LoadFrom(stream:Stream) : InputEventTrace
+    + Replay() : ReplayController
+    + Resize(newBufferSize:long, newMaxBufferSize:long) : bool
+    + Clear() : void
+    + Enable() : void
+    + Disable() : void
+    + GetNextEvent(current:InputEventPtr) : bool
+    + GetEnumerator() : IEnumerator<InputEventPtr>
+    - GetEnumerator() : IEnumerator
+    + Dispose() : void
+    - m_ChangeCounter : int
+    - m_Enabled : bool
+    - m_OnFilterEvent : Func<InputEventPtr, InputDevice, bool>
+    - m_DeviceId : int
+    - m_EventListeners : CallbackArray<Action<InputEventPtr>>
+    - m_EventBufferSize : long
+    - m_MaxEventBufferSize : long
+    - m_GrowIncrementSize : long
+    - m_EventCount : long
+    - m_EventSizeInBytes : long
+    - m_EventBufferStorage : ulong
+    - m_EventBufferHeadStorage : ulong
+    - m_EventBufferTailStorage : ulong
+    - m_HasWrapped : bool
+    - m_RecordFrameMarkers : bool
+    - m_DeviceInfos : DeviceInfo[]
+    - m_EventBuffer : byte* <<get>> <<set>>
+    - m_EventBufferHead : byte* <<get>> <<set>>
+    - m_EventBufferTail : byte* <<get>> <<set>>
+    - Allocate() : void
+    - Release() : void
+    - OnBeforeUpdate() : void
+    - OnInputEvent(inputEvent:InputEventPtr, device:InputDevice) : void
+    - {static} kFileFormat : FourCC <<get>>
+    - {static} kFileVersion : int = 1
+}
+class Enumerator {
+    - m_Trace : InputEventTrace
+    - m_ChangeCounter : int
+    <<internal>> m_Current : InputEventPtr
+    + Enumerator(trace:InputEventTrace)
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : InputEventPtr <<get>>
+    - Current : object <<get>>
+}
+enum FileFlags {
+    FixedUpdate= 1 << 0,
+}
+class ReplayController {
+    + trace : InputEventTrace <<get>>
+    + finished : bool <<get>>
+    + paused : bool <<get>> <<set>>
+    + position : int <<get>>
+    + createdDevices : IEnumerable<InputDevice> <<get>>
+    - m_EventTrace : InputEventTrace
+    - m_Enumerator : Enumerator
+    - m_DeviceIDMappings : InlinedArray<KeyValuePair<int, int>>
+    - m_CreateNewDevices : bool
+    - m_CreatedDevices : InlinedArray<InputDevice>
+    - m_OnFinished : Action
+    - m_OnEvent : Action<InputEventPtr>
+    - m_StartTimeAsPerFirstEvent : double
+    - m_StartTimeAsPerRuntime : double
+    - m_AllEventsByTimeIndex : int = 0
+    - m_AllEventsByTime : List<InputEventPtr>
+    <<internal>> ReplayController(trace:InputEventTrace)
+    + Dispose() : void
+    + WithDeviceMappedFromTo(recordedDevice:InputDevice, playbackDevice:InputDevice) : ReplayController
+    + WithDeviceMappedFromTo(recordedDeviceId:int, playbackDeviceId:int) : ReplayController
+    + WithAllDevicesMappedToNewInstances() : ReplayController
+    + OnFinished(action:Action) : ReplayController
+    + OnEvent(action:Action<InputEventPtr>) : ReplayController
+    + PlayOneEvent() : ReplayController
+    + Rewind() : ReplayController
+    + PlayAllFramesOneByOne() : ReplayController
+    + PlayAllEvents() : ReplayController
+    + PlayAllEventsAccordingToTimestamps() : ReplayController
+    - OnBeginFrame() : void
+    - Finished() : void
+    - QueueEvent(eventPtr:InputEventPtr) : void
+    - MoveNext(skipFrameEvents:bool, eventPtr:InputEventPtr) : bool
+    - ApplyDeviceMapping(originalDeviceId:int) : int
+}
+struct DeviceInfo {
+    + deviceId : int <<get>> <<set>>
+    + layout : string <<get>> <<set>>
+    + stateFormat : FourCC <<get>> <<set>>
+    + stateSizeInBytes : int <<get>> <<set>>
+    <<internal>> m_DeviceId : int
+    <<internal>> m_Layout : string
+    <<internal>> m_StateFormat : FourCC
+    <<internal>> m_StateSizeInBytes : int
+    <<internal>> m_FullLayoutJson : string
+}
+IDisposable <|-- InputEventTrace
+"IEnumerable`1" "<InputEventPtr>" <|-- InputEventTrace
+InputEventTrace +-- Enumerator
+"IEnumerator`1" "<InputEventPtr>" <|-- Enumerator
+InputEventTrace +-- FileFlags
+InputEventTrace +-- ReplayController
+IDisposable <|-- ReplayController
+InputEventTrace +-- DeviceInfo
+@enduml

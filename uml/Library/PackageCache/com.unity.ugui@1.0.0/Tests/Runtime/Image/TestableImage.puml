@@ -1,0 +1,10 @@
+@startuml
+class TestableImage {
+    + isOnPopulateMeshCalled : bool = false
+    + isGeometryUpdated : bool = false
+    # <<override>> OnPopulateMesh(toFill:VertexHelper) : void
+    # <<override>> UpdateGeometry() : void
+    + GenerateImageData(vh:VertexHelper) : void
+}
+Image <|-- TestableImage
+@enduml

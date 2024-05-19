@@ -1,0 +1,9 @@
+@startuml
+class Migration_1_2_2_to_1_2_3 {
+    + Migration_1_2_2_to_1_2_3(plugin:Plugin)
+    + <<override>> from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + <<override>> Run() : void
+}
+BoltCoreMigration <|-- Migration_1_2_2_to_1_2_3
+@enduml

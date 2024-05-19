@@ -1,0 +1,12 @@
+@startuml
+class Coroutine <<sealed>> {
+    <<internal>> m_Ptr : IntPtr
+    - Coroutine()
+    <<extern>> {static} - ReleaseCoroutine(ptr:IntPtr) : void
+}
+class BindingsMarshaller <<static>> {
+    + {static} ConvertToNative(coroutine:Coroutine) : IntPtr
+}
+YieldInstruction <|-- Coroutine
+Coroutine +-- BindingsMarshaller
+@enduml

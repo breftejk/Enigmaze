@@ -1,0 +1,9 @@
+@startuml
+class TMP_FontFeatureTable {
+    + glyphPairAdjustmentRecords : List<TMP_GlyphPairAdjustmentRecord> <<get>> <<set>>
+    <<internal>> m_GlyphPairAdjustmentRecords : List<TMP_GlyphPairAdjustmentRecord>
+    <<internal>> m_GlyphPairAdjustmentRecordLookupDictionary : Dictionary<uint, TMP_GlyphPairAdjustmentRecord>
+    + TMP_FontFeatureTable()
+    + SortGlyphPairAdjustmentRecords() : void
+}
+@enduml

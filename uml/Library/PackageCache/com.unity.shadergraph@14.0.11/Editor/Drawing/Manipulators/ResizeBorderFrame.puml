@@ -1,0 +1,13 @@
+@startuml
+class ResizeBorderFrame {
+    - m_ResizeSideHandles : List<ResizeSideHandle>
+    - m_MaintainApsectRatio : bool
+    + maintainAspectRatio : bool <<get>> <<set>>
+    + OnResizeFinished : Action
+    + ResizeBorderFrame(target:VisualElement)
+    + ResizeBorderFrame(target:VisualElement, container:VisualElement)
+    - InitializeResizeBorderFrame(target:VisualElement, container:VisualElement) : void
+    - HandleResizefinished() : void
+}
+VisualElement <|-- ResizeBorderFrame
+@enduml

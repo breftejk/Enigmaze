@@ -1,0 +1,75 @@
+@startuml
+class CinemachineFreeLook {
+    + m_LookAt : Transform = null
+    + m_Follow : Transform = null
+    + m_CommonLens : bool = true
+    + m_Lens : LensSettings
+    + m_Transitions : TransitionParams
+    - m_LegacyBlendHint : BlendHint
+    + m_YAxis : AxisState
+    + m_YAxisRecentering : AxisState.Recentering
+    + m_XAxis : AxisState
+    + m_Heading : CinemachineOrbitalTransposer.Heading
+    + m_RecenterToTargetHeading : AxisState.Recentering
+    + m_BindingMode : CinemachineOrbitalTransposer.BindingMode
+    + m_SplineCurvature : float = 0.2f
+    + m_Orbits : Orbit[]
+    - m_LegacyHeadingBias : float
+    - mUseLegacyRigDefinitions : bool = false
+    # <<override>> OnValidate() : void
+    + GetRig(i:int) : CinemachineVirtualCamera
+    <<internal>> RigsAreCreated : bool <<get>>
+    + {static} RigNames : string[] <<get>>
+    - mIsDestroyed : bool = false
+    # <<override>> OnEnable() : void
+    + UpdateInputAxisProvider() : void
+    # <<override>> OnDestroy() : void
+    - OnTransformChildrenChanged() : void
+    - Reset() : void
+    + <<override>> PreviousStateIsValid : bool <<get>> <<set>>
+    <<override>> + State : CameraState <<get>>
+    <<override>> + LookAt : Transform <<get>> <<set>>
+    <<override>> + Follow : Transform <<get>> <<set>>
+    + <<override>> IsLiveChild(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    + <<override>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<override>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    <<override>> + InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    + <<override>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    <<internal>> <<override>> RequiresUserInput() : bool
+    - GetYAxisClosestValue(cameraPos:Vector3, up:Vector3) : float
+    - SteepestDescent(cameraOffset:Vector3) : float
+    - m_State : CameraState
+    - m_Rigs : CinemachineVirtualCamera[]
+    - InvalidateRigCache() : void
+    - mOrbitals : CinemachineOrbitalTransposer[] = null
+    - mBlendA : CinemachineBlend
+    - mBlendB : CinemachineBlend
+    + {static} CreateRigOverride : CreateRigDelegate
+    + {static} DestroyRigOverride : DestroyRigDelegate
+    - DestroyRigs() : void
+    - CreateRigs(copyFrom:CinemachineVirtualCamera[]) : CinemachineVirtualCamera[]
+    - UpdateRigCache() : bool
+    - LocateExistingRigs(forceOrbital:bool) : List<CinemachineVirtualCamera>
+    - m_CachedXAxisHeading : float
+    - m_LastHeadingUpdateFrame : float
+    - UpdateXAxisHeading(orbital:CinemachineOrbitalTransposer, deltaTime:float, up:Vector3) : float
+    - PushSettingsToRigs() : void
+    - GetYAxisValue() : float
+    - CalculateNewState(worldUp:Vector3, deltaTime:float) : CameraState
+    + GetLocalPositionForCameraFromInput(t:float) : Vector3
+    - m_CachedOrbits : Orbit[]
+    - m_CachedTension : float
+    - m_CachedKnots : Vector4[]
+    - m_CachedCtrl1 : Vector4[]
+    - m_CachedCtrl2 : Vector4[]
+    - UpdateCachedSpline() : void
+    <<internal>> <<override>> OnBeforeSerialize() : void
+}
+struct Orbit {
+    + m_Height : float
+    + m_Radius : float
+    + Orbit(h:float, r:float)
+}
+CinemachineVirtualCameraBase <|-- CinemachineFreeLook
+CinemachineFreeLook +-- Orbit
+@enduml

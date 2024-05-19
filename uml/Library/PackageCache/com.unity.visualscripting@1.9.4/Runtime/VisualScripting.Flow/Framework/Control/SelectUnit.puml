@@ -1,0 +1,12 @@
+@startuml
+class SelectUnit <<sealed>> {
+    + condition : ValueInput <<get>>
+    + ifTrue : ValueInput <<get>>
+    + ifFalse : ValueInput <<get>>
+    + selection : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Branch(flow:Flow) : object
+}
+Unit <|-- SelectUnit
+ISelectUnit <|-- SelectUnit
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class VolumeComponentEditorAttribute <<sealed>> {
+    + <<readonly>> componentType : Type
+    + VolumeComponentEditorAttribute(componentType:Type)
+}
+interface "IRemoveAdditionalDataContextualMenu`1"<T> {
+    RemoveComponent(component:T, dependencies:IEnumerable<Component>) : void
+}
+CustomEditor <|-- VolumeComponentEditorAttribute
+@enduml

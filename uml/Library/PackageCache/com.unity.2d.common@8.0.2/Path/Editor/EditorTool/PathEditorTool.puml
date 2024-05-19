@@ -1,0 +1,77 @@
+@startuml
+class PathEditorToolContents <<static>> {
+    <<internal>> {static} <<readonly>> shapeToolIcon : GUIContent
+    <<internal>> {static} <<readonly>> shapeToolPro : GUIContent
+    <<internal>> {static} IconContent(name:string, tooltip:string) : GUIContent
+    + {static} icon : GUIContent <<get>>
+}
+interface IDuringSceneGuiTool {
+    DuringSceneGui(sceneView:SceneView) : void
+    IsAvailable() : bool
+}
+class EditorToolManager {
+    - {static} m_Tools : List<IDuringSceneGuiTool>
+    {static} - EditorToolManager()
+    <<internal>> {static} Add(tool:IDuringSceneGuiTool) : void
+    <<internal>> {static} Remove(tool:IDuringSceneGuiTool) : void
+    <<internal>> {static} IsActiveTool() : bool
+    <<internal>> {static} IsAvailable() : bool
+    <<internal>> {static} GetEditorTool() : T
+    - {static} DuringSceneGui(sceneView:SceneView) : void
+}
+abstract class "PathEditorTool`1"<T> {
+    - m_Paths : Dictionary<UnityObject, T>
+    - m_GUIState : IGUIState
+    - m_PathEditors : Dictionary<UnityObject, PathEditor>
+    - m_SerializedObjects : Dictionary<UnityObject, SerializedObject>
+    - m_Controller : MultipleEditablePathController
+    - m_RectSelector : PointRectSelector
+    - m_IsActive : bool = false
+    + <<override>> gridSnapEnabled : bool <<get>>
+    <<internal>> paths : T[] <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+    + <<override>> IsAvailable() : bool
+    + GetPath(targetObject:UnityObject) : T
+    + SetPath(target:UnityObject) : void
+    - RepaintInspectors() : void
+    - OnEnable() : void
+    - OnDestroy() : void
+    - HandleActivation() : void
+    - Activate() : void
+    - Deactivate() : void
+    - RegisterCallbacks() : void
+    - UnregisterCallbacks() : void
+    - DestroyCache() : void
+    - UndoRedoPerformed() : void
+    - SelectionChanged() : void
+    - PlayModeStateChanged(stateChange:PlayModeStateChange) : void
+    - SetupRectSelector() : void
+    - ForEachTarget(action:Action<UnityObject>) : void
+    - InitializeCache() : void
+    - InitializePath(target:UnityObject) : void
+    - GetOrCreatePath(targetObject:UnityObject) : T
+    - GetPathEditor(target:UnityObject) : PathEditor
+    - CreatePathEditor(target:UnityObject) : void
+    - GetSerializedObject(target:UnityObject) : SerializedObject
+    - DuringSceneGui(sceneView:SceneView) : void
+    - BeginSelection(selector:ISelector<Vector3>, isAdditive:bool) : void
+    - UpdateSelection(selector:ISelector<Vector3>) : void
+    - EndSelection(selector:ISelector<Vector3>) : void
+    <<internal>> SetShapes() : void
+    - GetTransform(target:UnityObject) : Transform
+    - GetLocalToWorldMatrix(target:UnityObject) : Matrix4x4
+    - GetForward(target:UnityObject) : Vector3
+    - GetUp(target:UnityObject) : Vector3
+    - GetRight(target:UnityObject) : Vector3
+    # {abstract} GetShape(target:UnityObject) : IShape
+    # <<virtual>> Initialize(path:T, serializedObject:SerializedObject) : void
+    # {abstract} SetShape(path:T, serializedObject:SerializedObject) : void
+    # <<virtual>> OnActivate() : void
+    # <<virtual>> OnDeactivate() : void
+    # <<virtual>> OnCustomGUI(path:T) : void
+    # <<virtual>> GetLinearTangentIsZero(target:UnityObject) : bool
+    # <<virtual>> GetCustomDrawer(target:UnityObject) : IDrawer
+}
+EditorTool <|-- "PathEditorTool`1"
+IDuringSceneGuiTool <|-- "PathEditorTool`1"
+@enduml

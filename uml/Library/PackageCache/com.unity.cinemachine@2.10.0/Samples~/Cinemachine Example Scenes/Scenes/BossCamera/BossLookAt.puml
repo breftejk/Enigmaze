@@ -1,0 +1,9 @@
+@startuml
+class BossLookAt {
+    + m_LookAt : Transform
+    + m_RotationX : float = 0
+    + m_RotationZ : float = 0
+    - Update() : void
+}
+MonoBehaviour <|-- BossLookAt
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class GraphsExceptionUtility <<static>> {
+    - <<const>> handledKey : string = "Bolt.Core.Handled"
+    + {static} GetException(element:IGraphElementWithDebugData, pointer:GraphPointer) : Exception
+    + {static} SetException(element:IGraphElementWithDebugData, pointer:GraphPointer, ex:Exception) : void
+    + {static} HandleException(element:IGraphElementWithDebugData, pointer:GraphPointer, ex:Exception) : void
+    - {static} HandledIn(ex:Exception, reference:GraphReference) : bool
+}
+@enduml

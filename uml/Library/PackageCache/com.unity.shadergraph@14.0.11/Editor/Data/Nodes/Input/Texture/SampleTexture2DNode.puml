@@ -1,0 +1,43 @@
+@startuml
+enum TextureType {
+    Default,
+    Normal,
+}
+class SampleTexture2DNode {
+    + <<const>> OutputSlotRGBAId : int = 0
+    + <<const>> OutputSlotRId : int = 4
+    + <<const>> OutputSlotGId : int = 5
+    + <<const>> OutputSlotBId : int = 6
+    + <<const>> OutputSlotAId : int = 7
+    + <<const>> TextureInputId : int = 1
+    + <<const>> UVInput : int = 2
+    + <<const>> SamplerInput : int = 3
+    + <<const>> MipBiasInput : int = 8
+    + <<const>> LodInput : int = 9
+    + <<const>> DdxInput : int = 10
+    + <<const>> DdyInput : int = 11
+    <<const>> - kTextureInputName : string = "Texture"
+    <<const>> - kUVInputName : string = "UV"
+    <<const>> - kSamplerInputName : string = "Sampler"
+    - m_RGBAPins : RGBANodeOutput
+    - m_Mip2DSamplingInputs : Mip2DSamplingInputs
+    + <<override>> hasPreview : bool <<get>>
+    + SampleTexture2DNode()
+    - m_TextureType : TextureType
+    + textureType : TextureType <<get>> <<set>>
+    - m_NormalMapSpace : NormalMapSpace
+    + normalMapSpace : NormalMapSpace <<get>> <<set>>
+    - m_EnableGlobalMipBias : bool = true
+    <<internal>> enableGlobalMipBias : bool <<set>> <<get>>
+    - m_MipSamplingMode : Texture2DMipSamplingMode
+    <<internal>> mipSamplingMode : Texture2DMipSamplingMode <<set>> <<get>>
+    - UpdateMipSamplingModeInputs() : void
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> Setup() : void
+    + <<virtual>> GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- SampleTexture2DNode
+IGeneratesBodyCode <|-- SampleTexture2DNode
+IMayRequireMeshUV <|-- SampleTexture2DNode
+@enduml

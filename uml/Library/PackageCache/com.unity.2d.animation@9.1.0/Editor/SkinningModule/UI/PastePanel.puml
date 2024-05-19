@@ -1,0 +1,27 @@
+@startuml
+class PastePanel {
+    +  <<event>> onPasteActivated : Action<bool, bool, bool, bool> 
+    - m_BonesToggle : Toggle
+    - m_MeshToggle : Toggle
+    - m_FlipXToggle : Toggle
+    - m_FlipYToggle : Toggle
+    + bones : bool <<get>> <<set>>
+    + mesh : bool <<get>> <<set>>
+    + flipX : bool <<get>> <<set>>
+    + flipY : bool <<get>> <<set>>
+    + PastePanel()
+    + BindElements() : void
+    + OnPasteActivated() : void
+    + BonePasteEnable(value:bool) : void
+    + {static} GenerateFromUXML() : PastePanel
+}
+class PastePanelFactory {
+}
+class PastePanelUxmlTraits {
+}
+VisualElement <|-- PastePanel
+PastePanel +-- PastePanelFactory
+"UxmlFactory`2" "<PastePanel,PastePanelUxmlTraits>" <|-- PastePanelFactory
+PastePanel +-- PastePanelUxmlTraits
+UxmlTraits <|-- PastePanelUxmlTraits
+@enduml

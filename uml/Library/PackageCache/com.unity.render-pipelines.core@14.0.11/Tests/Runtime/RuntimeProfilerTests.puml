@@ -1,0 +1,11 @@
+@startuml
+class RuntimeProfilerTestBase {
+    # <<const>> k_NumWarmupFrames : int = 10
+    # <<const>> k_NumFramesToRender : int = 30
+    # m_DebugFrameTiming : DebugFrameTiming
+    # m_ToCleanup : GameObject
+    + Setup() : void
+    + TearDown() : void
+    # Warmup() : IEnumerator
+}
+@enduml

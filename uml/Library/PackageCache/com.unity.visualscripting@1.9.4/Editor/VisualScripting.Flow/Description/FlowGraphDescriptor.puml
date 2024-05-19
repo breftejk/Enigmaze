@@ -1,0 +1,6 @@
+@startuml
+class FlowGraphDescriptor <<sealed>> {
+    + FlowGraphDescriptor(target:FlowGraph)
+}
+"GraphDescriptor`2" "<FlowGraph,GraphDescription>" <|-- FlowGraphDescriptor
+@enduml

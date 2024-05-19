@@ -1,0 +1,6 @@
+@startuml
+interface IRemoteTestResultDataFactory {
+    CreateFromTestResult(result:ITestResult) : RemoteTestResultDataWithTestData
+    CreateFromTest(test:ITest) : RemoteTestResultDataWithTestData
+}
+@enduml

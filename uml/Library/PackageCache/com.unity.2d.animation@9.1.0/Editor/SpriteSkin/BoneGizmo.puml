@@ -1,0 +1,56 @@
+@startuml
+class BoneGizmoInitializer {
+    {static} - BoneGizmoInitializer()
+}
+class BoneGizmo {
+    - m_BoneGizmoController : BoneGizmoController
+    <<internal>> boneGizmoController : BoneGizmoController <<get>>
+    <<internal>> Initialize() : void
+    <<internal>> ClearSpriteBoneCache() : void
+    - RegisterCallbacks() : void
+    - OnSceneGUI(sceneView:SceneView) : void
+    - OnSelectionChanged() : void
+    - OnAfterAssemblyReload() : void
+    - PlayModeStateChanged(stateChange:PlayModeStateChange) : void
+}
+class BoneGizmoController {
+    - m_SpriteBones : Dictionary<Sprite, UnityEngine.U2D.SpriteBone[]>
+    - m_BoneData : Dictionary<Transform, Vector2>
+    - m_SkinComponents : HashSet<SpriteSkin>
+    - m_CachedBones : HashSet<Transform>
+    - m_SelectionRoots : HashSet<Transform>
+    - view : ISkeletonView
+    - m_Undo : IUndo
+    - m_PreviousTool : Tool
+    - m_BoneGizmoToggle : IBoneGizmoToggle
+    <<internal>> boneGizmoToggle : IBoneGizmoToggle <<get>> <<set>>
+    + hoveredBone : Transform <<get>>
+    + hoveredTail : Transform <<get>>
+    + hoveredBody : Transform <<get>>
+    + hoveredJoint : Transform <<get>>
+    + hotBone : Transform <<get>>
+    - GetBone(instanceID:int) : Transform
+    + BoneGizmoController(view:ISkeletonView, undo:IUndo, toggle:IBoneGizmoToggle)
+    <<internal>> OnSelectionChanged() : void
+    <<internal>> OnGUI() : void
+    <<internal>> FindSkinComponents() : void
+    <<internal>> ClearSpriteBoneCache() : void
+    - PrepareBones() : void
+    - GetSpriteBones(spriteSkin:SpriteSkin) : UnityEngine.U2D.SpriteBone[]
+    - PrepareBones(spriteSkin:SpriteSkin) : void
+    - DoBoneGUI() : void
+    - LayoutBones() : void
+    - HandleSelectBone() : void
+    - HandleRotateBone() : void
+    - HandleMoveBone() : void
+    - FindPivotTransform(transform:Transform, selectedTransform:Transform) : bool
+    - SetBonePosition(deltaPosition:Vector3) : void
+    - SetBoneRotation(deltaAngle:float) : void
+    - DrawBones() : void
+    - DrawBone(bone:Transform, length:float, color:Color) : void
+    - DrawBoneOutline(bone:Transform, length:float, color:Color, outlineScale:float) : void
+    - DrawCursors() : void
+    - HasParentBone(transform:Transform) : bool
+}
+"ScriptableSingleton`1" "<BoneGizmo>" <|-- BoneGizmo
+@enduml

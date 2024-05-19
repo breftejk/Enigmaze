@@ -1,0 +1,23 @@
+@startuml
+class FilterRulesConfirmationDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} AskForConfirmation(rules:string[], isAddOperation:bool, isApplicableToAllWorkspaces:bool, parentWindow:EditorWindow) : FilterRulesConfirmationData
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - RulesArea() : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    - GetRules() : string[]
+    {static} - FixTextAreaSelectionIfNeeded(isTextAreaFocused:bool) : bool
+    {static} - GetRulesText(rules:string[]) : string
+    {static} - Create(explanation:string, rulesText:string, isApplicableToAllWorkspaces:bool) : FilterRulesConfirmationDialog
+    - mIsTextAreaFocused : bool
+    - mScrollPosition : Vector2
+    - mApplyRulesToAllWorkspace : bool
+    - mIsApplicableToAllWorkspaces : bool
+    - mRulesText : string
+    - mDialogExplanation : string
+}
+PlasticDialog <|-- FilterRulesConfirmationDialog
+@enduml

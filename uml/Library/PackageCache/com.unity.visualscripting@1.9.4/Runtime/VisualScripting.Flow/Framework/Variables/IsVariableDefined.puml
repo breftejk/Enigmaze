@@ -1,0 +1,8 @@
+@startuml
+class IsVariableDefined <<sealed>> {
+    + isVariableDefined : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - IsDefined(flow:Flow) : bool
+}
+UnifiedVariableUnit <|-- IsVariableDefined
+@enduml

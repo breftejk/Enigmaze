@@ -1,0 +1,8 @@
+@startuml
+class NamespaceInspector {
+    + NamespaceInspector(metadata:Metadata)
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- NamespaceInspector
+@enduml

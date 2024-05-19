@@ -1,0 +1,41 @@
+@startuml
+class ToolConstants <<static>> {
+    <<internal>> <<const>> LEGACY_MACOS_BINDIR : string = "/Applications/PlasticSCM.app/Contents/MonoBundle"
+    <<internal>> <<const>> NEW_MACOS_BINDIR : string = "/Applications/PlasticSCM.app/Contents/MacOS"
+}
+class Plastic <<static>> {
+    <<internal>> <<const>> GUI_CONFIGURE_ARG : string = "--configure"
+    <<internal>> <<const>> GUI_WINDOWS_WK_ARG : string = "--wk=\"{0&#125;\""
+    <<internal>> <<const>> GUI_WINDOWS_BREX_ARG : string = "--branchexplorer=\"{0&#125;\""
+    <<internal>> <<const>> GUI_WINDOWS_MERGE_ARG : string = "--resolve=\"{0&#125;\""
+    <<internal>> <<const>> GUI_WINDOWS_INCOMING_CHANGES_ARG : string = "--resolve=\"{0&#125;\" --incomingmerge"
+    <<internal>> <<const>> GUI_MACOS_WK_EXPLORER_ARG : string = "--wk=\"{0&#125;\" --view=ItemsView"
+    <<internal>> <<const>> GUI_MACOS_BREX_ARG : string = "--wk=\"{0&#125;\" --view=BranchExplorerView"
+    <<internal>> <<const>> GUI_MACOS_MERGE_ARG : string = "--wk=\"{0&#125;\" --view=MergeView"
+    <<internal>> <<const>> GUI_MACOS_INCOMING_CHANGES_ARG : string = "--wk=\"{0&#125;\" --view=IncomingChangesView"
+    <<internal>> <<const>> GUI_MACOS_COMMAND_FILE_ARG : string = " --command-file=\"{0&#125;\""
+    <<internal>> <<const>> GUI_MACOS_COMMAND_FILE : string = "macplastic-command-file.txt"
+    <<internal>> <<const>> GUI_CHANGESET_DIFF_ARG : string = "--diffchangeset=\"{0&#125;\""
+    <<internal>> <<const>> GUI_SELECTED_CHANGESETS_DIFF_ARGS : string = "--diffchangesetsrc=\"{0&#125;\" --diffchangesetdst=\"{1&#125;\""
+    <<internal>> <<const>> GUI_BRANCH_DIFF_ARG : string = "--diffbranch=\"{0&#125;\""
+}
+class Gluon <<static>> {
+    <<internal>> <<const>> GUI_CONFIGURE_ARG : string = "--configure"
+    <<internal>> <<const>> GUI_WK_EXPLORER_ARG : string = "--wk=\"{0&#125;\" --view=WorkspaceExplorerView"
+    <<internal>> <<const>> GUI_WK_CONFIGURATION_ARG : string = "--wk=\"{0&#125;\" --view=WorkspaceConfigurationView"
+    <<internal>> <<const>> GUI_WK_INCOMING_CHANGES_ARG : string = "--wk=\"{0&#125;\" --view=IncomingChangesView"
+    <<internal>> <<const>> GUI_COMMAND_FILE_ARG : string = " --command-file=\"{0&#125;\""
+    <<internal>> <<const>> GUI_COMMAND_FILE : string = "gluon-command-file.txt"
+    <<internal>> <<const>> GUI_CHANGESET_DIFF_ARG : string = "--diffchangeset=\"{0&#125;\""
+    <<internal>> <<const>> GUI_SELECTED_CHANGESETS_DIFF_ARGS : string = "--diffchangesetsrc=\"{0&#125;\" --diffchangesetdst=\"{1&#125;\""
+    <<internal>> <<const>> GUI_BRANCH_DIFF_ARG : string = "--diffbranch=\"{0&#125;\""
+}
+class Installer <<static>> {
+    <<internal>> <<const>> INSTALLER_WINDOWS_ARGS : string = "--mode unattended --unattendedmodeui minimal"
+    <<internal>> <<const>> INSTALLER_MACOS_OPEN : string = "open"
+    <<internal>> <<const>> INSTALLER_MACOS_OPEN_ARGS : string = "-W -n {0&#125;"
+}
+ToolConstants +-- Plastic
+ToolConstants +-- Gluon
+ToolConstants +-- Installer
+@enduml

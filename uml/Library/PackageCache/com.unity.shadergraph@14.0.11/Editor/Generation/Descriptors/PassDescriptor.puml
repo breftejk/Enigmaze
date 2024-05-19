@@ -1,0 +1,24 @@
+@startuml
+struct PassDescriptor {
+    + displayName : string
+    + referenceName : string
+    + lightMode : string
+    + useInPreview : bool
+    + virtualTextureFeedback : bool
+    + passTemplatePath : string
+    + sharedTemplateDirectories : string[]
+    + validVertexBlocks : BlockFieldDescriptor[]
+    + validPixelBlocks : BlockFieldDescriptor[]
+    + structs : StructCollection
+    + requiredFields : FieldCollection
+    + fieldDependencies : DependencyCollection
+    + renderStates : RenderStateCollection
+    + pragmas : PragmaCollection
+    + defines : DefineCollection
+    + keywords : KeywordCollection
+    + includes : IncludeCollection
+    + additionalCommands : AdditionalCommandCollection
+    + customInterpolators : CustomInterpSubGen.Collection
+    + Equals(other:PassDescriptor) : bool
+}
+@enduml

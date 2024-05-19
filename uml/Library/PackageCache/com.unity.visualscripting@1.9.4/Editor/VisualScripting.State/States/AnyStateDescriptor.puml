@@ -1,0 +1,6 @@
+@startuml
+class AnyStateDescriptor {
+    + AnyStateDescriptor(state:AnyState)
+}
+"StateDescriptor`1" "<AnyState>" <|-- AnyStateDescriptor
+@enduml

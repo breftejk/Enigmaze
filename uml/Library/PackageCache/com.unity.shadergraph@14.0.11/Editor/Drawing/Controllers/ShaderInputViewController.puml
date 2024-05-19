@@ -1,0 +1,57 @@
+@startuml
+class ChangeExposedFlagAction {
+    <<internal>> ChangeExposedFlagAction(shaderInput:ShaderInput, newIsExposed:bool)
+    - ChangeExposedFlag(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputReference : ShaderInput <<get>>
+    <<internal>> newIsExposedValue : bool <<get>>
+    <<internal>> oldIsExposedValue : bool <<get>>
+}
+class ChangePropertyValueAction {
+    - ChangePropertyValue(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputReference : ShaderInput <<get>> <<set>>
+    <<internal>> newShaderInputValue : object <<get>> <<set>>
+}
+class ChangeDisplayNameAction {
+    - ChangeDisplayName(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputReference : ShaderInput <<get>> <<set>>
+    <<internal>> newDisplayNameValue : string <<get>> <<set>>
+}
+class ChangeReferenceNameAction {
+    - ChangeReferenceName(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputReference : ShaderInput <<get>> <<set>>
+    <<internal>> newReferenceNameValue : string <<get>> <<set>>
+}
+class ResetReferenceNameAction {
+    - ResetReferenceName(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputReference : ShaderInput <<get>> <<set>>
+}
+class DeleteShaderInputAction {
+    - DeleteShaderInput(graphData:GraphData) : void
+    + modifyGraphDataAction : Action<GraphData> <<get>>
+    <<internal>> shaderInputsToDelete : IList<ShaderInput> <<get>> <<set>>
+}
+class ShaderInputViewController {
+    <<internal>> graphData : GraphData <<get>>
+    <<internal>> ShaderInputViewController(shaderInput:ShaderInput, inViewModel:ShaderInputViewModel, graphDataStore:GraphDataStore)
+    - InitializeViewModel() : void
+    - m_BlackboardRowView : SGBlackboardRow
+    - m_SgBlackboardField : SGBlackboardField
+    <<internal>> BlackboardItemView : SGBlackboardRow <<get>>
+    # <<override>> RequestModelChange(changeAction:IGraphDataAction) : void
+    # <<override>> ModelChanged(graphData:GraphData, changeAction:IGraphDataAction) : void
+    <<internal>> DirtyNodes(modificationScope:ModificationScope) : void
+    + <<override>> Dispose() : void
+}
+IGraphDataAction <|-- ChangeExposedFlagAction
+IGraphDataAction <|-- ChangePropertyValueAction
+IGraphDataAction <|-- ChangeDisplayNameAction
+IGraphDataAction <|-- ChangeReferenceNameAction
+IGraphDataAction <|-- ResetReferenceNameAction
+IGraphDataAction <|-- DeleteShaderInputAction
+"SGViewController`2" "<ShaderInput,ShaderInputViewModel>" <|-- ShaderInputViewController
+@enduml

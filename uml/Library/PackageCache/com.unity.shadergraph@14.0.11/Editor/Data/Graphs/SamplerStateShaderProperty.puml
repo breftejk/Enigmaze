@@ -1,0 +1,21 @@
+@startuml
+class SamplerStateShaderProperty {
+    + SamplerStateShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> isReferenceRenamable : bool <<get>>
+    - propertyReferenceName : string <<get>>
+    + <<override>> referenceNameForEditing : string <<get>>
+    <<internal>> <<override>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+"AbstractShaderProperty`1" "<TextureSamplerState>" <|-- SamplerStateShaderProperty
+@enduml

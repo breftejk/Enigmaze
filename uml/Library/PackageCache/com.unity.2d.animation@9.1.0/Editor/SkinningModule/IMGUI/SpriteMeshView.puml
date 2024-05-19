@@ -1,0 +1,80 @@
+@startuml
+class SpriteMeshView {
+    <<readonly>> - m_VertexHashCode : int
+    <<readonly>> - m_EdgeHashCode : int
+    <<const>> - kDeleteCommandName : string = "Delete"
+    <<const>> - kSoftDeleteCommandName : string = "SoftDelete"
+    {static} <<readonly>> - kEdgeColor : Color
+    {static} <<readonly>> - kEdgeHoveredColor : Color
+    {static} <<readonly>> - kEdgeSelectedColor : Color
+    <<const>> - kEdgeWidth : float = 2f
+    <<const>> - kVertexRadius : float = 2.5f
+    - m_Styles : Styles
+    - styles : Styles <<get>>
+    - m_HoveredEdge : int
+    - m_HoveredEdgeControlID : int
+    - m_MoveEdgeControlID : int
+    - m_HoveredVertex : int
+    - m_PrevHoveredVertex : int
+    - m_HoveredVertexControlID : int
+    - m_MoveVertexControlID : int
+    - m_TempColor : Color
+    - m_HotSliderData : SliderData
+    - m_PreviousActiveAction : MeshEditorAction
+    - m_MouseWorldPosition : Vector2
+    - m_NearestVertexDistance : float
+    - m_NearestEdgeDistance : float
+    - m_NearestVertex : int
+    - m_NearestEdge : int
+    + mode : SpriteMeshViewMode <<get>> <<set>>
+    + selection : ISelection<int> <<get>> <<set>>
+    + defaultControlID : int <<get>> <<set>>
+    + frame : Rect <<get>> <<set>>
+    - guiWrapper : IGUIWrapper <<get>> <<set>>
+    + mouseWorldPosition : Vector2 <<get>>
+    + hoveredVertex : int <<get>>
+    + hoveredEdge : int <<get>>
+    + closestEdge : int <<get>>
+    + SpriteMeshView(gw:IGUIWrapper)
+    + CancelMode() : void
+    + BeginLayout() : void
+    + EndLayout() : void
+    + LayoutVertex(position:Vector2, index:int) : void
+    + LayoutEdge(startPosition:Vector2, endPosition:Vector2, index:int) : void
+    + DoCreateVertex() : bool
+    + DoSelectVertex(additive:bool) : bool
+    + DoMoveVertex(delta:Vector2) : bool
+    + DoMoveEdge(delta:Vector2) : bool
+    + DoCreateEdge() : bool
+    + DoSplitEdge() : bool
+    + DoSelectEdge(additive:bool) : bool
+    + DoRemove() : bool
+    + DrawVertex(position:Vector2) : void
+    + DrawVertexHovered(position:Vector2) : void
+    + DrawVertexSelected(position:Vector2) : void
+    + BeginDrawEdges() : void
+    + EndDrawEdges() : void
+    + DrawEdge(startPosition:Vector2, endPosition:Vector2) : void
+    + DrawEdgeHovered(startPosition:Vector2, endPosition:Vector2) : void
+    + DrawEdgeSelected(startPosition:Vector2, endPosition:Vector2) : void
+    + IsActionActive(action:MeshEditorAction) : bool
+    + IsActionHot(action:MeshEditorAction) : bool
+    + IsActionTriggered(action:MeshEditorAction) : bool
+    + WorldToScreen(position:Vector2) : Vector2
+    - ConsumeMouseMoveEvents() : void
+    - CanCreateEdge() : bool
+    - CanSplitEdge() : bool
+    - DrawEdge(startPosition:Vector2, endPosition:Vector2, color:Color) : void
+    + DoRepaint() : void
+    + CanRepaint() : bool
+    + CanLayout() : bool
+}
+class Styles {
+    + <<readonly>> pointNormalStyle : GUIStyle
+    + <<readonly>> pointHoveredStyle : GUIStyle
+    + <<readonly>> pointSelectedStyle : GUIStyle
+    + Styles()
+}
+ISpriteMeshView <|-- SpriteMeshView
+SpriteMeshView +-- Styles
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class MatrixPropertyDrawer {
+    + dimension : MatrixDimensions <<get>> <<set>>
+    <<internal>> PreValueChangeCallback : Action
+    <<internal>> PostValueChangeCallback : Action
+    <<internal>> MatrixRowFetchCallback : GetMatrixRowDelegate
+    - HandleMatrix2Property(valueChangedCallback:ValueChangedCallback, propertySheet:PropertySheet, matrix2Property:Matrix4x4, labelName:string) : void
+    - HandleMatrix3Property(valueChangedCallback:ValueChangedCallback, propertySheet:PropertySheet, matrix3Property:Matrix4x4, labelName:string) : void
+    - HandleMatrix4Property(valueChangedCallback:ValueChangedCallback, propertySheet:PropertySheet, matrix4Property:Matrix4x4, labelName:string) : void
+    <<internal>> CreateGUI(valueChangedCallback:ValueChangedCallback, fieldToDraw:Matrix4x4, labelName:string, propertyMatrixField:VisualElement, indentLevel:int) : VisualElement
+    + inspectorUpdateDelegate : Action <<get>> <<set>>
+    + DrawProperty(propertyInfo:PropertyInfo, actualObject:object, attribute:InspectableAttribute) : VisualElement
+    - DisposePropertyDrawer() : void
+}
+enum MatrixDimensions {
+    Two,
+    Three,
+    Four,
+}
+IPropertyDrawer <|-- MatrixPropertyDrawer
+MatrixPropertyDrawer +-- MatrixDimensions
+@enduml

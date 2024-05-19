@@ -1,0 +1,16 @@
+@startuml
+class ProjectPart {
+    + Name : string <<get>>
+    + OutputPath : string <<get>>
+    + Assembly : Assembly <<get>>
+    + AdditionalAssets : List<string> <<get>>
+    + SourceFiles : string[] <<get>>
+    + RootNamespace : string <<get>>
+    + AssemblyReferences : Assembly[] <<get>>
+    + CompiledAssemblyReferences : string[] <<get>>
+    + Defines : string[] <<get>>
+    + CompilerOptions : ScriptCompilerOptions <<get>>
+    + ProjectPart(name:string, assembly:Assembly, additionalAssets:List<string>)
+    + GetResponseFileData(assemblyNameProvider:IAssemblyNameProvider, projectDirectory:string) : List<ResponseFileData>
+}
+@enduml

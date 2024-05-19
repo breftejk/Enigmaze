@@ -1,0 +1,8 @@
+@startuml
+class ShaderSubGraphImporterEditor {
+    + <<override>> showImportedObject : bool <<get>>
+    # <<override>> needsApplyRevert : bool <<get>>
+    + <<override>> OnInspectorGUI() : void
+}
+ScriptedImporterEditor <|-- ShaderSubGraphImporterEditor
+@enduml

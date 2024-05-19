@@ -1,0 +1,16 @@
+@startuml
+class XRMirrorView <<static>> {
+    {static} <<readonly>> - s_MirrorViewMaterialProperty : MaterialPropertyBlock
+    {static} <<readonly>> - k_MirrorViewProfilingSampler : ProfilingSampler
+    {static} <<readonly>> - k_SourceTex : int
+    {static} <<readonly>> - k_SourceTexArraySlice : int
+    {static} <<readonly>> - k_ScaleBias : int
+    {static} <<readonly>> - k_ScaleBiasRt : int
+    {static} <<readonly>> - k_SRGBRead : int
+    {static} <<readonly>> - k_SRGBWrite : int
+    {static} <<readonly>> - k_MaxNits : int
+    {static} <<readonly>> - k_SourceMaxNits : int
+    {static} <<readonly>> - k_SourceHDREncoding : int
+    {static} <<readonly>> - k_ColorTransform : int
+}
+@enduml

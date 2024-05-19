@@ -1,0 +1,12 @@
+@startuml
+class SlowTapInteraction {
+    + duration : float
+    + pressPoint : float
+    - durationOrDefault : float <<get>>
+    - pressPointOrDefault : float <<get>>
+    - m_SlowTapStartTime : double
+    + Process(context:InputInteractionContext) : void
+    + Reset() : void
+}
+IInputInteraction <|-- SlowTapInteraction
+@enduml

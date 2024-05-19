@@ -1,0 +1,13 @@
+@startuml
+class ActivateCameraWithDistance {
+    + objectToCheck : GameObject
+    + distanceToObject : float = 15f
+    + initialActiveCam : CinemachineVirtualCameraBase
+    + switchCameraTo : CinemachineVirtualCameraBase
+    - brain : CinemachineBrain
+    - Start() : void
+    - Update() : void
+    + SwitchCam(vcam:CinemachineVirtualCameraBase) : void
+}
+MonoBehaviour <|-- ActivateCameraWithDistance
+@enduml

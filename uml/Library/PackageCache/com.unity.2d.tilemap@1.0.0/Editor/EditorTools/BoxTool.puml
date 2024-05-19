@@ -1,0 +1,14 @@
+@startuml
+class BoxTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string = "|Paint a filled box with active brush ({0&#125;)"
+    + {static} shortcutId : string = "Grid Painting/Rectangle"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- BoxTool
+BoxTool +-- Styles
+@enduml

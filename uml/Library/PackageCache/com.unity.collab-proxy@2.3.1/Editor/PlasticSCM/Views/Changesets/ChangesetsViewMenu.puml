@@ -1,0 +1,43 @@
+@startuml
+class ChangesetsViewMenu {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> ChangesetsViewMenu(wkInfo:WorkspaceInfo, changesetMenuOperations:IChangesetMenuOperations, menuOperations:IMenuOperations, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, isGluonMode:bool)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    <<internal>> SetLoadedBranchId(loadedBranchId:long) : void
+    - DiffChangesetMenuItem_Click() : void
+    - DiffSelectedChangesetsMenuItem_Click() : void
+    - RevertToChangesetMenuItem_Click() : void
+    - DiffBranchMenuItem_Click() : void
+    - SwitchToChangesetMenuItem_Click() : void
+    <<internal>> UpdateMenuItems(menu:GenericMenu) : void
+    - ProcessMenuOperation(operationToExecute:ChangesetMenuOperations, changesetMenuOperations:IChangesetMenuOperations) : void
+    {static} - AddDiffChangesetMenuItem(menuItemContent:GUIContent, menu:GenericMenu, changeset:ChangesetExtendedInfo, operations:ChangesetMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - AddDiffSelectedChangesetsMenuItem(menuItemContent:GUIContent, menu:GenericMenu, operations:ChangesetMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - AddBackToMenuItem(menuItemContent:GUIContent, menu:GenericMenu, operations:ChangesetMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - AddDiffBranchMenuItem(menuItemContent:GUIContent, menu:GenericMenu, changeset:ChangesetExtendedInfo, operations:ChangesetMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - AddSwitchToChangesetMenuItem(menuItemContent:GUIContent, menu:GenericMenu, operations:ChangesetMenuOperations, menuFunction:GenericMenu.MenuFunction) : void
+    {static} - GetBranchName(changesetInfo:ChangesetExtendedInfo) : string
+    {static} - IsOnMainBranch(singleSeletedChangeset:ChangesetExtendedInfo) : bool
+    {static} - GetMenuOperations(e:Event, isMultipleSelection:bool) : ChangesetMenuOperations
+    - BuildComponents() : void
+    - mMenu : GenericMenu
+    - mDiffChangesetMenuItemContent : GUIContent
+    - mDiffSelectedChangesetsMenuItemContent : GUIContent
+    - mDiffBranchMenuItemContent : GUIContent
+    - mSwitchToChangesetMenuItemContent : GUIContent
+    - mRevertToChangesetMenuItemContent : GUIContent
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mChangesetMenuOperations : IChangesetMenuOperations
+    <<readonly>> - mMenuOperations : IMenuOperations
+    <<readonly>> - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    <<readonly>> - mIsGluonMode : bool
+    - mLoadedBranchId : long
+    <<const>> - MAIN_BRANCH_NAME : string = "/main"
+}
+interface IMenuOperations {
+    DiffBranch() : void
+    GetSelectedChangeset() : ChangesetExtendedInfo
+}
+ChangesetsViewMenu +-- IMenuOperations
+@enduml

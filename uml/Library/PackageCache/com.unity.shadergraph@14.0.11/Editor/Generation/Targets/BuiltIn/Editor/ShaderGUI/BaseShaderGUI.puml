@@ -1,0 +1,78 @@
+@startuml
+class BuiltInBaseShaderGUI {
+    + m_FirstTimeApply : bool = true
+    <<readonly>> - m_MaterialScopeList : MaterialHeaderScopeList
+    - m_MaterialEditor : MaterialEditor
+    - m_Properties : MaterialProperty[]
+    - <<const>> queueOffsetRange : int = 50
+    <<override>> + OnGUI(materialEditor:MaterialEditor, properties:MaterialProperty[]) : void
+    + <<virtual>> OnOpenGUI(material:Material, materialEditor:MaterialEditor, properties:MaterialProperty[]) : void
+    + <<override>> AssignNewShaderToMaterial(material:Material, oldShader:Shader, newShader:Shader) : void
+    - ShaderPropertiesGUI(materialEditor:MaterialEditor, material:Material, properties:MaterialProperty[]) : void
+    # <<virtual>> DrawSurfaceOptions(material:Material) : void
+    # <<virtual>> DrawSurfaceInputs(material:Material) : void
+    # <<virtual>> DrawAdvancedOptions(material:Material) : void
+    # DrawQueueOffsetField(materialEditor:MaterialEditor, material:Material, properties:MaterialProperty[]) : void
+    {static} - DrawShaderGraphProperties(materialEditor:MaterialEditor, material:Material, properties:MaterialProperty[]) : void
+    <<internal>> {static} UpdateMaterialRenderQueueControl(material:Material) : void
+    <<internal>> {static} GetAutomaticQueueControlSetting(material:Material) : bool
+    + <<override>> ValidateMaterial(material:Material) : void
+    + {static} SetupSurface(material:Material) : void
+    {static} - SetMaterialZWriteProperty(material:Material, state:bool) : void
+    {static} - SetBlendMode(material:Material, srcBlendMode:UnityEngine.Rendering.BlendMode, dstBlendMode:UnityEngine.Rendering.BlendMode) : void
+    + {static} DoPopup(label:GUIContent, materialEditor:MaterialEditor, property:MaterialProperty, options:string[]) : void
+    + {static} DoIntPopup(label:GUIContent, materialEditor:MaterialEditor, property:MaterialProperty, options:string[], optionValues:int[]) : void
+    + {static} DrawFloatToggleProperty(styles:GUIContent, prop:MaterialProperty) : void
+}
+enum Expandable {
+    SurfaceOptions= 1 << 0,
+    SurfaceInputs= 1 << 1,
+    Advanced= 1 << 2,
+}
+enum SurfaceType {
+    Opaque,
+    Transparent,
+}
+enum BlendMode {
+    Alpha,
+    Premultiply,
+    Additive,
+    Multiply,
+}
+enum RenderFace {
+    Front= 2,
+    Back= 1,
+    Both= 0,
+}
+enum QueueControl {
+    Auto= 0,
+    UserOverride= 1,
+}
+class Styles {
+    + {static} <<readonly>> surfaceTypeNames : string[]
+    + {static} <<readonly>> blendModeNames : string[]
+    + {static} <<readonly>> renderFaceNames : string[]
+    + {static} <<readonly>> zwriteNames : string[]
+    + {static} <<readonly>> ztestValues : int[]
+    + {static} <<readonly>> ztestNames : string[]
+    + {static} <<readonly>> queueControlNames : string[]
+    + {static} <<readonly>> SurfaceOptions : GUIContent
+    + {static} <<readonly>> SurfaceInputs : GUIContent
+    + {static} <<readonly>> AdvancedLabel : GUIContent
+    + {static} <<readonly>> surfaceType : GUIContent
+    + {static} <<readonly>> blendingMode : GUIContent
+    + {static} <<readonly>> cullingText : GUIContent
+    + {static} <<readonly>> zwriteText : GUIContent
+    + {static} <<readonly>> ztestText : GUIContent
+    + {static} <<readonly>> alphaClipText : GUIContent
+    + {static} <<readonly>> queueSlider : GUIContent
+    + {static} <<readonly>> queueControl : GUIContent
+}
+ShaderGUI <|-- BuiltInBaseShaderGUI
+BuiltInBaseShaderGUI +-- Expandable
+BuiltInBaseShaderGUI +-- SurfaceType
+BuiltInBaseShaderGUI +-- BlendMode
+BuiltInBaseShaderGUI +-- RenderFace
+BuiltInBaseShaderGUI +-- QueueControl
+BuiltInBaseShaderGUI +-- Styles
+@enduml

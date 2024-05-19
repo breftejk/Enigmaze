@@ -1,0 +1,127 @@
+@startuml
+struct InputUser {
+    + <<const>> InvalidId : uint = 0
+    + valid : bool <<get>>
+    + index : int <<get>>
+    + id : uint <<get>>
+    + platformUserAccountHandle : InputUserAccountHandle? <<get>>
+    + platformUserAccountName : string <<get>>
+    + platformUserAccountId : string <<get>>
+    + pairedDevices : ReadOnlyArray<InputDevice> <<get>>
+    + lostDevices : ReadOnlyArray<InputDevice> <<get>>
+    + actions : IInputActionCollection <<get>>
+    + controlScheme : InputControlScheme? <<get>>
+    + controlSchemeMatch : InputControlScheme.MatchResult <<get>>
+    + hasMissingRequiredDevices : bool <<get>>
+    + {static} all : ReadOnlyArray<InputUser> <<get>>
+    + {static} listenForUnpairedDeviceActivity : int <<get>> <<set>>
+    + <<override>> ToString() : string
+    + AssociateActionsWithUser(actions:IInputActionCollection) : void
+    + ActivateControlScheme(schemeName:string) : ControlSchemeChangeSyntax
+    - TryFindControlScheme(schemeName:string, scheme:InputControlScheme) : bool
+    <<internal>> FindControlScheme(schemeName:string, scheme:InputControlScheme) : void
+    + ActivateControlScheme(scheme:InputControlScheme) : ControlSchemeChangeSyntax
+    - ActivateControlSchemeInternal(userIndex:int, scheme:InputControlScheme) : void
+    + UnpairDevice(device:InputDevice) : void
+    + UnpairDevices() : void
+    - {static} RemoveLostDevicesForUser(userIndex:int) : void
+    + UnpairDevicesAndRemoveUser() : void
+    + {static} GetUnpairedInputDevices() : InputControlList<InputDevice>
+    + {static} GetUnpairedInputDevices(list:InputControlList<InputDevice>) : int
+    + {static} FindUserPairedToDevice(device:InputDevice) : InputUser?
+    + {static} FindUserByAccount(platformUserAccountHandle:InputUserAccountHandle) : InputUser?
+    + {static} CreateUserWithoutPairedDevices() : InputUser
+    + {static} PerformPairingWithDevice(device:InputDevice, user:InputUser, options:InputUserPairingOptions) : InputUser
+    - {static} InitiateUserAccountSelection(userIndex:int, device:InputDevice, options:InputUserPairingOptions) : bool
+    + Equals(other:InputUser) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    - {static} AddUser() : int
+    - {static} RemoveUser(userIndex:int) : void
+    - {static} Notify(userIndex:int, change:InputUserChange, device:InputDevice) : void
+    - {static} TryFindUserIndex(userId:uint) : int
+    - {static} TryFindUserIndex(platformHandle:InputUserAccountHandle) : int
+    - {static} TryFindUserIndex(device:InputDevice) : int
+    - {static} AddDeviceToUser(userIndex:int, device:InputDevice, asLostDevice:bool, dontUpdateControlScheme:bool) : void
+    - {static} RemoveDeviceFromUser(userIndex:int, device:InputDevice, asLostDevice:bool) : void
+    - {static} UpdateControlSchemeMatch(userIndex:int, autoPairMissing:bool) : void
+    - {static} UpdatePlatformUserAccount(userIndex:int, device:InputDevice) : long
+    - {static} QueryPairedPlatformUserAccount(device:InputDevice, platformAccountHandle:InputUserAccountHandle?, platformAccountName:string, platformAccountId:string) : long
+    - {static} InitiateUserAccountSelectionAtPlatformLevel(device:InputDevice) : bool
+    - {static} OnActionChange(obj:object, change:InputActionChange) : void
+    - {static} OnDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    - {static} FindLostDevice(device:InputDevice, startIndex:int) : int
+    - {static} OnEvent(eventPtr:InputEventPtr, device:InputDevice) : void
+    - m_Id : uint
+    - {static} s_GlobalState : GlobalState
+    <<internal>> {static} SaveAndResetState() : ISavedState
+    - {static} HookIntoActionChange() : void
+    - {static} UnhookFromActionChange() : void
+    - {static} HookIntoDeviceChange() : void
+    - {static} UnhookFromDeviceChange() : void
+    - {static} HookIntoEvents() : void
+    - {static} UnhookFromDeviceStateChange() : void
+    - {static} DisposeAndResetGlobalState() : void
+    <<internal>> {static} ResetGlobals() : void
+}
+struct ControlSchemeChangeSyntax {
+    + AndPairRemainingDevices() : ControlSchemeChangeSyntax
+    <<internal>> m_UserIndex : int
+}
+enum UserFlags {
+    BindToAllDevices= 1 << 0,
+    UserAccountSelectionInProgress= 1 << 1,
+}
+struct UserData {
+    + platformUserAccountHandle : InputUserAccountHandle?
+    + platformUserAccountName : string
+    + platformUserAccountId : string
+    + deviceCount : int
+    + deviceStartIndex : int
+    + actions : IInputActionCollection
+    + controlScheme : InputControlScheme?
+    + controlSchemeMatch : InputControlScheme.MatchResult
+    + lostDeviceCount : int
+    + lostDeviceStartIndex : int
+    + flags : UserFlags
+}
+struct CompareDevicesByUserAccount {
+    + platformUserAccountHandle : InputUserAccountHandle
+    + Compare(x:InputDevice, y:InputDevice) : int
+    - {static} GetUserAccountHandleForDevice(device:InputDevice) : InputUserAccountHandle?
+}
+struct OngoingAccountSelection {
+    + device : InputDevice
+    + userId : uint
+}
+struct GlobalState {
+    <<internal>> pairingStateVersion : int
+    <<internal>> lastUserId : uint
+    <<internal>> allUserCount : int
+    <<internal>> allPairedDeviceCount : int
+    <<internal>> allLostDeviceCount : int
+    <<internal>> allUsers : InputUser[]
+    <<internal>> allUserData : UserData[]
+    <<internal>> allPairedDevices : InputDevice[]
+    <<internal>> allLostDevices : InputDevice[]
+    <<internal>> ongoingAccountSelections : InlinedArray<OngoingAccountSelection>
+    <<internal>> onChange : CallbackArray<Action<InputUser, InputUserChange, InputDevice>>
+    <<internal>> onUnpairedDeviceUsed : CallbackArray<Action<InputControl, InputEventPtr>>
+    <<internal>> onPreFilterUnpairedDeviceUsed : CallbackArray<Func<InputDevice, InputEventPtr, bool>>
+    <<internal>> actionChangeDelegate : Action<object, InputActionChange>
+    <<internal>> onDeviceChangeDelegate : Action<InputDevice, InputDeviceChange>
+    <<internal>> onEventDelegate : Action<InputEventPtr, InputDevice>
+    <<internal>> onActionChangeHooked : bool
+    <<internal>> onDeviceChangeHooked : bool
+    <<internal>> onEventHooked : bool
+    <<internal>> listenForUnpairedDeviceActivity : int
+}
+"IEquatable`1" "<InputUser>" <|-- InputUser
+InputUser +-- ControlSchemeChangeSyntax
+InputUser +-- UserFlags
+InputUser +-- UserData
+InputUser +-- CompareDevicesByUserAccount
+"IComparer`1" "<InputDevice>" <|-- CompareDevicesByUserAccount
+InputUser +-- OngoingAccountSelection
+InputUser +-- GlobalState
+@enduml

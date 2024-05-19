@@ -1,0 +1,23 @@
+@startuml
+class VirtualTextureShaderProperty {
+    + VirtualTextureShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> GetPropertyReferenceNames(result:List<string>) : void
+    <<internal>> <<override>> GetPropertyDisplayNames(result:List<string>) : void
+    <<internal>> <<override>> AppendPropertyBlockStrings(builder:ShaderStringBuilder) : void
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    <<internal>> AddTextureInfo(infos:List<PropertyCollector.TextureInfo>) : void
+    <<internal>> <<override>> isAlwaysExposed : bool <<get>>
+    <<internal>> <<override>> isCustomSlotAllowed : bool <<get>>
+    + <<override>> OnAfterDeserialize(json:string) : void
+}
+"AbstractShaderProperty`1" "<SerializableVirtualTexture>" <|-- VirtualTextureShaderProperty
+@enduml

@@ -1,0 +1,86 @@
+@startuml
+enum DynamicResScalePolicyType {
+    ReturnsPercentage,
+    ReturnsMinMaxLerpFactor,
+}
+enum DynamicResScalerSlot {
+    User,
+    System,
+    Count,
+}
+class DynamicResolutionHandler {
+    - m_Enabled : bool
+    - m_UseMipBias : bool
+    - m_MinScreenFraction : float
+    - m_MaxScreenFraction : float
+    - m_CurrentFraction : float
+    - m_ForcingRes : bool
+    - m_CurrentCameraRequest : bool
+    - m_PrevFraction : float
+    - m_ForceSoftwareFallback : bool
+    - m_RunUpscalerFilterOnFullResolution : bool
+    - m_PrevHWScaleWidth : float
+    - m_PrevHWScaleHeight : float
+    - m_LastScaledSize : Vector2Int
+    - Reset() : void
+    - {static} s_ActiveScalerSlot : DynamicResScalerSlot
+    - {static} s_ScalerContainers : ScalerContainer[]
+    - cachedOriginalSize : Vector2Int
+    + filter : DynamicResUpscaleFilter <<get>>
+    {static} - s_CameraUpscaleFilters : Dictionary<int, DynamicResUpscaleFilter>
+    + finalViewport : Vector2Int <<get>> <<set>>
+    + runUpscalerFilterOnFullResolution : bool <<set>> <<get>>
+    - type : DynamicResolutionType
+    - m_CachedSettings : GlobalDynamicResolutionSettings
+    - <<const>> CameraDictionaryMaxcCapacity : int = 32
+    - m_OwnerCameraWeakRef : WeakReference = null
+    - {static} s_CameraInstances : Dictionary<int, DynamicResolutionHandler>
+    - {static} s_DefaultInstance : DynamicResolutionHandler
+    - {static} s_ActiveCameraId : int = 0
+    - {static} s_ActiveInstance : DynamicResolutionHandler
+    - {static} s_ActiveInstanceDirty : bool = true
+    - {static} s_GlobalHwFraction : float = 1.0f
+    - {static} s_GlobalHwUpresActive : bool = false
+    - FlushScalableBufferManagerState() : bool
+    - {static} GetOrCreateDrsInstanceHandler(camera:Camera) : DynamicResolutionHandler
+    - m_UpsamplerSchedule : UpsamplerScheduleType
+    + upsamplerSchedule : UpsamplerScheduleType <<set>> <<get>>
+    + {static} instance : DynamicResolutionHandler <<get>>
+    - DynamicResolutionHandler()
+    {static} - DefaultDynamicResMethod() : float
+    - ProcessSettings(settings:GlobalDynamicResolutionSettings) : void
+    + GetResolvedScale() : Vector2
+    + CalculateMipBias(inputResolution:Vector2Int, outputResolution:Vector2Int, forceApply:bool) : float
+    {static} + SetDynamicResScaler(scaler:PerformDynamicRes, scalerType:DynamicResScalePolicyType) : void
+    {static} + SetSystemDynamicResScaler(scaler:PerformDynamicRes, scalerType:DynamicResScalePolicyType) : void
+    {static} + SetActiveDynamicScalerSlot(slot:DynamicResScalerSlot) : void
+    + {static} ClearSelectedCamera() : void
+    {static} + SetUpscaleFilter(camera:Camera, filter:DynamicResUpscaleFilter) : void
+    + SetCurrentCameraRequest(cameraRequest:bool) : void
+    + {static} UpdateAndUseCamera(camera:Camera, settings:GlobalDynamicResolutionSettings?, OnResolutionChange:Action) : void
+    + Update(settings:GlobalDynamicResolutionSettings, OnResolutionChange:Action) : void
+    + SoftwareDynamicResIsEnabled() : bool
+    + HardwareDynamicResIsEnabled() : bool
+    + RequestsHardwareDynamicResolution() : bool
+    + DynamicResolutionEnabled() : bool
+    + ForceSoftwareFallback() : void
+    + GetScaledSize(size:Vector2Int) : Vector2Int
+    + ApplyScalesOnSize(size:Vector2Int) : Vector2Int
+    <<internal>> ApplyScalesOnSize(size:Vector2Int, scales:Vector2) : Vector2Int
+    + GetCurrentScale() : float
+    + GetLastScaledSize() : Vector2Int
+    + GetLowResMultiplier(targetLowRes:float) : float
+    + GetLowResMultiplier(targetLowRes:float, minimumThreshold:float) : float
+}
+struct ScalerContainer {
+    + type : DynamicResScalePolicyType
+    + method : PerformDynamicRes
+}
+enum UpsamplerScheduleType {
+    BeforePost,
+    AfterDepthOfField,
+    AfterPost,
+}
+DynamicResolutionHandler +-- ScalerContainer
+DynamicResolutionHandler +-- UpsamplerScheduleType
+@enduml

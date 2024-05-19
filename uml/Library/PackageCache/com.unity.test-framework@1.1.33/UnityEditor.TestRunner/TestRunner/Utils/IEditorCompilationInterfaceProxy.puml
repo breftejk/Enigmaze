@@ -1,0 +1,6 @@
+@startuml
+interface IEditorCompilationInterfaceProxy {
+    GetAllEditorScriptAssemblies() : ScriptAssembly[]
+    GetAllPrecompiledAssemblies() : PrecompiledAssembly[]
+}
+@enduml

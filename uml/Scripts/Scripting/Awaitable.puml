@@ -1,0 +1,37 @@
+@startuml
+class Awaitable <<partial>> {
+    - <<readonly>> _spinLock : ManagedLockWithSingleThreadBias = default
+    {static} <<readonly>> - _pool : ThreadSafeObjectPool<Awaitable>
+    - _handle : AwaitableHandle
+    - _exceptionToRethrow : ExceptionDispatchInfo
+    - _managedAwaitableDone : bool
+    - _continuation : Action
+    - _cancelTokenRegistration : CancellationTokenRegistration?
+    - Awaitable()
+    <<internal>> {static} NewManagedAwaitable() : Awaitable
+    - {static} FromNativeAwaitableHandle(nativeHandle:IntPtr, cancellationToken:CancellationToken) : Awaitable
+    - {static} WireupCancellation(awaitable:Awaitable, cancellationToken:CancellationToken) : void
+    <<internal>> RaiseManagedCompletion(exception:Exception) : void
+    <<internal>> RaiseManagedCompletion() : void
+    <<internal>> PropagateExceptionAndRelease() : void
+    + Cancel() : void
+    - IsCompletedNoLock : bool <<get>>
+    + IsCompleted : bool <<get>>
+    <<internal>> IsDettachedOrCompleted : bool <<get>>
+    - CheckPointerValidity() : AwaitableHandle
+    <<internal>> SetContinuation(continuation:Action) : void
+    - MoveNext() : bool
+    - Reset() : void
+    - Current : object <<get>>
+}
+struct AwaitableHandle {
+    - <<readonly>> _handle : IntPtr
+    + IsNull : bool <<get>>
+    + IsManaged : bool <<get>>
+    + AwaitableHandle(handle:IntPtr)
+    + {static} ManagedHandle : AwaitableHandle
+    + {static} NullHandle : AwaitableHandle
+}
+IEnumerator <|-- Awaitable
+Awaitable +-- AwaitableHandle
+@enduml

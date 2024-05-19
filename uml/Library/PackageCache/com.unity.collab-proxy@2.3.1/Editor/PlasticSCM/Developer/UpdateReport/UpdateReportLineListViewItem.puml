@@ -1,0 +1,7 @@
+@startuml
+class UpdateReportLineListViewItem {
+    <<internal>> ReportLine : ReportLine <<get>>
+    <<internal>> UpdateReportLineListViewItem(id:int, reportLine:ReportLine)
+}
+TreeViewItem <|-- UpdateReportLineListViewItem
+@enduml

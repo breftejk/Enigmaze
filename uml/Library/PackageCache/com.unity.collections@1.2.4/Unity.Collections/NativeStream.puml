@@ -1,0 +1,69 @@
+@startuml
+struct NativeStream {
+    - m_Stream : UnsafeStream
+    + NativeStream(bufferCount:int, allocator:AllocatorManager.AllocatorHandle)
+    + {static} ScheduleConstruct(stream:NativeStream, bufferCount:NativeList<T>, dependency:JobHandle, allocator:AllocatorManager.AllocatorHandle) : JobHandle
+    + {static} ScheduleConstruct(stream:NativeStream, bufferCount:NativeArray<int>, dependency:JobHandle, allocator:AllocatorManager.AllocatorHandle) : JobHandle
+    + IsEmpty() : bool
+    + IsCreated : bool <<get>>
+    + ForEachCount : int <<get>>
+    + AsReader() : Reader
+    + AsWriter() : Writer
+    + Count() : int
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    {static} - AllocateBlock(stream:NativeStream, allocator:AllocatorManager.AllocatorHandle) : void
+    - AllocateForEach(forEachCount:int) : void
+    {static} - CheckForEachCountGreaterThanZero(forEachCount:int) : void
+    - CheckReadAccess() : void
+}
+struct ConstructJobList {
+    + Container : NativeStream
+    + List : UntypedUnsafeList*
+    + Execute() : void
+}
+struct ConstructJob {
+    + Container : NativeStream
+    + Length : NativeArray<int>
+    + Execute() : void
+}
+struct Writer {
+    - m_Writer : UnsafeStream.Writer
+    <<internal>> Writer(stream:NativeStream)
+    + ForEachCount : int <<get>>
+    + PatchMinMaxRange(foreEachIndex:int) : void
+    + BeginForEachIndex(foreachIndex:int) : void
+    + EndForEachIndex() : void
+    + Write(value:T) : void
+    + Allocate() : ref T
+    + Allocate(size:int) : byte*
+    - CheckBeginForEachIndex(foreachIndex:int) : void
+    - CheckEndForEachIndex() : void
+    - CheckAllocateSize(size:int) : void
+}
+struct Reader {
+    - m_Reader : UnsafeStream.Reader
+    <<internal>> Reader(stream:NativeStream)
+    + BeginForEachIndex(foreachIndex:int) : int
+    + EndForEachIndex() : void
+    + ForEachCount : int <<get>>
+    + RemainingItemCount : int <<get>>
+    + ReadUnsafePtr(size:int) : byte*
+    + Read() : ref T
+    + Peek() : ref T
+    + Count() : int
+    - CheckNotReadingOutOfBounds(size:int) : void
+    - CheckRead() : void
+    - CheckReadSize(size:int) : void
+    - CheckBeginForEachIndex(forEachIndex:int) : void
+    - CheckEndForEachIndex() : void
+}
+IDisposable <|-- NativeStream
+NativeStream +-- ConstructJobList
+IJob <|-- ConstructJobList
+NativeStream +-- ConstructJob
+IJob <|-- ConstructJob
+NativeStream +-- Writer
+NativeStream +-- Reader
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class "MachineDescriptor`2"<TMachine,TMachineDescription> {
+    # MachineDescriptor(target:TMachine)
+    # machine : TMachine <<get>>
+    + <<override>> Title() : string
+    + <<override>> Summary() : string
+    + <<override>> Icon() : EditorTexture
+}
+"Descriptor`2" "<TMachine,TMachineDescription>" <|-- "MachineDescriptor`2"
+@enduml

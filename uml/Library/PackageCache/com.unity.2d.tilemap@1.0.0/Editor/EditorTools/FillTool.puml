@@ -1,0 +1,14 @@
+@startuml
+class FillTool <<sealed>> {
+    # <<override>> tooltipStringFormat : string <<get>>
+    # <<override>> shortcutId : string <<get>>
+    + <<override>> toolbarIcon : GUIContent <<get>>
+}
+class Styles <<static>> {
+    + {static} tooltipStringFormat : string = "|Flood fill with active brush ({0&#125;)"
+    + {static} shortcutId : string = "Grid Painting/Fill"
+    + {static} toolContent : GUIContent
+}
+TilemapEditorTool <|-- FillTool
+FillTool +-- Styles
+@enduml

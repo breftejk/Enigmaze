@@ -1,0 +1,8 @@
+@startuml
+interface INodeWidget {
+    outerPosition : Rect <<get>>
+    edgePosition : Rect <<get>>
+    innerPosition : Rect <<get>>
+}
+IGraphElementWidget <|-- INodeWidget
+@enduml

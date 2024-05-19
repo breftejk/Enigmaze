@@ -1,0 +1,11 @@
+@startuml
+class fsDictionaryConverter {
+    + <<override>> CanProcess(type:Type) : bool
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+    + <<override>> TryDeserialize(data:fsData, instance_:object, storageType:Type) : fsResult
+    + <<override>> TrySerialize(instance_:object, serialized:fsData, storageType:Type) : fsResult
+    - AddItemToDictionary(dictionary:IDictionary, key:object, value:object) : fsResult
+    - {static} GetKeyValueTypes(dictionaryType:Type, keyStorageType:Type, valueStorageType:Type) : void
+}
+fsConverter <|-- fsDictionaryConverter
+@enduml

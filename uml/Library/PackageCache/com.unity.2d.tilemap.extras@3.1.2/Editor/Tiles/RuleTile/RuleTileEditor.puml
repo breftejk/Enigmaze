@@ -1,0 +1,111 @@
+@startuml
+class RuleTileEditor {
+    - <<const>> s_XIconString : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABoSURBVDhPnY3BDcAgDAOZhS14dP1O0x2C/LBEgiNSHvfwyZabmV0jZRUpq2zi6f0DJwdcQOEdwwDLypF0zHLMa9+NQRxkQ+ACOT2STVw/q8eY1346ZlE54sYAhVhSDrjwFymrSFnD2gTZpls2OvFUHAAAAABJRU5ErkJggg=="
+    - <<const>> s_Arrow0 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAACYSURBVDhPzZExDoQwDATzE4oU4QXXcgUFj+YxtETwgpMwXuFcwMFSRMVKKwzZcWzhiMg91jtg34XIntkre5EaT7yjjhI9pOD5Mw5k2X/DdUwFr3cQ7Pu23E/BiwXyWSOxrNqx+ewnsayam5OLBtbOGPUM/r93YZL4/dhpR/amwByGFBz170gNChA6w5bQQMqramBTgJ+Z3A58WuWejPCaHQAAAABJRU5ErkJggg=="
+    - <<const>> s_Arrow1 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABqSURBVDhPxYzBDYAgEATpxYcd+PVr0fZ2siZrjmMhFz6STIiDs8XMlpEyi5RkO/d66TcgJUB43JfNBqRkSEYDnYjhbKD5GIUkDqRDwoH3+NgTAw+bL/aoOP4DOgH+iwECEt+IlFmkzGHlAYKAWF9R8zUnAAAAAElFTkSuQmCC"
+    - <<const>> s_Arrow2 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAC0SURBVDhPjVE5EsIwDMxPKFKYF9CagoJH8xhaMskLmEGsjOSRkBzYmU2s9a58TUQUmCH1BWEHweuKP+D8tphrWcAHuIGrjPnPNY8X2+DzEWE+FzrdrkNyg2YGNNfRGlyOaZDJOxBrDhgOowaYW8UW0Vau5ZkFmXbbDr+CzOHKmLinAXMEePyZ9dZkZR+s5QX2O8DY3zZ/sgYcdDqeEVp8516o0QQV1qeMwg6C91toYoLoo+kNt/tpKQEVvFQAAAAASUVORK5CYII="
+    - <<const>> s_Arrow3 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAB2SURBVDhPzY1LCoAwEEPnLi48gW5d6p31bH5SMhp0Cq0g+CCLxrzRPqMZ2pRqKG4IqzJc7JepTlbRZXYpWTg4RZE1XAso8VHFKNhQuTjKtZvHUNCEMogO4K3BhvMn9wP4EzoPZ3n0AGTW5fiBVzLAAYTP32C2Ay3agtu9V/9PAAAAAElFTkSuQmCC"
+    - <<const>> s_Arrow5 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABqSURBVDhPnY3BCYBADASvFx924NevRdvbyoLBmNuDJQMDGjNxAFhK1DyUQ9fvobCdO+j7+sOKj/uSB+xYHZAxl7IR1wNTXJeVcaAVU+614uWfCT9mVUhknMlxDokd15BYsQrJFHeUQ0+MB5ErsPi/6hO1AAAAAElFTkSuQmCC"
+    - <<const>> s_Arrow6 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAACaSURBVDhPxZExEkAwEEVzE4UiTqClUDi0w2hlOIEZsV82xCZmQuPPfFn8t1mirLWf7S5flQOXjd64vCuEKWTKVt+6AayH3tIa7yLg6Qh2FcKFB72jBgJeziA1CMHzeaNHjkfwnAK86f3KUafU2ClHIJSzs/8HHLv09M3SaMCxS7ljw/IYJWzQABOQZ66x4h614ahTCL/WT7BSO51b5Z5hSx88AAAAAElFTkSuQmCC"
+    - <<const>> s_Arrow7 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABQSURBVDhPYxh8QNle/T8U/4MKEQdAmsz2eICx6W530gygr2aQBmSMphkZYxqErAEXxusKfAYQ7XyyNMIAsgEkaYQBkAFkaYQBsjXSGDAwAAD193z4luKPrAAAAABJRU5ErkJggg=="
+    - <<const>> s_Arrow8 : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAACYSURBVDhPxZE9DoAwCIW9iUOHegJXHRw8tIdx1egJTMSHAeMPaHSR5KVQ+KCkCRF91mdz4VDEWVzXTBgg5U1N5wahjHzXS3iFFVRxAygNVaZxJ6VHGIl2D6oUXP0ijlJuTp724FnID1Lq7uw2QM5+thoKth0N+GGyA7IA3+yM77Ag1e2zkey5gCdAg/h8csy+/89v7E+YkgUntOWeVt2SfAAAAABJRU5ErkJggg=="
+    - <<const>> s_MirrorX : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwQAADsEBuJFr7QAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAG1JREFUOE+lj9ENwCAIRB2IFdyRfRiuDSaXAF4MrR9P5eRhHGb2Gxp2oaEjIovTXSrAnPNx6hlgyCZ7o6omOdYOldGIZhAziEmOTSfigLV0RYAB9y9f/7kO8L3WUaQyhCgz0dmCL9CwCw172HgBeyG6oloC8fAAAAAASUVORK5CYII="
+    - <<const>> s_MirrorY : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAG9JREFUOE+djckNACEMAykoLdAjHbPyw1IOJ0L7mAejjFlm9hspyd77Kk+kBAjPOXcakJIh6QaKyOE0EB5dSPJAiUmOiL8PMVGxugsP/0OOib8vsY8yYwy6gRyC8CB5QIWgCMKBLgRSkikEUr5h6wOPWfMoCYILdgAAAABJRU5ErkJggg=="
+    - <<const>> s_MirrorXY : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAAHkSURBVDhPrVJLSwJRFJ4cdXwjPlrVJly1kB62cpEguElXKgYKIpaC+EIEEfGxLqI/UES1KaJlEdGmRY9ltCsIWrUJatGm0eZO3xkHIsJdH3zce+ec75z5zr3cf2MMmLdYLA/BYFA2mUyPOPvwnR+GR4PXaDQLLpfrKpVKSb1eT6bV6XTeocAS4sIw7S804BzEZ4IgsGq1ykhcr9dlj8czwPdbxJdBMyX/As/zLiz74Ar2J9lsVulcKpUYut5DnEbsHFwEx8AhtFqtGViD6BOc1ul0B5lMRhGXy2Wm1+ufkBOE/2fsL1FsQpXCiCAcQiAlk0kJRZjf7+9TRxI3Gg0WCoW+IpGISHHERBS5UKUch8n2K5WK3O125VqtpqydTkdZie12W261WjIVo73b7RZVKccZDIZ1q9XaT6fTLB6PD9BFKhQKjITFYpGFw+FBNBpVOgcCARH516pUGZYZXk5R4B3efLBxDM9f1CkWi/WR3ICtGVh6Rd4NPE+p0iEgmkSRLRoMEjYhHpA4kUiIOO8iZRU8AmnadK2/QOOfhnjPZrO95fN5Zdq5XE5yOBwvuKoNxGfBkQ8FzXkPprnj9Xrfm82mDI8fsLON3x5H/Od+RwHdLfDds9vtn0aj8QoF6QH9JzjuG3acpxmu1RgPAAAAAElFTkSuQmCC"
+    - <<const>> s_Rotated : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwQAADsEBuJFr7QAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAHdJREFUOE+djssNwCAMQxmIFdgx+2S4Vj4YxWlQgcOT8nuG5u5C732Sd3lfLlmPMR4QhXgrTQaimUlA3EtD+CJlBuQ7aUAUMjEAv9gWCQNEPhHJUkYfZ1kEpcxDzioRzGIlr0Qwi0r+Q5rTgM+AAVcygHgt7+HtBZs/2QVWP8ahAAAAAElFTkSuQmCC"
+    - <<const>> s_RotatedMirror : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAApklEQVQoFY2SMRaAIAxDwefknVg8uIt3ckVSKdYSnjBAi/lprcaUUphZ+3WGY3u1yJcJMBdNtqAyM3BAFRgohBNmUzDEzIDCVQgGK2rL1gAxhatY3vXh+U7hIs2uOqUZ7EGfN6O1RU/wEf5VX4zgAzpTSessIhL5VDrJkrepitJtFtRHvm0YtA6MMfRSUUGcbGC+A0AdOIJx7w1w1y1WWX/FYUV1uQFvVjvOTYh+rAAAAABJRU5ErkJggg=="
+    - <<const>> s_Fixed : string = "iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAA50lEQVQ4T51Ruw6CQBCkwBYKWkIgQAs9gfgCvgb4BML/qWBM9Bdo9QPIuVOQ3JIzosVkc7Mzty9NCPE3lORaKMm1YA/LsnTXdbdhGJ6iKHoVRTEi+r4/OI6zN01Tl/XM7HneLsuyW13XU9u2ous6gYh3kiR327YPsp6ZgyDom6aZYFqiqqqJ8mdZz8xoca64BHjkZT0zY0aVcQbysp6Z4zj+Vvkp65mZttxjOSozdkEzD7KemekcxzRNHxDOHSDiQ/DIy3pmpjtuSJBThStGKMtyRKSOLnSm3DCMz3f+FUpyLZTkOgjtDSWORSDbpbmNAAAAAElFTkSuQmCC"
+    - {static} <<readonly>> k_UndoName : string
+    - {static} s_Arrows : Texture2D[]
+    + {static} arrows : Texture2D[] <<get>>
+    - {static} s_AutoTransforms : Texture2D[]
+    + {static} autoTransforms : Texture2D[] <<get>>
+    + tile : RuleTile <<get>>
+    - dragAndDropSprites : List<Sprite>
+    - m_ReorderableList : ReorderableList
+    + extendNeighbor : bool
+    + m_PreviewUtility : PreviewRenderUtility
+    + m_PreviewGrid : Grid
+    + m_PreviewTilemaps : List<Tilemap>
+    + m_PreviewTilemapRenderers : List<TilemapRenderer>
+    + <<const>> k_DefaultElementHeight : float = 48f
+    + <<const>> k_PaddingBetweenRules : float = 8f
+    + <<const>> k_SingleLineHeight : float = 18f
+    + <<const>> k_LabelWidth : float = 80f
+    - m_TilingRules : SerializedProperty
+    - m_ClearCacheMethod : MethodInfo
+    + <<virtual>> OnEnable() : void
+    + <<virtual>> OnDisable() : void
+    - UpdateTilingRuleIds() : void
+    + <<virtual>> GetRuleGUIBounds(bounds:BoundsInt, rule:RuleTile.TilingRule) : BoundsInt
+    + ListUpdated(list:ReorderableList) : void
+    - GetElementHeight(index:int) : float
+    + GetElementHeight(rule:RuleTile.TilingRule) : float
+    + GetElementHeight(rule:RuleTile.TilingRuleOutput) : float
+    + <<virtual>> GetMatrixSize(bounds:BoundsInt) : Vector2
+    # <<virtual>> OnDrawElement(rect:Rect, index:int, isactive:bool, isfocused:bool) : void
+    - OnAddElement(obj:object) : void
+    - OnDuplicateElement(obj:object) : void
+    - OnAddDropdownElement(rect:Rect, list:ReorderableList) : void
+    + SaveTile() : void
+    + {static} UpdateAffectedOverrideTiles(target:RuleTile) : void
+    + {static} FindAffectedOverrideTiles(target:RuleTile) : List<RuleOverrideTile>
+    + OnDrawHeader(rect:Rect) : void
+    + <<override>> OnInspectorGUI() : void
+    - ResizeRuleTileList(count:int) : void
+    + DrawCustomFields(isOverrideInstance:bool) : void
+    + <<virtual>> GetArrowIndex(position:Vector3Int) : int
+    + <<virtual>> RuleOnGUI(rect:Rect, position:Vector3Int, neighbor:int) : void
+    + RuleTooltipOnGUI(rect:Rect, neighbor:int) : void
+    + <<virtual>> RuleTransformOnGUI(rect:Rect, ruleTransform:RuleTile.TilingRuleOutput.Transform) : void
+    + RuleNeighborUpdate(rect:Rect, tilingRule:RuleTile.TilingRule, neighbors:Dictionary<Vector3Int, int>, position:Vector3Int) : void
+    + RuleTransformUpdate(rect:Rect, tilingRule:RuleTile.TilingRule) : void
+    + <<virtual>> ContainsMousePosition(rect:Rect) : bool
+    + {static} GetMouseChange() : int
+    + <<virtual>> RuleMatrixOnGUI(tile:RuleTile, rect:Rect, bounds:BoundsInt, tilingRule:RuleTile.TilingRule) : void
+    + RuleMatrixIconOnGUI(tilingRule:RuleTile.TilingRule, neighbors:Dictionary<Vector3Int, int>, position:Vector3Int, rect:Rect) : void
+    + <<virtual>> SpriteOnGUI(rect:Rect, tilingRule:RuleTile.TilingRuleOutput) : void
+    + RuleInspectorOnGUI(rect:Rect, tilingRule:RuleTile.TilingRuleOutput) : void
+    - DisplayClipboardText(clipboardText:GUIContent, position:Rect) : void
+    - dragAndDropActive : bool <<get>>
+    - {static} GetSpritesFromTexture(texture:Texture2D) : List<Sprite>
+    - {static} GetValidSingleSprites(objects:Object[]) : List<Sprite>
+    - HandleDragAndDrop(guiRect:Rect) : void
+    - DragAndDropClear() : void
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnPreviewGUI(rect:Rect, background:GUIStyle) : void
+    # <<virtual>> CreatePreview() : void
+    # <<virtual>> DestroyPreview() : void
+    + <<override>> RenderStaticPreview(assetPath:string, subAssets:Object[], width:int, height:int) : Texture2D
+    - {static} GetType(typeName:string) : Type
+    + {static} Base64ToTexture(base64:string) : Texture2D
+    + {static} CopyAllRules(item:MenuCommand) : void
+    + {static} PasteRules(item:MenuCommand) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> defaultSprite : GUIContent
+    + {static} <<readonly>> defaultGameObject : GUIContent
+    + {static} <<readonly>> defaultCollider : GUIContent
+    + {static} <<readonly>> emptyRuleTileInfo : GUIContent
+    + {static} <<readonly>> extendNeighbor : GUIContent
+    + {static} <<readonly>> numberOfTilingRules : GUIContent
+    + {static} <<readonly>> tilingRules : GUIContent
+    + {static} <<readonly>> tilingRulesGameObject : GUIContent
+    + {static} <<readonly>> tilingRulesCollider : GUIContent
+    + {static} <<readonly>> tilingRulesOutput : GUIContent
+    + {static} <<readonly>> tilingRulesNoise : GUIContent
+    + {static} <<readonly>> tilingRulesShuffle : GUIContent
+    + {static} <<readonly>> tilingRulesRandomSize : GUIContent
+    + {static} <<readonly>> tilingRulesMinSpeed : GUIContent
+    + {static} <<readonly>> tilingRulesMaxSpeed : GUIContent
+    + {static} <<readonly>> tilingRulesAnimationSize : GUIContent
+    + {static} <<readonly>> extendNeighborsLightStyle : GUIStyle
+    + {static} <<readonly>> extendNeighborsDarkStyle : GUIStyle
+}
+class RuleTileRuleWrapper {
+    + rules : List<RuleTile.TilingRule>
+}
+Editor <|-- RuleTileEditor
+RuleTileEditor +-- Styles
+RuleTileEditor +-- RuleTileRuleWrapper
+@enduml

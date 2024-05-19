@@ -1,0 +1,86 @@
+@startuml
+class TestConstArrays {
+    + {static} ReadFromIntArray() : int
+    + {static} <<unsafe>> ReadViaFixed() : int
+    + {static} ReadFromColorArray() : int
+    + {static} ReadFromColorArray2() : int
+    + {static} TestStaticReadonlyArrayLength() : int
+    + {static} TestStaticReadonlyArrayNonConstantLength() : int
+    + {static} TestStaticReadonlyArrayWithNonConstantStelemIndex() : int
+    + {static} TestStaticReadonlyArrayExplicitConstructionOfUninitialized() : int
+    + {static} TestStaticReadonlyArrayExplicitConstruction() : int
+    + {static} TestStaticReadonlyArrayLdelem() : int
+    - {static} TakesRef(x:T) : T
+    + {static} TestStaticReadonlyArrayWithElementRef() : int
+    + {static} TestStaticReadonlyArrayWithElementVectorRef() : int
+    + {static} TestStaticReadonlyArrayWithDynamicLdelem(count:int) : int
+    + {static} TestStaticReadonlyArrayOfStructOfStructs() : int
+    + {static} TestStaticReadonlyNullArray() : int
+    - {static} <<readonly>> SomeArray : int[]
+    + {static} StoreNullIntoLocalArray(x:int) : int
+}
+struct StructWithConstArray1 {
+    + {static} <<readonly>> IntValues : int[]
+}
+struct StructWithConstArrayWithStruct1 {
+    + {static} <<readonly>> Colors : Color[]
+}
+struct Color {
+    + Color(r:byte, g:byte, b:byte, a:byte)
+    + R : byte
+    + G : byte
+    + B : byte
+    + A : byte
+}
+struct StaticArrayStruct {
+    + {static} <<readonly>> Doubles : double[]
+    + {static} <<readonly>> Bytes : byte[]
+    + {static} <<readonly>> UShorts : ushort[]
+    + {static} <<readonly>> Ints : int[]
+    + {static} <<readonly>> ZeroData : int[]
+    + {static} <<readonly>> ZeroLength : int[]
+    + {static} <<readonly>> ZeroLengthStruct : Color[]
+    + {static} <<readonly>> Colors : Color[]
+    + {static} <<readonly>> Positions : int3[]
+}
+struct StructP {
+    + {static} <<readonly>> Value : int[]
+    + {static} One() : int
+}
+struct StructQ {
+    + {static} <<readonly>> Value : int[]
+    + {static} One() : int
+    {static} - StructQ()
+}
+struct StructR {
+    + {static} Value : int[]
+    {static} - StructR()
+}
+struct StructS {
+    + {static} <<readonly>> Value : int[]
+    {static} - StructS()
+}
+struct ContainerStruct {
+    + A : SmallStruct
+    + B : SmallStruct
+    + {static} <<readonly>> CoolStructs : ContainerStruct[]
+}
+struct SmallStruct {
+    + a : int
+    + b : int
+}
+struct NullArrayHolder {
+    + {static} <<readonly>> Array : int[] = null
+}
+TestConstArrays +-- StructWithConstArray1
+TestConstArrays +-- StructWithConstArrayWithStruct1
+TestConstArrays +-- Color
+TestConstArrays +-- StaticArrayStruct
+TestConstArrays +-- StructP
+TestConstArrays +-- StructQ
+TestConstArrays +-- StructR
+TestConstArrays +-- StructS
+TestConstArrays +-- ContainerStruct
+TestConstArrays +-- SmallStruct
+TestConstArrays +-- NullArrayHolder
+@enduml

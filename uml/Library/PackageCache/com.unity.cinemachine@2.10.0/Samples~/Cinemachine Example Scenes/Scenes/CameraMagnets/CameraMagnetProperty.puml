@@ -1,0 +1,11 @@
+@startuml
+class CameraMagnetProperty {
+    + MagnetStrength : float = 5.0f
+    + Proximity : float = 5.0f
+    + ProximityVisualization : Transform
+    + myTransform : Transform
+    - Start() : void
+    - Update() : void
+}
+MonoBehaviour <|-- CameraMagnetProperty
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class UnityOnDropdownValueChangedMessageListener <<sealed>> {
+    - Start() : void
+}
+MessageListener <|-- UnityOnDropdownValueChangedMessageListener
+@enduml

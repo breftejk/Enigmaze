@@ -1,0 +1,7 @@
+@startuml
+class GroupTrack {
+    <<internal>> <<override>> CanCompileClips() : bool
+    + <<override>> outputs : IEnumerable<PlayableBinding> <<get>>
+}
+TrackAsset <|-- GroupTrack
+@enduml

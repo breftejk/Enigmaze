@@ -1,0 +1,33 @@
+@startuml
+class TouchSimulation {
+    + simulatedTouchscreen : Touchscreen <<get>>
+    + {static} instance : TouchSimulation <<get>>
+    + {static} Enable() : void
+    + {static} Disable() : void
+    + {static} Destroy() : void
+    # AddPointer(pointer:Pointer) : void
+    # RemovePointer(pointer:Pointer) : void
+    - <<unsafe>> OnEvent(eventPtr:InputEventPtr, device:InputDevice) : void
+    - OnDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    # OnEnable() : void
+    # OnDisable() : void
+    - <<unsafe>> UpdateTouch(touchIndex:int, pointerIndex:int, phase:TouchPhase, eventPtr:InputEventPtr) : void
+    - m_NumPointers : int
+    - m_Pointers : Pointer[]
+    - m_CurrentPositions : Vector2[]
+    - m_CurrentDisplayIndices : int[]
+    - m_Touches : ButtonControl[]
+    - m_LastTouchId : int
+    - m_PrimaryTouchIndex : int
+    - m_OnDeviceChange : Action<InputDevice, InputDeviceChange>
+    - m_OnEvent : Action<InputEventPtr, InputDevice>
+    <<internal>> {static} s_Instance : TouchSimulation
+    - NotifyControlStateChanged(control:InputControl, time:double, eventPtr:InputEventPtr, monitorIndex:long) : void
+    - NotifyTimerExpired(control:InputControl, time:double, monitorIndex:long, timerIndex:int) : void
+    # InstallStateChangeMonitors(startIndex:int) : void
+    # OnSourceControlChangedValue(control:InputControl, time:double, eventPtr:InputEventPtr, sourceDeviceAndButtonIndex:long) : void
+    # UninstallStateChangeMonitors(startIndex:int) : void
+}
+MonoBehaviour <|-- TouchSimulation
+IInputStateChangeMonitor <|-- TouchSimulation
+@enduml

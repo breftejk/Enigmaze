@@ -1,0 +1,10 @@
+@startuml
+abstract class AotStubWriter {
+    # AotStubWriter(stub:object)
+    + stub : object <<get>>
+    + <<virtual>> skip : bool <<get>>
+    + {abstract} stubMethodComment : string <<get>>
+    + {abstract} stubMethodName : string <<get>>
+    + {abstract} GetStubStatements() : IEnumerable<CodeStatement>
+}
+@enduml

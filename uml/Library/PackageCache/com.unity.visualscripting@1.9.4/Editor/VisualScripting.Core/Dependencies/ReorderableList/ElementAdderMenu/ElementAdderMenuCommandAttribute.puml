@@ -1,0 +1,7 @@
+@startuml
+class ElementAdderMenuCommandAttribute <<sealed>> {
+    + ElementAdderMenuCommandAttribute(contractType:Type)
+    + ContractType : Type <<get>>
+}
+Attribute <|-- ElementAdderMenuCommandAttribute
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+abstract class DictionaryIndexMetadata {
+    # DictionaryIndexMetadata(subpathPrefix:string, index:int, parent:Metadata)
+    + index : int <<get>>
+    # parentIsOrderedDictionary : bool <<get>>
+    # <<override>> OnParentValueChange(previousValue:object) : void
+    # {abstract} GetDefinedType(dictionaryType:Type) : Type
+    - Reflect(throwOnFail:bool) : void
+    + <<override>> GetCustomAttributes(inherit:bool) : Attribute[]
+}
+Metadata <|-- DictionaryIndexMetadata
+@enduml

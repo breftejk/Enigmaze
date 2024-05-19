@@ -1,0 +1,8 @@
+@startuml
+class StateGraphData <<sealed>> {
+    + isListening : bool <<get>> <<set>>
+    + StateGraphData(definition:StateGraph)
+}
+"GraphData`1" "<StateGraph>" <|-- StateGraphData
+IGraphEventListenerData <|-- StateGraphData
+@enduml

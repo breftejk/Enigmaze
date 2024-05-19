@@ -1,0 +1,37 @@
+@startuml
+class Cooldown <<sealed>> {
+    + enter : ControlInput <<get>>
+    + reset : ControlInput <<get>>
+    + duration : ValueInput <<get>>
+    + unscaledTime : ValueInput <<get>>
+    + exitReady : ControlOutput <<get>>
+    + exitNotReady : ControlOutput <<get>>
+    + tick : ControlOutput <<get>>
+    + becameReady : ControlOutput <<get>>
+    + remainingSeconds : ValueOutput <<get>>
+    + remainingRatio : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + CreateData() : IGraphElementData
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    - TriggerUpdate(reference:GraphReference) : void
+    - Enter(flow:Flow) : ControlOutput
+    - Reset(flow:Flow) : ControlOutput
+    - AssignMetrics(flow:Flow, data:Data) : void
+    + Update(flow:Flow) : void
+}
+class Data <<sealed>> {
+    + remaining : float
+    + duration : float
+    + unscaled : bool
+    + isReady : bool <<get>>
+    + update : Delegate
+    + isListening : bool
+}
+Unit <|-- Cooldown
+IGraphElementWithData <|-- Cooldown
+IGraphEventListener <|-- Cooldown
+Cooldown +-- Data
+IGraphElementData <|-- Data
+@enduml

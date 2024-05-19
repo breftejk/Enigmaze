@@ -1,0 +1,11 @@
+@startuml
+class HandleMenuItem <<static>> {
+    <<internal>> {static} AddMenuItem(name:string, priority:int, execute:Action, validate:Func<bool>) : void
+    <<internal>> {static} AddMenuItem(name:string, shortcut:string, priority:int, execute:Action, validate:Func<bool>) : void
+    <<internal>> {static} RemoveMenuItem(name:string) : void
+    <<internal>> {static} UpdateAllMenus() : void
+    <<internal>> {static} GetEnabled(menuPath:string) : bool
+    {static} <<readonly>> - MenuType : Type
+    {static} <<readonly>> - EditorUtilityType : Type
+}
+@enduml

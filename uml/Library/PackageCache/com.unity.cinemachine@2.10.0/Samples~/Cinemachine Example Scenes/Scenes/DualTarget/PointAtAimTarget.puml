@@ -1,0 +1,7 @@
+@startuml
+class PointAtAimTarget {
+    + AimTarget : Transform
+    - Update() : void
+}
+MonoBehaviour <|-- PointAtAimTarget
+@enduml

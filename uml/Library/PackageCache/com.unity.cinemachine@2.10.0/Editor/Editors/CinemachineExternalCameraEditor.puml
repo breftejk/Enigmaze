@@ -1,0 +1,6 @@
+@startuml
+class CinemachineExternalCameraEditor {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+}
+"CinemachineVirtualCameraBaseEditor`1" "<CinemachineExternalCamera>" <|-- CinemachineExternalCameraEditor
+@enduml

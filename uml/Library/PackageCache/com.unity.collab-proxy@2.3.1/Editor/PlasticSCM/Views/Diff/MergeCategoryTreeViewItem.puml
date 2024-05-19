@@ -1,0 +1,7 @@
+@startuml
+class MergeCategoryTreeViewItem {
+    <<internal>> Category : CategoryGroup <<get>>
+    <<internal>> MergeCategoryTreeViewItem(id:int, depth:int, categoryGroup:CategoryGroup)
+}
+TreeViewItem <|-- MergeCategoryTreeViewItem
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+interface ICanvas {
+    Cache() : void
+    window : ICanvasWindow <<get>> <<set>>
+    graph : IGraph <<get>>
+    widgetProvider : WidgetProvider <<get>>
+    selection : GraphSelection <<get>>
+    widgets : IEnumerable<IWidget> <<get>>
+    Recollect() : void
+    CacheWidgetCollections() : void
+    hoveredWidget : IWidget <<get>>
+    DeleteSelection() : void
+    ShrinkCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    RegisterControls() : void
+    Open() : void
+    Close() : void
+    Update() : void
+    BeforeFrame() : void
+    OnGUI() : void
+    zoom : float <<get>>
+    pan : Vector2 <<get>>
+    UpdateViewport() : void
+    viewport : Rect <<get>> <<set>>
+    mousePosition : Vector2 <<get>>
+    isMouseOver : bool <<get>>
+    isMouseOverBackground : bool <<get>>
+    ViewElements(elements:IEnumerable<IGraphElement>) : void
+    IsVisible(widget:IWidget) : bool
+    CacheWidgetPositions() : void
+    isLassoing : bool <<get>>
+    lassoArea : Rect <<get>>
+    isSelecting : bool <<get>>
+    selectionArea : Rect <<get>>
+    isGrouping : bool <<get>>
+    groupArea : Rect <<get>>
+    isDragging : bool <<get>>
+    BeginDrag(e:EventWrapper) : void
+    Drag(e:EventWrapper) : void
+    EndDrag(e:EventWrapper) : void
+    Align(operation:AlignOperation) : void
+    Distribute(operation:DistributeOperation) : void
+    frameDeltaTime : float <<get>>
+    eventDeltaTime : float <<get>>
+    repaintDeltaTime : float <<get>>
+    OnToolbarGUI() : void
+     <<event>> delayCall : Action 
+    delayedCalls : Queue<Action> <<get>>
+}
+IDisposable <|-- ICanvas
+IDragAndDropHandler <|-- ICanvas
+@enduml

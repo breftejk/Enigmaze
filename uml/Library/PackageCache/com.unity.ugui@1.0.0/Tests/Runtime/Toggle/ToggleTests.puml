@@ -1,0 +1,16 @@
+@startuml
+class ToggleTests {
+    <<const>> - kPrefabTogglePath : string = "Assets/Resources/TestToggle.prefab"
+    # m_PrefabRoot : GameObject
+    # m_toggle : List<Toggle>
+    # {static} nbToggleInGroup : int = 2
+    + Setup() : void
+    + <<virtual>> TestSetup() : void
+    + <<virtual>> TearDown() : void
+    + OneTimeTearDown() : void
+    + SetIsOnWithoutNotifyWillNotNotify() : void
+    + NonInteractableCantBeToggled() : void
+    + InactiveCantBeToggled() : void
+}
+IPrebuildSetup <|-- ToggleTests
+@enduml

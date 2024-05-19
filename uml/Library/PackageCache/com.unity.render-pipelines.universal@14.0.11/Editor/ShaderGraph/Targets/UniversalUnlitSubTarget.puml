@@ -1,0 +1,51 @@
+@startuml
+class UniversalUnlitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<override>> latestVersion : int <<get>>
+    + UniversalUnlitSubTarget()
+    # <<override>> shaderID : ShaderID <<get>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> ProcessPreviewMaterial(material:Material) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> CollectShaderProperties(collector:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + TryUpgradeFromMasterNode(masterNode:IMasterNode1, blockMap:Dictionary<BlockFieldDescriptor, int>) : bool
+    <<internal>> <<override>> OnAfterParentTargetDeserialized() : void
+}
+class SubShaders <<static>> {
+    + {static} Unlit(target:UniversalTarget, renderType:string, renderQueue:string, disableBatchingTag:string) : SubShaderDescriptor
+}
+class UnlitPasses <<static>> {
+    + {static} Forward(target:UniversalTarget, keywords:KeywordCollection) : PassDescriptor
+    + {static} DepthNormalOnly(target:UniversalTarget) : PassDescriptor
+    + {static} GBuffer(target:UniversalTarget) : PassDescriptor
+}
+class UnlitKeywords <<static>> {
+    + {static} <<readonly>> Forward : KeywordCollection
+    + {static} <<readonly>> GBuffer : KeywordCollection
+}
+class UnlitIncludes <<static>> {
+    <<const>> - kUnlitPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/UnlitPass.hlsl"
+    <<const>> - kUnlitGBufferPass : string = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/UnlitGBufferPass.hlsl"
+    + {static} Unlit : IncludeCollection
+    + {static} GBuffer : IncludeCollection
+}
+class UnlitBlockMasks <<static>> {
+    + {static} <<readonly>> FragmentDepthNormals : BlockFieldDescriptor[]
+}
+class UnlitRequiredFields <<static>> {
+    + {static} <<readonly>> Unlit : FieldCollection
+    + {static} <<readonly>> DepthNormalsOnly : FieldCollection
+    + {static} <<readonly>> GBuffer : FieldCollection
+}
+UniversalSubTarget <|-- UniversalUnlitSubTarget
+ILegacyTarget <|-- UniversalUnlitSubTarget
+UniversalUnlitSubTarget +-- SubShaders
+UniversalUnlitSubTarget +-- UnlitPasses
+UniversalUnlitSubTarget +-- UnlitKeywords
+UniversalUnlitSubTarget +-- UnlitIncludes
+UnlitPasses +-- UnlitBlockMasks
+UnlitPasses +-- UnlitRequiredFields
+@enduml

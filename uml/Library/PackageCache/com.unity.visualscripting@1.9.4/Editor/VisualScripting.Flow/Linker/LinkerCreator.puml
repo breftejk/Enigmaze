@@ -1,0 +1,20 @@
+@startuml
+class LinkerCreator {
+    - {static} linkerPath : string <<get>>
+    + callbackOrder : int <<get>>
+    - {static} GetManagedStrippingLevel(buildTarget:BuildTargetGroup) : ManagedStrippingLevel
+    + OnPreprocessBuild(report:BuildReport) : void
+    - {static} OnPostprocessBuild(buildTarget:BuildTarget, path:string) : void
+    - {static} DeleteLinker() : void
+    + {static} GenerateLinker() : void
+    - {static} AddCustomNodesToLinker(linkerNode:XElement, plugins:IEnumerable<Plugin>) : void
+    - {static} ProcessSubGraphs(types:HashSet<Type>, subgraph:SubgraphUnit) : void
+    - {static} AddTypeToHashSet(types:HashSet<Type>, unit:IUnit) : void
+    - {static} FindGraphsOnAssets() : HashSet<Type>
+    - {static} FindGraphsOnScenes(includeGraphAssets:bool) : HashSet<Type>
+    - {static} FindGraphsOnPrefabs(includeGraphAssets:bool) : HashSet<Type>
+    - {static} FindGraphInPrefab(types:HashSet<Type>, gameObject:GameObject, includeGraphAssets:bool) : void
+    - {static} FindAllCustomTypes() : HashSet<Type>
+}
+IPreprocessBuildWithReport <|-- LinkerCreator
+@enduml

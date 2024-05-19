@@ -1,0 +1,50 @@
+@startuml
+class VcamStageEditor {
+    {static} - sStageData : StageData[] = null
+    - m_StageSelection : int
+    - m_StageError : bool
+    - m_IsMixedType : bool
+    - m_Stage : CinemachineCore.Stage
+    - m_EditedComponents : List<CinemachineComponentBase>
+    - m_ScratchComponentList : List<CinemachineComponentBase>
+    - m_ComponentEditor : UnityEditor.Editor
+    - m_ComponentEditorOnSceneGUI : System.Reflection.MethodInfo
+    + VcamStageEditor(stage:CinemachineCore.Stage)
+    + Shutdown() : void
+    + ComponentEditor : UnityEditor.Editor <<get>>
+    + HasImplementation : bool <<get>>
+    + TypeIsLocked : bool <<get>> <<set>>
+    + OnInspectorGUI() : void
+    + OnSceneGUI() : void
+    - GetPopupIndexForComponent(c:CinemachineComponentBase) : int
+    - DrawComponentInspector() : void
+    + GetComponent : GetComponentDelegate
+    + SetComponent : SetComponentDelegate
+}
+class VcamStageEditorPipeline {
+    {static} - ProceduralMotionLabel : GUIContent
+    - m_subeditors : VcamStageEditor[]
+    + Initialize(getComponent:VcamStageEditor.GetComponentDelegate, setComponent:VcamStageEditor.SetComponentDelegate) : void
+    + SetStageIsLocked(stage:CinemachineCore.Stage) : void
+    + Shutdown() : void
+    + OnInspectorGUI(withHeader:bool) : void
+    + OnSceneGUI() : void
+}
+struct StageData {
+    + IsExpanded : bool <<get>> <<set>>
+    + Name : string
+    + types : Type[]
+    + PopupOptions : GUIContent[]
+}
+class EditorInitialize {
+    {static} - EditorInitialize()
+}
+class ActiveEditorRegistry <<static>> {
+    {static} - s_ActiveEditorRegistry : HashSet<UnityEditor.Editor>
+    + {static} SetActiveEditor(e:UnityEditor.Editor, active:bool) : void
+    + {static} IsActiveEditor(e:UnityEditor.Editor) : bool
+}
+VcamStageEditor +-- StageData
+VcamStageEditor +-- EditorInitialize
+VcamStageEditor +-- ActiveEditorRegistry
+@enduml

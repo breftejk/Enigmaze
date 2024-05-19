@@ -1,0 +1,6 @@
+@startuml
+interface IGraphEventListenerData {
+    isListening : bool <<get>>
+}
+IGraphData <|-- IGraphEventListenerData
+@enduml

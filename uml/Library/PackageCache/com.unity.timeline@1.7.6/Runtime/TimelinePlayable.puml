@@ -1,0 +1,26 @@
+@startuml
+interface ITimelineEvaluateCallback {
+    Evaluate() : void
+}
+class TimelinePlayable {
+    - m_IntervalTree : IntervalTree<RuntimeElement>
+    - m_ActiveClips : List<RuntimeElement>
+    - m_CurrentListOfActiveClips : List<RuntimeElement>
+    - m_ActiveBit : int = 0
+    - m_EvaluateCallbacks : List<ITimelineEvaluateCallback>
+    - m_PlayableCache : Dictionary<TrackAsset, Playable>
+    <<internal>> {static} muteAudioScrubbing : bool = true
+    + {static} Create(graph:PlayableGraph, tracks:IEnumerable<TrackAsset>, go:GameObject, autoRebalance:bool, createOutputs:bool) : ScriptPlayable<TimelinePlayable>
+    + Compile(graph:PlayableGraph, timelinePlayable:Playable, tracks:IEnumerable<TrackAsset>, go:GameObject, autoRebalance:bool, createOutputs:bool) : void
+    - CompileTrackList(graph:PlayableGraph, timelinePlayable:Playable, tracks:IEnumerable<TrackAsset>, go:GameObject, createOutputs:bool) : void
+    - CreateTrackOutput(graph:PlayableGraph, track:TrackAsset, go:GameObject, playable:Playable, port:int) : void
+    - EvaluateWeightsForAnimationPlayableOutput(track:TrackAsset, animOutput:AnimationPlayableOutput) : void
+    - EvaluateAnimationPreviewUpdateCallback(track:TrackAsset, animOutput:AnimationPlayableOutput) : void
+    - CreateTrackPlayable(graph:PlayableGraph, timelinePlayable:Playable, track:TrackAsset, go:GameObject, createOutputs:bool) : Playable
+    + <<override>> PrepareFrame(playable:Playable, info:FrameData) : void
+    - Evaluate(playable:Playable, frameData:FrameData) : void
+    - CacheTrack(track:TrackAsset, playable:Playable, port:int, parent:Playable) : void
+    {static} - ForAOTCompilationOnly() : void
+}
+PlayableBehaviour <|-- TimelinePlayable
+@enduml

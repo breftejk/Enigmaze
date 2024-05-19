@@ -1,0 +1,173 @@
+@startuml
+struct uint3 {
+    + x : uint
+    + y : uint
+    + z : uint
+    + {static} <<readonly>> zero : uint3
+    + uint3(x:uint, y:uint, z:uint)
+    + uint3(x:uint, yz:uint2)
+    + uint3(xy:uint2, z:uint)
+    + uint3(xyz:uint3)
+    + uint3(v:uint)
+    + uint3(v:bool)
+    + uint3(v:bool3)
+    + uint3(v:int)
+    + uint3(v:int3)
+    + uint3(v:float)
+    + uint3(v:float3)
+    + uint3(v:double)
+    + uint3(v:double3)
+    + xxxx : uint4 <<get>>
+    + xxxy : uint4 <<get>>
+    + xxxz : uint4 <<get>>
+    + xxyx : uint4 <<get>>
+    + xxyy : uint4 <<get>>
+    + xxyz : uint4 <<get>>
+    + xxzx : uint4 <<get>>
+    + xxzy : uint4 <<get>>
+    + xxzz : uint4 <<get>>
+    + xyxx : uint4 <<get>>
+    + xyxy : uint4 <<get>>
+    + xyxz : uint4 <<get>>
+    + xyyx : uint4 <<get>>
+    + xyyy : uint4 <<get>>
+    + xyyz : uint4 <<get>>
+    + xyzx : uint4 <<get>>
+    + xyzy : uint4 <<get>>
+    + xyzz : uint4 <<get>>
+    + xzxx : uint4 <<get>>
+    + xzxy : uint4 <<get>>
+    + xzxz : uint4 <<get>>
+    + xzyx : uint4 <<get>>
+    + xzyy : uint4 <<get>>
+    + xzyz : uint4 <<get>>
+    + xzzx : uint4 <<get>>
+    + xzzy : uint4 <<get>>
+    + xzzz : uint4 <<get>>
+    + yxxx : uint4 <<get>>
+    + yxxy : uint4 <<get>>
+    + yxxz : uint4 <<get>>
+    + yxyx : uint4 <<get>>
+    + yxyy : uint4 <<get>>
+    + yxyz : uint4 <<get>>
+    + yxzx : uint4 <<get>>
+    + yxzy : uint4 <<get>>
+    + yxzz : uint4 <<get>>
+    + yyxx : uint4 <<get>>
+    + yyxy : uint4 <<get>>
+    + yyxz : uint4 <<get>>
+    + yyyx : uint4 <<get>>
+    + yyyy : uint4 <<get>>
+    + yyyz : uint4 <<get>>
+    + yyzx : uint4 <<get>>
+    + yyzy : uint4 <<get>>
+    + yyzz : uint4 <<get>>
+    + yzxx : uint4 <<get>>
+    + yzxy : uint4 <<get>>
+    + yzxz : uint4 <<get>>
+    + yzyx : uint4 <<get>>
+    + yzyy : uint4 <<get>>
+    + yzyz : uint4 <<get>>
+    + yzzx : uint4 <<get>>
+    + yzzy : uint4 <<get>>
+    + yzzz : uint4 <<get>>
+    + zxxx : uint4 <<get>>
+    + zxxy : uint4 <<get>>
+    + zxxz : uint4 <<get>>
+    + zxyx : uint4 <<get>>
+    + zxyy : uint4 <<get>>
+    + zxyz : uint4 <<get>>
+    + zxzx : uint4 <<get>>
+    + zxzy : uint4 <<get>>
+    + zxzz : uint4 <<get>>
+    + zyxx : uint4 <<get>>
+    + zyxy : uint4 <<get>>
+    + zyxz : uint4 <<get>>
+    + zyyx : uint4 <<get>>
+    + zyyy : uint4 <<get>>
+    + zyyz : uint4 <<get>>
+    + zyzx : uint4 <<get>>
+    + zyzy : uint4 <<get>>
+    + zyzz : uint4 <<get>>
+    + zzxx : uint4 <<get>>
+    + zzxy : uint4 <<get>>
+    + zzxz : uint4 <<get>>
+    + zzyx : uint4 <<get>>
+    + zzyy : uint4 <<get>>
+    + zzyz : uint4 <<get>>
+    + zzzx : uint4 <<get>>
+    + zzzy : uint4 <<get>>
+    + zzzz : uint4 <<get>>
+    + xxx : uint3 <<get>>
+    + xxy : uint3 <<get>>
+    + xxz : uint3 <<get>>
+    + xyx : uint3 <<get>>
+    + xyy : uint3 <<get>>
+    + xyz : uint3 <<get>> <<set>>
+    + xzx : uint3 <<get>>
+    + xzy : uint3 <<get>> <<set>>
+    + xzz : uint3 <<get>>
+    + yxx : uint3 <<get>>
+    + yxy : uint3 <<get>>
+    + yxz : uint3 <<get>> <<set>>
+    + yyx : uint3 <<get>>
+    + yyy : uint3 <<get>>
+    + yyz : uint3 <<get>>
+    + yzx : uint3 <<get>> <<set>>
+    + yzy : uint3 <<get>>
+    + yzz : uint3 <<get>>
+    + zxx : uint3 <<get>>
+    + zxy : uint3 <<get>> <<set>>
+    + zxz : uint3 <<get>>
+    + zyx : uint3 <<get>> <<set>>
+    + zyy : uint3 <<get>>
+    + zyz : uint3 <<get>>
+    + zzx : uint3 <<get>>
+    + zzy : uint3 <<get>>
+    + zzz : uint3 <<get>>
+    + xx : uint2 <<get>>
+    + xy : uint2 <<get>> <<set>>
+    + xz : uint2 <<get>> <<set>>
+    + yx : uint2 <<get>> <<set>>
+    + yy : uint2 <<get>>
+    + yz : uint2 <<get>> <<set>>
+    + zx : uint2 <<get>> <<set>>
+    + zy : uint2 <<get>> <<set>>
+    + zz : uint2 <<get>>
+    + Equals(rhs:uint3) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} uint3(x:uint, y:uint, z:uint) : uint3
+    + {static} uint3(x:uint, yz:uint2) : uint3
+    + {static} uint3(xy:uint2, z:uint) : uint3
+    + {static} uint3(xyz:uint3) : uint3
+    + {static} uint3(v:uint) : uint3
+    + {static} uint3(v:bool) : uint3
+    + {static} uint3(v:bool3) : uint3
+    + {static} uint3(v:int) : uint3
+    + {static} uint3(v:int3) : uint3
+    + {static} uint3(v:float) : uint3
+    + {static} uint3(v:float3) : uint3
+    + {static} uint3(v:double) : uint3
+    + {static} uint3(v:double3) : uint3
+    + {static} hash(v:uint3) : uint
+    + {static} hashwide(v:uint3) : uint3
+    + {static} shuffle(left:uint3, right:uint3, x:ShuffleComponent) : uint
+    + {static} shuffle(left:uint3, right:uint3, x:ShuffleComponent, y:ShuffleComponent) : uint2
+    + {static} shuffle(left:uint3, right:uint3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : uint3
+    + {static} shuffle(left:uint3, right:uint3, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : uint4
+    <<internal>> {static} select_shuffle_component(a:uint3, b:uint3, component:ShuffleComponent) : uint
+}
+class DebuggerProxy <<sealed>> {
+    + x : uint
+    + y : uint
+    + z : uint
+    + DebuggerProxy(v:uint3)
+}
+IFormattable <|-- uint3
+uint3 +-- DebuggerProxy
+@enduml

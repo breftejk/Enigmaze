@@ -1,0 +1,11 @@
+@startuml
+class TilemapEditorToolButton {
+    - m_TilemapEditorTool : TilemapEditorTool
+    + TilemapEditorToolButton(tool:TilemapEditorTool)
+    - OnAttachedToPanel(evt:AttachToPanelEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    # SetToolActive() : void
+    - UpdateState() : void
+}
+EditorToolbarToggle <|-- TilemapEditorToolButton
+@enduml

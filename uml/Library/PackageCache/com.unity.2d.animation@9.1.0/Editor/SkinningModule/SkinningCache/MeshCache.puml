@@ -1,0 +1,19 @@
+@startuml
+class MeshCache {
+    - m_Bones : List<BoneCache>
+    - m_Sprite : SpriteCache
+    + <<override>> spriteName : string <<get>>
+    + <<override>> boneCount : int <<get>>
+    + <<override>> frame : Rect <<get>>
+    + textureDataProvider : ITextureDataProvider <<get>> <<set>>
+    + sprite : SpriteCache <<get>> <<set>>
+    + bones : BoneCache[] <<get>> <<set>>
+    + <<override>> GetBoneData(index:int) : SpriteBoneData
+    + <<override>> GetBoneDepth(index:int) : float
+    + ContainsBone(bone:BoneCache) : bool
+    + SetCompatibleBoneSet(boneCache:BoneCache[]) : void
+    - SetBones(boneCache:BoneCache[]) : void
+    - FixWeights(newBones:BoneCache[]) : void
+}
+BaseSpriteMeshData <|-- MeshCache
+@enduml

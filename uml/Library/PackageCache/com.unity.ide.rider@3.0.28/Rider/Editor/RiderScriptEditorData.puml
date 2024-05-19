@@ -1,0 +1,16 @@
+@startuml
+class RiderScriptEditorData {
+    <<internal>> hasChanges : bool
+    <<internal>> shouldLoadEditorPlugin : bool
+    <<internal>> initializedOnce : bool
+    <<internal>> editorBuildNumber : SerializableVersion
+    <<internal>> prevEditorBuildNumber : SerializableVersion
+    <<internal>> installations : RiderPathLocator.RiderInfo[]
+    <<internal>> activeScriptCompilationDefines : string[]
+    + Init() : void
+    + InvalidateSavedCompilationDefines() : void
+    + HasChangesInCompilationDefines() : bool
+    + Invalidate(editorInstallationPath:string, shouldInvalidatePrevEditorBuildNumber:bool) : void
+}
+"ScriptableSingleton`1" "<RiderScriptEditorData>" <|-- RiderScriptEditorData
+@enduml

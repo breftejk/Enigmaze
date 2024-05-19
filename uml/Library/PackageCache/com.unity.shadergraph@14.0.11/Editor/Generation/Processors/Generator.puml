@@ -1,0 +1,40 @@
+@startuml
+struct GeneratedShader {
+    + codeString : string
+    + shaderName : string
+    + assignedTextures : List<PropertyCollector.TextureInfo>
+    + errorMessage : string
+    + {static} Null : GeneratedShader <<get>>
+}
+class Generator {
+    <<const>> - kDebugSymbol : string = "SHADERGRAPH_DEBUG"
+    <<readonly>> - m_GraphData : GraphData
+    <<readonly>> - m_OutputNode : AbstractMaterialNode
+    <<readonly>> - m_Mode : GenerationMode
+    <<readonly>> - m_PrimaryShaderFullName : string
+    <<readonly>> - m_AssetCollection : AssetCollection
+    <<readonly>> - m_HumanReadable : bool
+    <<readonly>> - m_ActiveBlocks : ReadOnlyCollection<BlockNode>
+    <<readonly>> - m_Targets : ReadOnlyCollection<Target>
+    <<readonly>> - m_TargetContexts : ReadOnlyCollection<TargetSetupContext>
+    <<readonly>> - m_AdditionalShaderIDs : ReadOnlyCollection<string>
+    <<readonly>> - m_PrimaryShader : GeneratedShader
+    <<readonly>> - m_PrimaryShaderTemporaryBlocks : List<BlockNode>
+    + generatedShader : string <<get>>
+    + configuredTextures : List<PropertyCollector.TextureInfo> <<get>>
+    + temporaryBlocks : List<BlockNode> <<get>>
+    + allGeneratedShaders : IEnumerable<GeneratedShader> <<get>>
+    + allGeneratedComputeShaders : IEnumerable<GeneratedShader> <<get>>
+    + Generator(graphData:GraphData, outputNode:AbstractMaterialNode, mode:GenerationMode, primaryShaderName:string, targets:Target[], assetCollection:AssetCollection, humanReadable:bool)
+    - GetTargetImplementations() : Target[]
+    + GatherActiveFieldsFromNode(outputNode:AbstractMaterialNode, pass:PassDescriptor, activeBlocks:List<(BlockFieldDescriptor descriptor, bool isDefaultValue)>, connectedBlocks:List<BlockFieldDescriptor>, target:Target) : ActiveFields
+    - ErrorShader(shaderName:string, errorMessage:string) : GeneratedShader
+    - m_Builder : ShaderStringBuilder
+    - BuildShader(additionalShaderID:string, outTemporaryBlocks:List<BlockNode>) : GeneratedShader
+    - GenerateSubShader(targetIndex:int, descriptor:SubShaderDescriptor, subShaderProperties:PropertyCollector) : void
+    {static} - GetSubShaderPropertiesForTarget(target:Target, graph:GraphData, generationMode:GenerationMode, outputNode:AbstractMaterialNode, outTemporaryBlockNodes:List<BlockNode>) : PropertyCollector
+    - BuildComputeShader(targetIndex:int, kernel:KernelDescriptor) : GeneratedShader
+    - GenerateKernel(targetIndex:int, kernel:KernelDescriptor) : void
+    - GenerateShaderPass(targetIndex:int, pass:PassDescriptor, activeFields:ActiveFields, currentBlockDescriptors:List<BlockFieldDescriptor>, subShaderProperties:PropertyCollector) : void
+}
+@enduml

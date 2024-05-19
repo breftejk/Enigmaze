@@ -1,0 +1,25 @@
+@startuml
+class Expression {
+    - Expression()
+    + Expression(expression:string, options:EvaluateOptions)
+    + Expression(expression:LogicalExpression, options:EvaluateOptions)
+    +  <<event>> EvaluateFunction : EvaluateFunctionHandler 
+    +  <<event>> EvaluateParameter : EvaluateParameterHandler 
+    # <<readonly>> OriginalExpression : string
+    # ParameterEnumerators : Dictionary<string, IEnumerator>
+    - _parameters : Dictionary<string, object>
+    + Options : EvaluateOptions <<get>> <<set>>
+    + Error : string <<get>>
+    + ParsedExpression : LogicalExpression <<get>>
+    + Parameters : Dictionary<string, object> <<get>> <<set>>
+    + UpdateUnityTimeParameters() : void
+    + HasErrors() : bool
+    + Evaluate(flow:Flow) : object
+    + {static} Compile(expression:string, noCache:bool) : LogicalExpression
+    - {static} _cacheEnabled : bool = true
+    - {static} _compiledExpressions : Dictionary<string, WeakReference>
+    - {static} <<readonly>> Rwl : ReaderWriterLock
+    + {static} CacheEnabled : bool <<get>> <<set>>
+    - {static} CleanCache() : void
+}
+@enduml

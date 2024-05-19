@@ -1,0 +1,43 @@
+@startuml
+interface IWelcomeWindowNotify {
+    SuccessForConfigure(organizations:List<string>) : void
+    Back() : void
+}
+class CloudEditionWelcomeWindow {
+    <<internal>> {static} ShowWindow(restApi:IPlasticWebRestApi, cmConnection:CmConnection, welcomeView:WelcomeView, autoLogin:bool) : void
+    <<internal>> {static} GetWelcomeWindow() : CloudEditionWelcomeWindow
+    <<internal>> {static} JoinCloudServer(cloudServer:string, username:string, accessToken:string) : void
+    <<internal>> {static} GetPlasticConfigFileToSaveOrganization() : string
+    <<internal>> {static} GetGluonConfigFileToSaveOrganization() : string
+    <<internal>> CancelJoinOrganization() : void
+    <<internal>> JoinOrganizationAndWelcomePage(organization:string) : void
+    <<internal>> ReplaceRootPanel(panel:VisualElement) : void
+    <<internal>> ShowOrganizationPanel(title:string, organizations:List<string>) : void
+    <<internal>> FillUserAndToken(userName:string, accessToken:string) : void
+    <<internal>> ShowOrganizationPanelFromAutoLogin(organizations:List<string>) : void
+    <<internal>> GetWindowTitle() : string
+    <<internal>> GetSignInPanel() : SignInPanel
+    - SuccessForConfigure(organizations:List<string>, canCreateAnOrganization:bool, userName:string, accessToken:string) : void
+    - SuccessForSSO(organization:string) : void
+    - SuccessForProfile(email:string) : void
+    - SuccessForHomeView(homeView:string) : void
+    - SuccessForCredentials(email:string, accessToken:string) : void
+    - Cancel(errorMessage:string) : void
+    - SuccessForConfigure(organizations:List<string>) : void
+    - Back() : void
+    - OnEnable() : void
+    - OnDestroy() : void
+    - Dispose() : void
+    - BuildComponents() : void
+    - mAccessToken : string
+    - mUserName : string
+    - mOrganizationPanel : OrganizationPanel
+    - mSignInPanel : SignInPanel
+    - mWelcomeView : WelcomeView
+    {static} - sRestApi : IPlasticWebRestApi
+    {static} - sCmConnection : CmConnection
+    {static} - sAutoLogin : bool = false
+}
+EditorWindow <|-- CloudEditionWelcomeWindow
+IWelcomeWindowNotify <|-- CloudEditionWelcomeWindow
+@enduml

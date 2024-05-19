@@ -1,0 +1,5 @@
+@startuml
+class ProjectPath <<static>> {
+    <<internal>> {static} FromApplicationDataPath(dataPath:string) : string
+}
+@enduml

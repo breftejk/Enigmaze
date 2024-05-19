@@ -1,0 +1,5 @@
+@startuml
+class AuthToken <<static>> {
+    <<internal>> {static} GetForServer(server:string) : string
+}
+@enduml

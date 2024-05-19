@@ -1,0 +1,20 @@
+@startuml
+class GameObjectCreation <<static>> {
+    <<const>> - k_MenuPriority : int = 3
+    <<internal>> {static} CreateRectangularTilemap() : void
+    <<internal>> {static} CreateHexagonalPointTopTilemap() : void
+    <<internal>> {static} CreateHexagonalFlatTopTilemap() : void
+    <<internal>> {static} CreateIsometricTilemap() : void
+    <<internal>> {static} CreateIsometricZAsYTilemap() : void
+    - {static} CreateIsometricTilemap(isometricLayout:GridLayout.CellLayout, undoMessage:string) : void
+    - {static} CreateHexagonalTilemap(swizzle:GridLayout.CellSwizzle, undoMessage:string, cellSize:Vector3) : void
+    - {static} FindOrCreateRootGrid() : GameObject
+}
+class Styles <<static>> {
+    + {static} <<readonly>> pointTopHexagonCreateUndo : string
+    + {static} <<readonly>> flatTopHexagonCreateUndo : string
+    + {static} <<readonly>> isometricCreateUndo : string
+    + {static} <<readonly>> isometricZAsYCreateUndo : string
+}
+GameObjectCreation +-- Styles
+@enduml

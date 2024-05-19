@@ -1,0 +1,45 @@
+@startuml
+enum FontFeatureLookupFlags {
+    None=     0x0,
+    IgnoreLigatures=   0x004,
+    IgnoreSpacingAdjustments=   0x100,
+}
+struct TMP_GlyphValueRecord {
+    + xPlacement : float <<get>> <<set>>
+    + yPlacement : float <<get>> <<set>>
+    + xAdvance : float <<get>> <<set>>
+    + yAdvance : float <<get>> <<set>>
+    <<internal>> m_XPlacement : float
+    <<internal>> m_YPlacement : float
+    <<internal>> m_XAdvance : float
+    <<internal>> m_YAdvance : float
+    + TMP_GlyphValueRecord(xPlacement:float, yPlacement:float, xAdvance:float, yAdvance:float)
+    <<internal>> TMP_GlyphValueRecord(valueRecord:GlyphValueRecord_Legacy)
+    <<internal>> TMP_GlyphValueRecord(valueRecord:GlyphValueRecord)
+}
+struct TMP_GlyphAdjustmentRecord {
+    + glyphIndex : uint <<get>> <<set>>
+    + glyphValueRecord : TMP_GlyphValueRecord <<get>> <<set>>
+    <<internal>> m_GlyphIndex : uint
+    <<internal>> m_GlyphValueRecord : TMP_GlyphValueRecord
+    + TMP_GlyphAdjustmentRecord(glyphIndex:uint, glyphValueRecord:TMP_GlyphValueRecord)
+    <<internal>> TMP_GlyphAdjustmentRecord(adjustmentRecord:GlyphAdjustmentRecord)
+}
+class TMP_GlyphPairAdjustmentRecord {
+    + firstAdjustmentRecord : TMP_GlyphAdjustmentRecord <<get>> <<set>>
+    + secondAdjustmentRecord : TMP_GlyphAdjustmentRecord <<get>> <<set>>
+    + featureLookupFlags : FontFeatureLookupFlags <<get>> <<set>>
+    <<internal>> m_FirstAdjustmentRecord : TMP_GlyphAdjustmentRecord
+    <<internal>> m_SecondAdjustmentRecord : TMP_GlyphAdjustmentRecord
+    <<internal>> m_FeatureLookupFlags : FontFeatureLookupFlags
+    + TMP_GlyphPairAdjustmentRecord(firstAdjustmentRecord:TMP_GlyphAdjustmentRecord, secondAdjustmentRecord:TMP_GlyphAdjustmentRecord)
+    <<internal>> TMP_GlyphPairAdjustmentRecord(glyphPairAdjustmentRecord:GlyphPairAdjustmentRecord)
+}
+struct GlyphPairKey {
+    + firstGlyphIndex : uint
+    + secondGlyphIndex : uint
+    + key : uint
+    + GlyphPairKey(firstGlyphIndex:uint, secondGlyphIndex:uint)
+    <<internal>> GlyphPairKey(record:TMP_GlyphPairAdjustmentRecord)
+}
+@enduml

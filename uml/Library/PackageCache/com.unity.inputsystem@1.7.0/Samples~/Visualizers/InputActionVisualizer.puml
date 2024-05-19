@@ -1,0 +1,33 @@
+@startuml
+class InputActionVisualizer {
+    + action : InputAction <<get>>
+    # FixedUpdate() : void
+    # Update() : void
+    # <<new>> OnEnable() : void
+    # <<new>> OnDisable() : void
+    # <<new>> OnGUI() : void
+    - RecordValue(time:double) : void
+    - RecordControlName() : void
+    - ResolveAction() : void
+    - SetupVisualizer() : void
+    - OnActionDisabled() : void
+    - OnActionTriggered(context:InputAction.CallbackContext) : void
+    - {static} OnActionChange(actionOrMap:object, change:InputActionChange) : void
+    - m_Visualization : Visualization
+    - m_ActionReference : InputActionReference
+    - m_ActionName : string
+    - m_ShowControlName : bool
+    - m_Action : InputAction
+    - m_ActiveControl : InputControl
+    - m_ActiveControlName : GUIContent
+    - {static} s_EnabledInstances : List<InputActionVisualizer>
+    - {static} <<readonly>> s_InteractionColors : Color[]
+}
+enum Visualization {
+    None,
+    Value,
+    Interaction,
+}
+InputVisualizer <|-- InputActionVisualizer
+InputActionVisualizer +-- Visualization
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+class DrawTextBlockWithEndLink <<static>> {
+    <<internal>> {static} For(url:string, formattedExplanation:string, textblockStyle:GUIStyle) : void
+}
+@enduml

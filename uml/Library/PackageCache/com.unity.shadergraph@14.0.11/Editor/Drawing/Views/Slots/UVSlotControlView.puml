@@ -1,0 +1,8 @@
+@startuml
+class UVSlotControlView {
+    - m_Slot : UVMaterialSlot
+    + UVSlotControlView(slot:UVMaterialSlot)
+    - OnValueChanged(evt:ChangeEvent<Enum>) : void
+}
+VisualElement <|-- UVSlotControlView
+@enduml

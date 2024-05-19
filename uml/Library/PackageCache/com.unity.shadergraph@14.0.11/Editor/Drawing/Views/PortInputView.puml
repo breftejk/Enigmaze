@@ -1,0 +1,22 @@
+@startuml
+class PortInputView {
+    <<readonly>> - k_EdgeColorProperty : CustomStyleProperty<Color>
+    - m_EdgeColor : Color
+    + edgeColor : Color <<get>>
+    + slot : MaterialSlot <<get>>
+    - m_Slot : MaterialSlot
+    - m_SlotType : ConcreteSlotValueType
+    - m_Control : VisualElement
+    - m_Container : VisualElement
+    - m_EdgeControl : EdgeControl
+    + PortInputView(slot:MaterialSlot)
+    - OnCustomStyleResolved(e:CustomStyleResolvedEvent) : void
+    + UpdateSlot(newSlot:MaterialSlot) : void
+    + UpdateSlotType() : void
+    - Recreate() : void
+    - CreateControl() : void
+    + Dispose() : void
+}
+GraphElement <|-- PortInputView
+IDisposable <|-- PortInputView
+@enduml

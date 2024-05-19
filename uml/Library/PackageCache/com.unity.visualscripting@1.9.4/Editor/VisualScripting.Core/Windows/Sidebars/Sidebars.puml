@@ -1,0 +1,11 @@
+@startuml
+class Sidebars <<sealed>> {
+    + Sidebars()
+    + left : Sidebar <<get>>
+    + right : Sidebar <<get>>
+    + panels : List<SidebarPanel> <<get>>
+    + Feed(panelContents:IEnumerable<ISidebarPanelContent>) : void
+    + Feed(panelContent:ISidebarPanelContent) : void
+    + Remove() : void
+}
+@enduml

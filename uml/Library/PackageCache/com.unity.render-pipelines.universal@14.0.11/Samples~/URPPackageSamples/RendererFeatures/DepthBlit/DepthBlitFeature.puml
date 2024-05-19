@@ -1,0 +1,22 @@
+@startuml
+class DepthBlitFeature {
+    + evt_Depth : RenderPassEvent
+    + evt_Edge : RenderPassEvent
+    + rendererDataAsset : UniversalRendererData
+    + copyDepthShader : Shader
+    - m_CopyDepthMaterial : Material
+    + m_DepthEdgeMaterial : Material
+    - m_DepthRTHandle : RTHandle
+    - <<const>> k_DepthRTName : string = "_MyDepthTexture"
+    - m_CopyDepthPass : CopyDepthPass
+    - m_DepthOnlyPass : DepthOnlyPass
+    - m_DepthEdgePass : DepthBlitEdgePass
+    - CanCopyDepth(cameraData:CameraData) : bool
+    - IsGLESDevice() : bool
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    + <<override>> SetupRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    + <<override>> Create() : void
+    # <<override>> Dispose(disposing:bool) : void
+}
+ScriptableRendererFeature <|-- DepthBlitFeature
+@enduml

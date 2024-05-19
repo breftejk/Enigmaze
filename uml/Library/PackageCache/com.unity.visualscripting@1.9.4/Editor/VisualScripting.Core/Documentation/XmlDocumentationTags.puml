@@ -1,0 +1,19 @@
+@startuml
+class XmlDocumentationTags {
+    + XmlDocumentationTags()
+    + XmlDocumentationTags(summary:string)
+    + XmlDocumentationTags(xml:XElement)
+    - methodBaseCompleted : bool = true
+    + summary : string <<get>> <<set>>
+    + returns : string <<get>> <<set>>
+    + remarks : string <<get>> <<set>>
+    + parameters : Dictionary<string, string> <<get>>
+    + typeParameters : Dictionary<string, string> <<get>>
+    + parameterTypes : Dictionary<string, Type> <<get>>
+    + returnType : Type <<get>> <<set>>
+    + inherit : bool <<get>>
+    + CompleteWithMethodBase(methodBase:MethodBase, returnType:Type) : void
+    + ParameterSummary(parameter:ParameterInfo) : string
+    - {static} ProcessText(xmlText:string) : string
+}
+@enduml

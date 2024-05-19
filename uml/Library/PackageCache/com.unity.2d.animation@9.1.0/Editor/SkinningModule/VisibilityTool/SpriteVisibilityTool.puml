@@ -1,0 +1,125 @@
+@startuml
+interface ISpriteVisibilityToolModel {
+    view : ISpriteVisibilityToolView <<get>>
+    character : CharacterCache <<get>>
+    previousVisibility : bool <<get>> <<set>>
+    allVisibility : bool <<get>> <<set>>
+    mode : SkinningMode <<get>>
+    hasCharacter : bool <<get>>
+    UndoScope(description:string) : UndoScope
+    selectedSprite : SpriteCache <<get>>
+}
+interface ISpriteVisibilityToolView {
+    Setup() : void
+    SetSelection(sprite:SpriteCache) : void
+    SetSelectionIds(selectedIds:IList<int>) : void
+}
+class SpriteVisibilityToolData {
+    - m_AllVisibility : bool = true
+    - m_PreviousVisibility : bool = true
+    + allVisibility : bool <<get>> <<set>>
+    + previousVisibility : bool <<get>> <<set>>
+}
+class SpriteVisibilityToolController {
+    - m_UpdateViewOnSelection : bool = true
+    - m_Model : ISpriteVisibilityToolModel
+    - m_Events : SkinningEvents
+    +  <<event>> OnAvailabilityChangeListeners : Action 
+    + SpriteVisibilityToolController(model:ISpriteVisibilityToolModel, events:SkinningEvents)
+    + Activate() : void
+    + Deactivate() : void
+    + Dispose() : void
+    - OnViewModeChanged(mode:SkinningMode) : void
+    - OnSpriteSelectedChanged(sprite:SpriteCache) : void
+    + isAvailable : bool <<get>>
+    - SetAllCharacterSpriteVisibility() : void
+    + SetAllVisibility(visibility:bool) : void
+    + GetAllVisibility() : bool
+    + BuildTreeView() : List<TreeViewItem>
+    - SpriteVisibilityItemOrderSort(x:ISpriteVisibilityItem, y:ISpriteVisibilityItem) : int
+    - CreateTreeGroup(level:int, groups:CharacterGroupCache[], parts:CharacterPartCache[], depth:int) : List<TreeViewItem>
+    - CreateTreeViewItem(part:CharacterPartCache, groups:CharacterGroupCache[], depth:int) : TreeViewItem
+    + GetCharacterPartVisibility(item:TreeViewItem) : bool
+    + SetCharacterPartVisibility(item:TreeViewItem, visible:bool, isolate:bool) : void
+    + SetSelectedSprite(rows:IList<TreeViewItem>, selectedIds:IList<int>) : void
+    + GetTreeViewSelectionID(sprite:SpriteCache) : int
+}
+class SpriteVisibilityTool {
+    - m_View : SpriteVisibilityToolView
+    - m_Controller : SpriteVisibilityToolController
+    - m_Data : SpriteVisibilityToolData
+    - m_SkinningCache : SkinningCache
+    + skinningCache : SkinningCache <<get>>
+    + SpriteVisibilityTool(s:SkinningCache)
+    + Setup() : void
+    + Dispose() : void
+    + view : VisualElement <<get>>
+    + name : string <<get>>
+    + Activate() : void
+    + Deactivate() : void
+    + isAvailable : bool <<get>>
+    + SetAvailabilityChangeCallback(callback:Action) : void
+    - view : ISpriteVisibilityToolView <<get>>
+    - hasCharacter : bool <<get>>
+    - selectedSprite : SpriteCache <<get>>
+    - character : CharacterCache <<get>>
+    - previousVisibility : bool <<get>> <<set>>
+    - allVisibility : bool <<get>> <<set>>
+    - mode : SkinningMode <<get>>
+    - UndoScope(description:string) : UndoScope
+}
+class SpriteVisibilityToolView {
+    + GetController : Func<SpriteVisibilityToolController>
+    + SpriteVisibilityToolView()
+    - InternalGetController() : SpriteVisibilityToolController
+    - InternalGetAllVisibility() : bool
+    - InternalSetAllVisibility(visibility:bool) : void
+    + Setup() : void
+    + SetSelection(sprite:SpriteCache) : void
+    + SetSelectionIds(selectedIds:IList<int>) : void
+}
+class SpriteTreeView {
+    + GetController : Func<SpriteVisibilityToolController>
+    + m_Style : GUIStyle
+    - m_CurrentEdittingItem : TreeViewItem
+    + SpriteTreeView(treeViewState:TreeViewState, multiColumnHeader:MultiColumnHeader)
+    - SkinInit() : void
+    + Setup() : void
+    + <<override>> OnGUI(rect:Rect) : void
+    - CellGUI(cellRect:Rect, item:TreeViewItem, column:int, args:RowGUIArgs) : void
+    - DrawVisibilityCell(cellRect:Rect, item:TreeViewItem) : void
+    - DrawNameCell(cellRect:Rect, item:TreeViewItem, args:RowGUIArgs) : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> GetRenameRect(rowRect:Rect, row:int, item:TreeViewItem) : Rect
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    + SetSelectionIds(selectedIds:IList<int>) : void
+    + SetSelection(sprite:SpriteCache) : void
+}
+interface ISpriteVisibilityItem {
+    visibility : bool <<get>> <<set>>
+    characterOrder : ICharacterOrder <<get>>
+}
+class SpriteVisibilityGroupItem {
+    + group : CharacterGroupCache
+    + childItems : ISpriteVisibilityItem[]
+    - visibility : bool <<get>> <<set>>
+    + characterOrder : ICharacterOrder <<get>>
+}
+class SpriteVisibilitySpriteItem {
+    + sprite : CharacterPartCache
+    - visibility : bool <<get>> <<set>>
+    + characterOrder : ICharacterOrder <<get>>
+}
+CacheObject <|-- SpriteVisibilityToolData
+IVisibilityTool <|-- SpriteVisibilityTool
+ISpriteVisibilityToolModel <|-- SpriteVisibilityTool
+VisibilityToolViewBase <|-- SpriteVisibilityToolView
+ISpriteVisibilityToolView <|-- SpriteVisibilityToolView
+VisibilityTreeViewBase <|-- SpriteTreeView
+SpriteVisibilityToolController +-- ISpriteVisibilityItem
+SpriteVisibilityToolController +-- SpriteVisibilityGroupItem
+ISpriteVisibilityItem <|-- SpriteVisibilityGroupItem
+SpriteVisibilityToolController +-- SpriteVisibilitySpriteItem
+ISpriteVisibilityItem <|-- SpriteVisibilitySpriteItem
+@enduml

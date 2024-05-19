@@ -1,0 +1,58 @@
+@startuml
+class "@InGameHintsActions" <<partial>> {
+    + asset : InputActionAsset <<get>>
+    + @InGameHintsActions()
+    + Dispose() : void
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + Contains(action:InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    + Enable() : void
+    + Disable() : void
+    + bindings : IEnumerable<InputBinding> <<get>>
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindBinding(bindingMask:InputBinding, action:InputAction) : int
+    - <<readonly>> m_Gameplay : InputActionMap
+    - m_GameplayActionsCallbackInterfaces : List<IGameplayActions>
+    - <<readonly>> m_Gameplay_Move : InputAction
+    - <<readonly>> m_Gameplay_Look : InputAction
+    - <<readonly>> m_Gameplay_PickUp : InputAction
+    - <<readonly>> m_Gameplay_Drop : InputAction
+    - <<readonly>> m_Gameplay_Throw : InputAction
+    + @Gameplay : GameplayActions <<get>>
+    - m_GamepadSchemeIndex : int
+    + GamepadScheme : InputControlScheme <<get>>
+    - m_KeyboardMouseSchemeIndex : int
+    + KeyboardMouseScheme : InputControlScheme <<get>>
+}
+struct GameplayActions {
+    - m_Wrapper : @InGameHintsActions
+    + GameplayActions(wrapper:@InGameHintsActions)
+    + @Move : InputAction <<get>>
+    + @Look : InputAction <<get>>
+    + @PickUp : InputAction <<get>>
+    + @Drop : InputAction <<get>>
+    + @Throw : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + AddCallbacks(instance:IGameplayActions) : void
+    - UnregisterCallbacks(instance:IGameplayActions) : void
+    + RemoveCallbacks(instance:IGameplayActions) : void
+    + SetCallbacks(instance:IGameplayActions) : void
+}
+interface IGameplayActions {
+    OnMove(context:InputAction.CallbackContext) : void
+    OnLook(context:InputAction.CallbackContext) : void
+    OnPickUp(context:InputAction.CallbackContext) : void
+    OnDrop(context:InputAction.CallbackContext) : void
+    OnThrow(context:InputAction.CallbackContext) : void
+}
+IInputActionCollection2 <|-- "@InGameHintsActions"
+IDisposable <|-- "@InGameHintsActions"
+"@InGameHintsActions" +-- GameplayActions
+"@InGameHintsActions" +-- IGameplayActions
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class UniversalGlobalSettingsPanelProvider {
+    + UniversalGlobalSettingsPanelProvider()
+    + {static} CreateSettingsProvider() : SettingsProvider
+    # <<override>> Clone(src:RenderPipelineGlobalSettings, activateAsset:bool) : void
+    # <<override>> Create(useProjectSettingsFolder:bool, activateAsset:bool) : void
+    # <<override>> Ensure() : void
+}
+"RenderPipelineGlobalSettingsProvider`2" "<UniversalRenderPipeline,UniversalRenderPipelineGlobalSettings>" <|-- UniversalGlobalSettingsPanelProvider
+@enduml

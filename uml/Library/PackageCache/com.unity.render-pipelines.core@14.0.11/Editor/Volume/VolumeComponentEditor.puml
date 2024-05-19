@@ -1,0 +1,90 @@
+@startuml
+class VolumeComponentEditor {
+    <<const>> - k_KeyPrefix : string = "CoreRP:VolumeComponent:UI_State:"
+    - m_EditorPrefBool : EditorPrefBool
+    + expanded : bool <<get>> <<set>>
+    <<internal>> m_PipelineTypes : Type[]
+    <<internal>> pipelineTypes : Type[] <<get>>
+    <<internal>> visible : bool <<get>>
+    - m_OverrideToggleSize : Vector2?
+    <<internal>> overrideToggleSize : Vector2 <<get>>
+    + volumeComponent : VolumeComponent <<get>>
+    + baseProperty : SerializedProperty <<get>> <<internal set>>
+    + activeProperty : SerializedProperty <<get>> <<internal set>>
+    - m_AdditionalPropertiesAnimation : AnimFloat
+    - m_ShowAdditionalProperties : EditorPrefBool
+    - m_VolumeNotAdditionalParameters : List<VolumeParameter>
+    + <<virtual>> hasAdditionalProperties : bool <<get>>
+    + showAdditionalProperties : bool <<get>> <<set>>
+    # BeginAdditionalPropertiesScope() : bool
+    # EndAdditionalPropertiesScope() : void
+    # m_Inspector : Editor
+    <<internal>> inspector : Editor <<get>> <<set>>
+    # volume : Volume <<get>>
+    - m_Parameters : List<(GUIContent displayName, int displayOrder, SerializedDataParameter param)>
+    {static} - s_ParameterDrawers : Dictionary<Type, VolumeParameterDrawer>
+    {static} - VolumeComponentEditor()
+    {static} - OnEditorReload() : void
+    {static} - ReloadDecoratorTypes() : void
+    + <<new>> Repaint() : void
+    <<internal>> {static} GetAdditionalPropertiesPreferenceKey(type:Type) : string
+    <<internal>> InitAdditionalPropertiesPreference() : void
+    <<internal>> SetAdditionalPropertiesPreference(value:bool) : void
+    <<internal>> Init() : void
+    - InitParameters() : void
+    - GetFields(o:object, infos:List<(FieldInfo, SerializedProperty)>, prop:SerializedProperty) : void
+    + <<virtual>> OnEnable() : void
+    + <<virtual>> OnDisable() : void
+    <<internal>> OnInternalInspectorGUI() : void
+    + <<override>> OnInspectorGUI() : void
+    + <<virtual>> GetDisplayTitle() : GUIContent
+    - AddToogleState(content:GUIContent, state:bool) : void
+    - TopRowFields() : void
+    <<internal>> AreOverridesTo(state:bool) : bool
+    <<internal>> SetOverridesTo(state:bool) : void
+    <<internal>> AreAllOverridesTo(state:bool) : bool
+    <<internal>> SetAllOverridesTo(state:bool) : void
+    # Unpack(property:SerializedProperty) : SerializedDataParameter
+    # PropertyField(property:SerializedDataParameter) : bool
+    {static} <<readonly>> - s_HeadersGuiContents : Dictionary<string, GUIContent>
+    # DrawHeader(header:string) : void
+    - HandleDecorators(property:SerializedDataParameter, title:GUIContent) : void
+    - HandleRelativeIndentation(property:SerializedDataParameter) : int
+    # PropertyField(property:SerializedDataParameter, title:GUIContent) : bool
+    - DrawPropertyField(property:SerializedDataParameter, title:GUIContent) : bool
+    - DrawEmbeddedField(property:SerializedDataParameter, title:GUIContent) : bool
+    # DrawOverrideCheckbox(property:SerializedDataParameter) : void
+}
+class Styles {
+    + {static} overrideSettingText : GUIContent <<get>>
+    + {static} allText : GUIContent <<get>>
+    + {static} noneText : GUIContent <<get>>
+    + {static} toggleAllText : string <<get>>
+    + <<const>> overrideCheckboxWidth : int = 14
+    + <<const>> overrideCheckboxOffset : int = 9
+}
+struct OverridablePropertyScope {
+    - isAdditionalProperty : bool
+    - editor : VolumeComponentEditor
+    - disabledScope : IDisposable
+    - indentScope : IDisposable
+    <<internal>> haveCustomOverrideCheckbox : bool <<get>>
+    <<internal>> drawer : VolumeParameterDrawer <<get>>
+    + displayed : bool <<get>>
+    + label : GUIContent <<get>>
+    + OverridablePropertyScope(property:SerializedDataParameter, label:GUIContent, editor:VolumeComponentEditor)
+    + OverridablePropertyScope(property:SerializedDataParameter, label:string, editor:VolumeComponentEditor)
+    - Init(property:SerializedDataParameter, label:GUIContent, editor:VolumeComponentEditor) : void
+    - Dispose() : void
+}
+class IndentLevelScope {
+    - m_Offset : int
+    + IndentLevelScope(offset:int)
+    # <<override>> CloseScope() : void
+}
+Editor <|-- VolumeComponentEditor
+VolumeComponentEditor +-- Styles
+VolumeComponentEditor +-- OverridablePropertyScope
+IDisposable <|-- OverridablePropertyScope
+VolumeComponentEditor +-- IndentLevelScope
+@enduml

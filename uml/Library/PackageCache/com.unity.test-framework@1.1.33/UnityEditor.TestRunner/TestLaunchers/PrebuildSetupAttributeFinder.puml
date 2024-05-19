@@ -1,0 +1,6 @@
+@startuml
+class PrebuildSetupAttributeFinder {
+    + PrebuildSetupAttributeFinder()
+}
+"AttributeFinderBase`2" "<IPrebuildSetup,PrebuildSetupAttribute>" <|-- PrebuildSetupAttributeFinder
+@enduml

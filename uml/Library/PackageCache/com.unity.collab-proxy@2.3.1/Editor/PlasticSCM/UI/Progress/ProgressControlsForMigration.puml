@@ -1,0 +1,24 @@
+@startuml
+class ProgressControlsForMigration {
+    <<internal>> ProgressData : Data <<get>>
+    <<internal>> IsOperationRunning() : bool
+    <<internal>> UpdateDeterminateProgress(parentWindow:EditorWindow) : void
+    <<internal>> HideProgress() : void
+    <<internal>> ShowProgress(header:string, message:string, progressPercent:float) : void
+    <<internal>> ShowError(message:string) : void
+    <<internal>> ShowSuccess(message:string) : void
+    - HideNotification() : void
+    - mData : Data
+    - mRequestedRepaint : bool
+}
+class Data {
+    <<internal>> IsOperationRunning : bool
+    <<internal>> ProgressPercent : float
+    <<internal>> ProgressMessage : string
+    <<internal>> HeaderMessage : string
+    <<internal>> NotificationType : MessageType
+    <<internal>> NotificationMessage : string
+    <<internal>> CopyInto(other:Data) : void
+}
+ProgressControlsForMigration +-- Data
+@enduml

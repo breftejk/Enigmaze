@@ -1,0 +1,48 @@
+@startuml
+interface IDebugData {
+    GetReset() : Action
+}
+class DebugManager <<sealed>> <<partial>> {
+    {static} <<readonly>> - s_Instance : Lazy<DebugManager>
+    + {static} instance : DebugManager <<get>>
+    - m_ReadOnlyPanels : ReadOnlyCollection<DebugUI.Panel>
+    <<readonly>> - m_Panels : List<DebugUI.Panel>
+    - UpdateReadOnlyCollection() : void
+    + panels : ReadOnlyCollection<DebugUI.Panel> <<get>>
+    +  <<event>> onDisplayRuntimeUIChanged : Action<bool> 
+    +  <<event>> onSetDirty : Action 
+    -  <<event>> resetData : Action 
+    + refreshEditorRequested : bool
+    - m_RequestedPanelIndex : int?
+    - m_Root : GameObject
+    - m_RootUICanvas : DebugUIHandlerCanvas
+    - m_PersistentRoot : GameObject
+    - m_RootUIPersistentCanvas : DebugUIHandlerPersistentCanvas
+    + isAnyDebugUIActive : bool <<get>>
+    - DebugManager()
+    + RefreshEditor() : void
+    + Reset() : void
+    + ReDrawOnScreenDebug() : void
+    + RegisterData(data:IDebugData) : void
+    + UnregisterData(data:IDebugData) : void
+    + GetState() : int
+    <<internal>> RegisterRootCanvas(root:DebugUIHandlerCanvas) : void
+    <<internal>> ChangeSelection(widget:DebugUIHandlerWidget, fromNext:bool) : void
+    <<internal>> SetScrollTarget(widget:DebugUIHandlerWidget) : void
+    - EnsurePersistentCanvas() : void
+    <<internal>> TogglePersistent(widget:DebugUI.Widget, forceTupleIndex:int?) : void
+    - OnPanelDirty(panel:DebugUI.Panel) : void
+    + PanelIndex(displayName:string) : int
+    + PanelDiplayName(panelIndex:int) : string
+    + RequestEditorWindowPanelIndex(index:int) : void
+    <<internal>> GetRequestedEditorWindowPanelIndex() : int?
+    + GetPanel(displayName:string, createIfNull:bool, groupIndex:int, overrideIfExist:bool) : DebugUI.Panel
+    + FindPanelIndex(displayName:string) : int
+    + RemovePanel(displayName:string) : void
+    + RemovePanel(panel:DebugUI.Panel) : void
+    + GetItems(flags:DebugUI.Flags) : DebugUI.Widget[]
+    <<internal>> GetItemsFromContainer(flags:DebugUI.Flags, container:DebugUI.IContainer) : DebugUI.Widget[]
+    + GetItem(queryPath:string) : DebugUI.Widget
+    - GetItem(queryPath:string, container:DebugUI.IContainer) : DebugUI.Widget
+}
+@enduml

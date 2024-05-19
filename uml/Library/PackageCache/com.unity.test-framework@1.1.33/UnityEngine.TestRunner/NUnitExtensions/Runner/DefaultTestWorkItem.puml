@@ -1,0 +1,11 @@
+@startuml
+class EditModeTestCallbacks {
+    + {static} RestoringTestContext : Action <<get>> <<set>>
+}
+class DefaultTestWorkItem {
+    - _command : TestCommand
+    + DefaultTestWorkItem(test:TestMethod, filter:ITestFilter)
+    # <<override>> PerformWork() : IEnumerable
+}
+UnityWorkItem <|-- DefaultTestWorkItem
+@enduml

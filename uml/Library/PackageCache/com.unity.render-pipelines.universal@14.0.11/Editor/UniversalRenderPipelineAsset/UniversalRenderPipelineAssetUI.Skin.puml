@@ -1,0 +1,85 @@
+@startuml
+class UniversalRenderPipelineAssetUI <<partial>> {
+}
+class Styles <<static>> {
+    + {static} renderingSettingsText : GUIContent
+    + {static} qualitySettingsText : GUIContent
+    + {static} lightingSettingsText : GUIContent
+    + {static} shadowSettingsText : GUIContent
+    + {static} postProcessingSettingsText : GUIContent
+    + {static} advancedSettingsText : GUIContent
+    + {static} adaptivePerformanceText : GUIContent
+    + {static} rendererHeaderText : GUIContent
+    + {static} rendererDefaultText : GUIContent
+    + {static} rendererSetDefaultText : GUIContent
+    + {static} rendererSettingsText : GUIContent
+    + {static} rendererMissingText : GUIContent
+    + {static} rendererDefaultMissingText : GUIContent
+    + {static} requireDepthTextureText : GUIContent
+    + {static} requireOpaqueTextureText : GUIContent
+    + {static} opaqueDownsamplingText : GUIContent
+    + {static} supportsTerrainHolesText : GUIContent
+    + {static} srpBatcher : GUIContent
+    + {static} storeActionsOptimizationText : GUIContent
+    + {static} dynamicBatching : GUIContent
+    + {static} debugLevel : GUIContent
+    + {static} enableRenderGraphText : GUIContent
+    + {static} hdrText : GUIContent
+    + {static} hdrColorBufferPrecisionText : GUIContent
+    + {static} msaaText : GUIContent
+    + {static} renderScaleText : GUIContent
+    + {static} upscalingFilterText : GUIContent
+    + {static} fsrOverrideSharpness : GUIContent
+    + {static} fsrSharpnessText : GUIContent
+    + {static} enableLODCrossFadeText : GUIContent
+    + {static} lodCrossFadeDitheringTypeText : GUIContent
+    + {static} shEvalModeText : GUIContent
+    + {static} mainLightRenderingModeText : GUIContent
+    + {static} supportsMainLightShadowsText : GUIContent
+    + {static} mainLightShadowmapResolutionText : GUIContent
+    + {static} addditionalLightsRenderingModeText : GUIContent
+    + {static} perObjectLimit : GUIContent
+    + {static} supportsAdditionalShadowsText : GUIContent
+    + {static} additionalLightsShadowmapResolution : GUIContent
+    + {static} additionalLightsShadowResolutionTiers : GUIContent
+    + {static} additionalLightsShadowResolutionTierNames : GUIContent[]
+    + {static} additionalLightsCookieResolution : GUIContent
+    + {static} additionalLightsCookieFormat : GUIContent
+    + {static} reflectionProbesSettingsText : GUIContent
+    + {static} reflectionProbeBlendingText : GUIContent
+    + {static} reflectionProbeBoxProjectionText : GUIContent
+    + {static} mixedLightingSupportLabel : GUIContent
+    + {static} useRenderingLayers : GUIContent
+    + {static} supportsLightCookies : GUIContent
+    + {static} shadowWorkingUnitText : GUIContent
+    + {static} shadowDistanceText : GUIContent
+    + {static} shadowCascadesText : GUIContent
+    + {static} shadowDepthBias : GUIContent
+    + {static} shadowNormalBias : GUIContent
+    + {static} supportsSoftShadows : GUIContent
+    + {static} conservativeEnclosingSphere : GUIContent
+    + {static} softShadowsQuality : GUIContent
+    + {static} softShadowsQualityAssetOptions : GUIContent[]
+    + {static} softShadowsQualityAssetValues : int[]
+    + {static} colorGradingMode : GUIContent
+    + {static} colorGradingLutSize : GUIContent
+    + {static} useFastSRGBLinearConversion : GUIContent
+    + {static} supportDataDrivenLensFlare : GUIContent
+    + {static} colorGradingModeWarning : string = "HDR rendering is required to use the high dynamic range color grading mode. The low dynamic range will be used instead."
+    + {static} colorGradingModeWithHDROutput : string = "With the current configuration, Unity uses the HDR color grading mode when outputting to an HDR display."
+    + {static} colorGradingModeSpecInfo : string = "The high dynamic range color grading mode works best on platforms that support floating point textures."
+    + {static} colorGradingLutSizeWarning : string = "The minimal recommended LUT size for the high dynamic range color grading mode is 32. Using lower values will potentially result in color banding and posterization effects."
+    + {static} volumeFrameworkUpdateMode : GUIContent
+    + {static} useAdaptivePerformance : GUIContent
+    + {static} rendererListDefaultMessage : GUIContent
+    + {static} rendererMissingDefaultMessage : GUIContent
+    + {static} rendererMissingMessage : GUIContent
+    + {static} lightlayersUnsupportedMessage : GUIContent
+    + {static} rendererUnsupportedAPIMessage : GUIContent
+    + {static} shadowCascadesUnsupportedMessage : GUIContent
+    + {static} mainLightOptions : string[]
+    + {static} volumeFrameworkUpdateOptions : string[]
+    + {static} opaqueDownsamplingOptions : string[]
+}
+UniversalRenderPipelineAssetUI +-- Styles
+@enduml

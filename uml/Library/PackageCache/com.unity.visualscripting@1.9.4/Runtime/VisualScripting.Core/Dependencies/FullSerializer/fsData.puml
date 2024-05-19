@@ -1,0 +1,48 @@
+@startuml
+enum fsDataType {
+    Array,
+    Object,
+    Double,
+    Int64,
+    Boolean,
+    String,
+    Null,
+}
+class fsData <<sealed>> {
+    - _value : object
+    + <<override>> ToString() : string
+    + fsData()
+    + fsData(boolean:bool)
+    + fsData(f:double)
+    + fsData(i:Int64)
+    + fsData(str:string)
+    + fsData(dict:Dictionary<string, fsData>)
+    + fsData(list:List<fsData>)
+    + {static} CreateDictionary() : fsData
+    + {static} CreateList() : fsData
+    + {static} CreateList(capacity:int) : fsData
+    + <<readonly>> {static} True : fsData
+    + <<readonly>> {static} False : fsData
+    + <<readonly>> {static} Null : fsData
+    <<internal>> BecomeDictionary() : void
+    <<internal>> Clone() : fsData
+    + Type : fsDataType <<get>>
+    + IsNull : bool <<get>>
+    + IsDouble : bool <<get>>
+    + IsInt64 : bool <<get>>
+    + IsBool : bool <<get>>
+    + IsString : bool <<get>>
+    + IsDictionary : bool <<get>>
+    + IsList : bool <<get>>
+    + AsDouble : double <<get>>
+    + AsInt64 : Int64 <<get>>
+    + AsBool : bool <<get>>
+    + AsString : string <<get>>
+    + AsDictionary : Dictionary<string, fsData> <<get>>
+    + AsList : List<fsData> <<get>>
+    - Cast() : T
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:fsData) : bool
+    + <<override>> GetHashCode() : int
+}
+@enduml

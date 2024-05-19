@@ -1,0 +1,24 @@
+@startuml
+class DrawScreenSpaceUIPass {
+    - m_PassData : PassData
+    - m_ColorTarget : RTHandle
+    - m_DepthTarget : RTHandle
+    - m_RenderOffscreen : bool
+    + DrawScreenSpaceUIPass(evt:RenderPassEvent, renderOffscreen:bool)
+    + {static} ConfigureColorDescriptor(descriptor:RenderTextureDescriptor, cameraWidth:int, cameraHeight:int) : void
+    + {static} ConfigureDepthDescriptor(descriptor:RenderTextureDescriptor, depthBufferBits:int, cameraWidth:int, cameraHeight:int) : void
+    - {static} ExecutePass(context:ScriptableRenderContext, passData:PassData) : void
+    + Dispose() : void
+    + Setup(cameraData:CameraData, depthBufferBits:int) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> RenderOffscreen(renderGraph:RenderGraph, depthBufferBits:int, output:TextureHandle, renderingData:RenderingData) : void
+    <<internal>> RenderOverlay(renderGraph:RenderGraph, colorBuffer:TextureHandle, depthBuffer:TextureHandle, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> cmd : CommandBuffer
+    <<internal>> camera : Camera
+    <<internal>> offscreenTexture : TextureHandle
+}
+ScriptableRenderPass <|-- DrawScreenSpaceUIPass
+DrawScreenSpaceUIPass +-- PassData
+@enduml

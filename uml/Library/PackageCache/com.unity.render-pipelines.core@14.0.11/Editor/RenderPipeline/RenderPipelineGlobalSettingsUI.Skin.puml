@@ -1,0 +1,11 @@
+@startuml
+class RenderPipelineGlobalSettingsUI <<static>> <<partial>> {
+}
+class Styles <<static>> {
+    + <<const>> labelWidth : int = 220
+    + {static} <<readonly>> shaderStrippingSettingsLabel : GUIContent
+    + {static} <<readonly>> shaderVariantLogLevelLabel : GUIContent
+    + {static} <<readonly>> exportShaderVariantsLabel : GUIContent
+}
+RenderPipelineGlobalSettingsUI +-- Styles
+@enduml

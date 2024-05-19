@@ -1,0 +1,98 @@
+@startuml
+enum DecalSurfaceData {
+    Albedo,
+    AlbedoNormal,
+    AlbedoNormalMAOS,
+}
+enum DecalTechnique {
+    Invalid,
+    DBuffer,
+    ScreenSpace,
+    GBuffer,
+}
+enum DecalTechniqueOption {
+    Automatic,
+    DBuffer,
+    ScreenSpace,
+}
+class DBufferSettings {
+    + surfaceData : DecalSurfaceData
+}
+enum DecalNormalBlend {
+    Low,
+    Medium,
+    High,
+}
+class DecalScreenSpaceSettings {
+    + normalBlend : DecalNormalBlend
+}
+class DecalSettings {
+    + technique : DecalTechniqueOption
+    + maxDrawDistance : float = 1000f
+    + decalLayers : bool = false
+    + dBufferSettings : DBufferSettings
+    + screenSpaceSettings : DecalScreenSpaceSettings
+}
+class SharedDecalEntityManager {
+    - m_DecalEntityManager : DecalEntityManager
+    - m_ReferenceCounter : int
+    + Get() : DecalEntityManager
+    + Release(decalEntityManager:DecalEntityManager) : void
+    + Dispose() : void
+    - OnDecalAdd(decalProjector:DecalProjector) : void
+    - OnDecalRemove(decalProjector:DecalProjector) : void
+    - OnDecalPropertyChange(decalProjector:DecalProjector) : void
+    - OnAllDecalPropertyChange() : void
+    - OnDecalMaterialChange(decalProjector:DecalProjector) : void
+}
+class DecalRendererFeature {
+    - {static} sharedDecalEntityManager : SharedDecalEntityManager <<get>>
+    - m_Settings : DecalSettings
+    - m_CopyDepthPS : Shader
+    - m_DBufferClear : Shader
+    - m_Technique : DecalTechnique
+    - m_DBufferSettings : DBufferSettings
+    - m_ScreenSpaceSettings : DecalScreenSpaceSettings
+    - m_RecreateSystems : bool
+    - m_CopyDepthPass : CopyDepthPass
+    - m_DecalPreviewPass : DecalPreviewPass
+    - m_CopyDepthMaterial : Material
+    - m_DecalEntityManager : DecalEntityManager
+    - m_DecalUpdateCachedSystem : DecalUpdateCachedSystem
+    - m_DecalUpdateCullingGroupSystem : DecalUpdateCullingGroupSystem
+    - m_DecalUpdateCulledSystem : DecalUpdateCulledSystem
+    - m_DecalCreateDrawCallSystem : DecalCreateDrawCallSystem
+    - m_DrawErrorSystem : DecalDrawErrorSystem
+    - m_DBufferRenderPass : DBufferRenderPass
+    - m_ForwardEmissivePass : DecalForwardEmissivePass
+    - m_DecalDrawDBufferSystem : DecalDrawDBufferSystem
+    - m_DecalDrawForwardEmissiveSystem : DecalDrawFowardEmissiveSystem
+    - m_DBufferClearMaterial : Material
+    - m_ScreenSpaceDecalRenderPass : DecalScreenSpaceRenderPass
+    - m_DecalDrawScreenSpaceSystem : DecalDrawScreenSpaceSystem
+    - m_DecalSkipCulledSystem : DecalSkipCulledSystem
+    - m_GBufferRenderPass : DecalGBufferRenderPass
+    - m_DrawGBufferSystem : DecalDrawGBufferSystem
+    - m_DeferredLights : DeferredLights
+    <<internal>> settings : ref DecalSettings <<get>>
+    <<internal>> intermediateRendering : bool <<get>>
+    <<internal>> requiresDecalLayers : bool <<get>>
+    <<internal>> {static} isGLDevice : bool <<get>>
+    + <<override>> Create() : void
+    <<internal>> <<override>> RequireRenderingLayers(isDeferred:bool, needsGBufferAccurateNormals:bool, atEvent:RenderingLayerUtils.Event, maskSize:RenderingLayerUtils.MaskSize) : bool
+    <<internal>> GetDBufferSettings() : DBufferSettings
+    <<internal>> GetScreenSpaceSettings() : DecalScreenSpaceSettings
+    <<internal>> GetTechnique(renderer:ScriptableRendererData) : DecalTechnique
+    <<internal>> GetTechnique(renderer:ScriptableRenderer) : DecalTechnique
+    <<internal>> GetTechnique(isDeferred:bool, needsGBufferAccurateNormals:bool, checkForInvalidTechniques:bool) : DecalTechnique
+    - IsAutomaticDBuffer() : bool
+    - RecreateSystemsIfNeeded(renderer:ScriptableRenderer, cameraData:CameraData) : bool
+    + <<override>> OnCameraPreCull(renderer:ScriptableRenderer, cameraData:CameraData) : void
+    + <<override>> AddRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    <<internal>> <<override>> SupportsNativeRenderPass() : bool
+    + <<override>> SetupRenderPasses(renderer:ScriptableRenderer, renderingData:RenderingData) : void
+    # <<override>> Dispose(disposing:bool) : void
+    - ChangeAdaptivePerformanceDrawDistances() : void
+}
+ScriptableRendererFeature <|-- DecalRendererFeature
+@enduml

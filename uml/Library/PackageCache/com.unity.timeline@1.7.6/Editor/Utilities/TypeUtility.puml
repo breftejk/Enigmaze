@@ -1,0 +1,46 @@
+@startuml
+class TypeUtility <<static>> {
+    - {static} s_AllTrackTypes : List<Type>
+    - {static} s_AllClipTypes : List<Type>
+    - {static} s_MarkerTypes : List<Type>
+    - {static} s_TrackTypeToVisibleClipType : Dictionary<Type, Type[]>
+    - {static} s_TrackTypeToAllClipType : Dictionary<Type, Type[]>
+    - {static} s_TrackToBindingCache : Dictionary<Type, TrackBindingTypeAttribute>
+    + {static} IsConcretePlayableAsset(t:Type) : bool
+    - {static} IsConcreteAsset(t:Type) : bool
+    + {static} AllClipTypes() : IEnumerable<Type>
+    + {static} AllTrackTypes() : IEnumerable<Type>
+    + {static} GetVisiblePlayableAssetsHandledByTrack(trackType:Type) : IEnumerable<Type>
+    + {static} GetPlayableAssetsHandledByTrack(trackType:Type) : IEnumerable<Type>
+    + {static} GetTrackBindingAttribute(trackType:Type) : TrackBindingTypeAttribute
+    + {static} TrackHasClipForObject(trackType:Type, obj:Object) : bool
+    + {static} MarkerTypesWithFieldForObject(obj:Object) : IEnumerable<Type>
+    + {static} GetTrackTypesForObject(obj:Object) : IEnumerable<Type>
+    + {static} IsTrackCreatableFromObject(obj:Object, trackType:Type) : bool
+    + {static} GetTracksCreatableFromObject(obj:Object) : IEnumerable<Type>
+    + {static} GetAssetTypesForObject(trackType:Type, obj:Object) : IEnumerable<Type>
+    - {static} GetTrackClipTypesFromAttributes(trackType:Type) : IEnumerable<Type>
+    - {static} GetUnhandledClipTypes() : IEnumerable<Type>
+    + {static} GetAllMarkerTypes() : IEnumerable<Type>
+    + {static} GetUserMarkerTypes() : IEnumerable<Type>
+    + {static} GetBuiltInMarkerTypes() : IEnumerable<Type>
+    + {static} DoesTrackSupportMarkerType(track:TrackAsset, type:Type) : bool
+    <<internal>> {static} GetDisplayName(t:Type) : string
+    + {static} IsHiddenInMenu(type:Type) : bool
+    + {static} ObjectReferencesForType(type:Type) : IEnumerable<ObjectReference>
+    + {static} HasOverrideMethod(t:System.Type, name:string) : bool
+    + {static} IsBuiltIn(t:System.Type) : bool
+}
+class TimelineTypeComparer {
+    + {static} <<readonly>> Instance : TimelineTypeComparer
+    + Compare(x:Type, y:Type) : int
+    - TimelineTypeComparer()
+}
+struct ObjectReference {
+    + type : Type
+    + isSceneReference : bool
+}
+TypeUtility +-- TimelineTypeComparer
+"IComparer`1" "<Type>" <|-- TimelineTypeComparer
+TypeUtility +-- ObjectReference
+@enduml

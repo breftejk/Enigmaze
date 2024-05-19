@@ -1,0 +1,55 @@
+@startuml
+struct DecalSubDrawCall {
+    + start : int
+    + end : int
+    + count : int <<get>>
+}
+class DecalDrawCallChunk {
+    + decalToWorlds : NativeArray<float4x4>
+    + normalToDecals : NativeArray<float4x4>
+    + renderingLayerMasks : NativeArray<float>
+    + subCalls : NativeArray<DecalSubDrawCall>
+    + subCallCounts : NativeArray<int>
+    + subCallCount : int <<set>> <<get>>
+    + <<override>> RemoveAtSwapBack(entityIndex:int) : void
+    + <<override>> SetCapacity(newCapacity:int) : void
+    + <<override>> Dispose() : void
+}
+class DecalCreateDrawCallSystem {
+    - m_EntityManager : DecalEntityManager
+    - m_Sampler : ProfilingSampler
+    - m_MaxDrawDistance : float
+    + maxDrawDistance : float <<get>> <<set>>
+    + DecalCreateDrawCallSystem(entityManager:DecalEntityManager, maxDrawDistance:float)
+    + Execute() : void
+    - Execute(cachedChunk:DecalCachedChunk, culledChunk:DecalCulledChunk, drawCallChunk:DecalDrawCallChunk, count:int) : void
+}
+struct DrawCallJob {
+    + decalToWorlds : NativeArray<float4x4>
+    + normalToWorlds : NativeArray<float4x4>
+    + sizeOffsets : NativeArray<float4x4>
+    + drawDistances : NativeArray<float2>
+    + angleFades : NativeArray<float2>
+    + uvScaleBiases : NativeArray<float4>
+    + layerMasks : NativeArray<int>
+    + sceneLayerMasks : NativeArray<ulong>
+    + fadeFactors : NativeArray<float>
+    + boundingSpheres : NativeArray<BoundingSphere>
+    + renderingLayerMasks : NativeArray<uint>
+    + cameraPosition : Vector3
+    + sceneCullingMask : ulong
+    + cullingMask : int
+    + visibleDecalIndices : NativeArray<int>
+    + visibleDecalCount : int
+    + maxDrawDistance : float
+    + decalToWorldsDraw : NativeArray<float4x4>
+    + normalToDecalsDraw : NativeArray<float4x4>
+    + renderingLayerMasksDraw : NativeArray<float>
+    + subCalls : NativeArray<DecalSubDrawCall>
+    + subCallCount : NativeArray<int>
+    + Execute() : void
+}
+DecalChunk <|-- DecalDrawCallChunk
+DecalCreateDrawCallSystem +-- DrawCallJob
+IJob <|-- DrawCallJob
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+class TrackViewModelData {
+    + {static} <<readonly>> DefaultinlineAnimationCurveHeight : float = 100.0f
+    + collapsed : bool = true
+    + showMarkers : bool = true
+    + showInlineCurves : bool = false
+    + inlineAnimationCurveHeight : float
+    + lastInlineCurveDataID : int
+    + inlineCurvesState : TreeViewState = null
+    + inlineCurvesShownAreaInsideMargins : Rect
+    + trackHeightExtension : int
+    + markerTimeStamps : Dictionary<int, long>
+    - m_MarkerTimeStampsKeys : List<int>
+    - m_MarkerTimeStampsValues : List<long>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+class TimelineAssetViewModel <<partial>> {
+    + <<const>> DefaultTrackScale : float = 1.0f
+    + <<const>> DefaultVerticalScroll : float = 0
+    + {static} <<readonly>> TimeAreaDefaultRange : Vector2
+    + {static} <<readonly>> NoPlayRangeSet : PlayRange
+    + timeAreaShownRange : Vector2
+    + trackScale : float
+    + playRangeEnabled : bool
+    + timeAreaPlayRange : PlayRange <<get>> <<set>>
+    + windowTime : double
+    + verticalScroll : float
+    + sequencerHeaderWidth : float
+    + tracksViewModelData : Dictionary<TrackAsset, TrackViewModelData>
+    - m_TimeAreaPlayRange : PlayRange
+    - m_Keys : List<TrackAsset>
+    - m_Vals : List<TrackViewModelData>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    + OnEnable() : void
+}
+ISerializationCallbackReceiver <|-- TrackViewModelData
+ScriptableObject <|-- TimelineAssetViewModel
+ISerializationCallbackReceiver <|-- TimelineAssetViewModel
+@enduml

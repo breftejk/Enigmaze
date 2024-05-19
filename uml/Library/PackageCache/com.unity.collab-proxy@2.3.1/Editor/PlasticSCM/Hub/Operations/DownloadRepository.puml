@@ -1,0 +1,17 @@
+@startuml
+class DownloadRepository {
+    <<internal>> {static} LaunchOperation(parameters:OperationParams) : void
+    - DownloadRepositoryOperation(parameters:OperationParams) : void
+    - DownloadRepositoryToPathIfNeeded(state:object) : void
+    {static} - DisplayProgress(status:UpdateOperationStatus, progressData:BuildProgressSpeedAndRemainingTime.ProgressData, cloudRepository:string) : void
+    {static} - LogTokenExchangeErrorInConsole(error:ErrorResponse.ErrorFields) : void
+    {static} - LogExceptionErrorInConsole(ex:Exception) : void
+    {static} - LogException(ex:Exception) : void
+    - DownloadRepository()
+    <<volatile>> - mOperationFinished : bool = false
+    <<volatile>> - mOperationFailed : bool = false
+    <<volatile>> - mDisplayProgress : bool
+    - mUpdateNotifier : UpdateNotifier
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

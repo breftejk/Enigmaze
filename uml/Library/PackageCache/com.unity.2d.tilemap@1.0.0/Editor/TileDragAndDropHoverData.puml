@@ -1,0 +1,10 @@
+@startuml
+struct TileDragAndDropHoverData {
+    + hoverObject : Object
+    + positionOffset : Vector3
+    + scaleFactor : Vector3
+    + hasOffset : bool
+    + TileDragAndDropHoverData(hoverObject:Object)
+    + TileDragAndDropHoverData(hoverObject:Object, positionOffset:Vector3, scaleFactor:Vector3, hasOffset:bool)
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class GridPaintSortingAttribute {
+    - {static} m_SortingMethods : List<MethodInfo>
+    - {static} m_SortingTypes : List<Type>
+    <<internal>> {static} sortingMethods : List<MethodInfo> <<get>>
+    <<internal>> {static} sortingTypes : List<Type> <<get>>
+    - {static} GetUserSortingComparers() : void
+}
+class Alphabetical {
+    + Compare(go1:GameObject, go2:GameObject) : int
+}
+class ReverseAlphabetical {
+    + Compare(go1:GameObject, go2:GameObject) : int
+}
+Attribute <|-- GridPaintSortingAttribute
+GridPaintSortingAttribute +-- Alphabetical
+"IComparer`1" "<GameObject>" <|-- Alphabetical
+GridPaintSortingAttribute +-- ReverseAlphabetical
+"IComparer`1" "<GameObject>" <|-- ReverseAlphabetical
+@enduml

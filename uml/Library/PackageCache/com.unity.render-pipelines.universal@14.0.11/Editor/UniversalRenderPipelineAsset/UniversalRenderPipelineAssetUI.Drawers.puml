@@ -1,0 +1,42 @@
+@startuml
+class UniversalRenderPipelineAssetUI <<partial>> {
+    <<internal>> {static} RegisterEditor(editor:UniversalRenderPipelineAssetEditor) : void
+    <<internal>> {static} UnregisterEditor(editor:UniversalRenderPipelineAssetEditor) : void
+    <<internal>> {static} SetAdditionalPropertiesVisibility(value:bool) : void
+    {static} - ValidateRendererGraphicsAPIsForLightLayers(pipelineAsset:UniversalRenderPipelineAsset, unsupportedGraphicsApisMessage:string) : bool
+    {static} - ValidateRendererGraphicsAPIs(pipelineAsset:UniversalRenderPipelineAsset, unsupportedGraphicsApisMessage:string) : bool
+    {static} - ValidateCrossFadeDitheringTextures(pipelineAsset:UniversalRenderPipelineAsset) : bool
+    {static} <<readonly>> - k_ExpandedState : ExpandedState<Expandable, UniversalRenderPipelineAsset>
+    <<readonly>> {static} - k_AdditionalPropertiesState : AdditionalPropertiesState<ExpandableAdditional, Light>
+    + {static} <<readonly>> Inspector : CED.IDrawer
+    {static} - DrawRendering(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawRenderingAdditional(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawQuality(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawHDR(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawLighting(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawLightingAdditional(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawShadowResolutionTierSettings(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawShadows(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawShadowsSoftShadowQuality(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawShadowsAdditional(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+    {static} - DrawCascadeSliders(serialized:SerializedUniversalRenderPipelineAsset, splitCount:int, useMetric:bool, baseMetric:float) : void
+    {static} - DrawCascades(serialized:SerializedUniversalRenderPipelineAsset, cascadeCount:int, useMetric:bool, baseMetric:float) : void
+    {static} - DrawPostProcessing(serialized:SerializedUniversalRenderPipelineAsset, ownerEditor:Editor) : void
+}
+enum Expandable {
+    Rendering= 1 << 1,
+    Quality= 1 << 2,
+    Lighting= 1 << 3,
+    Shadows= 1 << 4,
+    PostProcessing= 1 << 5,
+}
+enum ExpandableAdditional {
+    Rendering= 1 << 1,
+    Lighting= 1 << 2,
+    PostProcessing= 1 << 3,
+    Shadows= 1 << 4,
+    Quality= 1 << 5,
+}
+UniversalRenderPipelineAssetUI +-- Expandable
+UniversalRenderPipelineAssetUI +-- ExpandableAdditional
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class CinemachineColliderPrefs <<static>> {
+    - {static} SettingsFoldedOut : bool <<get>> <<set>>
+    + {static} FeelerHitColor : Color <<get>> <<set>>
+    + {static} FeelerColor : Color <<get>> <<set>>
+    - <<const>> kColliderSettingsFoldoutKey : string = "CNMCN_Collider_Foldout"
+    - <<const>> kFeelerHitColourKey : string = "CNMCN_Collider_FeelerHit_Colour"
+    - <<const>> kFeelerColourKey : string = "CNMCN_Collider_Feeler_Colour"
+    {static} - CinemachineColliderPrefs()
+    - {static} DrawColliderSettings() : void
+}
+@enduml

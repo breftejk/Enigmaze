@@ -1,0 +1,26 @@
+@startuml
+class PlasticApp <<static>> {
+    <<internal>> {static} InitializeIfNeeded() : void
+    <<internal>> {static} SetWorkspace(wkInfo:WorkspaceInfo) : void
+    <<internal>> {static} Dispose() : void
+    {static} - InitLocalization() : void
+    {static} - ConfigureLogging() : void
+    {static} - RegisterExceptionHandlers() : void
+    {static} - RegisterApplicationFocusHandlers() : void
+    {static} - UnRegisterExceptionHandlers() : void
+    {static} - UnRegisterApplicationFocusHandlers() : void
+    {static} - RegisterAssemblyReloadHandlers() : void
+    {static} - UnRegisterAssemblyReloadHandlers() : void
+    {static} - HandleUnhandledException(sender:object, args:UnhandledExceptionEventArgs) : void
+    {static} - HandleLog(logString:string, stackTrace:string, type:LogType) : void
+    {static} - EnableFsWatcher() : void
+    {static} - DisableFsWatcher() : void
+    {static} - SetupFsWatcher() : void
+    {static} - IsPlasticStackTrace(stackTrace:string) : bool
+    {static} - IsExitGUIException(ex:Exception) : bool
+    {static} - mIsInitialized : bool
+    {static} - sEventSenderScheduler : EventSenderScheduler
+    {static} - sPingEventLoop : PingEventLoop
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

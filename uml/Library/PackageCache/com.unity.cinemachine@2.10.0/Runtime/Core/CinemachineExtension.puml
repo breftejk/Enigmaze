@@ -1,0 +1,24 @@
+@startuml
+abstract class CinemachineExtension {
+    # <<const>> Epsilon : float
+    + VirtualCamera : CinemachineVirtualCameraBase <<get>>
+    - m_vcamOwner : CinemachineVirtualCameraBase
+    # <<virtual>> Awake() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDestroy() : void
+    <<internal>> EnsureStarted() : void
+    # <<virtual>> ConnectToVcam(connect:bool) : void
+    + <<virtual>> PrePipelineMutateCameraStateCallback(vcam:CinemachineVirtualCameraBase, curState:CameraState, deltaTime:float) : void
+    + InvokePostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+    # {abstract} PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+    + <<virtual>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<virtual>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    + <<virtual>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : bool
+    + <<virtual>> GetMaxDampTime() : float
+    + <<virtual>> RequiresUserInput : bool <<get>>
+    # GetExtraState(vcam:ICinemachineCamera) : T
+    # GetAllExtraStates() : List<T>
+    - mExtraState : Dictionary<ICinemachineCamera, System.Object>
+}
+MonoBehaviour <|-- CinemachineExtension
+@enduml

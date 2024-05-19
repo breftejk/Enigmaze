@@ -1,0 +1,24 @@
+@startuml
+class UnitPreservation <<sealed>> {
+    - <<readonly>> defaultValues : Dictionary<string, object>
+    - <<readonly>> inputConnections : Dictionary<string, List<UnitPortPreservation>>
+    - <<readonly>> outputConnections : Dictionary<string, List<UnitPortPreservation>>
+    - disposed : bool
+    - New() : void
+    - Free() : void
+    - UnitPreservation()
+    + {static} Preserve(unit:IUnit) : UnitPreservation
+    + RestoreTo(unit:IUnit) : void
+    - RestoreConnection(sourcePreservation:UnitPortPreservation, destinationPreservation:UnitPortPreservation) : void
+}
+struct UnitPortPreservation {
+    + <<readonly>> unit : IUnit
+    + <<readonly>> key : string
+    + UnitPortPreservation(port:IUnitPort)
+    + UnitPortPreservation(unit:IUnit, key:string)
+    + GetOrCreateInput(newInvalidInput:InvalidInput) : IUnitPort
+    + GetOrCreateOutput(newInvalidOutput:InvalidOutput) : IUnitPort
+}
+IPoolable <|-- UnitPreservation
+UnitPreservation +-- UnitPortPreservation
+@enduml

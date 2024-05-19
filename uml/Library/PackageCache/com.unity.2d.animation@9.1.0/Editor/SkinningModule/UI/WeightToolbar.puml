@@ -1,0 +1,26 @@
+@startuml
+class WeightToolbar {
+    - <<const>> k_UxmlPath : string = "SkinningModule/WeightToolbar.uxml"
+    - <<const>> k_ToolbarId : string = "WeightToolbar"
+    - <<const>> k_AutoGenerateWeightId : string = "AutoGenerateWeight"
+    - <<const>> k_WeightPainterSliderId : string = "WeightPainterSlider"
+    - <<const>> k_WeightPainterBrushId : string = "WeightPainterBrush"
+    - <<const>> k_BoneInfluenceWidgetId : string = "BoneInfluenceWidget"
+    - <<const>> k_SpriteInfluenceWidgetId : string = "SpriteInfluenceWidget"
+    +  <<event>> SetWeightTool : Action<Tools> 
+    + skinningCache : SkinningCache <<get>> <<set>>
+    + {static} GenerateFromUXML() : WeightToolbar
+    + WeightToolbar()
+    + EnableBoneInfluenceWidget() : void
+    + DisableBoneInfluenceWidget() : void
+    - BindElements() : void
+    - SetupShortcutUtility() : void
+    + UpdateToggleState() : void
+    - AddShortcutsToToolTips() : void
+}
+class CustomUXMLFactor {
+}
+Toolbar <|-- WeightToolbar
+WeightToolbar +-- CustomUXMLFactor
+"UxmlFactory`2" "<WeightToolbar,UxmlTraits>" <|-- CustomUXMLFactor
+@enduml

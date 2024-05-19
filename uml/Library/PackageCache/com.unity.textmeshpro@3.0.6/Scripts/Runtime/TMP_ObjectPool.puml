@@ -1,0 +1,13 @@
+@startuml
+class "TMP_ObjectPool`1"<T> {
+    - <<readonly>> m_Stack : Stack<T>
+    - <<readonly>> m_ActionOnGet : UnityAction<T>
+    - <<readonly>> m_ActionOnRelease : UnityAction<T>
+    + countAll : int <<get>>
+    + countActive : int <<get>>
+    + countInactive : int <<get>>
+    + TMP_ObjectPool(actionOnGet:UnityAction<T>, actionOnRelease:UnityAction<T>)
+    + Get() : T
+    + Release(element:T) : void
+}
+@enduml

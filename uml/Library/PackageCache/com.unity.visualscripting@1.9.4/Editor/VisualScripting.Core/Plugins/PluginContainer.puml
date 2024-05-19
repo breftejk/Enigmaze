@@ -1,0 +1,26 @@
+@startuml
+class PluginContainer <<sealed>> {
+    <<internal>> {static} InitializeOnLoad() : void
+    - {static} initializing : bool
+    - {static} pluginsById : Dictionary<string, Plugin>
+    - {static} pluginTypesById : Dictionary<string, Type>
+    <<internal>> {static} pluginDependencies : Dictionary<string, HashSet<string>>
+    - {static} <<readonly>> delayQueue : ConcurrentQueue<Action>
+    + {static} initialized : bool <<get>>
+    + {static} plugins : IEnumerable<Plugin> <<get>>
+    + {static} UpdateVersionMismatch() : void
+    <<internal>> {static} Initialize() : void
+    - {static} PerformUpdate() : void
+    + {static} ImportUnits() : void
+    - {static} EnsureInitialized() : void
+    + {static} GetPluginID(linkedType:Type) : string
+    + {static} GetPluginType(pluginId:string) : Type
+    + {static} GetAllPlugins() : IEnumerable<Plugin>
+    + {static} GetPlugin(pluginId:string) : Plugin
+    + {static} HasPlugin(pluginId:string) : bool
+    - {static} InstantiateLinkedType(linkedType:Type, plugin:Plugin) : IPluginLinked
+    <<internal>> {static} GetLinkedTypes(linkedType:Type, pluginId:string) : IEnumerable<Type>
+    <<internal>> {static} InstantiateLinkedTypes(linkedType:Type, plugin:Plugin) : IPluginLinked[]
+    + {static} anyVersionMismatch : bool <<get>>
+}
+@enduml

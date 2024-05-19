@@ -1,0 +1,20 @@
+@startuml
+class "GenericElementAdderMenuBuilder`1"<TContext> <<sealed>> {
+    + GenericElementAdderMenuBuilder()
+    - _contractType : Type
+    - _elementAdder : IElementAdder<TContext>
+    - _typeDisplayNameFormatter : Func<Type, string>
+    - _typeFilters : List<Func<Type, bool>>
+    - _customCommands : List<IElementAdderMenuCommand<TContext>>
+    + SetContractType(contractType:Type) : void
+    + SetElementAdder(elementAdder:IElementAdder<TContext>) : void
+    + SetTypeDisplayNameFormatter(formatter:Func<Type, string>) : void
+    + AddTypeFilter(typeFilter:Func<Type, bool>) : void
+    + AddCustomCommand(command:IElementAdderMenuCommand<TContext>) : void
+    + GetMenu() : IElementAdderMenu
+    - AddCommandsToMenu(menu:GenericElementAdderMenu, commands:IList<IElementAdderMenuCommand<TContext>>) : void
+    - AddConcreteTypesToMenu(menu:GenericElementAdderMenu, concreteTypes:Type[]) : void
+    - {static} NicifyTypeName(type:Type) : string
+}
+"IElementAdderMenuBuilder`1" "<TContext>" <|-- "GenericElementAdderMenuBuilder`1"
+@enduml

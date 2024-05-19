@@ -1,0 +1,8 @@
+@startuml
+class BoltStyles <<static>> {
+    {static} - BoltStyles()
+    + {static} <<readonly>> variableFieldDirectionIndicator : GUIStyle
+    + {static} <<readonly>> variableFieldWithDirectionIndicator : GUIStyle
+    + {static} <<readonly>> variableFieldWithoutDirectionIndicator : GUIStyle
+}
+@enduml

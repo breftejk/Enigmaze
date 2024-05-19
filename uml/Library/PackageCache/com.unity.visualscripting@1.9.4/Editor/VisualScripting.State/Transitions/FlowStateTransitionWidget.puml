@@ -1,0 +1,13 @@
+@startuml
+class FlowStateTransitionWidget <<sealed>> {
+    + FlowStateTransitionWidget(canvas:StateCanvas, transition:FlowStateTransition)
+    + dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + AcceptsDragAndDrop() : bool
+    + PerformDragAndDrop() : void
+    + UpdateDragAndDrop() : void
+    + DrawDragAndDropPreview() : void
+    + ExitDragAndDrop() : void
+}
+"NesterStateTransitionWidget`1" "<FlowStateTransition>" <|-- FlowStateTransitionWidget
+IDragAndDropHandler <|-- FlowStateTransitionWidget
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class DrawDialogIcon <<static>> {
+    <<internal>> {static} ForMessage(alertType:GuiMessage.GuiMessageType) : void
+    {static} - GetHelpIcon(alertType:GuiMessage.GuiMessageType) : Texture
+}
+@enduml

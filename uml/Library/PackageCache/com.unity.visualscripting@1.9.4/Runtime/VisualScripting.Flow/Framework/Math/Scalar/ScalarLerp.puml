@@ -1,0 +1,8 @@
+@startuml
+class ScalarLerp <<sealed>> {
+    # <<override>> defaultA : float <<get>>
+    # <<override>> defaultB : float <<get>>
+    + <<override>> Operation(a:float, b:float, t:float) : float
+}
+"Lerp`1" "<float>" <|-- ScalarLerp
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+class BlockNode {
+    - m_SerializedDescriptor : string
+    - m_ContextData : ContextData
+    - m_Descriptor : BlockFieldDescriptor
+    + <<override>> canCutNode : bool <<get>>
+    + <<override>> canCopyNode : bool <<get>>
+    + <<override>> documentationURL : string <<get>>
+    + serializedDescriptor : string <<get>>
+    + contextData : ContextData <<get>> <<set>>
+    + index : int <<get>>
+    + descriptor : BlockFieldDescriptor <<get>> <<set>>
+    <<const>> - k_CustomBlockDefaultName : string = "CustomInterpolator"
+    <<internal>> isCustomBlock : bool <<get>>
+    <<internal>> customName : string <<get>> <<set>>
+    <<internal>> customWidth : CustomBlockType <<get>> <<set>>
+    + Init(fieldDescriptor:BlockFieldDescriptor) : void
+    <<internal>> InitCustomDefault() : void
+    - AddSlotFromControlType(attemptToModifyExisting:bool) : void
+    + <<override>> GetVariableNameForNode() : string
+    + RequiresNormal(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresViewDirection(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresPositionPredisplacement(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresTangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+    + RequiresScreenPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresNDCPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresPixelPosition(stageCapability:ShaderStageCapability) : bool
+    + RequiresVertexColor(stageCapability:ShaderStageCapability) : bool
+    - OnCustomBlockFieldModified(name:string, width:CustomBlockType) : void
+    + <<override>> OnBeforeSerialize() : void
+    + <<override>> OnAfterDeserialize() : void
+    - {static} MakeCustomBlockField(name:string, width:CustomBlockType) : BlockFieldDescriptor
+    - {static} WidthToControl(width:int) : IControl
+    - {static} ControlToWidth(control:IControl) : int
+}
+enum CustomBlockType {
+    Float= 1,
+    Vector2= 2,
+    Vector3= 3,
+    Vector4= 4,
+}
+AbstractMaterialNode <|-- BlockNode
+IMayRequireNormal <|-- BlockNode
+IMayRequireTangent <|-- BlockNode
+IMayRequireBitangent <|-- BlockNode
+IMayRequireMeshUV <|-- BlockNode
+IMayRequireScreenPosition <|-- BlockNode
+IMayRequireNDCPosition <|-- BlockNode
+IMayRequirePixelPosition <|-- BlockNode
+IMayRequireViewDirection <|-- BlockNode
+IMayRequirePosition <|-- BlockNode
+IMayRequirePositionPredisplacement <|-- BlockNode
+IMayRequireVertexColor <|-- BlockNode
+BlockNode +-- CustomBlockType
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class RequiredInterfaceAttribute {
+    + RequiredInterfaceAttribute(interfaceType:Type)
+}
+Attribute <|-- RequiredInterfaceAttribute
+@enduml

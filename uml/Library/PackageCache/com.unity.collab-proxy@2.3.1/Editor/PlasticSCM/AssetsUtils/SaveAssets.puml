@@ -1,0 +1,13 @@
+@startuml
+class SaveAssets <<static>> {
+    <<internal>> {static} ForChangesWithConfirmation(changes:List<ChangeInfo>, workspaceOperationsMonitor:WorkspaceOperationsMonitor, isCancelled:bool) : void
+    <<internal>> {static} ForPathsWithConfirmation(paths:List<string>, workspaceOperationsMonitor:WorkspaceOperationsMonitor, isCancelled:bool) : void
+    <<internal>> {static} ForChangesWithoutConfirmation(changes:List<ChangeInfo>, workspaceOperationsMonitor:WorkspaceOperationsMonitor) : void
+    <<internal>> {static} ForPathsWithoutConfirmation(paths:List<string>, workspaceOperationsMonitor:WorkspaceOperationsMonitor) : void
+    {static} - ForPaths(paths:List<string>, askForUserConfirmation:bool, workspaceOperationsMonitor:WorkspaceOperationsMonitor, isCancelled:bool) : void
+    {static} - SaveDirtyScenes(paths:List<string>, askForUserConfirmation:bool, isCancelled:bool) : void
+    {static} - GetDirtyScenes() : List<Scene>
+    {static} - Contains(paths:List<string>, scene:Scene) : bool
+    {static} - GetPaths(changeInfos:List<ChangeInfo>) : List<string>
+}
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class Attack {
+    + animator : Animator
+    + swordBoxCollider : BoxCollider2D
+    + attackDamage : float = 10f
+    + attackDuration : float = 0.1f
+    + attackCooldown : float = 3f
+    - _canAttack : bool = true
+    - _isAttacking : bool = false
+    - Start() : void
+    - OnTriggerEnter2D(collision:Collider2D) : void
+    + TriggerAttack() : void
+    - PerformAttack() : IEnumerator
+    - DamageTarget(target:Collider2D, message:string) : void
+}
+MonoBehaviour <|-- Attack
+@enduml

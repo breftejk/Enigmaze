@@ -1,0 +1,15 @@
+@startuml
+abstract class "MoveTowards`1"<T> {
+    + current : ValueInput <<get>>
+    + target : ValueInput <<get>>
+    + maxDelta : ValueInput <<get>>
+    + result : ValueOutput <<get>>
+    + perSecond : bool <<get>> <<set>>
+    # <<virtual>> defaultCurrent : T <<get>>
+    # <<virtual>> defaultTarget : T <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : T
+    + {abstract} Operation(current:T, target:T, maxDelta:float) : T
+}
+Unit <|-- "MoveTowards`1"
+@enduml

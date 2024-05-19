@@ -1,0 +1,24 @@
+@startuml
+class DebugUIHandlerColor {
+    + nameLabel : Text
+    + valueToggle : UIFoldout
+    + colorImage : Image
+    + fieldR : DebugUIHandlerIndirectFloatField
+    + fieldG : DebugUIHandlerIndirectFloatField
+    + fieldB : DebugUIHandlerIndirectFloatField
+    + fieldA : DebugUIHandlerIndirectFloatField
+    - m_Field : DebugUI.ColorField
+    - m_Container : DebugUIHandlerContainer
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    - SetValue(x:float, r:bool, g:bool, b:bool, a:bool) : void
+    - SetupSettings(field:DebugUIHandlerIndirectFloatField) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnIncrement(fast:bool) : void
+    + <<override>> OnDecrement(fast:bool) : void
+    + <<override>> OnAction() : void
+    <<internal>> UpdateColor() : void
+    + <<override>> Next() : DebugUIHandlerWidget
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerColor
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class DepthBlitEdgePass {
+    - m_ProfilingSampler : ProfilingSampler
+    - m_DepthHandle : RTHandle
+    - m_OutputHandle : RTHandle
+    - m_Material : Material
+    + DepthBlitEdgePass(mat:Material, evt:RenderPassEvent)
+    + SetRTHandle(depthHandle:RTHandle, outputHandle:RTHandle) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+ScriptableRenderPass <|-- DepthBlitEdgePass
+@enduml

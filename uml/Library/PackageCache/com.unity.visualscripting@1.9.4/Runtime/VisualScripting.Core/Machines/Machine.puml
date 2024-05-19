@@ -1,0 +1,39 @@
+@startuml
+abstract class "Machine`2"<TGraph,TMacro> {
+    # Machine()
+    + nest : GraphNest<TGraph, TMacro> <<get>>
+    - nest : IGraphNest <<get>>
+    - _alive : bool
+    - _enabled : bool
+    - threadSafeGameObject : GameObject
+    - threadSafeGameObject : GameObject <<get>>
+    - isReferenceCached : bool
+    - _reference : GraphReference
+    # reference : GraphReference <<get>>
+    # hasGraph : bool <<get>>
+    + graph : TGraph <<get>>
+    + graphData : IGraphData <<get>> <<set>>
+    - isSerializationRoot : bool <<get>>
+    - serializedObject : UnityObject <<get>>
+    - childGraph : IGraph <<get>>
+    + GetAotStubs(visited:HashSet<object>) : IEnumerable<object>
+    + isDescriptionValid : bool <<get>> <<set>>
+    # <<virtual>> Awake() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnInstantiateWhileEnabled() : void
+    # <<virtual>> OnUninstantiateWhileEnabled() : void
+    # <<virtual>> OnDisable() : void
+    # <<virtual>> OnDestroy() : void
+    # <<virtual>> OnValidate() : void
+    + GetReference() : GraphPointer
+    - CacheReference() : void
+    - ClearCachedReference() : void
+    + <<virtual>> InstantiateNest() : void
+    + <<virtual>> UninstantiateNest() : void
+    + <<virtual>> TriggerUnityEvent(name:string) : void
+    + {abstract} DefaultGraph() : TGraph
+    - DefaultGraph() : IGraph
+}
+LudiqBehaviour <|-- "Machine`2"
+IMachine <|-- "Machine`2"
+@enduml

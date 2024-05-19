@@ -1,0 +1,20 @@
+@startuml
+class StructCollection {
+    <<readonly>> - m_Items : List<StructCollection.Item>
+    + StructCollection()
+    + Add(structs:StructCollection) : StructCollection
+    + Add(descriptor:StructDescriptor) : StructCollection
+    + Add(descriptor:StructDescriptor, fieldCondition:FieldCondition) : StructCollection
+    + Add(descriptor:StructDescriptor, fieldConditions:FieldCondition[]) : StructCollection
+    + GetEnumerator() : IEnumerator<StructCollection.Item>
+    - GetEnumerator() : IEnumerator
+}
+class Item {
+    + descriptor : StructDescriptor <<get>>
+    + fieldConditions : FieldCondition[] <<get>>
+    + Item(descriptor:StructDescriptor, fieldConditions:FieldCondition[])
+}
+"IEnumerable`1" "<StructCollection.Item>" <|-- StructCollection
+StructCollection +-- Item
+IConditional <|-- Item
+@enduml

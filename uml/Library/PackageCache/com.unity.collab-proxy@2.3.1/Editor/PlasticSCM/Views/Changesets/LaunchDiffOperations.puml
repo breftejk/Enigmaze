@@ -1,0 +1,11 @@
+@startuml
+class LaunchDiffOperations <<static>> {
+    <<internal>> {static} DiffChangeset(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, repSpec:RepositorySpec, changesetId:long, isGluonMode:bool) : void
+    <<internal>> {static} DiffChangeset(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, repSpec:RepositorySpec, changesetInfo:ChangesetInfo, isGluonMode:bool) : void
+    <<internal>> {static} DiffSelectedChangesets(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, repSpec:RepositorySpec, cset1:ChangesetInfo, cset2:ChangesetInfo, isGluonMode:bool) : void
+    <<internal>> {static} DiffBranch(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, repSpec:RepositorySpec, changesetExtendedInfo:ChangesetExtendedInfo, isGluonMode:bool) : void
+    {static} - GetSrcAndDstCangesets(cset1:ChangesetInfo, cset2:ChangesetInfo, srcChangesetInfo:ChangesetInfo, dstChangesetInfo:ChangesetInfo) : void
+    {static} - GetChangesetFullSpec(repSpec:RepositorySpec, changesetId:long) : string
+    {static} - GetBranchFullSpec(repSpec:RepositorySpec, changesetExtendedInfo:ChangesetExtendedInfo) : string
+}
+@enduml

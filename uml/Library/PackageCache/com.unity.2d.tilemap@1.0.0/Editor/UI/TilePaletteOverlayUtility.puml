@@ -1,0 +1,14 @@
+@startuml
+class TilePaletteOverlayUtility <<static>> {
+    - {static} <<readonly>> s_TilePaletteOverlayStyleSheetPath : string = "Packages/com.unity.2d.tilemap/Editor/UI/TilePaletteOverlay.uss"
+    - {static} <<readonly>> s_TilePaletteOverlayStyleSheetShiroPath : string = "Packages/com.unity.2d.tilemap/Editor/UI/TilePaletteOverlayLight.uss"
+    - {static} <<readonly>> s_TilePaletteOverlayStyleSheetKuroPath : string = "Packages/com.unity.2d.tilemap/Editor/UI/TilePaletteOverlayDark.uss"
+    - {static} s_TilePaletteOverlayStyleSheet : StyleSheet
+    - {static} s_TilePaletteOverlayStyleSheetLight : StyleSheet
+    - {static} s_TilePaletteOverlayStyleSheetDark : StyleSheet
+    - {static} StyleSheet : StyleSheet <<get>>
+    - {static} StyleSheetLight : StyleSheet <<get>>
+    - {static} StyleSheetDark : StyleSheet <<get>>
+    <<internal>> {static} SetStyleSheet(ve:VisualElement) : void
+}
+@enduml

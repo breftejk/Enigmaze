@@ -1,0 +1,35 @@
+@startuml
+class UnityPendingChangesTree {
+    <<internal>> UnityPendingChangesTree()
+    <<internal>> GetNodes() : IEnumerable<IPlasticTreeNode>
+    <<internal>> HasMeta(changeInfo:ChangeInfo) : bool
+    <<internal>> GetMetaChange(change:ChangeInfo) : ChangeInfo
+    <<internal>> FillWithMeta(changes:List<ChangeInfo>) : void
+    <<internal>> GetFirstPendingChange() : PendingChangeInfo
+    <<internal>> GetAllChanges() : List<ChangeInfo>
+    <<internal>> GetCheckedChanges(selectedChangelists:List<ChangelistNode>, bExcludePrivates:bool, changes:List<ChangeInfo>, dependenciesCandidates:List<ChangeInfo>) : void
+    <<internal>> GetDependenciesCandidates(selectedChanges:List<ChangeInfo>, bExcludePrivates:bool) : List<ChangeInfo>
+    <<internal>> BuildChangeCategories(wkInfo:WorkspaceInfo, changes:List<ChangeInfo>, checkedStateManager:PendingChangesViewCheckedStateManager) : void
+    <<internal>> GetChangedForMoved(moved:ChangeInfo) : ChangeInfo
+    <<internal>> Filter(filter:Filter, columnNames:List<string>) : void
+    <<internal>> Sort(key:string, ascending:bool) : void
+    - mMetaCache : MetaCache
+    - mInnerTree : PendingChangesTree
+}
+class MetaCache {
+    <<internal>> ContainsMeta(changeInfo:ChangeInfo) : bool
+    <<internal>> GetExistingMeta(change:ChangeInfo) : ChangeInfo
+    <<internal>> GetExistingMeta(changes:List<ChangeInfo>) : List<ChangeInfo>
+    <<internal>> Build(changes:List<ChangeInfo>) : void
+    {static} - ExtractMetaToCache(changes:List<ChangeInfo>, cache:Dictionary<string, ChangeInfo>) : void
+    {static} - BuildIndexedKeys(changes:List<ChangeInfo>) : HashSet<string>
+    - mCache : Dictionary<string, ChangeInfo>
+}
+class BuildKey <<static>> {
+    <<internal>> {static} ForChange(change:ChangeInfo) : string
+    <<internal>> {static} ForMetaChange(change:ChangeInfo) : string
+    <<internal>> {static} BuildCacheKey(changeTypes:ChangeTypes, path:string) : string
+}
+UnityPendingChangesTree +-- MetaCache
+MetaCache +-- BuildKey
+@enduml

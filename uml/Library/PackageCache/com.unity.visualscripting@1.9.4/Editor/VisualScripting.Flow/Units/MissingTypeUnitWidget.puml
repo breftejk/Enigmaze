@@ -1,0 +1,8 @@
+@startuml
+class MissingTypeUnitWidget {
+    + MissingTypeUnitWidget(canvas:FlowCanvas, unit:MissingType)
+    # <<override>> showSubtitle : bool <<get>>
+    # <<override>> CacheDescription() : void
+}
+"UnitWidget`1" "<MissingType>" <|-- MissingTypeUnitWidget
+@enduml

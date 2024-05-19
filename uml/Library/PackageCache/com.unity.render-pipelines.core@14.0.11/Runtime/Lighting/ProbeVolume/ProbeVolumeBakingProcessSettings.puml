@@ -1,0 +1,37 @@
+@startuml
+struct ProbeDilationSettings {
+    + enableDilation : bool
+    + dilationDistance : float
+    + dilationValidityThreshold : float
+    + dilationIterations : int
+    + squaredDistWeighting : bool
+    <<internal>> SetDefaults() : void
+    <<internal>> UpgradeFromTo(from:ProbeVolumeBakingProcessSettings.SettingsVersion, to:ProbeVolumeBakingProcessSettings.SettingsVersion) : void
+}
+struct VirtualOffsetSettings {
+    + useVirtualOffset : bool
+    + outOfGeoOffset : float
+    + searchMultiplier : float
+    + rayOriginBias : float
+    + maxHitsPerRay : int
+    + collisionMask : LayerMask
+    <<internal>> SetDefaults() : void
+    <<internal>> UpgradeFromTo(from:ProbeVolumeBakingProcessSettings.SettingsVersion, to:ProbeVolumeBakingProcessSettings.SettingsVersion) : void
+}
+struct ProbeVolumeBakingProcessSettings {
+    <<internal>> {static} Default : ProbeVolumeBakingProcessSettings <<get>>
+    <<internal>> ProbeVolumeBakingProcessSettings(dilationSettings:ProbeDilationSettings, virtualOffsetSettings:VirtualOffsetSettings)
+    <<internal>> SetDefaults() : void
+    <<internal>> Upgrade() : void
+    - m_Version : SettingsVersion
+    + dilationSettings : ProbeDilationSettings
+    + virtualOffsetSettings : VirtualOffsetSettings
+}
+enum SettingsVersion {
+    Initial,
+    ThreadedVirtualOffset,
+    Max,
+    Current= Max - 1,
+}
+ProbeVolumeBakingProcessSettings +-- SettingsVersion
+@enduml

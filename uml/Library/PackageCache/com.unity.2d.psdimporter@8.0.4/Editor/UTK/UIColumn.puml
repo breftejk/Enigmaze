@@ -1,0 +1,26 @@
+@startuml
+interface IColumnUpdate {
+    Update() : void
+}
+interface IUIModuleColumn {
+    MakeColumn(treeView:PSDImporterLayerManagementMultiColumnTreeView, module:SerializedProperty) : Column[]
+}
+class UICellElement {
+    - m_MultiColumnTreeView : PSDImporterLayerManagementMultiColumnTreeView
+    - m_Index : int
+    + UICellElement()
+    + <<virtual>> BindPSDNode(index:int, treeView:PSDImporterLayerManagementMultiColumnTreeView) : void
+    + <<virtual>> UnbindPSDNode() : void
+    + psdTreeViewNode : PSDTreeViewNode <<get>>
+    # index : int <<get>> <<set>>
+    # treeView : PSDImporterLayerManagementMultiColumnTreeView <<get>> <<set>>
+}
+class UIColumn {
+    - m_TreeView : PSDImporterLayerManagementMultiColumnTreeView
+    + UIColumn(treeView:PSDImporterLayerManagementMultiColumnTreeView)
+    - UIColumn()
+    # treeView : PSDImporterLayerManagementMultiColumnTreeView <<get>>
+}
+VisualElement <|-- UICellElement
+Column <|-- UIColumn
+@enduml

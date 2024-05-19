@@ -1,0 +1,46 @@
+@startuml
+interface ISequenceState {
+    asset : TimelineAsset <<get>>
+    director : PlayableDirector <<get>>
+    hostClip : TimelineClip <<get>>
+    cachedChildAssets : List<UnityEngine.Object> <<get>>
+    start : double <<get>>
+    timeScale : double <<get>>
+    duration : double <<get>>
+    isReadOnly : bool <<get>>
+    isAssetOnly : bool <<get>> <<set>>
+    viewModel : TimelineAssetViewModel <<get>>
+    time : double <<get>> <<set>>
+    frame : int <<get>> <<set>>
+    frameRate : double <<get>> <<set>>
+    GetEvaluableRange() : Range
+    ToGlobalTime(t:double) : double
+    ToLocalTime(t:double) : double
+    ResetIsReadOnly() : void
+    InvalidateChildAssetCache() : void
+}
+class NullSequenceState {
+    + asset : TimelineAsset <<get>>
+    + director : PlayableDirector <<get>>
+    + hostClip : TimelineClip <<get>>
+    - cachedChildAssets : List<UnityEngine.Object> <<get>>
+    + start : double <<get>>
+    + timeScale : double <<get>>
+    + duration : double <<get>>
+    + isReadOnly : bool <<get>>
+    + isAssetOnly : bool <<get>> <<set>>
+    - m_ViewModel : TimelineAssetViewModel
+    + viewModel : TimelineAssetViewModel <<get>>
+    + time : double <<get>> <<set>>
+    + frame : int <<get>> <<set>>
+    + frameRate : double <<get>> <<set>>
+    + GetEvaluableRange() : Range
+    + ToGlobalTime(t:double) : double
+    + ToLocalTime(t:double) : double
+    + ResetIsReadOnly() : void
+    + InvalidateChildAssetCache() : void
+    + Dispose() : void
+}
+IDisposable <|-- ISequenceState
+ISequenceState <|-- NullSequenceState
+@enduml

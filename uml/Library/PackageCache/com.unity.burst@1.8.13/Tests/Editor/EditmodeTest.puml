@@ -1,0 +1,104 @@
+@startuml
+class EditModeTest {
+    - <<const>> MaxIterations : int = 500
+    + CheckBurstJobEnabledDisabled() : IEnumerator
+    - CheckBurstJobEnabled() : IEnumerable
+    - CheckBurstJobDisabled() : IEnumerable
+    + CheckJobWithNativeArray() : IEnumerator
+    + {static} TestTypeHash() : void
+    + CheckSafetyChecksWithDomainReload() : IEnumerator
+    + CheckConditionalAttribute() : IEnumerator
+    + {static} TestDebugLog() : void
+    + DebugLogError() : IEnumerator
+    - {static} SafelySetSomeBool(b:bool) : void
+    + CheckSafetyChecksOffGloballyAndOnInJob() : IEnumerator
+    + CheckSafetyChecksOffGloballyAndOffInJob() : IEnumerator
+    + CheckSafetyChecksOnGloballyAndOnInJob() : IEnumerator
+    + CheckSafetyChecksOnGloballyAndOffInJob() : IEnumerator
+    + CheckForceSafetyChecksWorks() : IEnumerator
+    + CheckSharedStaticWithDomainReload() : IEnumerator
+    - {static} AssertTestSharedStaticEmpty() : void
+    {static} - EditModeTest()
+    + CheckSafetyChecksOffGloballyAndOffInFunctionPointer() : IEnumerator
+    + CheckSafetyChecksOffGloballyAndOnInFunctionPointer() : IEnumerator
+    + CheckSafetyChecksOnGloballyAndOffInFunctionPointer() : IEnumerator
+    + CheckSafetyChecksOnGloballyAndOnInFunctionPointer() : IEnumerator
+    + CheckFunctionPointerForceSafetyChecksWorks() : IEnumerator
+    + TestDebugDrawLine() : void
+    + TestCreateProfilerMarker() : void
+    + TestAssemblyBuilder() : void
+    + CheckChangingScriptOptimizationMode() : IEnumerator
+}
+struct HashTestJob {
+    + Hashes : NativeArray<int>
+    + Execute() : void
+}
+struct DebugLogJob {
+    + Value : int
+    + Execute() : void
+}
+struct DebugLogErrorJob {
+    + Execute() : void
+}
+struct SafetyCheckJobWithDomainReload {
+    + Result : NativeArray<int>
+    + Execute() : void
+    - SetResultWithSafetyChecksOnly() : void
+}
+struct ConditonAttributeCheckerJob {
+    + Result : NativeArray<int>
+    + Execute() : void
+    {static} - OnlyRunIfSafetyChecksAreOnOrFOOIsDefined(x:int) : void
+}
+struct EnabledSafetyChecksJob {
+    + WasHit : NativeArray<int>
+    + Execute() : void
+}
+struct DisabledSafetyChecksJob {
+    + WasHit : NativeArray<int>
+    + Execute() : void
+}
+struct TestSharedStatic {
+    + {static} <<readonly>> SharedValue : SharedStatic<TestSharedStatic>
+    + TestSharedStatic(value1:int, value2:long, value3:long, value4:long)
+    + Value1 : int
+    + Value2 : long
+    + Value3 : long
+    + Value4 : long
+}
+class FunctionPointers <<static>> {
+    + {static} WithSafetyChecksEnabled() : int
+    + {static} WithSafetyChecksDisabled() : int
+}
+struct DebugDrawLineJob {
+    + Execute() : void
+}
+class ProfilerMarkerWrapper <<static>> {
+    - {static} <<readonly>> StaticMarker : ProfilerMarker
+    + {static} CreateAndUseProfilerMarker(start:int) : int
+}
+class EnsureAssemblyBuilderDoesNotInvalidFunctionPointers <<static>> {
+    - {static} MessOnManaged(x:int) : void
+    + {static} WithBurst() : int
+}
+EditModeTest +-- HashTestJob
+IJob <|-- HashTestJob
+EditModeTest +-- DebugLogJob
+IJob <|-- DebugLogJob
+EditModeTest +-- DebugLogErrorJob
+IJob <|-- DebugLogErrorJob
+EditModeTest +-- SafetyCheckJobWithDomainReload
+IJob <|-- SafetyCheckJobWithDomainReload
+EditModeTest +-- ConditonAttributeCheckerJob
+IJob <|-- ConditonAttributeCheckerJob
+EditModeTest +-- EnabledSafetyChecksJob
+IJob <|-- EnabledSafetyChecksJob
+EditModeTest +-- DisabledSafetyChecksJob
+IJob <|-- DisabledSafetyChecksJob
+EditModeTest +-- TestSharedStatic
+EditModeTest +-- FunctionPointers
+EditModeTest +-- DebugDrawLineJob
+IJob <|-- DebugDrawLineJob
+EditModeTest +-- ProfilerMarkerWrapper
+EditModeTest +-- EnsureAssemblyBuilderDoesNotInvalidFunctionPointers
+@enduml

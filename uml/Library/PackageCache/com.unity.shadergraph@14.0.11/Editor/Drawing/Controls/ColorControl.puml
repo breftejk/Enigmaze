@@ -1,0 +1,20 @@
+@startuml
+class ColorControlAttribute {
+    - m_Label : string
+    - m_ColorMode : ColorMode
+    + ColorControlAttribute(label:string, colorMode:ColorMode)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class ColorControlView {
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_Color : Color
+    - m_ColorField : ColorField
+    + ColorControlView(label:string, colorMode:ColorMode, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnChange(evt:ChangeEvent<UnityEngine.Color>) : void
+    - OnModeChanged(evt:ChangeEvent<Enum>) : void
+}
+Attribute <|-- ColorControlAttribute
+IControlAttribute <|-- ColorControlAttribute
+VisualElement <|-- ColorControlView
+@enduml

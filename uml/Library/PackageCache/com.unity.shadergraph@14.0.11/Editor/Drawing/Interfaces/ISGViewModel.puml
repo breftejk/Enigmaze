@@ -1,0 +1,6 @@
+@startuml
+interface ISGViewModel {
+    parentView : VisualElement <<get>> <<set>>
+    ResetViewModelData() : void
+}
+@enduml

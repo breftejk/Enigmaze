@@ -1,0 +1,31 @@
+@startuml
+class TMP_UIStyleManager <<static>> {
+    + {static} label : GUIStyle
+    + {static} textAreaBoxWindow : GUIStyle
+    + {static} boldFoldout : GUIStyle
+    + {static} panelTitle : GUIStyle
+    + {static} sectionHeader : GUIStyle
+    + {static} centeredLabel : GUIStyle
+    + {static} rightLabel : GUIStyle
+    + {static} wrappingTextArea : GUIStyle
+    + {static} alignmentButtonLeft : GUIStyle
+    + {static} alignmentButtonMid : GUIStyle
+    + {static} alignmentButtonRight : GUIStyle
+    + {static} alignLeft : Texture2D
+    + {static} alignCenter : Texture2D
+    + {static} alignRight : Texture2D
+    + {static} alignJustified : Texture2D
+    + {static} alignFlush : Texture2D
+    + {static} alignGeoCenter : Texture2D
+    + {static} alignTop : Texture2D
+    + {static} alignMiddle : Texture2D
+    + {static} alignBottom : Texture2D
+    + {static} alignBaseline : Texture2D
+    + {static} alignMidline : Texture2D
+    + {static} alignCapline : Texture2D
+    + {static} sectionHeaderTexture : Texture2D
+    + {static} alignContentA : GUIContent[]
+    + {static} alignContentB : GUIContent[]
+    {static} - TMP_UIStyleManager()
+}
+@enduml

@@ -1,0 +1,118 @@
+@startuml
+interface ITimelineClipAsset {
+    clipCaps : ClipCaps <<get>>
+}
+class TimelineClip <<partial>> {
+    + {static} <<readonly>> kDefaultClipCaps : ClipCaps
+    + {static} <<readonly>> kDefaultClipDurationInSeconds : float = 5
+    + {static} <<readonly>> kTimeScaleMin : double
+    + {static} <<readonly>> kTimeScaleMax : double = 1000
+    <<internal>> {static} <<readonly>> kDefaultCurvesName : string = "Clip Parameters"
+    <<internal>> {static} <<readonly>> kMinDuration : double
+    <<internal>> {static} <<readonly>> kMaxTimeValue : double = 1000000
+    <<internal>> TimelineClip(parent:TrackAsset)
+    - m_Start : double
+    - m_ClipIn : double
+    - m_Asset : Object
+    - m_Duration : double
+    - m_TimeScale : double = 1.0
+    - m_ParentTrack : TrackAsset
+    - m_EaseInDuration : double
+    - m_EaseOutDuration : double
+    - m_BlendInDuration : double
+    - m_BlendOutDuration : double
+    - m_MixInCurve : AnimationCurve
+    - m_MixOutCurve : AnimationCurve
+    - m_BlendInCurveMode : BlendCurveMode
+    - m_BlendOutCurveMode : BlendCurveMode
+    - m_ExposedParameterNames : List<string>
+    - m_AnimationCurves : AnimationClip
+    - m_Recordable : bool
+    - m_PostExtrapolationMode : ClipExtrapolation
+    - m_PreExtrapolationMode : ClipExtrapolation
+    - m_PostExtrapolationTime : double
+    - m_PreExtrapolationTime : double
+    - m_DisplayName : string
+    + hasPreExtrapolation : bool <<get>>
+    + hasPostExtrapolation : bool <<get>>
+    + timeScale : double <<get>> <<set>>
+    + start : double <<get>> <<set>>
+    + duration : double <<get>> <<set>>
+    + end : double <<get>>
+    + clipIn : double <<get>> <<set>>
+    + displayName : string <<get>> <<set>>
+    + clipAssetDuration : double <<get>>
+    + curves : AnimationClip <<get>> <<internal set>>
+    - defaultCurvesName : string <<get>>
+    + hasCurves : bool <<get>>
+    + asset : Object <<get>> <<set>>
+    - assetOwner : Object <<get>>
+    - targetTrack : TrackAsset <<get>>
+    + underlyingAsset : Object <<get>> <<set>>
+    + parentTrack : TrackAsset <<get>> <<set>>
+    + GetParentTrack() : TrackAsset
+    <<internal>> SetParentTrack_Internal(newParentTrack:TrackAsset) : void
+    + easeInDuration : double <<get>> <<set>>
+    + easeOutDuration : double <<get>> <<set>>
+    + eastOutTime : double <<get>>
+    + easeOutTime : double <<get>>
+    + blendInDuration : double <<get>> <<set>>
+    + blendOutDuration : double <<get>> <<set>>
+    + blendInCurveMode : BlendCurveMode <<get>> <<set>>
+    + blendOutCurveMode : BlendCurveMode <<get>> <<set>>
+    + hasBlendIn : bool <<get>>
+    + hasBlendOut : bool <<get>>
+    + mixInCurve : AnimationCurve <<get>> <<set>>
+    + mixInPercentage : float <<get>>
+    + mixInDuration : double <<get>>
+    + mixOutCurve : AnimationCurve <<get>> <<set>>
+    + mixOutTime : double <<get>>
+    + mixOutDuration : double <<get>>
+    + mixOutPercentage : float <<get>>
+    + recordable : bool <<get>> <<internal set>>
+    + exposedParameters : List<string> <<get>>
+    + clipCaps : ClipCaps <<get>>
+    <<internal>> Hash() : int
+    + EvaluateMixOut(time:double) : float
+    + EvaluateMixIn(time:double) : float
+    {static} - GetDefaultMixInCurve() : AnimationCurve
+    {static} - GetDefaultMixOutCurve() : AnimationCurve
+    + ToLocalTime(time:double) : double
+    + ToLocalTimeUnbound(time:double) : double
+    <<internal>> FromLocalTimeUnbound(time:double) : double
+    + animationClip : AnimationClip <<get>>
+    {static} - SanitizeTimeValue(value:double, defaultValue:double) : double
+    + postExtrapolationMode : ClipExtrapolation <<get>> <<internal set>>
+    + preExtrapolationMode : ClipExtrapolation <<get>> <<internal set>>
+    <<internal>> SetPostExtrapolationTime(time:double) : void
+    <<internal>> SetPreExtrapolationTime(time:double) : void
+    + IsExtrapolatedTime(sequenceTime:double) : bool
+    + IsPreExtrapolatedTime(sequenceTime:double) : bool
+    + IsPostExtrapolatedTime(sequenceTime:double) : bool
+    + extrapolatedStart : double <<get>>
+    + extrapolatedDuration : double <<get>>
+    {static} - GetExtrapolatedTime(time:double, mode:ClipExtrapolation, duration:double) : double
+    + CreateCurves(curvesClipName:string) : void
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    + <<override>> ToString() : string
+    + ConformEaseValues() : void
+    {static} - CalculateEasingRatio(easeIn:double, easeOut:double) : double
+    - UpdateDirty(oldValue:double, newValue:double) : void
+}
+enum ClipExtrapolation {
+    None,
+    Hold,
+    Loop,
+    PingPong,
+    Continue,
+}
+enum BlendCurveMode {
+    Auto,
+    Manual,
+}
+ICurvesOwner <|-- TimelineClip
+ISerializationCallbackReceiver <|-- TimelineClip
+TimelineClip +-- ClipExtrapolation
+TimelineClip +-- BlendCurveMode
+@enduml

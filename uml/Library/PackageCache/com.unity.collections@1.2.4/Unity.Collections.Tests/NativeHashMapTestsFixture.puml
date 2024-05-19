@@ -1,0 +1,22 @@
+@startuml
+class NativeHashMapTestsFixture {
+    # <<const>> hashMapSize : int
+}
+struct HashMapWriteJob {
+    + hashMap : NativeHashMap<int, int>.ParallelWriter
+    + status : NativeArray<int>
+    + keyMod : int
+    + Execute() : void
+}
+struct HashMapReadParallelForJob {
+    + hashMap : NativeHashMap<int, int>
+    + values : NativeArray<int>
+    + keyMod : int
+    + Execute(i:int) : void
+}
+CollectionsTestFixture <|-- NativeHashMapTestsFixture
+NativeHashMapTestsFixture +-- HashMapWriteJob
+IJob <|-- HashMapWriteJob
+NativeHashMapTestsFixture +-- HashMapReadParallelForJob
+IJobParallelFor <|-- HashMapReadParallelForJob
+@enduml

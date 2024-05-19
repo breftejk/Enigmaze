@@ -1,0 +1,18 @@
+@startuml
+class GridPaintingToolbar {
+    - {static} <<readonly>> ussClassName : string = "unity-tilepalette-toolbar"
+    - {static} <<readonly>> k_Name : string
+    - {static} <<readonly>> k_ToolbarElements : string[]
+    + GridPaintingToolbar()
+    + GridPaintingToolbar(editorWindow:EditorWindow)
+}
+class GridPaintingToolbarFactory {
+}
+class GridPaintingToolbarUxmlTraits {
+}
+VisualElement <|-- GridPaintingToolbar
+GridPaintingToolbar +-- GridPaintingToolbarFactory
+"UxmlFactory`2" "<GridPaintingToolbar,GridPaintingToolbarUxmlTraits>" <|-- GridPaintingToolbarFactory
+GridPaintingToolbar +-- GridPaintingToolbarUxmlTraits
+UxmlTraits <|-- GridPaintingToolbarUxmlTraits
+@enduml

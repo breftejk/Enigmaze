@@ -1,0 +1,16 @@
+@startuml
+class CollabPlugin <<static>> {
+    + {static} IsEnabled() : bool
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} Enable() : void
+    {static} - SetCollabEnabledInstanceAs(value:bool) : void
+    {static} - SetCollabEnabledInProjectSettingsAs(value:bool) : void
+    {static} - IsCollabInstanceEnabled() : bool
+    {static} - SetCollabEnabledForCurrentProject(collabInstance:object, enable:bool) : void
+    {static} - SetCloudServiceEnabled(setting:string, enable:bool) : void
+    {static} - GetCollabInstance() : object
+    {static} - IsCollabEnabledForCurrentProject(collabInstance:object) : bool
+    {static} <<readonly>> - CollabType : Type
+    {static} <<readonly>> - PlayerSettingsType : Type
+}
+@enduml

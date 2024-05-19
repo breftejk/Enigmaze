@@ -1,0 +1,6 @@
+@startuml
+class RemoteTestResultDataWithTestData {
+    + results : RemoteTestResultData[]
+    + tests : RemoteTestData[]
+}
+@enduml

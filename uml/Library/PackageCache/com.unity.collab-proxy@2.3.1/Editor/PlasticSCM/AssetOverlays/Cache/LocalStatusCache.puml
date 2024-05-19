@@ -1,0 +1,10 @@
+@startuml
+class LocalStatusCache {
+    <<internal>> LocalStatusCache(wkInfo:WorkspaceInfo)
+    <<internal>> GetStatus(fullPath:string) : AssetStatus
+    <<internal>> Clear() : void
+    {static} - CalculateStatus(fullPath:string, wkPath:string, ignoredFilter:IgnoredFilesFilter, hiddenChangesFilter:HiddenChangesFilesFilter) : AssetStatus
+    - mStatusByPathCache : Dictionary<string, AssetStatus>
+    <<readonly>> - mWkInfo : WorkspaceInfo
+}
+@enduml

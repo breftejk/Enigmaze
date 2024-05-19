@@ -1,0 +1,129 @@
+@startuml
+class PlayerInput {
+    + <<const>> DeviceLostMessage : string = "OnDeviceLost"
+    + <<const>> DeviceRegainedMessage : string = "OnDeviceRegained"
+    + <<const>> ControlsChangedMessage : string = "OnControlsChanged"
+    + inputIsActive : bool <<get>>
+    + active : bool <<get>>
+    + playerIndex : int <<get>>
+    + splitScreenIndex : int <<get>>
+    + actions : InputActionAsset <<get>> <<set>>
+    + currentControlScheme : string <<get>>
+    + defaultControlScheme : string <<get>> <<set>>
+    + neverAutoSwitchControlSchemes : bool <<get>> <<set>>
+    + currentActionMap : InputActionMap <<get>> <<set>>
+    + defaultActionMap : string <<get>> <<set>>
+    + notificationBehavior : PlayerNotifications <<get>> <<set>>
+    + actionEvents : ReadOnlyArray<ActionEvent> <<get>> <<set>>
+    + deviceLostEvent : DeviceLostEvent <<get>>
+    + deviceRegainedEvent : DeviceRegainedEvent <<get>>
+    + controlsChangedEvent : ControlsChangedEvent <<get>>
+    + camera : Camera <<get>> <<set>>
+    + user : InputUser <<get>>
+    + devices : ReadOnlyArray<InputDevice> <<get>>
+    + hasMissingRequiredDevices : bool <<get>>
+    + {static} all : ReadOnlyArray<PlayerInput> <<get>>
+    + {static} isSinglePlayer : bool <<get>>
+    + GetDevice() : TDevice
+    + ActivateInput() : void
+    + DeactivateInput() : void
+    + PassivateInput() : void
+    + SwitchCurrentControlScheme(devices:InputDevice[]) : bool
+    + SwitchCurrentControlScheme(controlScheme:string, devices:InputDevice[]) : void
+    + SwitchCurrentActionMap(mapNameOrId:string) : void
+    + {static} GetPlayerByIndex(playerIndex:int) : PlayerInput
+    + {static} FindFirstPairedToDevice(device:InputDevice) : PlayerInput
+    + {static} Instantiate(prefab:GameObject, playerIndex:int, controlScheme:string, splitScreenIndex:int, pairWithDevice:InputDevice) : PlayerInput
+    + {static} Instantiate(prefab:GameObject, playerIndex:int, controlScheme:string, splitScreenIndex:int, pairWithDevices:InputDevice[]) : PlayerInput
+    - {static} DoInstantiate(prefab:GameObject) : PlayerInput
+    <<internal>> m_Actions : InputActionAsset
+    <<internal>> m_NotificationBehavior : PlayerNotifications
+    <<internal>> m_DeviceLostEvent : DeviceLostEvent
+    <<internal>> m_DeviceRegainedEvent : DeviceRegainedEvent
+    <<internal>> m_ControlsChangedEvent : ControlsChangedEvent
+    <<internal>> m_ActionEvents : ActionEvent[]
+    <<internal>> m_NeverAutoSwitchControlSchemes : bool
+    <<internal>> m_DefaultControlScheme : string
+    <<internal>> m_DefaultActionMap : string
+    <<internal>> m_SplitScreenIndex : int
+    <<internal>> m_Camera : Camera
+    - m_InputValueObject : InputValue
+    <<internal>> m_CurrentActionMap : InputActionMap
+    - m_PlayerIndex : int
+    - m_InputActive : bool
+    - m_Enabled : bool
+    <<internal>> m_ActionsInitialized : bool
+    - m_ActionMessageNames : Dictionary<string, string>
+    - m_InputUser : InputUser
+    - m_ActionTriggeredDelegate : Action<InputAction.CallbackContext>
+    - m_DeviceLostCallbacks : CallbackArray<Action<PlayerInput>>
+    - m_DeviceRegainedCallbacks : CallbackArray<Action<PlayerInput>>
+    - m_ControlsChangedCallbacks : CallbackArray<Action<PlayerInput>>
+    - m_ActionTriggeredCallbacks : CallbackArray<Action<InputAction.CallbackContext>>
+    - m_UnpairedDeviceUsedDelegate : Action<InputControl, InputEventPtr>
+    - m_PreFilterUnpairedDeviceUsedDelegate : Func<InputDevice, InputEventPtr, bool>
+    - m_OnUnpairedDeviceUsedHooked : bool
+    - m_DeviceChangeDelegate : Action<InputDevice, InputDeviceChange>
+    - m_OnDeviceChangeHooked : bool
+    <<internal>> {static} s_AllActivePlayersCount : int
+    <<internal>> {static} s_AllActivePlayers : PlayerInput[]
+    - {static} s_UserChangeDelegate : Action<InputUser, InputUserChange, InputDevice>
+    - {static} s_InitPairWithDevicesCount : int
+    - {static} s_InitPairWithDevices : InputDevice[]
+    - {static} s_InitPlayerIndex : int
+    - {static} s_InitSplitScreenIndex : int
+    - {static} s_InitControlScheme : string
+    <<internal>> {static} s_DestroyIfDeviceSetupUnsuccessful : bool
+    - InitializeActions() : void
+    - UninitializeActions() : void
+    - InstallOnActionTriggeredHook() : void
+    - UninstallOnActionTriggeredHook() : void
+    - OnActionTriggered(context:InputAction.CallbackContext) : void
+    - CacheMessageNames() : void
+    - ClearCaches() : void
+    - AssignUserAndDevices() : void
+    - HaveBindingForDevice(device:InputDevice) : bool
+    - UnassignUserAndDevices() : void
+    - TryToActivateControlScheme(controlScheme:InputControlScheme) : bool
+    - AssignPlayerIndex() : void
+    - OnEnable() : void
+    - StartListeningForUnpairedDeviceActivity() : void
+    - StopListeningForUnpairedDeviceActivity() : void
+    - StartListeningForDeviceChanges() : void
+    - StopListeningForDeviceChanges() : void
+    - OnDisable() : void
+    + DebugLogAction(context:InputAction.CallbackContext) : void
+    - HandleDeviceLost() : void
+    - HandleDeviceRegained() : void
+    - HandleControlsChanged() : void
+    - {static} OnUserChange(user:InputUser, change:InputUserChange, device:InputDevice) : void
+    - {static} OnPreFilterUnpairedDeviceUsed(device:InputDevice, eventPtr:InputEventPtr) : bool
+    - OnUnpairedDeviceUsed(control:InputControl, eventPtr:InputEventPtr) : void
+    - OnDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    - SwitchControlSchemeInternal(controlScheme:InputControlScheme, devices:InputDevice[]) : void
+}
+class ActionEvent {
+    + actionId : string <<get>>
+    + actionName : string <<get>>
+    - m_ActionId : string
+    - m_ActionName : string
+    + ActionEvent()
+    + ActionEvent(action:InputAction)
+    + ActionEvent(actionGUID:Guid, name:string)
+}
+class DeviceLostEvent {
+}
+class DeviceRegainedEvent {
+}
+class ControlsChangedEvent {
+}
+MonoBehaviour <|-- PlayerInput
+PlayerInput +-- ActionEvent
+"UnityEvent`1" "<InputAction.CallbackContext>" <|-- ActionEvent
+PlayerInput +-- DeviceLostEvent
+"UnityEvent`1" "<PlayerInput>" <|-- DeviceLostEvent
+PlayerInput +-- DeviceRegainedEvent
+"UnityEvent`1" "<PlayerInput>" <|-- DeviceRegainedEvent
+PlayerInput +-- ControlsChangedEvent
+"UnityEvent`1" "<PlayerInput>" <|-- ControlsChangedEvent
+@enduml

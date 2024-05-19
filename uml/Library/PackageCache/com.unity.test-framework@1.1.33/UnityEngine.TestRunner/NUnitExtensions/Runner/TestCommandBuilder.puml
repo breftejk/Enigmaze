@@ -1,0 +1,7 @@
+@startuml
+class TestCommandBuilder <<static>> {
+    + {static} BuildTestCommand(test:TestMethod, filter:ITestFilter) : TestCommand
+    - {static} GetTestBuilderName(testMethod:TestMethod) : string
+    - {static} TryReplaceWithEnumerableCommand(command:TestCommand) : TestCommand
+}
+@enduml

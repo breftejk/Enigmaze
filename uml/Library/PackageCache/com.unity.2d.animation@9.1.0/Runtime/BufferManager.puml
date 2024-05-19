@@ -1,0 +1,34 @@
+@startuml
+class VertexBuffer {
+    + bufferCount : int <<get>>
+    - <<readonly>> m_Id : int
+    - m_IsActive : bool = true
+    - m_DeactivateFrame : int
+    - m_Buffers : NativeByteArray[]
+    - m_ActiveIndex : int = 0
+    + VertexBuffer(id:int, size:int, needDoubleBuffering:bool)
+    + <<override>> GetHashCode() : int
+    - {static} GetCurrentFrame() : int
+    + GetBuffer(size:int) : NativeByteArray
+    - ResizeBuffer(bufferId:int, newSize:int) : void
+    + Deactivate() : void
+    + Dispose() : void
+    + IsSafeToDispose() : bool
+}
+class BufferManager {
+    - {static} s_Instance : BufferManager
+    - m_Buffers : Dictionary<int, VertexBuffer>
+    - m_BuffersToDispose : Queue<VertexBuffer>
+    + bufferCount : int <<get>>
+    + needDoubleBuffering : bool <<get>> <<set>>
+    + {static} instance : BufferManager <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    - ForceClearBuffers() : void
+    + GetBuffer(id:int, bufferSize:int) : NativeByteArray
+    - CreateBuffer(id:int, bufferSize:int) : VertexBuffer
+    + ReturnBuffer(id:int) : void
+    - Update() : void
+}
+ScriptableObject <|-- BufferManager
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+class WebRestApiClient <<static>> {
+    {static} - WriteBody(request:WebRequest, body:object) : void
+    {static} - GetResponse(request:WebRequest) : TRes
+    {static} - BuildLoggedErrorFields(ex:Exception, endpoint:Uri) : ErrorResponse.ErrorFields
+    {static} - LogException(ex:Exception, endpoint:Uri) : void
+    {static} <<readonly>> - mLog : ILog
+}
+class PlasticScm <<static>> {
+    <<internal>> {static} TokenExchange(unityAccessToken:string) : TokenExchangeResponse
+    <<internal>> {static} IsCollabProjectMigrated(bearerToken:string, projectId:string) : IsCollabProjectMigratedResponse
+    <<internal>> {static} GetLastVersion(plasticEdition:Edition) : NewVersionResponse
+    <<internal>> {static} GetCredentials(unityToken:string) : CredentialsResponse
+    <<internal>> {static} IsUserAdmin(organizationName:string, authToken:string) : CurrentUserAdminCheckResponse
+    <<internal>> {static} GetSubscriptionDetails(organizationName:string, authToken:string) : SubscriptionDetailsResponse
+    <<const>> - IsBetaEnabledEndpoint : string = "api/unity-package/beta/is-enabled"
+    <<const>> - TokenExchangeEndpoint : string = "api/oauth/unityid/exchange/{0&#125;"
+    <<const>> - IsCollabProjectMigratedEndpoint : string = "api/cloud/unity/projects/{0&#125;/is-migrated"
+    <<const>> - IsUserAdminEnpoint : string = "api/cloud/organizations/{0&#125;/is-user-admin"
+    <<const>> - SubscriptionDetailsEndpoint : string = "api/cloud/organizations/{0&#125;/subscription-details"
+    {static} <<readonly>> - mWebApiUris : PlasticWebApiUris
+}
+class CloudServer <<static>> {
+    <<internal>> {static} WebLogin(webServerUri:string, organizationName:string, credentials:OrganizationCredentials) : string
+    <<internal>> {static} GetChangesetFromCollabCommit(webServerUri:string, organizationName:string, webLoginAccessToken:string, projectId:string, commitSha:string) : ChangesetFromCollabCommitResponse
+    <<const>> - WebLoginEndPoint : string = "api/v1/organizations/{0&#125;/login/accesstoken"
+    <<const>> - GetChangesetFromCollabCommitEndpoint : string = "cloudapi/v1/organizations/{0&#125;/repos/{1&#125;/collabcommit/{2&#125;/changeset"
+}
+WebRestApiClient +-- PlasticScm
+WebRestApiClient +-- CloudServer
+@enduml

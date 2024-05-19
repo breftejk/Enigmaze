@@ -1,0 +1,18 @@
+@startuml
+class AnimationClipGeneration <<static>> {
+    <<const>> - k_RootName : string = "Root"
+    + {static} Generate(assetName:string, sprites:Sprite[], file:AsepriteFile, layers:List<Layer>, frames:List<Frame>, tags:List<Tag>, layerIdToGameObject:Dictionary<int, GameObject>) : AnimationClip[]
+    {static} - CreateClip(tag:Tag, clipName:string, layers:List<Layer>, frames:IReadOnlyList<Frame>, sprites:Sprite[], layerIdToGameObject:Dictionary<int, GameObject>) : AnimationClip
+    {static} - AddCellsToClip(cells:IReadOnlyList<Cell>, tag:Tag, sprites:Sprite[], frames:IReadOnlyList<Frame>, keyFrames:List<ObjectReferenceKeyframe>) : HashSet<int>
+    {static} - AddLinkedCellsToClip(linkedCells:IReadOnlyList<LinkedCell>, cells:List<Cell>, tag:Tag, sprites:Sprite[], frames:IReadOnlyList<Frame>, keyFrames:List<ObjectReferenceKeyframe>) : HashSet<int>
+    {static} - DuplicateLastFrame(keyFrames:List<ObjectReferenceKeyframe>, lastFrame:Frame) : void
+    {static} - GetTransformPath(transform:Transform) : string
+    {static} - AddEnabledKeyframes(layerTransform:Transform, tag:Tag, frames:IReadOnlyList<Frame>, activeFrames:HashSet<int>, animationClip:AnimationClip) : void
+    {static} - AddSortOrderKeyframes(layerTransform:Transform, layer:Layer, tag:Tag, frames:IReadOnlyList<Frame>, cells:List<Cell>, animationClip:AnimationClip) : void
+    {static} - GetTimeFromFrame(frames:IReadOnlyList<Frame>, frameIndex:int) : float
+    {static} - MsToSeconds(ms:int) : float
+    {static} - GetBoolKeyFrame(value:bool, time:float) : Keyframe
+    {static} - GetIntKeyFrame(value:int, time:float) : Keyframe
+    {static} - AddAnimationEvents(tag:Tag, frames:IReadOnlyList<Frame>, animationClip:AnimationClip) : void
+}
+@enduml

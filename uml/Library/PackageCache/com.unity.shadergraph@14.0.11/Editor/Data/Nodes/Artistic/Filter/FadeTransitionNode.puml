@@ -1,0 +1,20 @@
+@startuml
+class FadeTransitionNode {
+    + <<const>> OutputSlotFadeId : int = 0
+    + <<const>> NoiseValue : int = 1
+    + <<const>> FadeValue : int = 2
+    + <<const>> FadeContrast : int = 3
+    <<const>> - kOutputSlotFadeName : string = "Fade"
+    <<const>> - kNoiseValueInputName : string = "NoiseValue"
+    <<const>> - kFadeValueInputName : string = "FadeValue"
+    <<const>> - kFadeContrastInputName : string = "FadeContrast"
+    + <<override>> hasPreview : bool <<get>>
+    + FadeTransitionNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + <<virtual>> GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+}
+AbstractMaterialNode <|-- FadeTransitionNode
+IGeneratesBodyCode <|-- FadeTransitionNode
+IGeneratesFunction <|-- FadeTransitionNode
+@enduml

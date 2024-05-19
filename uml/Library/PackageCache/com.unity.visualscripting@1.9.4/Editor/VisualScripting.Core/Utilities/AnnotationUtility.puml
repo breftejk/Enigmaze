@@ -1,0 +1,27 @@
+@startuml
+class AnnotationUtility {
+    {static} - AnnotationUtility()
+    - {static} <<readonly>> AnnotationUtilityType : Type
+    - {static} <<readonly>> AnnotationUtility_GetAnnotations : MethodInfo
+    - {static} <<readonly>> AnnotationUtility_SetGizmoEnabled : MethodInfo
+    - {static} <<readonly>> AnnotationUtility_SetIconEnabled : MethodInfo
+    - {static} <<readonly>> AnnotationType : Type
+    - {static} <<readonly>> Annotation_classID : FieldInfo
+    - {static} <<readonly>> Annotation_scriptClass : FieldInfo
+    - {static} <<readonly>> Annotation_iconEnabled : FieldInfo
+    - {static} <<readonly>> Annotation_gizmoEnabled : FieldInfo
+    - {static} <<readonly>> unityAnnotations : Dictionary<int, Annotation>
+    - {static} <<readonly>> scriptAnnotations : Dictionary<string, Annotation>
+    + {static} GetAnnotation(type:Type) : Annotation
+    + {static} GetAnnotation() : Annotation
+}
+class Annotation {
+    + Annotation(instance:object)
+    - <<readonly>> instance : object
+    + classID : int <<get>>
+    + scriptClass : string <<get>>
+    + iconEnabled : bool <<get>> <<set>>
+    + gizmoEnabled : bool <<get>> <<set>>
+}
+AnnotationUtility +-- Annotation
+@enduml

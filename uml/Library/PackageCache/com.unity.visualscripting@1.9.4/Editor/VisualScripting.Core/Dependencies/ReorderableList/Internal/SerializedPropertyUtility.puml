@@ -1,0 +1,8 @@
+@startuml
+class SerializedPropertyUtility <<static>> {
+    + {static} ResetValue(property:SerializedProperty) : void
+    - {static} ResetChildPropertyValues(element:SerializedProperty) : void
+    + {static} CopyPropertyValue(destProperty:SerializedProperty, sourceProperty:SerializedProperty) : void
+    - {static} CopyPropertyValueSingular(destProperty:SerializedProperty, sourceProperty:SerializedProperty) : void
+}
+@enduml

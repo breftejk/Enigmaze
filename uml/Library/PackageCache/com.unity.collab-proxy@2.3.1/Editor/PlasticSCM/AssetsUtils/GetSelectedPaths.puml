@@ -1,0 +1,6 @@
+@startuml
+class GetSelectedPaths <<static>> {
+    <<internal>> {static} ForOperation(wkPath:string, assetList:AssetList, assetStatusCache:IAssetStatusCache, operation:AssetMenuOperations) : List<string>
+    {static} - IsApplicableForOperation(path:string, isDirectory:bool, operation:AssetMenuOperations, assetStatusCache:IAssetStatusCache) : bool
+}
+@enduml

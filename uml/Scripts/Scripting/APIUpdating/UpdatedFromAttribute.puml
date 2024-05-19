@@ -1,0 +1,20 @@
+@startuml
+struct MovedFromAttributeData {
+    + Set(autoUpdateAPI:bool, sourceNamespace:string, sourceAssembly:string, sourceClassName:string) : void
+    + className : string
+    + nameSpace : string
+    + assembly : string
+    + classHasChanged : bool
+    + nameSpaceHasChanged : bool
+    + assemblyHasChanged : bool
+    + autoUdpateAPI : bool
+}
+class MovedFromAttribute {
+    + MovedFromAttribute(autoUpdateAPI:bool, sourceNamespace:string, sourceAssembly:string, sourceClassName:string)
+    + MovedFromAttribute(sourceNamespace:string)
+    <<internal>> AffectsAPIUpdater : bool <<get>>
+    + IsInDifferentAssembly : bool <<get>>
+    <<internal>> data : MovedFromAttributeData
+}
+Attribute <|-- MovedFromAttribute
+@enduml

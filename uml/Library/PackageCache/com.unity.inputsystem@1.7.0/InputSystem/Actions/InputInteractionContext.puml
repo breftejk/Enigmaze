@@ -1,0 +1,34 @@
+@startuml
+struct InputInteractionContext {
+    + action : InputAction <<get>>
+    + control : InputControl <<get>>
+    + phase : InputActionPhase <<get>>
+    + time : double <<get>>
+    + startTime : double <<get>>
+    + timerHasExpired : bool <<get>> <<internal set>>
+    + isWaiting : bool <<get>>
+    + isStarted : bool <<get>>
+    + ComputeMagnitude() : float
+    + ControlIsActuated(threshold:float) : bool
+    + Started() : void
+    + Performed() : void
+    + PerformedAndStayStarted() : void
+    + PerformedAndStayPerformed() : void
+    + Canceled() : void
+    + Waiting() : void
+    + SetTimeout(seconds:float) : void
+    + SetTotalTimeoutCompletionTime(seconds:float) : void
+    + ReadValue() : TValue
+    <<internal>> m_State : InputActionState
+    <<internal>> m_Flags : Flags
+    <<internal>> m_TriggerState : InputActionState.TriggerState
+    <<internal>> mapIndex : int <<get>>
+    <<internal>> controlIndex : int <<get>>
+    <<internal>> bindingIndex : int <<get>>
+    <<internal>> interactionIndex : int <<get>>
+}
+enum Flags {
+    TimerHasExpired= 1 << 1,
+}
+InputInteractionContext +-- Flags
+@enduml

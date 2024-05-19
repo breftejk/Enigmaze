@@ -1,0 +1,187 @@
+@startuml
+abstract class Metadata {
+    # Metadata(subpath:object, parent:Metadata)
+    # <<virtual>> isRoot : bool <<get>>
+    + label : GUIContent <<get>> <<protected set>>
+    + <<virtual>> isEditable : bool <<get>> <<set>> = true
+    + RecordUndo() : void
+    + RecordUndo(name:string) : void
+    + InferOwnerFromParent() : void
+    + isLinked : bool <<get>>
+    + Unlink() : void
+    + UnlinkChildren() : void
+    + EnsureLinked() : void
+    + children : Children <<get>>
+    + parent : Metadata <<get>>
+    + path : string <<get>>
+    + root : Metadata <<get>>
+    + Ancestor(predicate:Func<Metadata, bool>, includeSelf:bool) : Metadata
+    + Ancestor(includeSelf:bool) : T
+    + Descendants(predicate:Func<Metadata, bool>) : IEnumerable<Metadata>
+    + Descendants() : IEnumerable<T>
+    - <<readonly>> subhash : int
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+    # subpath : object <<get>>
+    - CachePath() : void
+    # <<virtual>> SubpathToString() : string
+    + <<override>> ToString() : string
+    + definedType : Type <<get>> <<protected set>>
+    # _definedType : Type
+    + instantiator : Func<object> <<get>> <<set>>
+    + instantiate : bool <<get>> <<set>>
+    - canInstantiate : bool <<get>>
+    - instantiatedValue : object <<get>> <<set>>
+    - obtainedValue : bool
+    - lastObservedValue : object
+    # {abstract} rawValue : object <<get>> <<set>>
+    + value : object <<get>> <<set>>
+    # <<virtual>> OnValueChange(previousValue:object) : void
+    # <<virtual>> OnParentValueChange(previousValue:object) : void
+    -  <<event>> _valueChanged : Action<object> 
+    - obtainedValueType : bool
+    - rawValueType : Type <<get>>
+    - lastObservedValueType : Type
+    + nullableValueType : Type <<get>>
+    + valueType : Type <<get>>
+    - AnalyzeCollection() : void
+    # <<virtual>> OnValueTypeChange(previousType:Type) : void
+    # <<virtual>> OnParentValueTypeChange(previousType:Type) : void
+    -  <<event>> _valueTypeChanged : Action<Type> 
+    # Dig(subpath:TSubpath, constructor:Func<Metadata, TMetadata>, createInPrefab:bool, prefabInstance:Metadata) : TMetadata
+    + prefabDefinition : Metadata <<get>> <<protected set>>
+    + isPrefabInstance : bool <<get>>
+    + isPrefabInstanceWithDefinition : bool <<get>>
+    + isPrefabInstanceWithoutDefinition : bool <<get>>
+    + isPrefabRoot : bool <<get>>
+    + isPrefabDiff : bool <<get>>
+    + isRevertibleToPrefab : bool <<get>>
+    + RevertToPrefab() : void
+    + MatchWithPrefab() : void
+    + {abstract} GetCustomAttributes(inherit:bool) : Attribute[]
+    + AncestorHasAttribute(attributeType:Type, inherit:bool) : bool
+    + GetAncestorAttribute(attributeType:Type, inherit:bool) : Attribute
+    + GetAncestorAttributes(attributeType:Type, inherit:bool) : IEnumerable<Attribute>
+    + AncestorHasAttribute(inherit:bool) : bool
+    + GetAncestorAttribute(inherit:bool) : TAttribute
+    + GetAncestorAttributes(inherit:bool) : IEnumerable<TAttribute>
+    + GetEnumerator() : IEnumerator
+    + Count : int <<get>>
+    + IsFixedSize : bool <<get>>
+    + IsReadOnly : bool <<get>>
+    + IsSynchronized : bool <<get>>
+    + SyncRoot : object <<get>>
+    + Contains(value:object) : bool
+    + Remove(value:object) : void
+    + Clear() : void
+    + isEnumerable : bool <<get>>
+    + enumerableType : Type <<get>>
+    + enumerableElementType : Type <<get>>
+    - enumerable : IEnumerable <<get>>
+    + isList : bool <<get>>
+    + listType : Type <<get>>
+    + listElementType : Type <<get>>
+    - list : IList <<get>>
+    - UnlinkListChildren() : void
+    - resizableList : IList
+    # GetResizableList() : IList
+    # ApplyResizableList() : void
+    + Add(value:object) : int
+    + Insert(index:int, value:object) : void
+    + IndexOf(value:object) : int
+    + RemoveAt(index:int) : void
+    + CopyTo(array:Array, index:int) : void
+    + Move(sourceIndex:int, destinationIndex:int) : void
+    + Duplicate(index:int) : void
+    + isDictionary : bool <<get>>
+    + isOrderedDictionary : bool <<get>>
+    + dictionaryType : Type <<get>>
+    + dictionaryKeyType : Type <<get>>
+    + dictionaryValueType : Type <<get>>
+    - dictionary : IDictionary <<get>>
+    + Keys : ICollection <<get>>
+    + Values : ICollection <<get>>
+    + Add(key:object, value:object) : void
+    - GetEnumerator() : IDictionaryEnumerator
+    + KeyMetadata(index:int) : Metadata
+    + ValueMetadata(index:int) : Metadata
+    - UnlinkDictionaryChildren() : void
+    - {static} <<readonly>> digMember : DigMember
+    - {static} <<readonly>> digIndex : DigIndex
+    - {static} <<readonly>> digIndexer : DigIndexer
+    - {static} <<readonly>> digCast : DigCast
+    - {static} <<readonly>> digStaticObject : DigStaticObject
+    + {static} Root() : Metadata
+    + StaticObject(@object:object, definedType:Type) : ObjectMetadata
+    + StaticObject(@object:object) : ObjectMetadata
+    + Object(name:string, @object:object, definedType:Type) : ObjectMetadata
+    + Object(name:string, @object:object) : ObjectMetadata
+    + Member(name:string, bindingFlags:BindingFlags) : MemberMetadata
+    + Index(index:int) : IndexMetadata
+    + Indexer(indexer:object) : IndexerMetadata
+    + Cast(type:Type) : CastMetadata
+    + Cast() : CastMetadata
+    + DictionaryKeyAt(index:int) : DictionaryKeyAtIndexMetadata
+    + DictionaryValueAt(index:int) : DictionaryValueAtIndexMetadata
+    + Proxy(subpath:object, binding:Metadata) : ProxyMetadata
+    + EditorPref(configuration:PluginConfiguration, member:MemberInfo) : EditorPrefMetadata
+    + ProjectSetting(configuration:PluginConfiguration, member:MemberInfo) : ProjectSettingMetadata
+    + AutoDig(path:string) : Metadata
+    + {static} FromProperty(property:SerializedProperty) : Metadata
+}
+class Children {
+    # <<override>> GetKeyForItem(item:Metadata) : int
+    + <<new>> TryGetValue(key:int, value:Metadata) : bool
+}
+abstract class "NoAllocDelegate`1"<T> {
+    # @delegate : T
+}
+abstract class "NoAllocDig`1"<T> {
+}
+class DigMember {
+    + DigMember()
+    - name : string
+    - bindingFlags : BindingFlags
+    + Get(name:string, bindingFlags:BindingFlags) : Func<Metadata, MemberMetadata>
+}
+class DigIndex {
+    + DigIndex()
+    - index : int
+    + Get(index:int) : Func<Metadata, IndexMetadata>
+}
+class DigIndexer {
+    + DigIndexer()
+    - indexer : object
+    + Get(indexer:object) : Func<Metadata, IndexerMetadata>
+}
+class DigCast {
+    + DigCast()
+    - type : Type
+    + Get(type:Type) : Func<Metadata, CastMetadata>
+}
+class DigStaticObject {
+    + DigStaticObject()
+    - @object : object
+    - definedType : Type
+    + Get(@object:object, definedType:Type) : Func<Metadata, ObjectMetadata>
+}
+IAttributeProvider <|-- Metadata
+IList <|-- Metadata
+IDictionary <|-- Metadata
+Metadata +-- Children
+"KeyedCollection`2" "<int,Metadata>" <|-- Children
+"IKeyedCollection`2" "<int,Metadata>" <|-- Children
+Metadata +-- "NoAllocDelegate`1"
+Metadata +-- "NoAllocDig`1"
+"NoAllocDelegate`1" "<Func<Metadata, T>>" <|-- "NoAllocDig`1"
+Metadata +-- DigMember
+"NoAllocDig`1" "<MemberMetadata>" <|-- DigMember
+Metadata +-- DigIndex
+"NoAllocDig`1" "<IndexMetadata>" <|-- DigIndex
+Metadata +-- DigIndexer
+"NoAllocDig`1" "<IndexerMetadata>" <|-- DigIndexer
+Metadata +-- DigCast
+"NoAllocDig`1" "<CastMetadata>" <|-- DigCast
+Metadata +-- DigStaticObject
+"NoAllocDig`1" "<ObjectMetadata>" <|-- DigStaticObject
+@enduml

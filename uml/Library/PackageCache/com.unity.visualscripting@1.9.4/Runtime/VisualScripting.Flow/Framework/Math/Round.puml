@@ -1,0 +1,19 @@
+@startuml
+abstract class "Round`2"<TInput,TOutput> {
+    + rounding : Rounding <<get>> <<set>>
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # {abstract} Floor(input:TInput) : TOutput
+    # {abstract} AwayFromZero(input:TInput) : TOutput
+    # {abstract} Ceiling(input:TInput) : TOutput
+    + Operation(flow:Flow) : TOutput
+}
+enum Rounding {
+    Floor= 0,
+    Ceiling= 1,
+    AwayFromZero= 2,
+}
+Unit <|-- "Round`2"
+"Round`2" +-- Rounding
+@enduml

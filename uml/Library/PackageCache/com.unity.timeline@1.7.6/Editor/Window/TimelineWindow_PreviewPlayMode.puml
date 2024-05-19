@@ -1,0 +1,9 @@
+@startuml
+class TimelineWindow <<partial>> {
+    - OnPreviewPlayModeChanged(isPlaying:bool) : void
+    - PreparePreviewPlay() : void
+    <<internal>> OnPreviewPlay() : void
+    - ApplyJog() : void
+    - EnsurePlayRangeIsRespected() : void
+}
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class ColorPalette <<static>> {
+    + {static} unityBackgroundVeryDark : SkinnedColor
+    + {static} unityBackgroundDark : SkinnedColor
+    + {static} unityBackgroundMid : SkinnedColor
+    + {static} unityBackgroundLight : SkinnedColor
+    + {static} unityBackgroundLighter : SkinnedColor
+    + {static} unityBackgroundPure : SkinnedColor
+    + {static} unityForeground : SkinnedColor
+    + {static} unityForegroundDim : SkinnedColor
+    + {static} unityForegroundSelected : SkinnedColor
+    + {static} unitySelectionHighlight : SkinnedColor
+    + {static} reorderableListBackground : SkinnedColor
+    + {static} transparent : SkinnedColor
+    + {static} hyperlink : SkinnedColor
+    + {static} hyperlinkActive : SkinnedColor
+}
+@enduml

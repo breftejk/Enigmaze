@@ -1,0 +1,5 @@
+@startuml
+class RequireAttributeUsagesAttribute {
+}
+Attribute <|-- RequireAttributeUsagesAttribute
+@enduml

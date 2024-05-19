@@ -1,0 +1,48 @@
+@startuml
+struct XRPassCreateInfo {
+    <<internal>> renderTarget : RenderTargetIdentifier
+    <<internal>> renderTargetDesc : RenderTextureDescriptor
+    <<internal>> cullingParameters : ScriptableCullingParameters
+    <<internal>> occlusionMeshMaterial : Material
+    <<internal>> foveatedRenderingInfo : IntPtr
+    <<internal>> multipassId : int
+    <<internal>> cullingPassId : int
+    <<internal>> copyDepth : bool
+}
+class XRPass {
+    <<readonly>> - m_Views : List<XRView>
+    <<readonly>> - m_OcclusionMesh : XROcclusionMesh
+    + XRPass()
+    + {static} CreateDefault(createInfo:XRPassCreateInfo) : XRPass
+    <<virtual>> + Release() : void
+    + enabled : bool <<get>>
+    + supportsFoveatedRendering : bool <<get>>
+    + copyDepth : bool <<get>>
+    + multipassId : int <<get>>
+    + cullingPassId : int <<get>>
+    + renderTarget : RenderTargetIdentifier <<get>>
+    + renderTargetDesc : RenderTextureDescriptor <<get>>
+    + cullingParams : ScriptableCullingParameters <<get>>
+    + viewCount : int <<get>>
+    + singlePassEnabled : bool <<get>>
+    + foveatedRenderingInfo : IntPtr <<get>>
+    + isHDRDisplayOutputActive : bool <<get>>
+    + hdrDisplayOutputColorGamut : ColorGamut <<get>>
+    + hdrDisplayOutputInformation : HDROutputUtils.HDRDisplayInformation <<get>>
+    + GetProjMatrix(viewIndex:int) : Matrix4x4
+    + GetViewMatrix(viewIndex:int) : Matrix4x4
+    + GetViewport(viewIndex:int) : Rect
+    + GetOcclusionMesh(viewIndex:int) : Mesh
+    + GetTextureArraySlice(viewIndex:int) : int
+    + StartSinglePass(cmd:CommandBuffer) : void
+    + StopSinglePass(cmd:CommandBuffer) : void
+    + hasValidOcclusionMesh : bool <<get>>
+    + RenderOcclusionMesh(cmd:CommandBuffer) : void
+    + ApplyXRViewCenterOffset(center:Vector2) : Vector4
+    <<internal>> AssignView(viewId:int, xrView:XRView) : void
+    <<internal>> AssignCullingParams(cullingPassId:int, cullingParams:ScriptableCullingParameters) : void
+    <<internal>> UpdateCombinedOcclusionMesh() : void
+    + InitBase(createInfo:XRPassCreateInfo) : void
+    <<internal>> AddView(xrView:XRView) : void
+}
+@enduml

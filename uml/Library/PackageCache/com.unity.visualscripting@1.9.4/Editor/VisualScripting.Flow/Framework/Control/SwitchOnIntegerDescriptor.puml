@@ -1,0 +1,7 @@
+@startuml
+class SwitchOnIntegerDescriptor {
+    + SwitchOnIntegerDescriptor(unit:SwitchOnInteger)
+    # <<override>> GetLabelForOption(option:int) : string
+}
+"SwitchUnitDescriptor`1" "<int>" <|-- SwitchOnIntegerDescriptor
+@enduml

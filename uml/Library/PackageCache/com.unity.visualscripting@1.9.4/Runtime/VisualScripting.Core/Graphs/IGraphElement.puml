@@ -1,0 +1,18 @@
+@startuml
+interface IGraphElement {
+    <<new>> graph : IGraph <<get>> <<set>>
+    HandleDependencies() : bool
+    dependencyOrder : int <<get>>
+    <<new>> guid : Guid <<get>> <<set>>
+    Instantiate(instance:GraphReference) : void
+    Uninstantiate(instance:GraphReference) : void
+    deserializationDependencies : IEnumerable<ISerializationDependency> <<get>>
+}
+IGraphItem <|-- IGraphElement
+INotifiedCollectionItem <|-- IGraphElement
+IDisposable <|-- IGraphElement
+IPrewarmable <|-- IGraphElement
+IAotStubbable <|-- IGraphElement
+IIdentifiable <|-- IGraphElement
+IAnalyticsIdentifiable <|-- IGraphElement
+@enduml

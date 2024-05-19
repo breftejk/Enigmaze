@@ -1,0 +1,18 @@
+@startuml
+class GetSampleInfos {
+    + type : Type
+    + prefab : GameObject
+    - TextMeshProComponent : TextMeshPro = null
+    - Start() : IEnumerator
+    - UpdateTextMeshProReference() : void
+    - OnValidate() : void
+    - UpdateText() : void
+}
+enum Type {
+    Introduction,
+    Title,
+    Description,
+}
+MonoBehaviour <|-- GetSampleInfos
+GetSampleInfos +-- Type
+@enduml

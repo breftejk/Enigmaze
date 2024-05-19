@@ -1,0 +1,37 @@
+@startuml
+class MetadataListAdaptor {
+    + MetadataListAdaptor(metadata:Metadata, parentInspector:Inspector)
+    +  <<event>> itemAdded : Action<object> 
+    + metadata : Metadata <<get>>
+    # <<virtual>> ConstructList() : IList
+    # <<virtual>> ConstructItem() : object
+    + <<override>> Count : int <<get>>
+    + <<override>> Add() : void
+    + <<override>> Clear() : void
+    + <<override>> Insert(index:int) : void
+    + <<override>> Remove(index:int) : void
+    + <<override>> Move(sourceIndex:int, destinationIndex:int) : void
+    + <<override>> Duplicate(index:int) : void
+    # <<virtual>> CanAdd() : bool
+    + <<override>> CanDrag(index:int) : bool
+    + <<override>> CanRemove(index:int) : bool
+    - {static} selectedList : MetadataListAdaptor
+    - {static} selectedItem : object
+    + CanDropInsert(insertionIndex:int) : bool
+    # <<virtual>> CanDrop(item:object) : bool
+    + ProcessDropInsertion(insertionIndex:int) : void
+    + <<override>> GetItemAdaptiveWidth(index:int) : float
+    + <<override>> GetItemHeight(width:float, index:int) : float
+    + alwaysDragAndDrop : bool <<get>> <<set>> = false
+    + <<override>> DrawItem(position:Rect, index:int) : void
+    + <<override>> DrawItemBackground(position:Rect, index:int) : void
+}
+class ProjectAssemblyOptionsListAdaptor {
+    + ProjectAssemblyOptionsListAdaptor(metadata:Metadata, parentInspector:Inspector)
+    + <<override>> DrawItem(position:Rect, index:int) : void
+    - DrawAssemblyReferencingEditorWarning(position:Rect, assemblyName:string) : void
+}
+MetadataCollectionAdaptor <|-- MetadataListAdaptor
+IReorderableListDropTarget <|-- MetadataListAdaptor
+MetadataListAdaptor <|-- ProjectAssemblyOptionsListAdaptor
+@enduml

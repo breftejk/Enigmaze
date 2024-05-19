@@ -1,0 +1,15 @@
+@startuml
+enum RuntimeInitializeLoadType {
+    AfterSceneLoad= 0,
+    BeforeSceneLoad,
+    AfterAssembliesLoaded,
+    BeforeSplashScreen,
+    SubsystemRegistration,
+}
+class RuntimeInitializeOnLoadMethodAttribute {
+    + RuntimeInitializeOnLoadMethodAttribute()
+    + RuntimeInitializeOnLoadMethodAttribute(loadType:RuntimeInitializeLoadType)
+    + loadType : RuntimeInitializeLoadType <<get>>
+    - m_LoadType : RuntimeInitializeLoadType
+}
+@enduml

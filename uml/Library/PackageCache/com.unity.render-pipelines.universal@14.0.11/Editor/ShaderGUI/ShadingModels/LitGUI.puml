@@ -1,0 +1,66 @@
+@startuml
+class LitGUI <<static>> {
+    + {static} Inputs(properties:LitProperties, materialEditor:MaterialEditor, material:Material) : void
+    - {static} ClearCoatAvailable(material:Material) : bool
+    - {static} HeightmapAvailable(material:Material) : bool
+    - {static} DoHeightmapArea(properties:LitProperties, materialEditor:MaterialEditor) : void
+    - {static} ClearCoatEnabled(material:Material) : bool
+    + {static} DoClearCoat(properties:LitProperties, materialEditor:MaterialEditor, material:Material) : void
+    + {static} DoMetallicSpecularArea(properties:LitProperties, materialEditor:MaterialEditor, material:Material) : void
+    <<internal>> {static} IsOpaque(material:Material) : bool
+    + {static} DoSmoothness(materialEditor:MaterialEditor, material:Material, smoothness:MaterialProperty, smoothnessMapChannel:MaterialProperty, smoothnessChannelNames:string[]) : void
+    + {static} GetSmoothnessMapChannel(material:Material) : SmoothnessMapChannel
+    <<internal>> {static} SetupSpecularWorkflowKeyword(material:Material, isSpecularWorkflow:bool) : void
+    + {static} SetMaterialKeywords(material:Material) : void
+}
+enum WorkflowMode {
+    Specular= 0,
+    Metallic,
+}
+enum SmoothnessMapChannel {
+    SpecularMetallicAlpha,
+    AlbedoAlpha,
+}
+class Styles <<static>> {
+    + {static} workflowModeText : GUIContent
+    + {static} specularMapText : GUIContent
+    + {static} metallicMapText : GUIContent
+    + {static} smoothnessText : GUIContent
+    + {static} smoothnessMapChannelText : GUIContent
+    + {static} highlightsText : GUIContent
+    + {static} reflectionsText : GUIContent
+    + {static} heightMapText : GUIContent
+    + {static} occlusionText : GUIContent
+    + {static} <<readonly>> metallicSmoothnessChannelNames : string[]
+    + {static} <<readonly>> specularSmoothnessChannelNames : string[]
+    + {static} clearCoatText : GUIContent
+    + {static} clearCoatMaskText : GUIContent
+    + {static} clearCoatSmoothnessText : GUIContent
+}
+struct LitProperties {
+    + workflowMode : MaterialProperty
+    + metallic : MaterialProperty
+    + specColor : MaterialProperty
+    + metallicGlossMap : MaterialProperty
+    + specGlossMap : MaterialProperty
+    + smoothness : MaterialProperty
+    + smoothnessMapChannel : MaterialProperty
+    + bumpMapProp : MaterialProperty
+    + bumpScaleProp : MaterialProperty
+    + parallaxMapProp : MaterialProperty
+    + parallaxScaleProp : MaterialProperty
+    + occlusionStrength : MaterialProperty
+    + occlusionMap : MaterialProperty
+    + highlights : MaterialProperty
+    + reflections : MaterialProperty
+    + clearCoat : MaterialProperty
+    + clearCoatMap : MaterialProperty
+    + clearCoatMask : MaterialProperty
+    + clearCoatSmoothness : MaterialProperty
+    + LitProperties(properties:MaterialProperty[])
+}
+LitGUI +-- WorkflowMode
+LitGUI +-- SmoothnessMapChannel
+LitGUI +-- Styles
+LitGUI +-- LitProperties
+@enduml

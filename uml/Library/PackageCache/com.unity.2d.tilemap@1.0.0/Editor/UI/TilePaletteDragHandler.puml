@@ -1,0 +1,12 @@
+@startuml
+class TilePaletteDragHandler {
+    - <<readonly>> m_DragUpdated : Action
+    - <<readonly>> m_DragPerformed : Action
+    + TilePaletteDragHandler(dragUpdated:Action, dragPerformed:Action)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - OnDragUpdate(evt:DragUpdatedEvent) : void
+    - OnDragPerformEvent(evt:DragPerformEvent) : void
+}
+MouseManipulator <|-- TilePaletteDragHandler
+@enduml

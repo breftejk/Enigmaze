@@ -1,0 +1,8 @@
+@startuml
+struct KernelDescriptor {
+    + name : string
+    + templatePath : string
+    + sharedTemplateDirectories : string[]
+    + passDescriptorReference : PassDescriptor
+}
+@enduml

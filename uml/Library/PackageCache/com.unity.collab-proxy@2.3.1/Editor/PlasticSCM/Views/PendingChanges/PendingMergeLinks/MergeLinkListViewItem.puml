@@ -1,0 +1,7 @@
+@startuml
+class MergeLinkListViewItem {
+    <<internal>> MergeLink : MountPendingMergeLink <<get>>
+    <<internal>> MergeLinkListViewItem(id:int, mergeLink:MountPendingMergeLink)
+}
+TreeViewItem <|-- MergeLinkListViewItem
+@enduml

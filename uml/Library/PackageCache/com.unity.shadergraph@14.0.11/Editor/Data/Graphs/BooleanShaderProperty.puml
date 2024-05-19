@@ -1,0 +1,15 @@
+@startuml
+class BooleanShaderProperty <<sealed>> {
+    <<internal>> BooleanShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+}
+"AbstractShaderProperty`1" "<bool>" <|-- BooleanShaderProperty
+@enduml

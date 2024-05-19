@@ -1,0 +1,7 @@
+@startuml
+class VariablesAsset <<sealed>> {
+    + declarations : VariableDeclarations <<get>> <<internal set>>
+    # <<override>> ShowData() : void
+}
+LudiqScriptableObject <|-- VariablesAsset
+@enduml

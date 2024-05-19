@@ -1,0 +1,16 @@
+@startuml
+class UnityPlasticGuiMessage {
+    - ShowMessage(title:string, message:string, alertType:GuiMessage.GuiMessageType) : void
+    - ShowError(message:string) : void
+    - ShowQuestion(title:string, message:string, positiveActionButton:string, neutralActionButton:string, negativeActionButton:string) : GuiMessage.GuiMessageResponseButton
+    - ShowQuestion(title:string, message:string, yesButton:string) : bool
+    - ShowQuestionWithLearnMore(title:string, message:string, yesButton:string, noButton:string, learnMoreContent:MultiLinkLabelData) : bool
+    - ShowYesNoQuestion(title:string, message:string) : bool
+    - ShowYesNoCancelQuestion(title:string, message:string) : GuiMessage.GuiMessageResponseButton
+    - ShowYesNoQuestionWithType(title:string, message:string, messageType:GuiMessage.GuiMessageType) : bool
+    - ShowQuestionWithCheckBox(title:string, message:string, positiveButtonText:string, neutralButtonText:string, negativeButtonText:string, dontShowAgainContent:MultiLinkLabelData, checkBoxValue:bool) : GuiMessage.GuiMessageResponseButton
+    {static} - GetResponse(dialogResult:int) : GuiMessage.GuiMessageResponseButton
+    {static} - BuildDialogTitle(title:string, alertType:GuiMessage.GuiMessageType) : string
+    {static} - GetAlertTypeText(alertType:GuiMessage.GuiMessageType) : string
+}
+@enduml

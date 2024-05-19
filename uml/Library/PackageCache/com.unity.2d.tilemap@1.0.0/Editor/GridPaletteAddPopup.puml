@@ -1,0 +1,31 @@
+@startuml
+class GridPaletteAddPopup {
+    - {static} s_LastClosedTime : long
+    - m_Name : string = "New Palette"
+    - {static} s_Instance : GridPaletteAddPopup
+    - m_Layout : GridLayout.CellLayout
+    - m_HexagonLayout : int
+    - m_CellSizing : GridPalette.CellSizing
+    - m_CellSize : Vector3
+    - m_TransparencySortMode : TransparencySortMode
+    - m_TransparencySortAxis : Vector3
+    - Init(buttonRect:Rect) : void
+    <<internal>> OnGUI() : void
+    <<internal>> {static} ShowAtPosition(buttonRect:Rect) : bool
+}
+class Styles <<static>> {
+    + {static} <<readonly>> nameLabel : GUIContent
+    + {static} <<readonly>> ok : GUIContent
+    + {static} <<readonly>> cancel : GUIContent
+    + {static} <<readonly>> header : GUIContent
+    + {static} <<readonly>> gridLabel : GUIContent
+    + {static} <<readonly>> sizeLabel : GUIContent
+    + {static} <<readonly>> hexagonLabel : GUIContent
+    + {static} <<readonly>> hexagonSwizzleTypeLabel : GUIContent[]
+    + {static} <<readonly>> hexagonSwizzleTypeValue : GridLayout.CellSwizzle[]
+    + {static} <<readonly>> transparencySortModeLabel : GUIContent
+    + {static} <<readonly>> transparencySortAxisLabel : GUIContent
+}
+EditorWindow <|-- GridPaletteAddPopup
+GridPaletteAddPopup +-- Styles
+@enduml

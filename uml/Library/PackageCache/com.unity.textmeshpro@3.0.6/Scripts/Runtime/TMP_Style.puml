@@ -1,0 +1,22 @@
+@startuml
+class TMP_Style {
+    + {static} NormalStyle : TMP_Style <<get>>
+    <<internal>> {static} k_NormalStyle : TMP_Style
+    + name : string <<get>> <<set>>
+    + hashCode : int <<get>> <<set>>
+    + styleOpeningDefinition : string <<get>>
+    + styleClosingDefinition : string <<get>>
+    + styleOpeningTagArray : int[] <<get>>
+    + styleClosingTagArray : int[] <<get>>
+    - m_Name : string
+    - m_HashCode : int
+    - m_OpeningDefinition : string
+    - m_ClosingDefinition : string
+    - m_OpeningTagArray : int[]
+    - m_ClosingTagArray : int[]
+    <<internal>> m_OpeningTagUnicodeArray : uint[]
+    <<internal>> m_ClosingTagUnicodeArray : uint[]
+    <<internal>> TMP_Style(styleName:string, styleOpeningDefinition:string, styleClosingDefinition:string)
+    + RefreshStyle() : void
+}
+@enduml

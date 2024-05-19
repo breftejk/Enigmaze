@@ -1,0 +1,13 @@
+@startuml
+class TilePaletteSaveUtility {
+    + {static} SaveTilePalette(originalPalette:GameObject, paletteInstance:GameObject) : bool
+}
+class TilePaletteSaveScope {
+    - m_GameObject : GameObject
+    + TilePaletteSaveScope(paletteInstance:GameObject)
+    + Dispose() : void
+    - SetHideFlagsRecursively(root:GameObject, flags:HideFlags) : void
+}
+TilePaletteSaveUtility +-- TilePaletteSaveScope
+IDisposable <|-- TilePaletteSaveScope
+@enduml

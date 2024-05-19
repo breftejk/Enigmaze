@@ -1,0 +1,32 @@
+@startuml
+class Serialization <<static>> {
+    {static} - Serialization()
+    + <<const>> ConstructorWarning : string = "This parameterless constructor is only made public for serialization. Use another constructor instead."
+    - {static} <<readonly>> freeOperations : HashSet<SerializationOperation>
+    - {static} <<readonly>> busyOperations : HashSet<SerializationOperation>
+    - {static} <<readonly>> @lock : object
+    + {static} isUnitySerializing : bool <<get>> <<set>>
+    + {static} isCustomSerializing : bool <<get>>
+    + {static} isSerializing : bool <<get>>
+    - {static} StartOperation() : SerializationOperation
+    - {static} EndOperation(operation:SerializationOperation) : void
+    + {static} CloneViaSerialization(value:T, forceReflected:bool) : T
+    + {static} CloneViaSerializationInto(value:TSource, instance:TDestination, forceReflected:bool) : void
+    + {static} Serialize(value:object, forceReflected:bool) : SerializationData
+    + {static} DeserializeInto(data:SerializationData, instance:object, forceReflected:bool) : void
+    + {static} Deserialize(data:SerializationData, forceReflected:bool) : object
+    - {static} SerializeJson(serializer:fsSerializer, instance:object, forceReflected:bool) : string
+    - {static} DeserializeJsonUtil(serializer:fsSerializer, json:string, instance:object, forceReflected:bool) : fsResult
+    - {static} DeserializeJson(serializer:fsSerializer, json:string, instance:object, forceReflected:bool) : void
+    - {static} HandleResult(label:string, result:fsResult, context:UnityObject) : void
+    + {static} PrettyPrint(json:string) : string
+    - {static} <<readonly>> awaitingDependers : HashSet<ISerializationDepender>
+    + {static} AwaitDependencies(depender:ISerializationDepender) : void
+    + {static} NotifyDependencyDeserializing(dependency:ISerializationDependency) : void
+    + {static} NotifyDependencyDeserialized(dependency:ISerializationDependency) : void
+    + {static} NotifyDependencyUnavailable(dependency:ISerializationDependency) : void
+    + {static} NotifyDependencyAvailable(dependency:ISerializationDependency) : void
+    - {static} CheckIfDependenciesMet(depender:ISerializationDepender) : void
+    + {static} LogStuckDependers() : void
+}
+@enduml

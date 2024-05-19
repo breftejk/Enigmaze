@@ -1,0 +1,8 @@
+@startuml
+class UniversalGlobalSettingsEditor <<sealed>> {
+    - m_SerializedGlobalSettings : SerializedUniversalRenderPipelineGlobalSettings
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+Editor <|-- UniversalGlobalSettingsEditor
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class TrackResourceCache <<static>> {
+    - {static} s_TrackIconCache : Dictionary<System.Type, GUIContent>
+    - {static} s_TrackColorCache : Dictionary<System.Type, Color>
+    + {static} s_DefaultIcon : GUIContent
+    + {static} GetTrackIcon(track:TrackAsset) : GUIContent
+    + {static} GetTrackIconForType(trackType:System.Type) : Texture2D
+    + {static} GetTrackColor(track:TrackAsset) : Color
+    + {static} ClearTrackIconCache() : void
+    + {static} SetTrackIcon(content:GUIContent) : void
+    + {static} ClearTrackColorCache() : void
+    + {static} SetTrackColor(c:Color) : void
+    - {static} FindTrackIcon(track:TrackAsset) : GUIContent
+}
+@enduml

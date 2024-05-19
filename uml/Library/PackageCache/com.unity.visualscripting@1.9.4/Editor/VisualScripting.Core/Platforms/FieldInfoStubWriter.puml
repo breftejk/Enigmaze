@@ -1,0 +1,8 @@
+@startuml
+class FieldInfoStubWriter {
+    + FieldInfoStubWriter(fieldInfo:FieldInfo)
+    # <<override>> GetOptimizedAccessor(fieldInfo:FieldInfo) : IOptimizedAccessor
+    + <<override>> GetStubStatements() : IEnumerable<CodeStatement>
+}
+"AccessorInfoStubWriter`1" "<FieldInfo>" <|-- FieldInfoStubWriter
+@enduml

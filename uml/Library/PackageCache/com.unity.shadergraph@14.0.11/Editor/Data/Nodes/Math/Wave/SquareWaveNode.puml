@@ -1,0 +1,8 @@
+@startuml
+class SquareWaveNode {
+    + SquareWaveNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - SquareWave(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SquareWaveNode
+@enduml

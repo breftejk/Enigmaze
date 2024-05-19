@@ -1,0 +1,27 @@
+@startuml
+enum PendingChangesTreeColumn {
+    Item,
+    Status,
+    Size,
+    Extension,
+    Type,
+    DateModififed,
+    Repository,
+}
+class PendingChangesTreeHeaderState {
+    <<internal>> {static} GetDefault(isGluonMode:bool) : PendingChangesTreeHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    <<internal>> {static} GetColumnName(column:PendingChangesTreeColumn) : string
+    <<internal>> {static} SetMode(state:MultiColumnHeaderState, isGluonMode:bool) : void
+    <<internal>> UpdateItemColumnHeader(treeView:PendingChangesTreeView) : void
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - GetDefaultVisibleColumns() : int[]
+    {static} - BuildColumns() : Column[]
+    - PendingChangesTreeHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+    - mColumsAllowedToggleVisibility : bool[]
+}
+MultiColumnHeaderState <|-- PendingChangesTreeHeaderState
+ISerializationCallbackReceiver <|-- PendingChangesTreeHeaderState
+@enduml

@@ -1,0 +1,113 @@
+@startuml
+class SpriteOutline {
+    + m_Path : List<Vector2>
+    + Add(point:Vector2) : void
+    + Insert(index:int, point:Vector2) : void
+    + RemoveAt(index:int) : void
+    + Count : int <<get>>
+    + AddRange(addRange:IEnumerable<Vector2>) : void
+}
+class SpriteOutlineList {
+    - m_SpriteOutlines : List<SpriteOutline>
+    - m_TessellationDetail : float = 0
+    + spriteOutlines : List<SpriteOutline> <<get>> <<set>>
+    + spriteID : GUID <<get>>
+    + tessellationDetail : float <<get>> <<set>>
+    + SpriteOutlineList(guid:GUID)
+    + SpriteOutlineList(guid:GUID, list:List<Vector2[]>)
+    + SpriteOutlineList(guid:GUID, list:List<SpriteOutline>)
+    + ToListVector() : List<Vector2[]>
+    + ToListVectorCapped(rect:Rect) : List<Vector2[]>
+    + Count : int <<get>>
+    - IsValidIndex(index:int) : bool
+}
+class SpriteOutlineModel {
+    - m_SpriteOutlineList : List<SpriteOutlineList>
+    - SpriteOutlineModel()
+    + AddListVector2(guid:GUID, outline:List<Vector2[]>) : void
+    + Count : int <<get>>
+    - IsValidIndex(index:int) : bool
+}
+class SpriteOutlineModule {
+    # m_Selected : SpriteRect
+    - <<const>> k_HandleSize : float = 5f
+    - <<readonly>> k_DeleteCommandName : string
+    - <<readonly>> k_SoftDeleteCommandName : string
+    - m_ShapeEditors : ShapeEditor[]
+    - m_RequestRepaint : bool
+    - m_HandleMatrix : Matrix4x4
+    - m_MousePosition : Vector2
+    - m_Snap : bool = true
+    - m_ShapeSelectionUI : ShapeEditorRectSelectionTool
+    - m_WasRectSelecting : bool = false
+    - m_SelectionRect : Rect?
+    - m_OutlineTexture : ITexture2D
+    - m_Styles : Styles
+    # m_Outline : SpriteOutlineModel
+    - m_CopyOutline : SpriteOutlineList = null
+    # m_TextureDataProvider : ITextureDataProvider
+    + SpriteOutlineModule(sem:ISpriteEditor, es:IEventSystem, us:IUndoSystem, ad:IAssetDatabase, gu:IGUIUtility, sef:IShapeEditorFactory, outlineTexture:ITexture2D)
+    + <<override>> moduleName : string <<get>>
+    + <<override>> ApplyRevert(apply:bool) : bool
+    - styles : Styles <<get>>
+    # <<virtual>> selectedShapeOutline : List<SpriteOutline> <<get>> <<set>>
+    - shapeEditorDirty : bool <<get>> <<set>>
+    - editingDisabled : bool <<get>>
+    - spriteEditorWindow : ISpriteEditor <<get>> <<set>>
+    - undoSystem : IUndoSystem <<get>> <<set>>
+    - eventSystem : IEventSystem <<get>> <<set>>
+    - assetDatabase : IAssetDatabase <<get>> <<set>>
+    - guiUtility : IGUIUtility <<get>> <<set>>
+    - shapeEditorFactory : IShapeEditorFactory <<get>> <<set>>
+    - RectSelect(r:Rect, selectionType:ShapeEditor.SelectionType) : void
+    - ClearSelection() : void
+    # <<virtual>> LoadOutline() : void
+    + <<override>> OnModuleActivate() : void
+    - GenerateOutlineIfNotExist() : void
+    + <<override>> OnModuleDeactivate() : void
+    + <<override>> DoMainGUI() : void
+    + <<override>> DoToolbarGUI(drawArea:Rect) : void
+    + <<override>> DoPostGUI() : void
+    + <<override>> CanBeActivated() : bool
+    - RecordUndo() : void
+    + CreateNewOutline(rectOutline:Rect) : void
+    - HandleCreateNewOutline() : void
+    + UpdateShapeEditors() : void
+    - IsMouseOverOutlinePoints() : bool
+    - GetHandleSize() : float
+    - CleanupShapeEditors() : void
+    + SetupShapeEditor() : void
+    # <<virtual>> HasShapeOutline(spriteRect:SpriteRect) : bool
+    # <<virtual>> SetupShapeEditorOutline(spriteRect:SpriteRect) : void
+    + SnapPoint(position:Vector3) : Vector3
+    + GetPointPosition(outlineIndex:int, pointIndex:int) : Vector3
+    + SetPointPosition(outlineIndex:int, pointIndex:int, position:Vector3) : void
+    + InsertPointAt(outlineIndex:int, pointIndex:int, position:Vector3) : void
+    + RemovePointAt(outlineIndex:int, i:int) : void
+    + GetPointsCount(outlineIndex:int) : int
+    - ConvertSpriteRectSpaceToTextureSpace(value:Vector2) : Vector2
+    - ConvertTextureSpaceToSpriteRectSpace(value:Vector2) : Vector2
+    - ScreenToLocal(point:Vector2) : Vector3
+    - UndoRedoPerformed() : void
+    - DrawGizmos() : void
+    # {static} GenerateSpriteRectOutline(rect:Rect, detail:float, alphaTolerance:byte, textureProvider:ITextureDataProvider) : List<SpriteOutline>
+    + Copy() : void
+    + Paste() : void
+    + PasteAll() : void
+    <<internal>> {static} CapPointToRect(so:Vector2, r:Rect) : Vector2
+}
+class Styles {
+    + generateOutlineLabel : GUIContent
+    + outlineTolerance : GUIContent
+    + snapButtonLabel : GUIContent
+    + copyButtonLabel : GUIContent
+    + pasteButtonLabel : GUIContent
+    + pasteAllButtonLabel : GUIContent
+    + generatingOutlineDialogTitle : GUIContent
+    + generatingOutlineDialogContent : GUIContent
+    + spriteBorderColor : Color
+}
+ScriptableObject <|-- SpriteOutlineModel
+SpriteEditorModuleBase <|-- SpriteOutlineModule
+SpriteOutlineModule +-- Styles
+@enduml

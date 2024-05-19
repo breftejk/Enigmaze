@@ -1,0 +1,10 @@
+@startuml
+class FreeformPathPresets <<static>> {
+    + {static} CreateSquare() : Vector3[]
+    + {static} CreateIsometricDiamond() : Vector3[]
+    - {static} CreateShape(vertices:int, angleOffset:float) : Vector3[]
+    + {static} CreateCircle() : Vector3[]
+    + {static} CreateHexagonFlatTop() : Vector3[]
+    + {static} CreateHexagonPointedTop() : Vector3[]
+}
+@enduml

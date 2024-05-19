@@ -1,0 +1,9 @@
+@startuml
+class "ScriptableData`1"<T> {
+    - m_Data : T
+    + owner : UnityObject <<get>> <<set>>
+    + index : int <<get>> <<set>>
+    + data : T <<get>> <<set>>
+}
+ScriptableObject <|-- "ScriptableData`1"
+@enduml

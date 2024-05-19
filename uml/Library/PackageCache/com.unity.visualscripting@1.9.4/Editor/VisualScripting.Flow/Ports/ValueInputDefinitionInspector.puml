@@ -1,0 +1,15 @@
+@startuml
+class ValueInputDefinitionInspector <<sealed>> {
+    + ValueInputDefinitionInspector(metadata:Metadata)
+    - hasDefaultValueMetadata : Metadata <<get>>
+    - defaultValueMetadata : Metadata <<get>>
+    - typedDefaultValueMetadata : Metadata <<get>>
+    - GetHasDefaultValueHeight(width:float) : float
+    - GetDefaultValueHeight(width:float) : float
+    - OnHasDefaultValueGUI(position:Rect) : void
+    - OnDefaultValueGUI(position:Rect) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnFieldsGUI(position:Rect) : void
+}
+ValuePortDefinitionInspector <|-- ValueInputDefinitionInspector
+@enduml

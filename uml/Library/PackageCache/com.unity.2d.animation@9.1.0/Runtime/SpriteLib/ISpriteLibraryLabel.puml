@@ -1,0 +1,6 @@
+@startuml
+interface ISpriteLibraryLabel {
+    name : string <<get>>
+    sprite : Sprite <<get>>
+}
+@enduml

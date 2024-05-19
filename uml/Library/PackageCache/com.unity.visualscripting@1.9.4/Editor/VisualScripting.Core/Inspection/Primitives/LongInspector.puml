@@ -1,0 +1,6 @@
+@startuml
+class LongInspector {
+    + LongInspector(metadata:Metadata)
+}
+"ContinuousNumberInspector`1" "<long>" <|-- LongInspector
+@enduml

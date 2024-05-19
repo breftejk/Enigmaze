@@ -1,0 +1,25 @@
+@startuml
+class IKChain2D {
+    - m_EffectorTransform : Transform
+    - m_TargetTransform : Transform
+    - m_TransformCount : int
+    - m_Transforms : Transform[]
+    - m_DefaultLocalRotations : Quaternion[]
+    - m_StoredLocalRotations : Quaternion[]
+    # m_Lengths : float[]
+    + effector : Transform <<get>> <<set>>
+    + target : Transform <<get>> <<set>>
+    + transforms : Transform[] <<get>>
+    + rootTransform : Transform <<get>>
+    - lastTransform : Transform <<get>>
+    + transformCount : int <<get>> <<set>>
+    + isValid : bool <<get>>
+    + lengths : float[] <<get>>
+    - Validate() : bool
+    + Initialize() : void
+    - PrepareLengths() : void
+    + RestoreDefaultPose(targetRotationIsConstrained:bool) : void
+    + StoreLocalRotations() : void
+    + BlendFkToIk(finalWeight:float, targetRotationIsConstrained:bool) : void
+}
+@enduml

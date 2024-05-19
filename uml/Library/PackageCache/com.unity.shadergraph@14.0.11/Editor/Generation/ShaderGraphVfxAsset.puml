@@ -1,0 +1,58 @@
+@startuml
+struct TextureInfo {
+    + TextureInfo(name:string, texture:Texture, dimension:TextureDimension)
+    + name : string
+    + texture : Texture
+    + dimension : TextureDimension
+    + instanceID : int <<get>>
+}
+class ShaderGraphVfxAsset <<sealed>> {
+    + <<const>> BaseColorSlotId : int = 1
+    + <<const>> MetallicSlotId : int = 2
+    + <<const>> SmoothnessSlotId : int = 3
+    + <<const>> NormalSlotId : int = 8
+    + <<const>> AlphaSlotId : int = 4
+    + <<const>> EmissiveSlotId : int = 5
+    + <<const>> ColorSlotId : int = 6
+    + <<const>> AlphaThresholdSlotId : int = 7
+    + generatesWithShaderGraph : bool
+    + lit : bool
+    + alphaClipping : bool
+    <<internal>> m_PropertiesStages : ShaderStageCapability[]
+    <<internal>> compilationResult : GraphCompilationResult
+    <<internal>> portRequirements : ShaderGraphRequirements[]
+    - m_EvaluationFunctionName : string
+    - m_InputStructName : string
+    - m_OutputStructName : string
+    - m_ConcretePrecision : ConcretePrecision
+    - m_Data : ShaderGraphVfxAssetData
+    - m_SerializedVfxAssetData : SerializationHelper.JSONSerializedElement
+    <<internal>> outputPropertyIndices : IntArray[]
+    <<internal>> concretePrecision : ConcretePrecision <<get>> <<set>>
+    - m_Outputs : OutputMetadata[]
+    - m_TextureInfos : TextureInfo[]
+    + textureInfos : IEnumerable<TextureInfo> <<get>>
+    <<internal>> SetTextureInfos(textures:IList<PropertyCollector.TextureInfo>) : void
+    <<internal>> SetOutputs(outputs:OutputMetadata[]) : void
+    + GetOutput(id:int) : OutputMetadata
+    + HasOutput(id:int) : bool
+    + evaluationFunctionName : string <<get>> <<internal set>>
+    + inputStructName : string <<get>> <<internal set>>
+    + outputStructName : string <<get>> <<internal set>>
+    + properties : List<AbstractShaderProperty> <<get>>
+    + fragmentProperties : List<AbstractShaderProperty> <<get>>
+    + vertexProperties : List<AbstractShaderProperty> <<get>>
+    <<internal>> SetProperties(propertiesList:List<AbstractShaderProperty>) : void
+    - EnsureProperties() : void
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    + GetCode(outputs:OutputMetadata[]) : GraphCode
+}
+class ShaderGraphVfxAssetData {
+    + m_Properties : List<JsonData<AbstractShaderProperty>>
+}
+ScriptableObject <|-- ShaderGraphVfxAsset
+ISerializationCallbackReceiver <|-- ShaderGraphVfxAsset
+ShaderGraphVfxAsset +-- ShaderGraphVfxAssetData
+JsonObject <|-- ShaderGraphVfxAssetData
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class GetApplicationVariable <<sealed>> {
+    + GetApplicationVariable()
+    + GetApplicationVariable(defaultName:string)
+    # <<override>> GetDeclarations(flow:Flow) : VariableDeclarations
+}
+GetVariableUnit <|-- GetApplicationVariable
+IApplicationVariableUnit <|-- GetApplicationVariable
+@enduml

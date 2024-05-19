@@ -1,0 +1,44 @@
+@startuml
+class TilemapEditorToolPreferences {
+    - {static} <<readonly>> s_LibraryFolderPath : string = "Library/GridBrush"
+    - {static} <<readonly>> s_AssetPath : string
+    <<internal>> {static} PreferencesGUI() : void
+    <<internal>> {static} CreateDefaultTilePaletteEditorTools() : EditorTool[]
+    <<internal>> {static}  <<event>> tilemapEditorToolsChanged : Action 
+    - m_DefaultTypes : ReorderableList
+    - m_OtherTypes : ReorderableList
+    - m_Changed : bool
+    - m_AllTilemapEditorToolTypes : HashSet<Type>
+    - m_DefaultTilemapEditorToolTypes : List<DefaultTilemapEditorTool>
+    - m_OtherTilemapEditorToolTypes : List<DefaultTilemapEditorTool>
+    - {static} s_DefaultTilemapEditorTools : EditorTool[]
+    - OnEnable() : void
+    - InitializeAllTilemapEditorToolTypes() : void
+    - LoadDefaultEditorToolTypes() : void
+    - CreateDefaultTilemapEditorTools() : EditorTool[]
+    <<internal>> UpdateTilemapEditorToolsChange() : void
+    - OnDrawDefaultElement(rect:Rect, i:int, isactive:bool, isfocused:bool) : void
+    - OnDrawOtherElement(rect:Rect, i:int, isactive:bool, isfocused:bool) : void
+    - DoDrawElement(rect:Rect, defaultType:DefaultTilemapEditorTool) : void
+    - OnReorderDefaultElement(list:ReorderableList) : void
+    - DoPreferencesGUI() : void
+    <<internal>> SaveTilemapEditorToolPreferences(defaultTools:List<DefaultTilemapEditorTool>) : void
+    <<internal>> ResetTilemapEditorToolPreferences() : void
+    - {static} DeleteTilemapEditorToolPreferencesAsset() : void
+    - {static} SaveTilemapEditorToolPreferencesAsset(defaultTools:List<DefaultTilemapEditorTool>) : void
+    - {static} ClearExistingDefaultTilemapEditorTools() : void
+    - LoadTilemapEditorToolPreferencesAsset() : List<DefaultTilemapEditorTool>
+    - DeactivateToolIfNotInDefault() : void
+}
+class TilemapEditorToolProperties {
+    + {static} <<readonly>> defaultToolsEditorPref : string = "TilemapEditorTool.DefaultTools"
+    + {static} <<readonly>> defaultToolsLabel : GUIContent
+    + {static} <<readonly>> addLabel : GUIContent
+    + {static} <<readonly>> removeLabel : GUIContent
+    + {static} <<readonly>> saveLabel : GUIContent
+    + {static} <<readonly>> revertLabel : GUIContent
+    + {static} <<readonly>> resetLabel : GUIContent
+}
+"ScriptableSingleton`1" "<TilemapEditorToolPreferences>" <|-- TilemapEditorToolPreferences
+TilemapEditorToolPreferences +-- TilemapEditorToolProperties
+@enduml

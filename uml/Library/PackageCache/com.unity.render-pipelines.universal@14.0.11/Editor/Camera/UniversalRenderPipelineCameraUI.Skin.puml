@@ -1,0 +1,12 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Styles {
+    + {static} cameraType : GUIContent
+    + {static} <<readonly>> pixelPerfectInfo : string
+    + {static} stackSettingsText : GUIContent
+    + {static} cameras : GUIContent
+    + {static} inspectorOverlayCameraText : string
+}
+UniversalRenderPipelineCameraUI +-- Styles
+@enduml

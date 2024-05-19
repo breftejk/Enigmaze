@@ -1,0 +1,17 @@
+@startuml
+class ParticleControlPlayable {
+    <<const>> - kUnsetTime : float
+    - m_LastPlayableTime : float
+    - m_LastParticleTime : float
+    - m_RandomSeed : uint = 1
+    + {static} Create(graph:PlayableGraph, component:ParticleSystem, randomSeed:uint) : ScriptPlayable<ParticleControlPlayable>
+    + particleSystem : ParticleSystem <<get>>
+    + Initialize(ps:ParticleSystem, randomSeed:uint) : void
+    {static} - SetRandomSeed(particleSystem:ParticleSystem, randomSeed:uint) : void
+    + <<override>> PrepareFrame(playable:Playable, data:FrameData) : void
+    + <<override>> OnBehaviourPlay(playable:Playable, info:FrameData) : void
+    + <<override>> OnBehaviourPause(playable:Playable, info:FrameData) : void
+    - Simulate(time:float, restart:bool) : void
+}
+PlayableBehaviour <|-- ParticleControlPlayable
+@enduml

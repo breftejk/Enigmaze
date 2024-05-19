@@ -1,0 +1,13 @@
+@startuml
+class AnimationTriggersDrawer {
+    <<const>> - kNormalTrigger : string = "m_NormalTrigger"
+    <<const>> - kHighlightedTrigger : string = "m_HighlightedTrigger"
+    <<const>> - kPressedTrigger : string = "m_PressedTrigger"
+    <<const>> - kSelectedTrigger : string = "m_SelectedTrigger"
+    <<const>> - kDisabledTrigger : string = "m_DisabledTrigger"
+    + <<override>> OnGUI(rect:Rect, prop:SerializedProperty, label:GUIContent) : void
+    + <<override>> GetPropertyHeight(prop:SerializedProperty, label:GUIContent) : float
+    + <<override>> CreatePropertyGUI(property:SerializedProperty) : VisualElement
+}
+PropertyDrawer <|-- AnimationTriggersDrawer
+@enduml

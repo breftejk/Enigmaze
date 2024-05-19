@@ -1,0 +1,7 @@
+@startuml
+class SelectOnEnumDescriptor {
+    + SelectOnEnumDescriptor(unit:SelectOnEnum)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<SelectOnEnum>" <|-- SelectOnEnumDescriptor
+@enduml

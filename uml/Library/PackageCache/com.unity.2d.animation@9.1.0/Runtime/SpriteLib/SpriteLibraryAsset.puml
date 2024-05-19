@@ -1,0 +1,53 @@
+@startuml
+interface INameHash {
+    name : string <<get>> <<set>>
+    hash : int <<get>>
+}
+class SpriteCategoryEntry {
+    - m_Name : string
+    - m_Hash : int
+    - m_Sprite : Sprite
+    + name : string <<get>> <<set>>
+    + hash : int <<get>>
+    + sprite : Sprite <<get>> <<set>>
+    + UpdateHash() : void
+}
+class SpriteLibCategory {
+    - m_Name : string
+    - m_Hash : int
+    - m_CategoryList : List<SpriteCategoryEntry>
+    + name : string <<get>> <<set>>
+    + hash : int <<get>>
+    + categoryList : List<SpriteCategoryEntry> <<get>> <<set>>
+    + labels : IEnumerable<ISpriteLibraryLabel> <<get>>
+    + UpdateHash() : void
+    <<internal>> ValidateLabels(log:bool) : void
+}
+class SpriteLibraryAsset {
+    - m_Labels : List<SpriteLibCategory>
+    - m_ModificationHash : long
+    - m_Version : int
+    <<internal>> {static} CreateAsset(categories:List<SpriteLibCategory>, assetName:string, modificationHash:long) : SpriteLibraryAsset
+    <<internal>> categories : List<SpriteLibCategory> <<get>> <<set>>
+    <<internal>> modificationHash : long <<get>> <<set>>
+    <<internal>> version : int <<set>>
+    - OnEnable() : void
+    - UpdateToVersionOne() : void
+    <<internal>> GetSprite(categoryHash:int, labelHash:int) : Sprite
+    <<internal>> GetSprite(categoryHash:int, labelHash:int, validEntry:bool) : Sprite
+    + GetSprite(category:string, label:string) : Sprite
+    + GetCategoryNames() : IEnumerable<string>
+    + GetCategorylabelNames(category:string) : IEnumerable<string>
+    + GetCategoryLabelNames(category:string) : IEnumerable<string>
+    + AddCategoryLabel(sprite:Sprite, category:string, label:string) : void
+    + RemoveCategoryLabel(category:string, label:string, deleteCategory:bool) : void
+    <<internal>> UpdateHashes() : void
+    <<internal>> ValidateCategories(log:bool) : void
+    <<internal>> {static} RenameDuplicate(nameHashList:IEnumerable<INameHash>, onRename:Action<string, string>) : void
+}
+INameHash <|-- SpriteCategoryEntry
+ISpriteLibraryLabel <|-- SpriteCategoryEntry
+INameHash <|-- SpriteLibCategory
+ISpriteLibraryCategory <|-- SpriteLibCategory
+ScriptableObject <|-- SpriteLibraryAsset
+@enduml

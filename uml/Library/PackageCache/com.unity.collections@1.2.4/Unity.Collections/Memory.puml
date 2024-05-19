@@ -1,0 +1,28 @@
+@startuml
+struct Memory {
+    <<internal>> <<const>> k_MaximumRamSizeInBytes : long
+    <<internal>> {static} CheckByteCountIsReasonable(size:long) : void
+}
+struct Unmanaged {
+    <<internal>> {static} Allocate(size:long, align:int, allocator:AllocatorManager.AllocatorHandle) : void*
+    <<internal>> {static} Free(pointer:void*, allocator:AllocatorManager.AllocatorHandle) : void
+    <<internal>> {static} Allocate(allocator:AllocatorManager.AllocatorHandle) : T*
+    <<internal>> {static} Free(pointer:T*, allocator:AllocatorManager.AllocatorHandle) : void
+}
+struct Array {
+    <<internal>> {static} Set(pointer:T*, count:long, t:T) : void
+    <<internal>> {static} Clear(pointer:T*, count:long) : void
+    <<internal>> {static} Copy(dest:T*, src:T*, count:long) : void
+}
+struct Array {
+    {static} - IsCustom(allocator:AllocatorManager.AllocatorHandle) : bool
+    {static} - CustomResize(oldPointer:void*, oldCount:long, newCount:long, allocator:AllocatorManager.AllocatorHandle, size:long, align:int) : void*
+    <<internal>> {static} Resize(oldPointer:void*, oldCount:long, newCount:long, allocator:AllocatorManager.AllocatorHandle, size:long, align:int) : void*
+    <<internal>> {static} Resize(oldPointer:T*, oldCount:long, newCount:long, allocator:AllocatorManager.AllocatorHandle) : T*
+    <<internal>> {static} Allocate(count:long, allocator:AllocatorManager.AllocatorHandle) : T*
+    <<internal>> {static} Free(pointer:T*, count:long, allocator:AllocatorManager.AllocatorHandle) : void
+}
+Memory +-- Unmanaged
+Memory +-- Array
+Unmanaged +-- Array
+@enduml

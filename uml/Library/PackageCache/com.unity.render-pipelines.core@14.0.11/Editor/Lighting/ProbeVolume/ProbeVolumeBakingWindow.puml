@@ -1,0 +1,121 @@
+@startuml
+class ProbeVolumeBakingWindow {
+    <<const>> - k_LeftPanelSize : int = 250
+    <<const>> - k_RightPanelLabelWidth : int = 200
+    <<const>> - k_ProbeVolumeIconSize : int = 30
+    <<const>> - k_TitleTextHeight : int = 30
+    <<const>> - k_SelectedBakingSetKey : string = "Selected Baking Set"
+    <<const>> - k_RenameFocusKey : string = "Baking Set Rename Field"
+    - m_SearchField : SearchField
+    - m_SearchString : string = ""
+    - m_DrawHorizontalSplitter : MethodInfo
+    - m_BakingSets : ReorderableList = null
+    - m_Scenarios : ReorderableList = null
+    - scenariosStatuses : ScenariosStatus[]
+    - m_LeftScrollPosition : Vector2
+    - m_RightScrollPosition : Vector2
+    - m_ScenesInSet : ReorderableList
+    - m_SubtitleStyle : GUIStyle
+    - m_ProbeVolumeProfileEditor : Editor
+    - m_SerializedObject : SerializedObject
+    - m_ProbeSceneData : SerializedProperty
+    - m_RenameSelectedBakingSet : bool
+    - m_RenameSelectedScenario : bool
+    - m_Initialized : bool
+    - infoLabelX : float
+    - hasPendingScenarioUpdate : bool = false
+    - m_ScenesInProject : List<SceneData>
+    {static} <<readonly>> - k_ExpandableDefault : Expandable = 0
+    {static} - k_Foldouts : ExpandedState<Expandable, ProbeVolumeBakingProcessSettings>
+    <<internal>> {static} Foldout(label:GUIContent, expandable:Expandable, style:GUIStyle) : bool
+    - sceneData : ProbeVolumeSceneData <<get>>
+    {static} - OpenWindow() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - UpdateSceneData() : void
+    - Initialize() : void
+    - InitializeBakingSetList() : void
+    - SetActiveScenario(scenario:string) : void
+    - InitializeScenarioList() : void
+    <<internal>> OnSceneOpened(scene:Scene, mode:OpenSceneMode) : void
+    <<internal>> UpdateScenariosStatuses() : void
+    <<internal>> UpdateScenariosStatuses(mostRecentState:string) : void
+    - RefreshAfterUndo() : void
+    - RefreshSceneAssets() : void
+    - FindSceneData(guid:string) : SceneData
+    - OnBakingSetSelected(list:ReorderableList) : void
+    - GetCurrentBakingSet() : ProbeVolumeSceneData.BakingSet
+    - AllSetScenesAreLoaded() : bool
+    - OnGUI() : void
+    - DrawLeftPanel() : void
+    - DrawSeparator() : void
+    - SanitizeScenes() : void
+    - DrawRightPanel() : void
+    - OpenProbeVolumeDebugPanel() : void
+    {static} - k_EditorGUI_ButtonWithDropdownList : MethodInfo
+    {static} - ButtonWithDropdownList(content:GUIContent, buttonNames:string[], callback:GenericMenu.MenuFunction2, options:GUILayoutOption[]) : bool
+    {static} <<readonly>> - k_GenerateLighting : GUIContent
+    {static} <<readonly>> - k_BakeOptionsText : string[]
+    - BakeButtonCallback(data:object) : void
+    - DrawBakeButton() : void
+    - BakeLightingForSet(set:ProbeVolumeSceneData.BakingSet) : void
+    - LoadScenesInBakingSet(set:ProbeVolumeSceneData.BakingSet) : void
+    - LoadScenes(scenePathes:IEnumerable<string>) : void
+    - DrawToolbar() : void
+}
+struct SceneData {
+    + asset : SceneAsset
+    + guid : string
+    + GetPath() : string
+}
+class Styles <<static>> {
+    + {static} <<readonly>> sceneIcon : Texture
+    + {static} <<readonly>> probeVolumeIcon : Texture
+    + {static} <<readonly>> debugIcon : Texture
+    + {static} <<readonly>> sceneLightingSettings : GUIContent
+    + {static} <<readonly>> activeScenarioLabel : GUIContent
+    + {static} <<readonly>> sceneNotFound : GUIContent
+    + {static} <<readonly>> bakingSetsTitle : GUIContent
+    + {static} <<readonly>> debugButton : GUIContent
+    + {static} <<readonly>> stats : GUIContent
+    + {static} <<readonly>> scenarioCostStat : GUIContent
+    + {static} <<readonly>> totalCostStat : GUIContent
+    + {static} <<readonly>> invalidLabel : GUIContent
+    + {static} <<readonly>> emptyLabel : GUIContent
+    + {static} <<readonly>> notLoadedLabel : GUIContent
+    + {static} <<readonly>> scenariosStatusLabel : GUIContent[]
+    + {static} <<readonly>> labelRed : GUIStyle = "CN StatusError"
+    + {static} <<readonly>> boldFoldout : GUIStyle
+}
+enum ScenariosStatus {
+    Valid,
+    NotLoaded,
+    OutOfDate,
+    NotBaked,
+}
+enum Expandable {
+    RendererFilterSettings= 1 << 0,
+    Dilation= 1 << 1,
+    VirtualOffset= 1 << 2,
+}
+class ProbeVolumeOverlay {
+    <<const>> - k_OverlayID : string = "APV Overlay"
+    - m_Labels : Label[] = null
+    - maxSubdiv : int
+    - minDistance : float
+    + visible : bool <<get>>
+    - GetSettings() : (int maxSubdiv, float minDistance)
+    - IsVisible() : bool
+    + <<override>> OnCreated() : void
+    - CreateColorSwatch(color:Color) : VisualElement
+    + <<override>> CreatePanelContent() : VisualElement
+}
+EditorWindow <|-- ProbeVolumeBakingWindow
+ProbeVolumeBakingWindow +-- SceneData
+ProbeVolumeBakingWindow +-- Styles
+ProbeVolumeBakingWindow +-- ScenariosStatus
+ProbeVolumeBakingWindow +-- Expandable
+ProbeVolumeBakingWindow +-- ProbeVolumeOverlay
+Overlay <|-- ProbeVolumeOverlay
+ITransientOverlay <|-- ProbeVolumeOverlay
+@enduml

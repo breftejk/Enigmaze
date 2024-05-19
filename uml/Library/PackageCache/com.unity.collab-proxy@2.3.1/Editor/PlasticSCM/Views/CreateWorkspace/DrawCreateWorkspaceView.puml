@@ -1,0 +1,42 @@
+@startuml
+class DrawCreateWorkspace <<static>> {
+    <<internal>> {static} ForState(createRepositoryAction:Action<RepositoryCreationData>, createWorkspaceAction:Action<CreateWorkspaceViewState>, parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, defaultServer:string, state:CreateWorkspaceViewState) : void
+    {static} - DoTitle() : void
+    {static} - DoFieldsArea(createRepositoryAction:Action<RepositoryCreationData>, parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, defaultServer:string, state:CreateWorkspaceViewState) : void
+    {static} - DoRepositoryField(createRepositoryAction:Action<RepositoryCreationData>, parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, defaultServer:string, state:CreateWorkspaceViewState) : void
+    {static} - DoWorkspaceField(state:CreateWorkspaceViewState) : void
+    {static} - DoRadioButtonsArea(state:CreateWorkspaceViewState) : void
+    {static} - DoCreateWorkspaceButton(createWorkspaceAction:Action<CreateWorkspaceViewState>, state:CreateWorkspaceViewState) : void
+    {static} - DoBrowseRepositoryButton(parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, defaultServer:string, state:CreateWorkspaceViewState) : void
+    {static} - DoNewRepositoryButton(createRepositoryAction:Action<RepositoryCreationData>, parentWindow:EditorWindow, plasticWebRestApi:IPlasticWebRestApi, repositoryName:string, defaultServer:string) : void
+    {static} - DoHelpLabel() : void
+    {static} - DoNotificationArea(progressData:ProgressControlsForViews.Data) : void
+    {static} - DoLabel(labelText:string) : void
+    {static} - DoTextField(entryValue:string, enabled:bool, textBoxLeft:float, textBoxWidth:float) : string
+    {static} - DoButton(text:string, isEnabled:bool, buttonLeft:float, buttonWidth:float) : bool
+    {static} - DoRadioButton(text:string, isChecked:bool, isEnabled:bool, buttonLeft:float) : bool
+    {static} - DoWarningLabel(labelText:string, labelLeft:float) : void
+    {static} - DoLinkLabel(labelText:string, linkText:string, labelLeft:float) : bool
+    {static} - DoProgress(data:ProgressControlsForViews.Data, progressLeft:float) : void
+    {static} - GetLinkRect(labelText:string, linkText:string, labelContent:GUIContent, labelStyle:GUIStyle, rect:Rect) : Rect
+    {static} - IsValidState(state:CreateWorkspaceViewState) : bool
+    {static} - ValidateRepositoryName(repositoryName:string) : ValidationResult
+    {static} - ValidateWorkspaceName(workspaceName:string) : ValidationResult
+    {static} - GetRepSpecFromName(repositoryName:string) : RepositorySpec
+    <<const>> - LABEL_WIDTH : float = 150
+    <<const>> - TEXTBOX_WIDTH : float = 400
+    <<const>> - BROWSE_BUTTON_WIDTH : float = 25
+    <<const>> - NEW_BUTTON_WIDTH : float = 60
+    <<const>> - BUTTON_MARGIN : float = 2
+    <<const>> - LABEL_MARGIN : float = 2
+    <<const>> - RADIO_BUTTON_MARGIN : float = 38
+    <<const>> - PROGRESS_MARGIN : float = 5
+    <<const>> - CREATE_WORKSPACE_BUTTON_MARGIN : float = 32
+    <<const>> - CREATE_WORKSPACE_BUTTON_WIDTH : float = 160
+}
+class ValidationResult {
+    <<internal>> ErrorMessage : string
+    <<internal>> IsValid : bool
+}
+DrawCreateWorkspace +-- ValidationResult
+@enduml

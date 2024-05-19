@@ -1,0 +1,10 @@
+@startuml
+class GraphDrawingData {
+    - m_SerializableSelection : List<string>
+    - m_Selection : List<Guid>
+    + selection : IEnumerable<Guid> <<get>> <<set>>
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+ISerializationCallbackReceiver <|-- GraphDrawingData
+@enduml

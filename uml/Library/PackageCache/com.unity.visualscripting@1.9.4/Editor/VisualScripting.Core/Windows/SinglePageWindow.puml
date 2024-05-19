@@ -1,0 +1,16 @@
+@startuml
+abstract class "SinglePageWindow`1"<TPage> {
+    # SinglePageWindow()
+    - _page : TPage
+    + page : TPage <<get>>
+    # {abstract} CreatePage() : TPage
+    # <<override>> ConfigureWindow() : void
+    + <<override>> OnShow() : void
+    + <<override>> Update() : void
+    + <<override>> OnClose() : void
+    + <<override>> OnFocus() : void
+    + <<override>> OnLostFocus() : void
+    + <<override>> OnGUI() : void
+}
+EditorWindowWrapper <|-- "SinglePageWindow`1"
+@enduml

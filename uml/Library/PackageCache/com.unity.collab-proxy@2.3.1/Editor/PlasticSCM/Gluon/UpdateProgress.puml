@@ -1,0 +1,10 @@
+@startuml
+class UpdateProgress {
+    <<internal>> UpdateProgress(workspaceWindow:WorkspaceWindow)
+    <<internal>> Cancel() : void
+    <<internal>> SetCancellable(bCancelable:bool) : void
+    <<internal>> RefreshProgress(progress:Codice.Client.BaseCommands.UpdateProgress, updateProgressData:UpdateProgressData) : void
+    - mUpdateProgress : Codice.Client.BaseCommands.UpdateProgress
+    - mWorkspaceWindow : WorkspaceWindow
+}
+@enduml

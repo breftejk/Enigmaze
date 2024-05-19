@@ -1,0 +1,9 @@
+@startuml
+class EditorProgressBar <<static>> {
+    {static} - EditorProgressBar()
+    <<internal>> {static} ShowProgressBar(text:string, progress:float) : void
+    <<internal>> {static} ClearProgressBar() : void
+    {static} - mDisplayMethod : MethodInfo = null
+    {static} - mClearMethod : MethodInfo = null
+}
+@enduml

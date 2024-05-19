@@ -1,0 +1,29 @@
+@startuml
+class GraphicRaycaster {
+    # <<const>> kNoEventMaskSet : int
+    + <<override>> sortOrderPriority : int <<get>>
+    + <<override>> renderOrderPriority : int <<get>>
+    - m_IgnoreReversedGraphics : bool = true
+    - m_BlockingObjects : BlockingObjects
+    + ignoreReversedGraphics : bool <<get>> <<set>>
+    + blockingObjects : BlockingObjects <<get>> <<set>>
+    # m_BlockingMask : LayerMask
+    + blockingMask : LayerMask <<get>> <<set>>
+    - m_Canvas : Canvas
+    # GraphicRaycaster()
+    - canvas : Canvas <<get>>
+    - m_RaycastResults : List<Graphic>
+    + <<override>> Raycast(eventData:PointerEventData, resultAppendList:List<RaycastResult>) : void
+    + <<override>> eventCamera : Camera <<get>>
+    {static} <<readonly>> - s_SortedGraphics : List<Graphic>
+    - {static} Raycast(canvas:Canvas, eventCamera:Camera, pointerPosition:Vector2, foundGraphics:IList<Graphic>, results:List<Graphic>) : void
+}
+enum BlockingObjects {
+    None= 0,
+    TwoD= 1,
+    ThreeD= 2,
+    All= 3,
+}
+BaseRaycaster <|-- GraphicRaycaster
+GraphicRaycaster +-- BlockingObjects
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class HexagonalRuleTileEditor {
+    + hexTile : HexagonalRuleTile <<get>>
+    + <<override>> GetArrowIndex(position:Vector3Int) : int
+    + <<override>> GetRuleGUIBounds(bounds:BoundsInt, rule:RuleTile.TilingRule) : BoundsInt
+    + <<override>> GetMatrixSize(bounds:BoundsInt) : Vector2
+    + <<override>> RuleMatrixOnGUI(tile:RuleTile, rect:Rect, bounds:BoundsInt, tilingRule:RuleTile.TilingRule) : void
+    # <<override>> CreatePreview() : void
+}
+RuleTileEditor <|-- HexagonalRuleTileEditor
+@enduml

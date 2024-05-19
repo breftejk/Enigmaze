@@ -1,0 +1,12 @@
+@startuml
+class FilmGrainEditor <<sealed>> {
+    - m_Type : SerializedDataParameter
+    - m_Intensity : SerializedDataParameter
+    - m_Response : SerializedDataParameter
+    - m_Texture : SerializedDataParameter
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    {static} - SetTextureImportSettings(importer:TextureImporter) : void
+}
+VolumeComponentEditor <|-- FilmGrainEditor
+@enduml

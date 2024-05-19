@@ -1,0 +1,31 @@
+@startuml
+class CommonUsages <<static>> {
+    + {static} <<readonly>> Primary2DMotion : InternedString
+    + {static} <<readonly>> Secondary2DMotion : InternedString
+    + {static} <<readonly>> PrimaryAction : InternedString
+    + {static} <<readonly>> SecondaryAction : InternedString
+    + {static} <<readonly>> PrimaryTrigger : InternedString
+    + {static} <<readonly>> SecondaryTrigger : InternedString
+    + {static} <<readonly>> Modifier : InternedString
+    + {static} <<readonly>> Position : InternedString
+    + {static} <<readonly>> Orientation : InternedString
+    + {static} <<readonly>> Hatswitch : InternedString
+    + {static} <<readonly>> Back : InternedString
+    + {static} <<readonly>> Forward : InternedString
+    + {static} <<readonly>> Menu : InternedString
+    + {static} <<readonly>> Submit : InternedString
+    + {static} <<readonly>> Cancel : InternedString
+    + {static} <<readonly>> Horizontal : InternedString
+    + {static} <<readonly>> Vertical : InternedString
+    + {static} <<readonly>> Twist : InternedString
+    + {static} <<readonly>> Pressure : InternedString
+    + {static} <<readonly>> ScrollHorizontal : InternedString
+    + {static} <<readonly>> ScrollVertical : InternedString
+    + {static} <<readonly>> Point : InternedString
+    + {static} <<readonly>> LowFreqMotor : InternedString
+    + {static} <<readonly>> HighFreqMotor : InternedString
+    + {static} <<readonly>> LeftHand : InternedString
+    + {static} <<readonly>> RightHand : InternedString
+    + {static} <<readonly>> BatteryStrength : InternedString
+}
+@enduml

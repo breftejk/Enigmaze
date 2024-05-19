@@ -1,0 +1,8 @@
+@startuml
+class SerializableEnum {
+    - m_EnumValueAsString : string
+    - m_EnumTypeAsString : string
+    + value : Enum <<get>> <<set>>
+    + SerializableEnum(enumType:Type)
+}
+@enduml

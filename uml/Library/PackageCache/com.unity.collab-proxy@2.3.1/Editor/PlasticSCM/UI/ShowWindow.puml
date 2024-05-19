@@ -1,0 +1,9 @@
+@startuml
+class ShowWindow <<static>> {
+    <<internal>> {static} Plastic() : PlasticWindow
+    <<internal>> {static} PlasticDisablingCollab() : PlasticWindow
+    {static} - ShowPlasticWindow(disableCollabWhenLoaded:bool) : PlasticWindow
+    {static} - mConsoleWindowType : Type
+    {static} - mProjectBrowserType : Type
+}
+@enduml

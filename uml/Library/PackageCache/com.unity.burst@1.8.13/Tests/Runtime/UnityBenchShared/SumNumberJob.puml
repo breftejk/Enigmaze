@@ -1,0 +1,17 @@
+@startuml
+struct SumNumbersTest {
+    + <<const>> Count : int = 10000000
+    + output : NativeArray<float>
+    + a : NativeArray<float>
+    + b : NativeArray<float>
+    + Execute() : void
+    + Dispose() : void
+}
+struct Provider {
+    + Value : object <<get>>
+}
+IJob <|-- SumNumbersTest
+IDisposable <|-- SumNumbersTest
+SumNumbersTest +-- Provider
+IArgumentProvider <|-- Provider
+@enduml

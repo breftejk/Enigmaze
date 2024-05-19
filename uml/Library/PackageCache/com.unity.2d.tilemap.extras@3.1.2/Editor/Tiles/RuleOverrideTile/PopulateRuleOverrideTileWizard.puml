@@ -1,0 +1,14 @@
+@startuml
+class PopulateRuleOverideTileWizard {
+    {static} - MenuOption(menuCommand:MenuCommand) : void
+    {static} - MenuOptionValidation(menuCommand:MenuCommand) : bool
+    + m_spriteSet : Texture2D
+    - m_tileset : RuleOverrideTile
+    + {static} CreateWizard(target:RuleOverrideTile) : void
+    + {static} CloneWizard(oldWizard:PopulateRuleOverideTileWizard) : void
+    - OnWizardUpdate() : void
+    - OnWizardCreate() : void
+    - Populate() : void
+}
+ScriptableWizard <|-- PopulateRuleOverideTileWizard
+@enduml

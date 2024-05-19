@@ -1,0 +1,9 @@
+@startuml
+class SpriteSkinCompositeDebugWindow {
+    {static} - Launch() : void
+    - m_ScrollPos : Vector2
+    - m_DebugLog : string = ""
+    - OnGUI() : void
+}
+EditorWindow <|-- SpriteSkinCompositeDebugWindow
+@enduml

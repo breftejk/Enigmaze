@@ -1,0 +1,8 @@
+@startuml
+class NormalReconstructZNode {
+    + NormalReconstructZNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - NormalReconstructZ(In:Vector2, Out:Vector3) : string
+}
+CodeFunctionNode <|-- NormalReconstructZNode
+@enduml

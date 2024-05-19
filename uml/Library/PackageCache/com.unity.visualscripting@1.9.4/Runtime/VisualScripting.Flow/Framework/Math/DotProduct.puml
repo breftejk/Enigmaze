@@ -1,0 +1,11 @@
+@startuml
+abstract class "DotProduct`1"<T> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + dotProduct : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : float
+    + {abstract} Operation(a:T, b:T) : float
+}
+Unit <|-- "DotProduct`1"
+@enduml

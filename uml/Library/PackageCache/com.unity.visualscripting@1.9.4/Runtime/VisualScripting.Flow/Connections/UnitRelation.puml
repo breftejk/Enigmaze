@@ -1,0 +1,8 @@
+@startuml
+class UnitRelation <<sealed>> {
+    + UnitRelation(source:IUnitPort, destination:IUnitPort)
+    + source : IUnitPort <<get>>
+    + destination : IUnitPort <<get>>
+}
+IUnitRelation <|-- UnitRelation
+@enduml

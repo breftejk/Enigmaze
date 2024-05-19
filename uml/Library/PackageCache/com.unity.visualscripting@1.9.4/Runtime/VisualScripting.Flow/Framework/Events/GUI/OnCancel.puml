@@ -1,0 +1,7 @@
+@startuml
+class OnCancel <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+GenericGuiEventUnit <|-- OnCancel
+@enduml

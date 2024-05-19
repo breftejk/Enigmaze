@@ -1,0 +1,7 @@
+@startuml
+class HasStateGraph <<sealed>> {
+    + containerType : StateGraphContainerType <<get>> <<set>>
+    # <<override>> isGameObject : bool <<get>>
+}
+"HasGraph`3" "<StateGraph,StateGraphAsset,StateMachine>" <|-- HasStateGraph
+@enduml

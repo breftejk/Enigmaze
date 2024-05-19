@@ -1,0 +1,36 @@
+@startuml
+class AddMenuClickedEventArgs <<sealed>> {
+    + AddMenuClickedEventArgs(adaptor:IReorderableListAdaptor, buttonPosition:Rect)
+    + Adaptor : IReorderableListAdaptor <<get>>
+    + ButtonPosition : Rect <<get>> <<internal set>>
+}
+class ItemInsertedEventArgs <<sealed>> {
+    + ItemInsertedEventArgs(adaptor:IReorderableListAdaptor, itemIndex:int, wasDuplicated:bool)
+    + Adaptor : IReorderableListAdaptor <<get>>
+    + ItemIndex : int <<get>>
+    + WasDuplicated : bool <<get>>
+}
+class ItemRemovingEventArgs <<sealed>> {
+    + ItemRemovingEventArgs(adaptor:IReorderableListAdaptor, itemIndex:int)
+    + Adaptor : IReorderableListAdaptor <<get>>
+    + ItemIndex : int <<get>> <<internal set>>
+}
+class ItemMovingEventArgs <<sealed>> {
+    + ItemMovingEventArgs(adaptor:IReorderableListAdaptor, itemIndex:int, destinationItemIndex:int)
+    + Adaptor : IReorderableListAdaptor <<get>>
+    + ItemIndex : int <<get>> <<internal set>>
+    + DestinationItemIndex : int <<get>> <<internal set>>
+    + NewItemIndex : int <<get>>
+}
+class ItemMovedEventArgs <<sealed>> {
+    + ItemMovedEventArgs(adaptor:IReorderableListAdaptor, oldItemIndex:int, newItemIndex:int)
+    + Adaptor : IReorderableListAdaptor <<get>>
+    + OldItemIndex : int <<get>> <<internal set>>
+    + NewItemIndex : int <<get>> <<internal set>>
+}
+EventArgs <|-- AddMenuClickedEventArgs
+EventArgs <|-- ItemInsertedEventArgs
+CancelEventArgs <|-- ItemRemovingEventArgs
+CancelEventArgs <|-- ItemMovingEventArgs
+EventArgs <|-- ItemMovedEventArgs
+@enduml

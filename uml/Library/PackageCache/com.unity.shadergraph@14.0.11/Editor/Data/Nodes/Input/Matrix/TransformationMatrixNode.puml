@@ -1,0 +1,40 @@
+@startuml
+enum TransformationMatrixType {
+    None= -1,
+    ModelView,
+    View,
+    Projection,
+    ViewProjection,
+    TransposeModelView,
+    InverseTransposeModelView,
+    ObjectToWorld,
+    WorldToObject,
+}
+enum UnityMatrixType {
+    Model,
+    InverseModel,
+    View,
+    InverseView,
+    Projection,
+    InverseProjection,
+    ViewProjection,
+    InverseViewProjection,
+}
+class TransformationMatrixNode {
+    {static} - m_MatrixList : Dictionary<UnityMatrixType, string>
+    {static} - m_MatrixUpgrade : Dictionary<TransformationMatrixType, UnityMatrixType>
+    - m_matrix : TransformationMatrixType
+    - m_MatrixType : UnityMatrixType
+    - <<const>> kOutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    + matrixType : UnityMatrixType <<get>> <<set>>
+    + TransformationMatrixNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + RequiresVertexColor() : bool
+    + RequiresTransform(stageCapability:ShaderStageCapability) : NeededTransform[]
+}
+AbstractMaterialNode <|-- TransformationMatrixNode
+IMayRequireTransform <|-- TransformationMatrixNode
+@enduml

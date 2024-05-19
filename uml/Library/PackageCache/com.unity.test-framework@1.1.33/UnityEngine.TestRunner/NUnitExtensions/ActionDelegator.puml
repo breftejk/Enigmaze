@@ -1,0 +1,11 @@
+@startuml
+class ActionDelegator {
+    - m_Action : Func<object>
+    + Delegate(action:Action) : object
+    + Delegate(action:Func<object>) : object
+    - AssertState() : void
+    + HasAction() : bool
+    + Execute(logScope:LogScope) : void
+}
+BaseDelegator <|-- ActionDelegator
+@enduml

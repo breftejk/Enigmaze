@@ -1,0 +1,9 @@
+@startuml
+class DebugUIHandlerHBox {
+    - m_Container : DebugUIHandlerContainer
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> Next() : DebugUIHandlerWidget
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerHBox
+@enduml

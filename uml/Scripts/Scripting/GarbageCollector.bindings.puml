@@ -1,0 +1,17 @@
+@startuml
+class GarbageCollector <<static>> {
+    + {static}  <<event>> GCModeChanged : Action<Mode> 
+    + {static} GCMode : Mode <<get>> <<set>>
+    <<extern>> {static} - SetMode(mode:Mode) : void
+    <<extern>> {static} - GetMode() : Mode
+    + <<extern>> {static} isIncremental : bool <<get>>
+    + <<extern>> {static} incrementalTimeSliceNanoseconds : ulong <<get>> <<set>>
+    + <<extern>> {static} CollectIncremental(nanoseconds:ulong) : bool
+}
+enum Mode {
+    Disabled= 0,
+    Enabled= 1,
+    Manual=  2,
+}
+GarbageCollector +-- Mode
+@enduml

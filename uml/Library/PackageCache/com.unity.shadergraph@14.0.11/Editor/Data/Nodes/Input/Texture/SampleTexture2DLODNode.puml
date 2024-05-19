@@ -1,0 +1,35 @@
+@startuml
+class SampleTexture2DLODNode {
+    + <<const>> OutputSlotRGBAId : int = 0
+    + <<const>> OutputSlotRId : int = 5
+    + <<const>> OutputSlotGId : int = 6
+    + <<const>> OutputSlotBId : int = 7
+    + <<const>> OutputSlotAId : int = 8
+    + <<const>> TextureInputId : int = 1
+    + <<const>> UVInputId : int = 2
+    + <<const>> SamplerInputId : int = 3
+    + <<const>> LODInputId : int = 4
+    <<const>> - kOutputSlotRGBAName : string = "RGBA"
+    <<const>> - kOutputSlotRName : string = "R"
+    <<const>> - kOutputSlotGName : string = "G"
+    <<const>> - kOutputSlotBName : string = "B"
+    <<const>> - kOutputSlotAName : string = "A"
+    <<const>> - kTextureInputName : string = "Texture"
+    <<const>> - kUVInputName : string = "UV"
+    <<const>> - kSamplerInputName : string = "Sampler"
+    <<const>> - kLODInputName : string = "LOD"
+    + <<override>> hasPreview : bool <<get>>
+    + SampleTexture2DLODNode()
+    - m_TextureType : TextureType
+    + textureType : TextureType <<get>> <<set>>
+    - m_NormalMapSpace : NormalMapSpace
+    + normalMapSpace : NormalMapSpace <<get>> <<set>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + <<override>> Setup() : void
+    + <<virtual>> GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- SampleTexture2DLODNode
+IGeneratesBodyCode <|-- SampleTexture2DLODNode
+IMayRequireMeshUV <|-- SampleTexture2DLODNode
+@enduml

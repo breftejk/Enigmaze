@@ -1,0 +1,10 @@
+@startuml
+class OnAnimatorIK <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + layerIndex : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, layerIndex:int) : void
+}
+"GameObjectEventUnit`1" "<int>" <|-- OnAnimatorIK
+@enduml

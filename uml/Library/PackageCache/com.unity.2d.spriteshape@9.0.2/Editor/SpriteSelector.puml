@@ -1,0 +1,37 @@
+@startuml
+class SpriteSelector {
+    - m_SelectedSprite : int = 0
+    - m_SpriteList : Sprite[] = null
+    - m_Thumbnails : Texture[]
+    - m_ScrollPos : Vector2
+    - m_WindowSize : int = 0
+    - m_ImageSize : int = 4
+    - m_Inspector : bool = true
+    + inspector : bool <<get>> <<set>>
+    + imageSize : int <<get>> <<set>>
+    + windowSize : int <<get>> <<set>>
+    + selectedIndex : int <<get>> <<set>>
+    + hasSprites : bool <<get>>
+    + SpriteSelector()
+    + SetCustomSize(windowSizer:int, imageSizer:int) : void
+    + ResetSize() : void
+    + UpdateSprites(sprites:Sprite[]) : void
+    + UpdateSelection(newSelectedBrush:int) : void
+    - {static} CalcTotalHorizSpacing(xCount:int, style:GUIStyle, firstStyle:GUIStyle, midStyle:GUIStyle, lastStyle:GUIStyle) : int
+    - {static} CalcMouseRects(position:Rect, contents:GUIContent[], xCount:int, elemWidth:float, elemHeight:float, style:GUIStyle, firstStyle:GUIStyle, midStyle:GUIStyle, lastStyle:GUIStyle, addBorders:bool, buttonSize:GUI.ToolbarButtonSize) : Rect[]
+    {static} - DrawRectangleOutline(rect:Rect, color:Color) : void
+    - {static} DoButtonGrid(position:Rect, selected:int, contents:GUIContent[], controlNames:string[], xCount:int, style:GUIStyle, firstStyle:GUIStyle, midStyle:GUIStyle, lastStyle:GUIStyle, buttonSize:GUI.ToolbarButtonSize, contentsEnabled:bool[]) : int
+    - {static} Temp(images:Texture[]) : GUIContent[]
+    + GetActiveSprite() : Sprite
+    + ShowGUI(selectedIndex:int) : bool
+    - SpriteSelectionGrid(selected:int, sprites:Sprite[], approxSize:int, style:GUIStyle, emptyString:GUIContent, columns:int, rows:int) : int
+    <<internal>> {static} PreviewTexturesFromSprites(sprites:Sprite[]) : Texture[]
+}
+class Styles <<static>> {
+    + {static} gridList : GUIStyle = "GridList"
+    + {static} spriteList : GUIContent
+    + {static} missingSprites : GUIContent
+    + {static} localGrid : GUIStyle = null
+}
+SpriteSelector +-- Styles
+@enduml

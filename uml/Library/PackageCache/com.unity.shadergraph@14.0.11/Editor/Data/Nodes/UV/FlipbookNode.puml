@@ -1,0 +1,32 @@
+@startuml
+class FlipbookNode {
+    + FlipbookNode()
+    <<const>> - UVSlotId : int = 0
+    <<const>> - WidthSlotId : int = 1
+    <<const>> - HeightSlotId : int = 2
+    <<const>> - TileSlotId : int = 3
+    <<const>> - OutputSlotId : int = 4
+    <<const>> - kUVSlotName : string = "UV"
+    <<const>> - kWidthSlotName : string = "Width"
+    <<const>> - kHeightSlotName : string = "Height"
+    <<const>> - kTileSlotName : string = "Tile"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    - GetFunctionName() : string
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_InvertX : bool = false
+    + invertX : ToggleData <<get>> <<set>>
+    - m_InvertY : bool = true
+    + invertY : ToggleData <<get>> <<set>>
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    - AppendInvertSpecificLines(stringBuilder:ShaderStringBuilder) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- FlipbookNode
+IGeneratesBodyCode <|-- FlipbookNode
+IGeneratesFunction <|-- FlipbookNode
+IMayRequireMeshUV <|-- FlipbookNode
+@enduml

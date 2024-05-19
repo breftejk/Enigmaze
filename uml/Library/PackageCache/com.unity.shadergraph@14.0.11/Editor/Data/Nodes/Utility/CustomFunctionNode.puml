@@ -1,0 +1,61 @@
+@startuml
+class CustomFunctionNode {
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> allowedNodeVersions : IEnumerable<int> <<get>>
+    + {static} s_ValidExtensions : string[]
+    <<const>> - k_InvalidFileType : string = "Source file is not a valid file type. Valid file extensions are .hlsl, .cginc, and .cg"
+    <<const>> - k_MissingFile : string = "Source file does not exist. A valid .hlsl, .cginc, or .cg file must be referenced"
+    <<const>> - k_MissingOutputSlot : string = "A Custom Function Node must have at least one output slot"
+    + CustomFunctionNode()
+    - UpdateNodeName() : void
+    + <<override>> hasPreview : bool <<get>>
+    - m_SourceType : HlslSourceType
+    + sourceType : HlslSourceType <<get>> <<set>>
+    - m_FunctionName : string
+    <<const>> - k_DefaultFunctionName : string = "Enter function name here..."
+    + functionName : string <<get>> <<set>>
+    + hlslFunctionName : string <<get>>
+    + {static} defaultFunctionName : string <<get>>
+    - m_FunctionSource : string
+    <<const>> - k_DefaultFunctionSource : string = "Enter function source file path here..."
+    + functionSource : string <<get>> <<set>>
+    - m_FunctionBody : string
+    <<const>> - k_DefaultFunctionBody : string = "Enter function body here..."
+    + functionBody : string <<get>> <<set>>
+    + {static} defaultFunctionBody : string <<get>>
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    - AssignDefaultBareResource(slot:MaterialSlot, sb:ShaderStringBuilder) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    - GetFunctionHeader(sb:ShaderStringBuilder) : void
+    - SlotInputValue(port:MaterialSlot, generationMode:GenerationMode) : string
+    - IsValidFunction() : bool
+    {static} - IsValidFunction(sourceType:HlslSourceType, functionName:string, functionSource:string, functionBody:string) : bool
+    - ValidateSlotName() : void
+    - ValidateBareTextureSlots() : void
+    + <<override>> ValidateNode() : void
+    + Reload(changedFileDependencyGUIDs:HashSet<string>) : bool
+    + {static} UpgradeFunctionSource(functionSource:string) : string
+    + <<override>> OnAfterDeserialize() : void
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    + RequiresTransform(stageCapability:ShaderStageCapability) : NeededTransform[]
+}
+class MinimalCustomFunctionNode {
+    - m_SourceType : HlslSourceType
+    - m_FunctionName : string
+    - m_FunctionSource : string = null
+    + GetSourceAssetDependencies(assetCollection:AssetCollection) : void
+}
+enum SourceFileStatus {
+    Empty,
+    DoesNotExist,
+    Invalid,
+    Valid,
+}
+AbstractMaterialNode <|-- CustomFunctionNode
+IGeneratesBodyCode <|-- CustomFunctionNode
+IGeneratesFunction <|-- CustomFunctionNode
+IMayRequireTransform <|-- CustomFunctionNode
+CustomFunctionNode +-- MinimalCustomFunctionNode
+IHasDependencies <|-- MinimalCustomFunctionNode
+CustomFunctionNode +-- SourceFileStatus
+@enduml

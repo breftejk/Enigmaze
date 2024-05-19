@@ -1,0 +1,7 @@
+@startuml
+class QuaternionDrawer {
+    # <<override>> GetVectorProperty(property:SerializedProperty) : SerializedProperty
+    # <<override>> Normalize(value:double4) : double4
+}
+PostNormalizedVectorDrawer <|-- QuaternionDrawer
+@enduml

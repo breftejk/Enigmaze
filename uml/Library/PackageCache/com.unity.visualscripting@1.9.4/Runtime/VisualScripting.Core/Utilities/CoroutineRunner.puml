@@ -1,0 +1,9 @@
+@startuml
+class CoroutineRunner <<sealed>> {
+    - Awake() : void
+    - OnDestroy() : void
+    + {static} instance : CoroutineRunner <<get>>
+}
+MonoBehaviour <|-- CoroutineRunner
+ISingleton <|-- CoroutineRunner
+@enduml

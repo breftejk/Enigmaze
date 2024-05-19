@@ -1,0 +1,23 @@
+@startuml
+class ChannelEnumMaskControlAttribute {
+    - m_Label : string
+    - m_SlotId : int
+    + ChannelEnumMaskControlAttribute(label:string, slotId:int)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class ChannelEnumMaskControlView {
+    - m_Label : string
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_Container : IMGUIContainer
+    - m_SlotId : int
+    + ChannelEnumMaskControlView(label:string, slotId:int, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - OnGUIHandler() : void
+    + OnNodeModified(scope:ModificationScope) : void
+    - UpdatePopup() : void
+}
+Attribute <|-- ChannelEnumMaskControlAttribute
+IControlAttribute <|-- ChannelEnumMaskControlAttribute
+VisualElement <|-- ChannelEnumMaskControlView
+AbstractMaterialNodeModificationListener <|-- ChannelEnumMaskControlView
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+class AsepriteImporter <<partial>> {
+    + asepriteFile : AsepriteFile <<get>>
+    + importMode : FileImportModes <<get>> <<set>>
+    + textureType : TextureImporterType <<get>> <<set>>
+    + spriteImportMode : SpriteImportMode <<get>> <<set>>
+    + spritePixelsPerUnit : float <<get>> <<set>>
+    + spriteMeshType : SpriteMeshType <<get>> <<set>>
+    + generatePhysicsShape : bool <<get>> <<set>>
+    + spriteExtrude : uint <<get>> <<set>>
+    + canvasSize : Vector2 <<get>>
+    + includeHiddenLayers : bool <<get>> <<set>>
+    + layerImportMode : LayerImportModes <<get>> <<set>>
+    + pivotSpace : PivotSpaces <<get>> <<set>>
+    + pivotAlignment : SpriteAlignment <<get>> <<set>>
+    + customPivotPosition : Vector2 <<get>> <<set>>
+    + mosaicPadding : uint <<get>> <<set>>
+    + spritePadding : uint <<get>> <<set>>
+    + generateModelPrefab : bool <<get>> <<set>>
+    + addSortingGroup : bool <<get>> <<set>>
+    + generateAnimationClips : bool <<get>> <<set>>
+    + wrapMode : TextureWrapMode <<get>> <<set>>
+    + wrapModeU : TextureWrapMode <<get>> <<set>>
+    + wrapModeV : TextureWrapMode <<get>> <<set>>
+    + wrapModeW : TextureWrapMode <<get>> <<set>>
+    + filterMode : FilterMode <<get>> <<set>>
+    + aniso : int <<get>> <<set>>
+    + mipMapBias : float <<get>> <<set>>
+    + mipmapEnabled : bool <<get>> <<set>>
+    + mipmapFadeDistanceEnd : int <<get>> <<set>>
+    + mipmapFadeDistanceStart : int <<get>> <<set>>
+    + streamingMipmaps : bool <<get>> <<set>>
+    + streamingMipmapsPriority : int <<get>> <<set>>
+    + mipmapFilter : TextureImporterMipFilter <<get>> <<set>>
+    + mipMapsPreserveCoverage : bool <<get>> <<set>>
+    + GetImporterPlatformSettings(buildTarget:BuildTarget) : TextureImporterPlatformSettings
+    + SetImporterPlatformSettings(setting:TextureImporterPlatformSettings) : void
+    + OnPostAsepriteImport : AsepriteImportEventHandler <<get>> <<set>>
+}
+struct ImportEventArgs {
+    + <<readonly>> importer : AsepriteImporter
+    + <<readonly>> context : AssetImportContext
+    + ImportEventArgs(importer:AsepriteImporter, context:AssetImportContext)
+}
+AsepriteImporter +-- ImportEventArgs
+@enduml

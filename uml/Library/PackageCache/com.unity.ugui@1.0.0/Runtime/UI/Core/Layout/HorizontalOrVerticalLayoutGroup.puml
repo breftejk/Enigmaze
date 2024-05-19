@@ -1,0 +1,24 @@
+@startuml
+abstract class HorizontalOrVerticalLayoutGroup {
+    # m_Spacing : float = 0
+    + spacing : float <<get>> <<set>>
+    # m_ChildForceExpandWidth : bool = true
+    + childForceExpandWidth : bool <<get>> <<set>>
+    # m_ChildForceExpandHeight : bool = true
+    + childForceExpandHeight : bool <<get>> <<set>>
+    # m_ChildControlWidth : bool = true
+    + childControlWidth : bool <<get>> <<set>>
+    # m_ChildControlHeight : bool = true
+    + childControlHeight : bool <<get>> <<set>>
+    # m_ChildScaleWidth : bool = false
+    + childScaleWidth : bool <<get>> <<set>>
+    # m_ChildScaleHeight : bool = false
+    + childScaleHeight : bool <<get>> <<set>>
+    + reverseArrangement : bool <<get>> <<set>>
+    # m_ReverseArrangement : bool = false
+    # CalcAlongAxis(axis:int, isVertical:bool) : void
+    # SetChildrenAlongAxis(axis:int, isVertical:bool) : void
+    - GetChildSizes(child:RectTransform, axis:int, controlSize:bool, childForceExpand:bool, min:float, preferred:float, flexible:float) : void
+}
+LayoutGroup <|-- HorizontalOrVerticalLayoutGroup
+@enduml

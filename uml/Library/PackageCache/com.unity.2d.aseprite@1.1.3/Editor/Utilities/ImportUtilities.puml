@@ -1,0 +1,26 @@
+@startuml
+class UniqueNameGenerator {
+    <<readonly>> - m_NameHashes : Dictionary<int, HashSet<int>>
+    + GetUniqueName(name:string, parentIndex:int, logNewNameGenerated:bool, context:UnityEngine.Object) : string
+    {static} - GetUniqueName(name:string, stringHash:HashSet<int>, logNewNameGenerated:bool, context:UnityEngine.Object) : string
+    {static} - SanitizeName(name:string) : string
+    {static} - GetStringHash(str:string) : int
+}
+class ImportUtilities <<static>> {
+    + {static} SaveAllPalettesToDisk(file:AsepriteFile) : void
+    {static} - PaletteToDisk(palette:PaletteChunk) : void
+    + {static} SaveToPng(buffer:NativeArray<Color32>, width:int, height:int) : string
+    {static} - SaveToPng(buffer:Color32[], width:int, height:int) : string
+    + {static} ExportAnimationAssets(importers:AsepriteImporter[], exportClips:bool, exportController:bool) : void
+    + {static} ExportAnimationAssets(savePath:string, importers:AsepriteImporter[], exportClips:bool, exportController:bool) : void
+    {static} - ExportAnimationClips(importedObjectPath:string, path:string) : AnimationClip[]
+    {static} - GetAllClipsFromController(assetPath:string) : AnimationClip[]
+    {static} - ExportAnimatorController(importer:AsepriteImporter, clips:AnimationClip[], path:string) : void
+    + {static} CalculateCellPivot(cellRect:RectInt, spritePadding:uint, canvasSize:Vector2Int, alignment:SpriteAlignment, customPivot:Vector2) : Vector2
+    + {static} PivotAlignmentToVector(alignment:SpriteAlignment) : Vector2
+    + {static} GetCellName(baseName:string, frameIndex:int, noOfFrames:int) : string
+    + {static} DisposeIfCreated(arr:NativeArray<T>) : void
+    + {static} IsLayerVisible(layerIndex:int, layers:List<Layer>) : bool
+    + {static} IsEqual(rectA:RectInt, rectB:RectInt) : bool
+}
+@enduml

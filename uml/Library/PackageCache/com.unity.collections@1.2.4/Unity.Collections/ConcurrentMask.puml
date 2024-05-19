@@ -1,0 +1,57 @@
+@startuml
+struct Long8 {
+    <<internal>> f0 : long
+    <<internal>> f1 : long
+    <<internal>> f2 : long
+    <<internal>> f3 : long
+    <<internal>> f4 : long
+    <<internal>> f5 : long
+    <<internal>> f6 : long
+    <<internal>> f7 : long
+}
+struct Long64 {
+    <<internal>> f0 : Long8
+    <<internal>> f1 : Long8
+    <<internal>> f2 : Long8
+    <<internal>> f3 : Long8
+    <<internal>> f4 : Long8
+    <<internal>> f5 : Long8
+    <<internal>> f6 : Long8
+    <<internal>> f7 : Long8
+}
+struct Long512 {
+    <<internal>> f0 : Long64
+    <<internal>> f1 : Long64
+    <<internal>> f2 : Long64
+    <<internal>> f3 : Long64
+    <<internal>> f4 : Long64
+    <<internal>> f5 : Long64
+    <<internal>> f6 : Long64
+    <<internal>> f7 : Long64
+}
+struct Long1024 {
+    <<internal>> f0 : Long512
+    <<internal>> f1 : Long512
+    + Length : int <<get>> <<set>>
+    + ElementAt(index:int) : ref long
+}
+class ConcurrentMask {
+    <<internal>> {static} longestConsecutiveOnes(value:long, offset:int, count:int) : void
+    <<internal>> {static} foundAtLeastThisManyConsecutiveOnes(value:long, minimum:int, offset:int, count:int) : bool
+    <<internal>> {static} foundAtLeastThisManyConsecutiveZeroes(value:long, minimum:int, offset:int, count:int) : bool
+    <<internal>> <<const>> ErrorFailedToFree : int
+    <<internal>> <<const>> ErrorFailedToAllocate : int
+    <<internal>> <<const>> EmptyBeforeAllocation : int = 0
+    <<internal>> <<const>> EmptyAfterFree : int = 0
+    <<internal>> {static} Succeeded(error:int) : bool
+    <<internal>> {static} MakeMask(offset:int, bits:int) : long
+    <<internal>> {static} TryAllocate(l:long, offset:int, bits:int) : int
+    <<internal>> {static} TryFree(l:long, offset:int, bits:int) : int
+    <<internal>> {static} TryAllocate(l:long, offset:int, bits:int) : int
+    <<internal>> {static} TryAllocate(t:T, offset:int, bits:int) : int
+    <<internal>> {static} TryFree(t:T, offset:int, bits:int) : int
+    <<internal>> {static} TryAllocate(t:T, offset:int, begin:int, end:int, bits:int) : int
+    <<internal>> {static} TryAllocate(t:T, offset:int, bits:int) : int
+}
+"IIndexable`1" "<long>" <|-- Long1024
+@enduml

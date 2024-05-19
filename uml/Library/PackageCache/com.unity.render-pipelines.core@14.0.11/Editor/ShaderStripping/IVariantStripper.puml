@@ -1,0 +1,31 @@
+@startuml
+interface "IVariantStripper`2"<TShader,TShaderVariant> {
+    active : bool <<get>>
+    CanRemoveVariant(shader:TShader, shaderVariant:TShaderVariant, shaderCompilerData:ShaderCompilerData) : bool
+}
+interface "IVariantStripperSkipper`2"<TShader,TShaderVariant> {
+    SkipShader(shader:TShader, shaderVariant:TShaderVariant) : bool
+}
+interface "IVariantStripperScope`2"<TShader,TShaderVariant> {
+    BeforeShaderStripping(shader:TShader) : void
+    AfterShaderStripping(shader:TShader) : void
+}
+interface IShaderVariantStripper {
+}
+interface IShaderVariantStripperSkipper {
+}
+interface IShaderVariantStripperScope {
+}
+interface IComputeShaderVariantStripper {
+}
+interface IComputeShaderVariantStripperSkipper {
+}
+interface IComputeShaderVariantStripperScope {
+}
+"IVariantStripper`2" "<Shader,ShaderSnippetData>" <|-- IShaderVariantStripper
+"IVariantStripperSkipper`2" "<Shader,ShaderSnippetData>" <|-- IShaderVariantStripperSkipper
+"IVariantStripperScope`2" "<Shader,ShaderSnippetData>" <|-- IShaderVariantStripperScope
+"IVariantStripper`2" "<ComputeShader,string>" <|-- IComputeShaderVariantStripper
+"IVariantStripperSkipper`2" "<ComputeShader,string>" <|-- IComputeShaderVariantStripperSkipper
+"IVariantStripperScope`2" "<ComputeShader,string>" <|-- IComputeShaderVariantStripperScope
+@enduml

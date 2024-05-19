@@ -1,0 +1,23 @@
+@startuml
+class GridSelection {
+    - {static} kUpdateGridSelection : string
+    + {static}  <<event>> gridSelectionChanged : Action 
+    - m_Position : BoundsInt
+    - m_Target : GameObject
+    - m_PreviousSelection : Object
+    - m_Scene : Scene
+    - m_OriginalPalette : GameObject
+    + {static} active : bool <<get>>
+    - {static} selection : GridSelection <<get>>
+    + {static} position : BoundsInt <<get>> <<set>>
+    + {static} target : GameObject <<get>>
+    + {static} grid : Grid <<get>>
+    + {static} Select(target:Object, bounds:BoundsInt) : void
+    + {static} Clear() : void
+    <<internal>> {static} SaveStandalone() : void
+    <<internal>> {static} TransferToStandalone(palette:GameObject) : void
+    <<internal>> {static} RegisterUndo() : void
+    - OnDisable() : void
+}
+ScriptableObject <|-- GridSelection
+@enduml

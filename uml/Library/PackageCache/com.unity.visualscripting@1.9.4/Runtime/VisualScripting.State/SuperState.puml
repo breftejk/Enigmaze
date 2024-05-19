@@ -1,0 +1,15 @@
+@startuml
+class SuperState <<sealed>> {
+    + SuperState()
+    + SuperState(macro:StateGraphAsset)
+    + {static} WithStart() : SuperState
+    # <<override>> OnEnterImplementation(flow:Flow) : void
+    # <<override>> OnExitImplementation(flow:Flow) : void
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    + <<override>> DefaultGraph() : StateGraph
+}
+"NesterState`2" "<StateGraph,StateGraphAsset>" <|-- SuperState
+IGraphEventListener <|-- SuperState
+@enduml

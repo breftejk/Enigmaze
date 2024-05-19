@@ -1,0 +1,49 @@
+@startuml
+class EditablePathView {
+    <<const>> - kSnappingDistance : float = 15f
+    <<const>> - kDeleteCommandName : string = "Delete"
+    <<const>> - kSoftDeleteCommandName : string = "SoftDelete"
+    + controller : IEditablePathController <<get>> <<set>>
+    - m_PointControl : Control
+    - m_EdgeControl : Control
+    - m_LeftTangentControl : Control
+    - m_RightTangentControl : Control
+    - m_MovePointAction : GUIAction
+    - m_MoveEdgeAction : GUIAction
+    - m_CreatePointAction : GUIAction
+    - m_RemovePointAction1 : GUIAction
+    - m_RemovePointAction2 : GUIAction
+    - m_MoveLeftTangentAction : GUIAction
+    - m_MoveRightTangentAction : GUIAction
+    - m_Drawer : IDrawer
+    + EditablePathView()
+    + EditablePathView(drawer:IDrawer)
+    + Install(guiSystem:GUISystem) : void
+    + Uninstall(guiSystem:GUISystem) : void
+    - GetPoint(index:int) : ControlPoint
+    - GetPointCount() : int
+    - GetEdgeCount() : int
+    - GetSelectedPointCount() : int
+    - IsSelected(index:int) : bool
+    - GetForward() : Vector3
+    - GetUp() : Vector3
+    - GetRight() : Vector3
+    - GetLocalToWorldMatrix() : Matrix4x4
+    - GetShapeType() : ShapeType
+    - IsOpenEnded() : bool
+    - GetLeftTangent(index:int) : Vector3
+    - GetRightTangent(index:int) : Vector3
+    - NextIndex(index:int) : int
+    - NextControlPoint(index:int) : ControlPoint
+    - PrevIndex(index:int) : int
+    - PrevControlPoint(index:int) : ControlPoint
+    - ClosestPointInEdge(guiState:IGUIState, mousePosition:Vector2, index:int) : Vector3
+    - DistanceToEdge(guiState:IGUIState, index:int) : float
+    - GUIToWorld(guiState:IGUIState, position:Vector2) : Vector3
+    - DrawPoint(guiState:IGUIState, control:Control, index:int) : void
+    - DrawEdge(guiState:IGUIState, control:Control, index:int) : void
+    - EnableCreatePointRepaint(guiState:IGUIState, action:GUIAction) : bool
+    - SnapIfNeeded(position:Vector3) : Vector3
+}
+IEditablePathView <|-- EditablePathView
+@enduml

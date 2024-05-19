@@ -1,0 +1,6 @@
+@startuml
+interface "IUnitPortCollection`1"<TPort> {
+    Single() : TPort
+}
+"IKeyedCollection`2" "<string,TPort>" <|-- "IUnitPortCollection`1"
+@enduml

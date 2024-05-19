@@ -1,0 +1,14 @@
+@startuml
+enum UserDataFlags {
+    HasText= 1,
+    HasColor= 2,
+}
+class UserDataChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + text : string <<get>>
+    + color : Color32 <<get>>
+    <<internal>> UserDataChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- UserDataChunk
+@enduml

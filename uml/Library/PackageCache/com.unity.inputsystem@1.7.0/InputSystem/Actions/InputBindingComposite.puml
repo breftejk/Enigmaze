@@ -1,0 +1,24 @@
+@startuml
+abstract class InputBindingComposite {
+    + {abstract} valueType : Type <<get>>
+    + {abstract} valueSizeInBytes : int <<get>>
+    + {abstract} <<unsafe>> ReadValue(context:InputBindingCompositeContext, buffer:void*, bufferSize:int) : void
+    + {abstract} ReadValueAsObject(context:InputBindingCompositeContext) : object
+    + <<virtual>> EvaluateMagnitude(context:InputBindingCompositeContext) : float
+    # <<virtual>> FinishSetup(context:InputBindingCompositeContext) : void
+    <<internal>> CallFinishSetup(context:InputBindingCompositeContext) : void
+    <<internal>> {static} s_Composites : TypeTable
+    <<internal>> {static} GetValueType(composite:string) : Type
+    + {static} GetExpectedControlLayoutName(composite:string, part:string) : string
+    <<internal>> {static} GetPartNames(composite:string) : IEnumerable<string>
+    <<internal>> {static} GetDisplayFormatString(composite:string) : string
+}
+abstract class "InputBindingComposite`1"<TValue> {
+    + <<override>> valueType : Type <<get>>
+    + <<override>> valueSizeInBytes : int <<get>>
+    + {abstract} ReadValue(context:InputBindingCompositeContext) : TValue
+    + <<override>> <<unsafe>> ReadValue(context:InputBindingCompositeContext, buffer:void*, bufferSize:int) : void
+    + <<override>> <<unsafe>> ReadValueAsObject(context:InputBindingCompositeContext) : object
+}
+InputBindingComposite <|-- "InputBindingComposite`1"
+@enduml

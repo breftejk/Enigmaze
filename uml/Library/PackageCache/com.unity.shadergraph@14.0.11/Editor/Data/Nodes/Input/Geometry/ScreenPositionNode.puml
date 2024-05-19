@@ -1,0 +1,20 @@
+@startuml
+class ScreenPositionNode {
+    + ScreenPositionNode()
+    - m_ScreenSpaceType : ScreenSpaceType
+    + screenSpaceType : ScreenSpaceType <<get>> <<set>>
+    - <<const>> kOutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    - RequiresScreenPosition(stageCapability:ShaderStageCapability) : bool
+    - RequiresNDCPosition(stageCapability:ShaderStageCapability) : bool
+    - RequiresPixelPosition(stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- ScreenPositionNode
+IGeneratesBodyCode <|-- ScreenPositionNode
+IMayRequireScreenPosition <|-- ScreenPositionNode
+IMayRequireNDCPosition <|-- ScreenPositionNode
+IMayRequirePixelPosition <|-- ScreenPositionNode
+@enduml

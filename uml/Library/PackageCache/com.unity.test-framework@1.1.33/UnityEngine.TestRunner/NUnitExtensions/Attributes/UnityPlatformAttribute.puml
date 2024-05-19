@@ -1,0 +1,13 @@
+@startuml
+class UnityPlatformAttribute {
+    + include : RuntimePlatform[] <<get>> <<set>>
+    + exclude : RuntimePlatform[] <<get>> <<set>>
+    - m_skippedReason : string
+    + UnityPlatformAttribute()
+    + UnityPlatformAttribute(include:RuntimePlatform[])
+    + ApplyToTest(test:Test) : void
+    <<internal>> IsPlatformSupported(testTargetPlatform:RuntimePlatform) : bool
+}
+NUnitAttribute <|-- UnityPlatformAttribute
+IApplyToTest <|-- UnityPlatformAttribute
+@enduml

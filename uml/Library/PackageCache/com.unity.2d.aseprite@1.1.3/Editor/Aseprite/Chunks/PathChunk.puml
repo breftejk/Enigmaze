@@ -1,0 +1,8 @@
+@startuml
+class PathChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    <<internal>> PathChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- PathChunk
+@enduml

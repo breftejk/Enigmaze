@@ -1,0 +1,49 @@
+@startuml
+enum CopyPasteGraphSource {
+    Default,
+    Duplicate,
+}
+class CopyPasteGraph <<sealed>> {
+    - m_CopyPasteGraphSource : CopyPasteGraphSource
+    - m_Edges : List<Edge>
+    - m_Nodes : List<JsonData<AbstractMaterialNode>>
+    - m_Groups : List<JsonData<GroupData>>
+    - m_StickyNotes : List<JsonData<StickyNoteData>>
+    - m_Inputs : List<JsonRef<ShaderInput>>
+    - m_Categories : List<JsonData<CategoryData>>
+    - m_MetaProperties : List<JsonData<AbstractShaderProperty>>
+    - m_MetaPropertyIds : List<string>
+    - m_MetaKeywords : List<JsonData<ShaderKeyword>>
+    - m_MetaKeywordIds : List<string>
+    - m_MetaDropdowns : List<JsonData<ShaderDropdown>>
+    - m_MetaDropdownIds : List<string>
+    + CopyPasteGraph()
+    + CopyPasteGraph(groups:IEnumerable<GroupData>, nodes:IEnumerable<AbstractMaterialNode>, edges:IEnumerable<Edge>, inputs:IEnumerable<ShaderInput>, categories:IEnumerable<CategoryData>, metaProperties:IEnumerable<AbstractShaderProperty>, metaKeywords:IEnumerable<ShaderKeyword>, metaDropdowns:IEnumerable<ShaderDropdown>, notes:IEnumerable<StickyNoteData>, keepOutputEdges:bool, removeOrphanEdges:bool, copyPasteGraphSource:CopyPasteGraphSource)
+    + IsInputCategorized(shaderInput:ShaderInput) : bool
+    + IsInputDuplicatedFromCategory(shaderInput:ShaderInput, inputCategory:CategoryData, targetGraphData:GraphData) : bool
+    - AddGroup(group:GroupData) : void
+    - AddNote(stickyNote:StickyNoteData) : void
+    - AddNode(node:AbstractMaterialNode) : void
+    - AddEdge(edge:Edge) : void
+    - AddInput(input:ShaderInput) : void
+    - AddCategory(category:CategoryData) : void
+    - AddMetaProperty(metaProperty:AbstractShaderProperty) : void
+    - AddMetaKeyword(metaKeyword:ShaderKeyword) : void
+    - AddMetaDropdown(metaDropdown:ShaderDropdown) : void
+    + GetNodes() : IEnumerable<T>
+    + groups : DataValueEnumerable<GroupData> <<get>>
+    + stickyNotes : DataValueEnumerable<StickyNoteData> <<get>>
+    + edges : IEnumerable<Edge> <<get>>
+    + inputs : RefValueEnumerable<ShaderInput> <<get>>
+    + categories : DataValueEnumerable<CategoryData> <<get>>
+    + metaProperties : DataValueEnumerable<AbstractShaderProperty> <<get>>
+    + metaKeywords : DataValueEnumerable<ShaderKeyword> <<get>>
+    + metaDropdowns : DataValueEnumerable<ShaderDropdown> <<get>>
+    + metaPropertyIds : IEnumerable<string> <<get>>
+    + metaKeywordIds : IEnumerable<string> <<get>>
+    + copyPasteGraphSource : CopyPasteGraphSource <<get>>
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    <<internal>> {static} FromJson(copyBuffer:string, targetGraph:GraphData) : CopyPasteGraph
+}
+JsonObject <|-- CopyPasteGraph
+@enduml

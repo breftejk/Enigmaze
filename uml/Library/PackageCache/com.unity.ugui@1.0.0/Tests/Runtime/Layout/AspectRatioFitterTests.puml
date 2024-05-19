@@ -1,0 +1,15 @@
+@startuml
+class AspectRatioFitterTests {
+    <<const>> - kPrefabPath : string = "Assets/Resources/AspectRatioFitterTestsEnvelopeParent.prefab"
+    <<const>> - kPrefabPath2 : string = "Assets/Resources/AspectRatioFitterTestsFitInParent.prefab"
+    - m_PrefabRoot : GameObject
+    - m_AspectRatioFitter : AspectRatioFitter
+    - m_RectTransform : RectTransform
+    + Setup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    + TestEnvelopParent() : void
+    + TestFitInParent() : void
+}
+IPrebuildSetup <|-- AspectRatioFitterTests
+@enduml

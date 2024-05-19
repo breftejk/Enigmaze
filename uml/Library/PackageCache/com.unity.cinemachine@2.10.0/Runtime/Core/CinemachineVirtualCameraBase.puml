@@ -1,0 +1,109 @@
+@startuml
+abstract class CinemachineVirtualCameraBase {
+    + m_ExcludedPropertiesInInspector : string[]
+    + m_LockStageInInspector : CinemachineCore.Stage[]
+    + ValidatingStreamVersion : int <<get>>
+    - m_ValidatingStreamVersion : int = 0
+    - m_OnValidateCalled : bool = false
+    - m_StreamingVersion : int
+    + m_Priority : int = 10
+    <<internal>> m_ActivationId : int
+    + FollowTargetAttachment : float
+    + LookAtTargetAttachment : float
+    + m_StandbyUpdate : StandbyUpdateMode
+    + <<virtual>> GetMaxDampTime() : float
+    + DetachedFollowTargetDamp(initial:float, dampTime:float, deltaTime:float) : float
+    + DetachedFollowTargetDamp(initial:Vector3, dampTime:Vector3, deltaTime:float) : Vector3
+    + DetachedFollowTargetDamp(initial:Vector3, dampTime:float, deltaTime:float) : Vector3
+    + DetachedLookAtTargetDamp(initial:float, dampTime:float, deltaTime:float) : float
+    + DetachedLookAtTargetDamp(initial:Vector3, dampTime:Vector3, deltaTime:float) : Vector3
+    + DetachedLookAtTargetDamp(initial:Vector3, dampTime:float, deltaTime:float) : Vector3
+    + <<virtual>> AddExtension(extension:CinemachineExtension) : void
+    + <<virtual>> RemoveExtension(extension:CinemachineExtension) : void
+    <<internal>> mExtensions : List<CinemachineExtension> <<get>>
+    # InvokePostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, newState:CameraState, deltaTime:float) : void
+    # InvokePrePipelineMutateCameraStateCallback(vcam:CinemachineVirtualCameraBase, newState:CameraState, deltaTime:float) : void
+    # InvokeOnTransitionInExtensions(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : bool
+    + Name : string <<get>>
+    + <<virtual>> Description : string <<get>>
+    + Priority : int <<get>> <<set>>
+    # ApplyPositionBlendMethod(state:CameraState, hint:BlendHint) : void
+    + VirtualCameraGameObject : GameObject <<get>>
+    + IsValid : bool <<get>>
+    + {abstract} State : CameraState <<get>>
+    + ParentCamera : ICinemachineCamera <<get>>
+    + <<virtual>> IsLiveChild(vcam:ICinemachineCamera, dominantChildOnly:bool) : bool
+    + {abstract} LookAt : Transform <<get>> <<set>>
+    + {abstract} Follow : Transform <<get>> <<set>>
+    + <<virtual>> PreviousStateIsValid : bool <<get>> <<set>>
+    + UpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    + {abstract} InternalUpdateCameraState(worldUp:Vector3, deltaTime:float) : void
+    + <<virtual>> OnTransitionFromCamera(fromCam:ICinemachineCamera, worldUp:Vector3, deltaTime:float) : void
+    # <<virtual>> OnDestroy() : void
+    # <<virtual>> OnTransformParentChanged() : void
+    - m_WasStarted : bool
+    # <<virtual>> Start() : void
+    <<internal>> <<virtual>> RequiresUserInput() : bool
+    <<internal>> EnsureStarted() : void
+    + GetInputAxisProvider() : AxisState.IInputAxisProvider
+    # <<virtual>> OnValidate() : void
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    # <<virtual>> Update() : void
+    - mSlaveStatusUpdated : bool = false
+    - m_parentVcam : CinemachineVirtualCameraBase = null
+    - UpdateSlaveStatus() : void
+    + ResolveLookAt(localLookAt:Transform) : Transform
+    + ResolveFollow(localFollow:Transform) : Transform
+    - m_QueuePriority : int
+    - UpdateVcamPoolStatus() : void
+    + MoveToTopOfPrioritySubqueue() : void
+    + <<virtual>> OnTargetObjectWarped(target:Transform, positionDelta:Vector3) : void
+    + <<virtual>> ForceCameraPosition(pos:Vector3, rot:Quaternion) : void
+    - m_blendStartPosition : float
+    - GetInheritPosition(cam:ICinemachineCamera) : bool
+    # CreateBlend(camA:ICinemachineCamera, camB:ICinemachineCamera, blendDef:CinemachineBlendDefinition, activeBlend:CinemachineBlend) : CinemachineBlend
+    # PullStateFromVirtualCamera(worldUp:Vector3, lens:LensSettings) : CameraState
+    - m_CachedFollowTarget : Transform
+    - m_CachedFollowTargetVcam : CinemachineVirtualCameraBase
+    - m_CachedFollowTargetGroup : ICinemachineTargetGroup
+    - m_CachedLookAtTarget : Transform
+    - m_CachedLookAtTargetVcam : CinemachineVirtualCameraBase
+    - m_CachedLookAtTargetGroup : ICinemachineTargetGroup
+    - InvalidateCachedTargets() : void
+    + FollowTargetChanged : bool <<get>>
+    + LookAtTargetChanged : bool <<get>>
+    # UpdateTargetCache() : void
+    + AbstractFollowTargetGroup : ICinemachineTargetGroup <<get>>
+    + FollowTargetAsVcam : CinemachineVirtualCameraBase <<get>>
+    + AbstractLookAtTargetGroup : ICinemachineTargetGroup <<get>>
+    + LookAtTargetAsVcam : CinemachineVirtualCameraBase <<get>>
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    <<internal>> # <<virtual>> LegacyUpgrade(streamedVersion:int) : void
+    <<internal>> <<virtual>> OnBeforeSerialize() : void
+    + CancelDamping(updateNow:bool) : void
+}
+enum StandbyUpdateMode {
+    Never,
+    Always,
+    RoundRobin,
+}
+enum BlendHint {
+    None,
+    SphericalPosition,
+    CylindricalPosition,
+    ScreenSpaceAimWhenTargetsDiffer,
+}
+struct TransitionParams {
+    + m_BlendHint : BlendHint
+    + m_InheritPosition : bool
+    + m_OnCameraLive : CinemachineBrain.VcamActivatedEvent
+}
+MonoBehaviour <|-- CinemachineVirtualCameraBase
+ICinemachineCamera <|-- CinemachineVirtualCameraBase
+ISerializationCallbackReceiver <|-- CinemachineVirtualCameraBase
+CinemachineVirtualCameraBase +-- StandbyUpdateMode
+CinemachineVirtualCameraBase +-- BlendHint
+CinemachineVirtualCameraBase +-- TransitionParams
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+class UnityRemoteTestScript {
+    + camera : Camera
+    + accelerometerInputText : Text
+    + touchInputText : Text
+    + gyroInputText : Text
+    + rotatingCube : Transform
+    - m_Rotation : Vector3
+    - m_CubeOffsetFromCanvas : float
+    - m_CubeStartingPosition : Vector3
+    + ResetCube() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    - UpdateTouch() : void
+    - UpdateAccelerometer() : void
+    - UpdateGyro() : void
+    - {static} EnableDeviceIfNeeded(device:InputDevice) : void
+    - {static} GetRemoteDevice() : TDevice
+}
+MonoBehaviour <|-- UnityRemoteTestScript
+@enduml

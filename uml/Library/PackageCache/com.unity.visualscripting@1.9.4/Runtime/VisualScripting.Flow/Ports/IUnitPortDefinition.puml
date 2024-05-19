@@ -1,0 +1,9 @@
+@startuml
+interface IUnitPortDefinition {
+    key : string <<get>>
+    label : string <<get>>
+    summary : string <<get>>
+    hideLabel : bool <<get>>
+    isValid : bool <<get>>
+}
+@enduml

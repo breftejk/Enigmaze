@@ -1,0 +1,6 @@
+@startuml
+class IndexedSelection {
+    # <<override>> GetInvalidElement() : int
+}
+"SerializableSelection`1" "<int>" <|-- IndexedSelection
+@enduml

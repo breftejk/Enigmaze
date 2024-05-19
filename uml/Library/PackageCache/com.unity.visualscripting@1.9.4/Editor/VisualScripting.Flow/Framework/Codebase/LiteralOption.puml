@@ -1,0 +1,14 @@
+@startuml
+class LiteralOption {
+    + LiteralOption()
+    + LiteralOption(unit:Literal)
+    + literalType : Type <<get>>
+    # <<override>> FillFromUnit() : void
+    # <<override>> Label(human:bool) : string
+    # <<override>> Icon() : EditorTexture
+    # <<override>> FavoriteKey() : string
+    + <<override>> Deserialize(row:UnitOptionRow) : void
+    + <<override>> Serialize() : UnitOptionRow
+}
+"UnitOption`1" "<Literal>" <|-- LiteralOption
+@enduml

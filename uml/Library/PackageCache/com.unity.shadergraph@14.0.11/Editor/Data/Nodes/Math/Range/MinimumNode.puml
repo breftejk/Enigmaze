@@ -1,0 +1,8 @@
+@startuml
+class MinimumNode {
+    + MinimumNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Minimum(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- MinimumNode
+@enduml

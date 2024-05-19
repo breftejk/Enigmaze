@@ -1,0 +1,24 @@
+@startuml
+class ProbeReferenceVolume <<partial>> {
+    - m_LoadedCells : DynamicArray<CellInfo>
+    - m_ToBeLoadedCells : DynamicArray<CellInfo>
+    - m_TempCellToLoadList : DynamicArray<CellInfo>
+    - m_TempCellToUnloadList : DynamicArray<CellInfo>
+    - m_LoadedBlendingCells : DynamicArray<BlendingCellInfo>
+    - m_ToBeLoadedBlendingCells : DynamicArray<BlendingCellInfo>
+    - m_TempBlendingCellToLoadList : DynamicArray<BlendingCellInfo>
+    - m_TempBlendingCellToUnloadList : DynamicArray<BlendingCellInfo>
+    - m_FrozenCameraPosition : Vector3
+    - m_HasRemainingCellsToBlend : bool = false
+    <<internal>> ScenarioBlendingChanged(scenarioChanged:bool) : void
+    + SetNumberOfCellsLoadedPerFrame(numberOfCells:int) : void
+    - ComputeCellCameraDistance(cameraPosition:Vector3, cells:DynamicArray<CellInfo>) : void
+    - ComputeStreamingScoreForBlending(cells:DynamicArray<BlendingCellInfo>, worstScore:float) : void
+    - TryLoadCell(cellInfo:CellInfo, shBudget:int, indexBudget:int, loadedCells:DynamicArray<CellInfo>) : bool
+    - UnloadBlendingCell(blendingCell:BlendingCellInfo, unloadedCells:DynamicArray<BlendingCellInfo>) : void
+    - TryLoadBlendingCell(blendingCell:BlendingCellInfo, loadedCells:DynamicArray<BlendingCellInfo>) : bool
+    + UpdateCellStreaming(cmd:CommandBuffer, camera:Camera) : void
+    - FindWorstBlendingCellToBeLoaded() : int
+    - UpdateBlendingCellStreaming(cmd:CommandBuffer) : void
+}
+@enduml

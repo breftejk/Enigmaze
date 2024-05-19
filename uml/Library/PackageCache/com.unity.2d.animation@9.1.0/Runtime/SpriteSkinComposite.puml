@@ -1,0 +1,142 @@
+@startuml
+struct PerSkinJobData {
+    + deformVerticesStartPos : int
+    + bindPosesIndex : int2
+    + verticesIndex : int2
+}
+struct SpriteSkinData {
+    + vertices : NativeCustomSlice<Vector3>
+    + boneWeights : NativeCustomSlice<BoneWeight>
+    + bindPoses : NativeCustomSlice<Matrix4x4>
+    + tangents : NativeCustomSlice<Vector4>
+    + hasTangents : bool
+    + spriteVertexStreamSize : int
+    + spriteVertexCount : int
+    + tangentVertexOffset : int
+    + deformVerticesStartPos : int
+    + transformId : int
+    + boneTransformId : NativeCustomSlice<int>
+}
+struct PrepareDeformJob {
+    + perSkinJobData : NativeArray<PerSkinJobData>
+    + batchDataSize : int
+    + boneLookupData : NativeArray<int2>
+    + vertexLookupData : NativeArray<int2>
+    + Execute() : void
+}
+struct BoneDeformBatchedJob {
+    + boneTransform : NativeArray<float4x4>
+    + rootTransform : NativeArray<float4x4>
+    + boneLookupData : NativeArray<int2>
+    + spriteSkinData : NativeArray<SpriteSkinData>
+    + rootTransformIndex : NativeHashMap<int, TransformAccessJob.TransformData>
+    + boneTransformIndex : NativeHashMap<int, TransformAccessJob.TransformData>
+    + finalBoneTransforms : NativeArray<float4x4>
+    + Execute(i:int) : void
+}
+struct SkinDeformBatchedJob {
+    + vertices : NativeSlice<byte>
+    + finalBoneTransforms : NativeArray<float4x4>
+    + perSkinJobData : NativeArray<PerSkinJobData>
+    + spriteSkinData : NativeArray<SpriteSkinData>
+    + vertexLookupData : NativeArray<int2>
+    + <<unsafe>> Execute(i:int) : void
+}
+struct CalculateSpriteSkinAABBJob {
+    + vertices : NativeSlice<byte>
+    + isSpriteSkinValidForDeformArray : NativeArray<bool>
+    + spriteSkinData : NativeArray<SpriteSkinData>
+    + bounds : NativeArray<Bounds>
+    + <<unsafe>> Execute(i:int) : void
+}
+struct FillPerSkinJobSingleThread {
+    + combinedSkinBatch : PerSkinJobData
+    + isSpriteSkinValidForDeformArray : NativeArray<bool>
+    + spriteSkinDataArray : NativeArray<SpriteSkinData>
+    + perSkinJobDataArray : NativeArray<PerSkinJobData>
+    + combinedSkinBatchArray : NativeArray<PerSkinJobData>
+    + Execute() : void
+}
+struct CopySpriteRendererBuffersJob {
+    + isSpriteSkinValidForDeformArray : NativeArray<bool>
+    + spriteSkinData : NativeArray<SpriteSkinData>
+    + ptrVertices : IntPtr
+    + buffers : NativeArray<IntPtr>
+    + bufferSizes : NativeArray<int>
+    + Execute(i:int) : void
+}
+class SpriteSkinComposite {
+    {static} - s_Instance : SpriteSkinComposite
+    + {static} instance : SpriteSkinComposite <<get>>
+    - m_SpriteSkinsToAdd : List<SpriteSkin>
+    - m_SpriteSkinsToRemove : List<SpriteSkin>
+    - m_TransformIdsToRemove : List<int>
+    - m_SpriteSkins : List<SpriteSkin>
+    - m_SpriteRenderers : SpriteRenderer[]
+    - m_DeformedVerticesBuffer : NativeByteArray
+    - m_FinalBoneTransforms : NativeArray<float4x4>
+    - m_IsSpriteSkinActiveForDeform : NativeArray<bool>
+    - m_SpriteSkinData : NativeArray<SpriteSkinData>
+    - m_PerSkinJobData : NativeArray<PerSkinJobData>
+    - m_BoundsData : NativeArray<Bounds>
+    - m_Buffers : NativeArray<IntPtr>
+    - m_BufferSizes : NativeArray<int>
+    - m_BoneLookupData : NativeArray<int2>
+    - m_VertexLookupData : NativeArray<int2>
+    - m_SkinBatchArray : NativeArray<PerSkinJobData>
+    - m_LocalToWorldTransformAccessJob : TransformAccessJob
+    - m_WorldToLocalTransformAccessJob : TransformAccessJob
+    - m_BoundJobHandle : JobHandle
+    - m_DeformJobHandle : JobHandle
+    - m_CopyJobHandle : JobHandle
+    - m_Helper : GameObject
+    <<internal>> helperGameObject : GameObject <<get>>
+    <<internal>> RemoveTransformById(transformId:int) : void
+    <<internal>> AddSpriteSkinBoneTransform(spriteSkin:SpriteSkin) : void
+    <<internal>> AddSpriteSkinRootBoneTransform(spriteSkin:SpriteSkin) : void
+    <<internal>> AddSpriteSkin(spriteSkin:SpriteSkin) : void
+    <<internal>> CopyToSpriteSkinData(spriteSkin:SpriteSkin) : void
+    - CopyToSpriteSkinData(index:int) : void
+    <<internal>> RemoveSpriteSkin(spriteSkin:SpriteSkin) : void
+    {static} - DoesContainSpriteSkin(collection:List<SpriteSkin>, skin:SpriteSkin) : bool
+    - Init() : void
+    - CreateHelper() : void
+    - OnHelperDestroyed(helperGo:GameObject) : void
+    <<internal>> ResetComposite() : void
+    + OnEnable() : void
+    - InitializeArrays() : void
+    - OnDisable() : void
+    <<internal>> <<unsafe>> LateUpdate() : void
+    - BatchRemoveSpriteSkins() : void
+    - BatchAddSpriteSkins() : void
+    - ResizeAndCopyArrays(updatedCount:int) : void
+    - DeactivateDeformableBuffers() : void
+    <<internal>> HasDeformableBufferForSprite(dataIndex:int) : bool
+    <<internal>> <<unsafe>> GetDeformableBufferForSprite(dataIndex:int) : NativeArray<byte>
+    <<internal>> GetDebugLog() : string
+    <<internal>> GetSpriteSkins() : SpriteSkin[]
+    <<internal>> GetWorldToLocalTransformAccessJob() : TransformAccessJob
+    <<internal>> GetLocalToWorldTransformAccessJob() : TransformAccessJob
+}
+class Profiling <<static>> {
+    + {static} <<readonly>> batchAddSpriteSkin : ProfilerMarker
+    + {static} <<readonly>> batchRemoveSpriteSkin : ProfilerMarker
+    + {static} <<readonly>> prepareData : ProfilerMarker
+    + {static} <<readonly>> validateSpriteSkinData : ProfilerMarker
+    + {static} <<readonly>> transformAccessJob : ProfilerMarker
+    + {static} <<readonly>> getSpriteSkinBatchData : ProfilerMarker
+    + {static} <<readonly>> resizeBuffers : ProfilerMarker
+    + {static} <<readonly>> prepare : ProfilerMarker
+    + {static} <<readonly>> scheduleJobs : ProfilerMarker
+    + {static} <<readonly>> setBatchDeformableBufferAndLocalAABB : ProfilerMarker
+    + {static} <<readonly>> deactivateDeformableBuffer : ProfilerMarker
+}
+IJob <|-- PrepareDeformJob
+IJobParallelFor <|-- BoneDeformBatchedJob
+IJobParallelFor <|-- SkinDeformBatchedJob
+IJobParallelFor <|-- CalculateSpriteSkinAABBJob
+IJob <|-- FillPerSkinJobSingleThread
+IJobParallelFor <|-- CopySpriteRendererBuffersJob
+ScriptableObject <|-- SpriteSkinComposite
+SpriteSkinComposite +-- Profiling
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class StickyNoteOption <<sealed>> {
+    + StickyNoteOption()
+}
+"FuzzyOption`1" "<object>" <|-- StickyNoteOption
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class ScriptableObjectUtility {
+    + {static} kPackageRoot : string = "Packages/com.unity.cinemachine"
+    + {static} CinemachineInstallPath : string <<get>>
+    + {static} CinemachineRealativeInstallPath : string <<get>>
+    + {static} CreateAt(assetPath:string) : T
+    + {static} CreateAt(assetType:Type, assetPath:string) : ScriptableObject
+    + {static} Create(prependFolderName:bool, trimName:bool) : void
+    - {static} Create(className:string, assetName:string, folder:string) : ScriptableObject
+    - {static} GetSelectedAssetFolder() : string
+    - {static} GetUnusedAssetPath(folder:string, assetName:string) : string
+}
+ScriptableObject <|-- ScriptableObjectUtility
+@enduml

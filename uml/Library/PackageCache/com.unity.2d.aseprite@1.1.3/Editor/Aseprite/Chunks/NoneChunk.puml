@@ -1,0 +1,7 @@
+@startuml
+class NoneChunk {
+    <<internal>> NoneChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- NoneChunk
+@enduml

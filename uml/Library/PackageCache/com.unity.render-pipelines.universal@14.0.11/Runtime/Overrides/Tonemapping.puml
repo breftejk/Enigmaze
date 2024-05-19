@@ -1,0 +1,43 @@
+@startuml
+enum TonemappingMode {
+    None,
+    Neutral,
+    ACES,
+}
+enum NeutralRangeReductionMode {
+    Reinhard= HDRRangeReduction.Reinhard,
+    BT2390= HDRRangeReduction.BT2390,
+}
+enum HDRACESPreset {
+    ACES1000Nits= HDRRangeReduction.ACES1000Nits,
+    ACES2000Nits= HDRRangeReduction.ACES2000Nits,
+    ACES4000Nits= HDRRangeReduction.ACES4000Nits,
+}
+class Tonemapping <<sealed>> {
+    + mode : TonemappingModeParameter
+    + neutralHDRRangeReductionMode : NeutralRangeReductionModeParameter
+    + acesPreset : HDRACESPresetParameter
+    + hueShiftAmount : ClampedFloatParameter
+    + detectPaperWhite : BoolParameter
+    + paperWhite : ClampedFloatParameter
+    + detectBrightnessLimits : BoolParameter
+    + minNits : ClampedFloatParameter
+    + maxNits : ClampedFloatParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+class TonemappingModeParameter <<sealed>> {
+    + TonemappingModeParameter(value:TonemappingMode, overrideState:bool)
+}
+class NeutralRangeReductionModeParameter <<sealed>> {
+    + NeutralRangeReductionModeParameter(value:NeutralRangeReductionMode, overrideState:bool)
+}
+class HDRACESPresetParameter <<sealed>> {
+    + HDRACESPresetParameter(value:HDRACESPreset, overrideState:bool)
+}
+VolumeComponent <|-- Tonemapping
+IPostProcessComponent <|-- Tonemapping
+"VolumeParameter`1" "<TonemappingMode>" <|-- TonemappingModeParameter
+"VolumeParameter`1" "<NeutralRangeReductionMode>" <|-- NeutralRangeReductionModeParameter
+"VolumeParameter`1" "<HDRACESPreset>" <|-- HDRACESPresetParameter
+@enduml

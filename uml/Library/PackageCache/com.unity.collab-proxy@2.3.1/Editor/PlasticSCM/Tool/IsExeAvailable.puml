@@ -1,0 +1,27 @@
+@startuml
+class IsExeAvailable <<static>> {
+    <<internal>> {static} ForMode(isGluonMode:bool) : bool
+}
+class PlasticInstallPath <<static>> {
+    <<internal>> {static} GetClientBinDir() : string
+    <<internal>> {static} GetPlasticExePath() : string
+    <<internal>> {static} GetGluonExePath() : string
+    {static} - GetToolCommand(tool:string) : string
+    {static} - GetExistingDir(directory:string) : string
+    {static} - GetWindowsInstallationFolder() : string
+    <<const>> - PLASTICSCM_FOLDER : string = "PlasticSCM5"
+    <<const>> - PLASTICSCM_SUBFOLDER : string = "client"
+}
+class Plastic {
+    <<internal>> <<const>> GUI_WINDOWS : string = "plastic.exe"
+    <<internal>> <<const>> LEGACY_GUI_MACOS : string = "/Applications/PlasticSCM.app/Contents/MacOS/PlasticSCM"
+    <<internal>> <<const>> NEW_GUI_MACOS : string = "/Applications/PlasticSCM.app/Contents/MacOS/macplasticx"
+}
+class Gluon {
+    <<internal>> <<const>> GUI_WINDOWS : string = "gluon.exe"
+    <<internal>> <<const>> LEGACY_GUI_MACOS : string = "/Applications/Gluon.app/Contents/MacOS/Gluon"
+    <<internal>> <<const>> NEW_GUI_MACOS : string = "/Applications/Gluon.app/Contents/MacOS/macgluonx"
+}
+PlasticInstallPath +-- Plastic
+PlasticInstallPath +-- Gluon
+@enduml

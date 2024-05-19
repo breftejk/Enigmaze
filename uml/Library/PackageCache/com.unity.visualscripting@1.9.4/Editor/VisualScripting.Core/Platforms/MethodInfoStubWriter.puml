@@ -1,0 +1,8 @@
+@startuml
+class MethodInfoStubWriter {
+    + MethodInfoStubWriter(methodInfo:MethodInfo)
+    + <<override>> GetStubStatements() : IEnumerable<CodeStatement>
+    + {static} <<readonly>> operatorTypes : Dictionary<string, CodeBinaryOperatorType>
+}
+"MethodBaseStubWriter`1" "<MethodInfo>" <|-- MethodInfoStubWriter
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+interface "IKeyedCollection`2"<TKey,TItem> {
+    TryGetValue(key:TKey, value:TItem) : bool
+    Contains(key:TKey) : bool
+    Remove(key:TKey) : bool
+}
+"ICollection`1" "<TItem>" <|-- "IKeyedCollection`2"
+@enduml

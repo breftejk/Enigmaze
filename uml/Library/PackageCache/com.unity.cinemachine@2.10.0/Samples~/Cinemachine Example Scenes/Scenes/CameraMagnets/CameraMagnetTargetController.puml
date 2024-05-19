@@ -1,0 +1,10 @@
+@startuml
+class CameraMagnetTargetController {
+    + targetGroup : CinemachineTargetGroup
+    - playerIndex : int
+    - cameraMagnets : CameraMagnetProperty[]
+    - Start() : void
+    - Update() : void
+}
+MonoBehaviour <|-- CameraMagnetTargetController
+@enduml

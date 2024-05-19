@@ -1,0 +1,35 @@
+@startuml
+class WebView <<sealed>> {
+    + WebView(host:EditorWindow, position:Rect)
+    - <<readonly>> webView : ScriptableObject
+    + position : Rect <<set>>
+    + host : EditorWindow <<set>>
+    + isDestroyed : bool <<get>>
+    + hasFocus : bool <<set>>
+    + Destroy() : void
+    + Load(uri:string) : void
+    + Show() : void
+    + Hide() : void
+    + Forward() : void
+    + Back() : void
+    + Reload() : void
+    {static} - WebView()
+    - {static} <<readonly>> WebViewType : Type
+    - {static} <<readonly>> WebView_InitWebView : MethodInfo
+    - {static} <<readonly>> WebView_LoadUrl : MethodInfo
+    - {static} <<readonly>> WebView_LoadFile : MethodInfo
+    - {static} <<readonly>> WebView_SetHostView : MethodInfo
+    - {static} <<readonly>> WebView_SetSizeAndPosition : MethodInfo
+    - {static} <<readonly>> WebView_SetFocus : MethodInfo
+    - {static} <<readonly>> WebView_SetApplicationFocus : MethodInfo
+    - {static} <<readonly>> WebView_Show : MethodInfo
+    - {static} <<readonly>> WebView_Hide : MethodInfo
+    - {static} <<readonly>> WebView_Back : MethodInfo
+    - {static} <<readonly>> WebView_Forward : MethodInfo
+    - {static} <<readonly>> WebView_Reload : MethodInfo
+    - {static} <<readonly>> WebView_IntPtrIsNull : MethodInfo
+    - {static} <<readonly>> EditorWindow_m_Parent : FieldInfo
+    - {static} GetHostView(window:EditorWindow) : object
+    - {static} ToWindowRect(rect:Rect) : Rect
+}
+@enduml

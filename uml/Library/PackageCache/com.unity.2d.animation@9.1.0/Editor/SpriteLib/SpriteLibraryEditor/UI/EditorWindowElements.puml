@@ -1,0 +1,59 @@
+@startuml
+class EditorMainWindow {
+    - m_ViewEvents : ViewEvents
+    - m_CategoriesTab : CategoriesTab
+    - m_LabelsTab : LabelsTab
+    - m_SplitView : TwoPaneSplitView
+    <<const>> - k_MinPaneWidth : float = 150f
+    <<internal>> BindElements(controllerEvents:ControllerEvents, viewEvents:ViewEvents) : void
+    - GeometryInitialized(evt:GeometryChangedEvent) : void
+    - OnSplitViewResize(evt:GeometryChangedEvent) : void
+}
+class EditorBottomToolbar {
+    + BindElements(controllerEvents:ControllerEvents, viewEvents:ViewEvents) : void
+}
+class EditorTopToolbar {
+    - m_ControllerEvents : ControllerEvents
+    - m_ViewEvents : ViewEvents
+    - m_ObjectField : ObjectField
+    - m_Breadcrumbs : ToolbarBreadcrumbs
+    - m_SearchField : ToolbarPopupSearchField
+    - m_SaveButton : Button
+    - m_RevertButton : Button
+    - m_AutoSaveToggle : Toggle
+    - m_CurrentSearchColumn : SearchType
+    - m_SelectedAsset : SpriteLibraryAsset
+    + BindElements(controllerEvents:ControllerEvents, viewEvents:ViewEvents) : void
+    - OnSelectAutoSave(evt:ChangeEvent<bool>) : void
+    - SetSearchType(searchType:SearchType) : void
+    - AutoSaveChanged(autoSave:bool) : void
+    - OnSelectedMainAsset(evt:ChangeEvent<UnityEngine.Object>) : void
+    - OnSelectedAssetChanged(selectedAsset:SpriteLibraryAsset) : void
+    - OnMainAssetChanged(mainAsset:SpriteLibraryAsset) : void
+    - UpdateBreadCrumbs(breadcrumbList:List<SpriteLibraryAsset>) : void
+    {static} - OnBreadcrumbClicked(asset:SpriteLibraryAsset) : void
+    - SetSaveRevertEnabled(toggleEnabled:bool) : void
+}
+class EditorTabHeader {
+}
+class CustomUxmlFactory {
+}
+class CustomUxmlFactory {
+}
+class CustomUxmlFactory {
+}
+class CustomUxmlFactory {
+}
+VisualElement <|-- EditorMainWindow
+VisualElement <|-- EditorBottomToolbar
+VisualElement <|-- EditorTopToolbar
+VisualElement <|-- EditorTabHeader
+EditorMainWindow +-- CustomUxmlFactory
+"UxmlFactory`2" "<EditorMainWindow,UxmlTraits>" <|-- CustomUxmlFactory
+EditorBottomToolbar +-- CustomUxmlFactory
+"UxmlFactory`2" "<EditorBottomToolbar,UxmlTraits>" <|-- CustomUxmlFactory
+EditorTopToolbar +-- CustomUxmlFactory
+"UxmlFactory`2" "<EditorTopToolbar,UxmlTraits>" <|-- CustomUxmlFactory
+EditorTabHeader +-- CustomUxmlFactory
+"UxmlFactory`2" "<EditorTabHeader,UxmlTraits>" <|-- CustomUxmlFactory
+@enduml

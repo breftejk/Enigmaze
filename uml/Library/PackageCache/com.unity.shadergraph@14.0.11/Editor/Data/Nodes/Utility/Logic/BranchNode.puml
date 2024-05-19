@@ -1,0 +1,8 @@
+@startuml
+class BranchNode {
+    + BranchNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Branch(Predicate:Boolean, True:DynamicDimensionVector, False:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- BranchNode
+@enduml

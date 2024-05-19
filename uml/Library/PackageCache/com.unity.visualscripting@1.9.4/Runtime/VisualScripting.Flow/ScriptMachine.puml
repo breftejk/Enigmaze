@@ -1,0 +1,11 @@
+@startuml
+class ScriptMachine <<sealed>> {
+    + <<override>> DefaultGraph() : FlowGraph
+    # <<override>> OnEnable() : void
+    # <<override>> OnInstantiateWhileEnabled() : void
+    # <<override>> OnUninstantiateWhileEnabled() : void
+    # <<override>> OnDisable() : void
+    # <<override>> ShowData() : void
+}
+"EventMachine`2" "<FlowGraph,ScriptGraphAsset>" <|-- ScriptMachine
+@enduml

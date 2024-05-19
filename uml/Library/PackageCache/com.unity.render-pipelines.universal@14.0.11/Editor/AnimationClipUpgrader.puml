@@ -1,0 +1,43 @@
+@startuml
+class AnimationClipUpgrader <<static>> <<partial>> {
+    {static} <<readonly>> - k_MatchMaterialPropertyName : Regex
+    <<internal>> {static} IsMaterialBinding(b:EditorCurveBinding) : bool
+    {static} <<readonly>> - k_ColorAttributeSuffixes : IReadOnlyCollection<string>
+    <<internal>> {static} InferShaderProperty(binding:EditorCurveBinding) : (string Name, ShaderPropertyType Type)
+    <<internal>> {static} GetAssetDataForClipsFiltered(clipPaths:IEnumerable<ClipPath>) : IDictionary<
+            IAnimationClip,
+            (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)
+        >
+    <<internal>> {static} GetClipDependencyMappings(clips:IEnumerable<ClipPath>, assets:IEnumerable<T>, clipToDependentAssets:IReadOnlyDictionary<ClipPath, IReadOnlyCollection<T>>, assetToClipDependencies:IReadOnlyDictionary<T, IReadOnlyCollection<ClipPath>>) : void
+    {static} <<readonly>> - s_AnimationBuffer : List<Animation>
+    {static} <<readonly>> - s_AnimatorBuffer : List<Animator>
+    {static} <<readonly>> - s_CustomAnimationBuffer : List<IAnimationClipSource>
+    {static} <<readonly>> - s_PlayableDirectorBuffer : List<PlayableDirector>
+    <<internal>> {static} GatherClipsUsageInDependentPrefabs(clipDependents:IReadOnlyDictionary<ClipPath, IReadOnlyCollection<PrefabPath>>, assetDependencies:IReadOnlyDictionary<PrefabPath, IReadOnlyCollection<ClipPath>>, clipData:IDictionary<
+                IAnimationClip,
+                (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)
+            >, allUpgradePathsToNewShaders:IReadOnlyDictionary<string, IReadOnlyList<MaterialUpgrader>>, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>, progressFunctor:Func<string, float, bool>) : void
+    <<internal>> {static} GatherClipsUsageInDependentScenes(clipDependents:IReadOnlyDictionary<ClipPath, IReadOnlyCollection<ScenePath>>, assetDependencies:IReadOnlyDictionary<ScenePath, IReadOnlyCollection<ClipPath>>, clipData:IDictionary<
+                IAnimationClip,
+                (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string>
+                    PropertyRenames)
+            >, allUpgradePathsToNewShaders:IReadOnlyDictionary<string, IReadOnlyList<MaterialUpgrader>>, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>, progressFunctor:Func<string, float, bool>) : void
+    {static} - GatherClipsUsageForGameObject(go:GameObject, clipData:IDictionary<
+                IAnimationClip,
+                (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)
+            >, allUpgradePathsToNewShaders:IReadOnlyDictionary<string, IReadOnlyList<MaterialUpgrader>>, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>) : void
+    {static} <<readonly>> - s_RendererBuffer : List<Renderer>
+    {static} <<readonly>> - s_RenderersByPath : Dictionary<string, (IRenderer Renderer, List<IMaterial> Materials)>
+    {static} - GatherClipsUsageForAnimatedHierarchy(root:Transform, clips:IEnumerable<IAnimationClip>, clipData:IDictionary<
+                IAnimationClip,
+                (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)
+            >, allUpgradePathsToNewShaders:IReadOnlyDictionary<string, IReadOnlyList<MaterialUpgrader>>, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>) : void
+    <<internal>> {static} GatherClipUsage(clip:IAnimationClip, clipData:IDictionary<
+                IAnimationClip,
+                (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)
+            >, renderersByPath:IReadOnlyDictionary<string, (IRenderer Renderer, List<IMaterial> Materials)>, allUpgradePathsToNewShaders:IReadOnlyDictionary<string, IReadOnlyList<MaterialUpgrader>>, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>) : void
+    <<internal>> {static} UpgradeClips(clipsToUpgrade:IDictionary<IAnimationClip, (ClipPath Path, EditorCurveBinding[] Bindings, SerializedShaderPropertyUsage Usage, IDictionary<EditorCurveBinding, string> PropertyRenames)>, excludeFlags:SerializedShaderPropertyUsage, upgraded:HashSet<(IAnimationClip Clip, ClipPath Path, SerializedShaderPropertyUsage Usage)>, notUpgraded:HashSet<(IAnimationClip Clip, ClipPath Path, SerializedShaderPropertyUsage Usage)>, progressFunctor:Func<string, float, bool>) : void
+    + {static} DoUpgradeAllClipsMenuItem(allUpgraders:IEnumerable<MaterialUpgrader>, progressBarName:string, knownUpgradePaths:IReadOnlyDictionary<UID, MaterialUpgrader>, filterFlags:SerializedShaderPropertyUsage) : void
+    {static} - DoUpgradeClipsMenuItem(clipPaths:ClipPath[], allUpgraders:IEnumerable<MaterialUpgrader>, progressBarName:string, upgradePathsUsedByMaterials:IReadOnlyDictionary<UID, MaterialUpgrader>, filterFlags:SerializedShaderPropertyUsage) : void
+}
+@enduml

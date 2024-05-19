@@ -1,0 +1,6 @@
+@startuml
+abstract class "InstanceFunctionInvokerBase`2"<TTarget,TResult> {
+    # InstanceFunctionInvokerBase(methodInfo:MethodInfo)
+}
+"InstanceInvokerBase`1" "<TTarget>" <|-- "InstanceFunctionInvokerBase`2"
+@enduml

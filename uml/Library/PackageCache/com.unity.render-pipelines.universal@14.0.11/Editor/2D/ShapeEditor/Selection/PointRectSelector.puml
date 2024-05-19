@@ -1,0 +1,6 @@
+@startuml
+class PointRectSelector {
+    # <<override>> Select(element:Vector3) : bool
+}
+"RectSelector`1" "<Vector3>" <|-- PointRectSelector
+@enduml

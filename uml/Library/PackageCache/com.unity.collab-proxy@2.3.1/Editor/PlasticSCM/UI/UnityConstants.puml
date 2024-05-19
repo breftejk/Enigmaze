@@ -1,0 +1,118 @@
+@startuml
+class UnityConstants <<static>> {
+    <<internal>> <<const>> CANCEL_BUTTON_SIZE : float = 15f
+    <<internal>> <<const>> SMALL_BUTTON_WIDTH : float = 40f
+    <<internal>> <<const>> REGULAR_BUTTON_WIDTH : float = 60f
+    <<internal>> <<const>> LARGE_BUTTON_WIDTH : float = 100f
+    <<internal>> <<const>> EXTRA_LARGE_BUTTON_WIDTH : float = 130f
+    <<internal>> <<const>> SEARCH_FIELD_WIDTH : float = 550f
+    <<internal>> <<const>> DIFF_PANEL_MIN_WIDTH : float
+    <<internal>> <<const>> TREEVIEW_META_LABEL : string = " +meta"
+    <<internal>> <<const>> TREEVIEW_CHECKBOX_SIZE : float = 17f
+    <<internal>> <<const>> TREEVIEW_BASE_INDENT : float = 16f
+    <<internal>> <<const>> TREEVIEW_ROW_WIDTH_OFFSET : float = 24f
+    <<internal>> <<const>> TREEVIEW_STATUS_ICON_SIZE : int = 16
+    <<internal>> <<const>> TREEVIEW_STATUS_CONTENT_PADDING : int = 4
+    <<internal>> <<const>> TREEVIEW_STATUS_CONTENT_OFFSET : int = 2
+    <<internal>> <<const>> FIRST_COLUMN_WITHOUT_ICON_INDENT : float = 5f
+    <<internal>> <<const>> PENDING_CHANGES_FONT_SIZE : int = 12
+    <<internal>> <<const>> OVERLAY_STATUS_ICON_SIZE : int = 16
+    <<internal>> <<const>> SETTINGS_GUI_WIDTH : int = 400
+    <<internal>> <<const>> STATUS_BAR_HEIGHT : int = 24
+    <<internal>> <<const>> STATUS_BAR_ICON_SIZE : int = 16
+    <<internal>> <<const>> STATUS_BAR_NOTIFICATION_SPACING : int = 8
+    <<internal>> <<const>> DROPDOWN_ICON_Y_OFFSET : float = 5f
+    <<internal>> <<const>> TREEVIEW_FOLDOUT_Y_OFFSET : float = 1f
+    <<internal>> <<const>> TREEVIEW_ROW_HEIGHT : float = 20f
+    <<internal>> <<const>> TREEVIEW_PENDING_CHANGES_ROW_HEIGHT : float = 24f
+    <<internal>> <<const>> TREEVIEW_HEADER_CHECKBOX_Y_OFFSET : float = 6f
+    <<internal>> <<const>> TREEVIEW_CHECKBOX_Y_OFFSET : float = 2f
+    <<internal>> {static} DIR_CONFLICT_VALIDATION_WARNING_LABEL_HEIGHT : float = 18f
+    <<internal>> <<const>> INSPECTOR_ACTIONS_BACK_RECTANGLE_TOP_MARGIN : float = 0f
+    <<internal>> <<const>> INSPECTOR_ACTIONS_HEADER_BACK_RECTANGLE_HEIGHT : int = 7
+    <<internal>> <<const>> LEFT_MOUSE_BUTTON : int = 0
+    <<internal>> <<const>> RIGHT_MOUSE_BUTTON : int = 1
+    <<internal>> <<const>> UNSORT_COLUMN_ID : int
+    <<internal>> <<const>> PLASTIC_WINDOW_TITLE : string = "Unity Version Control"
+    <<internal>> <<const>> PROJECT_SETTINGS_TAB_PATH : string = "Project/Version Control/Unity Version Control"
+    <<internal>> <<const>> PROJECT_SETTINGS_TAB_TITLE : string = "Unity Version Control Settings"
+    <<internal>> <<const>> PLASTIC_WINDOW_MIN_SIZE_WIDTH : float = 600f
+    <<internal>> <<const>> PLASTIC_WINDOW_MIN_SIZE_HEIGHT : float = 350f
+    <<internal>> <<const>> PLASTIC_WINDOW_COMMENT_SECTION_HEIGHT : float = 55f
+    <<internal>> <<const>> ACTIVE_TAB_UNDERLINE_HEIGHT : int = 1
+    <<internal>> <<const>> SPLITTER_INDICATOR_HEIGHT : int = 1
+    <<internal>> <<const>> SEARCH_DELAYED_INPUT_ACTION_INTERVAL : double = 0.25
+    <<internal>> <<const>> SELECTION_DELAYED_INPUT_ACTION_INTERVAL : double = 0.25
+    <<internal>> <<const>> AUTO_REFRESH_DELAYED_INTERVAL : double = 0.25
+    <<internal>> <<const>> AUTO_REFRESH_PENDING_CHANGES_DELAYED_INTERVAL : double = 0.1
+    + <<const>> PLUGIN_DELAYED_INITIALIZE_INTERVAL : double = 0.25
+    <<internal>> <<const>> NOTIFICATION_CLEAR_INTERVAL : double = 5
+    <<internal>> <<const>> PENDING_CHANGES_TABLE_SETTINGS_NAME : string = "{0&#125;_PendingChangesTreeV3_{1&#125;"
+    <<internal>> <<const>> GLUON_INCOMING_CHANGES_TABLE_SETTINGS_NAME : string = "{0&#125;_GluonIncomingChangesTreeV2_{1&#125;"
+    <<internal>> <<const>> GLUON_INCOMING_ERRORS_TABLE_SETTINGS_NAME : string = "{0&#125;_GluonIncomingErrorsListV2_{1&#125;"
+    <<internal>> <<const>> GLUON_UPDATE_REPORT_TABLE_SETTINGS_NAME : string = "{0&#125;_GluonUpdateReportListV2_{1&#125;"
+    <<internal>> <<const>> DEVELOPER_INCOMING_CHANGES_TABLE_SETTINGS_NAME : string = "{0&#125;_DeveloperIncomingChangesTreeV3_{1&#125;"
+    <<internal>> <<const>> DEVELOPER_UPDATE_REPORT_TABLE_SETTINGS_NAME : string = "{0&#125;_DeveloperUpdateReportListV2_{1&#125;"
+    <<internal>> <<const>> REPOSITORIES_TABLE_SETTINGS_NAME : string = "{0&#125;_RepositoriesListV2_{1&#125;"
+    <<internal>> <<const>> CHANGESETS_TABLE_SETTINGS_NAME : string = "{0&#125;_ChangesetsListV3_{1&#125;"
+    <<internal>> <<const>> CHANGESETS_DATE_FILTER_SETTING_NAME : string = "{0&#125;_ChangesetsDateFilter_{1&#125;"
+    <<internal>> <<const>> CHANGESETS_SHOW_CHANGES_SETTING_NAME : string = "{0&#125;_ShowChanges_{1&#125;"
+    <<internal>> <<const>> HISTORY_TABLE_SETTINGS_NAME : string = "{0&#125;_HistoryListV2_{1&#125;"
+    <<internal>> <<const>> BRANCHES_TABLE_SETTINGS_NAME : string = "{0&#125;_BranchesListV2_{1&#125;"
+    <<internal>> <<const>> BRANCHES_DATE_FILTER_SETTING_NAME : string = "{0&#125;_BranchesDateFilter_{1&#125;"
+    <<internal>> <<const>> LOCKS_TABLE_SETTINGS_NAME : string = "{0&#125;_LocksListV2_{1&#125;"
+    <<internal>> <<const>> PLASTIC_PLUGIN_IS_ENABLED_KEY_NAME : string = "{0&#125;_PlasticPluginIsEnabled"
+    <<internal>> <<const>> SHOW_BRANCHES_VIEW_KEY_NAME : string = "{0&#125;_ShowBranchesView"
+    <<internal>> <<const>> SHOW_LOCKS_VIEW_KEY_NAME : string = "{0&#125;_ShowLocksView"
+    <<internal>> <<const>> FIRST_CHECKIN_SUBMITTED : string = "{0&#125;_FirstCheckinSubmitted"
+    <<internal>> <<const>> SHOW_NOTIFICATION_KEY_NAME : string = "ShowNotification"
+    <<internal>> <<const>> FORCE_CHECKOUT_KEY_NAME : string = "forceCheckoutPlasticSCM"
+}
+class ChangesetsColumns <<static>> {
+    <<internal>> <<const>> CHANGESET_NUMBER_WIDTH : float = 80f
+    <<internal>> <<const>> CHANGESET_NUMBER_MIN_WIDTH : float = 50f
+    <<internal>> <<const>> CREATION_DATE_WIDTH : float = 150f
+    <<internal>> <<const>> CREATION_DATE_MIN_WIDTH : float = 100f
+    <<internal>> <<const>> CREATED_BY_WIDTH : float = 200f
+    <<internal>> <<const>> CREATED_BY_MIN_WIDTH : float = 110f
+    <<internal>> <<const>> COMMENT_WIDTH : float = 300f
+    <<internal>> <<const>> COMMENT_MIN_WIDTH : float = 100f
+    <<internal>> <<const>> BRANCH_WIDTH : float = 160f
+    <<internal>> <<const>> BRANCH_MIN_WIDTH : float = 90f
+    <<internal>> <<const>> REPOSITORY_WIDTH : float = 210f
+    <<internal>> <<const>> REPOSITORY_MIN_WIDTH : float = 90f
+    <<internal>> <<const>> GUID_WIDTH : float = 270f
+    <<internal>> <<const>> GUID_MIN_WIDTH : float = 100f
+}
+class BranchesColumns <<static>> {
+    <<internal>> <<const>> BRANCHES_NAME_WIDTH : float = 180f
+    <<internal>> <<const>> BRANCHES_NAME_MIN_WIDTH : float = 70f
+    <<internal>> <<const>> CREATION_DATE_WIDTH : float = 80f
+    <<internal>> <<const>> CREATION_DATE_MIN_WIDTH : float = 60f
+    <<internal>> <<const>> CREATEDBY_WIDTH : float = 200f
+    <<internal>> <<const>> CREATEDBY_MIN_WIDTH : float = 110f
+    <<internal>> <<const>> COMMENT_WIDTH : float = 300f
+    <<internal>> <<const>> COMMENT_MIN_WIDTH : float = 100f
+    <<internal>> <<const>> REPOSITORY_WIDTH : float = 180f
+    <<internal>> <<const>> REPOSITORY_MIN_WIDTH : float = 90f
+    <<internal>> <<const>> GUID_WIDTH : float = 270f
+    <<internal>> <<const>> GUID_MIN_WIDTH : float = 100f
+}
+class LocksColumns <<static>> {
+    <<internal>> <<const>> PATH_WIDTH : float = 400f
+    <<internal>> <<const>> PATH_MIN_WIDTH : float = 200f
+    <<internal>> <<const>> LOCK_TYPE_WIDTH : float = 100f
+    <<internal>> <<const>> LOCK_TYPE_MIN_WIDTH : float = 60f
+    <<internal>> <<const>> MODIFICATION_DATE_WIDTH : float = 120f
+    <<internal>> <<const>> MODIFICATION_DATE_MIN_WIDTH : float = 60f
+    <<internal>> <<const>> OWNER_WIDTH : float = 220f
+    <<internal>> <<const>> OWNER_MIN_WIDTH : float = 110f
+    <<internal>> <<const>> BRANCH_NAME_WIDTH : float = 180f
+    <<internal>> <<const>> BRANCH_NAME_MIN_WIDTH : float = 90f
+    <<internal>> <<const>> DESTINATION_BRANCH_NAME_WIDTH : float = 180f
+    <<internal>> <<const>> DESTINATION_BRANCH_NAME_MIN_WIDTH : float = 90f
+}
+UnityConstants +-- ChangesetsColumns
+UnityConstants +-- BranchesColumns
+UnityConstants +-- LocksColumns
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class CinemachineConfinerEditor <<sealed>> {
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    + <<override>> OnInspectorGUI() : void
+    - {static} DrawColliderGizmos(confiner:CinemachineConfiner, type:GizmoType) : void
+    {static} - DrawPath(path:Vector2[], numPoints:int, offset:Vector2) : void
+}
+"BaseEditor`1" "<CinemachineConfiner>" <|-- CinemachineConfinerEditor
+@enduml

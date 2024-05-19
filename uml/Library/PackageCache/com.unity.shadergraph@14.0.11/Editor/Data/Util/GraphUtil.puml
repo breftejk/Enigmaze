@@ -1,0 +1,55 @@
+@startuml
+struct Dependency {
+    + name : string
+    + dependsOn : string
+    + Dependency(name:string, dependsOn:string)
+}
+class InterpolatorPack {
+    + InterpolatorPack()
+}
+class Semantic {
+    + semantic : string
+    + Semantic(semantic:string)
+}
+class Optional {
+    + Optional()
+}
+class OverrideType {
+    + typeName : string
+    + OverrideType(typeName:string)
+}
+class SystemGenerated {
+    + SystemGenerated()
+}
+class PreprocessorIf {
+    + conditional : string
+    + PreprocessorIf(conditional:string)
+}
+class NewGraphAction {
+    - m_Targets : Target[]
+    + targets : Target[] <<get>> <<set>>
+    - m_Blocks : BlockFieldDescriptor[]
+    + blocks : BlockFieldDescriptor[] <<get>> <<set>>
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+class GraphUtil <<static>> {
+    <<internal>> {static} CheckForRecursiveDependencyOnPendingSave(saveFilePath:string, subGraphNodes:IEnumerable<SubGraphNode>, context:string) : bool
+    <<internal>> {static} ConvertCamelCase(text:string, preserveAcronyms:bool) : string
+    + {static} CreateNewGraph() : void
+    + {static} CreateNewGraphWithOutputs(targets:Target[], blockDescriptors:BlockFieldDescriptor[]) : void
+    + {static} TryGetMetadataOfType(shader:Shader, obj:T) : bool
+    + {static} IsShaderGraph(material:Material) : bool
+    + {static} IsShaderGraphAsset(shader:Shader) : bool
+    + {static} IsShaderGraph(shader:Shader) : bool
+    {static} - Visit(outputList:List<AbstractMaterialNode>, unmarkedNodes:Dictionary<string, AbstractMaterialNode>, node:AbstractMaterialNode) : void
+    {static} - s_LegacyTypeRemapping : Dictionary<SerializationHelper.TypeSerializationInfo, SerializationHelper.TypeSerializationInfo>
+    + {static} GetLegacyTypeRemapping() : Dictionary<SerializationHelper.TypeSerializationInfo, SerializationHelper.TypeSerializationInfo>
+    <<internal>> {static} SanitizeName(existingNames:IEnumerable<string>, duplicateFormat:string, name:string, disallowedPatternRegex:string) : string
+    <<internal>> {static} SanitizeCategoryName(categoryName:string, disallowedPatternRegex:string) : string
+    <<internal>> {static} DeduplicateName(existingNames:IEnumerable<string>, duplicateFormat:string, name:string) : string
+    + {static} WriteToFile(path:string, content:string) : bool
+    + {static} OpenFile(path:string) : void
+    + {static} FindDownStreamNodesOfType(node:AbstractMaterialNode) : List<NodeType>
+}
+EndNameEditAction <|-- NewGraphAction
+@enduml

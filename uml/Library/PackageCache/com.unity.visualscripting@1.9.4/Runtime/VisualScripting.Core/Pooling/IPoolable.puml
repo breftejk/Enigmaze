@@ -1,0 +1,6 @@
+@startuml
+interface IPoolable {
+    New() : void
+    Free() : void
+}
+@enduml

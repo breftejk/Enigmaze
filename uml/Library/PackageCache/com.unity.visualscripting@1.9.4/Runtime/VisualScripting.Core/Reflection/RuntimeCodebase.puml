@@ -1,0 +1,37 @@
+@startuml
+class RuntimeCodebase <<static>> {
+    - {static} <<readonly>> @lock : object
+    - {static} <<readonly>> _types : List<Type>
+    + {static} types : IEnumerable<Type> <<get>>
+    - {static} <<readonly>> _assemblies : List<Assembly>
+    + {static} assemblies : IEnumerable<Assembly> <<get>>
+    + {static} disallowedAssemblies : HashSet<string>
+    - {static} <<readonly>> typeSerializations : Dictionary<string, Type>
+    - {static} _renamedTypes : Dictionary<string, Type> = null
+    - {static} _renamedNamespaces : Dictionary<string, string> = null
+    - {static} _renamedAssemblies : Dictionary<string, string> = null
+    - {static} <<readonly>> _renamedMembers : Dictionary<Type, Dictionary<string, string>>
+    {static} - RuntimeCodebase()
+    + {static} GetAssemblyAttributes(attributeType:Type) : IEnumerable<Attribute>
+    + {static} GetAssemblyAttributes(attributeType:Type, assemblies:IEnumerable<Assembly>) : IEnumerable<Attribute>
+    + {static} GetAssemblyAttributes(assemblies:IEnumerable<Assembly>) : IEnumerable<TAttribute>
+    + {static} GetAssemblyAttributes() : IEnumerable<TAttribute>
+    + {static} PrewarmTypeDeserialization(type:Type) : void
+    + {static} SerializeType(type:Type) : string
+    + {static} TryDeserializeType(typeName:string, type:Type) : bool
+    + {static} DeserializeType(typeName:string) : Type
+    + {static} ClearCachedTypes() : void
+    - {static} TryCachedTypeLookup(typeName:string, type:Type) : bool
+    - {static} TrySystemTypeLookup(typeName:string, type:Type) : bool
+    - {static} TrySystemTypeLookup(typeName:TypeName, type:Type) : bool
+    - {static} TryRenamedTypeLookup(previousTypeName:string, type:Type) : bool
+    + {static} renamedNamespaces : Dictionary<string, string> <<get>>
+    + {static} renamedAssemblies : Dictionary<string, string> <<get>>
+    + {static} renamedTypes : Dictionary<string, Type> <<get>>
+    + {static} RenamedMembers(type:Type) : Dictionary<string, string>
+    - {static} FetchRenamedMembers(type:Type) : Dictionary<string, string>
+    - {static} FetchRenamedNamespaces() : Dictionary<string, string>
+    - {static} FetchRenamedAssemblies() : Dictionary<string, string>
+    - {static} FetchRenamedTypes() : Dictionary<string, Type>
+}
+@enduml

@@ -1,0 +1,63 @@
+@startuml
+class GridPaintTargetsDropdown {
+    {static} - s_Styles : Styles
+    - m_ItemProvider : IFlexibleMenuItemProvider
+    - m_ModifyItemUI : FlexibleMenuModifyItemUI
+    <<readonly>> - m_ItemClickedCallback : Action<int, object>
+    - m_ScrollPosition : Vector2
+    - m_ShowAddNewPresetItem : bool
+    - m_HoverIndex : int
+    - m_SeperatorIndices : int[]
+    - m_CachedWidth : float
+    - m_MinTextWidth : float
+    <<const>> - LineHeight : float = 18f
+    <<const>> - SeparatorHeight : float = 8f
+    - maxIndex : int <<get>>
+    + selectedIndex : int <<get>> <<set>>
+    # minTextWidth : float <<get>> <<set>>
+    + GridPaintTargetsDropdown(itemProvider:IFlexibleMenuItemProvider, selectionIndex:int, modifyItemUi:FlexibleMenuModifyItemUI, itemClickedCallback:Action<int, object>, minWidth:float)
+    + <<override>> GetWindowSize() : Vector2
+    + <<override>> OnGUI(rect:Rect) : void
+    - SelectItem(index:int) : void
+    - IsVisible(index:int) : bool
+    - ToggleVisibility(index:int, includeDescendants:bool) : void
+    - PingItem(index:int) : void
+    # CalcSize() : Vector2
+    - ClearCachedWidth() : void
+    - CalcWidth() : float
+    - Repaint() : void
+}
+class Styles {
+    + menuItem : GUIStyle = "MenuItem"
+    + {static} <<readonly>> backgroundColor : Color
+    + {static} <<readonly>> hoveredBackgroundColor : Color
+    + {static} <<readonly>> selectedBackgroundColor : Color
+    + {static} <<readonly>> selectedNoFocusBackgroundColor : Color
+    + {static} <<readonly>> sceneVisibilityStyle : GUIStyle = "SceneVisibility"
+    + {static} <<readonly>> iconNormal : IconState
+    + {static} <<readonly>> iconHovered : IconState
+    + {static} GetItemBackgroundColor(isHovered:bool, isSelected:bool, isFocused:bool) : Color
+}
+class MenuItemProvider {
+    + Count() : int
+    + GetItem(index:int) : object
+    + Add(obj:object) : int
+    + Replace(index:int, newPresetObject:object) : void
+    + Remove(index:int) : void
+    + Create() : object
+    + Move(index:int, destIndex:int, insertAfterDestIndex:bool) : void
+    + GetName(index:int) : string
+    + IsModificationAllowed(index:int) : bool
+    + GetSeperatorIndices() : int[]
+}
+class IconState {
+    + visible : GUIContent
+    + hidden : GUIContent
+    + ping : GUIContent
+}
+PopupWindowContent <|-- GridPaintTargetsDropdown
+GridPaintTargetsDropdown +-- Styles
+GridPaintTargetsDropdown +-- MenuItemProvider
+IFlexibleMenuItemProvider <|-- MenuItemProvider
+Styles +-- IconState
+@enduml

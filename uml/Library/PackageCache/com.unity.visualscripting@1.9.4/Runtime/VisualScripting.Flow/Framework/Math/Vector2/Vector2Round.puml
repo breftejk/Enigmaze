@@ -1,0 +1,8 @@
+@startuml
+class Vector2Round <<sealed>> {
+    # <<override>> Floor(input:Vector2) : Vector2
+    # <<override>> AwayFromZero(input:Vector2) : Vector2
+    # <<override>> Ceiling(input:Vector2) : Vector2
+}
+"Round`2" "<Vector2,Vector2>" <|-- Vector2Round
+@enduml

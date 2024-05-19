@@ -1,0 +1,40 @@
+@startuml
+class VolumeEditor <<sealed>> {
+    - m_IsGlobal : SerializedProperty
+    - m_BlendRadius : SerializedProperty
+    - m_Weight : SerializedProperty
+    - m_Priority : SerializedProperty
+    - m_Profile : SerializedProperty
+    - m_ComponentList : VolumeComponentListEditor
+    - actualTarget : Volume <<get>>
+    - profileRef : VolumeProfile <<get>>
+    - OnEnable() : void
+    - OnDisable() : void
+    - RefreshEffectListEditor(asset:VolumeProfile) : void
+    - AddOverride() : void
+    - {static} RemoveAllOverrides(command:MenuCommand) : void
+    - {static} SetVolumeOverridesActiveState(components:List<VolumeComponent>, activeState:bool) : void
+    - {static} DisableAllOverrides(command:MenuCommand) : void
+    - {static} EnableAllOverrides(command:MenuCommand) : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> mode : GUIContent
+    + {static} <<readonly>> modes : GUIContent[]
+    + {static} <<readonly>> addBoxCollider : GUIContent
+    + {static} <<readonly>> sphereBoxCollider : GUIContent
+    + {static} <<readonly>> capsuleBoxCollider : GUIContent
+    + {static} <<readonly>> meshBoxCollider : GUIContent
+    + {static} <<readonly>> addColliderFixMessage : GUIContent
+    + {static} <<readonly>> disableColliderFixMessage : GUIContent
+    + {static} <<readonly>> enableColliderFixMessage : GUIContent
+    + {static} <<readonly>> profileInstance : GUIContent
+    + {static} <<readonly>> profile : GUIContent
+    + {static} <<readonly>> newLabel : GUIContent
+    + {static} <<readonly>> saveLabel : GUIContent
+    + {static} <<readonly>> cloneLabel : GUIContent
+    + {static} <<readonly>> noVolumeMessage : string
+}
+Editor <|-- VolumeEditor
+VolumeEditor +-- Styles
+@enduml

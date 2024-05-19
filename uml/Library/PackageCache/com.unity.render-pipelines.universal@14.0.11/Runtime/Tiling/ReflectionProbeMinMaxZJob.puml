@@ -1,0 +1,9 @@
+@startuml
+struct ReflectionProbeMinMaxZJob {
+    + worldToViews : Fixed2<float4x4>
+    + reflectionProbes : NativeArray<VisibleReflectionProbe>
+    + minMaxZs : NativeArray<float2>
+    + Execute(index:int) : void
+}
+IJobFor <|-- ReflectionProbeMinMaxZJob
+@enduml

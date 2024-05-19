@@ -1,0 +1,105 @@
+@startuml
+interface IViewDisplayer {
+    GetRect(index:ViewCompositionIndex) : Rect
+    SetTexture(index:ViewCompositionIndex, texture:Texture) : void
+    Repaint() : void
+     <<event>> OnLayoutChanged : Action<Layout, SidePanel> 
+     <<event>> OnRenderDocAcquisitionTriggered : Action 
+     <<event>> OnMouseEventInView : Action<IMouseEvent> 
+     <<event>> OnChangingObjectInView : Action<GameObject, ViewCompositionIndex, Vector2> 
+     <<event>> OnChangingEnvironmentInView : Action<UnityEngine.Object, ViewCompositionIndex, Vector2> 
+     <<event>> OnClosed : Action 
+     <<event>> OnUpdateRequested : Action 
+}
+class DisplayWindow <<partial>> {
+    - m_MainContainer : VisualElement
+    - m_ViewContainer : VisualElement
+    - m_DebugContainer : VisualElement
+    - m_NoEnvironmentList : Label
+    - m_NoObject1 : Label
+    - m_NoEnvironment1 : Label
+    - m_NoObject2 : Label
+    - m_NoEnvironment2 : Label
+    - m_Views : Image[]
+    - layout : LayoutContext <<get>>
+    - viewLayout : Layout <<get>> <<set>>
+    - sidePanel : SidePanel <<get>> <<set>>
+    -  <<event>> OnLayoutChangedInternal : Action<Layout, SidePanel> 
+    -  <<event>> OnRenderDocAcquisitionTriggeredInternal : Action 
+    -  <<event>> OnMouseEventInViewPortInternal : Action<IMouseEvent> 
+    -  <<event>> OnChangingObjectInViewInternal : Action<GameObject, ViewCompositionIndex, Vector2> 
+    -  <<event>> OnChangingEnvironmentInViewInternal : Action<UnityEngine.Object, ViewCompositionIndex, Vector2> 
+    -  <<event>> OnClosedInternal : Action 
+    -  <<event>> OnUpdateRequestedInternal : Action 
+    - styleSheet : StyleSheet = null
+    - styleSheetLight : StyleSheet = null
+    - m_FirstOrCompositeManipulator : SwitchableCameraController
+    - m_SecondManipulator : CameraController
+    - m_GizmoManipulator : ComparisonGizmoController
+    - ReloadStyleSheets() : void
+    - CreateGUI() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - CreateToolbar() : void
+    - CreateViews() : void
+    - CreateDropAreas() : void
+    - GetRect(index:ViewCompositionIndex) : Rect
+    - m_LastFirstViewSize : Vector2
+    - m_LastSecondViewSize : Vector2
+    - SetTexture(index:ViewCompositionIndex, texture:Texture) : void
+    - Repaint() : void
+    - ApplyLayout(value:Layout) : void
+    - ApplySidePanelChange(sidePanel:SidePanel) : void
+    - Update() : void
+    - OnGUI() : void
+}
+class Style <<static>> <<partial>> {
+    <<internal>> <<const>> k_IconFolder : string = @"Packages/com.unity.render-pipelines.core/Editor/LookDev/Icons/"
+    <<internal>> <<const>> k_uss : string = @"Packages/com.unity.render-pipelines.core/Editor/LookDev/DisplayWindow.uss"
+    <<internal>> <<const>> k_uss_personal_overload : string = @"Packages/com.unity.render-pipelines.core/Editor/LookDev/DisplayWindow-PersonalSkin.uss"
+    <<internal>> {static} <<readonly>> k_WindowTitleAndIcon : GUIContent
+    <<internal>> {static} <<readonly>> k_Layout1Icon : (Texture2D icon, string tooltip)
+    <<internal>> {static} <<readonly>> k_Layout2Icon : (Texture2D icon, string tooltip)
+    <<internal>> {static} <<readonly>> k_LayoutVerticalIcon : (Texture2D icon, string tooltip)
+    <<internal>> {static} <<readonly>> k_LayoutHorizontalIcon : (Texture2D icon, string tooltip)
+    <<internal>> {static} <<readonly>> k_LayoutStackIcon : (Texture2D icon, string tooltip)
+    <<internal>> {static} <<readonly>> k_Camera1Icon : Texture2D
+    <<internal>> {static} <<readonly>> k_Camera2Icon : Texture2D
+    <<internal>> {static} <<readonly>> k_LinkIcon : Texture2D
+    <<internal>> {static} <<readonly>> k_RightIcon : Texture2D
+    <<internal>> {static} <<readonly>> k_LeftIcon : Texture2D
+    <<internal>> {static} <<readonly>> k_RenderdocIcon : Texture2D
+    <<internal>> <<const>> k_RenderDocLabel : string = " Content"
+    <<internal>> <<const>> k_CameraSyncTooltip : string = "Synchronize camera movement amongst views"
+    <<internal>> <<const>> k_CameraMenuSync1On2 : string = "Align Camera 1 with Camera 2"
+    <<internal>> <<const>> k_CameraMenuSync2On1 : string = "Align Camera 2 with Camera 1"
+    <<internal>> <<const>> k_CameraMenuReset : string = "Reset Cameras"
+    <<internal>> <<const>> k_EnvironmentSidePanelName : string = "Environment"
+    <<internal>> <<const>> k_DebugSidePanelName : string = "Debug"
+    <<internal>> <<const>> k_DragAndDropObject : string = "Drag and drop object here"
+    <<internal>> <<const>> k_DragAndDropEnvironment : string = "Drag and drop environment from side panel here"
+    <<internal>> <<const>> k_MainContainerName : string = "mainContainer"
+    <<internal>> <<const>> k_ViewContainerName : string = "viewContainer"
+    <<internal>> <<const>> k_FirstViewName : string = "firstView"
+    <<internal>> <<const>> k_SecondViewName : string = "secondView"
+    <<internal>> <<const>> k_ToolbarName : string = "toolbar"
+    <<internal>> <<const>> k_ToolbarRadioName : string = "toolbarRadio"
+    <<internal>> <<const>> k_TabsRadioName : string = "tabsRadio"
+    <<internal>> <<const>> k_SideToolbarName : string = "sideToolbar"
+    <<internal>> <<const>> k_SharedContainerClass : string = "container"
+    <<internal>> <<const>> k_FirstViewClass : string = "firstView"
+    <<internal>> <<const>> k_SecondViewsClass : string = "secondView"
+    <<internal>> <<const>> k_VerticalViewsClass : string = "verticalSplit"
+    <<internal>> <<const>> k_DebugContainerName : string = "debugContainer"
+    <<internal>> <<const>> k_ShowDebugPanelClass : string = "showDebugPanel"
+    <<internal>> <<const>> k_EnvironmentContainerName : string = "environmentContainer"
+    <<internal>> <<const>> k_ShowEnvironmentPanelClass : string = "showEnvironmentPanel"
+    <<internal>> <<const>> k_CameraMenuName : string = "cameraMenu"
+    <<internal>> <<const>> k_CameraButtonName : string = "cameraButton"
+    <<internal>> <<const>> k_CameraSeparatorName : string = "cameraSeparator"
+    <<internal>> <<const>> k_RenderDocContentName : string = "renderdoc-content"
+}
+EditorWindow <|-- DisplayWindow
+IViewDisplayer <|-- DisplayWindow
+DisplayWindow +-- Style
+@enduml

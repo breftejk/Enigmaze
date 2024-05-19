@@ -1,0 +1,53 @@
+@startuml
+class TMP_TextEventHandler {
+    + onCharacterSelection : CharacterSelectionEvent <<get>> <<set>>
+    - m_OnCharacterSelection : CharacterSelectionEvent
+    + onSpriteSelection : SpriteSelectionEvent <<get>> <<set>>
+    - m_OnSpriteSelection : SpriteSelectionEvent
+    + onWordSelection : WordSelectionEvent <<get>> <<set>>
+    - m_OnWordSelection : WordSelectionEvent
+    + onLineSelection : LineSelectionEvent <<get>> <<set>>
+    - m_OnLineSelection : LineSelectionEvent
+    + onLinkSelection : LinkSelectionEvent <<get>> <<set>>
+    - m_OnLinkSelection : LinkSelectionEvent
+    - m_TextComponent : TMP_Text
+    - m_Camera : Camera
+    - m_Canvas : Canvas
+    - m_selectedLink : int
+    - m_lastCharIndex : int
+    - m_lastWordIndex : int
+    - m_lastLineIndex : int
+    - Awake() : void
+    - LateUpdate() : void
+    + OnPointerEnter(eventData:PointerEventData) : void
+    + OnPointerExit(eventData:PointerEventData) : void
+    - SendOnCharacterSelection(character:char, characterIndex:int) : void
+    - SendOnSpriteSelection(character:char, characterIndex:int) : void
+    - SendOnWordSelection(word:string, charIndex:int, length:int) : void
+    - SendOnLineSelection(line:string, charIndex:int, length:int) : void
+    - SendOnLinkSelection(linkID:string, linkText:string, linkIndex:int) : void
+}
+class CharacterSelectionEvent {
+}
+class SpriteSelectionEvent {
+}
+class WordSelectionEvent {
+}
+class LineSelectionEvent {
+}
+class LinkSelectionEvent {
+}
+MonoBehaviour <|-- TMP_TextEventHandler
+IPointerEnterHandler <|-- TMP_TextEventHandler
+IPointerExitHandler <|-- TMP_TextEventHandler
+TMP_TextEventHandler +-- CharacterSelectionEvent
+"UnityEvent`2" "<char,int>" <|-- CharacterSelectionEvent
+TMP_TextEventHandler +-- SpriteSelectionEvent
+"UnityEvent`2" "<char,int>" <|-- SpriteSelectionEvent
+TMP_TextEventHandler +-- WordSelectionEvent
+"UnityEvent`3" "<string,int,int>" <|-- WordSelectionEvent
+TMP_TextEventHandler +-- LineSelectionEvent
+"UnityEvent`3" "<string,int,int>" <|-- LineSelectionEvent
+TMP_TextEventHandler +-- LinkSelectionEvent
+"UnityEvent`3" "<string,string,int>" <|-- LinkSelectionEvent
+@enduml

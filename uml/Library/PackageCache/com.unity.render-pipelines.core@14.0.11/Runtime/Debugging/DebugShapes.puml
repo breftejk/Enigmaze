@@ -1,0 +1,20 @@
+@startuml
+class DebugShapes <<partial>> {
+    {static} - s_Instance : DebugShapes = null
+    {static} + instance : DebugShapes <<get>>
+    - m_sphereMesh : Mesh = null
+    - m_boxMesh : Mesh = null
+    - m_coneMesh : Mesh = null
+    - m_pyramidMesh : Mesh = null
+    - BuildSphere(outputMesh:Mesh, radius:float, longSubdiv:uint, latSubdiv:uint) : void
+    - BuildBox(outputMesh:Mesh, length:float, width:float, height:float) : void
+    - BuildCone(outputMesh:Mesh, height:float, topRadius:float, bottomRadius:float, nbSides:int) : void
+    - BuildPyramid(outputMesh:Mesh, width:float, height:float, depth:float) : void
+    - BuildShapes() : void
+    - RebuildResources() : void
+    + RequestSphereMesh() : Mesh
+    + RequestBoxMesh() : Mesh
+    + RequestConeMesh() : Mesh
+    + RequestPyramidMesh() : Mesh
+}
+@enduml

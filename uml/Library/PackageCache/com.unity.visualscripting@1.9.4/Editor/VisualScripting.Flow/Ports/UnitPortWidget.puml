@@ -1,0 +1,89 @@
+@startuml
+abstract class "UnitPortWidget`1"<TPort> {
+    # UnitPortWidget(canvas:FlowCanvas, port:TPort)
+    + port : TPort <<get>>
+    + unit : IUnit <<get>>
+    - _unitWidget : IUnitWidget
+    + unitWidget : IUnitWidget <<get>>
+    - port : IUnitPort <<get>>
+    # description : UnitPortDescription <<get>>
+    + inspectorMetadata : Metadata <<get>>
+    # inspector : Inspector <<get>>
+    + <<override>> FetchMetadata() : Metadata
+    + <<virtual>> FetchInspectorMetadata() : Metadata
+    # <<override>> CacheDescription() : void
+    # <<override>> CacheMetadata() : void
+    + <<override>> foregroundRequiresInput : bool <<get>>
+    + wouldDisconnect : bool <<get>>
+    + willDisconnect : bool <<get>>
+    # <<virtual>> canStartConnection : bool <<get>>
+    + <<override>> HandleInput() : void
+    - StartConnection() : void
+    - RemoveConnections() : void
+    - FinishConnection(source:IUnitPort, destination:IUnitPort) : void
+    - <<readonly>> labelContent : GUIContent
+    + <<override>> positionDependencies : IEnumerable<IWidget> <<get>>
+    + <<override>> positionDependers : IEnumerable<IWidget> <<get>>
+    # {abstract} edge : Edge <<get>>
+    + y : float <<get>> <<set>>
+    - _position : Rect
+    + <<override>> position : Rect <<get>> <<set>>
+    + handlePosition : Rect <<get>>
+    + labelPosition : Rect <<get>>
+    + iconPosition : Rect <<get>>
+    + inspectorPosition : Rect <<get>>
+    + identifierPosition : Rect <<get>>
+    + surroundPosition : Rect <<get>>
+    + <<override>> hotArea : Rect <<get>>
+    + <<override>> CachePosition() : void
+    + GetInnerWidth() : float
+    - GetInspectorWidth() : float
+    - GetLabelWidth() : float
+    + GetHeight() : float
+    - GetLabelHeight() : float
+    - GetInspectorHeight() : float
+    + <<override>> zIndex : float <<get>> <<set>>
+    + <<override>> canClip : bool <<get>>
+    # <<virtual>> showInspector : bool <<get>>
+    # showIcon : bool <<get>>
+    # showLabel : bool <<get>>
+    + <<virtual>> color : Color <<get>>
+    # {abstract} handleTextureConnected : Texture <<get>>
+    # {abstract} handleTextureUnconnected : Texture <<get>>
+    # <<virtual>> colorIfActive : bool <<get>>
+    # <<override>> dim : bool <<get>>
+    + <<override>> DrawBackground() : void
+    + <<override>> DrawForeground() : void
+    + <<override>> DrawOverlay() : void
+    - GetConnectionsNoAlloc(connections:HashSet<IUnitConnection>) : void
+    - DrawHandle() : void
+    - DrawIcon() : void
+    - DrawLabel() : void
+    - DrawInspector() : void
+    - DrawConnectionSource() : void
+    - DrawSurround() : void
+}
+class Styles <<static>> {
+    - {static} t : byte[]
+    - {static} tx : Texture2D
+    {static} - Styles()
+    + <<const>> highlightScaling : float = 1f
+    + {static} <<readonly>> handleSize : Vector2
+    + {static} <<readonly>> spaceBetweenEdgeAndHandle : float = 5
+    + {static} <<readonly>> spaceAfterEdge : float = 5
+    + {static} <<readonly>> spaceBetweenIconAndLabel : float = 5
+    + {static} <<readonly>> spaceBetweenIconAndInspector : float = 5
+    + {static} <<readonly>> spaceBetweenLabelAndInspector : float = 5
+    + {static} <<readonly>> labellessInspectorMinWidth : float = 75
+    + {static} <<readonly>> maxInspectorWidth : float = 200
+    + {static} <<readonly>> maxLabelWidth : float = 150
+    + {static} <<readonly>> iconSize : int
+    + {static} <<readonly>> label : GUIStyle
+    + {static} <<readonly>> surround : GUIStyle
+    + {static} <<readonly>> easierGrabOffset : RectOffset
+    + {static} <<readonly>> surroundPadding : RectOffset
+}
+"Widget`2" "<FlowCanvas,TPort>" <|-- "UnitPortWidget`1"
+IUnitPortWidget <|-- "UnitPortWidget`1"
+"UnitPortWidget`1" +-- Styles
+@enduml

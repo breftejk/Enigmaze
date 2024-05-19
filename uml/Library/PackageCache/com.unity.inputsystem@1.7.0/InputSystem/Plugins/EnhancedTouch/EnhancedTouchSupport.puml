@@ -1,0 +1,15 @@
+@startuml
+class EnhancedTouchSupport <<static>> {
+    + {static} enabled : bool <<get>>
+    - {static} s_Enabled : int
+    - {static} s_UpdateMode : InputSettings.UpdateMode
+    + {static} Enable() : void
+    + {static} Disable() : void
+    <<internal>> {static} Reset() : void
+    - {static} SetUpState() : void
+    <<internal>> {static} TearDownState() : void
+    - {static} OnDeviceChange(device:InputDevice, change:InputDeviceChange) : void
+    - {static} OnSettingsChange() : void
+    <<internal>> {static} CheckEnabled() : void
+}
+@enduml

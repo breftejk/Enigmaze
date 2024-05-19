@@ -1,0 +1,17 @@
+@startuml
+abstract class "Assigner`2"<TTarget,TAssignee> {
+    # Assigner(target:TTarget, assignee:TAssignee)
+    + target : TTarget <<get>>
+    + assignee : TAssignee <<get>>
+    + isDirty : bool <<get>> <<set>> = true
+    + Validate() : void
+    # AssignAll() : void
+    # AssignTransient() : void
+    + <<virtual>> ValueChanged() : void
+    + assignments : Assignment[] <<get>>
+    + transientAssignments : Assignment[] <<get>>
+    - {static} <<readonly>> _assignments : Dictionary<Type, Assignment[]>
+    - {static} <<readonly>> _transientAssignments : Dictionary<Type, Assignment[]>
+}
+IAssigner <|-- "Assigner`2"
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+class Icons <<static>> {
+    {static} - Icons()
+    - {static} <<readonly>> EditorGUIUtility_GetScriptObjectFromClass : MethodInfo
+    - {static} <<readonly>> EditorGUIUtility_GetIconForObject : MethodInfo
+    - {static} <<readonly>> typeIcons : Dictionary<Type, EditorTexture>
+    - {static} <<readonly>> namespaceIcons : Dictionary<Namespace, EditorTexture>
+    - {static} <<readonly>> enumIcons : Dictionary<Enum, EditorTexture>
+    - {static} <<readonly>> resourcesTypeIcons : Dictionary<string, EditorTexture>
+    + {static} Load() : void
+    <<internal>> {static} Clear() : void
+    + {static} Icon(type:Type) : EditorTexture
+    + {static} Icon(member:MemberInfo, direction:ActionDirection) : EditorTexture
+    + {static} Icon(@enum:Enum) : EditorTexture
+    + {static} Icon(@namespace:Namespace) : EditorTexture
+    + {static} Type(type:Type) : EditorTexture
+    - {static} GetCustomTypeIcon(type:Type, inherit:bool) : EditorTexture
+    - {static} InterfaceImplementationPriority(type:Type) : int
+    + {static} Icon(obj:UnityObject) : EditorTexture
+    - {static} GetResourcesTypeIcon(fileName:string) : EditorTexture
+    - {static} GetBuiltInUnityTypeIcon(type:Type) : EditorTexture
+    - {static} GetScriptTypeIcon(scriptName:string) : EditorTexture
+    - {static} GetTypeVisibilityIcon(type:Type, languageIcon:LanguageIconSet) : EditorTexture
+    + {static} Member(member:MemberInfo, direction:ActionDirection) : EditorTexture
+    + {static} Enum(@enum:Enum) : EditorTexture
+    + {static} Namespace(@namespace:Namespace) : EditorTexture
+}
+class Language <<static>> {
+    + {static} method : LanguageIconSet
+    + {static} @namespace : LanguageIconSet <<get>>
+    + {static} @class : LanguageIconSet <<get>>
+    + {static} @interface : LanguageIconSet <<get>>
+    + {static} @struct : LanguageIconSet <<get>>
+    + {static} @enum : LanguageIconSet <<get>>
+    + {static} primitive : LanguageIconSet <<get>>
+    + {static} field : LanguageIconSet <<get>>
+    + {static} property : LanguageIconSet <<get>>
+    + {static} extensionMethod : LanguageIconSet <<get>>
+    + {static} constructor : LanguageIconSet <<get>>
+    + {static} @const : LanguageIconSet <<get>>
+    + {static} favorite : LanguageIconSet <<get>>
+    <<internal>> {static} Load() : void
+}
+Icons +-- Language
+@enduml

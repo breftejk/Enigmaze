@@ -1,0 +1,30 @@
+@startuml
+class DisplacableRectHandles {
+    <<const>> - k_HandleSizeCoef : float = 0.05f
+    - m_ControlIDs : int[]
+    - m_MonochromeHandleColor : Color
+    - m_WireframeColor : Color
+    - m_WireframeColorBehind : Color
+    + center : Vector2 <<get>> <<set>>
+    + size : Vector2 <<get>> <<set>>
+    {static} - k_Slider1D : Type
+    {static} - k_Slider1D_Do : MethodInfo
+    {static} - Slider1D(controlID:int, handlePosition:Vector3, handleOrientation:Vector3, snapScale:float) : void
+    + baseColor : Color <<get>> <<set>>
+    + DisplacableRectHandles(baseColor:Color)
+    + DrawRect(dottedLine:bool, thickness:float, screenSpaceSize:float) : void
+    - DrawSliders(leftPosition:Vector3, rightPosition:Vector3, topPosition:Vector3, bottomPosition:Vector3) : NamedEdge
+    - EnsureEdgeFacesOutsideForHomothety(theChangedEdge:NamedEdge, leftPosition:Vector3, rightPosition:Vector3, topPosition:Vector3, bottomPosition:Vector3) : void
+    - EnsureEdgeFacesOutsideForSymetry(theChangedEdge:NamedEdge, leftPosition:Vector3, rightPosition:Vector3, topPosition:Vector3, bottomPosition:Vector3) : void
+    - EnsureEdgeFacesOutsideForOtherTransformation(max:Vector2, min:Vector2) : void
+    + DrawHandle() : void
+}
+enum NamedEdge {
+    Right,
+    Top,
+    Left,
+    Bottom,
+    None,
+}
+DisplacableRectHandles +-- NamedEdge
+@enduml

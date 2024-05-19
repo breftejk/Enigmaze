@@ -1,0 +1,7 @@
+@startuml
+class SignalAsset {
+    <<internal>> {static}  <<event>> OnEnableCallback : Action<SignalAsset> 
+    - OnEnable() : void
+}
+ScriptableObject <|-- SignalAsset
+@enduml

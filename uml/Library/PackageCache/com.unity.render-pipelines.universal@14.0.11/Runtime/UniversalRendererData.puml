@@ -1,0 +1,55 @@
+@startuml
+enum CopyDepthMode {
+    AfterOpaques,
+    AfterTransparents,
+    ForcePrepass,
+}
+class UniversalRendererData {
+    + postProcessData : PostProcessData = null
+    + shaders : ShaderResources = null
+    <<const>> - k_LatestAssetVersion : int = 2
+    - m_AssetVersion : int = 0
+    - m_OpaqueLayerMask : LayerMask
+    - m_TransparentLayerMask : LayerMask
+    - m_DefaultStencilState : StencilStateData
+    - m_ShadowTransparentReceive : bool = true
+    - m_RenderingMode : RenderingMode
+    - m_DepthPrimingMode : DepthPrimingMode
+    - m_CopyDepthMode : CopyDepthMode
+    - m_AccurateGbufferNormals : bool = false
+    - m_IntermediateTextureMode : IntermediateTextureMode
+    # <<override>> Create() : ScriptableRenderer
+    + opaqueLayerMask : LayerMask <<get>> <<set>>
+    + transparentLayerMask : LayerMask <<get>> <<set>>
+    + defaultStencilState : StencilStateData <<get>> <<set>>
+    + shadowTransparentReceive : bool <<get>> <<set>>
+    + renderingMode : RenderingMode <<get>> <<set>>
+    + depthPrimingMode : DepthPrimingMode <<get>> <<set>>
+    + copyDepthMode : CopyDepthMode <<get>> <<set>>
+    + accurateGbufferNormals : bool <<get>> <<set>>
+    + intermediateTextureMode : IntermediateTextureMode <<get>> <<set>>
+    # <<override>> OnEnable() : void
+    - ReloadAllNullProperties() : void
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+class ShaderResources <<sealed>> {
+    + blitPS : Shader
+    + copyDepthPS : Shader
+    + screenSpaceShadowPS : Shader
+    + samplingPS : Shader
+    + stencilDeferredPS : Shader
+    + fallbackErrorPS : Shader
+    + fallbackLoadingPS : Shader
+    + materialErrorPS : Shader
+    <<internal>> coreBlitPS : Shader
+    <<internal>> coreBlitColorAndDepthPS : Shader
+    <<internal>> blitHDROverlay : Shader
+    + cameraMotionVector : Shader
+    + objectMotionVector : Shader
+    + dataDrivenLensFlare : Shader
+}
+ScriptableRendererData <|-- UniversalRendererData
+ISerializationCallbackReceiver <|-- UniversalRendererData
+UniversalRendererData +-- ShaderResources
+@enduml

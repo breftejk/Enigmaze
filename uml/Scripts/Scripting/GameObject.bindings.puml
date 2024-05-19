@@ -1,0 +1,96 @@
+@startuml
+class GameObject <<sealed>> <<partial>> {
+    + <<extern>> {static} CreatePrimitive(type:PrimitiveType) : GameObject
+    + <<unsafe>> GetComponent() : T
+    + <<extern>> GetComponent(type:Type) : Component
+    <<internal>> <<extern>> GetComponentFastPath(type:Type, oneFurtherThanResultValue:IntPtr) : void
+    <<internal>> <<extern>> GetComponentByName(type:string) : Component
+    <<internal>> <<extern>> GetComponentByNameWithCase(type:string, caseSensitive:bool) : Component
+    + GetComponent(type:string) : Component
+    + <<extern>> GetComponentInChildren(type:Type, includeInactive:bool) : Component
+    + GetComponentInChildren(type:Type) : Component
+    + GetComponentInChildren() : T
+    + GetComponentInChildren(includeInactive:bool) : T
+    + <<extern>> GetComponentInParent(type:Type, includeInactive:bool) : Component
+    + GetComponentInParent(type:Type) : Component
+    + GetComponentInParent() : T
+    + GetComponentInParent(includeInactive:bool) : T
+    - <<extern>> GetComponentsInternal(type:Type, useSearchTypeAsArrayReturnType:bool, recursive:bool, includeInactive:bool, reverse:bool, resultList:object) : System.Array
+    + GetComponents(type:Type) : Component[]
+    + GetComponents() : T[]
+    + GetComponents(type:Type, results:List<Component>) : void
+    + GetComponents(results:List<T>) : void
+    + GetComponentsInChildren(type:Type) : Component[]
+    + GetComponentsInChildren(type:Type, includeInactive:bool) : Component[]
+    + GetComponentsInChildren(includeInactive:bool) : T[]
+    + GetComponentsInChildren(includeInactive:bool, results:List<T>) : void
+    + GetComponentsInChildren() : T[]
+    + GetComponentsInChildren(results:List<T>) : void
+    + GetComponentsInParent(type:Type) : Component[]
+    + GetComponentsInParent(type:Type, includeInactive:bool) : Component[]
+    + GetComponentsInParent(includeInactive:bool, results:List<T>) : void
+    + GetComponentsInParent(includeInactive:bool) : T[]
+    + GetComponentsInParent() : T[]
+    + <<unsafe>> TryGetComponent(component:T) : bool
+    + TryGetComponent(type:Type, component:Component) : bool
+    <<internal>> <<extern>> TryGetComponentInternal(type:Type) : Component
+    <<internal>> <<extern>> TryGetComponentFastPath(type:Type, oneFurtherThanResultValue:IntPtr) : void
+    + {static} FindWithTag(tag:string) : GameObject
+    - {static} <<extern>> FindGameObjectsWithTagForListInternal(tag:string, results:object) : void
+    + {static} FindGameObjectsWithTag(tag:string, results:List<GameObject>) : void
+    + SendMessageUpwards(methodName:string, options:SendMessageOptions) : void
+    + SendMessage(methodName:string, options:SendMessageOptions) : void
+    + BroadcastMessage(methodName:string, options:SendMessageOptions) : void
+    <<internal>> <<extern>> AddComponentInternal(className:string) : Component
+    - <<extern>> Internal_AddComponentWithType(componentType:Type) : Component
+    + AddComponent(componentType:Type) : Component
+    + AddComponent() : T
+    + <<extern>> GetComponentCount() : int
+    <<internal>> <<extern>> QueryComponentAtIndex(index:int) : Component
+    + GetComponentAtIndex(index:int) : Component
+    + GetComponentAtIndex(index:int) : T
+    + <<extern>> GetComponentIndex(component:Component) : int
+    + <<extern>> transform : Transform <<get>>
+    + <<extern>> layer : int <<get>> <<set>>
+    + <<extern>> active : bool <<get>> <<set>>
+    + <<extern>> SetActive(value:bool) : void
+    + <<extern>> activeSelf : bool <<get>>
+    + <<extern>> activeInHierarchy : bool <<get>>
+    + <<extern>> SetActiveRecursively(state:bool) : void
+    + <<extern>> isStatic : bool <<get>> <<set>>
+    <<internal>> <<extern>> isStaticBatchable : bool <<get>>
+    + <<extern>> tag : string <<get>> <<set>>
+    + CompareTag(tag:string) : bool
+    + CompareTag(tag:TagHandle) : bool
+    - <<extern>> CompareTag_Internal(tag:string) : bool
+    - <<extern>> CompareTagHandle_Internal(tag:TagHandle) : bool
+    + {static} <<extern>> FindGameObjectWithTag(tag:string) : GameObject
+    + {static} <<extern>> FindGameObjectsWithTag(tag:string) : GameObject[]
+    <<extern>> + SendMessageUpwards(methodName:string, value:object, options:SendMessageOptions) : void
+    + SendMessageUpwards(methodName:string, value:object) : void
+    + SendMessageUpwards(methodName:string) : void
+    <<extern>> + SendMessage(methodName:string, value:object, options:SendMessageOptions) : void
+    + SendMessage(methodName:string, value:object) : void
+    + SendMessage(methodName:string) : void
+    <<extern>> + BroadcastMessage(methodName:string, parameter:object, options:SendMessageOptions) : void
+    + BroadcastMessage(methodName:string, parameter:object) : void
+    + BroadcastMessage(methodName:string) : void
+    + GameObject(name:string)
+    + GameObject()
+    + GameObject(name:string, components:Type[])
+    {static} <<extern>> - Internal_CreateGameObject(self:GameObject, name:string) : void
+    + {static} <<extern>> Find(name:string) : GameObject
+    <<extern>> - {static} SetGameObjectsActive(instanceIds:IntPtr, instanceCount:int, active:bool) : void
+    + {static} <<unsafe>> SetGameObjectsActive(instanceIDs:NativeArray<int>, active:bool) : void
+    + {static} <<unsafe>> SetGameObjectsActive(instanceIDs:ReadOnlySpan<int>, active:bool) : void
+    <<extern>> - {static} InstantiateGameObjects(sourceInstanceID:int, newInstanceIDs:IntPtr, newTransformInstanceIDs:IntPtr, count:int, destinationScene:Scene) : void
+    + {static} <<unsafe>> InstantiateGameObjects(sourceInstanceID:int, count:int, newInstanceIDs:NativeArray<int>, newTransformInstanceIDs:NativeArray<int>, destinationScene:Scene) : void
+    + {static} <<extern>> GetScene(instanceID:int) : Scene
+    + <<extern>> scene : Scene <<get>>
+    + <<extern>> sceneCullingMask : ulong <<get>>
+    <<internal>> <<extern>> CalculateBounds() : Bounds
+    <<internal>> <<extern>> IsMarkedVisible() : int
+    + gameObject : GameObject <<get>>
+}
+Object <|-- GameObject
+@enduml

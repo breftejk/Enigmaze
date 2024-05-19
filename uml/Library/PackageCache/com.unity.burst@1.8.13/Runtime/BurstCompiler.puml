@@ -1,0 +1,77 @@
+@startuml
+class BurstCompiler <<static>> {
+    + {static} IsLoadAdditionalLibrarySupported() : bool
+    - {static} _cmdBuilder : CommandBuilder
+    - {static} BeginCompilerCommand(cmd:string) : CommandBuilder
+    <<internal>> {static} _IsEnabled : bool
+    + {static} IsEnabled : bool <<get>>
+    + {static} <<readonly>> Options : BurstCompilerOptions
+    + {static} SetExecutionMode(mode:BurstExecutionEnvironment) : void
+    + {static} GetExecutionMode() : BurstExecutionEnvironment
+    <<internal>> {static} <<unsafe>> CompileDelegate(delegateMethod:T) : T
+    - {static} VerifyDelegateIsNotMulticast(delegateMethod:T) : void
+    - {static} VerifyDelegateHasCorrectUnmanagedFunctionPointerAttribute(delegateMethod:T) : void
+    + {static} <<unsafe>> CompileILPPMethod(burstMethodHandle:RuntimeMethodHandle, managedMethodHandle:RuntimeMethodHandle, delegateTypeHandle:RuntimeTypeHandle) : IntPtr
+    + {static} <<unsafe>> CompileILPPMethod2(burstMethodHandle:RuntimeMethodHandle) : IntPtr
+    <<internal>> {static} OnCompileILPPMethod2 : Action
+    + {static} <<unsafe>> GetILPPMethodFunctionPointer(ilppMethod:IntPtr) : void*
+    + {static} <<unsafe>> GetILPPMethodFunctionPointer2(ilppMethod:IntPtr, managedMethodHandle:RuntimeMethodHandle, delegateTypeHandle:RuntimeTypeHandle) : void*
+    + {static} <<unsafe>> CompileUnsafeStaticMethod(handle:RuntimeMethodHandle) : void*
+    + {static} <<unsafe>> CompileFunctionPointer(delegateMethod:T) : FunctionPointer<T>
+    - {static} <<unsafe>> Compile(delegateObj:object, isFunctionPointer:bool) : void*
+    - {static} <<unsafe>> Compile(delegateObj:object, methodInfo:MethodInfo, isFunctionPointer:bool, isILPostProcessing:bool) : void*
+    <<internal>> {static} Shutdown() : void
+    <<internal>> {static} Cancel() : void
+    <<internal>> {static} IsCurrentCompilationDone() : bool
+    <<internal>> {static} Enable() : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} IsHostEditorArm() : bool
+    <<internal>> {static} TriggerUnsafeStaticMethodRecompilation() : void
+    <<internal>> {static} TriggerRecompilation() : void
+    <<internal>> {static} UnloadAdditionalLibraries() : void
+    <<internal>> {static} InitialiseDebuggerHooks() : void
+    <<internal>> {static} IsApiAvailable(apiName:string) : bool
+    <<internal>> {static} RequestSetProtocolVersion(version:int) : int
+    <<internal>> {static} Initialize(assemblyFolders:string[], ignoreAssemblies:string[]) : void
+    <<internal>> {static} NotifyCompilationStarted(assemblyFolders:string[], ignoreAssemblies:string[]) : void
+    <<internal>> {static} NotifyAssemblyCompilationNotRequired(assemblyName:string) : void
+    <<internal>> {static} NotifyAssemblyCompilationFinished(assemblyName:string, defines:string[]) : void
+    <<internal>> {static} NotifyCompilationFinished() : void
+    <<internal>> {static} AotCompilation(assemblyFolders:string[], assemblyRoots:string[], options:string) : string
+    <<internal>> {static} SetProfilerCallbacks() : void
+    - {static} SendRawCommandToCompiler(command:string) : string
+    - {static} SendCommandToCompiler(commandName:string, commandArgs:string) : string
+    - {static} <<readonly>> DummyMethodInfo : MethodInfo
+    - {static} DummyMethod() : void
+}
+class CommandBuilder {
+    - _builder : StringBuilder
+    - _hasArgs : bool
+    + CommandBuilder()
+    + Begin(cmd:string) : CommandBuilder
+    + With(arg:string) : CommandBuilder
+    + With(arg:IntPtr) : CommandBuilder
+    + And(sep:char) : CommandBuilder
+    + SendToCompiler() : string
+}
+class StaticTypeReinitAttribute {
+    + <<readonly>> reinitType : Type
+    + StaticTypeReinitAttribute(toReinit:Type)
+}
+class BurstCompilerHelper <<static>> {
+    - {static} <<readonly>> IsBurstEnabledImpl : IsBurstEnabledDelegate
+    - {static} IsBurstEnabled() : bool
+    - {static} DiscardedMethod(value:bool) : void
+    - {static} <<unsafe>> IsCompiledByBurst(del:Delegate) : bool
+    + {static} <<readonly>> IsBurstGenerated : bool
+}
+class FakeDelegate {
+    + FakeDelegate(method:MethodInfo)
+    + Method : MethodInfo <<get>>
+}
+BurstCompiler +-- CommandBuilder
+BurstCompiler +-- StaticTypeReinitAttribute
+Attribute <|-- StaticTypeReinitAttribute
+BurstCompiler +-- BurstCompilerHelper
+BurstCompiler +-- FakeDelegate
+@enduml

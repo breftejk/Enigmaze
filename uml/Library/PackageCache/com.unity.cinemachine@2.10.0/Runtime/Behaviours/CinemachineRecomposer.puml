@@ -1,0 +1,16 @@
+@startuml
+class CinemachineRecomposer {
+    + m_ApplyAfter : CinemachineCore.Stage
+    + m_Tilt : float
+    + m_Pan : float
+    + m_Dutch : float
+    + m_ZoomScale : float
+    + m_FollowAttachment : float
+    + m_LookAtAttachment : float
+    - Reset() : void
+    - OnValidate() : void
+    + <<override>> PrePipelineMutateCameraStateCallback(vcam:CinemachineVirtualCameraBase, curState:CameraState, deltaTime:float) : void
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+}
+CinemachineExtension <|-- CinemachineRecomposer
+@enduml

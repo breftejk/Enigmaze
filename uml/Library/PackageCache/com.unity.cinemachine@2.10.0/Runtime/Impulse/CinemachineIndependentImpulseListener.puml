@@ -1,0 +1,16 @@
+@startuml
+class CinemachineIndependentImpulseListener {
+    - impulsePosLastFrame : Vector3
+    - impulseRotLastFrame : Quaternion
+    + m_ChannelMask : int
+    + m_Gain : float
+    + m_Use2DDistance : bool
+    + m_UseLocalSpace : bool
+    + m_ReactionSettings : CinemachineImpulseListener.ImpulseReaction
+    - Reset() : void
+    - OnEnable() : void
+    - Update() : void
+    - LateUpdate() : void
+}
+MonoBehaviour <|-- CinemachineIndependentImpulseListener
+@enduml

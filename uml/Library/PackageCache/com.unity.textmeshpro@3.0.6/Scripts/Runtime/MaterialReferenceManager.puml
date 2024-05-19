@@ -1,0 +1,49 @@
+@startuml
+class MaterialReferenceManager {
+    - {static} s_Instance : MaterialReferenceManager
+    - m_FontMaterialReferenceLookup : Dictionary<int, Material>
+    - m_FontAssetReferenceLookup : Dictionary<int, TMP_FontAsset>
+    - m_SpriteAssetReferenceLookup : Dictionary<int, TMP_SpriteAsset>
+    - m_ColorGradientReferenceLookup : Dictionary<int, TMP_ColorGradient>
+    + {static} instance : MaterialReferenceManager <<get>>
+    + {static} AddFontAsset(fontAsset:TMP_FontAsset) : void
+    - AddFontAssetInternal(fontAsset:TMP_FontAsset) : void
+    + {static} AddSpriteAsset(spriteAsset:TMP_SpriteAsset) : void
+    - AddSpriteAssetInternal(spriteAsset:TMP_SpriteAsset) : void
+    + {static} AddSpriteAsset(hashCode:int, spriteAsset:TMP_SpriteAsset) : void
+    - AddSpriteAssetInternal(hashCode:int, spriteAsset:TMP_SpriteAsset) : void
+    + {static} AddFontMaterial(hashCode:int, material:Material) : void
+    - AddFontMaterialInternal(hashCode:int, material:Material) : void
+    + {static} AddColorGradientPreset(hashCode:int, spriteAsset:TMP_ColorGradient) : void
+    - AddColorGradientPreset_Internal(hashCode:int, spriteAsset:TMP_ColorGradient) : void
+    + Contains(font:TMP_FontAsset) : bool
+    + Contains(sprite:TMP_SpriteAsset) : bool
+    + {static} TryGetFontAsset(hashCode:int, fontAsset:TMP_FontAsset) : bool
+    - TryGetFontAssetInternal(hashCode:int, fontAsset:TMP_FontAsset) : bool
+    + {static} TryGetSpriteAsset(hashCode:int, spriteAsset:TMP_SpriteAsset) : bool
+    - TryGetSpriteAssetInternal(hashCode:int, spriteAsset:TMP_SpriteAsset) : bool
+    + {static} TryGetColorGradientPreset(hashCode:int, gradientPreset:TMP_ColorGradient) : bool
+    - TryGetColorGradientPresetInternal(hashCode:int, gradientPreset:TMP_ColorGradient) : bool
+    + {static} TryGetMaterial(hashCode:int, material:Material) : bool
+    - TryGetMaterialInternal(hashCode:int, material:Material) : bool
+}
+struct TMP_MaterialReference {
+    + material : Material
+    + referenceCount : int
+}
+struct MaterialReference {
+    + index : int
+    + fontAsset : TMP_FontAsset
+    + spriteAsset : TMP_SpriteAsset
+    + material : Material
+    + isDefaultMaterial : bool
+    + isFallbackMaterial : bool
+    + fallbackMaterial : Material
+    + padding : float
+    + referenceCount : int
+    + MaterialReference(index:int, fontAsset:TMP_FontAsset, spriteAsset:TMP_SpriteAsset, material:Material, padding:float)
+    + {static} Contains(materialReferences:MaterialReference[], fontAsset:TMP_FontAsset) : bool
+    + {static} AddMaterialReference(material:Material, fontAsset:TMP_FontAsset, materialReferences:MaterialReference[], materialReferenceIndexLookup:Dictionary<int, int>) : int
+    + {static} AddMaterialReference(material:Material, spriteAsset:TMP_SpriteAsset, materialReferences:MaterialReference[], materialReferenceIndexLookup:Dictionary<int, int>) : int
+}
+@enduml

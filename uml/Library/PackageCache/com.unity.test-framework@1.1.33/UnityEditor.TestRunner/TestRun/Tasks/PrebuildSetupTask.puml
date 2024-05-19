@@ -1,0 +1,7 @@
+@startuml
+class PrebuildSetupTask {
+    + PrebuildSetupTask()
+    # <<override>> Action(target:IPrebuildSetup) : void
+}
+"BuildActionTaskBase`1" "<IPrebuildSetup>" <|-- PrebuildSetupTask
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+abstract class RuntimeTestLauncherBase {
+    <<internal>> <<readonly>> m_Settings : PlaymodeTestsControllerSettings
+    # RuntimeTestLauncherBase(mSettings:PlaymodeTestsControllerSettings)
+    # CreateBootstrapScene(sceneName:string, runnerSetup:Action<PlaymodeTestsController>) : Scene
+    + CreateSceneName() : string
+    # LoadTests(filter:ITestFilter) : UnityTestAssemblyRunner
+    # {static} ReopenOriginalScene(originalSceneName:string) : void
+}
+class PlaymodeTestsControllerExtensions <<static>> {
+    <<internal>> {static} AddEventHandlerMonoBehaviour(controller:PlaymodeTestsController) : T
+    <<internal>> {static} AddEventHandlerScriptableObject(controller:PlaymodeTestsController) : T
+    <<internal>> {static} AddEventHandlerScriptableObject(controller:PlaymodeTestsController, obj:ITestRunnerListener) : void
+    - {static} SetListeners(controller:PlaymodeTestsController, eventHandler:ITestRunnerListener) : void
+}
+TestLauncherBase <|-- RuntimeTestLauncherBase
+@enduml

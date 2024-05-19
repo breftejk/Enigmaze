@@ -1,0 +1,21 @@
+@startuml
+class WebWindow <<sealed>> {
+    - Initialize() : void
+    - webView : WebView
+    - _uri : string
+    - syncingFocus : bool
+    + uri : string <<get>> <<set>>
+    - OnEnable() : void
+    - OnGUI() : void
+    - OnBecameInvisible() : void
+    - OnFocus() : void
+    - OnLostFocus() : void
+    - OnDestroy() : void
+    + Reload() : void
+    - SetFocus(value:bool) : void
+    + {static} instance : WebWindow <<get>>
+    + {static} Show(titleContent:GUIContent, uri:string) : void
+    + {static} Show(title:string, uri:string) : void
+}
+EditorWindow <|-- WebWindow
+@enduml

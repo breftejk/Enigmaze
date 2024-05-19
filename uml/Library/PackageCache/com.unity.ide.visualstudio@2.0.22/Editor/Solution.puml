@@ -1,0 +1,6 @@
+@startuml
+class Solution {
+    + Projects : SolutionProjectEntry[] <<get>> <<set>>
+    + Properties : SolutionProperties[] <<get>> <<set>>
+}
+@enduml

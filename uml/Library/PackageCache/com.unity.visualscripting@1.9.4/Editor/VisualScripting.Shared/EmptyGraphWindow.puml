@@ -1,0 +1,55 @@
+@startuml
+class DropdownOptions {
+    <<internal>> interactable : bool = true
+    <<internal>> label : string
+    <<internal>> tooltip : string
+    <<internal>> callback : Action
+}
+class SplitDropdown {
+    - reset : bool
+    - listOfOptions : List<DropdownOptions>
+    <<internal>> SplitDropdown(listOfOptions:List<DropdownOptions>)
+    <<internal>> GetOption(index:int) : DropdownOptions
+    <<internal>> Reset() : void
+    <<internal>> Draw(area:Rect, label:string, toggleState:bool) : bool
+}
+class EmptyGraphWindow {
+    <<internal>> {static} dropdownIcon : GUIContent
+    - toggleOnScript : bool = false
+    - toggleOnState : bool = false
+    <<internal>> {static} buttonStyle : GUIStyle
+    <<internal>> {static} labelStyleButton : GUIStyle
+    <<internal>> {static} labelStyleDropdownOptions : GUIStyle
+    <<internal>> {static} titleStyle : GUIStyle
+    <<internal>> {static} titleHeight : int = 120
+    <<internal>> {static} buttonWidth : int = 200
+    <<internal>> {static} buttonHeight : int = 22
+    - shouldCloseWindow : bool
+    - scrollPosition : Vector2
+    - scrollArea : Rect
+    - splitDropdownScriptGraph : SplitDropdown
+    - splitDropdownStateGraph : SplitDropdown
+    <<const>> - k_OnSelectedGameObject : string = "...on selected GameObject"
+    <<const>> - k_OnNewGameObject : string = "...on new GameObject"
+    <<const>> - k_SelectedGameObject : string = "Please, select a GameObject"
+    - {static} ShowWindow() : void
+    - OnEnable() : void
+    - OpenGraphAsset(unityObject:UnityObject, shouldSetSceneAsDirty:bool) : void
+    - OpenGraphFromPath(path:string, shouldSetSceneAsDirty:bool) : void
+    - OpenGraph() : void
+    - CreateScriptGraphAsset(gameObject:GameObject, updateName:bool) : bool
+    - CreateScriptGraph() : void
+    - CreateScriptGraphOnNewGameObject() : void
+    - CreateScriptGraphOnSelectedGameObject() : void
+    - CreateStateGraphAsset(gameObject:GameObject, updateName:bool) : bool
+    - CreateStateGraph() : void
+    - CreateStateGraphOnNewGameObject() : void
+    - CreateStateGraphOnSelectedGameObject() : void
+    - CreateStyles() : void
+    - ResetToggle() : void
+    - OpenGraphFromPicker() : void
+    - OnGUI() : void
+    - DropAreaGUI() : void
+}
+EditorWindow <|-- EmptyGraphWindow
+@enduml

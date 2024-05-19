@@ -1,0 +1,9 @@
+@startuml
+class ControlPlayableAssetEditor {
+    {static} <<readonly>> - s_ParticleSystemIcon : Texture2D[]
+    + <<override>> GetClipOptions(clip:TimelineClip) : ClipDrawOptions
+    + <<override>> OnCreate(clip:TimelineClip, track:TrackAsset, clonedFrom:TimelineClip) : void
+    + <<override>> GetSubTimelines(clip:TimelineClip, director:PlayableDirector, subTimelines:List<PlayableDirector>) : void
+}
+ClipEditor <|-- ControlPlayableAssetEditor
+@enduml

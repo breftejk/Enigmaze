@@ -1,0 +1,30 @@
+@startuml
+class ValueInput <<sealed>> {
+    + ValueInput(key:string, type:Type)
+    + type : Type <<get>>
+    + hasDefaultValue : bool <<get>>
+    + <<override>> validConnections : IEnumerable<ValueConnection> <<get>>
+    + <<override>> invalidConnections : IEnumerable<InvalidConnection> <<get>>
+    + <<override>> validConnectedPorts : IEnumerable<ValueOutput> <<get>>
+    + <<override>> invalidConnectedPorts : IEnumerable<IUnitOutputPort> <<get>>
+    <<internal>> _defaultValue : object <<get>> <<set>>
+    + nullMeansSelf : bool <<get>>
+    + allowsNull : bool <<get>>
+    + connection : ValueConnection <<get>>
+    + <<override>> hasValidConnection : bool <<get>>
+    + SetDefaultValue(value:object) : void
+    + <<override>> CanConnectToValid(port:ValueOutput) : bool
+    + <<override>> ConnectToValid(port:ValueOutput) : void
+    + <<override>> ConnectToInvalid(port:IUnitOutputPort) : void
+    + <<override>> DisconnectFromValid(port:ValueOutput) : void
+    + <<override>> DisconnectFromInvalid(port:IUnitOutputPort) : void
+    + NullMeansSelf() : ValueInput
+    + AllowsNull() : ValueInput
+    - {static} <<readonly>> typesWithDefaultValues : HashSet<Type>
+    + {static} SupportsDefaultValue(type:Type) : bool
+    + <<override>> CompatiblePort(unit:IUnit) : IUnitPort
+}
+"UnitPort`3" "<ValueOutput,IUnitOutputPort,ValueConnection>" <|-- ValueInput
+IUnitValuePort <|-- ValueInput
+IUnitInputPort <|-- ValueInput
+@enduml

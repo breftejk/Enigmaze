@@ -1,0 +1,12 @@
+@startuml
+class Keyboard <<static>> {
+    <<internal>> {static} IsShiftPressed(e:Event) : bool
+    <<internal>> {static} IsReturnOrEnterKeyPressed(e:Event) : bool
+    <<internal>> {static} IsKeyPressed(e:Event, keyCode:KeyCode) : bool
+    <<internal>> {static} IsControlOrCommandKeyPressed(e:Event) : bool
+}
+class Mouse {
+    <<internal>> {static} IsLeftMouseButtonPressed(e:Event) : bool
+    <<internal>> {static} IsRightMouseButtonPressed(e:Event) : bool
+}
+@enduml

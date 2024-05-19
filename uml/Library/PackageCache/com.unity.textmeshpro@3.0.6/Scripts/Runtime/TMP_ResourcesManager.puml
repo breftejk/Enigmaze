@@ -1,0 +1,13 @@
+@startuml
+class TMP_ResourceManager {
+    - {static} <<readonly>> s_instance : TMP_ResourceManager
+    {static} - TMP_ResourceManager()
+    - {static} s_TextSettings : TMP_Settings
+    <<internal>> {static} GetTextSettings() : TMP_Settings
+    - {static} <<readonly>> s_FontAssetReferences : List<TMP_FontAsset>
+    - {static} <<readonly>> s_FontAssetReferenceLookup : Dictionary<int, TMP_FontAsset>
+    + {static} AddFontAsset(fontAsset:TMP_FontAsset) : void
+    + {static} TryGetFontAsset(hashcode:int, fontAsset:TMP_FontAsset) : bool
+    <<internal>> {static} RebuildFontAssetCache(instanceID:int) : void
+}
+@enduml

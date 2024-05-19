@@ -1,0 +1,10 @@
+@startuml
+class ConformingSpline {
+    + m_ParentObject : GameObject
+    - hashCode : int
+    - Start() : void
+    - Update() : void
+    - {static} CopySpline(src:GameObject, dst:GameObject, hashCode:int) : int
+}
+MonoBehaviour <|-- ConformingSpline
+@enduml

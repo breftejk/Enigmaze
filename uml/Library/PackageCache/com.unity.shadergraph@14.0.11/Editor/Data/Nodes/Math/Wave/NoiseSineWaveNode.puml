@@ -1,0 +1,10 @@
+@startuml
+class NoiseSineWaveNode {
+    + <<override>> latestVersion : int <<get>>
+    + NoiseSineWaveNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - NoiseSineWave_V0(In:DynamicDimensionVector, MinMax:Vector2, Out:DynamicDimensionVector) : string
+    {static} - NoiseSineWave_V1(In:DynamicDimensionVector, MinMax:Vector2, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- NoiseSineWaveNode
+@enduml

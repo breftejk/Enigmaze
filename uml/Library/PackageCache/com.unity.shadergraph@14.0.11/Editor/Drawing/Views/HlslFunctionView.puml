@@ -1,0 +1,15 @@
+@startuml
+enum HlslSourceType {
+    File,
+    String,
+}
+class HlslFunctionView {
+    - m_Type : EnumField
+    - m_FunctionName : TextField
+    - m_FunctionSource : ObjectField
+    - m_FunctionBody : TextField
+    <<internal>> HlslFunctionView(node:CustomFunctionNode)
+    - Draw(node:CustomFunctionNode) : void
+}
+VisualElement <|-- HlslFunctionView
+@enduml

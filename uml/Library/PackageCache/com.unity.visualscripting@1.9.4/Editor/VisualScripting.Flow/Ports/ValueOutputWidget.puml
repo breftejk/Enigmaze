@@ -1,0 +1,10 @@
+@startuml
+class ValueOutputWidget {
+    + ValueOutputWidget(canvas:FlowCanvas, port:ValueOutput)
+    # <<override>> colorIfActive : bool <<get>>
+    + <<override>> color : Color <<get>>
+    # <<override>> handleTextureConnected : Texture <<get>>
+    # <<override>> handleTextureUnconnected : Texture <<get>>
+}
+"UnitOutputPortWidget`1" "<ValueOutput>" <|-- ValueOutputWidget
+@enduml

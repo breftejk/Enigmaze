@@ -1,0 +1,7 @@
+@startuml
+class TriggerCustomEventDescriptor {
+    + TriggerCustomEventDescriptor(trigger:TriggerCustomEvent)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<TriggerCustomEvent>" <|-- TriggerCustomEventDescriptor
+@enduml

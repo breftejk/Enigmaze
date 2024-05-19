@@ -1,0 +1,6 @@
+@startuml
+class ScalarAbsolute <<sealed>> {
+    # <<override>> Operation(input:float) : float
+}
+"Absolute`1" "<float>" <|-- ScalarAbsolute
+@enduml

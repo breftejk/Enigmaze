@@ -1,0 +1,8 @@
+@startuml
+interface IDescriptor {
+    target : object <<get>>
+    description : IDescription <<get>>
+    isDirty : bool <<get>> <<set>>
+    Validate() : void
+}
+@enduml

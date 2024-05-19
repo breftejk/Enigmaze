@@ -1,0 +1,32 @@
+@startuml
+interface IFilesFilterPatternsMenuOperations {
+    AddFilesFilterPatterns(type:FilterTypes, action:FilterActions, operation:FilterOperationType) : void
+}
+class FilesFilterPatternsMenuBuilder {
+    <<internal>> FilesFilterPatternsMenuBuilder(operations:IFilesFilterPatternsMenuOperations)
+    <<internal>> BuildIgnoredSubmenuItem() : void
+    <<internal>> BuildHiddenChangesSubmenuItem() : void
+    <<internal>> UpdateMenuItems(menu:GenericMenu, actions:FilterMenuActions) : void
+    - UpdateIgnoredMenuItems(menu:GenericMenu, operations:FilterMenuOperations) : void
+    - UpdateHiddenChangesMenuItems(menu:GenericMenu, operations:FilterMenuOperations) : void
+    - IgnoredByName_Click() : void
+    - IgnoredByExtension_Click() : void
+    - IgnoredByFullPath_Click() : void
+    - HiddenChangesByName_Click() : void
+    - HiddenChangesByExtension_Click() : void
+    - HiddenChangesByFullPath_Click() : void
+    - GetIgnoredFilterOperationType() : FilterOperationType
+    - GetHiddenChangesFilterOperationType() : FilterOperationType
+    - SetFilterMenuItemsLabels(actions:FilterMenuActions) : void
+    {static} - GetSubMenuText(menuName:string, subMenuName:string) : string
+    - mIgnoredSubmenuItem : GUIContent
+    - mHiddenChangesSubmenuItem : GUIContent
+    - mIgnoredByNameMenuItemContent : GUIContent
+    - mHiddenChangesByNameMenuItemContent : GUIContent
+    - mIgnoredByExtensionMenuItemContent : GUIContent
+    - mHiddenChangesByExtensionMenuItemContent : GUIContent
+    - mIgnoredByFullPathMenuItemContent : GUIContent
+    - mHiddenChangesByFullPathMenuItemContent : GUIContent
+    - mOperations : IFilesFilterPatternsMenuOperations
+}
+@enduml

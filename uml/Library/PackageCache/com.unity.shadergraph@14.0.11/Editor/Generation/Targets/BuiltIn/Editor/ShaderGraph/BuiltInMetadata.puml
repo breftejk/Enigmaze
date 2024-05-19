@@ -1,0 +1,7 @@
+@startuml
+class BuiltInMetadata <<sealed>> {
+    - m_ShaderID : ShaderUtils.ShaderID
+    + shaderID : ShaderUtils.ShaderID <<get>> <<set>>
+}
+ScriptableObject <|-- BuiltInMetadata
+@enduml

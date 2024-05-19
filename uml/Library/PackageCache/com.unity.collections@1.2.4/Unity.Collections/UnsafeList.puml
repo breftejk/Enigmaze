@@ -1,0 +1,184 @@
+@startuml
+struct UnsafeDisposeJob {
+    + Ptr : void*
+    + Allocator : AllocatorManager.AllocatorHandle
+    + Execute() : void
+}
+struct UntypedUnsafeList {
+    + Ptr : void*
+    + m_length : int
+    + m_capacity : int
+    + Allocator : AllocatorManager.AllocatorHandle
+    <<internal>> obsolete_length : int
+    <<internal>> obsolete_capacity : int
+}
+struct "UnsafeList`1"<T> {
+    + Ptr : T*
+    + m_length : int
+    + m_capacity : int
+    + Allocator : AllocatorManager.AllocatorHandle
+    + length : int
+    + capacity : int
+    + Length : int <<get>> <<set>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T
+    + UnsafeList(ptr:T*, length:int)
+    + UnsafeList(initialCapacity:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions)
+    <<internal>> Initialize(initialCapacity:int, allocator:U, options:NativeArrayOptions) : void
+    <<internal>> {static} New(initialCapacity:int, allocator:U, options:NativeArrayOptions) : UnsafeList<T>
+    <<internal>> {static} Create(initialCapacity:int, allocator:U, options:NativeArrayOptions) : UnsafeList<T>*
+    <<internal>> {static} Destroy(listData:UnsafeList<T>*, allocator:U) : void
+    + {static} Create(initialCapacity:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions) : UnsafeList<T>*
+    + {static} Destroy(listData:UnsafeList<T>*) : void
+    + IsEmpty : bool <<get>>
+    + IsCreated : bool <<get>>
+    <<internal>> Dispose(allocator:U) : void
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + Clear() : void
+    + Resize(length:int, options:NativeArrayOptions) : void
+    - Realloc(allocator:U, newCapacity:int) : void
+    - Realloc(capacity:int) : void
+    - SetCapacity(allocator:U, capacity:int) : void
+    + SetCapacity(capacity:int) : void
+    + TrimExcess() : void
+    + AddNoResize(value:T) : void
+    + AddRangeNoResize(ptr:void*, count:int) : void
+    + AddRangeNoResize(list:UnsafeList<T>) : void
+    + Add(value:T) : void
+    + AddRange(ptr:void*, count:int) : void
+    + AddRange(list:UnsafeList<T>) : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    + AsParallelReader() : ParallelReader
+    + AsParallelWriter() : ParallelWriter
+    + CopyFrom(array:UnsafeList<T>) : void
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<T>
+    <<internal>> {static} CheckNull(listData:void*) : void
+    - CheckIndexCount(index:int, count:int) : void
+    - CheckBeginEnd(begin:int, end:int) : void
+    - CheckNoResizeHasEnoughCapacity(length:int) : void
+    - CheckNoResizeHasEnoughCapacity(length:int, index:int) : void
+}
+class UnsafeListExtensions <<unsafe>> <<static>> {
+    + {static} IndexOf(list:UnsafeList<T>, value:U) : int
+    + {static} Contains(list:UnsafeList<T>, value:U) : bool
+    + {static} IndexOf(list:UnsafeList<T>.ParallelReader, value:U) : int
+    + {static} Contains(list:UnsafeList<T>.ParallelReader, value:U) : bool
+    + {static} ArraysEqual(array:UnsafeList<T>, other:UnsafeList<T>) : bool
+}
+class "UnsafeListTDebugView`1"<T> <<sealed>> {
+    - Data : UnsafeList<T>
+    + UnsafeListTDebugView(data:UnsafeList<T>)
+    + <<unsafe>> Items : T[] <<get>>
+}
+struct "UnsafePtrList`1"<T> {
+    + <<readonly>> Ptr : T**
+    + <<readonly>> m_length : int
+    + <<readonly>> m_capacity : int
+    + <<readonly>> Allocator : AllocatorManager.AllocatorHandle
+    + length : int
+    + capacity : int
+    + Length : int <<get>> <<set>>
+    + Capacity : int <<get>> <<set>>
+    + ElementAt(index:int) : ref T*
+    + <<unsafe>> UnsafePtrList(ptr:T**, length:int)
+    + <<unsafe>> UnsafePtrList(initialCapacity:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions)
+    + {static} Create(ptr:T**, length:int) : UnsafePtrList<T>*
+    + {static} Create(initialCapacity:int, allocator:AllocatorManager.AllocatorHandle, options:NativeArrayOptions) : UnsafePtrList<T>*
+    + {static} Destroy(listData:UnsafePtrList<T>*) : void
+    + IsEmpty : bool <<get>>
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + Clear() : void
+    + Resize(length:int, options:NativeArrayOptions) : void
+    + SetCapacity(capacity:int) : void
+    + TrimExcess() : void
+    + IndexOf(ptr:void*) : int
+    + Contains(ptr:void*) : bool
+    + AddNoResize(value:void*) : void
+    + AddRangeNoResize(ptr:void**, count:int) : void
+    + AddRangeNoResize(list:UnsafePtrList<T>) : void
+    + Add(value:IntPtr) : void
+    + Add(value:void*) : void
+    + AddRange(ptr:void*, length:int) : void
+    + AddRange(list:UnsafePtrList<T>) : void
+    + InsertRangeWithBeginEnd(begin:int, end:int) : void
+    + RemoveAtSwapBack(index:int) : void
+    + RemoveRangeSwapBack(index:int, count:int) : void
+    + RemoveRangeSwapBackWithBeginEnd(begin:int, end:int) : void
+    + RemoveAt(index:int) : void
+    + RemoveRange(index:int, count:int) : void
+    + RemoveRangeWithBeginEnd(begin:int, end:int) : void
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<IntPtr>
+    + AsParallelReader() : ParallelReader
+    + AsParallelWriter() : ParallelWriter
+}
+class UnsafePtrListTExtensions <<static>> {
+    + {static} ListData(from:UnsafePtrList<T>) : ref UnsafeList<IntPtr>
+}
+class "UnsafePtrListTDebugView`1"<T> <<sealed>> {
+    - Data : UnsafePtrList<T>
+    + UnsafePtrListTDebugView(data:UnsafePtrList<T>)
+    + <<unsafe>> Items : T*[] <<get>>
+}
+struct ParallelReader {
+    + <<readonly>> Ptr : T*
+    + <<readonly>> Length : int
+    <<internal>> ParallelReader(ptr:T*, length:int)
+}
+struct ParallelWriter {
+    + <<readonly>> Ptr : void* <<get>>
+    + ListData : UnsafeList<T>*
+    <<internal>> <<unsafe>> ParallelWriter(listData:UnsafeList<T>*)
+    + AddNoResize(value:T) : void
+    + AddRangeNoResize(ptr:void*, count:int) : void
+    + AddRangeNoResize(list:UnsafeList<T>) : void
+}
+struct Enumerator {
+    <<internal>> m_Ptr : T*
+    <<internal>> m_Length : int
+    <<internal>> m_Index : int
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+struct ParallelReader {
+    + <<readonly>> Ptr : T**
+    + <<readonly>> Length : int
+    <<internal>> ParallelReader(ptr:T**, length:int)
+    + IndexOf(ptr:void*) : int
+    + Contains(ptr:void*) : bool
+}
+struct ParallelWriter {
+    + <<readonly>> Ptr : T**
+    + ListData : UnsafeList<IntPtr>*
+    <<internal>> <<unsafe>> ParallelWriter(ptr:T**, listData:UnsafeList<IntPtr>*)
+    + AddNoResize(value:T*) : void
+    + AddRangeNoResize(ptr:T**, count:int) : void
+    + AddRangeNoResize(list:UnsafePtrList<T>) : void
+}
+IJob <|-- UnsafeDisposeJob
+INativeDisposable <|-- "UnsafeList`1"
+"INativeList`1" "<T>" <|-- "UnsafeList`1"
+"IEnumerable`1" "<T>" <|-- "UnsafeList`1"
+INativeDisposable <|-- "UnsafePtrList`1"
+"IEnumerable`1" "<IntPtr>" <|-- "UnsafePtrList`1"
+"UnsafeList`1" +-- ParallelReader
+"UnsafeList`1" +-- ParallelWriter
+"UnsafeList`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+"UnsafePtrList`1" +-- ParallelReader
+"UnsafePtrList`1" +-- ParallelWriter
+@enduml

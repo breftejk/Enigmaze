@@ -1,0 +1,8 @@
+@startuml
+abstract class "GlobalEventUnit`1"<TArgs> {
+    # <<override>> register : bool <<get>>
+    # <<virtual>> hookName : string <<get>>
+    + <<override>> GetHook(reference:GraphReference) : EventHook
+}
+"EventUnit`1" "<TArgs>" <|-- "GlobalEventUnit`1"
+@enduml

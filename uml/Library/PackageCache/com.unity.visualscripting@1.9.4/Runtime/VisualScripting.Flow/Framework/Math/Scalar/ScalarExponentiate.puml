@@ -1,0 +1,10 @@
+@startuml
+class ScalarExponentiate <<sealed>> {
+    + @base : ValueInput <<get>>
+    + exponent : ValueInput <<get>>
+    + power : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Exponentiate(flow:Flow) : float
+}
+Unit <|-- ScalarExponentiate
+@enduml

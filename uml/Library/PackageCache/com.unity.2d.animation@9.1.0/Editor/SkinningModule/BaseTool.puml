@@ -1,0 +1,22 @@
+@startuml
+interface ITool {
+}
+abstract class BaseTool {
+    - m_LayoutOverlay : LayoutOverlay
+    <<internal>> layoutOverlay : LayoutOverlay <<get>>
+    - m_IsActive : bool = false
+    + isActive : bool <<get>>
+    + <<virtual>> defaultControlID : int <<get>>
+    + <<virtual>> previewBehaviour : IMeshPreviewBehaviour <<get>>
+    <<internal>> <<override>> OnDestroy() : void
+    + Activate() : void
+    + Deactivate() : void
+    + DoGUI() : void
+    + <<virtual>> Initialize(layout:LayoutOverlay) : void
+    # <<virtual>> OnActivate() : void
+    # <<virtual>> OnDeactivate() : void
+    # <<virtual>> OnGUI() : void
+}
+SkinningObject <|-- BaseTool
+ITool <|-- BaseTool
+@enduml

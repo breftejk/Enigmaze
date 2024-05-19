@@ -1,0 +1,7 @@
+@startuml
+struct ConditionalField {
+    + field : FieldDescriptor <<get>>
+    + condition : bool <<get>>
+    + ConditionalField(field:FieldDescriptor, condition:bool)
+}
+@enduml

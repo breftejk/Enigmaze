@@ -1,0 +1,58 @@
+@startuml
+interface IRenamableCollection {
+    StartRename() : void
+    EndRename(cancelled:bool) : void
+    + onRename : Action<int, string> <<get>> <<set>>
+    + onItemsReordered : Action <<get>> <<set>>
+    renamingIndex : int <<get>>
+    SetSourceItems(sourceList:IList) : void
+    GetItemSource() : IList
+    SetSelectionWithoutNotify(indices:IEnumerable<int>) : void
+    SetElementSize(newSize:float) : void
+    SetWidth(newWidth:float) : void
+    ScrollToItem(id:int) : void
+    + <<const>> labelElementName : string = "SpriteLibraryLabel"
+    + <<const>> textFieldElementName : string = "SpriteLibraryTextField"
+}
+class RenamableListView {
+    + onRename : Action<int, string> <<get>> <<set>>
+    + onItemsReordered : Action <<get>> <<set>>
+    + CanRenameAtIndex : CanRenameDelegate
+    + renamingIndex : int <<get>>
+    + RenamableListView()
+    - OnDragPerform(evt:DragPerformEvent) : void
+    - OnCollectionKeyDown(evt:KeyDownEvent) : void
+    + SetSourceItems(sourceList:IList) : void
+    + GetItemSource() : IList
+    + SetElementSize(newSize:float) : void
+    + SetWidth(newWidth:float) : void
+    - OnItemChosen(obj:IEnumerable<object>) : void
+    + StartRename() : void
+    + EndRename(cancelled:bool) : void
+    - FocusOnItem(index:int) : void
+    - CanRename(index:int) : bool
+}
+class RenamableGridView {
+    + onRename : Action<int, string> <<get>> <<set>>
+    + onItemsReordered : Action <<get>> <<set>>
+    + renamingIndex : int <<get>>
+    - m_Width : float
+    + RenamableGridView()
+    - OnCollectionKeyDown(evt:KeyDownEvent) : void
+    - OnItemChosen(obj:IEnumerable<object>) : void
+    + StartRename() : void
+    + EndRename(cancelled:bool) : void
+    - FocusOnItem(index:int) : void
+    + CanRenameAtIndex : CanRenameDelegate
+    - CanRename(index:int) : bool
+    + SetSourceItems(sourceList:IList) : void
+    + GetItemSource() : IList
+    + SetElementSize(newSize:float) : void
+    + SetWidth(newWidth:float) : void
+    - UpdateColumnCount() : void
+}
+ListView <|-- RenamableListView
+IRenamableCollection <|-- RenamableListView
+GridView <|-- RenamableGridView
+IRenamableCollection <|-- RenamableGridView
+@enduml

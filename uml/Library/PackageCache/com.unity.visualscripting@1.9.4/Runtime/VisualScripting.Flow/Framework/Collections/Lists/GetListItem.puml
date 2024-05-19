@@ -1,0 +1,10 @@
+@startuml
+class GetListItem <<sealed>> {
+    + list : ValueInput <<get>>
+    + index : ValueInput <<get>>
+    + item : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Get(flow:Flow) : object
+}
+Unit <|-- GetListItem
+@enduml

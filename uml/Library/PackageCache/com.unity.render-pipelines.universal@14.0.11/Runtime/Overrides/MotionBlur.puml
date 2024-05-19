@@ -1,0 +1,29 @@
+@startuml
+enum MotionBlurMode {
+    CameraOnly,
+    CameraAndObjects,
+}
+enum MotionBlurQuality {
+    Low,
+    Medium,
+    High,
+}
+class MotionBlur <<sealed>> {
+    + mode : MotionBlurModeParameter
+    + quality : MotionBlurQualityParameter
+    + intensity : ClampedFloatParameter
+    + clamp : ClampedFloatParameter
+    + IsActive() : bool
+    + IsTileCompatible() : bool
+}
+class MotionBlurModeParameter <<sealed>> {
+    + MotionBlurModeParameter(value:MotionBlurMode, overrideState:bool)
+}
+class MotionBlurQualityParameter <<sealed>> {
+    + MotionBlurQualityParameter(value:MotionBlurQuality, overrideState:bool)
+}
+VolumeComponent <|-- MotionBlur
+IPostProcessComponent <|-- MotionBlur
+"VolumeParameter`1" "<MotionBlurMode>" <|-- MotionBlurModeParameter
+"VolumeParameter`1" "<MotionBlurQuality>" <|-- MotionBlurQualityParameter
+@enduml

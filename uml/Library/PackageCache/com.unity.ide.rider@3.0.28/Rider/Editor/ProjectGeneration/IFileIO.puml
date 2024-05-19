@@ -1,0 +1,9 @@
+@startuml
+interface IFileIO {
+    Exists(path:string) : bool
+    GetReader(path:string) : TextReader
+    ReadAllText(path:string) : string
+    WriteAllText(path:string, content:string) : void
+    EscapedRelativePathFor(path:string, rootDirectoryFullPath:string) : string
+}
+@enduml

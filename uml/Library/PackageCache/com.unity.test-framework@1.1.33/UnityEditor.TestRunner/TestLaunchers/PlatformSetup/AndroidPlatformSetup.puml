@@ -1,0 +1,17 @@
+@startuml
+class AndroidPlatformSetup {
+    - m_oldApplicationIdentifier : string
+    - m_oldDeviceSocketAddress : string
+    - m_Stripping : bool
+    - RequiresLegacyConnectionMechanism : bool <<get>>
+    - PerformLegacySetup() : void
+    - PerformLegacyCleanup() : void
+    - PerformLegacyPostSuccessfulLaunchAction() : void
+    + Setup() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+}
+IPlatformSetup <|-- AndroidPlatformSetup
+@enduml

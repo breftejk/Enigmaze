@@ -1,0 +1,13 @@
+@startuml
+class SuperStateWidget <<sealed>> {
+    + SuperStateWidget(canvas:StateCanvas, state:SuperState)
+    + dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + AcceptsDragAndDrop() : bool
+    + PerformDragAndDrop() : void
+    + UpdateDragAndDrop() : void
+    + DrawDragAndDropPreview() : void
+    + ExitDragAndDrop() : void
+}
+"NesterStateWidget`1" "<SuperState>" <|-- SuperStateWidget
+IDragAndDropHandler <|-- SuperStateWidget
+@enduml

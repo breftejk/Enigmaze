@@ -1,0 +1,7 @@
+@startuml
+interface IGraphWithVariables {
+    variables : VariableDeclarations <<get>>
+    GetDynamicVariableNames(kind:VariableKind, reference:GraphReference) : IEnumerable<string>
+}
+IGraph <|-- IGraphWithVariables
+@enduml

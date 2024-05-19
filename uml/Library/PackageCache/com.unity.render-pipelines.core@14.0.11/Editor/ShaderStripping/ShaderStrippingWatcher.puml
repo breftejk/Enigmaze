@@ -1,0 +1,7 @@
+@startuml
+class ShaderStrippingWatcher <<static>> {
+    + {static}  <<event>> shaderProcessed : OnShaderStrippedCallbackHandler<Shader, ShaderSnippetData> 
+    + {static}  <<event>> computeShaderProcessed : OnShaderStrippedCallbackHandler<ComputeShader, string> 
+    <<internal>> {static} OnShaderProcessed(shader:TShader, shaderVariant:TShaderVariant, variantsOut:uint, stripTimeMs:double) : void
+}
+@enduml

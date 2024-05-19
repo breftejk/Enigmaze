@@ -1,0 +1,14 @@
+@startuml
+class DebugManagerWidgetUsedAnalytic {
+    <<const>> - k_MaxEventsPerHour : int = 1000
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.srp"
+    + {static} Send(path:string, value:object) : void
+}
+class Data {
+    <<internal>> <<const>> k_EventName : string = "uDebugManagerWidgetUsedAnalytic"
+    + query_path : string
+    + value : string
+}
+DebugManagerWidgetUsedAnalytic +-- Data
+@enduml

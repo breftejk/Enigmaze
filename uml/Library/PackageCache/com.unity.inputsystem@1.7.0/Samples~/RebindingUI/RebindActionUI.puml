@@ -1,0 +1,45 @@
+@startuml
+class RebindActionUI {
+    + actionReference : InputActionReference <<get>> <<set>>
+    + bindingId : string <<get>> <<set>>
+    + displayStringOptions : InputBinding.DisplayStringOptions <<get>> <<set>>
+    + actionLabel : Text <<get>> <<set>>
+    + bindingText : Text <<get>> <<set>>
+    + rebindPrompt : Text <<get>> <<set>>
+    + rebindOverlay : GameObject <<get>> <<set>>
+    + updateBindingUIEvent : UpdateBindingUIEvent <<get>>
+    + startRebindEvent : InteractiveRebindEvent <<get>>
+    + stopRebindEvent : InteractiveRebindEvent <<get>>
+    + ongoingRebind : InputActionRebindingExtensions.RebindingOperation <<get>>
+    + ResolveActionAndBinding(action:InputAction, bindingIndex:int) : bool
+    + UpdateBindingDisplay() : void
+    + ResetToDefault() : void
+    + StartInteractiveRebind() : void
+    - PerformInteractiveRebind(action:InputAction, bindingIndex:int, allCompositeParts:bool) : void
+    # OnEnable() : void
+    # OnDisable() : void
+    - {static} OnActionChange(obj:object, change:InputActionChange) : void
+    - m_Action : InputActionReference
+    - m_BindingId : string
+    - m_DisplayStringOptions : InputBinding.DisplayStringOptions
+    - m_ActionLabel : Text
+    - m_BindingText : Text
+    - m_RebindOverlay : GameObject
+    - m_RebindText : Text
+    - m_UpdateBindingUIEvent : UpdateBindingUIEvent
+    - m_RebindStartEvent : InteractiveRebindEvent
+    - m_RebindStopEvent : InteractiveRebindEvent
+    - m_RebindOperation : InputActionRebindingExtensions.RebindingOperation
+    - {static} s_RebindActionUIs : List<RebindActionUI>
+    - UpdateActionLabel() : void
+}
+class UpdateBindingUIEvent {
+}
+class InteractiveRebindEvent {
+}
+MonoBehaviour <|-- RebindActionUI
+RebindActionUI +-- UpdateBindingUIEvent
+"UnityEvent`4" "<RebindActionUI,string,string,string>" <|-- UpdateBindingUIEvent
+RebindActionUI +-- InteractiveRebindEvent
+"UnityEvent`2" "<RebindActionUI,InputActionRebindingExtensions.RebindingOperation>" <|-- InteractiveRebindEvent
+@enduml

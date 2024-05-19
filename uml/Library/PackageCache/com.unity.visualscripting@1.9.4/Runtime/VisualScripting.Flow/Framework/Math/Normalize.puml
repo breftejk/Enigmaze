@@ -1,0 +1,10 @@
+@startuml
+abstract class "Normalize`1"<T> {
+    + input : ValueInput <<get>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Operation(flow:Flow) : T
+    + {abstract} Operation(input:T) : T
+}
+Unit <|-- "Normalize`1"
+@enduml

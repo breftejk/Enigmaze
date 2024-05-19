@@ -1,0 +1,40 @@
+@startuml
+class MeshPreviewCache {
+    - m_Sprite : SpriteCache
+    - m_Mesh : Mesh
+    - m_DefaultMesh : Mesh
+    - m_SkinnedVertices : List<Vector3>
+    - m_Vertices : List<Vector3>
+    - m_Weights : List<BoneWeight>
+    - m_TexCoords : List<Vector2>
+    - m_Colors : List<Color>
+    - m_SkinningMatrices : List<Matrix4x4>
+    - m_MeshDirty : bool
+    - m_VerticesDirty : bool
+    - m_SkinningDirty : bool
+    - m_WeightsDirty : bool
+    - m_IndicesDirty : bool
+    - m_ColorsDirty : bool
+    - m_EnableSkinning : bool
+    + sprite : SpriteCache <<get>> <<set>>
+    + mesh : Mesh <<get>>
+    + defaultMesh : Mesh <<get>>
+    + enableSkinning : bool <<get>> <<set>>
+    + canSkin : bool <<get>>
+    + vertices : List<Vector3> <<get>>
+    - CanSkin() : bool
+    <<internal>> <<override>> OnCreate() : void
+    <<internal>> <<override>> OnDestroy() : void
+    {static} - CreateMesh() : Mesh
+    - InitializeDefaultMesh() : void
+    + SetMeshDirty() : void
+    + SetSkinningDirty() : void
+    + SetWeightsDirty() : void
+    + SetColorsDirty() : void
+    + Prepare() : void
+    - PrepareColors() : void
+    - SkinVertices() : void
+    # <<override>> OnAfterDeserialize() : void
+}
+SkinningObject <|-- MeshPreviewCache
+@enduml

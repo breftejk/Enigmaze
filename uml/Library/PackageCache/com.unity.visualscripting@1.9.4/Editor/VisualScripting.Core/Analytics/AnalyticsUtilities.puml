@@ -1,0 +1,5 @@
+@startuml
+class AnalyticsUtilities <<static>> {
+    <<internal>> {static} AnonymizeException(e:Exception) : string
+}
+@enduml

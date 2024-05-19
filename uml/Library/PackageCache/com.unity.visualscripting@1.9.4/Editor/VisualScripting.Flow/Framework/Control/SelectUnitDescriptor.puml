@@ -1,0 +1,8 @@
+@startuml
+class "SelectUnitDescriptor`1"<T> {
+    + SelectUnitDescriptor(unit:SelectUnit<T>)
+    # <<virtual>> GetLabelForOption(option:T) : string
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<SelectUnit<T>>" <|-- "SelectUnitDescriptor`1"
+@enduml

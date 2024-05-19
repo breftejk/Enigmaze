@@ -1,0 +1,11 @@
+@startuml
+class TimelineClipGroup {
+    <<readonly>> - m_Clips : TimelineClip[]
+    <<readonly>> - m_LeftMostClip : TimelineClip
+    <<readonly>> - m_RightMostClip : TimelineClip
+    + clips : TimelineClip[] <<get>>
+    + start : double <<get>> <<set>>
+    + end : double <<get>>
+    + TimelineClipGroup(clips:IEnumerable<TimelineClip>)
+}
+@enduml

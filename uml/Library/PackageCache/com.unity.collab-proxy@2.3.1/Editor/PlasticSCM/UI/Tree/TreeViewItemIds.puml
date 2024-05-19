@@ -1,0 +1,15 @@
+@startuml
+class "TreeViewItemIds`2"<C,I> {
+    <<internal>> Clear() : void
+    <<internal>> GetCategoryIds() : List<int>
+    <<internal>> GetCategoryItems() : List<KeyValuePair<C, int>>
+    <<internal>> GetInfoItems() : List<KeyValuePair<I, int>>
+    <<internal>> TryGetCategoryItemId(category:C, itemId:int) : bool
+    <<internal>> TryGetInfoItemId(info:I, itemId:int) : bool
+    <<internal>> AddCategoryItem(category:C) : int
+    <<internal>> AddInfoItem(info:I) : int
+    - GetNextItemId() : int
+    - mCacheByCategories : Dictionary<C, int>
+    - mCacheByInfo : Dictionary<I, int>
+}
+@enduml

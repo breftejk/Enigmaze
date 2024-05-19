@@ -1,0 +1,7 @@
+@startuml
+interface "IElementAdderMenuCommand`1"<TContext> {
+    Content : GUIContent <<get>>
+    CanExecute(elementAdder:IElementAdder<TContext>) : bool
+    Execute(elementAdder:IElementAdder<TContext>) : void
+}
+@enduml

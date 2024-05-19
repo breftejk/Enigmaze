@@ -1,0 +1,6 @@
+@startuml
+interface IPropertyFromNode {
+    AsShaderProperty() : AbstractShaderProperty
+    outputSlotId : int <<get>>
+}
+@enduml

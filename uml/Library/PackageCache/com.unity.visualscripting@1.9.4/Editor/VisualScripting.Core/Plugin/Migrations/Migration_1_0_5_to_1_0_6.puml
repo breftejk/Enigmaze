@@ -1,0 +1,11 @@
+@startuml
+class Migration_1_0_5_to_1_0_6 {
+    + Migration_1_0_5_to_1_0_6(plugin:Plugin)
+    + <<override>> @from : SemanticVersion <<get>>
+    + <<override>> to : SemanticVersion <<get>>
+    + defaultAssemblyOptions : List<LooseAssemblyName> <<get>>
+    + defaultTypeOptions : List<Type> <<get>>
+    + <<override>> Run() : void
+}
+BoltCoreMigration <|-- Migration_1_0_5_to_1_0_6
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class TrackedDevice {
+    + trackingState : IntegerControl <<get>> <<protected set>>
+    + isTracked : ButtonControl <<get>> <<protected set>>
+    + devicePosition : Vector3Control <<get>> <<protected set>>
+    + deviceRotation : QuaternionControl <<get>> <<protected set>>
+    # <<override>> FinishSetup() : void
+}
+InputDevice <|-- TrackedDevice
+@enduml

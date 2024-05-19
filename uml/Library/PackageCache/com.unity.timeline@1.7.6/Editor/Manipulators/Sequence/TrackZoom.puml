@@ -1,0 +1,6 @@
+@startuml
+class TrackZoom {
+    # <<override>> MouseWheel(evt:Event, state:WindowState) : bool
+}
+Manipulator <|-- TrackZoom
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class SpriteEditorHandles <<static>> {
+    - {static} s_CurrentMousePosition : Vector2
+    - {static} s_DragStartScreenPosition : Vector2
+    - {static} s_DragScreenOffset : Vector2
+    {static} <<internal>> PointSlider(pos:Vector2, cursor:MouseCursor, dragDot:GUIStyle, dragDotActive:GUIStyle) : Vector2
+    {static} <<internal>> ScaleSlider(pos:Vector2, cursor:MouseCursor, cursorRect:Rect) : Vector2
+    {static} - ScaleSlider(id:int, pos:Vector2, cursor:MouseCursor, cursorRect:Rect) : Vector2
+    {static} <<internal>> PivotSlider(sprite:Rect, pos:Vector2, pivotDot:GUIStyle, pivotDotActive:GUIStyle) : Vector2
+    {static} <<internal>> SliderRect(pos:Rect) : Rect
+    {static} <<internal>> HandleSliderRectMouseDown(id:int, evt:UnityEvent, pos:Rect) : void
+    {static} - s_RectSelectionID : int
+    {static} <<internal>> RectCreator(textureArea:Rect, rectStyle:GUIStyle) : Rect
+    {static} <<internal>> RectCreator(textureWidth:float, textureHeight:float, rectStyle:GUIStyle) : Rect
+    {static} - ValidRect(startPoint:Vector2, endPoint:Vector2) : bool
+    {static} - GetCurrentRect(screenSpace:bool, clampArea:Rect, startPoint:Vector2, endPoint:Vector2) : Rect
+}
+@enduml

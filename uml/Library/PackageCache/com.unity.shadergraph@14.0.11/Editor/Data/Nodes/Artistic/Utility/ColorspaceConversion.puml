@@ -1,0 +1,33 @@
+@startuml
+enum Colorspace {
+    RGB,
+    Linear,
+    HSV,
+}
+struct ColorspaceConversion {
+    + from : Colorspace
+    + to : Colorspace
+    + ColorspaceConversion(from:Colorspace, to:Colorspace)
+    - from : Enum <<get>> <<set>>
+    - to : Enum <<get>> <<set>>
+}
+class ColorspaceConversionNode {
+    + ColorspaceConversionNode()
+    - m_Conversion : ColorspaceConversion
+    <<internal>> conversion : ColorspaceConversion <<get>> <<set>>
+    - GetSpaceFrom() : string
+    - GetSpaceTo() : string
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_ColorspaceConversion_RGB_RGB(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_RGB_Linear(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_RGB_HSV(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_Linear_RGB(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_Linear_Linear(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_Linear_HSV(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_HSV_RGB(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_HSV_Linear(In:Vector3, Out:Vector3) : string
+    {static} - Unity_ColorspaceConversion_HSV_HSV(In:Vector3, Out:Vector3) : string
+}
+IEnumConversion <|-- ColorspaceConversion
+CodeFunctionNode <|-- ColorspaceConversionNode
+@enduml

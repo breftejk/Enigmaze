@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequirePosition {
+    RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+class MayRequirePositionExtensions <<static>> {
+    + {static} RequiresPosition(slot:MaterialSlot) : NeededCoordinateSpace
+}
+@enduml

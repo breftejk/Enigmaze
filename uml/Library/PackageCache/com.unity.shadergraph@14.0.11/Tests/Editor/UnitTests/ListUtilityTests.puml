@@ -1,0 +1,9 @@
+@startuml
+class ListUtilityTests {
+    - GetList() : List<int>
+    - GetEmptyList() : List<int>
+    - ListEquals(list:List<int>, expectedValues:int[]) : bool
+    + ListSlice() : void
+    + ListRemoveAllFromRange() : void
+}
+@enduml

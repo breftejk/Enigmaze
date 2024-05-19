@@ -1,0 +1,78 @@
+@startuml
+class TMP_SettingsEditor {
+    - m_PropFontAsset : SerializedProperty
+    - m_PropDefaultFontAssetPath : SerializedProperty
+    - m_PropDefaultFontSize : SerializedProperty
+    - m_PropDefaultAutoSizeMinRatio : SerializedProperty
+    - m_PropDefaultAutoSizeMaxRatio : SerializedProperty
+    - m_PropDefaultTextMeshProTextContainerSize : SerializedProperty
+    - m_PropDefaultTextMeshProUITextContainerSize : SerializedProperty
+    - m_PropAutoSizeTextContainer : SerializedProperty
+    - m_PropEnableRaycastTarget : SerializedProperty
+    - m_PropIsTextObjectScaleStatic : SerializedProperty
+    - m_PropSpriteAsset : SerializedProperty
+    - m_PropMissingSpriteCharacterUnicode : SerializedProperty
+    - m_PropEnableEmojiSupport : SerializedProperty
+    - m_PropSpriteAssetPath : SerializedProperty
+    - m_PropStyleSheet : SerializedProperty
+    - m_PropStyleSheetsResourcePath : SerializedProperty
+    - m_List : ReorderableList
+    - m_PropColorGradientPresetsPath : SerializedProperty
+    - m_PropMatchMaterialPreset : SerializedProperty
+    - m_PropWordWrapping : SerializedProperty
+    - m_PropKerning : SerializedProperty
+    - m_PropExtraPadding : SerializedProperty
+    - m_PropTintAllSprites : SerializedProperty
+    - m_PropParseEscapeCharacters : SerializedProperty
+    - m_PropMissingGlyphCharacter : SerializedProperty
+    - m_GetFontFeaturesAtRuntime : SerializedProperty
+    - m_PropWarningsDisabled : SerializedProperty
+    - m_PropLeadingCharacters : SerializedProperty
+    - m_PropFollowingCharacters : SerializedProperty
+    - m_PropUseModernHangulLineBreakingRules : SerializedProperty
+    - <<const>> k_UndoRedo : string = "UndoRedoPerformed"
+    + OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles {
+    + {static} <<readonly>> defaultFontAssetLabel : GUIContent
+    + {static} <<readonly>> defaultFontAssetPathLabel : GUIContent
+    + {static} <<readonly>> fallbackFontAssetsLabel : GUIContent
+    + {static} <<readonly>> fallbackFontAssetsListLabel : GUIContent
+    + {static} <<readonly>> fallbackMaterialSettingsLabel : GUIContent
+    + {static} <<readonly>> matchMaterialPresetLabel : GUIContent
+    + {static} <<readonly>> containerDefaultSettingsLabel : GUIContent
+    + {static} <<readonly>> textMeshProLabel : GUIContent
+    + {static} <<readonly>> textMeshProUiLabel : GUIContent
+    + {static} <<readonly>> enableRaycastTarget : GUIContent
+    + {static} <<readonly>> autoSizeContainerLabel : GUIContent
+    + {static} <<readonly>> isTextObjectScaleStaticLabel : GUIContent
+    + {static} <<readonly>> textComponentDefaultSettingsLabel : GUIContent
+    + {static} <<readonly>> defaultFontSize : GUIContent
+    + {static} <<readonly>> autoSizeRatioLabel : GUIContent
+    + {static} <<readonly>> minLabel : GUIContent
+    + {static} <<readonly>> maxLabel : GUIContent
+    + {static} <<readonly>> wordWrappingLabel : GUIContent
+    + {static} <<readonly>> kerningLabel : GUIContent
+    + {static} <<readonly>> extraPaddingLabel : GUIContent
+    + {static} <<readonly>> tintAllSpritesLabel : GUIContent
+    + {static} <<readonly>> parseEscapeCharactersLabel : GUIContent
+    + {static} <<readonly>> dynamicFontSystemSettingsLabel : GUIContent
+    + {static} <<readonly>> getFontFeaturesAtRuntime : GUIContent
+    + {static} <<readonly>> dynamicAtlasTextureGroup : GUIContent
+    + {static} <<readonly>> missingGlyphLabel : GUIContent
+    + {static} <<readonly>> disableWarningsLabel : GUIContent
+    + {static} <<readonly>> defaultSpriteAssetLabel : GUIContent
+    + {static} <<readonly>> missingSpriteCharacterUnicodeLabel : GUIContent
+    + {static} <<readonly>> enableEmojiSupportLabel : GUIContent
+    + {static} <<readonly>> spriteAssetsPathLabel : GUIContent
+    + {static} <<readonly>> defaultStyleSheetLabel : GUIContent
+    + {static} <<readonly>> styleSheetResourcePathLabel : GUIContent
+    + {static} <<readonly>> colorGradientPresetsLabel : GUIContent
+    + {static} <<readonly>> colorGradientsPathLabel : GUIContent
+    + {static} <<readonly>> lineBreakingLabel : GUIContent
+    + {static} <<readonly>> koreanSpecificRules : GUIContent
+}
+Editor <|-- TMP_SettingsEditor
+TMP_SettingsEditor +-- Styles
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+class UniversalRenderPipelineLightUI <<partial>> {
+}
+class Styles <<static>> {
+    + {static} <<readonly>> Type : GUIContent
+    + {static} <<readonly>> AreaLightShapeContent : GUIContent
+    + {static} <<readonly>> LightTypeTitles : GUIContent[]
+    + {static} <<readonly>> LightTypeValues : int[]
+    + {static} <<readonly>> AreaLightShapeTitles : GUIContent[]
+    + {static} <<readonly>> AreaLightShapeValues : int[]
+    + {static} <<readonly>> SpotAngle : GUIContent
+    + {static} <<readonly>> BakingWarning : GUIContent
+    + {static} <<readonly>> DisabledLightWarning : GUIContent
+    + {static} <<readonly>> SunSourceWarning : GUIContent
+    + {static} <<readonly>> CullingMask : GUIContent
+    + {static} <<readonly>> CullingMaskWarning : GUIContent
+    + {static} <<readonly>> ShadowRealtimeSettings : GUIContent
+    + {static} <<readonly>> ShadowStrength : GUIContent
+    + {static} <<readonly>> ShadowNearPlane : GUIContent
+    + {static} <<readonly>> ShadowNormalBias : GUIContent
+    + {static} <<readonly>> ShadowDepthBias : GUIContent
+    + {static} <<readonly>> ShadowInfo : GUIContent
+    + {static} <<readonly>> ShadowResolution : GUIContent
+    + {static} <<readonly>> ShadowResolutionDefaultValues : int[]
+    + {static} <<readonly>> ShadowResolutionDefaultOptions : GUIContent[]
+    + {static} SoftShadowQuality : GUIContent
+    + {static} shadowBias : GUIContent
+    + {static} optionDefaultValues : int[]
+    + {static} displayedDefaultOptions : GUIContent[]
+    + {static} <<readonly>> customShadowLayers : GUIContent
+    + {static} <<readonly>> ShadowLayer : GUIContent
+    + {static} <<readonly>> LightCookieSize : GUIContent
+    + {static} <<readonly>> LightCookieOffset : GUIContent
+    + {static} <<readonly>> RenderingLayers : GUIContent
+    + {static} <<readonly>> RenderingLayersDisabled : GUIContent
+}
+UniversalRenderPipelineLightUI +-- Styles
+@enduml

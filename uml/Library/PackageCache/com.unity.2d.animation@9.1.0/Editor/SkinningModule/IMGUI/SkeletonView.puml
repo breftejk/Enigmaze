@@ -1,0 +1,78 @@
+@startuml
+class SkeletonView {
+    - <<const>> kPickingRadius : float = 5f
+    <<internal>> <<const>> kDeleteCommandName : string = "Delete"
+    <<internal>> <<const>> kSoftDeleteCommandName : string = "SoftDelete"
+    - {static} <<readonly>> kBodyHashCode : int
+    - {static} <<readonly>> kJointHashCode : int
+    - {static} <<readonly>> kTailHashCode : int
+    - {static} <<readonly>> kCreateBoneHashCode : int
+    + InvalidID : int <<get>> <<set>>
+    + mode : SkeletonMode <<get>> <<set>>
+    + defaultControlID : int <<get>> <<set>>
+    + hoveredBoneID : int <<get>>
+    + hoveredJointID : int <<get>>
+    + hoveredBodyID : int <<get>>
+    + hoveredTailID : int <<get>>
+    + hotBoneID : int <<get>>
+    - m_GUIWrapper : IGUIWrapper
+    - m_RotateControlID : int
+    - m_MoveControlID : int
+    - m_FreeMoveControlID : int
+    - m_MoveJointControlID : int
+    - m_MoveEndPositionControlID : int
+    - m_ChangeLengthControlID : int
+    - m_CreateBoneControlID : int
+    - m_HoveredBoneID : int = 0
+    - m_PrevHoveredBoneID : int = 0
+    - m_HoveredBodyID : int = 0
+    - m_HoveredJointID : int = 0
+    - m_HoveredTailID : int = 0
+    - m_HotBoneID : int = 0
+    - m_HoveredBodyControlID : int
+    - m_HoveredJointControlID : int
+    - m_HoveredTailControlID : int
+    - m_NearestDistance : float
+    - m_NearestBodyDistance : float
+    - m_NearestJointDistance : float
+    - m_NearestTailDistance : float
+    - m_NearestBodyId : int = 0
+    - m_NearestJointId : int = 0
+    - m_NearestTailId : int = 0
+    - m_HoveredSliderData : SliderData
+    - m_HotSliderData : SliderData
+    + SkeletonView(gw:IGUIWrapper)
+    + BeginLayout() : void
+    + EndLayout() : void
+    + CanLayout() : bool
+    + LayoutBone(id:int, position:Vector3, endPosition:Vector3, forward:Vector3, up:Vector3, right:Vector3, isChainEnd:bool) : void
+    + GetMouseWorldPosition(planeNormal:Vector3, planePosition:Vector3) : Vector3
+    - GetBoneRadiusForPicking(position:Vector3) : float
+    + DoSelectBone(id:int, additive:bool) : bool
+    + DoRotateBone(pivot:Vector3, normal:Vector3, deltaAngle:float) : bool
+    + DoMoveBone(deltaPosition:Vector3) : bool
+    + DoFreeMoveBone(deltaPosition:Vector3) : bool
+    + DoMoveJoint(deltaPosition:Vector3) : bool
+    + DoMoveEndPosition(endPosition:Vector3) : bool
+    + DoChangeLength(endPosition:Vector3) : bool
+    - DoSliderAction(action:SkeletonAction, controlID:int, actionControlID:int, newPosition:Vector3) : bool
+    + DoCreateBoneStart(position:Vector3) : bool
+    + CanCreateBone() : bool
+    + DoCreateBone(position:Vector3) : bool
+    + DoSplitBone(id:int, position:Vector3) : bool
+    + DoRemoveBone() : bool
+    + DoCancelMultistepAction(force:bool) : bool
+    + IsActionActive(action:SkeletonAction) : bool
+    + IsActionHot(action:SkeletonAction) : bool
+    + IsActionTriggering(action:SkeletonAction) : bool
+    + IsActionFinishing(action:SkeletonAction) : bool
+    + IsRepainting() : bool
+    + DrawBone(position:Vector3, right:Vector3, forward:Vector3, length:float, color:Color, isChained:bool, isSelected:bool, isJointHovered:bool, isTailHovered:bool, isHot:bool) : void
+    + DrawBoneParentLink(parentPosition:Vector3, position:Vector3, forward:Vector3, color:Color) : void
+    + DrawBoneOutline(position:Vector3, right:Vector3, forward:Vector3, length:float, color:Color, outlineScale:float) : void
+    + DrawCursors(canBeActive:bool) : void
+    - ConsumeMouseMoveEvents() : void
+    - IsCapable(action:SkeletonAction) : bool
+}
+ISkeletonView <|-- SkeletonView
+@enduml

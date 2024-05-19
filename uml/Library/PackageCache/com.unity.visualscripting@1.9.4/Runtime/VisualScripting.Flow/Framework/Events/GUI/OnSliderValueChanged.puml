@@ -1,0 +1,10 @@
+@startuml
+class OnSliderValueChanged <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+    + value : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, value:float) : void
+}
+"GameObjectEventUnit`1" "<float>" <|-- OnSliderValueChanged
+@enduml

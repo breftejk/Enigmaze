@@ -1,0 +1,27 @@
+@startuml
+abstract class RectangleTool {
+    <<const>> - k_HeaderSplitterOverlap : float
+    - m_TimeAreaAutoPanner : TimeAreaAutoPanner
+    - m_StartPoint : TimelinePoint
+    - m_EndPixel : Vector2
+    - m_ActiveRect : Rect
+    # {abstract} enableAutoPan : bool <<get>>
+    # {abstract} CanStartRectangle(evt:Event) : bool
+    # {abstract} OnFinish(evt:Event, state:WindowState, rect:Rect) : bool
+    - m_Id : int
+    + OnGUI(state:WindowState, rawType:EventType, mousePosition:Vector2) : void
+    {static} - DrawRectangle(rect:Rect) : void
+    {static} - IsValidRect(rect:Rect) : bool
+    - CurrentRectangle() : Rect
+}
+struct TimelinePoint {
+    <<readonly>> - m_Time : double
+    <<readonly>> - m_YPos : float
+    <<readonly>> - m_YScrollPos : float
+    <<readonly>> - m_State : WindowState
+    <<readonly>> - m_TreeViewGUI : TimelineTreeViewGUI
+    + TimelinePoint(state:WindowState, mousePosition:Vector2)
+    + ToPixel() : Vector2
+}
+RectangleTool +-- TimelinePoint
+@enduml

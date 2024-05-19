@@ -1,0 +1,47 @@
+@startuml
+class UniversalRenderer <<sealed>> <<partial>> {
+    - {static} m_RenderGraphCameraColorHandle : RTHandle
+    - {static} m_RenderGraphCameraDepthHandle : RTHandle
+    {static} <<internal>> m_ActiveRenderGraphColor : TextureHandle
+    {static} <<internal>> m_ActiveRenderGraphDepth : TextureHandle
+    <<internal>> m_TargetIsBackbuffer : bool
+    <<internal>> frameResources : RenderGraphFrameResources
+    - CleanupRenderGraphResources() : void
+    <<internal>> {static} CreateRenderGraphTexture(renderGraph:RenderGraph, desc:RenderTextureDescriptor, name:string, clear:bool, filterMode:FilterMode, wrapMode:TextureWrapMode) : TextureHandle
+    - RequiresColorAndDepthTextures(createColorTexture:bool, createDepthTexture:bool, renderingData:RenderingData, renderPassInputs:RenderPassInputSummary) : bool
+    - CreateRenderGraphCameraRenderTargets(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> <<override>> OnRecordRenderGraph(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> <<override>> OnFinishRenderGraphRendering(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - {static} m_UseIntermediateTexture : bool = false
+    - OnBeforeRendering(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - OnMainRendering(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - OnAfterRendering(renderGraph:RenderGraph, context:ScriptableRenderContext, renderingData:RenderingData) : void
+}
+class ClearTargetsPass {
+    {static} - s_ClearProfilingSampler : ProfilingSampler
+    <<internal>> {static} Render(graph:RenderGraph, renderer:UniversalRenderer, clearFlags:RTClearFlags, clearColor:Color) : void
+}
+class RenderGraphFrameResources {
+    <<internal>> backBufferColor : TextureHandle
+    <<internal>> cameraColor : TextureHandle
+    <<internal>> cameraDepth : TextureHandle
+    <<internal>> mainShadowsTexture : TextureHandle
+    <<internal>> additionalShadowsTexture : TextureHandle
+    <<internal>> gbuffer : TextureHandle[]
+    <<internal>> cameraOpaqueTexture : TextureHandle
+    <<internal>> cameraDepthTexture : TextureHandle
+    <<internal>> cameraNormalsTexture : TextureHandle
+    <<internal>> motionVectorColor : TextureHandle
+    <<internal>> motionVectorDepth : TextureHandle
+    <<internal>> internalColorLut : TextureHandle
+    <<internal>> overlayUITexture : TextureHandle
+}
+class PassData {
+    <<internal>> color : TextureHandle
+    <<internal>> depth : TextureHandle
+    <<internal>> clearFlags : RTClearFlags
+    <<internal>> clearColor : Color
+}
+UniversalRenderer +-- RenderGraphFrameResources
+ClearTargetsPass +-- PassData
+@enduml

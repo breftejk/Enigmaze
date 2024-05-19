@@ -1,0 +1,57 @@
+@startuml
+class SkeletonController {
+    - {static} <<readonly>> k_DefaultRootName : string = "root"
+    - {static} <<readonly>> k_DefaultBoneName : string = "bone"
+    - {static} s_Regex : Regex
+    - m_Skeleton : SkeletonCache
+    - m_CreateBoneStartPosition : Vector3
+    - m_PrevCreatedBone : BoneCache
+    - m_Moved : bool = false
+    - style : ISkeletonStyle <<get>>
+    - skinningCache : SkinningCache <<get>>
+    - selectedBone : BoneCache <<get>> <<set>>
+    - selectedBones : BoneCache[] <<get>> <<set>>
+    - rootBone : BoneCache <<get>>
+    - rootBones : BoneCache[] <<get>>
+    + view : ISkeletonView <<get>> <<set>>
+    + styleOverride : ISkeletonStyle <<get>> <<set>>
+    + selection : IBoneSelection <<get>> <<set>>
+    + editBindPose : bool <<get>> <<set>>
+    + skeleton : SkeletonCache <<get>> <<set>>
+    + hoveredBone : BoneCache <<get>>
+    + hoveredTail : BoneCache <<get>>
+    + hoveredBody : BoneCache <<get>>
+    + hoveredJoint : BoneCache <<get>>
+    + hotBone : BoneCache <<get>>
+    - GetBone(instanceID:int) : BoneCache
+    - SetSkeleton(newSkeleton:SkeletonCache) : void
+    + Reset() : void
+    + OnGUI() : void
+    - LayoutBones() : void
+    - HandleSelectBone() : void
+    - HandleRotateBone() : void
+    - HandleMoveBone() : void
+    - HandleFreeMoveBone() : void
+    - HandleMoveJoint() : void
+    - HandleMoveEndPosition() : void
+    - HandleChangeLength() : void
+    - HandleCreateBone() : void
+    - HandleSplitBone() : void
+    - HandleRemoveBone() : void
+    - HandleCancelMultiStepAction() : void
+    - DrawSkeleton() : void
+    - DrawBone(bone:BoneCache, color:Color) : void
+    - DrawBoneOutline(bone:BoneCache, color:Color, outlineScale:float) : void
+    - DrawSplitBonePreview() : void
+    - DrawCreateBonePreview() : void
+    - DrawCursors() : void
+    + {static} AutoBoneName(parent:BoneCache, bones:IEnumerable<BoneCache>) : string
+    + {static} AutoNameBoneCopy(originalBoneName:string, bones:IEnumerable<BoneCache>) : string
+    - {static} FindBiggestNameCounter(bones:IEnumerable<BoneCache>) : int
+    {static} - FindBiggestNameCounterForBone(boneName:string, bones:IEnumerable<BoneCache>) : int
+    - {static} DissectBoneName(boneName:string, inheritedName:string, counter:int) : void
+    - {static} IsBoneNameMatchAutoFormat(boneName:string) : bool
+    - InvokeTopologyChanged() : void
+    <<internal>> InvokePoseChanged() : void
+}
+@enduml

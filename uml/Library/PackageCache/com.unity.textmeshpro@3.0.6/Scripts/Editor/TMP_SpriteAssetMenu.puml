@@ -1,0 +1,14 @@
+@startuml
+class TMP_SpriteAssetMenu <<static>> {
+    {static} - AddDefaultMaterialValidate(command:MenuCommand) : bool
+    {static} - AddDefaultMaterial(command:MenuCommand) : void
+    {static} - UpdateSpriteAssetValidate(command:MenuCommand) : bool
+    {static} - UpdateSpriteAsset(command:MenuCommand) : void
+    <<internal>> {static} UpdateSpriteAsset(spriteAsset:TMP_SpriteAsset) : void
+    + {static} CreateSpriteAsset() : void
+    - {static} PopulateSpriteTables(source:Texture, spriteCharacterTable:List<TMP_SpriteCharacter>, spriteGlyphTable:List<TMP_SpriteGlyph>) : void
+    - {static} PopulateSpriteTables(spriteAtlas:SpriteAtlas, spriteCharacterTable:List<TMP_SpriteCharacter>, spriteGlyphTable:List<TMP_SpriteGlyph>) : void
+    - {static} AddDefaultMaterial(spriteAsset:TMP_SpriteAsset) : void
+    - {static} UpdateSpriteInfo(spriteAsset:TMP_SpriteAsset) : List<TMP_Sprite>
+}
+@enduml

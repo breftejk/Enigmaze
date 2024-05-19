@@ -1,0 +1,11 @@
+@startuml
+class TestRunnerApiListener {
+    - {static} <<readonly>> _testRunnerApi : TestRunnerApi
+    - {static} <<readonly>> _testRunnerCallbacks : TestRunnerCallbacks
+    {static} - TestRunnerApiListener()
+    + {static} RetrieveTestList(mode:string) : void
+    - {static} RetrieveTestList(mode:TestMode) : void
+    + {static} ExecuteTests(command:string) : void
+    - {static} ExecuteTests(filter:Filter) : void
+}
+@enduml

@@ -1,0 +1,59 @@
+@startuml
+class BoneSpriteInfluenceToolController {
+    - m_Events : SkinningEvents
+    - m_Model : IBoneSpriteInfluenceToolModel
+    + BoneSpriteInfluenceToolController(model:IBoneSpriteInfluenceToolModel, events:SkinningEvents)
+    + Activate() : void
+    + Deactivate() : void
+    - OnSpriteSelectionChanged(sprite:SpriteCache) : void
+    - OnBoneSelectionChanged() : void
+    - OnBoneNameChanged(bone:BoneCache) : void
+    - OnSkeletonTopologyChanged(skeleton:SkeletonCache) : void
+    - OnMeshChanged(mesh:MeshCache) : void
+    - OnSkinningModeChanged(skinningMode:SkinningMode) : void
+    - ShowHideView(show:bool) : void
+    - SetViewHeaderText() : void
+    + OnViewCreated() : void
+    - AddSelectedSpriteInfluenceToBone() : void
+    - RemoveSelectedSpriteInfluenceFromBone() : void
+    - SelectSprite(selectedSprite:IEnumerable<object>) : void
+    - UpdateSelectedBonesInfluencedSprites() : void
+    + ShouldEnableAddButton() : bool
+    - UpdateAddRemoveButtons() : void
+    + IsCharacterMode() : bool
+}
+interface IBoneSpriteInfluenceToolModel {
+    view : IInfluenceWindow <<get>>
+    selectedBone : BoneCache <<get>>
+    selectedSprite : SpriteCache <<get>> <<set>>
+    influencedSprites : List<TransformCache> <<get>> <<set>>
+    hasCharacter : bool <<get>>
+    skinningMode : SkinningMode <<get>>
+    characterSkeleton : SkeletonCache <<get>>
+    UndoScope(description:string) : UndoScope
+    GetSpriteCharacterPart(sprite:SpriteCache) : CharacterPartCache
+}
+class BoneSpriteInfluenceTool {
+    - m_Controller : BoneSpriteInfluenceToolController
+    - m_MeshPreviewBehaviour : MeshPreviewBehaviour
+    - m_View : InfluenceWindow
+    + skeletonTool : SkeletonTool <<get>> <<set>>
+    + <<override>> previewBehaviour : IMeshPreviewBehaviour <<get>>
+    <<internal>> <<override>> OnCreate() : void
+    - view : IInfluenceWindow <<get>>
+    - selectedBone : BoneCache <<get>>
+    - selectedSprite : SpriteCache <<get>> <<set>>
+    - influencedSprites : List<TransformCache> <<get>> <<set>>
+    - hasCharacter : bool <<get>>
+    - skinningMode : SkinningMode <<get>>
+    - characterSkeleton : SkeletonCache <<get>>
+    - UndoScope(description:string) : UndoScope
+    + GetSpriteCharacterPart(sprite:SpriteCache) : CharacterPartCache
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    # <<override>> OnGUI() : void
+}
+BaseTool <|-- BoneSpriteInfluenceTool
+IBoneSpriteInfluenceToolModel <|-- BoneSpriteInfluenceTool
+@enduml

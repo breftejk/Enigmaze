@@ -1,0 +1,35 @@
+@startuml
+class VariableDeclarationsInspector {
+    + VariableDeclarationsInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    - adaptor : ListAdaptor
+    - newName : string
+    - highlightPlaceholder : bool
+    - highlightNewNameField : bool
+    + kind : VariableKind? <<get>> <<set>>
+    # <<override>> OnGUI(drawerPosition:Rect, label:GUIContent) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    - OnNewNameGUI(newNamePosition:Rect) : void
+    - <<const>> newNameFieldControl : string = "newNameField"
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> invocationSpacing : float = 7
+    + {static} <<readonly>> addButtonWidth : float = 29
+    + {static} <<readonly>> newNameField : GUIStyle
+    + {static} <<readonly>> newNameFieldHighlighted : GUIStyle
+    + {static} <<readonly>> placeholder : GUIStyle
+    + {static} <<readonly>> placeholderHighlighted : GUIStyle
+}
+class ListAdaptor {
+    + ListAdaptor(metadata:Metadata, parentInspector:VariableDeclarationsInspector)
+    + <<new>> <<readonly>> parentInspector : VariableDeclarationsInspector
+    # <<override>> CanDrop(item:object) : bool
+    # <<override>> CanAdd() : bool
+    # <<override>> ConstructItem() : object
+}
+Inspector <|-- VariableDeclarationsInspector
+VariableDeclarationsInspector +-- Styles
+VariableDeclarationsInspector +-- ListAdaptor
+MetadataListAdaptor <|-- ListAdaptor
+@enduml

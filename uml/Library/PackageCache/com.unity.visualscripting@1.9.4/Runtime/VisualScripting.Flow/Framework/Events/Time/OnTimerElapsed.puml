@@ -1,0 +1,17 @@
+@startuml
+class OnTimerElapsed <<sealed>> {
+    + <<override>> CreateData() : IGraphElementData
+    # <<override>> hookName : string <<get>>
+    + seconds : ValueInput <<get>>
+    + unscaledTime : ValueInput <<get>>
+    # <<override>> Definition() : void
+    + <<override>> StartListening(stack:GraphStack) : void
+    # <<override>> ShouldTrigger(flow:Flow, args:EmptyEventArgs) : bool
+}
+class Data <<new>> {
+    + time : float
+    + triggered : bool
+}
+"MachineEventUnit`1" "<EmptyEventArgs>" <|-- OnTimerElapsed
+OnTimerElapsed +-- Data
+@enduml

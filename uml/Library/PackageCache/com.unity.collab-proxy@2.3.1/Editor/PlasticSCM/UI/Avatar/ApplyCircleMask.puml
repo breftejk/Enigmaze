@@ -1,0 +1,6 @@
+@startuml
+class ApplyCircleMask <<static>> {
+    <<internal>> {static} For(sourceImage:Texture2D) : Texture2D
+    {static} - GetAntialiasAlpha(radius:float, d:float, borderSize:float) : float
+}
+@enduml

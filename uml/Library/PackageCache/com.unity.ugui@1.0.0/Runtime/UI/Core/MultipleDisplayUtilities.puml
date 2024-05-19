@@ -1,0 +1,7 @@
+@startuml
+class MultipleDisplayUtilities <<static>> {
+    + {static} GetRelativeMousePositionForDrag(eventData:PointerEventData, position:Vector2) : bool
+    <<internal>> {static} GetRelativeMousePositionForRaycast(eventData:PointerEventData) : Vector3
+    + {static} RelativeMouseAtScaled(position:Vector2) : Vector3
+}
+@enduml

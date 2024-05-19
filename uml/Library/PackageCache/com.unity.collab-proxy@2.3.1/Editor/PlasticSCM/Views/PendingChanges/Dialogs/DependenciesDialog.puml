@@ -1,0 +1,19 @@
+@startuml
+class DependenciesDialog {
+    # <<override>> DefaultRect : Rect <<get>>
+    <<internal>> {static} IncludeDependencies(wkInfo:WorkspaceInfo, changesDependencies:IList<ChangeDependencies<ChangeInfo>>, operation:string, parentWindow:EditorWindow) : bool
+    # <<override>> OnModalGUI() : void
+    # <<override>> GetTitle() : string
+    - DoDependenciesArea() : void
+    - DoButtonsArea() : void
+    - DoOkButton() : void
+    - DoCancelButton() : void
+    {static} - Create(wkInfo:WorkspaceInfo, changesDependencies:IList<ChangeDependencies<ChangeInfo>>, operation:string) : DependenciesDialog
+    - mExpandedDependencies : bool[]
+    - mScrollPosition : Vector2
+    - mOperation : string
+    - mChangesDependencies : IList<ChangeDependencies<ChangeInfo>>
+    - mWkInfo : WorkspaceInfo
+}
+PlasticDialog <|-- DependenciesDialog
+@enduml

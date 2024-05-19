@@ -1,0 +1,15 @@
+@startuml
+class fsIEnumerableConverter {
+    + <<override>> CanProcess(type:Type) : bool
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+    + <<override>> TrySerialize(instance_:object, serialized:fsData, storageType:Type) : fsResult
+    - IsStack(type:Type) : bool
+    + <<override>> TryDeserialize(data:fsData, instance_:object, storageType:Type) : fsResult
+    - {static} HintSize(collection:IEnumerable) : int
+    - {static} GetElementType(objectType:Type) : Type
+    - {static} TryClear(type:Type, instance:object) : void
+    - {static} TryGetExistingSize(type:Type, instance:object) : int
+    - {static} GetAddMethod(type:Type) : MethodInfo
+}
+fsConverter <|-- fsIEnumerableConverter
+@enduml

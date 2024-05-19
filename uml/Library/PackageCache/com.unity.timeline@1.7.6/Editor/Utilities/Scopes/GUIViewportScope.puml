@@ -1,0 +1,9 @@
+@startuml
+struct GUIViewportScope {
+    - m_open : bool
+    + GUIViewportScope(position:Rect)
+    + Dispose() : void
+    - CloseScope() : void
+}
+IDisposable <|-- GUIViewportScope
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class "NesterUnitOption`1"<TNesterUnit> {
+    - m_Name : string
+    + <<override>> formerHaystack : string <<get>>
+    + NesterUnitOption()
+    + NesterUnitOption(unit:TNesterUnit)
+    + <<override>> favoritable : bool <<get>>
+    # <<override>> Label(human:bool) : string
+}
+"UnitOption`1" "<TNesterUnit>" <|-- "NesterUnitOption`1"
+@enduml

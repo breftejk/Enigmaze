@@ -1,0 +1,16 @@
+@startuml
+class Health {
+    + maxHealth : float = 100f
+    + currentHealth : float
+    + animator : Animator
+    + healthSlider : Slider
+    + healthBarUIPrefab : GameObject
+    + healthBarOffset : Vector3
+    - Start() : void
+    + TakeDamage(amount:float) : void
+    + Heal(amount:float) : void
+    - Die() : void
+    - RemoveCharacterAfterDelay(delay:float) : IEnumerator
+}
+MonoBehaviour <|-- Health
+@enduml

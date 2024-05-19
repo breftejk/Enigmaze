@@ -1,0 +1,17 @@
+@startuml
+interface IGraph {
+    pan : Vector2 <<get>> <<set>>
+    zoom : float <<get>> <<set>>
+    elements : MergedGraphElementCollection <<get>>
+    title : string <<get>>
+    summary : string <<get>>
+    CreateData() : IGraphData
+    CreateDebugData() : IGraphDebugData
+    Instantiate(instance:GraphReference) : void
+    Uninstantiate(instance:GraphReference) : void
+}
+IDisposable <|-- IGraph
+IPrewarmable <|-- IGraph
+IAotStubbable <|-- IGraph
+ISerializationDepender <|-- IGraph
+@enduml

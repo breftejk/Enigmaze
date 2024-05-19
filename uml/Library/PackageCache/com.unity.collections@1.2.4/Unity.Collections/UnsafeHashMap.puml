@@ -1,0 +1,141 @@
+@startuml
+struct UnsafeHashMapBucketData {
+    <<internal>> UnsafeHashMapBucketData(v:byte*, k:byte*, n:byte*, b:byte*, bcm:int)
+    + <<readonly>> values : byte*
+    + <<readonly>> keys : byte*
+    + <<readonly>> next : byte*
+    + <<readonly>> buckets : byte*
+    + <<readonly>> bucketCapacityMask : int
+}
+struct UnsafeHashMapData {
+    <<internal>> values : byte*
+    <<internal>> keys : byte*
+    <<internal>> next : byte*
+    <<internal>> buckets : byte*
+    <<internal>> keyCapacity : int
+    <<internal>> bucketCapacityMask : int
+    <<internal>> allocatedIndexLength : int
+    <<internal>> <<fixed>> firstFreeTLS : int
+    <<internal>> <<const>> IntsPerCacheLine : int
+    <<internal>> {static} GetBucketSize(capacity:int) : int
+    <<internal>> {static} GrowCapacity(capacity:int) : int
+    <<internal>> {static} AllocateHashMap(length:int, bucketLength:int, label:AllocatorManager.AllocatorHandle, outBuf:UnsafeHashMapData*) : void
+    <<internal>> {static} ReallocateHashMap(data:UnsafeHashMapData*, newCapacity:int, newBucketCapacity:int, label:AllocatorManager.AllocatorHandle) : void
+    <<internal>> {static} DeallocateHashMap(data:UnsafeHashMapData*, allocator:AllocatorManager.AllocatorHandle) : void
+    <<internal>> {static} CalculateDataSize(length:int, bucketLength:int, keyOffset:int, nextOffset:int, bucketOffset:int) : int
+    <<internal>> {static} IsEmpty(data:UnsafeHashMapData*) : bool
+    <<internal>> {static} GetCount(data:UnsafeHashMapData*) : int
+    <<internal>> {static} MoveNext(data:UnsafeHashMapData*, bucketIndex:int, nextIndex:int, index:int) : bool
+    <<internal>> {static} GetKeyArray(data:UnsafeHashMapData*, result:NativeArray<TKey>) : void
+    <<internal>> {static} GetValueArray(data:UnsafeHashMapData*, result:NativeArray<TValue>) : void
+    <<internal>> {static} GetKeyValueArrays(data:UnsafeHashMapData*, result:NativeKeyValueArrays<TKey, TValue>) : void
+    <<internal>> GetBucketData() : UnsafeHashMapBucketData
+    {static} - CheckHashMapReallocateDoesNotShrink(data:UnsafeHashMapData*, newCapacity:int) : void
+}
+struct UnsafeHashMapDataDispose {
+    <<internal>> m_Buffer : UnsafeHashMapData*
+    <<internal>> m_AllocatorLabel : AllocatorManager.AllocatorHandle
+    + Dispose() : void
+}
+struct UnsafeHashMapDataDisposeJob {
+    <<internal>> Data : UnsafeHashMapDataDispose
+    + Execute() : void
+}
+struct "UnsafeHashMapBase`2"<TKey,TValue> {
+    <<internal>> {static} <<unsafe>> Clear(data:UnsafeHashMapData*) : void
+    <<internal>> {static} <<unsafe>> AllocEntry(data:UnsafeHashMapData*, threadIndex:int) : int
+    <<internal>> {static} <<unsafe>> FreeEntry(data:UnsafeHashMapData*, idx:int, threadIndex:int) : void
+    <<internal>> {static} <<unsafe>> TryAddAtomic(data:UnsafeHashMapData*, key:TKey, item:TValue, threadIndex:int) : bool
+    <<internal>> {static} <<unsafe>> AddAtomicMulti(data:UnsafeHashMapData*, key:TKey, item:TValue, threadIndex:int) : void
+    <<internal>> {static} <<unsafe>> TryAdd(data:UnsafeHashMapData*, key:TKey, item:TValue, isMultiHashMap:bool, allocation:AllocatorManager.AllocatorHandle) : bool
+    <<internal>> {static} <<unsafe>> Remove(data:UnsafeHashMapData*, key:TKey, isMultiHashMap:bool) : int
+    <<internal>> {static} <<unsafe>> Remove(data:UnsafeHashMapData*, it:NativeMultiHashMapIterator<TKey>) : void
+    <<internal>> {static} <<unsafe>> RemoveKeyValue(data:UnsafeHashMapData*, key:TKey, value:TValueEQ) : void
+    <<internal>> {static} <<unsafe>> TryGetFirstValueAtomic(data:UnsafeHashMapData*, key:TKey, item:TValue, it:NativeMultiHashMapIterator<TKey>) : bool
+    <<internal>> {static} <<unsafe>> TryGetNextValueAtomic(data:UnsafeHashMapData*, item:TValue, it:NativeMultiHashMapIterator<TKey>) : bool
+    <<internal>> {static} <<unsafe>> SetValue(data:UnsafeHashMapData*, it:NativeMultiHashMapIterator<TKey>, item:TValue) : bool
+    {static} - CheckOutOfCapacity(idx:int, keyCapacity:int) : void
+    {static} <<unsafe>> - CheckIndexOutOfBounds(data:UnsafeHashMapData*, idx:int) : void
+    {static} - ThrowFull() : void
+    {static} - ThrowInvalidIterator() : void
+}
+struct "KeyValue`2"<TKey,TValue> {
+    <<internal>> m_Buffer : UnsafeHashMapData*
+    <<internal>> m_Index : int
+    <<internal>> m_Next : int
+    + {static} Null : KeyValue<TKey, TValue> <<get>>
+    + Key : TKey <<get>>
+    + Value : ref TValue <<get>>
+    + GetKeyValue(key:TKey, value:TValue) : bool
+}
+struct UnsafeHashMapDataEnumerator {
+    <<internal>> m_Buffer : UnsafeHashMapData*
+    <<internal>> m_Index : int
+    <<internal>> m_BucketIndex : int
+    <<internal>> m_NextIndex : int
+    <<internal>> <<unsafe>> UnsafeHashMapDataEnumerator(data:UnsafeHashMapData*)
+    <<internal>> MoveNext() : bool
+    <<internal>> Reset() : void
+    <<internal>> GetCurrent() : KeyValue<TKey, TValue>
+    <<internal>> GetCurrentKey() : TKey
+}
+struct "UnsafeHashMap`2"<TKey,TValue> {
+    <<internal>> m_Buffer : UnsafeHashMapData*
+    <<internal>> m_AllocatorLabel : AllocatorManager.AllocatorHandle
+    + UnsafeHashMap(capacity:int, allocator:AllocatorManager.AllocatorHandle)
+    + IsEmpty : bool <<get>>
+    + Count() : int
+    + Capacity : int <<get>> <<set>>
+    + Clear() : void
+    + TryAdd(key:TKey, item:TValue) : bool
+    + Add(key:TKey, item:TValue) : void
+    + Remove(key:TKey) : bool
+    + TryGetValue(key:TKey, item:TValue) : bool
+    + ContainsKey(key:TKey) : bool
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + GetKeyArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<TKey>
+    + GetValueArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<TValue>
+    + GetKeyValueArrays(allocator:AllocatorManager.AllocatorHandle) : NativeKeyValueArrays<TKey, TValue>
+    + AsParallelWriter() : ParallelWriter
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator<KeyValue<TKey, TValue>>
+    - GetEnumerator() : IEnumerator
+}
+struct UnsafeHashMapDisposeJob {
+    + Data : UnsafeHashMapData*
+    + Allocator : AllocatorManager.AllocatorHandle
+    + Execute() : void
+}
+class "UnsafeHashMapDebuggerTypeProxy`2"<TKey,TValue> <<sealed>> {
+    - m_Target : UnsafeHashMap<TKey, TValue>
+    + UnsafeHashMapDebuggerTypeProxy(target:UnsafeHashMap<TKey, TValue>)
+    + Items : List<Pair<TKey, TValue>> <<get>>
+}
+struct UntypedUnsafeHashMap {
+    - m_Buffer : UnsafeHashMapData*
+    - m_AllocatorLabel : AllocatorManager.AllocatorHandle
+}
+struct ParallelWriter {
+    <<internal>> m_Buffer : UnsafeHashMapData*
+    <<internal>> m_ThreadIndex : int
+    + Capacity : int <<get>>
+    + TryAdd(key:TKey, item:TValue) : bool
+}
+struct Enumerator {
+    <<internal>> m_Enumerator : UnsafeHashMapDataEnumerator
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : KeyValue<TKey, TValue> <<get>>
+    - Current : object <<get>>
+}
+IJob <|-- UnsafeHashMapDataDisposeJob
+INativeDisposable <|-- "UnsafeHashMap`2"
+"IEnumerable`1" "<KeyValue<TKey, TValue>>" <|-- "UnsafeHashMap`2"
+IJob <|-- UnsafeHashMapDisposeJob
+"UnsafeHashMap`2" +-- ParallelWriter
+"UnsafeHashMap`2" +-- Enumerator
+"IEnumerator`1" "<KeyValue<TKey, TValue>>" <|-- Enumerator
+@enduml

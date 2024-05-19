@@ -1,0 +1,9 @@
+@startuml
+interface ISidebarPanelContent {
+    sidebarControlHint : object <<get>>
+    titleContent : GUIContent <<get>>
+    minSize : Vector2 <<get>>
+    GetHeight(width:float) : float
+    OnGUI(position:Rect) : void
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class UniversalSpeedTree8Upgrader {
+    <<internal>> UniversalSpeedTree8Upgrader(oldShaderName:string)
+    {static} + UniversalSpeedTree8MaterialFinalizer(mat:Material) : void
+}
+class UniversalSpeedTree8PostProcessor {
+    - OnPostprocessSpeedTree(speedTree:GameObject) : void
+}
+SpeedTree8MaterialUpgrader <|-- UniversalSpeedTree8Upgrader
+AssetPostprocessor <|-- UniversalSpeedTree8PostProcessor
+@enduml

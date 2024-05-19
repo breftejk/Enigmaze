@@ -1,0 +1,53 @@
+@startuml
+struct RTHandleProperties {
+    + previousViewportSize : Vector2Int
+    + previousRenderTargetSize : Vector2Int
+    + currentViewportSize : Vector2Int
+    + currentRenderTargetSize : Vector2Int
+    + rtHandleScale : Vector4
+}
+class RTHandleSystem <<partial>> {
+    - m_HardwareDynamicResRequested : bool = false
+    - m_AutoSizedRTs : HashSet<RTHandle>
+    - m_AutoSizedRTsArray : RTHandle[]
+    - m_ResizeOnDemandRTs : HashSet<RTHandle>
+    - m_RTHandleProperties : RTHandleProperties
+    + rtHandleProperties : RTHandleProperties <<get>>
+    - m_MaxWidths : int = 0
+    - m_MaxHeights : int = 0
+    + RTHandleSystem()
+    + Dispose() : void
+    + Initialize(width:int, height:int) : void
+    + Initialize(width:int, height:int, useLegacyDynamicResControl:bool) : void
+    + Release(rth:RTHandle) : void
+    <<internal>> Remove(rth:RTHandle) : void
+    + ResetReferenceSize(width:int, height:int) : void
+    + SetReferenceSize(width:int, height:int) : void
+    + SetReferenceSize(width:int, height:int, reset:bool) : void
+    <<internal>> CalculateRatioAgainstMaxSize(viewportSize:Vector2Int) : Vector2
+    + SetHardwareDynamicResolutionState(enableHWDynamicRes:bool) : void
+    <<internal>> SwitchResizeMode(rth:RTHandle, mode:ResizeMode) : void
+    - DemandResize(rth:RTHandle) : void
+    + GetMaxWidth() : int
+    + GetMaxHeight() : int
+    - Dispose(disposing:bool) : void
+    - Resize(width:int, height:int, sizeChanged:bool) : void
+    + Alloc(width:int, height:int, slices:int, depthBufferBits:DepthBits, colorFormat:GraphicsFormat, filterMode:FilterMode, wrapMode:TextureWrapMode, dimension:TextureDimension, enableRandomWrite:bool, useMipMap:bool, autoGenerateMips:bool, isShadowMap:bool, anisoLevel:int, mipMapBias:float, msaaSamples:MSAASamples, bindTextureMS:bool, useDynamicScale:bool, memoryless:RenderTextureMemoryless, vrUsage:VRTextureUsage, name:string) : RTHandle
+    + Alloc(width:int, height:int, wrapModeU:TextureWrapMode, wrapModeV:TextureWrapMode, wrapModeW:TextureWrapMode, slices:int, depthBufferBits:DepthBits, colorFormat:GraphicsFormat, filterMode:FilterMode, dimension:TextureDimension, enableRandomWrite:bool, useMipMap:bool, autoGenerateMips:bool, isShadowMap:bool, anisoLevel:int, mipMapBias:float, msaaSamples:MSAASamples, bindTextureMS:bool, useDynamicScale:bool, memoryless:RenderTextureMemoryless, vrUsage:VRTextureUsage, name:string) : RTHandle
+    + Alloc(scaleFactor:Vector2, slices:int, depthBufferBits:DepthBits, colorFormat:GraphicsFormat, filterMode:FilterMode, wrapMode:TextureWrapMode, dimension:TextureDimension, enableRandomWrite:bool, useMipMap:bool, autoGenerateMips:bool, isShadowMap:bool, anisoLevel:int, mipMapBias:float, msaaSamples:MSAASamples, bindTextureMS:bool, useDynamicScale:bool, memoryless:RenderTextureMemoryless, vrUsage:VRTextureUsage, name:string) : RTHandle
+    + Alloc(scaleFunc:ScaleFunc, slices:int, depthBufferBits:DepthBits, colorFormat:GraphicsFormat, filterMode:FilterMode, wrapMode:TextureWrapMode, dimension:TextureDimension, enableRandomWrite:bool, useMipMap:bool, autoGenerateMips:bool, isShadowMap:bool, anisoLevel:int, mipMapBias:float, msaaSamples:MSAASamples, bindTextureMS:bool, useDynamicScale:bool, memoryless:RenderTextureMemoryless, vrUsage:VRTextureUsage, name:string) : RTHandle
+    - AllocAutoSizedRenderTexture(width:int, height:int, slices:int, depthBufferBits:DepthBits, colorFormat:GraphicsFormat, filterMode:FilterMode, wrapMode:TextureWrapMode, dimension:TextureDimension, enableRandomWrite:bool, useMipMap:bool, autoGenerateMips:bool, isShadowMap:bool, anisoLevel:int, mipMapBias:float, msaaSamples:MSAASamples, bindTextureMS:bool, useDynamicScale:bool, memoryless:RenderTextureMemoryless, vrUsage:VRTextureUsage, name:string) : RTHandle
+    + Alloc(texture:RenderTexture) : RTHandle
+    + Alloc(texture:Texture) : RTHandle
+    + Alloc(texture:RenderTargetIdentifier) : RTHandle
+    + Alloc(texture:RenderTargetIdentifier, name:string) : RTHandle
+    - {static} Alloc(tex:RTHandle) : RTHandle
+    <<internal>> DumpRTInfo() : string
+}
+enum ResizeMode {
+    Auto,
+    OnDemand,
+}
+IDisposable <|-- RTHandleSystem
+RTHandleSystem +-- ResizeMode
+@enduml

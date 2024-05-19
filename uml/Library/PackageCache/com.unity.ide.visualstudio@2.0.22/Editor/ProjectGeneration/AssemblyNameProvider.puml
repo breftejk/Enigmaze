@@ -1,0 +1,39 @@
+@startuml
+interface IAssemblyNameProvider {
+    ProjectSupportedExtensions : string[] <<get>>
+    ProjectGenerationRootNamespace : string <<get>>
+    ProjectGenerationFlag : ProjectGenerationFlag <<get>>
+    GetAssemblyNameFromScriptPath(path:string) : string
+    GetAssemblyName(assemblyOutputPath:string, assemblyName:string) : string
+    IsInternalizedPackagePath(path:string) : bool
+    GetAssemblies(shouldFileBePartOfSolution:Func<string, bool>) : IEnumerable<Assembly>
+    GetAllAssetPaths() : IEnumerable<string>
+    FindForAssetPath(assetPath:string) : UnityEditor.PackageManager.PackageInfo
+    ParseResponseFile(responseFilePath:string, projectDirectory:string, systemReferenceDirectories:string[]) : ResponseFileData
+    ToggleProjectGeneration(preference:ProjectGenerationFlag) : void
+}
+class AssemblyNameProvider {
+    - <<readonly>> m_PackageInfoCache : Dictionary<string, UnityEditor.PackageManager.PackageInfo>
+    - m_ProjectGenerationFlag : ProjectGenerationFlag
+    + ProjectSupportedExtensions : string[] <<get>>
+    + ProjectGenerationRootNamespace : string <<get>>
+    + ProjectGenerationFlag : ProjectGenerationFlag <<get>>
+    <<internal>> <<virtual>> ProjectGenerationFlagImpl : ProjectGenerationFlag <<get>>
+    + GetAssemblyNameFromScriptPath(path:string) : string
+    <<internal>> {static} <<readonly>> AssemblyOutput : string
+    <<internal>> {static} <<readonly>> PlayerAssemblyOutput : string
+    + GetAssemblies(shouldFileBePartOfSolution:Func<string, bool>) : IEnumerable<Assembly>
+    - {static} GetAssembliesByType(type:AssembliesType, shouldFileBePartOfSolution:Func<string, bool>, outputPath:string) : IEnumerable<Assembly>
+    + GetCompileOutputPath(assemblyName:string) : string
+    + GetAllAssetPaths() : IEnumerable<string>
+    - {static} ResolvePotentialParentPackageAssetPath(assetPath:string) : string
+    + FindForAssetPath(assetPath:string) : UnityEditor.PackageManager.PackageInfo
+    + IsInternalizedPackagePath(path:string) : bool
+    + ParseResponseFile(responseFilePath:string, projectDirectory:string, systemReferenceDirectories:string[]) : ResponseFileData
+    + ToggleProjectGeneration(preference:ProjectGenerationFlag) : void
+    <<internal>> ResetPackageInfoCache() : void
+    + ResetProjectGenerationFlag() : void
+    + GetAssemblyName(assemblyOutputPath:string, assemblyName:string) : string
+}
+IAssemblyNameProvider <|-- AssemblyNameProvider
+@enduml

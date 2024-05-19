@@ -1,0 +1,8 @@
+@startuml
+struct GUIMixedValueScope {
+    <<readonly>> - m_PrevValue : bool
+    + GUIMixedValueScope(newValue:bool)
+    + Dispose() : void
+}
+IDisposable <|-- GUIMixedValueScope
+@enduml

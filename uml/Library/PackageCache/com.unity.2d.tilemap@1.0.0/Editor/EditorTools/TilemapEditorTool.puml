@@ -1,0 +1,31 @@
+@startuml
+abstract class TilemapEditorTool {
+    - {static} s_TilemapEditorToolsMap : Dictionary<Type, EditorTool>
+    - {static} s_DefaultTilemapEditorTools : EditorTool[]
+    <<internal>> {static} s_DefaultToolTypes : Type[]
+    + {static} tilemapEditorTools : EditorTool[] <<get>>
+    + {static} tilemapEditorToolsToolbarSize : float <<get>>
+    # {abstract} tooltipStringFormat : string <<get>>
+    # {abstract} shortcutId : string <<get>>
+    # {static} GetTooltipText(tooltipStringFormat:string, shortcutId:string) : string
+    # {static} GetKeysFromToolName(id:string) : string
+    # UpdateTooltip() : void
+    + <<virtual>> HandleTool(isHotControl:bool, gridLayout:GridLayout, brushTarget:GameObject, gridMousePosition:Vector3Int) : bool
+    + <<override>> IsAvailable() : bool
+    + <<override>> OnActivated() : void
+    <<internal>> {static} UpdateTooltips() : void
+    + {static} ToggleActiveEditorTool(type:Type) : void
+    + {static} SetActiveEditorTool(type:Type) : void
+    <<internal>> {static} IsActive(toolType:Type) : bool
+    - {static} IsCachedEditorToolsInvalid() : bool
+    - {static} InstantiateEditorTools() : void
+    <<internal>> {static} UpdateEditorTools(brushToolsAttribute:BrushToolsAttribute) : void
+    <<internal>> {static} IsCustomTilemapEditorToolActive() : bool
+}
+class ShortcutContext {
+    + active : bool <<get>> <<set>>
+}
+EditorTool <|-- TilemapEditorTool
+TilemapEditorTool +-- ShortcutContext
+IShortcutToolContext <|-- ShortcutContext
+@enduml

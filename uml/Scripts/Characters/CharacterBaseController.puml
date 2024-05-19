@@ -1,0 +1,16 @@
+@startuml
+abstract class CharacterBaseController {
+    + movementSpeed : float = 1f
+    + contactFilter : ContactFilter2D
+    - # _health : Health
+    - # animator : Animator
+    - rb : Rigidbody2D
+    - collisions : List<RaycastHit2D>
+    - # spriteRenderer : SpriteRenderer
+    - # isWalking : bool
+    - isAttacking : bool = false
+    - Start() : void
+    - # TryMoving(direction:Vector2) : bool
+}
+MonoBehaviour <|-- CharacterBaseController
+@enduml

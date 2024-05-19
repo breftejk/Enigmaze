@@ -1,0 +1,12 @@
+@startuml
+class LinkerPropertyProviderSettings {
+    - <<readonly>> _linkerSettings : PluginConfigurationItemMetadata
+    - <<const>> Title : string = "Linker generation settings"
+    - <<readonly>> _toggleTargetsLabel : GUIContent[]
+    - _options : Array
+    - _settings : List<bool>
+    + LinkerPropertyProviderSettings(coreConfig:BoltCoreConfiguration)
+    - SaveIfNeeded() : void
+    + OnGUI() : void
+}
+@enduml

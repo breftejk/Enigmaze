@@ -1,0 +1,13 @@
+@startuml
+abstract class "PathComponentEditor`1"<T> {
+    - m_CachedEditor : Editor = null
+    # DoEditButton(icon:GUIContent, label:string) : bool
+    # DoPathInspector() : void
+    # DoOpenEndedInspector(isOpenEndedProperty:SerializedProperty) : void
+}
+class Contents <<static>> {
+    + {static} <<readonly>> snappingLabel : GUIContent
+}
+Editor <|-- "PathComponentEditor`1"
+"PathComponentEditor`1" +-- Contents
+@enduml

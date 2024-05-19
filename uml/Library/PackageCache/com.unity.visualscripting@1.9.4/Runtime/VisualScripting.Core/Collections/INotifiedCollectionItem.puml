@@ -1,0 +1,8 @@
+@startuml
+interface INotifiedCollectionItem {
+    BeforeAdd() : void
+    AfterAdd() : void
+    BeforeRemove() : void
+    AfterRemove() : void
+}
+@enduml

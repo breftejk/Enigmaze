@@ -1,0 +1,22 @@
+@startuml
+class DrawInspectorOperations <<static>> {
+    <<internal>> {static} Enable(wkPath:string, assetStatusCache:IAssetStatusCache) : void
+    <<internal>> {static} Disable() : void
+    <<internal>> {static} BuildOperations(wkInfo:WorkspaceInfo, workspaceWindow:WorkspaceWindow, viewSwitcher:IViewSwitcher, historyViewLauncher:IHistoryViewLauncher, viewHost:GluonGui.ViewHost, workspaceOperationsMonitor:WorkspaceOperationsMonitor, incomingChangesUpdater:PlasticGui.WorkspaceWindow.NewIncomingChangesUpdater, assetStatusCache:IAssetStatusCache, mergeViewLauncher:IMergeViewLauncher, gluonViewSwitcher:PlasticGui.Gluon.IGluonViewSwitcher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, parentWindow:EditorWindow, isGluonMode:bool) : void
+    {static} - Editor_finishedDefaultHeaderGUI(inspector:UnityEditor.Editor) : void
+    {static} - DrawBackRectangle(isEnabled:bool) : void
+    {static} - DrawButtons(assetOperations:AssetMenuOperations) : void
+    {static} - DrawStatusLabel(assetStatus:AssetsOverlays.AssetStatus, lockStatusData:LockStatusData) : void
+    {static} - DoAddButton() : void
+    {static} - DoCheckoutButton() : void
+    {static} - DoCheckinButton() : void
+    {static} - DoUndoButton() : void
+    {static} - GetAssetStatusToDraw(selectedPath:string, selectedCount:int, statusCache:IAssetStatusCache, assetStatus:AssetsOverlays.AssetStatus, lockStatusData:LockStatusData) : void
+    {static} - mOperations : IAssetMenuOperations
+    {static} - mAssetSelection : InspectorAssetSelection
+    {static} - mIsEnabled : bool
+    {static} - mAssetStatusCache : IAssetStatusCache
+    {static} - mWkPath : string
+    <<const>> - EXTRA_SPACE : string = "    "
+}
+@enduml

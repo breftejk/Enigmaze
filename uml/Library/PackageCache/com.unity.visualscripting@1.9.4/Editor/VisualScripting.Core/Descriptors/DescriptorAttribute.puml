@@ -1,0 +1,8 @@
+@startuml
+class DescriptorAttribute <<sealed>> {
+    + DescriptorAttribute(type:Type)
+    + type : Type <<get>>
+}
+Attribute <|-- DescriptorAttribute
+IDecoratorAttribute <|-- DescriptorAttribute
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+struct QueryPairedUserAccountCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kMaxNameLength : int = 256
+    <<internal>> <<const>> kMaxIdLength : int = 256
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + handle : ulong
+    <<internal>> <<fixed>> nameBuffer : byte
+    <<internal>> <<fixed>> idBuffer : byte
+    + id : string <<get>> <<set>>
+    + name : string <<get>> <<set>>
+    + typeStatic : FourCC <<get>>
+    + {static} Create() : QueryPairedUserAccountCommand
+}
+enum Result {
+    DevicePairedToUserAccount= 1 << 1,
+    UserAccountSelectionInProgress= 1 << 2,
+    UserAccountSelectionComplete= 1 << 3,
+    UserAccountSelectionCanceled= 1 << 4,
+}
+IInputDeviceCommandInfo <|-- QueryPairedUserAccountCommand
+QueryPairedUserAccountCommand +-- Result
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class RawImage {
+    - m_Texture : Texture
+    - m_UVRect : Rect
+    # RawImage()
+    + <<override>> mainTexture : Texture <<get>>
+    + texture : Texture <<get>> <<set>>
+    + uvRect : Rect <<get>> <<set>>
+    + <<override>> SetNativeSize() : void
+    # <<override>> OnPopulateMesh(vh:VertexHelper) : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+}
+MaskableGraphic <|-- RawImage
+@enduml

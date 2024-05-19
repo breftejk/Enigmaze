@@ -1,0 +1,8 @@
+@startuml
+class UnitBaseStateExtensions <<static>> {
+    {static} - UnitBaseStateExtensions()
+    - {static} GetStaticOptions() : IEnumerable<IUnitOption>
+    - {static} GetDynamicOptions() : IEnumerable<IUnitOption>
+    - {static} GetContextualOptions(reference:GraphReference) : IEnumerable<IUnitOption>
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+interface ICurvesOwnerInspectorWrapper {
+    curvesOwner : ICurvesOwner <<get>>
+    serializedPlayableAsset : SerializedObject <<get>>
+    lastCurveVersion : int <<get>> <<set>>
+    lastEvalTime : double <<get>> <<set>>
+    ToLocalTime(time:double) : double
+}
+@enduml

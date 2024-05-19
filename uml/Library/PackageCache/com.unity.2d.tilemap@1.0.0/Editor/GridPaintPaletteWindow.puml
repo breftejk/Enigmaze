@@ -1,0 +1,82 @@
+@startuml
+class GridPaintPaletteWindow {
+    - {static} <<readonly>> k_TilePaletteVerticalBrushSplitPref : string = "TilePaletteVerticalBrushSplit"
+    <<internal>> {static} tilePaletteVerticalBrushSplit : bool <<get>> <<set>>
+    - <<const>> k_ActiveTargetLabelWidth : float = 90f
+    - <<const>> k_ActiveTargetDropdownWidth : float = 130f
+    - <<const>> k_ActiveTargetWarningSize : float = 20f
+    - <<const>> k_MinClipboardHeight : float = 200f
+    - {static} <<readonly>> k_MinWindowSize : Vector2
+    {static} - GridSelectKey() : void
+    {static} - GridMoveKey() : void
+    {static} - GridBrushKey() : void
+    {static} - GridRectangleKey() : void
+    {static} - GridPickerKey() : void
+    {static} - GridEraseKey() : void
+    {static} - GridFillKey() : void
+    {static} - RotateBrush(direction:GridBrushBase.RotationDirection) : void
+    {static} - RotateBrushClockwise() : void
+    {static} - RotateBrushAntiClockwise() : void
+    {static} - FlipBrush(axis:GridBrushBase.FlipAxis) : void
+    {static} - FlipBrushX() : void
+    {static} - FlipBrushY() : void
+    {static} - ChangeBrushZ(change:int) : void
+    {static} - IncreaseBrushZ() : void
+    {static} - DecreaseBrushZ() : void
+    {static} - SwitchToNextBrush() : void
+    {static} - SwitchToPreviousBrush() : void
+    {static} - SwitchBrush(change:int) : void
+    <<internal>> {static} PreferencesGUI() : void
+    - {static} s_Instances : List<GridPaintPaletteWindow>
+    + {static} instances : List<GridPaintPaletteWindow> <<get>>
+    + {static} isActive : bool <<get>>
+    + palette : GameObject <<get>> <<set>>
+    + paletteInstance : GameObject <<get>>
+    + clipboardView : GridPaintPaletteClipboard <<get>>
+    - m_BrushScroll : Vector2
+    - m_IsUtilityWindow : bool
+    - m_ToolbarVisualElement : VisualElement
+    - m_ActiveTargetsVisualElement : VisualElement
+    - m_ClipboardSplitView : GridPaintPaletteWindowSplitView
+    - CreateGUI() : void
+    - OnGUI() : void
+    - DoContextMenu() : void
+    - OpenWindow(utility:bool) : void
+    - OpenTilePalettePreferences() : void
+    - FlipLocked() : void
+    - FlipShowToolbarInSceneView() : void
+    - SelectPaintTarget() : void
+    - SelectPaletteAsset() : void
+    - SelectTileAsset() : void
+    + OnEnable() : void
+    - OnProjectLoaded() : void
+    - OnGridSelectionChanged() : void
+    + OnDisable() : void
+    - ActiveToolChanged() : void
+    - ValidateDragAndDrop() : bool
+    - DragUpdatedForConvertGridPrefabToPalette() : void
+    - DragPerformedForConvertGridPrefabToPalette() : void
+    <<internal>> ResetZPosition() : void
+    + {static} OpenTilemapPalette() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> selectPaintTarget : GUIContent
+    + {static} <<readonly>> selectPalettePrefab : GUIContent
+    + {static} <<readonly>> selectTileAsset : GUIContent
+    + {static} <<readonly>> unlockPaletteEditing : GUIContent
+    + {static} <<readonly>> lockPaletteEditing : GUIContent
+    + {static} <<readonly>> verticalBrushSplit : GUIContent
+    + {static} <<readonly>> horizontalBrushSplit : GUIContent
+    + {static} <<readonly>> openTilePalettePreferences : GUIContent
+    + {static} <<readonly>> openAsFloatingWindow : GUIContent
+    + {static} <<readonly>> openAsDockableWindow : GUIContent
+    + {static} <<readonly>> tilePalette : GUIContent
+}
+class UIStyles <<static>> {
+    + {static} <<readonly>> styleSheetPath : string = "Packages/com.unity.2d.tilemap/Editor/UI/GridPaintPaletteWindow.uss"
+    + {static} <<readonly>> ussClassName : string = "unity-grid-paint-palette-window"
+}
+EditorWindow <|-- GridPaintPaletteWindow
+GridPaintPaletteWindow +-- Styles
+GridPaintPaletteWindow +-- UIStyles
+@enduml

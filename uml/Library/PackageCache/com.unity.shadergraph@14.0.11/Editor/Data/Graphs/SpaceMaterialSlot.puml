@@ -1,0 +1,10 @@
+@startuml
+abstract class SpaceMaterialSlot {
+    - m_Space : CoordinateSpace
+    + space : CoordinateSpace <<get>> <<set>>
+    # SpaceMaterialSlot()
+    # SpaceMaterialSlot(slotId:int, displayName:string, shaderOutputName:string, space:CoordinateSpace, stageCapability:ShaderStageCapability, hidden:bool)
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+}
+Vector3MaterialSlot <|-- SpaceMaterialSlot
+@enduml

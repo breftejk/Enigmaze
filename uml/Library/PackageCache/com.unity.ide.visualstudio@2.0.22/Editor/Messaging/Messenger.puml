@@ -1,0 +1,22 @@
+@startuml
+class Messager {
+    +  <<event>> ReceiveMessage : EventHandler<MessageEventArgs> 
+    +  <<event>> MessagerException : EventHandler<ExceptionEventArgs> 
+    - <<readonly>> _socket : UdpSocket
+    - <<readonly>> _disposeLock : object
+    - _disposed : bool
+    # Messager(port:int)
+    - BeginReceiveMessage() : void
+    - ReceiveMessageCallback(result:IAsyncResult) : void
+    - {static} IsValidTcpMessage(message:Message, port:int, bufferSize:int) : bool
+    - RaiseMessagerException(e:Exception) : void
+    - {static} MessageFor(type:MessageType, value:string) : Message
+    + SendMessage(target:IPEndPoint, type:MessageType, value:string) : void
+    - SendMessageCallback(result:IAsyncResult) : void
+    - {static} SerializeMessage(message:Message) : byte[]
+    - {static} DeserializeMessage(buffer:byte[]) : Message
+    + {static} BindTo(port:int) : Messager
+    + Dispose() : void
+}
+IDisposable <|-- Messager
+@enduml

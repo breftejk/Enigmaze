@@ -1,0 +1,7 @@
+@startuml
+class NormalReconstruction <<static>> {
+    - {static} <<readonly>> s_NormalReconstructionMatrixID : int
+    - {static} s_NormalReconstructionMatrix : Matrix4x4[]
+    + {static} SetupProperties(cmd:CommandBuffer, cameraData:CameraData) : void
+}
+@enduml

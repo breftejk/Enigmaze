@@ -1,0 +1,24 @@
+@startuml
+class DecalSettings {
+    - m_Technique : SerializedProperty
+    - m_MaxDrawDistance : SerializedProperty
+    - m_DecalLayers : SerializedProperty
+    - m_DBufferSettings : SerializedProperty
+    - m_DBufferSurfaceData : SerializedProperty
+    - m_ScreenSpaceSettings : SerializedProperty
+    - m_ScreenSpaceNormalBlend : SerializedProperty
+    - m_IsInitialized : bool = false
+    - Init() : void
+    + <<override>> OnInspectorGUI() : void
+    - ValidateGraphicsApis() : void
+}
+struct Styles {
+    + {static} Technique : GUIContent
+    + {static} MaxDrawDistance : GUIContent
+    + {static} UseRenderingLayers : GUIContent
+    + {static} SurfaceData : GUIContent
+    + {static} NormalBlend : GUIContent
+}
+Editor <|-- DecalSettings
+DecalSettings +-- Styles
+@enduml

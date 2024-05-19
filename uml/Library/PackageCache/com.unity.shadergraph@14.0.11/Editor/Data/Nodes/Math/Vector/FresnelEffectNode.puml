@@ -1,0 +1,8 @@
+@startuml
+class FresnelNode {
+    + FresnelNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_FresnelEffect(Normal:Vector3, ViewDir:Vector3, Power:Vector1, Out:Vector1) : string
+}
+CodeFunctionNode <|-- FresnelNode
+@enduml

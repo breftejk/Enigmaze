@@ -1,0 +1,8 @@
+@startuml
+class ScalarSubtract <<sealed>> {
+    # <<override>> defaultMinuend : float <<get>>
+    # <<override>> defaultSubtrahend : float <<get>>
+    + <<override>> Operation(a:float, b:float) : float
+}
+"Subtract`1" "<float>" <|-- ScalarSubtract
+@enduml

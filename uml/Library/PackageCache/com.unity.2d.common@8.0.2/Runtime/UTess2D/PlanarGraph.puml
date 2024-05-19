@@ -1,0 +1,15 @@
+@startuml
+struct PlanarGraph {
+    - {static} <<readonly>> kEpsilon : double = 0.00001
+    - {static} <<readonly>> kMaxIntersectionTolerance : int = 4
+    <<internal>> {static} RemoveDuplicateEdges(edges:Array<int2>, edgeCount:int, duplicates:Array<int>, duplicateCount:int) : void
+    <<internal>> {static} CheckCollinear(a0:double2, a1:double2, b0:double2, b1:double2) : bool
+    <<internal>> {static} LineLineIntersection(a0:double2, a1:double2, b0:double2, b1:double2) : bool
+    <<internal>> {static} LineLineIntersection(p1:double2, p2:double2, p3:double2, p4:double2, result:double2) : bool
+    <<internal>> {static} CalculateEdgeIntersections(edges:Array<int2>, edgeCount:int, points:Array<double2>, pointCount:int, results:Array<int2>, intersects:Array<double2>, resultCount:int) : bool
+    <<internal>> {static} CalculateTJunctions(edges:Array<int2>, edgeCount:int, points:Array<double2>, pointCount:int, results:Array<int2>, resultCount:int) : bool
+    <<internal>> {static} CutEdges(points:Array<double2>, pointCount:int, edges:Array<int2>, edgeCount:int, tJunctions:Array<int2>, tJunctionCount:int, intersections:Array<int2>, intersects:Array<double2>, intersectionCount:int) : bool
+    <<internal>> {static} RemoveDuplicatePoints(points:Array<double2>, pointCount:int, duplicates:Array<int>, duplicateCount:int, allocator:Allocator) : void
+    <<internal>> {static} Validate(allocator:Allocator, inputPoints:NativeArray<float2>, pointCount:int, inputEdges:NativeArray<int2>, edgeCount:int, outputPoints:NativeArray<float2>, outputPointCount:int, outputEdges:NativeArray<int2>, outputEdgeCount:int) : bool
+}
+@enduml

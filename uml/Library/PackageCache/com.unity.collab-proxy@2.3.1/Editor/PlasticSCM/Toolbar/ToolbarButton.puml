@@ -1,0 +1,13 @@
+@startuml
+class ToolbarBootstrap <<static>> {
+    {static} - ToolbarBootstrap()
+}
+class ToolbarButton {
+    <<internal>> {static} InitializeIfNeeded() : void
+    - ToolbarButton()
+    - OnPlasticNotificationUpdated() : void
+    + <<override>> OnGUI(rect:Rect) : void
+    {static} - mButtonGUIContent : GUIContent
+}
+SubToolbar <|-- ToolbarButton
+@enduml

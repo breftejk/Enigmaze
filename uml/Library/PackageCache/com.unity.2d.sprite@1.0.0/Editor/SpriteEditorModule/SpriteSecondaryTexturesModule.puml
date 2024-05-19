@@ -1,0 +1,36 @@
+@startuml
+class SpriteSecondaryTexturesModule {
+    - m_ReorderableList : ReorderableList
+    - m_ReorderableListScrollPosition : Vector2
+    - m_SuggestedNames : string[]
+    - m_SecondaryTextureInspectorContainer : IMGUIContainer
+    <<internal>> secondaryTextureList : List<SecondarySpriteTexture> <<get>>
+    + <<override>> moduleName : string <<get>>
+    + <<override>> ApplyRevert(apply:bool) : bool
+    + <<override>> CanBeActivated() : bool
+    + <<override>> DoPostGUI() : void
+    + SecondaryTextureReorderableListUI() : void
+    + <<override>> DoMainGUI() : void
+    + <<override>> DoToolbarGUI(drawArea:Rect) : void
+    + <<override>> OnModuleActivate() : void
+    - OnSelectCallback(list:ReorderableList) : void
+    + <<override>> OnModuleDeactivate() : void
+    - DrawSpriteSecondaryTextureElement(rect:Rect, index:int, isActive:bool, isFocused:bool) : void
+    - AddSpriteSecondaryTextureElement(list:ReorderableList) : void
+    - RemoveSpriteSecondaryTextureElement(list:ReorderableList) : void
+    - CanAddSpriteSecondaryTextureElement(list:ReorderableList) : bool
+    - DisplayMainTexture() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> invalidEntriesWarning : string
+    + {static} <<readonly>> invalidSourcesWarning : string
+    + {static} <<readonly>> nameUniquenessWarning : string
+    + {static} <<readonly>> builtInNameCollisionWarning : string
+    + {static} <<readonly>> panelTitle : GUIContent
+    + {static} <<readonly>> name : GUIContent
+    + {static} <<readonly>> texture : GUIContent
+    + <<const>> textFieldDropDownWidth : float = 18.0f
+}
+SpriteEditorModuleBase <|-- SpriteSecondaryTexturesModule
+SpriteSecondaryTexturesModule +-- Styles
+@enduml

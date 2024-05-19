@@ -1,0 +1,7 @@
+@startuml
+interface IInspectable {
+    inspectorTitle : string <<get>>
+    GetObjectToInspect() : object
+    SupplyDataToPropertyDrawer(propertyDrawer:IPropertyDrawer, inspectorUpdateDelegate:Action) : void
+}
+@enduml

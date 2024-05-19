@@ -1,0 +1,21 @@
+@startuml
+class PlatformSpecificSetup {
+    - m_AppleiOSPlatformSetup : ApplePlatformSetup
+    - m_AppleTvOSPlatformSetup : ApplePlatformSetup
+    - m_XboxOnePlatformSetup : XboxOnePlatformSetup
+    - m_AndroidPlatformSetup : AndroidPlatformSetup
+    - m_SwitchPlatformSetup : SwitchPlatformSetup
+    - m_UwpPlatformSetup : UwpPlatformSetup
+    - m_LuminPlatformSetup : LuminPlatformSetup
+    - m_SetupTypes : IDictionary<BuildTarget, IPlatformSetup>
+    - m_Target : BuildTarget
+    + PlatformSpecificSetup()
+    + PlatformSpecificSetup(target:BuildTarget)
+    + Setup() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+    - GetSetup() : IDictionary<BuildTarget, IPlatformSetup>
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class SelectOnString {
+    + ignoreCase : bool <<get>> <<set>>
+    # <<override>> Matches(a:string, b:string) : bool
+}
+"SelectUnit`1" "<string>" <|-- SelectOnString
+@enduml

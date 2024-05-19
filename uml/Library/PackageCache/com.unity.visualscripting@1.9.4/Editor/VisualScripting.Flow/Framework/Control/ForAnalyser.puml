@@ -1,0 +1,7 @@
+@startuml
+class ForAnalyser {
+    + ForAnalyser(reference:GraphReference, target:For)
+    # <<override>> Warnings() : IEnumerable<Warning>
+}
+"UnitAnalyser`1" "<For>" <|-- ForAnalyser
+@enduml

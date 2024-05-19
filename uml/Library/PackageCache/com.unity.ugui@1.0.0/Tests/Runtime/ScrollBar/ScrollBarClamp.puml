@@ -1,0 +1,13 @@
+@startuml
+class ScrollBarClamp {
+    - m_PrefabRoot : GameObject
+    - m_CameraGO : GameObject
+    <<const>> - kPrefabPath : string = "Assets/Resources/ScrollBarClampPrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + Scrollbar_clamp() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+}
+IPrebuildSetup <|-- ScrollBarClamp
+@enduml

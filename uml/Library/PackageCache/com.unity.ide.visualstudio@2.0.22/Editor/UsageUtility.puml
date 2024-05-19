@@ -1,0 +1,12 @@
+@startuml
+class FileUsage {
+    + Path : string
+    + GameObjectPath : string[]
+}
+class UsageUtility <<static>> {
+    <<internal>> {static} ShowUsage(json:string) : void
+    <<internal>> {static} ShowUsage(path:string, gameObjectPath:string[]) : void
+    - {static} ShowSceneUsage(scenePath:string, gameObjectPath:string[]) : void
+    - {static} ShowSceneUsage(scene:Scene, gameObjectPath:string[]) : void
+}
+@enduml

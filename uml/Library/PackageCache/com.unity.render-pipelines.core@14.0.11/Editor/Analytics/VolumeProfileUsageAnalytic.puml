@@ -1,0 +1,13 @@
+@startuml
+class VolumeProfileUsageAnalytic {
+    + {static} Send(volume:Volume, volumeProfile:VolumeProfile) : void
+}
+class Data {
+    <<internal>> <<const>> k_EventName : string = "uVolumeProfileUsageAnalytic"
+    <<internal>> <<const>> k_Version : int = 4
+    + volume_name : string
+    + scene_name : string
+    + volume_profile_asset_guid : string
+}
+VolumeProfileUsageAnalytic +-- Data
+@enduml

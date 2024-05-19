@@ -1,0 +1,31 @@
+@startuml
+interface IInputRuntime <<unsafe>> {
+    AllocateDeviceId() : int
+    Update(type:InputUpdateType) : void
+    QueueEvent(ptr:InputEvent*) : void
+    DeviceCommand(deviceId:int, commandPtr:InputDeviceCommand*) : long
+    onUpdate : InputUpdateDelegate <<get>> <<set>>
+    onBeforeUpdate : Action<InputUpdateType> <<get>> <<set>>
+    onShouldRunUpdate : Func<InputUpdateType, bool> <<get>> <<set>>
+    onDeviceDiscovered : Action<int, string> <<get>> <<set>>
+    onPlayerFocusChanged : Action<bool> <<get>> <<set>>
+    isPlayerFocused : bool <<get>>
+    onShutdown : Action <<get>> <<set>>
+    pollingFrequency : float <<get>> <<set>>
+    currentTime : double <<get>>
+    currentTimeForFixedUpdate : double <<get>>
+    unscaledGameTime : float <<get>>
+    currentTimeOffsetToRealtimeSinceStartup : double <<get>>
+    runInBackground : bool <<get>> <<set>>
+    screenSize : Vector2 <<get>>
+    screenOrientation : ScreenOrientation <<get>>
+    isInBatchMode : bool <<get>>
+}
+class InputRuntime <<static>> {
+    + {static} s_Instance : IInputRuntime
+    + {static} s_CurrentTimeOffsetToRealtimeSinceStartup : double
+}
+class InputRuntimeExtensions <<static>> {
+    + {static} <<unsafe>> DeviceCommand(runtime:IInputRuntime, deviceId:int, command:TCommand) : long
+}
+@enduml

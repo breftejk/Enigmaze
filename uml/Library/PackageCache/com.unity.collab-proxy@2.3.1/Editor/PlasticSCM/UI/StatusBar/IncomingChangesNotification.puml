@@ -1,0 +1,10 @@
+@startuml
+class IncomingChangesNotification {
+    <<internal>> InfoText : string
+    <<internal>> ActionText : string
+    <<internal>> TooltipText : string
+    <<internal>> HasUpdateAction : bool
+    <<internal>> Status : PlasticNotification.Status
+    <<internal>> Clear() : void
+}
+@enduml

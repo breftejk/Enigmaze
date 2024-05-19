@@ -1,0 +1,402 @@
+@startuml
+struct uint4 {
+    + x : uint
+    + y : uint
+    + z : uint
+    + w : uint
+    + {static} <<readonly>> zero : uint4
+    + uint4(x:uint, y:uint, z:uint, w:uint)
+    + uint4(x:uint, y:uint, zw:uint2)
+    + uint4(x:uint, yz:uint2, w:uint)
+    + uint4(x:uint, yzw:uint3)
+    + uint4(xy:uint2, z:uint, w:uint)
+    + uint4(xy:uint2, zw:uint2)
+    + uint4(xyz:uint3, w:uint)
+    + uint4(xyzw:uint4)
+    + uint4(v:uint)
+    + uint4(v:bool)
+    + uint4(v:bool4)
+    + uint4(v:int)
+    + uint4(v:int4)
+    + uint4(v:float)
+    + uint4(v:float4)
+    + uint4(v:double)
+    + uint4(v:double4)
+    + xxxx : uint4 <<get>>
+    + xxxy : uint4 <<get>>
+    + xxxz : uint4 <<get>>
+    + xxxw : uint4 <<get>>
+    + xxyx : uint4 <<get>>
+    + xxyy : uint4 <<get>>
+    + xxyz : uint4 <<get>>
+    + xxyw : uint4 <<get>>
+    + xxzx : uint4 <<get>>
+    + xxzy : uint4 <<get>>
+    + xxzz : uint4 <<get>>
+    + xxzw : uint4 <<get>>
+    + xxwx : uint4 <<get>>
+    + xxwy : uint4 <<get>>
+    + xxwz : uint4 <<get>>
+    + xxww : uint4 <<get>>
+    + xyxx : uint4 <<get>>
+    + xyxy : uint4 <<get>>
+    + xyxz : uint4 <<get>>
+    + xyxw : uint4 <<get>>
+    + xyyx : uint4 <<get>>
+    + xyyy : uint4 <<get>>
+    + xyyz : uint4 <<get>>
+    + xyyw : uint4 <<get>>
+    + xyzx : uint4 <<get>>
+    + xyzy : uint4 <<get>>
+    + xyzz : uint4 <<get>>
+    + xyzw : uint4 <<get>> <<set>>
+    + xywx : uint4 <<get>>
+    + xywy : uint4 <<get>>
+    + xywz : uint4 <<get>> <<set>>
+    + xyww : uint4 <<get>>
+    + xzxx : uint4 <<get>>
+    + xzxy : uint4 <<get>>
+    + xzxz : uint4 <<get>>
+    + xzxw : uint4 <<get>>
+    + xzyx : uint4 <<get>>
+    + xzyy : uint4 <<get>>
+    + xzyz : uint4 <<get>>
+    + xzyw : uint4 <<get>> <<set>>
+    + xzzx : uint4 <<get>>
+    + xzzy : uint4 <<get>>
+    + xzzz : uint4 <<get>>
+    + xzzw : uint4 <<get>>
+    + xzwx : uint4 <<get>>
+    + xzwy : uint4 <<get>> <<set>>
+    + xzwz : uint4 <<get>>
+    + xzww : uint4 <<get>>
+    + xwxx : uint4 <<get>>
+    + xwxy : uint4 <<get>>
+    + xwxz : uint4 <<get>>
+    + xwxw : uint4 <<get>>
+    + xwyx : uint4 <<get>>
+    + xwyy : uint4 <<get>>
+    + xwyz : uint4 <<get>> <<set>>
+    + xwyw : uint4 <<get>>
+    + xwzx : uint4 <<get>>
+    + xwzy : uint4 <<get>> <<set>>
+    + xwzz : uint4 <<get>>
+    + xwzw : uint4 <<get>>
+    + xwwx : uint4 <<get>>
+    + xwwy : uint4 <<get>>
+    + xwwz : uint4 <<get>>
+    + xwww : uint4 <<get>>
+    + yxxx : uint4 <<get>>
+    + yxxy : uint4 <<get>>
+    + yxxz : uint4 <<get>>
+    + yxxw : uint4 <<get>>
+    + yxyx : uint4 <<get>>
+    + yxyy : uint4 <<get>>
+    + yxyz : uint4 <<get>>
+    + yxyw : uint4 <<get>>
+    + yxzx : uint4 <<get>>
+    + yxzy : uint4 <<get>>
+    + yxzz : uint4 <<get>>
+    + yxzw : uint4 <<get>> <<set>>
+    + yxwx : uint4 <<get>>
+    + yxwy : uint4 <<get>>
+    + yxwz : uint4 <<get>> <<set>>
+    + yxww : uint4 <<get>>
+    + yyxx : uint4 <<get>>
+    + yyxy : uint4 <<get>>
+    + yyxz : uint4 <<get>>
+    + yyxw : uint4 <<get>>
+    + yyyx : uint4 <<get>>
+    + yyyy : uint4 <<get>>
+    + yyyz : uint4 <<get>>
+    + yyyw : uint4 <<get>>
+    + yyzx : uint4 <<get>>
+    + yyzy : uint4 <<get>>
+    + yyzz : uint4 <<get>>
+    + yyzw : uint4 <<get>>
+    + yywx : uint4 <<get>>
+    + yywy : uint4 <<get>>
+    + yywz : uint4 <<get>>
+    + yyww : uint4 <<get>>
+    + yzxx : uint4 <<get>>
+    + yzxy : uint4 <<get>>
+    + yzxz : uint4 <<get>>
+    + yzxw : uint4 <<get>> <<set>>
+    + yzyx : uint4 <<get>>
+    + yzyy : uint4 <<get>>
+    + yzyz : uint4 <<get>>
+    + yzyw : uint4 <<get>>
+    + yzzx : uint4 <<get>>
+    + yzzy : uint4 <<get>>
+    + yzzz : uint4 <<get>>
+    + yzzw : uint4 <<get>>
+    + yzwx : uint4 <<get>> <<set>>
+    + yzwy : uint4 <<get>>
+    + yzwz : uint4 <<get>>
+    + yzww : uint4 <<get>>
+    + ywxx : uint4 <<get>>
+    + ywxy : uint4 <<get>>
+    + ywxz : uint4 <<get>> <<set>>
+    + ywxw : uint4 <<get>>
+    + ywyx : uint4 <<get>>
+    + ywyy : uint4 <<get>>
+    + ywyz : uint4 <<get>>
+    + ywyw : uint4 <<get>>
+    + ywzx : uint4 <<get>> <<set>>
+    + ywzy : uint4 <<get>>
+    + ywzz : uint4 <<get>>
+    + ywzw : uint4 <<get>>
+    + ywwx : uint4 <<get>>
+    + ywwy : uint4 <<get>>
+    + ywwz : uint4 <<get>>
+    + ywww : uint4 <<get>>
+    + zxxx : uint4 <<get>>
+    + zxxy : uint4 <<get>>
+    + zxxz : uint4 <<get>>
+    + zxxw : uint4 <<get>>
+    + zxyx : uint4 <<get>>
+    + zxyy : uint4 <<get>>
+    + zxyz : uint4 <<get>>
+    + zxyw : uint4 <<get>> <<set>>
+    + zxzx : uint4 <<get>>
+    + zxzy : uint4 <<get>>
+    + zxzz : uint4 <<get>>
+    + zxzw : uint4 <<get>>
+    + zxwx : uint4 <<get>>
+    + zxwy : uint4 <<get>> <<set>>
+    + zxwz : uint4 <<get>>
+    + zxww : uint4 <<get>>
+    + zyxx : uint4 <<get>>
+    + zyxy : uint4 <<get>>
+    + zyxz : uint4 <<get>>
+    + zyxw : uint4 <<get>> <<set>>
+    + zyyx : uint4 <<get>>
+    + zyyy : uint4 <<get>>
+    + zyyz : uint4 <<get>>
+    + zyyw : uint4 <<get>>
+    + zyzx : uint4 <<get>>
+    + zyzy : uint4 <<get>>
+    + zyzz : uint4 <<get>>
+    + zyzw : uint4 <<get>>
+    + zywx : uint4 <<get>> <<set>>
+    + zywy : uint4 <<get>>
+    + zywz : uint4 <<get>>
+    + zyww : uint4 <<get>>
+    + zzxx : uint4 <<get>>
+    + zzxy : uint4 <<get>>
+    + zzxz : uint4 <<get>>
+    + zzxw : uint4 <<get>>
+    + zzyx : uint4 <<get>>
+    + zzyy : uint4 <<get>>
+    + zzyz : uint4 <<get>>
+    + zzyw : uint4 <<get>>
+    + zzzx : uint4 <<get>>
+    + zzzy : uint4 <<get>>
+    + zzzz : uint4 <<get>>
+    + zzzw : uint4 <<get>>
+    + zzwx : uint4 <<get>>
+    + zzwy : uint4 <<get>>
+    + zzwz : uint4 <<get>>
+    + zzww : uint4 <<get>>
+    + zwxx : uint4 <<get>>
+    + zwxy : uint4 <<get>> <<set>>
+    + zwxz : uint4 <<get>>
+    + zwxw : uint4 <<get>>
+    + zwyx : uint4 <<get>> <<set>>
+    + zwyy : uint4 <<get>>
+    + zwyz : uint4 <<get>>
+    + zwyw : uint4 <<get>>
+    + zwzx : uint4 <<get>>
+    + zwzy : uint4 <<get>>
+    + zwzz : uint4 <<get>>
+    + zwzw : uint4 <<get>>
+    + zwwx : uint4 <<get>>
+    + zwwy : uint4 <<get>>
+    + zwwz : uint4 <<get>>
+    + zwww : uint4 <<get>>
+    + wxxx : uint4 <<get>>
+    + wxxy : uint4 <<get>>
+    + wxxz : uint4 <<get>>
+    + wxxw : uint4 <<get>>
+    + wxyx : uint4 <<get>>
+    + wxyy : uint4 <<get>>
+    + wxyz : uint4 <<get>> <<set>>
+    + wxyw : uint4 <<get>>
+    + wxzx : uint4 <<get>>
+    + wxzy : uint4 <<get>> <<set>>
+    + wxzz : uint4 <<get>>
+    + wxzw : uint4 <<get>>
+    + wxwx : uint4 <<get>>
+    + wxwy : uint4 <<get>>
+    + wxwz : uint4 <<get>>
+    + wxww : uint4 <<get>>
+    + wyxx : uint4 <<get>>
+    + wyxy : uint4 <<get>>
+    + wyxz : uint4 <<get>> <<set>>
+    + wyxw : uint4 <<get>>
+    + wyyx : uint4 <<get>>
+    + wyyy : uint4 <<get>>
+    + wyyz : uint4 <<get>>
+    + wyyw : uint4 <<get>>
+    + wyzx : uint4 <<get>> <<set>>
+    + wyzy : uint4 <<get>>
+    + wyzz : uint4 <<get>>
+    + wyzw : uint4 <<get>>
+    + wywx : uint4 <<get>>
+    + wywy : uint4 <<get>>
+    + wywz : uint4 <<get>>
+    + wyww : uint4 <<get>>
+    + wzxx : uint4 <<get>>
+    + wzxy : uint4 <<get>> <<set>>
+    + wzxz : uint4 <<get>>
+    + wzxw : uint4 <<get>>
+    + wzyx : uint4 <<get>> <<set>>
+    + wzyy : uint4 <<get>>
+    + wzyz : uint4 <<get>>
+    + wzyw : uint4 <<get>>
+    + wzzx : uint4 <<get>>
+    + wzzy : uint4 <<get>>
+    + wzzz : uint4 <<get>>
+    + wzzw : uint4 <<get>>
+    + wzwx : uint4 <<get>>
+    + wzwy : uint4 <<get>>
+    + wzwz : uint4 <<get>>
+    + wzww : uint4 <<get>>
+    + wwxx : uint4 <<get>>
+    + wwxy : uint4 <<get>>
+    + wwxz : uint4 <<get>>
+    + wwxw : uint4 <<get>>
+    + wwyx : uint4 <<get>>
+    + wwyy : uint4 <<get>>
+    + wwyz : uint4 <<get>>
+    + wwyw : uint4 <<get>>
+    + wwzx : uint4 <<get>>
+    + wwzy : uint4 <<get>>
+    + wwzz : uint4 <<get>>
+    + wwzw : uint4 <<get>>
+    + wwwx : uint4 <<get>>
+    + wwwy : uint4 <<get>>
+    + wwwz : uint4 <<get>>
+    + wwww : uint4 <<get>>
+    + xxx : uint3 <<get>>
+    + xxy : uint3 <<get>>
+    + xxz : uint3 <<get>>
+    + xxw : uint3 <<get>>
+    + xyx : uint3 <<get>>
+    + xyy : uint3 <<get>>
+    + xyz : uint3 <<get>> <<set>>
+    + xyw : uint3 <<get>> <<set>>
+    + xzx : uint3 <<get>>
+    + xzy : uint3 <<get>> <<set>>
+    + xzz : uint3 <<get>>
+    + xzw : uint3 <<get>> <<set>>
+    + xwx : uint3 <<get>>
+    + xwy : uint3 <<get>> <<set>>
+    + xwz : uint3 <<get>> <<set>>
+    + xww : uint3 <<get>>
+    + yxx : uint3 <<get>>
+    + yxy : uint3 <<get>>
+    + yxz : uint3 <<get>> <<set>>
+    + yxw : uint3 <<get>> <<set>>
+    + yyx : uint3 <<get>>
+    + yyy : uint3 <<get>>
+    + yyz : uint3 <<get>>
+    + yyw : uint3 <<get>>
+    + yzx : uint3 <<get>> <<set>>
+    + yzy : uint3 <<get>>
+    + yzz : uint3 <<get>>
+    + yzw : uint3 <<get>> <<set>>
+    + ywx : uint3 <<get>> <<set>>
+    + ywy : uint3 <<get>>
+    + ywz : uint3 <<get>> <<set>>
+    + yww : uint3 <<get>>
+    + zxx : uint3 <<get>>
+    + zxy : uint3 <<get>> <<set>>
+    + zxz : uint3 <<get>>
+    + zxw : uint3 <<get>> <<set>>
+    + zyx : uint3 <<get>> <<set>>
+    + zyy : uint3 <<get>>
+    + zyz : uint3 <<get>>
+    + zyw : uint3 <<get>> <<set>>
+    + zzx : uint3 <<get>>
+    + zzy : uint3 <<get>>
+    + zzz : uint3 <<get>>
+    + zzw : uint3 <<get>>
+    + zwx : uint3 <<get>> <<set>>
+    + zwy : uint3 <<get>> <<set>>
+    + zwz : uint3 <<get>>
+    + zww : uint3 <<get>>
+    + wxx : uint3 <<get>>
+    + wxy : uint3 <<get>> <<set>>
+    + wxz : uint3 <<get>> <<set>>
+    + wxw : uint3 <<get>>
+    + wyx : uint3 <<get>> <<set>>
+    + wyy : uint3 <<get>>
+    + wyz : uint3 <<get>> <<set>>
+    + wyw : uint3 <<get>>
+    + wzx : uint3 <<get>> <<set>>
+    + wzy : uint3 <<get>> <<set>>
+    + wzz : uint3 <<get>>
+    + wzw : uint3 <<get>>
+    + wwx : uint3 <<get>>
+    + wwy : uint3 <<get>>
+    + wwz : uint3 <<get>>
+    + www : uint3 <<get>>
+    + xx : uint2 <<get>>
+    + xy : uint2 <<get>> <<set>>
+    + xz : uint2 <<get>> <<set>>
+    + xw : uint2 <<get>> <<set>>
+    + yx : uint2 <<get>> <<set>>
+    + yy : uint2 <<get>>
+    + yz : uint2 <<get>> <<set>>
+    + yw : uint2 <<get>> <<set>>
+    + zx : uint2 <<get>> <<set>>
+    + zy : uint2 <<get>> <<set>>
+    + zz : uint2 <<get>>
+    + zw : uint2 <<get>> <<set>>
+    + wx : uint2 <<get>> <<set>>
+    + wy : uint2 <<get>> <<set>>
+    + wz : uint2 <<get>> <<set>>
+    + ww : uint2 <<get>>
+    + Equals(rhs:uint4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} uint4(x:uint, y:uint, z:uint, w:uint) : uint4
+    + {static} uint4(x:uint, y:uint, zw:uint2) : uint4
+    + {static} uint4(x:uint, yz:uint2, w:uint) : uint4
+    + {static} uint4(x:uint, yzw:uint3) : uint4
+    + {static} uint4(xy:uint2, z:uint, w:uint) : uint4
+    + {static} uint4(xy:uint2, zw:uint2) : uint4
+    + {static} uint4(xyz:uint3, w:uint) : uint4
+    + {static} uint4(xyzw:uint4) : uint4
+    + {static} uint4(v:uint) : uint4
+    + {static} uint4(v:bool) : uint4
+    + {static} uint4(v:bool4) : uint4
+    + {static} uint4(v:int) : uint4
+    + {static} uint4(v:int4) : uint4
+    + {static} uint4(v:float) : uint4
+    + {static} uint4(v:float4) : uint4
+    + {static} uint4(v:double) : uint4
+    + {static} uint4(v:double4) : uint4
+    + {static} hash(v:uint4) : uint
+    + {static} hashwide(v:uint4) : uint4
+    + {static} shuffle(left:uint4, right:uint4, x:ShuffleComponent) : uint
+    + {static} shuffle(left:uint4, right:uint4, x:ShuffleComponent, y:ShuffleComponent) : uint2
+    + {static} shuffle(left:uint4, right:uint4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : uint3
+    + {static} shuffle(left:uint4, right:uint4, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : uint4
+    <<internal>> {static} select_shuffle_component(a:uint4, b:uint4, component:ShuffleComponent) : uint
+}
+class DebuggerProxy <<sealed>> {
+    + x : uint
+    + y : uint
+    + z : uint
+    + w : uint
+    + DebuggerProxy(v:uint4)
+}
+IFormattable <|-- uint4
+uint4 +-- DebuggerProxy
+@enduml

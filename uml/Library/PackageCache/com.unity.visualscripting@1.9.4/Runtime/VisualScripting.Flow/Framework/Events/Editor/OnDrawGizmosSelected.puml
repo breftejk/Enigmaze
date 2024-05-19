@@ -1,0 +1,6 @@
+@startuml
+class OnDrawGizmosSelected <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"ManualEventUnit`1" "<EmptyEventArgs>" <|-- OnDrawGizmosSelected
+@enduml

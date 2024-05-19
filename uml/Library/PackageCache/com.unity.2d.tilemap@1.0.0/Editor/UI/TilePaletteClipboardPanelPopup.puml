@@ -1,0 +1,7 @@
+@startuml
+class TilePaletteClipboardPanelPopup {
+    - trigger : BaseField<bool>
+    + CreateGUI() : void
+}
+BoolFieldOverlayPopupWindow <|-- TilePaletteClipboardPanelPopup
+@enduml

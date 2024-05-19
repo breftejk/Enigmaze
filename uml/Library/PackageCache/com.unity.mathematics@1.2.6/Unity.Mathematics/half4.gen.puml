@@ -1,0 +1,389 @@
+@startuml
+struct half4 {
+    + x : half
+    + y : half
+    + z : half
+    + w : half
+    + {static} <<readonly>> zero : half4
+    + half4(x:half, y:half, z:half, w:half)
+    + half4(x:half, y:half, zw:half2)
+    + half4(x:half, yz:half2, w:half)
+    + half4(x:half, yzw:half3)
+    + half4(xy:half2, z:half, w:half)
+    + half4(xy:half2, zw:half2)
+    + half4(xyz:half3, w:half)
+    + half4(xyzw:half4)
+    + half4(v:half)
+    + half4(v:float)
+    + half4(v:float4)
+    + half4(v:double)
+    + half4(v:double4)
+    + xxxx : half4 <<get>>
+    + xxxy : half4 <<get>>
+    + xxxz : half4 <<get>>
+    + xxxw : half4 <<get>>
+    + xxyx : half4 <<get>>
+    + xxyy : half4 <<get>>
+    + xxyz : half4 <<get>>
+    + xxyw : half4 <<get>>
+    + xxzx : half4 <<get>>
+    + xxzy : half4 <<get>>
+    + xxzz : half4 <<get>>
+    + xxzw : half4 <<get>>
+    + xxwx : half4 <<get>>
+    + xxwy : half4 <<get>>
+    + xxwz : half4 <<get>>
+    + xxww : half4 <<get>>
+    + xyxx : half4 <<get>>
+    + xyxy : half4 <<get>>
+    + xyxz : half4 <<get>>
+    + xyxw : half4 <<get>>
+    + xyyx : half4 <<get>>
+    + xyyy : half4 <<get>>
+    + xyyz : half4 <<get>>
+    + xyyw : half4 <<get>>
+    + xyzx : half4 <<get>>
+    + xyzy : half4 <<get>>
+    + xyzz : half4 <<get>>
+    + xyzw : half4 <<get>> <<set>>
+    + xywx : half4 <<get>>
+    + xywy : half4 <<get>>
+    + xywz : half4 <<get>> <<set>>
+    + xyww : half4 <<get>>
+    + xzxx : half4 <<get>>
+    + xzxy : half4 <<get>>
+    + xzxz : half4 <<get>>
+    + xzxw : half4 <<get>>
+    + xzyx : half4 <<get>>
+    + xzyy : half4 <<get>>
+    + xzyz : half4 <<get>>
+    + xzyw : half4 <<get>> <<set>>
+    + xzzx : half4 <<get>>
+    + xzzy : half4 <<get>>
+    + xzzz : half4 <<get>>
+    + xzzw : half4 <<get>>
+    + xzwx : half4 <<get>>
+    + xzwy : half4 <<get>> <<set>>
+    + xzwz : half4 <<get>>
+    + xzww : half4 <<get>>
+    + xwxx : half4 <<get>>
+    + xwxy : half4 <<get>>
+    + xwxz : half4 <<get>>
+    + xwxw : half4 <<get>>
+    + xwyx : half4 <<get>>
+    + xwyy : half4 <<get>>
+    + xwyz : half4 <<get>> <<set>>
+    + xwyw : half4 <<get>>
+    + xwzx : half4 <<get>>
+    + xwzy : half4 <<get>> <<set>>
+    + xwzz : half4 <<get>>
+    + xwzw : half4 <<get>>
+    + xwwx : half4 <<get>>
+    + xwwy : half4 <<get>>
+    + xwwz : half4 <<get>>
+    + xwww : half4 <<get>>
+    + yxxx : half4 <<get>>
+    + yxxy : half4 <<get>>
+    + yxxz : half4 <<get>>
+    + yxxw : half4 <<get>>
+    + yxyx : half4 <<get>>
+    + yxyy : half4 <<get>>
+    + yxyz : half4 <<get>>
+    + yxyw : half4 <<get>>
+    + yxzx : half4 <<get>>
+    + yxzy : half4 <<get>>
+    + yxzz : half4 <<get>>
+    + yxzw : half4 <<get>> <<set>>
+    + yxwx : half4 <<get>>
+    + yxwy : half4 <<get>>
+    + yxwz : half4 <<get>> <<set>>
+    + yxww : half4 <<get>>
+    + yyxx : half4 <<get>>
+    + yyxy : half4 <<get>>
+    + yyxz : half4 <<get>>
+    + yyxw : half4 <<get>>
+    + yyyx : half4 <<get>>
+    + yyyy : half4 <<get>>
+    + yyyz : half4 <<get>>
+    + yyyw : half4 <<get>>
+    + yyzx : half4 <<get>>
+    + yyzy : half4 <<get>>
+    + yyzz : half4 <<get>>
+    + yyzw : half4 <<get>>
+    + yywx : half4 <<get>>
+    + yywy : half4 <<get>>
+    + yywz : half4 <<get>>
+    + yyww : half4 <<get>>
+    + yzxx : half4 <<get>>
+    + yzxy : half4 <<get>>
+    + yzxz : half4 <<get>>
+    + yzxw : half4 <<get>> <<set>>
+    + yzyx : half4 <<get>>
+    + yzyy : half4 <<get>>
+    + yzyz : half4 <<get>>
+    + yzyw : half4 <<get>>
+    + yzzx : half4 <<get>>
+    + yzzy : half4 <<get>>
+    + yzzz : half4 <<get>>
+    + yzzw : half4 <<get>>
+    + yzwx : half4 <<get>> <<set>>
+    + yzwy : half4 <<get>>
+    + yzwz : half4 <<get>>
+    + yzww : half4 <<get>>
+    + ywxx : half4 <<get>>
+    + ywxy : half4 <<get>>
+    + ywxz : half4 <<get>> <<set>>
+    + ywxw : half4 <<get>>
+    + ywyx : half4 <<get>>
+    + ywyy : half4 <<get>>
+    + ywyz : half4 <<get>>
+    + ywyw : half4 <<get>>
+    + ywzx : half4 <<get>> <<set>>
+    + ywzy : half4 <<get>>
+    + ywzz : half4 <<get>>
+    + ywzw : half4 <<get>>
+    + ywwx : half4 <<get>>
+    + ywwy : half4 <<get>>
+    + ywwz : half4 <<get>>
+    + ywww : half4 <<get>>
+    + zxxx : half4 <<get>>
+    + zxxy : half4 <<get>>
+    + zxxz : half4 <<get>>
+    + zxxw : half4 <<get>>
+    + zxyx : half4 <<get>>
+    + zxyy : half4 <<get>>
+    + zxyz : half4 <<get>>
+    + zxyw : half4 <<get>> <<set>>
+    + zxzx : half4 <<get>>
+    + zxzy : half4 <<get>>
+    + zxzz : half4 <<get>>
+    + zxzw : half4 <<get>>
+    + zxwx : half4 <<get>>
+    + zxwy : half4 <<get>> <<set>>
+    + zxwz : half4 <<get>>
+    + zxww : half4 <<get>>
+    + zyxx : half4 <<get>>
+    + zyxy : half4 <<get>>
+    + zyxz : half4 <<get>>
+    + zyxw : half4 <<get>> <<set>>
+    + zyyx : half4 <<get>>
+    + zyyy : half4 <<get>>
+    + zyyz : half4 <<get>>
+    + zyyw : half4 <<get>>
+    + zyzx : half4 <<get>>
+    + zyzy : half4 <<get>>
+    + zyzz : half4 <<get>>
+    + zyzw : half4 <<get>>
+    + zywx : half4 <<get>> <<set>>
+    + zywy : half4 <<get>>
+    + zywz : half4 <<get>>
+    + zyww : half4 <<get>>
+    + zzxx : half4 <<get>>
+    + zzxy : half4 <<get>>
+    + zzxz : half4 <<get>>
+    + zzxw : half4 <<get>>
+    + zzyx : half4 <<get>>
+    + zzyy : half4 <<get>>
+    + zzyz : half4 <<get>>
+    + zzyw : half4 <<get>>
+    + zzzx : half4 <<get>>
+    + zzzy : half4 <<get>>
+    + zzzz : half4 <<get>>
+    + zzzw : half4 <<get>>
+    + zzwx : half4 <<get>>
+    + zzwy : half4 <<get>>
+    + zzwz : half4 <<get>>
+    + zzww : half4 <<get>>
+    + zwxx : half4 <<get>>
+    + zwxy : half4 <<get>> <<set>>
+    + zwxz : half4 <<get>>
+    + zwxw : half4 <<get>>
+    + zwyx : half4 <<get>> <<set>>
+    + zwyy : half4 <<get>>
+    + zwyz : half4 <<get>>
+    + zwyw : half4 <<get>>
+    + zwzx : half4 <<get>>
+    + zwzy : half4 <<get>>
+    + zwzz : half4 <<get>>
+    + zwzw : half4 <<get>>
+    + zwwx : half4 <<get>>
+    + zwwy : half4 <<get>>
+    + zwwz : half4 <<get>>
+    + zwww : half4 <<get>>
+    + wxxx : half4 <<get>>
+    + wxxy : half4 <<get>>
+    + wxxz : half4 <<get>>
+    + wxxw : half4 <<get>>
+    + wxyx : half4 <<get>>
+    + wxyy : half4 <<get>>
+    + wxyz : half4 <<get>> <<set>>
+    + wxyw : half4 <<get>>
+    + wxzx : half4 <<get>>
+    + wxzy : half4 <<get>> <<set>>
+    + wxzz : half4 <<get>>
+    + wxzw : half4 <<get>>
+    + wxwx : half4 <<get>>
+    + wxwy : half4 <<get>>
+    + wxwz : half4 <<get>>
+    + wxww : half4 <<get>>
+    + wyxx : half4 <<get>>
+    + wyxy : half4 <<get>>
+    + wyxz : half4 <<get>> <<set>>
+    + wyxw : half4 <<get>>
+    + wyyx : half4 <<get>>
+    + wyyy : half4 <<get>>
+    + wyyz : half4 <<get>>
+    + wyyw : half4 <<get>>
+    + wyzx : half4 <<get>> <<set>>
+    + wyzy : half4 <<get>>
+    + wyzz : half4 <<get>>
+    + wyzw : half4 <<get>>
+    + wywx : half4 <<get>>
+    + wywy : half4 <<get>>
+    + wywz : half4 <<get>>
+    + wyww : half4 <<get>>
+    + wzxx : half4 <<get>>
+    + wzxy : half4 <<get>> <<set>>
+    + wzxz : half4 <<get>>
+    + wzxw : half4 <<get>>
+    + wzyx : half4 <<get>> <<set>>
+    + wzyy : half4 <<get>>
+    + wzyz : half4 <<get>>
+    + wzyw : half4 <<get>>
+    + wzzx : half4 <<get>>
+    + wzzy : half4 <<get>>
+    + wzzz : half4 <<get>>
+    + wzzw : half4 <<get>>
+    + wzwx : half4 <<get>>
+    + wzwy : half4 <<get>>
+    + wzwz : half4 <<get>>
+    + wzww : half4 <<get>>
+    + wwxx : half4 <<get>>
+    + wwxy : half4 <<get>>
+    + wwxz : half4 <<get>>
+    + wwxw : half4 <<get>>
+    + wwyx : half4 <<get>>
+    + wwyy : half4 <<get>>
+    + wwyz : half4 <<get>>
+    + wwyw : half4 <<get>>
+    + wwzx : half4 <<get>>
+    + wwzy : half4 <<get>>
+    + wwzz : half4 <<get>>
+    + wwzw : half4 <<get>>
+    + wwwx : half4 <<get>>
+    + wwwy : half4 <<get>>
+    + wwwz : half4 <<get>>
+    + wwww : half4 <<get>>
+    + xxx : half3 <<get>>
+    + xxy : half3 <<get>>
+    + xxz : half3 <<get>>
+    + xxw : half3 <<get>>
+    + xyx : half3 <<get>>
+    + xyy : half3 <<get>>
+    + xyz : half3 <<get>> <<set>>
+    + xyw : half3 <<get>> <<set>>
+    + xzx : half3 <<get>>
+    + xzy : half3 <<get>> <<set>>
+    + xzz : half3 <<get>>
+    + xzw : half3 <<get>> <<set>>
+    + xwx : half3 <<get>>
+    + xwy : half3 <<get>> <<set>>
+    + xwz : half3 <<get>> <<set>>
+    + xww : half3 <<get>>
+    + yxx : half3 <<get>>
+    + yxy : half3 <<get>>
+    + yxz : half3 <<get>> <<set>>
+    + yxw : half3 <<get>> <<set>>
+    + yyx : half3 <<get>>
+    + yyy : half3 <<get>>
+    + yyz : half3 <<get>>
+    + yyw : half3 <<get>>
+    + yzx : half3 <<get>> <<set>>
+    + yzy : half3 <<get>>
+    + yzz : half3 <<get>>
+    + yzw : half3 <<get>> <<set>>
+    + ywx : half3 <<get>> <<set>>
+    + ywy : half3 <<get>>
+    + ywz : half3 <<get>> <<set>>
+    + yww : half3 <<get>>
+    + zxx : half3 <<get>>
+    + zxy : half3 <<get>> <<set>>
+    + zxz : half3 <<get>>
+    + zxw : half3 <<get>> <<set>>
+    + zyx : half3 <<get>> <<set>>
+    + zyy : half3 <<get>>
+    + zyz : half3 <<get>>
+    + zyw : half3 <<get>> <<set>>
+    + zzx : half3 <<get>>
+    + zzy : half3 <<get>>
+    + zzz : half3 <<get>>
+    + zzw : half3 <<get>>
+    + zwx : half3 <<get>> <<set>>
+    + zwy : half3 <<get>> <<set>>
+    + zwz : half3 <<get>>
+    + zww : half3 <<get>>
+    + wxx : half3 <<get>>
+    + wxy : half3 <<get>> <<set>>
+    + wxz : half3 <<get>> <<set>>
+    + wxw : half3 <<get>>
+    + wyx : half3 <<get>> <<set>>
+    + wyy : half3 <<get>>
+    + wyz : half3 <<get>> <<set>>
+    + wyw : half3 <<get>>
+    + wzx : half3 <<get>> <<set>>
+    + wzy : half3 <<get>> <<set>>
+    + wzz : half3 <<get>>
+    + wzw : half3 <<get>>
+    + wwx : half3 <<get>>
+    + wwy : half3 <<get>>
+    + wwz : half3 <<get>>
+    + www : half3 <<get>>
+    + xx : half2 <<get>>
+    + xy : half2 <<get>> <<set>>
+    + xz : half2 <<get>> <<set>>
+    + xw : half2 <<get>> <<set>>
+    + yx : half2 <<get>> <<set>>
+    + yy : half2 <<get>>
+    + yz : half2 <<get>> <<set>>
+    + yw : half2 <<get>> <<set>>
+    + zx : half2 <<get>> <<set>>
+    + zy : half2 <<get>> <<set>>
+    + zz : half2 <<get>>
+    + zw : half2 <<get>> <<set>>
+    + wx : half2 <<get>> <<set>>
+    + wy : half2 <<get>> <<set>>
+    + wz : half2 <<get>> <<set>>
+    + ww : half2 <<get>>
+    + Equals(rhs:half4) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} half4(x:half, y:half, z:half, w:half) : half4
+    + {static} half4(x:half, y:half, zw:half2) : half4
+    + {static} half4(x:half, yz:half2, w:half) : half4
+    + {static} half4(x:half, yzw:half3) : half4
+    + {static} half4(xy:half2, z:half, w:half) : half4
+    + {static} half4(xy:half2, zw:half2) : half4
+    + {static} half4(xyz:half3, w:half) : half4
+    + {static} half4(xyzw:half4) : half4
+    + {static} half4(v:half) : half4
+    + {static} half4(v:float) : half4
+    + {static} half4(v:float4) : half4
+    + {static} half4(v:double) : half4
+    + {static} half4(v:double4) : half4
+    + {static} hash(v:half4) : uint
+    + {static} hashwide(v:half4) : uint4
+}
+class DebuggerProxy <<sealed>> {
+    + x : half
+    + y : half
+    + z : half
+    + w : half
+    + DebuggerProxy(v:half4)
+}
+IFormattable <|-- half4
+half4 +-- DebuggerProxy
+@enduml

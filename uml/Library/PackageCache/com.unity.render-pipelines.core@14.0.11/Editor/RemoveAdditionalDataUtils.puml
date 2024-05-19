@@ -1,0 +1,12 @@
+@startuml
+class RemoveAdditionalDataUtils <<static>> {
+    {static} - s_DialogToSkip : int = 0
+    + {static} RemoveAdditionalData(command:MenuCommand, promptDisplay:bool) : void
+    {static} - RemoveAdditionalData(additionalDataComponent:Component, promptDisplay:bool) : void
+    {static} - IgnoreNextPromptsForThisSelection() : void
+    {static} - ShouldPrompt() : bool
+    {static} - RemoveAdditionalDataComponentOnSelection(additionalDataType:Type, componentsTypeToRemove:List<Type>) : void
+    {static} - RemoveAdditionalDataComponent(additionalDataComponent:Component, componentsTypeToRemove:List<Type>) : void
+    <<internal>> {static} TryGetComponentsToRemove(additionalData:IAdditionalData, componentsToRemove:List<Type>, error:Exception) : bool
+}
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+class NativeReferenceTests {
+    + NativeReference_AllocateDeallocate_ReadWrite() : void
+    + NativeReference_CopyFrom() : void
+    + NativeReference_CopyTo() : void
+    + NativeReference_NullThrows() : void
+    + NativeReference_CopiedIsKeptInSync() : void
+    + NativeReference_TempInBurstJob() : void
+    + <<unsafe>> NativeReference_UnsafePtr() : void
+    + NativeReference_DisposeJob() : void
+    + NativeReference_NoGCAllocations() : void
+    + NativeReference_Equals() : void
+    + NativeReference_ReadOnly() : void
+    + NativeReference_GetHashCode() : void
+    + NativeReference_CustomAllocatorTest() : void
+    + <<unsafe>> NativeReference_BurstedCustomAllocatorTest() : void
+}
+struct TestData {
+    + Integer : int
+    + Float : float
+}
+struct TempNativeReferenceInJob {
+    + Output : NativeReference<int>
+    + Execute() : void
+}
+struct BurstedCustomAllocatorJob {
+    + <<unsafe>> Allocator : CustomAllocatorTests.CountingAllocator*
+    + Execute() : void
+}
+CollectionsTestCommonBase <|-- NativeReferenceTests
+NativeReferenceTests +-- TestData
+NativeReferenceTests +-- TempNativeReferenceInJob
+IJob <|-- TempNativeReferenceInJob
+NativeReferenceTests +-- BurstedCustomAllocatorJob
+IJob <|-- BurstedCustomAllocatorJob
+@enduml

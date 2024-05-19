@@ -1,0 +1,16 @@
+@startuml
+class FlowState <<sealed>> {
+    + FlowState()
+    + FlowState(macro:ScriptGraphAsset)
+    # <<override>> OnEnterImplementation(flow:Flow) : void
+    # <<override>> OnExitImplementation(flow:Flow) : void
+    + StartListening(stack:GraphStack) : void
+    + StopListening(stack:GraphStack) : void
+    + IsListening(pointer:GraphPointer) : bool
+    + <<override>> DefaultGraph() : FlowGraph
+    + {static} WithEnterUpdateExit() : FlowState
+    + {static} GraphWithEnterUpdateExit() : FlowGraph
+}
+"NesterState`2" "<FlowGraph,ScriptGraphAsset>" <|-- FlowState
+IGraphEventListener <|-- FlowState
+@enduml

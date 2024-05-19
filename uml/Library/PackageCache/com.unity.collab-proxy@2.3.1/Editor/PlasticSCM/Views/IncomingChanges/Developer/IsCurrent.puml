@@ -1,0 +1,6 @@
+@startuml
+class IsCurrent <<static>> {
+    <<internal>> {static} Conflict(changeInfo:MergeChangeInfo, metaChangeInfo:MergeChangeInfo, solvedFileConflicts:MergeSolvedFileConflicts) : bool
+    {static} - IsSameConflict(currentConflict:MergeSolvedFileConflicts.CurrentConflict, changeInfo:MergeChangeInfo) : bool
+}
+@enduml

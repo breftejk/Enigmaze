@@ -1,0 +1,59 @@
+@startuml
+class ProjectedTransform {
+    {static} - paramXY : PositionHandleParam
+    {static} - paramZ : PositionHandleParam
+    {static} - ids : PositionHandleIds
+    {static} - s_DoPositionHandle_Internal_NextIndex : int[]
+    {static} - s_DoPositionHandle_Internal_PrevIndex : int[]
+    {static} - verts : Vector3[]
+    {static} - s_IsGridSnappingActive : Func<bool>
+    {static} - ProjectedTransform()
+    {static} - IsHovering(controlID:int, evt:Event) : bool
+    + {static} DrawHandles(position:Vector3, zProjectionDistance:float, rotation:Quaternion) : Vector3
+}
+struct PositionHandleIds {
+    {static} - s_xAxisMoveHandleHash : int
+    {static} - s_yAxisMoveHandleHash : int
+    {static} - s_zAxisMoveHandleHash : int
+    {static} - s_xyAxisMoveHandleHash : int
+    + {static} @default : PositionHandleIds <<get>>
+    + <<readonly>> x : int
+    + <<readonly>> y : int
+    + <<readonly>> z : int
+    + <<readonly>> xy : int
+    + Has(id:int) : bool
+    + PositionHandleIds(x:int, y:int, z:int, xy:int)
+    + <<override>> GetHashCode() : int
+    + <<override>> Equals(obj:object) : bool
+}
+struct PositionHandleParam {
+    + {static} defaultHandleXY : PositionHandleParam
+    + {static} defaultHandleZ : PositionHandleParam
+    + <<readonly>> axisOffset : Vector3
+    + <<readonly>> axisSize : Vector3
+    + <<readonly>> planeOffset : Vector3
+    + <<readonly>> planeSize : Vector3
+    + <<readonly>> handles : Handle
+    + <<readonly>> axesOrientation : Orientation
+    + <<readonly>> planeOrientation : Orientation
+    + ShouldShow(axis:int) : bool
+    + ShouldShow(handle:Handle) : bool
+    + PositionHandleParam(handles:Handle, axisOffset:Vector3, axisSize:Vector3, planeOffset:Vector3, planeSize:Vector3, axesOrientation:Orientation, planeOrientation:Orientation)
+}
+enum Handle {
+    None= 0,
+    X= 1 << 0,
+    Y= 1 << 1,
+    Z= 1 << 2,
+    XY= 1 << 3,
+    All= ~None,
+}
+enum Orientation {
+    Signed,
+    Camera,
+}
+ProjectedTransform +-- PositionHandleIds
+ProjectedTransform +-- PositionHandleParam
+PositionHandleParam +-- Handle
+PositionHandleParam +-- Orientation
+@enduml

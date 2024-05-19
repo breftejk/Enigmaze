@@ -1,0 +1,142 @@
+@startuml
+class InputManager <<partial>> {
+    + devices : ReadOnlyArray<InputDevice> <<get>>
+    + processors : TypeTable <<get>>
+    + interactions : TypeTable <<get>>
+    + composites : TypeTable <<get>>
+    + metrics : InputMetrics <<get>>
+    + settings : InputSettings <<get>> <<set>>
+    + updateMask : InputUpdateType <<get>> <<set>>
+    + defaultUpdateType : InputUpdateType <<get>>
+    + pollingFrequency : float <<get>> <<set>>
+    + isProcessingEvents : bool <<get>>
+    - gameIsPlaying : bool <<get>>
+    - gameHasFocus : bool <<get>>
+    - gameShouldGetInputRegardlessOfFocus : bool <<get>>
+    + RegisterControlLayout(name:string, type:Type) : void
+    + RegisterControlLayout(json:string, name:string, isOverride:bool) : void
+    + RegisterControlLayoutBuilder(method:Func<InputControlLayout>, name:string, baseLayout:string) : void
+    - PerformLayoutPostRegistration(layoutName:InternedString, baseLayouts:InlinedArray<InternedString>, isReplacement:bool, isKnownToBeDeviceLayout:bool, isOverride:bool) : void
+    + RegisterPrecompiledLayout(metadata:string) : void
+    - RecreateDevicesUsingLayout(layout:InternedString, isKnownToBeDeviceLayout:bool) : void
+    - IsControlOrChildUsingLayoutRecursive(control:InputControl, layout:InternedString) : bool
+    - IsControlUsingLayout(control:InputControl, layout:InternedString) : bool
+    + RegisterControlLayoutMatcher(layoutName:string, matcher:InputDeviceMatcher) : void
+    + RegisterControlLayoutMatcher(type:Type, matcher:InputDeviceMatcher) : void
+    - RecreateDevicesUsingLayoutWithInferiorMatch(deviceMatcher:InputDeviceMatcher) : void
+    - RecreateDevice(oldDevice:InputDevice, newLayout:InternedString) : void
+    - AddAvailableDevicesMatchingDescription(matcher:InputDeviceMatcher, layout:InternedString) : void
+    + RemoveControlLayout(name:string) : void
+    + TryLoadControlLayout(type:Type) : InputControlLayout
+    + TryLoadControlLayout(name:InternedString) : InputControlLayout
+    + TryFindMatchingControlLayout(deviceDescription:InputDeviceDescription, deviceId:int) : InternedString
+    - FindOrRegisterDeviceLayoutForType(type:Type) : InternedString
+    - IsDeviceLayoutMarkedAsSupportedInSettings(layoutName:InternedString) : bool
+    + ListControlLayouts(basedOn:string) : IEnumerable<string>
+    + GetControls(path:string, controls:InputControlList<TControl>) : int
+    + SetDeviceUsage(device:InputDevice, usage:InternedString) : void
+    + AddDeviceUsage(device:InputDevice, usage:InternedString) : void
+    + RemoveDeviceUsage(device:InputDevice, usage:InternedString) : void
+    - NotifyUsageChanged(device:InputDevice) : void
+    + AddDevice(type:Type, name:string) : InputDevice
+    + AddDevice(layout:string, name:string, variants:InternedString) : InputDevice
+    - AddDevice(layout:InternedString, deviceId:int, deviceName:string, deviceDescription:InputDeviceDescription, deviceFlags:InputDevice.DeviceFlags, variants:InternedString) : InputDevice
+    + AddDevice(device:InputDevice) : void
+    + AddDevice(description:InputDeviceDescription) : InputDevice
+    + AddDevice(description:InputDeviceDescription, throwIfNoLayoutFound:bool, deviceName:string, deviceId:int, deviceFlags:InputDevice.DeviceFlags) : InputDevice
+    + AddDevice(description:InputDeviceDescription, layout:InternedString, deviceName:string, deviceId:int, deviceFlags:InputDevice.DeviceFlags) : InputDevice
+    + RemoveDevice(device:InputDevice, keepOnListOfAvailableDevices:bool) : void
+    + FlushDisconnectedDevices() : void
+    + <<unsafe>> ResetDevice(device:InputDevice, alsoResetDontResetControls:bool, issueResetCommand:bool?) : void
+    + TryGetDevice(nameOrLayout:string) : InputDevice
+    + GetDevice(nameOrLayout:string) : InputDevice
+    + TryGetDevice(layoutType:Type) : InputDevice
+    + TryGetDeviceById(id:int) : InputDevice
+    + GetUnsupportedDevices(descriptions:List<InputDeviceDescription>) : int
+    + EnableOrDisableDevice(device:InputDevice, enable:bool, scope:DeviceDisableScope) : void
+    - <<unsafe>> QueueEvent(eventPtr:InputEvent*) : void
+    + <<unsafe>> QueueEvent(ptr:InputEventPtr) : void
+    + <<unsafe>> QueueEvent(inputEvent:TEvent) : void
+    + Update() : void
+    + Update(updateType:InputUpdateType) : void
+    <<internal>> Initialize(runtime:IInputRuntime, settings:InputSettings) : void
+    <<internal>> Destroy() : void
+    <<internal>> InitializeData() : void
+    <<internal>> InstallRuntime(runtime:IInputRuntime) : void
+    <<internal>> InstallGlobals() : void
+    <<internal>> UninstallGlobals() : void
+    <<internal>> m_LayoutRegistrationVersion : int
+    - m_PollingFrequency : float
+    <<internal>> m_Layouts : InputControlLayout.Collection
+    - m_Processors : TypeTable
+    - m_Interactions : TypeTable
+    - m_Composites : TypeTable
+    - m_DevicesCount : int
+    - m_Devices : InputDevice[]
+    - m_DevicesById : Dictionary<int, InputDevice>
+    <<internal>> m_AvailableDeviceCount : int
+    <<internal>> m_AvailableDevices : AvailableDevice[]
+    <<internal>> m_DisconnectedDevicesCount : int
+    <<internal>> m_DisconnectedDevices : InputDevice[]
+    <<internal>> m_UpdateMask : InputUpdateType
+    - m_CurrentUpdate : InputUpdateType
+    <<internal>> m_StateBuffers : InputStateBuffers
+    - m_DeviceChangeListeners : CallbackArray<DeviceChangeListener>
+    - m_DeviceStateChangeListeners : CallbackArray<DeviceStateChangeListener>
+    - m_DeviceFindLayoutCallbacks : CallbackArray<InputDeviceFindControlLayoutDelegate>
+    <<internal>> m_DeviceCommandCallbacks : CallbackArray<InputDeviceCommandDelegate>
+    - m_LayoutChangeListeners : CallbackArray<LayoutChangeListener>
+    - m_EventListeners : CallbackArray<EventListener>
+    - m_BeforeUpdateListeners : CallbackArray<UpdateListener>
+    - m_AfterUpdateListeners : CallbackArray<UpdateListener>
+    - m_SettingsChangedListeners : CallbackArray<Action>
+    - m_NativeBeforeUpdateHooked : bool
+    - m_HaveDevicesWithStateCallbackReceivers : bool
+    - m_HasFocus : bool
+    - m_InputEventStream : InputEventStream
+    - m_DeviceFindExecuteCommandDelegate : InputDeviceExecuteCommandDelegate
+    - m_DeviceFindExecuteCommandDeviceId : int
+    <<internal>> m_Runtime : IInputRuntime
+    <<internal>> m_Metrics : InputMetrics
+    <<internal>> m_Settings : InputSettings
+    - MakeDeviceNameUnique(device:InputDevice) : void
+    - {static} ResetControlPathsRecursive(control:InputControl) : void
+    - AssignUniqueDeviceId(device:InputDevice) : void
+    - <<unsafe>> ReallocateStateBuffers() : void
+    - <<unsafe>> InitializeDefaultState(device:InputDevice) : void
+    - <<unsafe>> InitializeDeviceState(device:InputDevice) : void
+    - OnNativeDeviceDiscovered(deviceId:int, deviceDescriptor:string) : void
+    - TryMatchDisconnectedDevice(deviceDescriptor:string) : InputDevice
+    - InstallBeforeUpdateHookIfNecessary() : void
+    - RestoreDevicesAfterDomainReloadIfNecessary() : void
+    - WarnAboutDevicesFailingToRecreateAfterDomainReload() : void
+    - OnBeforeUpdate(updateType:InputUpdateType) : void
+    <<internal>> ApplySettings() : void
+    <<internal>> <<unsafe>> ExecuteGlobalCommand(command:TCommand) : long
+    <<internal>> AddAvailableDevicesThatAreNowRecognized() : void
+    - ShouldRunDeviceInBackground(device:InputDevice) : bool
+    <<internal>> OnFocusChanged(focus:bool) : void
+    <<internal>> ShouldRunUpdate(updateType:InputUpdateType) : bool
+    - <<unsafe>> OnUpdate(updateType:InputUpdateType, eventBuffer:InputEventBuffer) : void
+    - InvokeAfterUpdateCallback(updateType:InputUpdateType) : void
+    - m_ShouldMakeCurrentlyUpdatingDeviceCurrent : bool
+    <<internal>> DontMakeCurrentlyUpdatingDeviceCurrent() : void
+    <<internal>> <<unsafe>> UpdateState(device:InputDevice, eventPtr:InputEvent*, updateType:InputUpdateType) : bool
+    <<internal>> <<unsafe>> UpdateState(device:InputDevice, updateType:InputUpdateType, statePtr:void*, stateOffsetInDevice:uint, stateSize:uint, internalTime:double, eventPtr:InputEventPtr) : bool
+    - <<unsafe>> WriteStateChange(buffers:InputStateBuffers.DoubleBuffers, deviceIndex:int, deviceStateBlock:InputStateBlock, stateOffsetInDevice:uint, statePtr:void*, stateSizeInBytes:uint, flippedBuffers:bool) : void
+    - FlipBuffersForDeviceIfNecessary(device:InputDevice, updateType:InputUpdateType) : bool
+}
+enum DeviceDisableScope {
+    Everywhere,
+    InFrontendOnly,
+    TemporaryWhilePlayerIsInBackground,
+}
+struct AvailableDevice {
+    + description : InputDeviceDescription
+    + deviceId : int
+    + isNative : bool
+    + isRemoved : bool
+}
+InputManager +-- DeviceDisableScope
+InputManager +-- AvailableDevice
+@enduml

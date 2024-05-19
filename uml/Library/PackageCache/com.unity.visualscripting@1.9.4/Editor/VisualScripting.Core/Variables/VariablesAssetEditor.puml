@@ -1,0 +1,9 @@
+@startuml
+class VariablesAssetEditor <<sealed>> {
+    + VariablesAssetEditor(metadata:Metadata)
+    - declarationsMetadata : Metadata <<get>>
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+}
+Inspector <|-- VariablesAssetEditor
+@enduml

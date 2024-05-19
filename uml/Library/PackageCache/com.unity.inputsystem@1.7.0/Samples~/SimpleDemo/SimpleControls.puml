@@ -1,0 +1,48 @@
+@startuml
+class "@SimpleControls" <<partial>> {
+    + asset : InputActionAsset <<get>>
+    + @SimpleControls()
+    + Dispose() : void
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + Contains(action:InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    + Enable() : void
+    + Disable() : void
+    + bindings : IEnumerable<InputBinding> <<get>>
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindBinding(bindingMask:InputBinding, action:InputAction) : int
+    - <<readonly>> m_gameplay : InputActionMap
+    - m_GameplayActionsCallbackInterfaces : List<IGameplayActions>
+    - <<readonly>> m_gameplay_fire : InputAction
+    - <<readonly>> m_gameplay_move : InputAction
+    - <<readonly>> m_gameplay_look : InputAction
+    + @gameplay : GameplayActions <<get>>
+}
+struct GameplayActions {
+    - m_Wrapper : @SimpleControls
+    + GameplayActions(wrapper:@SimpleControls)
+    + @fire : InputAction <<get>>
+    + @move : InputAction <<get>>
+    + @look : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + AddCallbacks(instance:IGameplayActions) : void
+    - UnregisterCallbacks(instance:IGameplayActions) : void
+    + RemoveCallbacks(instance:IGameplayActions) : void
+    + SetCallbacks(instance:IGameplayActions) : void
+}
+interface IGameplayActions {
+    OnFire(context:InputAction.CallbackContext) : void
+    OnMove(context:InputAction.CallbackContext) : void
+    OnLook(context:InputAction.CallbackContext) : void
+}
+IInputActionCollection2 <|-- "@SimpleControls"
+IDisposable <|-- "@SimpleControls"
+"@SimpleControls" +-- GameplayActions
+"@SimpleControls" +-- IGameplayActions
+@enduml

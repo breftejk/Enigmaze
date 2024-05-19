@@ -1,0 +1,118 @@
+@startuml
+class LudiqGUI <<static>> {
+    + {static} <<readonly>> color : OverrideStack<Color>
+    + {static} <<readonly>> matrix : OverrideStack<Matrix4x4>
+    - {static} emptyRect : GUIStyle
+    + {static} DrawEmptyRect(position:Rect, color:Color) : void
+    - {static} e : GUIEvent <<get>>
+    + {static} WindowHeader(label:string, icon:EditorTexture) : void
+    + {static} GetInspectorHeight(parentInspector:Inspector, metadata:Metadata, width:float, label:GUIContent) : float
+    + {static} GetInspectorAdaptiveWidth(metadata:Metadata) : float
+    + {static} Inspector(metadata:Metadata, position:Rect, label:GUIContent) : void
+    + {static} InspectorLayout(metadata:Metadata, label:GUIContent, scrollbarTrigger:float, offset:RectOffset) : void
+    + {static} GetEditorHeight(parentInspector:Inspector, metadata:Metadata, width:float) : float
+    + {static} Editor(metadata:Metadata, position:Rect) : void
+    + {static} EditorLayout(metadata:Metadata) : void
+    + {static} <<readonly>> loaderResolution : TextureResolution
+    + <<const>> loaderSize : int = 24
+    - <<const>> loaderFrames : int = 12
+    - <<const>> loaderSpeed : float = 12
+    - {static} temporaryLoader : EditorTexture
+    + {static} Loader(position:Rect) : void
+    + {static} LoaderLayout() : void
+    + {static} CenterLoader() : void
+    + {static} GetTypeFieldHeight(label:GUIContent, type:Type) : float
+    + {static} GetTypeFieldAdaptiveWidth(type:Type, nullLabel:GUIContent) : float
+    - {static} GetTypeFieldPopupLabel(type:Type, nullLabel:GUIContent) : GUIContent
+    + {static} TypeField(position:Rect, label:GUIContent, type:Type, getOptions:Func<IFuzzyOptionTree>, nullLabel:GUIContent) : Type
+    + {static} CompactVector2Field(position:Rect, label:GUIContent, value:Vector2) : Vector2
+    + {static} CompactVector3Field(position:Rect, label:GUIContent, value:Vector3) : Vector3
+    + {static} CompactVector4Field(position:Rect, label:GUIContent, value:Vector4) : Vector4
+    + {static} AdaptiveVector2Field(position:Rect, label:GUIContent, value:Vector2) : Vector2
+    + {static} AdaptiveVector3Field(position:Rect, label:GUIContent, value:Vector3) : Vector3
+    + {static} AdaptiveVector4Field(position:Rect, label:GUIContent, value:Vector4) : Vector4
+    + {static} GetEnumPopupContent(value:Enum) : GUIContent
+    + {static} Spinner(position:Rect, upEnabled:bool, downEnabled:bool) : int
+    - {static} CalculateDragSensitivityContinuous(value:double) : double
+    - {static} CalculateDragSensitivityDiscrete(value:long) : long
+    - {static} numberDragState : NumberDragState
+    - {static} numberDragStartValueContinuous : double
+    - {static} numberDragStartValueDiscrete : long
+    - {static} numberDragStartPosition : Vector2
+    - {static} numberDragSensitivity : double
+    - <<const>> numberDragDeadZone : float = 16
+    - {static} <<readonly>> numberDragControlIDHint : int
+    + {static} DraggableLongField(position:Rect, value:long, label:GUIContent) : long
+    + {static} DraggableFloatField(position:Rect, value:float, label:GUIContent) : float
+    + {static} DraggableIntField(position:Rect, value:int, label:GUIContent) : int
+    + {static} DragNumber(hotZone:Rect, deadZone:bool, controlId:int, value:long) : long
+    + {static} DragNumber(hotZone:Rect, deadZone:bool, controlId:int, value:float) : float
+    + {static} DragNumber(hotZone:Rect, deadZone:bool, controlId:int, value:int) : int
+    - {static} DragNumber(hotZone:Rect, deadZone:bool, controlId:int, isContinuous:bool, continuousValue:double, discreteValue:long) : void
+    - {static} DiscardLeastSignificantDecimal(v:double) : double
+    - {static} GetNumberOfDecimalsForMinimumDifference(minDifference:double) : int
+    - {static} RoundBasedOnMinimumDifference(valueToRound:double, minDifference:double) : double
+    + {static} GetHeaderHeight(getTitleHeight:GetHeaderTitleHeightDelegate, getSummaryHeight:GetHeaderSummaryHeightDelegate, icon:EditorTexture, totalWidth:float, bottomMargin:bool, spaceBetweenTitleAndSummary:float) : float
+    + {static} OnHeaderGUI(getTitleHeight:GetHeaderTitleHeightDelegate, getSummaryHeight:GetHeaderSummaryHeightDelegate, onTitleGUI:OnHeaderTitleGUIDelegate, onSummaryGui:OnHeaderSummaryGUIDelegate, icon:EditorTexture, position:Rect, y:float, bottomMargin:bool, spaceBetweenTitleAndSummary:float) : void
+    - {static} GetHeaderInnerWidth(totalWidth:float, icon:EditorTexture) : float
+    - {static} OnHeaderIconGUI(icon:EditorTexture, iconPosition:Rect) : void
+    + {static} GetHeaderHeight(header:GUIContent, totalWidth:float, bottomMargin:bool) : float
+    + {static} OnHeaderGUI(header:GUIContent, position:Rect, y:float, bottomMargin:bool) : void
+    - {static} GetHeaderTitleHeight(title:GUIContent, width:float) : float
+    - {static} GetHeaderSummaryHeight(summary:GUIContent, width:float) : float
+    - {static} OnHeaderTitleGUI(title:GUIContent, titlePosition:Rect) : void
+    - {static} OnHeaderSummaryGUI(summary:GUIContent, summaryPosition:Rect) : void
+    + {static} GetHeaderHeight(parentInspector:Inspector, titleMetadata:Metadata, summaryMetadata:Metadata, icon:EditorTexture, totalWidth:float, bottomMargin:bool) : float
+    + {static} OnHeaderGUI(titleMetadata:Metadata, summaryMetadata:Metadata, icon:EditorTexture, position:Rect, y:float, bottomMargin:bool) : void
+    - {static} GetHeaderTitleHeight(parentInspector:Inspector, titleMetadata:Metadata, width:float) : float
+    - {static} GetHeaderSummaryHeight(parentInspector:Inspector, summaryMetadata:Metadata, width:float) : float
+    - {static} OnHeaderTitleGUI(titleMetadata:Metadata, titlePosition:Rect) : void
+    - {static} OnHeaderSummaryGUI(summaryMetadata:Metadata, summaryPosition:Rect) : void
+    - <<const>> VersionMismatchMessage : string = "Inspectors are disabled when plugin versions mismatch to prevent data corruption. "
+    + {static} GetVersionMismatchShieldHeight(width:float) : float
+    + {static} VersionMismatchShield(position:Rect) : void
+    + {static} VersionMismatchShieldLayout() : void
+    - {static} CalculateListWidth(options:IList<ListOption>) : float
+    + {static} List(scroll:Vector2, options:IList<ListOption>, selected:object, selectionChanged:Action<object>) : Vector2
+    - {static} ListOption(label:GUIContent, selected:bool) : bool
+    + {static} Dropdown(position:Vector2, callback:Action<object>, options:IEnumerable<DropdownOption>, selected:object) : void
+    + {static} Dropdown(position:Vector2, callback:Action<HashSet<object>>, options:IEnumerable<DropdownOption>, selected:HashSet<object>, showNothingEverything:bool) : void
+    + {static} Popup(position:Rect, getOptions:Func<IEnumerable<DropdownOption>>, selected:object, label:GUIContent, style:GUIStyle) : object
+    + {static} Popup(position:Rect, getOptions:Func<IEnumerable<DropdownOption>>, selected:HashSet<object>, showNothingEverything:bool, label:GUIContent, style:GUIStyle) : HashSet<object>
+    + {static} FuzzyDropdown(activatorPosition:Rect, optionTree:IFuzzyOptionTree, selected:object, callback:Action<object>) : void
+    + {static} FuzzyDropdown(activatorPosition:Rect, optionTree:IFuzzyOptionTree, selected:HashSet<object>, callback:Action<HashSet<object>>) : void
+    + {static} FuzzyPopup(position:Rect, getProvider:Func<IFuzzyOptionTree>, selected:object, label:GUIContent, style:GUIStyle) : object
+    + {static} FuzzyPopup(position:Rect, getProvider:Func<IFuzzyOptionTree>, selected:HashSet<object>, showNothingEverything:bool, label:GUIContent, style:GUIStyle) : HashSet<object>
+    - {static} activeActivatorControlID : int
+    - {static} activeDropdownChanged : bool
+    - {static} activeDropdownValue : object
+    - {static} activeDropdownValues : HashSet<object>
+    + {static} UpdateImmediatePopupValue(value:object) : void
+    + {static} UpdateImmediatePopupValues(value:HashSet<object>) : void
+    - {static} PopupActivatorRaw(controlID:int, activated:bool, dropdown:Action) : bool
+    + {static} ImmediatePopup(controlID:int, activated:bool, selected:object, dropdown:Action) : object
+    + {static} ImmediatePopup(controlID:int, activated:bool, selected:HashSet<object>, dropdown:Action) : HashSet<object>
+    - {static} <<readonly>> PopupHash : int
+    - {static} PopupActivator(position:Rect, label:GUIContent, style:GUIStyle, dropdown:Action) : bool
+    - {static} ImmediatePopup(position:Rect, label:GUIContent, style:GUIStyle, selected:object, dropdown:Action) : object
+    - {static} ImmediatePopup(position:Rect, label:GUIContent, style:GUIStyle, selected:HashSet<object>, dropdown:Action) : HashSet<object>
+    - {static} OptionValuesEqual(a:object, b:object) : bool
+    - {static} DefaultPopupLabel(selectedValue:object) : GUIContent
+    - {static} DefaultPopupLabel(selectedValues:HashSet<object>) : GUIContent
+    - {static} DefaultPopupLabel(selectedValues:HashSet<object>, totalOptionsCount:int) : GUIContent
+    + {static} Space(pixels:float) : void
+    + {static} FlexibleSpace() : void
+    + {static} BeginHorizontal(options:GUILayoutOption[]) : void
+    + {static} BeginHorizontal(style:GUIStyle, options:GUILayoutOption[]) : void
+    + {static} EndHorizontal() : void
+    + {static} BeginVertical(options:GUILayoutOption[]) : void
+    + {static} EndVertical() : void
+    + {static} GetTextFieldAdaptiveWidth(content:object, min:float) : float
+}
+enum NumberDragState {
+    NotDragging,
+    RequestedDragging,
+    Dragging,
+}
+LudiqGUI +-- NumberDragState
+@enduml

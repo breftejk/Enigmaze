@@ -1,0 +1,25 @@
+@startuml
+enum PerformanceBottleneck {
+    Indeterminate,
+    PresentLimited,
+    CPU,
+    GPU,
+    Balanced,
+}
+struct BottleneckHistogram {
+    <<internal>> PresentLimited : float
+    <<internal>> CPU : float
+    <<internal>> GPU : float
+    <<internal>> Balanced : float
+}
+class BottleneckHistory {
+    + BottleneckHistory(initialCapacity:int)
+    - m_Bottlenecks : List<PerformanceBottleneck>
+    <<internal>> Histogram : BottleneckHistogram
+    <<internal>> DiscardOldSamples(historySize:int) : void
+    <<internal>> AddBottleneckFromAveragedSample(frameHistorySampleAverage:FrameTimeSample) : void
+    <<internal>> ComputeHistogram() : void
+    {static} - DetermineBottleneck(s:FrameTimeSample) : PerformanceBottleneck
+    <<internal>> Clear() : void
+}
+@enduml

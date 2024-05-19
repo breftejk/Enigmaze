@@ -1,0 +1,35 @@
+@startuml
+class Render2DLightingPass {
+    - {static} <<readonly>> k_HDREmulationScaleID : int
+    - {static} <<readonly>> k_InverseHDREmulationScaleID : int
+    - {static} <<readonly>> k_UseSceneLightingID : int
+    - {static} <<readonly>> k_RendererColorID : int
+    - {static} <<readonly>> k_ShapeLightTextureIDs : int[]
+    - {static} <<readonly>> k_CombinedRenderingPassName : ShaderTagId
+    - {static} <<readonly>> k_NormalsRenderingPassName : ShaderTagId
+    - {static} <<readonly>> k_LegacyPassName : ShaderTagId
+    - {static} <<readonly>> k_ShaderTags : List<ShaderTagId>
+    - {static} <<readonly>> m_ProfilingDrawLights : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingDrawLightTextures : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingDrawRenderers : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingDrawLayerBatch : ProfilingSampler
+    - {static} <<readonly>> m_ProfilingSamplerUnlit : ProfilingSampler
+    - m_BlitMaterial : Material
+    - m_SamplingMaterial : Material
+    - <<readonly>> m_Renderer2DData : Renderer2DData
+    - m_NeedsDepth : bool
+    - m_CameraSortingLayerBoundsIndex : short
+    + Render2DLightingPass(rendererData:Renderer2DData, blitMaterial:Material, samplingMaterial:Material)
+    <<internal>> Setup(useDepth:bool) : void
+    - GetTransparencySortingMode(camera:Camera, sortingSettings:SortingSettings) : void
+    - CopyCameraSortingLayerRenderTexture(context:ScriptableRenderContext, renderingData:RenderingData, mainTargetStoreAction:RenderBufferStoreAction) : void
+    - GetCameraSortingLayerBoundsIndex() : short
+    - DetermineWhenToResolve(startIndex:int, batchesDrawn:int, batchCount:int, layerBatches:LayerBatch[], resolveDuringBatch:int, resolveIsAfterCopy:bool) : void
+    - Render(context:ScriptableRenderContext, cmd:CommandBuffer, renderingData:RenderingData, filterSettings:FilteringSettings, drawSettings:DrawingSettings) : void
+    - DrawLayerBatches(layerBatches:LayerBatch[], batchCount:int, startIndex:int, cmd:CommandBuffer, context:ScriptableRenderContext, renderingData:RenderingData, filterSettings:FilteringSettings, normalsDrawSettings:DrawingSettings, drawSettings:DrawingSettings, desc:RenderTextureDescriptor) : int
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - rendererData : Renderer2DData <<get>>
+}
+ScriptableRenderPass <|-- Render2DLightingPass
+IRenderPass2D <|-- Render2DLightingPass
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class NormalStrengthNode {
+    + NormalStrengthNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_NormalStrength(In:Vector3, Strength:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- NormalStrengthNode
+@enduml

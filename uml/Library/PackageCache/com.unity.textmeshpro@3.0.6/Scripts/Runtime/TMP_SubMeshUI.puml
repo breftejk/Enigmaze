@@ -1,0 +1,57 @@
+@startuml
+class TMP_SubMeshUI {
+    + fontAsset : TMP_FontAsset <<get>> <<set>>
+    - m_fontAsset : TMP_FontAsset
+    + spriteAsset : TMP_SpriteAsset <<get>> <<set>>
+    - m_spriteAsset : TMP_SpriteAsset
+    + <<override>> mainTexture : Texture <<get>>
+    + <<override>> material : Material <<get>> <<set>>
+    - m_material : Material
+    + sharedMaterial : Material <<get>> <<set>>
+    - m_sharedMaterial : Material
+    + fallbackMaterial : Material <<get>> <<set>>
+    - m_fallbackMaterial : Material
+    + fallbackSourceMaterial : Material <<get>> <<set>>
+    - m_fallbackSourceMaterial : Material
+    + <<override>> materialForRendering : Material <<get>>
+    + isDefaultMaterial : bool <<get>> <<set>>
+    - m_isDefaultMaterial : bool
+    + padding : float <<get>> <<set>>
+    - m_padding : float
+    + mesh : Mesh <<get>> <<set>>
+    - m_mesh : Mesh
+    + textComponent : TMP_Text <<get>>
+    - m_TextComponent : TextMeshProUGUI
+    - m_isRegisteredForEvents : bool
+    - m_materialDirty : bool
+    - m_materialReferenceIndex : int
+    + {static} AddSubTextObject(textComponent:TextMeshProUGUI, materialReference:MaterialReference) : TMP_SubMeshUI
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    # <<override>> OnTransformParentChanged() : void
+    + <<override>> GetModifiedMaterial(baseMaterial:Material) : Material
+    + GetPaddingForMaterial() : float
+    + GetPaddingForMaterial(mat:Material) : float
+    + UpdateMeshPadding(isExtraPadding:bool, isUsingBold:bool) : void
+    + <<override>> SetAllDirty() : void
+    + <<override>> SetVerticesDirty() : void
+    + <<override>> SetLayoutDirty() : void
+    + <<override>> SetMaterialDirty() : void
+    + SetPivotDirty() : void
+    - GetRootCanvasTransform() : Transform
+    - m_RootCanvasTransform : Transform
+    + <<override>> Cull(clipRect:Rect, validRect:bool) : void
+    # <<override>> UpdateGeometry() : void
+    + <<override>> Rebuild(update:CanvasUpdate) : void
+    + RefreshMaterial() : void
+    # <<override>> UpdateMaterial() : void
+    + <<override>> RecalculateClipping() : void
+    - GetMaterial() : Material
+    - GetMaterial(mat:Material) : Material
+    - CreateMaterialInstance(source:Material) : Material
+    - GetSharedMaterial() : Material
+    - SetSharedMaterial(mat:Material) : void
+}
+MaskableGraphic <|-- TMP_SubMeshUI
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class "Awaitable`1"<T> {
+    {static} - _pool : Awaitable.ThreadSafeObjectPool<Awaitable<T>>
+    - _awaitable : Awaitable
+    - _result : T
+    - ContinueWith(continuation:Action) : void
+    - GetResult() : T
+    <<internal>> SetResultAndRaiseContinuation(result:T) : void
+    <<internal>> SetExceptionAndRaiseContinuation(exception:Exception) : void
+    + Cancel() : void
+    - Awaitable()
+    <<internal>> {static} GetManaged() : Awaitable<T>
+    + GetAwaiter() : Awaiter
+}
+struct Awaiter {
+    - <<readonly>> _coroutine : Awaitable<T>
+    + Awaiter(coroutine:Awaitable<T>)
+    + OnCompleted(continuation:Action) : void
+    + IsCompleted : bool <<get>>
+    + GetResult() : T
+}
+"Awaitable`1" +-- Awaiter
+INotifyCompletion <|-- Awaiter
+@enduml

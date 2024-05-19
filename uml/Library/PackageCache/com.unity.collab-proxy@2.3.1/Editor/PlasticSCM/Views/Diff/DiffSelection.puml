@@ -1,0 +1,7 @@
+@startuml
+class DiffSelection <<static>> {
+    <<internal>> {static} GetSelectedDiffs(treeView:DiffTreeView) : List<ClientDiffInfo>
+    <<internal>> {static} GetSelectedDiffsWithoutMeta(treeView:DiffTreeView) : List<ClientDiffInfo>
+    <<internal>> {static} GetSelectedDiff(treeView:DiffTreeView) : ClientDiffInfo
+}
+@enduml

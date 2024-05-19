@@ -1,0 +1,15 @@
+@startuml
+class CameraPositionTests {
+    - m_Vcam : CinemachineVirtualCamera
+    - m_FollowObject : GameObject
+    + <<override>> SetUp() : void
+    + DoNothing() : IEnumerator
+    + ThirdPerson() : IEnumerator
+    + FramingTransposer() : IEnumerator
+    + HardLockToTarget() : IEnumerator
+    + OrbTransposer() : IEnumerator
+    + TrackedDolly() : IEnumerator
+    + Transposer() : IEnumerator
+}
+CinemachineFixtureBase <|-- CameraPositionTests
+@enduml

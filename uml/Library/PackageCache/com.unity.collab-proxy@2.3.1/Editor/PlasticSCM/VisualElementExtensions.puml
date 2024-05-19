@@ -1,0 +1,7 @@
+@startuml
+class VisualElementExtensions <<static>> {
+    <<internal>> {static} Show(element:T) : void
+    <<internal>> {static} Collapse(element:T) : void
+    <<internal>> {static} Hide(element:T) : void
+}
+@enduml

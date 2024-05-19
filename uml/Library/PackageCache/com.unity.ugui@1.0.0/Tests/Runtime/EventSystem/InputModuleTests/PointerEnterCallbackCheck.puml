@@ -1,0 +1,8 @@
+@startuml
+class PointerEnterCallbackCheck {
+    + pointerData : PointerEventData <<get>>
+    + OnPointerEnter(eventData:PointerEventData) : void
+}
+MonoBehaviour <|-- PointerEnterCallbackCheck
+IPointerEnterHandler <|-- PointerEnterCallbackCheck
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+class ControlPlayableAsset {
+    <<const>> - k_MaxRandInt : int = 10000
+    {static} <<readonly>> - k_EmptyDirectorsList : List<PlayableDirector>
+    {static} <<readonly>> - k_EmptyParticlesList : List<ParticleSystem>
+    {static} <<readonly>> - s_SubEmitterCollector : HashSet<ParticleSystem>
+    + sourceGameObject : ExposedReference<GameObject>
+    + prefabGameObject : GameObject
+    + updateParticle : bool = true
+    + particleRandomSeed : uint
+    + updateDirector : bool = true
+    + updateITimeControl : bool = true
+    + searchHierarchy : bool
+    + active : bool = true
+    + postPlayback : ActivationControlPlayable.PostPlaybackState
+    - m_ControlDirectorAsset : PlayableAsset
+    - m_Duration : double
+    - m_SupportLoop : bool
+    - {static} s_ProcessedDirectors : HashSet<PlayableDirector>
+    - {static} s_CreatedPrefabs : HashSet<GameObject>
+    <<internal>> controllingDirectors : bool <<get>>
+    <<internal>> controllingParticles : bool <<get>>
+    + OnEnable() : void
+    + <<override>> duration : double <<get>>
+    + clipCaps : ClipCaps <<get>>
+    + <<override>> CreatePlayable(graph:PlayableGraph, go:GameObject) : Playable
+    {static} - ConnectPlayablesToMixer(graph:PlayableGraph, playables:List<Playable>) : Playable
+    - CreateActivationPlayable(root:GameObject, graph:PlayableGraph, outplayables:List<Playable>) : void
+    - SearchHierarchyAndConnectParticleSystem(particleSystems:IEnumerable<ParticleSystem>, graph:PlayableGraph, outplayables:List<Playable>) : void
+    - SearchHierarchyAndConnectDirector(directors:IEnumerable<PlayableDirector>, graph:PlayableGraph, outplayables:List<Playable>, disableSelfReferences:bool) : void
+    {static} - SearchHierarchyAndConnectControlableScripts(controlableScripts:IEnumerable<MonoBehaviour>, graph:PlayableGraph, outplayables:List<Playable>) : void
+    {static} - ConnectMixerAndPlayable(graph:PlayableGraph, mixer:Playable, playable:Playable, portIndex:int) : void
+    <<internal>> GetComponent(gameObject:GameObject) : IList<T>
+    <<internal>> {static} GetControlableScripts(root:GameObject) : IEnumerable<MonoBehaviour>
+    <<internal>> UpdateDurationAndLoopFlag(directors:IList<PlayableDirector>, particleSystems:IList<ParticleSystem>) : void
+    - GetControllableParticleSystems(go:GameObject) : IList<ParticleSystem>
+    {static} - GetControllableParticleSystems(t:Transform, roots:ICollection<ParticleSystem>, subEmitters:HashSet<ParticleSystem>) : void
+    {static} - CacheSubEmitters(ps:ParticleSystem, subEmitters:HashSet<ParticleSystem>) : void
+    + GatherProperties(director:PlayableDirector, driver:IPropertyCollector) : void
+    <<internal>> {static} PreviewParticles(driver:IPropertyCollector, particles:IEnumerable<ParticleSystem>) : void
+    <<internal>> {static} PreviewActivation(driver:IPropertyCollector, objects:IEnumerable<GameObject>) : void
+    <<internal>> {static} PreviewTimeControl(driver:IPropertyCollector, director:PlayableDirector, scripts:IEnumerable<MonoBehaviour>) : void
+    <<internal>> {static} PreviewDirectors(driver:IPropertyCollector, directors:IEnumerable<PlayableDirector>) : void
+}
+PlayableAsset <|-- ControlPlayableAsset
+IPropertyPreview <|-- ControlPlayableAsset
+ITimelineClipAsset <|-- ControlPlayableAsset
+@enduml

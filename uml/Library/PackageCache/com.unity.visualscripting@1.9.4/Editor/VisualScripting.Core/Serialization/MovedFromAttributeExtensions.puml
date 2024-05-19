@@ -1,0 +1,12 @@
+@startuml
+class MovedFromAttributeExtensions <<static>> {
+    {static} - s_DataType : Type
+    {static} - s_DataFieldInfo : FieldInfo
+    {static} - s_AutoUpdateAPIFieldInfo : FieldInfo
+    {static} - s_NamespaceFieldInfo : FieldInfo
+    {static} - s_AssemblyFieldInfo : FieldInfo
+    {static} - s_ClassNameFieldInfo : FieldInfo
+    + {static} GetData(@this:MovedFromAttribute, autoUpdateAPI:bool, sourceNamespace:string, sourceAssembly:string, sourceClassName:string) : void
+    {static} - Initialize() : void
+}
+@enduml

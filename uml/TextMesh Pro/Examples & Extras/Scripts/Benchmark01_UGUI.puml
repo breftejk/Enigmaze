@@ -1,0 +1,16 @@
+@startuml
+class Benchmark01_UGUI {
+    + BenchmarkType : int = 0
+    + canvas : Canvas
+    + TMProFont : TMP_FontAsset
+    + TextMeshFont : Font
+    - m_textMeshPro : TextMeshProUGUI
+    - m_textMesh : Text
+    - <<const>> label01 : string = "The <#0050FF>count is: </color>"
+    - <<const>> label02 : string = "The <color=#0050FF>count is: </color>"
+    - m_material01 : Material
+    - m_material02 : Material
+    - Start() : IEnumerator
+}
+MonoBehaviour <|-- Benchmark01_UGUI
+@enduml

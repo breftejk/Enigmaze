@@ -1,0 +1,61 @@
+@startuml
+class OperatorUtility <<static>> {
+    {static} - OperatorUtility()
+    + {static} <<readonly>> operatorNames : Dictionary<string, string>
+    + {static} <<readonly>> operatorRanks : Dictionary<string, int>
+    - {static} <<readonly>> unaryOperatorHandlers : Dictionary<UnaryOperator, UnaryOperatorHandler>
+    - {static} <<readonly>> binaryOpeatorHandlers : Dictionary<BinaryOperator, BinaryOperatorHandler>
+    - {static} <<readonly>> logicalNegationHandler : LogicalNegationHandler
+    - {static} <<readonly>> numericNegationHandler : NumericNegationHandler
+    - {static} <<readonly>> incrementHandler : IncrementHandler
+    - {static} <<readonly>> decrementHandler : DecrementHandler
+    - {static} <<readonly>> plusHandler : PlusHandler
+    - {static} <<readonly>> additionHandler : AdditionHandler
+    - {static} <<readonly>> subtractionHandler : SubtractionHandler
+    - {static} <<readonly>> multiplicationHandler : MultiplicationHandler
+    - {static} <<readonly>> divisionHandler : DivisionHandler
+    - {static} <<readonly>> moduloHandler : ModuloHandler
+    - {static} <<readonly>> andHandler : AndHandler
+    - {static} <<readonly>> orHandler : OrHandler
+    - {static} <<readonly>> exclusiveOrHandler : ExclusiveOrHandler
+    - {static} <<readonly>> equalityHandler : EqualityHandler
+    - {static} <<readonly>> inequalityHandler : InequalityHandler
+    - {static} <<readonly>> greaterThanHandler : GreaterThanHandler
+    - {static} <<readonly>> lessThanHandler : LessThanHandler
+    - {static} <<readonly>> greaterThanOrEqualHandler : GreaterThanOrEqualHandler
+    - {static} <<readonly>> lessThanOrEqualHandler : LessThanOrEqualHandler
+    - {static} <<readonly>> leftShiftHandler : LeftShiftHandler
+    - {static} <<readonly>> rightShiftHandler : RightShiftHandler
+    + {static} GetHandler(@operator:UnaryOperator) : UnaryOperatorHandler
+    + {static} GetHandler(@operator:BinaryOperator) : BinaryOperatorHandler
+    + {static} Symbol(@operator:UnaryOperator) : string
+    + {static} Symbol(@operator:BinaryOperator) : string
+    + {static} Name(@operator:UnaryOperator) : string
+    + {static} Name(@operator:BinaryOperator) : string
+    + {static} Verb(@operator:UnaryOperator) : string
+    + {static} Verb(@operator:BinaryOperator) : string
+    + {static} Operate(@operator:UnaryOperator, x:object) : object
+    + {static} Operate(@operator:BinaryOperator, a:object, b:object) : object
+    + {static} Negate(x:object) : object
+    + {static} Not(x:object) : object
+    + {static} UnaryPlus(x:object) : object
+    + {static} Increment(x:object) : object
+    + {static} Decrement(x:object) : object
+    + {static} And(a:object, b:object) : object
+    + {static} Or(a:object, b:object) : object
+    + {static} ExclusiveOr(a:object, b:object) : object
+    + {static} Add(a:object, b:object) : object
+    + {static} Subtract(a:object, b:object) : object
+    + {static} Multiply(a:object, b:object) : object
+    + {static} Divide(a:object, b:object) : object
+    + {static} Modulo(a:object, b:object) : object
+    + {static} Equal(a:object, b:object) : bool
+    + {static} NotEqual(a:object, b:object) : bool
+    + {static} GreaterThan(a:object, b:object) : bool
+    + {static} LessThan(a:object, b:object) : bool
+    + {static} GreaterThanOrEqual(a:object, b:object) : bool
+    + {static} LessThanOrEqual(a:object, b:object) : bool
+    + {static} LeftShift(a:object, b:object) : object
+    + {static} RightShift(a:object, b:object) : object
+}
+@enduml

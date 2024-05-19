@@ -1,0 +1,8 @@
+@startuml
+class CanvasScalerWithChildTextObjectDoesNotCrash {
+    - m_CanvasObject : GameObject
+    + TestSetup() : void
+    + CanvasScalerWithChildTextObjectWithTextFontDoesNotCrash() : IEnumerator
+    + TearDown() : void
+}
+@enduml

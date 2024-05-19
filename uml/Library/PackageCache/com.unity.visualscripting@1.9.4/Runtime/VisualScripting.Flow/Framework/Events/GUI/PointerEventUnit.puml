@@ -1,0 +1,8 @@
+@startuml
+abstract class PointerEventUnit {
+    + data : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    # <<override>> AssignArguments(flow:Flow, data:PointerEventData) : void
+}
+"GameObjectEventUnit`1" "<PointerEventData>" <|-- PointerEventUnit
+@enduml

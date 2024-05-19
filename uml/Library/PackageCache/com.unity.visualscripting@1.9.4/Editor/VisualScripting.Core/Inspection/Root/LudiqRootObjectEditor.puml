@@ -1,0 +1,16 @@
+@startuml
+abstract class LudiqRootObjectEditor {
+}
+class Individual {
+    # <<override>> Initialize() : void
+    - metadata : Metadata
+    - dataProperty : SerializedProperty
+    - inspector : Inspector
+    - debugFoldout : bool
+    + <<override>> Dispose() : void
+    + <<override>> OnGUI() : void
+}
+"OptimizedEditor`1" "<LudiqRootObjectEditor.Individual>" <|-- LudiqRootObjectEditor
+LudiqRootObjectEditor +-- Individual
+IndividualEditor <|-- Individual
+@enduml

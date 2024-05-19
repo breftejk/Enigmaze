@@ -1,0 +1,16 @@
+@startuml
+class LimbSolver2D <<sealed>> {
+    - m_Chain : IKChain2D
+    - m_Flip : bool
+    - m_Positions : Vector3[]
+    - m_Lengths : float[]
+    - m_Angles : float[]
+    + flip : bool <<get>> <<set>>
+    # <<override>> DoInitialize() : void
+    # <<override>> GetChainCount() : int
+    + <<override>> GetChain(index:int) : IKChain2D
+    # <<override>> DoPrepare() : void
+    # <<override>> DoUpdateIK(targetPositions:List<Vector3>) : void
+}
+Solver2D <|-- LimbSolver2D
+@enduml

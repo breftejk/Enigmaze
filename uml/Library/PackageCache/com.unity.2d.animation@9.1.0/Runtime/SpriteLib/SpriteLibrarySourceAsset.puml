@@ -1,0 +1,23 @@
+@startuml
+class SpriteLibrarySourceAsset {
+    + <<const>> defaultName : string = "New Sprite Library Asset"
+    + <<const>> extension : string = ".spriteLib"
+    - m_Library : List<SpriteLibCategoryOverride>
+    - m_PrimaryLibraryGUID : string
+    - m_ModificationHash : long
+    - m_Version : int = 1
+    + library : IReadOnlyList<SpriteLibCategoryOverride> <<get>>
+    + primaryLibraryGUID : string <<get>>
+    + modificationHash : long <<get>>
+    + version : int <<get>>
+    + InitializeWithAsset(source:SpriteLibrarySourceAsset) : void
+    + SetLibrary(newLibrary:IList<SpriteLibCategoryOverride>) : void
+    + SetPrimaryLibraryGUID(newPrimaryLibraryGUID:string) : void
+    + AddCategory(newCategory:SpriteLibCategoryOverride) : void
+    + RemoveCategory(categoryToRemove:SpriteLibCategoryOverride) : void
+    + ClearCategories() : void
+    + RemoveCategory(indexToRemove:int) : void
+    - UpdateModificationHash() : void
+}
+ScriptableObject <|-- SpriteLibrarySourceAsset
+@enduml

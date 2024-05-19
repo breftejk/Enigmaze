@@ -1,0 +1,15 @@
+@startuml
+class TMP_GlyphPairAdjustmentRecordPropertyDrawer {
+    - isEditingEnabled : bool = false
+    - isSelectable : bool = false
+    - m_FirstCharacter : string
+    - m_SecondCharacter : string
+    - m_PreviousInput : string
+    {static} - s_CharacterTextFieldLabel : GUIContent
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - ValidateInput(source:string) : bool
+    - GetUnicodeCharacter(source:string) : uint
+    - DrawGlyph(glyphIndex:uint, position:Rect, property:SerializedProperty) : void
+}
+PropertyDrawer <|-- TMP_GlyphPairAdjustmentRecordPropertyDrawer
+@enduml

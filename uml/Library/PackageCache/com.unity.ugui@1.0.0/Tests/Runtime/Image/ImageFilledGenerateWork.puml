@@ -1,0 +1,9 @@
+@startuml
+class ImageFilledGenerateWork {
+    - m_CanvasGO : GameObject
+    - m_ImageGO : GameObject
+    + SetUp() : void
+    + ImageFilledGenerateWorks() : void
+    + TearDown() : void
+}
+@enduml

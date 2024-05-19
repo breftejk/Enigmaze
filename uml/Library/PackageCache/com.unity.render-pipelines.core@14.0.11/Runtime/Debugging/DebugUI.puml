@@ -1,0 +1,78 @@
+@startuml
+class DebugUI <<partial>> {
+}
+enum Flags {
+    None= 0,
+    EditorOnly= 1 << 1,
+    RuntimeOnly= 1 << 2,
+    EditorForceUpdate= 1 << 3,
+    FrequentlyUsed= 1 << 4,
+}
+abstract class Widget {
+    # m_Panel : Panel
+    + <<virtual>> panel : Panel <<get>> <<internal set>>
+    # m_Parent : IContainer
+    + <<virtual>> parent : IContainer <<get>> <<internal set>>
+    + flags : Flags <<get>> <<set>>
+    + displayName : string <<get>> <<set>>
+    + tooltip : string <<get>> <<set>>
+    + queryPath : string <<get>>
+    + isEditorOnly : bool <<get>>
+    + isRuntimeOnly : bool <<get>>
+    + isInactiveInEditor : bool <<get>>
+    + isHiddenCallback : Func<bool>
+    + isHidden : bool <<get>>
+    <<internal>> <<virtual>> GenerateQueryPath() : void
+    + <<override>> GetHashCode() : int
+    + nameAndTooltip : NameAndTooltip <<set>>
+}
+interface IContainer {
+    children : ObservableList<Widget> <<get>>
+    displayName : string <<get>> <<set>>
+    queryPath : string <<get>>
+}
+interface IValueField {
+    GetValue() : object
+    SetValue(value:object) : void
+    ValidateValue(value:object) : object
+}
+class Button {
+    + action : Action <<get>> <<set>>
+}
+class Value {
+    + getter : Func<object> <<get>> <<set>>
+    + refreshRate : float = 0.1f
+    + formatString : string = null
+    + Value()
+    + <<virtual>> GetValue() : object
+    + <<virtual>> FormatString(value:object) : string
+}
+class ProgressBarValue {
+    + min : float = 0f
+    + max : float = 1f
+    + <<override>> FormatString(value:object) : string
+}
+class ValueTuple {
+    + numElements : int <<get>>
+    + values : Value[]
+    + refreshRate : float <<get>>
+    + pinnedElementIndex : int
+}
+struct NameAndTooltip {
+    + name : string
+    + tooltip : string
+}
+DebugUI +-- Flags
+DebugUI +-- Widget
+DebugUI +-- IContainer
+DebugUI +-- IValueField
+DebugUI +-- Button
+Widget <|-- Button
+DebugUI +-- Value
+Widget <|-- Value
+DebugUI +-- ProgressBarValue
+Value <|-- ProgressBarValue
+DebugUI +-- ValueTuple
+Widget <|-- ValueTuple
+Widget +-- NameAndTooltip
+@enduml

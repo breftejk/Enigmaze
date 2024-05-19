@@ -1,0 +1,19 @@
+@startuml
+class DebugUIHandlerFoldout {
+    + nameLabel : Text
+    + valueToggle : UIFoldout
+    - m_Field : DebugUI.Foldout
+    - m_Container : DebugUIHandlerContainer
+    <<const>> - k_FoldoutXOffset : float = 215f
+    <<const>> - k_XOffset : float = 230f
+    <<internal>> <<override>> SetWidget(widget:DebugUI.Widget) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnIncrement(fast:bool) : void
+    + <<override>> OnDecrement(fast:bool) : void
+    + <<override>> OnAction() : void
+    - UpdateValue() : void
+    + <<override>> Next() : DebugUIHandlerWidget
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerFoldout
+@enduml

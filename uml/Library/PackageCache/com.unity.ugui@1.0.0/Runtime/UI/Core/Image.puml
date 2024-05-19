@@ -1,0 +1,133 @@
+@startuml
+class Image {
+    {static} # s_ETC1DefaultUI : Material = null
+    - m_Sprite : Sprite
+    + sprite : Sprite <<get>> <<set>>
+    + DisableSpriteOptimizations() : void
+    - m_OverrideSprite : Sprite
+    + overrideSprite : Sprite <<get>> <<set>>
+    - activeSprite : Sprite <<get>>
+    - m_Type : Type
+    + type : Type <<get>> <<set>>
+    - m_PreserveAspect : bool = false
+    + preserveAspect : bool <<get>> <<set>>
+    - m_FillCenter : bool = true
+    + fillCenter : bool <<get>> <<set>>
+    - m_FillMethod : FillMethod
+    + fillMethod : FillMethod <<get>> <<set>>
+    - m_FillAmount : float = 1.0f
+    + fillAmount : float <<get>> <<set>>
+    - m_FillClockwise : bool = true
+    + fillClockwise : bool <<get>> <<set>>
+    - m_FillOrigin : int
+    + fillOrigin : int <<get>> <<set>>
+    - m_AlphaHitTestMinimumThreshold : float = 0
+    - m_Tracked : bool = false
+    + eventAlphaThreshold : float <<get>> <<set>>
+    + alphaHitTestMinimumThreshold : float <<get>> <<set>>
+    - m_UseSpriteMesh : bool
+    + useSpriteMesh : bool <<get>> <<set>>
+    # Image()
+    {static} + defaultETC1GraphicMaterial : Material <<get>>
+    + <<override>> mainTexture : Texture <<get>>
+    + hasBorder : bool <<get>>
+    - m_PixelsPerUnitMultiplier : float = 1.0f
+    + pixelsPerUnitMultiplier : float <<get>> <<set>>
+    - m_CachedReferencePixelsPerUnit : float = 100
+    + pixelsPerUnit : float <<get>>
+    # multipliedPixelsPerUnit : float <<get>>
+    + <<override>> material : Material <<get>> <<set>>
+    + <<virtual>> OnBeforeSerialize() : void
+    + <<virtual>> OnAfterDeserialize() : void
+    - PreserveSpriteAspectRatio(rect:Rect, spriteSize:Vector2) : void
+    - GetDrawingDimensions(shouldPreserveAspect:bool) : Vector4
+    + <<override>> SetNativeSize() : void
+    # <<override>> OnPopulateMesh(toFill:VertexHelper) : void
+    - TrackSprite() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> UpdateMaterial() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+    - GenerateSimpleSprite(vh:VertexHelper, lPreserveAspect:bool) : void
+    - GenerateSprite(vh:VertexHelper, lPreserveAspect:bool) : void
+    {static} <<readonly>> - s_VertScratch : Vector2[]
+    {static} <<readonly>> - s_UVScratch : Vector2[]
+    - GenerateSlicedSprite(toFill:VertexHelper) : void
+    - GenerateTiledSprite(toFill:VertexHelper) : void
+    {static} - AddQuad(vertexHelper:VertexHelper, quadPositions:Vector3[], color:Color32, quadUVs:Vector3[]) : void
+    {static} - AddQuad(vertexHelper:VertexHelper, posMin:Vector2, posMax:Vector2, color:Color32, uvMin:Vector2, uvMax:Vector2) : void
+    - GetAdjustedBorders(border:Vector4, adjustedRect:Rect) : Vector4
+    {static} <<readonly>> - s_Xy : Vector3[]
+    {static} <<readonly>> - s_Uv : Vector3[]
+    - GenerateFilledSprite(toFill:VertexHelper, preserveAspect:bool) : void
+    {static} - RadialCut(xy:Vector3[], uv:Vector3[], fill:float, invert:bool, corner:int) : bool
+    {static} - RadialCut(xy:Vector3[], cos:float, sin:float, invert:bool, corner:int) : void
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>>
+    + <<virtual>> preferredWidth : float <<get>>
+    + <<virtual>> flexibleWidth : float <<get>>
+    + <<virtual>> minHeight : float <<get>>
+    + <<virtual>> preferredHeight : float <<get>>
+    + <<virtual>> flexibleHeight : float <<get>>
+    + <<virtual>> layoutPriority : int <<get>>
+    + <<virtual>> IsRaycastLocationValid(screenPoint:Vector2, eventCamera:Camera) : bool
+    - MapCoordinate(local:Vector2, rect:Rect) : Vector2
+    {static} - m_TrackedTexturelessImages : List<Image>
+    {static} - s_Initialized : bool
+    {static} - RebuildImage(spriteAtlas:SpriteAtlas) : void
+    - {static} TrackImage(g:Image) : void
+    - {static} UnTrackImage(g:Image) : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+}
+enum Type {
+    Simple,
+    Sliced,
+    Tiled,
+    Filled,
+}
+enum FillMethod {
+    Horizontal,
+    Vertical,
+    Radial90,
+    Radial180,
+    Radial360,
+}
+enum OriginHorizontal {
+    Left,
+    Right,
+}
+enum OriginVertical {
+    Bottom,
+    Top,
+}
+enum Origin90 {
+    BottomLeft,
+    TopLeft,
+    TopRight,
+    BottomRight,
+}
+enum Origin180 {
+    Bottom,
+    Left,
+    Top,
+    Right,
+}
+enum Origin360 {
+    Bottom,
+    Right,
+    Top,
+    Left,
+}
+MaskableGraphic <|-- Image
+ISerializationCallbackReceiver <|-- Image
+ILayoutElement <|-- Image
+ICanvasRaycastFilter <|-- Image
+Image +-- Type
+Image +-- FillMethod
+Image +-- OriginHorizontal
+Image +-- OriginVertical
+Image +-- Origin90
+Image +-- Origin180
+Image +-- Origin360
+@enduml

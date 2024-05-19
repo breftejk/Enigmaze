@@ -1,0 +1,23 @@
+@startuml
+class CharacterMovement {
+    + useCharacterForward : bool = false
+    + lockToCameraForward : bool = false
+    + turnSpeed : float = 10f
+    + sprintJoystick : KeyCode
+    + sprintKeyboard : KeyCode
+    - turnSpeedMultiplier : float
+    - speed : float = 0f
+    - direction : float = 0f
+    - isSprinting : bool = false
+    - anim : Animator
+    - targetDirection : Vector3
+    - input : Vector2
+    - freeRotation : Quaternion
+    - mainCamera : Camera
+    - velocity : float
+    - Start() : void
+    - FixedUpdate() : void
+    + <<virtual>> UpdateTargetDirection() : void
+}
+MonoBehaviour <|-- CharacterMovement
+@enduml

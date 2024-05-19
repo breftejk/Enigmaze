@@ -1,0 +1,35 @@
+@startuml
+class VoronoiNode {
+    + <<override>> latestVersion : int <<get>>
+    + <<override>> allowedNodeVersions : IEnumerable<int> <<get>>
+    + <<const>> UVSlotId : int = 0
+    + <<const>> AngleOffsetSlotId : int = 1
+    + <<const>> CellDensitySlotId : int = 2
+    + <<const>> OutSlotId : int = 3
+    + <<const>> CellsSlotId : int = 4
+    <<const>> - kUVSlotName : string = "UV"
+    <<const>> - kAngleOffsetSlotName : string = "AngleOffset"
+    <<const>> - kCellDensitySlotName : string = "CellDensity"
+    <<const>> - kOutSlotName : string = "Out"
+    <<const>> - kCellsSlotName : string = "Cells"
+    + VoronoiNode()
+    {static} <<readonly>> - kHashFunctionPrefix : string[]
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_HashType : HashType
+    + hashType : HashType <<get>> <<set>>
+    - GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+}
+enum HashType {
+    Deterministic,
+    LegacySine,
+}
+AbstractMaterialNode <|-- VoronoiNode
+IGeneratesBodyCode <|-- VoronoiNode
+IGeneratesFunction <|-- VoronoiNode
+IMayRequireMeshUV <|-- VoronoiNode
+VoronoiNode +-- HashType
+@enduml

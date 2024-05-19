@@ -1,0 +1,29 @@
+@startuml
+class InspectorProvider {
+    # <<override>> cache : bool <<get>>
+    + <<override>> IsValid(metadata:Metadata) : bool
+    # <<override>> CreateDecorator(decoratorType:Type, metadata:Metadata) : Inspector
+    # <<override>> GetDecoratedType(metadata:Metadata) : Type
+    # <<override>> ResolveDecoratorType(decoratedType:Type) : Type
+    # UnityObjectReferenceInspector(type:Type) : Type
+    - EnumInspector(type:Type) : Type
+    - ListInspector(type:Type) : Type
+    - DictionaryInspector(type:Type) : Type
+    - NullableInspector(type:Type) : Type
+    - ImplementationInspector(type:Type) : Type
+    - SystemObjectInspector(type:Type) : Type
+    - TypeHandleInspector(type:Type) : Type
+    - AutomaticReflectedInspector(type:Type) : Type
+    - CustomPropertyDrawerInspector(type:Type) : Type
+    + HasInspector(type:Type) : bool
+    {static} - InspectorProvider()
+    + {static} instance : InspectorProvider <<get>>
+}
+class XInspectorProvider <<static>> {
+    + {static} Inspector(metadata:Metadata) : Inspector
+    + {static} Inspector(metadata:Metadata) : TInspector
+    + {static} HasInspector(type:Type) : bool
+    + {static} HasInspector(metadata:Metadata) : bool
+}
+"SingleDecoratorProvider`3" "<Metadata,Inspector,InspectorAttribute>" <|-- InspectorProvider
+@enduml

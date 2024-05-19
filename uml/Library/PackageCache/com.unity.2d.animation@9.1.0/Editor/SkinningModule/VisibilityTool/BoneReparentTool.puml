@@ -1,0 +1,55 @@
+@startuml
+class BoneReparentToolController {
+    + BoneReparentToolController(model:IBoneTreeViewModel, eventSystem:SkinningEvents)
+    + <<override>> CanDrag() : bool
+    + <<override>> CanRename() : bool
+}
+class BoneReparentToolModel {
+    + BoneReparentToolModel(cache:SkinningCache, view:IBoneVisibilityToolView)
+}
+class BoneReparentTool {
+    - m_View : BoneReparentToolWindow
+    - m_Model : BoneReparentToolModel
+    - m_Controller : BoneReparentToolController
+    + <<override>> Initialize(layout:LayoutOverlay) : void
+    # <<override>> OnActivate() : void
+    # <<override>> OnDeactivate() : void
+    # <<override>> OnGUI() : void
+}
+class BoneReparentToolWindow {
+    - m_ToolView : BoneReparentToolView
+    + GetModel : Func<IBoneTreeViewModel>
+    + GetController : Func<BoneTreeWidgetController>
+    {static} <<internal>> CreateFromUXML() : BoneReparentToolWindow
+    <<internal>> BindElements() : void
+    - InternalGetModel() : IBoneTreeViewModel
+    - InternalGetController() : BoneTreeWidgetController
+    + OnBoneSelectionChange(skeleton:SkeletonSelection) : void
+    + OnBoneExpandedChange(bones:BoneCache[]) : void
+    + OnBoneNameChanged(bone:BoneCache) : void
+    + OnSelectionChange(skeleton:SkeletonCache) : void
+    - toolView : BoneReparentToolView <<get>>
+    + Deactivate() : void
+}
+class BoneReparentToolView {
+    # <<override>> SetupToolColumnHeader() : VisibilityToolColumnHeader
+}
+class CustomUxmlFactory {
+}
+class CustomUxmlFactory {
+}
+class CustomUxmlTraits {
+}
+BoneTreeWidgetController <|-- BoneReparentToolController
+BoneTreeWidgetModel <|-- BoneReparentToolModel
+SkeletonToolWrapper <|-- BoneReparentTool
+VisualElement <|-- BoneReparentToolWindow
+IBoneVisibilityToolView <|-- BoneReparentToolWindow
+BoneVisibilityToolView <|-- BoneReparentToolView
+BoneReparentToolWindow +-- CustomUxmlFactory
+"UxmlFactory`2" "<BoneReparentToolWindow,UxmlTraits>" <|-- CustomUxmlFactory
+BoneReparentToolView +-- CustomUxmlFactory
+"UxmlFactory`2" "<BoneReparentToolView,CustomUxmlTraits>" <|-- CustomUxmlFactory
+BoneReparentToolView +-- CustomUxmlTraits
+UxmlTraits <|-- CustomUxmlTraits
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class DropDownTextField <<static>> {
+    <<internal>> {static} DoDropDownTextField(text:string, controlName:string, dropDownOptions:List<string>, optionSelected:GenericMenu.MenuFunction2, options:GUILayoutOption[]) : string
+    <<internal>> {static} DoDropDownTextField(text:string, controlName:string, dropDownOptions:List<string>, optionSelected:GenericMenu.MenuFunction2, textFieldRect:Rect) : string
+    <<const>> - BUTTON_WIDTH : int = 16
+}
+@enduml

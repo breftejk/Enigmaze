@@ -1,0 +1,47 @@
+@startuml
+class ProbeVolumeAsset {
+    + Version : int <<get>>
+    # <<internal>> m_Version : int
+    <<internal>> cells : ProbeReferenceVolume.Cell[]
+    <<internal>> cellCounts : CellCounts[]
+    <<internal>> totalCellCounts : CellCounts
+    <<internal>> maxCellPosition : Vector3Int
+    <<internal>> minCellPosition : Vector3Int
+    <<internal>> globalBounds : Bounds
+    <<internal>> bands : ProbeVolumeSHBands
+    <<internal>> chunkSizeInBricks : int
+    - m_AssetFullPath : string = "UNINITIALIZED!"
+    <<internal>> cellSizeInBricks : int
+    <<internal>> simplificationLevels : int
+    <<internal>> minDistanceBetweenProbes : float
+    <<internal>> maxSubdivision : int <<get>>
+    <<internal>> minBrickSize : float <<get>>
+    <<internal>> CompatibleWith(otherAsset:ProbeVolumeAsset) : bool
+    <<internal>> IsInvalid() : bool
+    + GetSerializedFullPath() : string
+    {static} - AlignUp16(count:int) : int
+    - GetSubArray(input:NativeArray<byte>, count:int, offset:int) : NativeArray<T>
+    <<internal>> ResolveSharedCellData(cellSharedDataAsset:TextAsset, cellSupportDataAsset:TextAsset) : bool
+    <<internal>> ResolvePerScenarioCellData(cellDataAsset:TextAsset, cellOptionalDataAsset:TextAsset, stateIndex:int) : bool
+}
+enum AssetVersion {
+    First,
+    AddProbeVolumesAtlasEncodingModes,
+    PV2,
+    ChunkBasedIndex,
+    BinaryRuntimeDebugSplit,
+    BinaryTextureData,
+    Max,
+    Current= Max - 1,
+}
+struct CellCounts {
+    + bricksCount : int
+    + probesCount : int
+    + offsetsCount : int
+    + chunksCount : int
+    + Add(o:CellCounts) : void
+}
+ScriptableObject <|-- ProbeVolumeAsset
+ProbeVolumeAsset +-- AssetVersion
+ProbeVolumeAsset +-- CellCounts
+@enduml

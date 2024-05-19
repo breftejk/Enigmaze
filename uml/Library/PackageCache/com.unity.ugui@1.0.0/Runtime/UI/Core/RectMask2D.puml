@@ -1,0 +1,36 @@
+@startuml
+class RectMask2D {
+    - <<readonly>> m_VertexClipper : RectangularVertexClipper
+    - m_RectTransform : RectTransform
+    - m_MaskableTargets : HashSet<MaskableGraphic>
+    - m_ClipTargets : HashSet<IClippable>
+    - m_ShouldRecalculateClipRects : bool
+    - m_Clippers : List<RectMask2D>
+    - m_LastClipRectCanvasSpace : Rect
+    - m_ForceClip : bool
+    - m_Padding : Vector4
+    + padding : Vector4 <<get>> <<set>>
+    - m_Softness : Vector2Int
+    + softness : Vector2Int <<get>> <<set>>
+    - m_Canvas : Canvas
+    <<internal>> Canvas : Canvas <<get>>
+    + canvasRect : Rect <<get>>
+    + rectTransform : RectTransform <<get>>
+    # RectMask2D()
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDestroy() : void
+    + <<virtual>> IsRaycastLocationValid(sp:Vector2, eventCamera:Camera) : bool
+    - m_Corners : Vector3[]
+    - rootCanvasRect : Rect <<get>>
+    + <<virtual>> PerformClipping() : void
+    + <<virtual>> UpdateClipSoftness() : void
+    + AddClippable(clippable:IClippable) : void
+    + RemoveClippable(clippable:IClippable) : void
+    # <<override>> OnTransformParentChanged() : void
+    # <<override>> OnCanvasHierarchyChanged() : void
+}
+UIBehaviour <|-- RectMask2D
+IClipper <|-- RectMask2D
+ICanvasRaycastFilter <|-- RectMask2D
+@enduml

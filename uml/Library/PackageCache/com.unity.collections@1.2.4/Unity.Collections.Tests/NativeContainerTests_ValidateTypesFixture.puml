@@ -1,0 +1,8 @@
+@startuml
+class NativeContainerTests_ValidateTypesFixture {
+    # {static} CheckNativeContainerReflectionException(expected:string) : void
+    # {static} CheckNativeContainerReflectionExceptionParallelFor(expected:string) : void
+    # {static} CheckNativeContainerReflectionException() : void
+}
+CollectionsTestCommonBase <|-- NativeContainerTests_ValidateTypesFixture
+@enduml

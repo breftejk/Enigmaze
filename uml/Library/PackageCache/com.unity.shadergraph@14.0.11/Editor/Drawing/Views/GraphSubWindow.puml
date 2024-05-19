@@ -1,0 +1,58 @@
+@startuml
+interface ISelectionProvider {
+    GetSelection : List<ISelectable> <<get>>
+}
+class GraphSubWindow {
+    - m_ViewModel : ISGViewModel
+    - ViewModel : ISGViewModel <<get>> <<set>>
+    - m_Dragger : Dragger
+    # windowDockingLayout : WindowDockingLayout <<get>>
+    - cachedWindowDockingStyle : IStyle
+    # m_MainContainer : VisualElement
+    # m_Root : VisualElement
+    # m_TitleLabel : Label
+    # m_SubTitleLabel : Label
+    # m_ScrollView : ScrollView
+    # m_ContentContainer : VisualElement
+    # m_HeaderItem : VisualElement
+    # m_ParentView : VisualElement
+    <<internal>> scrollView : ScrollView <<get>>
+    + <<virtual>> layoutKey : string <<get>>
+    + <<virtual>> styleName : string <<get>>
+    + <<virtual>> UxmlName : string <<get>>
+    + <<virtual>> elementName : string <<get>>
+    + <<virtual>> windowTitle : string <<get>>
+    + ParentView : VisualElement <<get>> <<set>>
+    + selection : List<ISelectable> <<get>>
+    + <<override>> title : string <<get>> <<set>>
+    + subTitle : string <<get>> <<set>>
+    - m_IsWindowed : bool
+    + isWindowed : bool <<get>> <<set>>
+    + <<override>> contentContainer : VisualElement <<get>>
+    - m_IsResizable : bool = false
+    # isWindowResizable : bool <<get>> <<set>>
+    - HandleResizingBehavior(isResizable:bool) : void
+    # SetResizingRules(resizeDirections:ResizableElement.Resizer) : void
+    - m_IsScrollable : bool = false
+    # isWindowScrollable : bool <<get>> <<set>>
+    # scrollableWidth : float <<get>>
+    # scrollableHeight : float <<get>>
+    - HandleScrollingBehavior(scrollable:bool) : void
+    # GraphSubWindow(viewModel:ISGViewModel)
+    + ShowWindow() : void
+    + HideWindow() : void
+    - BuildManipulators() : void
+    + ClampToParentLayout(parentLayout:Rect) : void
+    + OnStartResize() : void
+    + OnResized() : void
+    + DeserializeLayout() : void
+    # AddStyleSheetFromPath(styleSheetPath:string) : void
+    - SerializeLayout() : void
+    - OnMoveEnd(upEvent:MouseUpEvent) : void
+    + CanResizePastParentBounds() : bool
+    - OnWindowResize(upEvent:MouseUpEvent) : void
+    + <<virtual>> Dispose() : void
+}
+GraphElement <|-- GraphSubWindow
+ISGResizable <|-- GraphSubWindow
+@enduml

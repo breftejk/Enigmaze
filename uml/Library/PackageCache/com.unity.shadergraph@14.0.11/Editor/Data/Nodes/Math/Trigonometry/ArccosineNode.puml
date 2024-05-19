@@ -1,0 +1,8 @@
+@startuml
+class ArccosineNode {
+    + ArccosineNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Arccosine(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ArccosineNode
+@enduml

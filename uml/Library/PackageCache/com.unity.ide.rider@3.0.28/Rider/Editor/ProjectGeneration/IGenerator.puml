@@ -1,0 +1,9 @@
+@startuml
+interface IGenerator {
+    SyncIfNeeded(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>, checkProjectFiles:bool) : bool
+    Sync() : void
+    HasSolutionBeenGenerated() : bool
+    SolutionFile() : string
+    AssemblyNameProvider : IAssemblyNameProvider <<get>>
+}
+@enduml

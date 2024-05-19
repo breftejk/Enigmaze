@@ -1,0 +1,10 @@
+@startuml
+class UniversalGlobalSettingsCreator {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+    {static} - settings : UniversalRenderPipelineGlobalSettings
+    {static} - updateGraphicsSettings : bool = false
+    + {static} Clone(src:UniversalRenderPipelineGlobalSettings, activateAsset:bool) : void
+    + {static} Create(useProjectSettingsFolder:bool, activateAsset:bool) : void
+    <<internal>> {static} CreateUniversalRenderPipelineGlobalSettings() : void
+}
+@enduml

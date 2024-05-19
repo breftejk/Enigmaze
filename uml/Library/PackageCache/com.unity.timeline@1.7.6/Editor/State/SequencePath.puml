@@ -1,0 +1,23 @@
+@startuml
+class SequencePath {
+    - m_SelectionRoot : int
+    + selectionRoot : int <<get>>
+    - m_SubElements : List<SequencePathSubElement>
+    + subElements : List<SequencePathSubElement> <<get>>
+    + SetSelectionRoot(instanceID:int) : void
+    + AddSubSequence(state:ISequenceState, resolver:IExposedPropertyTable) : void
+    + Clear() : void
+    + {static} AreEqual(lhs:SequencePath, rhs:SequencePath) : bool
+    + <<override>> ToString() : string
+}
+class SequencePathSubElement {
+    + trackInstanceID : int
+    + trackHash : int
+    + clipIndex : int
+    + clipHash : int
+    + subDirectorIndex : int
+    + {static} Create(state:ISequenceState, resolver:IExposedPropertyTable) : SequencePathSubElement
+    + {static} AreEqual(lhs:SequencePathSubElement, rhs:SequencePathSubElement) : bool
+    + <<override>> ToString() : string
+}
+@enduml

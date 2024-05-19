@@ -1,0 +1,6 @@
+@startuml
+class Pipeline {
+    - PackImage(buffers:NativeArray<Color32>[], width:int[], height:int[], padding:int, spriteSizeExpand:uint, outPackedBuffer:NativeArray<Color32>, outPackedBufferWidth:int, outPackedBufferHeight:int, outPackedRect:RectInt[], outUVTransform:Vector2Int[], requireSquarePOT:bool) : void
+}
+ScriptableObject <|-- Pipeline
+@enduml

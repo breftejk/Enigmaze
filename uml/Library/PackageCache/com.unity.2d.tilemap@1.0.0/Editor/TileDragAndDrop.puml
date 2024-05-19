@@ -1,0 +1,28 @@
+@startuml
+class TileDragAndDrop <<static>> {
+    - {static} <<readonly>> k_TileExtension : string = "asset"
+    - {static} GetSpritesFromTexture(texture:Texture2D) : List<Sprite>
+    - {static} AllSpritesAreSameSizeOrMultiples(sprites:List<Sprite>) : bool
+    + {static} CreateHoverData(sheetTextures:List<Texture2D>, singleSprites:List<Sprite>, tiles:List<TileBase>, cellLayout:GridLayout.CellLayout) : Dictionary<Vector2Int, TileDragAndDropHoverData>
+    + {static} GetValidSpritesheets(objects:Object[]) : List<Texture2D>
+    + {static} GetValidSingleSprites(objects:Object[]) : List<Sprite>
+    + {static} GetValidTiles(objects:Object[]) : List<TileBase>
+    - {static} GetMinimum(sprites:List<Sprite>, minX:Func<Sprite, float>, minY:Func<Sprite, float>) : Vector2Int
+    + {static} EstimateGridPixelSize(sprites:List<Sprite>) : Vector2Int
+    + {static} EstimateGridOffsetSize(sprites:List<Sprite>) : Vector2Int
+    + {static} EstimateGridPaddingSize(sprites:List<Sprite>, cellSize:Vector2Int, offsetSize:Vector2Int) : Vector2Int
+    - {static} GetGridPosition(sprite:Sprite, cellPixelSize:Vector2Int, offsetSize:Vector2Int, paddingSize:Vector2Int, cellPosition:Vector2Int, positionOffset:Vector3) : void
+    - {static} GetIsometricGridPosition(sprite:Sprite, cellPixelSize:Vector2Int, offsetSize:Vector2Int, cellPosition:Vector2Int) : void
+    + {static} CreateHoverData(sheet:Texture2D, cellLayout:GridLayout.CellLayout) : Dictionary<Vector2Int, TileDragAndDropHoverData>
+    - {static} HasSpriteRectOverlaps(sprites:IReadOnlyList<Sprite>) : bool
+    <<internal>> {static} GenerateUniqueNameForNamelessSprite(sprite:Sprite, uniqueNames:HashSet<string>, count:int) : string
+    + {static} ConvertToTileSheet(sheet:Dictionary<Vector2Int, TileDragAndDropHoverData>) : List<TileBase>
+    <<internal>> {static} GetMinMaxRect(positions:IEnumerable<Vector2Int>) : RectInt
+}
+enum UserTileCreationMode {
+    Overwrite,
+    CreateUnique,
+    Reuse,
+}
+TileDragAndDrop +-- UserTileCreationMode
+@enduml

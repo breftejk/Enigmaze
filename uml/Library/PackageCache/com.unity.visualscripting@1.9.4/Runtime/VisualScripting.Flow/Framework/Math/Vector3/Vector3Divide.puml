@@ -1,0 +1,8 @@
+@startuml
+class Vector3Divide <<sealed>> {
+    # <<override>> defaultDividend : Vector3 <<get>>
+    # <<override>> defaultDivisor : Vector3 <<get>>
+    + <<override>> Operation(a:Vector3, b:Vector3) : Vector3
+}
+"Divide`1" "<Vector3>" <|-- Vector3Divide
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class InspectorAssetSelection {
+    - GetSelectedAssets() : AssetList
+    <<internal>> SetActiveInspector(inspector:UnityEditor.Editor) : void
+    {static} - GetInspectorAssets(inspector:UnityEditor.Editor) : AssetList
+    - mActiveInspector : UnityEditor.Editor
+}
+@enduml

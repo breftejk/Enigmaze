@@ -1,0 +1,126 @@
+@startuml
+abstract class "VisualScriptingCanvas`1"<TGraph> {
+    + widgetProvider : WidgetProvider <<get>>
+    + selection : GraphSelection <<get>>
+    + window : ICanvasWindow <<get>> <<set>>
+    # e : EventWrapper <<get>>
+    + graph : TGraph <<get>>
+    - graph : IGraph <<get>>
+    # VisualScriptingCanvas(graph:TGraph)
+    + <<virtual>> Dispose() : void
+    # context : IGraphContext <<get>>
+    # reference : GraphReference <<get>>
+    + Cache() : void
+    + CacheWidgetItems() : void
+    - widgets : IEnumerable<IWidget> <<get>>
+    - <<readonly>> widgets : WidgetList<IWidget>
+    - <<readonly>> elementWidgets : WidgetList<IGraphElementWidget>
+    - GetWidgets() : IEnumerable<IWidget>
+    - GetWidgetsRecursive(widget:IWidget) : IEnumerable<IWidget>
+    - collectionsAreValid : bool
+    + Recollect() : void
+    + CacheWidgetCollections() : void
+    + <<virtual>> Open() : void
+    + <<virtual>> Close() : void
+    + RegisterControls() : void
+    + Update() : void
+    + BeforeFrame() : void
+    + OnGUI() : void
+    # HandleEventCapture() : void
+    # <<virtual>> HandleHighPriorityInput() : void
+    # HandleWidgetInput() : void
+    # HandleEventRelease() : void
+    # <<virtual>> HandleLowPriorityInput() : void
+    # <<virtual>> HandleMaximization() : void
+    # ToggleMaximized() : void
+    + zoom : float <<get>>
+    + pan : Vector2 <<get>>
+    - _viewport : Rect
+    + viewport : Rect <<get>> <<set>>
+    - viewTweenDuration : float
+    - viewTweenStartPan : Vector2
+    - viewTweenEndPan : Vector2
+    - viewTweenStartZoom : float
+    - viewTweenEndZoom : float
+    - viewTweenStart : DateTime
+    - isTweeningView : bool
+    + mousePosition : Vector2 <<get>>
+    - HandleMouseMovement() : void
+    + isMouseOver : bool <<get>>
+    + isMouseOverBackground : bool <<get>>
+    - <<readonly>> dragPanOffset : RectOffset
+    - isResizing : bool <<get>>
+    # <<virtual>> shouldEdgePan : bool <<get>>
+    - <<readonly>> widgetsByAscendingZ : WidgetList<IWidget>
+    - <<readonly>> visibleWidgetsByAscendingZ : WidgetList<IWidget>
+    - <<readonly>> visibleWidgetsByDescendingZ : WidgetList<IWidget>
+    + UpdateViewport() : void
+    + TweenViewport(pan:Vector2, zoom:float, duration:float) : void
+    + CacheWidgetVisibility() : void
+    - OnViewportChange() : void
+    - HandleViewportInput() : void
+    - HandleEdgePanning() : void
+    - Overview() : void
+    - ViewSelection() : void
+    + ViewElements(elements:IEnumerable<IGraphElement>) : void
+    + IsVisible(widget:IWidget) : bool
+    - <<readonly>> widgetsToReposition : List<IWidget>
+    + CacheWidgetPositions() : void
+    + hoveredWidget : IWidget <<get>>
+    - DetermineHoveredWidget() : void
+    - lassoOrigin : Vector2
+    + isLassoing : bool <<get>>
+    + lassoArea : Rect <<get>>
+    - HandleLassoing() : void
+    + isSelecting : bool <<get>>
+    + selectionArea : Rect <<get>>
+    - HandleSelecting() : void
+    + isGrouping : bool <<get>>
+    + groupArea : Rect <<get>>
+    - {static} <<readonly>> HorizontalDrag : Vector2
+    - {static} <<readonly>> VerticalDrag : Vector2
+    - {static} <<readonly>> FreeDrag : Vector2
+    - dragConstraint : Vector2
+    + isDragging : bool <<get>>
+    - <<readonly>> dragGroup : HashSet<IGraphElement>
+    + BeginDrag(e:EventWrapper) : void
+    + Drag(e:EventWrapper) : void
+    + EndDrag(e:EventWrapper) : void
+    - LockDragOrigin() : void
+    + DeleteSelection() : void
+    - HandleDeleting() : void
+    + <<virtual>> ShrinkCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    - lastPasteTime : DateTime
+    - HandleClipboard() : void
+    # GetExtendedContextOptions() : IEnumerable<DropdownOption>
+    # <<virtual>> GetContextOptions() : IEnumerable<DropdownOption>
+    # <<virtual>> OnContext() : void
+    - HandleContext() : void
+    + alignableAndDistributable : IEnumerable<IGraphElementWidget> <<get>>
+    + Align(operation:AlignOperation) : void
+    + Distribute(operation:DistributeOperation) : void
+    # <<virtual>> DrawBackground() : void
+    # DrawWidgetsBackground() : void
+    # DrawWidgetsForeground() : void
+    # DrawWidgetsOverlay() : void
+    # <<virtual>> DrawOverlay() : void
+    - potentialDragAndDropHandlers : IEnumerable<IDragAndDropHandler> <<get>>
+    - dragAndDropHandler : IDragAndDropHandler <<get>> <<set>>
+    - HandleDragAndDrop() : void
+    + <<virtual>> dragAndDropVisualMode : DragAndDropVisualMode <<get>>
+    + <<virtual>> AcceptsDragAndDrop() : bool
+    + <<virtual>> PerformDragAndDrop() : void
+    + <<virtual>> UpdateDragAndDrop() : void
+    + <<virtual>> DrawDragAndDropPreview() : void
+    + <<virtual>> ExitDragAndDrop() : void
+    - lastFrameTime : DateTime
+    - lastEventTime : DateTime
+    - lastRepaintTime : DateTime
+    + frameDeltaTime : float <<get>>
+    + eventDeltaTime : float <<get>>
+    + repaintDeltaTime : float <<get>>
+    + <<virtual>> OnToolbarGUI() : void
+    + delayedCalls : Queue<Action> <<get>>
+}
+ICanvas <|-- "VisualScriptingCanvas`1"
+@enduml

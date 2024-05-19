@@ -1,0 +1,19 @@
+@startuml
+class TestResultRenderer {
+    - <<readonly>> m_FailedTestCollection : List<ITestResult>
+    - m_ShowResults : bool
+    - m_ScrollPosition : Vector2
+    + TestResultRenderer(testResults:ITestResult)
+    - GetFailedTests(testResults:ITestResult) : void
+    - <<const>> k_MaxStringLength : int = 15000
+    + ShowResults() : void
+    + Draw() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> SucceedLabelStyle : GUIStyle
+    + {static} <<readonly>> FailedLabelStyle : GUIStyle
+    + {static} <<readonly>> FailedMessagesStyle : GUIStyle
+    {static} - Styles()
+}
+TestResultRenderer +-- Styles
+@enduml

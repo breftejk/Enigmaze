@@ -1,0 +1,23 @@
+@startuml
+class CubemapAssetNode {
+    + <<const>> OutputSlotId : int = 0
+    <<const>> - kOutputSlotName : string = "Out"
+    + CubemapAssetNode()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - m_Cubemap : SerializableCubemap
+    + cubemap : Cubemap <<get>> <<set>>
+    - GetTexturePropertyName() : string
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+class MinimalCubemapAssetNode {
+    - m_Cubemap : SerializableCubemap = null
+    + GetSourceAssetDependencies(assetCollection:AssetCollection) : void
+}
+AbstractMaterialNode <|-- CubemapAssetNode
+IPropertyFromNode <|-- CubemapAssetNode
+IHasDependencies <|-- MinimalCubemapAssetNode
+@enduml

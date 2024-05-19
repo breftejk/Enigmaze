@@ -1,0 +1,27 @@
+@startuml
+class ExportAssetsPopup {
+    <<const>> - k_SubElementUssClass : string = "SubElement"
+    <<const>> - k_ControllerToggleId : string = "ControllerToggle"
+    <<const>> - k_ClipsToggleId : string = "ClipsToggle"
+    - m_ImporterEditor : AsepriteImporterEditor
+    - m_ImporterTargets : AsepriteImporter[]
+    - m_ControllerToggle : Toggle
+    - m_ClipsToggle : Toggle
+    - Awake() : void
+    - OnSelectionChange() : void
+    + ShowExportPopup(importerEditor:AsepriteImporterEditor, importerTargets:AsepriteImporter[]) : void
+    - CreateGUI() : void
+    - GetEditorPrefsBool(id:string, defaultValue:bool) : bool
+    - SetEditorPrefsBool(id:string, newValue:bool) : void
+}
+class Content <<static>> {
+    + {static} <<readonly>> titleText : string
+    + {static} <<readonly>> bodyText : string
+    + {static} <<readonly>> controllerText : string
+    + {static} <<readonly>> clipsText : string
+    + {static} <<readonly>> exportText : string
+    + {static} <<readonly>> cancelText : string
+}
+EditorWindow <|-- ExportAssetsPopup
+ExportAssetsPopup +-- Content
+@enduml

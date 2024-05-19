@@ -1,0 +1,17 @@
+@startuml
+class AutoConfig <<static>> {
+    <<internal>> {static} PlasticCredentials(unityAccessToken:string, serverName:string, projectPath:string) : TokenExchangeResponse
+}
+class ConfigureClientConf <<static>> {
+    <<internal>> {static} FromUnityAccessToken(unityAccessToken:string, serverName:string, projectPath:string) : void
+    {static} - BuildClientConfigData(serverName:string, projectPath:string, response:CredentialsResponse) : ClientConfigData
+    {static} - GetPassword(token:string, tokenType:CredentialsResponse.TokenType) : string
+    {static} - GetWorkingMode(tokenType:CredentialsResponse.TokenType) : SEIDWorkingMode
+    <<const>> - BEARER_PREFIX : string = "Bearer "
+}
+class ConfigureProfile <<static>> {
+    <<internal>> {static} ForServerIfNeeded(serverName:string, user:string) : void
+}
+AutoConfig +-- ConfigureClientConf
+AutoConfig +-- ConfigureProfile
+@enduml

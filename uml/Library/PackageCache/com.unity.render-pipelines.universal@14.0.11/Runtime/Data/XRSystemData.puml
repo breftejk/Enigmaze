@@ -1,0 +1,11 @@
+@startuml
+class XRSystemData {
+    + shaders : ShaderResources
+}
+class ShaderResources <<sealed>> {
+    + xrOcclusionMeshPS : Shader
+    + xrMirrorViewPS : Shader
+}
+ScriptableObject <|-- XRSystemData
+XRSystemData +-- ShaderResources
+@enduml

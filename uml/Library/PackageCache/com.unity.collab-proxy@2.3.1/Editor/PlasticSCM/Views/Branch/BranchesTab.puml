@@ -1,0 +1,57 @@
+@startuml
+class BranchesTab {
+    <<internal>> Table : BranchesListView <<get>>
+    <<internal>> Operations : IBranchMenuOperations <<get>>
+    <<internal>> BranchesTab(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, viewSwitcher:IViewSwitcher, mergeViewLauncher:IMergeViewLauncher, updateReport:IUpdateReport, developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, parentWindow:EditorWindow)
+    <<internal>> Update() : void
+    <<internal>> OnGUI() : void
+    <<internal>> SetWorkingObjectInfo(homeInfo:WorkingObjectInfo) : void
+    {static} - DoBranchesArea(branchesListView:BranchesListView, isOperationRunning:bool) : void
+    <<internal>> DrawSearchFieldForBranchesTab() : void
+    <<internal>> OnDisable() : void
+    - Refresh() : void
+    + RefreshAndSelect(repObj:RepObjectInfo) : void
+    - FillBranches(wkInfo:WorkspaceInfo, query:string, branchesToSelect:List<RepObjectInfo>) : void
+    {static} - GetLoadedBranchId(wkInfo:WorkspaceInfo) : long
+    {static} - UpdateBranchesList(branchesListView:BranchesListView, queryResult:ViewQueryResult, loadedBranchId:long) : void
+    <<internal>> {static} GetBranchesCount(queryResult:ViewQueryResult) : int
+    <<internal>> {static} GetBranchesQuery(dateFilter:DateFilter) : string
+    <<internal>> DrawDateFilter() : void
+    - SearchField_OnDownOrUpArrowKeyPressed() : void
+    {static} - DoActionsToolbar(progressControls:ProgressControlsForViews) : void
+    - BuildComponents(wkInfo:WorkspaceInfo, workspaceWindow:IWorkspaceWindow, viewSwitcher:IViewSwitcher, mergeViewLauncher:IMergeViewLauncher, updateReport:IUpdateReport, developerNewIncomingChangesUpdater:NewIncomingChangesUpdater, parentWindow:EditorWindow) : void
+    - OnBranchesListViewSizeChanged() : void
+    - GetSelectedBranchesCount() : int
+    - CreateBranch() : void
+    - CreateTopLevelBranch() : void
+    - SwitchToBranch() : void
+    - MergeBranch() : void
+    - CherrypickBranch() : void
+    - MergeToBranch() : void
+    - PullBranch() : void
+    - PullRemoteBranch() : void
+    - SyncWithGit() : void
+    - PushBranch() : void
+    - DiffBranch() : void
+    - DiffWithAnotherBranch() : void
+    - ViewChangesets() : void
+    - RenameBranch() : void
+    - DeleteBranch() : void
+    - CreateCodeReview() : void
+    - ViewPermissions() : void
+    - mSearchField : SearchField
+    - mIsRefreshing : bool
+    - mDateFilter : DateFilter
+    - mShouldScrollToSelection : bool
+    - mBranchesListView : BranchesListView
+    - mBranchOperations : BranchOperations
+    - mLoadedBranchId : long
+    - mLock : object
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mProgressControls : ProgressControlsForViews
+    <<readonly>> - mParentWindow : EditorWindow
+}
+IRefreshableView <|-- BranchesTab
+IBranchMenuOperations <|-- BranchesTab
+IQueryRefreshableView <|-- BranchesTab
+@enduml

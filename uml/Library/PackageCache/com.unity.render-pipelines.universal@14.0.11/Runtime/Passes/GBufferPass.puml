@@ -1,0 +1,34 @@
+@startuml
+class GBufferPass {
+    {static} <<readonly>> - s_CameraNormalsTextureID : int
+    {static} - s_ShaderTagLit : ShaderTagId
+    {static} - s_ShaderTagSimpleLit : ShaderTagId
+    {static} - s_ShaderTagUnlit : ShaderTagId
+    {static} - s_ShaderTagComplexLit : ShaderTagId
+    {static} - s_ShaderTagUniversalGBuffer : ShaderTagId
+    {static} - s_ShaderTagUniversalMaterialType : ShaderTagId
+    - m_ProfilingSampler : ProfilingSampler
+    - m_DeferredLights : DeferredLights
+    {static} - s_ShaderTagValues : ShaderTagId[]
+    {static} - s_RenderStateBlocks : RenderStateBlock[]
+    - m_FilteringSettings : FilteringSettings
+    - m_RenderStateBlock : RenderStateBlock
+    - m_PassData : PassData
+    + GBufferPass(evt:RenderPassEvent, renderQueueRange:RenderQueueRange, layerMask:LayerMask, stencilState:StencilState, stencilReference:int, deferredLights:DeferredLights)
+    + Dispose() : void
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescriptor:RenderTextureDescriptor) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    {static} - ExecutePass(context:ScriptableRenderContext, data:PassData, renderingData:RenderingData, useRenderGraph:bool) : void
+    <<internal>> Render(renderGraph:RenderGraph, cameraColor:TextureHandle, cameraDepth:TextureHandle, renderingData:RenderingData, frameResources:UniversalRenderer.RenderGraphFrameResources) : void
+}
+class PassData {
+    <<internal>> gbuffer : TextureHandle[]
+    <<internal>> depth : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> deferredLights : DeferredLights
+    <<internal>> filteringSettings : FilteringSettings
+    <<internal>> drawingSettings : DrawingSettings
+}
+ScriptableRenderPass <|-- GBufferPass
+GBufferPass +-- PassData
+@enduml

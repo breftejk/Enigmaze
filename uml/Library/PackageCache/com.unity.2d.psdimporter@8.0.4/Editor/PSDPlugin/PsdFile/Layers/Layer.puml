@@ -1,0 +1,28 @@
+@startuml
+class Layer {
+    <<internal>> PsdFile : PsdFile <<get>>
+    + Rect : Rectangle <<get>> <<set>>
+    + IsGroup : bool <<get>> <<set>>
+    + IsEndGroupMarker : bool <<get>> <<set>>
+    + ParentLayer : Layer <<get>> <<set>>
+    + LayerID : int <<get>> <<set>>
+    + Channels : ChannelList <<get>>
+    + AlphaChannel : Channel <<get>>
+    - blendModeKey : string
+    + BlendModeKey : string <<get>> <<set>>
+    + Opacity : byte <<get>> <<set>>
+    + Clipping : bool <<get>> <<set>>
+    - {static} protectTransBit : int
+    - {static} visibleBit : int
+    - flags : BitVector32
+    + Visible : bool <<get>> <<set>>
+    + ProtectTrans : bool <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + BlendingRangesData : BlendingRanges <<get>> <<set>>
+    + Masks : MaskInfo <<get>> <<set>>
+    + AdditionalInfo : List<LayerInfo> <<get>> <<set>>
+    + Layer(psdFile:PsdFile)
+    + Layer(reader:PsdBinaryReader, psdFile:PsdFile)
+    + CreateMissingChannels() : void
+}
+@enduml

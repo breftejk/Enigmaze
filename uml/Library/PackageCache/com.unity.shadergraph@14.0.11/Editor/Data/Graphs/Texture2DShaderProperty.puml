@@ -1,0 +1,39 @@
+@startuml
+class Texture2DShaderProperty <<sealed>> {
+    {static} <<readonly>> - k_DefaultTypeNames : string[]
+    <<internal>> {static} ToShaderLabString(defaultType:DefaultType) : string
+    <<internal>> Texture2DShaderProperty()
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> isMainTexture : bool = false
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> modifiableTagString : string <<get>>
+    <<internal>> useTilingAndOffset : bool = false
+    <<internal>> useSTString : string <<get>>
+    <<internal>> mainTextureString : string <<get>>
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> GetPropertyAsArgumentStringForVFX(precisionString:string) : string
+    <<internal>> <<override>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    - m_Modifiable : bool = true
+    <<internal>> modifiable : bool <<get>> <<set>>
+    - m_DefaultType : DefaultType
+    + defaultType : DefaultType <<get>> <<set>>
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    <<internal>> <<override>> Copy() : ShaderInput
+    <<internal>> <<override>> OnBeforePasteIntoGraph(graph:GraphData) : void
+}
+enum DefaultType {
+    White,
+    Black,
+    Grey,
+    NormalMap,
+    LinearGrey,
+    Red,
+}
+"AbstractShaderProperty`1" "<SerializableTexture>" <|-- Texture2DShaderProperty
+Texture2DShaderProperty +-- DefaultType
+@enduml

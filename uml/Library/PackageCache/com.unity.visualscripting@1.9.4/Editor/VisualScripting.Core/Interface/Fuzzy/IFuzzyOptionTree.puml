@@ -1,0 +1,20 @@
+@startuml
+interface IFuzzyOptionTree {
+    multithreaded : bool <<get>>
+    header : GUIContent <<get>>
+    searchable : bool <<get>>
+    favorites : ICollection<object> <<get>>
+    selected : ICollection<object> <<get>>
+    showBackgroundWorkerProgress : bool <<get>>
+    Option(item:object) : IFuzzyOption
+    Prewarm() : void
+    Root() : IEnumerable<object>
+    Children(parent:object) : IEnumerable<object>
+    OrderedSearchResults(query:string, cancellation:CancellationToken) : IEnumerable<object>
+    SearchResults(query:string, cancellation:CancellationToken) : IEnumerable<ISearchResult>
+    SearchResultLabel(item:object, query:string) : string
+    FavoritesLabel(item:object) : string
+    CanFavorite(item:object) : bool
+    OnFavoritesChange() : void
+}
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class NumericComparison <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + aLessThanB : ValueOutput <<get>>
+    + aLessThanOrEqualToB : ValueOutput <<get>>
+    + aEqualToB : ValueOutput <<get>>
+    + aGreaterThanOrEqualToB : ValueOutput <<get>>
+    + aGreatherThanB : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Less(flow:Flow) : bool
+    - LessOrEqual(flow:Flow) : bool
+    - Equal(flow:Flow) : bool
+    - GreaterOrEqual(flow:Flow) : bool
+    - Greater(flow:Flow) : bool
+}
+Unit <|-- NumericComparison
+@enduml

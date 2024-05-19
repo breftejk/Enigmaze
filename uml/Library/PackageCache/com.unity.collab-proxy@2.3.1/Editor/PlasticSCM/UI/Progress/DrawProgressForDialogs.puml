@@ -1,0 +1,6 @@
+@startuml
+class DrawProgressForDialogs <<static>> {
+    <<internal>> {static} For(data:ProgressControlsForDialogs.Data) : void
+    {static} - DoProgressBar(rect:Rect, progressMessage:string, progressPercent:float) : void
+}
+@enduml

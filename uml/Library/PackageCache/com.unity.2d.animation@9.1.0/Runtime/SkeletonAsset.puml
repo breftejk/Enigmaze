@@ -1,0 +1,8 @@
+@startuml
+class SkeletonAsset {
+    - m_SpriteBones : SpriteBone[]
+    + GetSpriteBones() : SpriteBone[]
+    + SetSpriteBones(spriteBones:SpriteBone[]) : void
+}
+ScriptableObject <|-- SkeletonAsset
+@enduml

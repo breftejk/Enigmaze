@@ -1,0 +1,134 @@
+@startuml
+class MultiJsonInternal <<static>> {
+    {static} <<readonly>> - k_TypeMap : Dictionary<string, Type>
+    <<internal>> {static} isDeserializing : bool
+    <<internal>> {static} <<readonly>> valueMap : Dictionary<string, JsonObject>
+    {static} - s_Entries : List<MultiJsonEntry>
+    <<internal>> {static} isSerializing : bool
+    <<internal>> {static} <<readonly>> serializationQueue : List<JsonObject>
+    <<internal>> {static} <<readonly>> serializedSet : HashSet<string>
+    {static} - currentRoot : JsonObject = null
+    {static} - jsonBlobs : Dictionary<string, Dictionary<string, string>>
+    {static} - CreateTypeMap() : Dictionary<string, Type>
+    + {static} ParseType(typeString:string) : Type
+    + {static} Parse(str:string) : List<MultiJsonEntry>
+    + {static} Enqueue(jsonObject:JsonObject, json:string) : void
+    + {static} CreateInstanceForDeserialization(typeString:string) : JsonObject
+    - {static} s_ObjectIdField : FieldInfo
+    + {static} Deserialize(root:JsonObject, entries:List<MultiJsonEntry>, rewriteIds:bool) : void
+    + {static} Serialize(mainObject:JsonObject) : string
+    + {static} PopulateValueMap(mainObject:JsonObject) : void
+}
+class UnknownJsonObject {
+    + typeInfo : string
+    + jsonData : string
+    + castedObject : JsonData<JsonObject>
+    + UnknownJsonObject(typeInfo:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    + <<override>> OnAfterDeserialize(json:string) : void
+    + <<override>> OnAfterMultiDeserialize(json:string) : void
+    + <<override>> CastTo() : T
+}
+class UnknownTargetType {
+    + jsonData : string
+    + UnknownTargetType()
+    - m_activeBlocks : List<BlockFieldDescriptor> = null
+    + UnknownTargetType(displayName:string, jsonData:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<string>) : void
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> WorksWithSRP(scriptableRenderPipeline:RenderPipelineAsset) : bool
+}
+class UnknownSubTargetType {
+    + jsonData : string
+    + UnknownSubTargetType()
+    + UnknownSubTargetType(displayName:string, jsonData:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    <<internal>> <<override>> targetType : Type <<get>>
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<string>) : void
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+}
+class UnknownShaderPropertyType {
+    + jsonData : string
+    + UnknownShaderPropertyType(displayName:string, jsonData:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    <<internal>> <<override>> concreteShaderValueType : ConcreteSlotValueType <<get>>
+    <<internal>> <<override>> isExposable : bool <<get>>
+    <<internal>> <<override>> isRenamable : bool <<get>>
+    <<internal>> <<override>> Copy() : ShaderInput
+    + <<override>> propertyType : PropertyType <<get>>
+    <<internal>> <<override>> GetPropertyReferenceNames(result:List<string>) : void
+    <<internal>> <<override>> GetPropertyDisplayNames(result:List<string>) : void
+    <<internal>> <<override>> GetPropertyBlockString() : string
+    <<internal>> <<override>> AppendPropertyBlockStrings(builder:ShaderStringBuilder) : void
+    <<internal>> <<override>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> <<override>> ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<override>> GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> <<override>> ToConcreteNode() : AbstractMaterialNode
+    <<internal>> <<override>> GetPreviewMaterialProperty() : PreviewProperty
+    + <<override>> GetPropertyTypeString() : string
+}
+class UnknownMaterialSlotType {
+    + jsonData : string
+    + UnknownMaterialSlotType(displayName:string, jsonData:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    + <<override>> isDefaultValue : bool <<get>>
+    + <<override>> valueType : SlotValueType <<get>>
+    + <<override>> concreteValueType : ConcreteSlotValueType <<get>>
+    + <<override>> AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> CopyValuesFrom(foundSlot:MaterialSlot) : void
+}
+class UnknownNodeType {
+    + jsonData : string
+    + UnknownNodeType()
+    + UnknownNodeType(jsonData:string)
+    + <<override>> OnAfterDeserialize(json:string) : void
+    + <<override>> Serialize() : string
+    + <<override>> ValidateNode() : void
+    + <<override>> canCutNode : bool <<get>>
+    + <<override>> canCopyNode : bool <<get>>
+}
+class UnknownGraphDataExtension {
+    + name : string
+    + jsonData : string
+    <<internal>> <<override>> displayName : string <<get>>
+    <<internal>> UnknownGraphDataExtension()
+    <<internal>> UnknownGraphDataExtension(displayName:string, jsonData:string)
+    + <<override>> Deserailize(typeInfo:string, jsonData:string) : void
+    + <<override>> Serialize() : string
+    <<internal>> <<override>> OnPropertiesGUI(context:VisualElement, onChange:Action, registerUndo:Action<string>, owner:GraphData) : void
+}
+class SerializerHelper {
+    + m_DisplayName : string = null
+    + m_SlotType : SlotType
+    + m_Hidden : bool = false
+    + m_ShaderOutputName : string = null
+    + m_StageCapability : ShaderStageCapability
+}
+MultiJsonInternal +-- UnknownJsonObject
+JsonObject <|-- UnknownJsonObject
+MultiJsonInternal +-- UnknownTargetType
+Target <|-- UnknownTargetType
+MultiJsonInternal +-- UnknownSubTargetType
+SubTarget <|-- UnknownSubTargetType
+MultiJsonInternal +-- UnknownShaderPropertyType
+AbstractShaderProperty <|-- UnknownShaderPropertyType
+MultiJsonInternal +-- UnknownMaterialSlotType
+MaterialSlot <|-- UnknownMaterialSlotType
+MultiJsonInternal +-- UnknownNodeType
+AbstractMaterialNode <|-- UnknownNodeType
+MultiJsonInternal +-- UnknownGraphDataExtension
+AbstractShaderGraphDataExtension <|-- UnknownGraphDataExtension
+UnknownMaterialSlotType +-- SerializerHelper
+@enduml

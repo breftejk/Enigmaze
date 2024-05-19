@@ -1,0 +1,74 @@
+@startuml
+class Scrollbar {
+    - m_HandleRect : RectTransform
+    + handleRect : RectTransform <<get>> <<set>>
+    - m_Direction : Direction
+    + direction : Direction <<get>> <<set>>
+    # Scrollbar()
+    - m_Value : float
+    + value : float <<get>> <<set>>
+    + <<virtual>> SetValueWithoutNotify(input:float) : void
+    - m_Size : float = 0.2f
+    + size : float <<get>> <<set>>
+    - m_NumberOfSteps : int = 0
+    + numberOfSteps : int <<get>> <<set>>
+    - m_OnValueChanged : ScrollEvent
+    + onValueChanged : ScrollEvent <<get>> <<set>>
+    - m_ContainerRect : RectTransform
+    - m_Offset : Vector2
+    - stepSize : float <<get>>
+    - m_Tracker : DrivenRectTransformTracker
+    - m_PointerDownRepeat : Coroutine
+    - isPointerDownAndNotDragging : bool = false
+    - m_DelayedUpdateVisuals : bool = false
+    + <<virtual>> Rebuild(executing:CanvasUpdate) : void
+    + <<virtual>> LayoutComplete() : void
+    + <<virtual>> GraphicUpdateComplete() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<virtual>> Update() : void
+    - UpdateCachedReferences() : void
+    - Set(input:float, sendCallback:bool) : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    - axis : Axis <<get>>
+    - reverseValue : bool <<get>>
+    - UpdateVisuals() : void
+    - UpdateDrag(eventData:PointerEventData) : void
+    - DoUpdateDrag(handleCorner:Vector2, remainingSize:float) : void
+    - MayDrag(eventData:PointerEventData) : bool
+    + <<virtual>> OnBeginDrag(eventData:PointerEventData) : void
+    + <<virtual>> OnDrag(eventData:PointerEventData) : void
+    + <<override>> OnPointerDown(eventData:PointerEventData) : void
+    # ClickRepeat(eventData:PointerEventData) : IEnumerator
+    # ClickRepeat(screenPosition:Vector2, camera:Camera) : IEnumerator
+    + <<override>> OnPointerUp(eventData:PointerEventData) : void
+    + <<override>> OnMove(eventData:AxisEventData) : void
+    + <<override>> FindSelectableOnLeft() : Selectable
+    + <<override>> FindSelectableOnRight() : Selectable
+    + <<override>> FindSelectableOnUp() : Selectable
+    + <<override>> FindSelectableOnDown() : Selectable
+    + <<virtual>> OnInitializePotentialDrag(eventData:PointerEventData) : void
+    + SetDirection(direction:Direction, includeRectLayouts:bool) : void
+}
+enum Direction {
+    LeftToRight,
+    RightToLeft,
+    BottomToTop,
+    TopToBottom,
+}
+class ScrollEvent {
+}
+enum Axis {
+    Horizontal= 0,
+    Vertical= 1,
+}
+Selectable <|-- Scrollbar
+IBeginDragHandler <|-- Scrollbar
+IDragHandler <|-- Scrollbar
+IInitializePotentialDragHandler <|-- Scrollbar
+ICanvasElement <|-- Scrollbar
+Scrollbar +-- Direction
+Scrollbar +-- ScrollEvent
+"UnityEvent`1" "<float>" <|-- ScrollEvent
+Scrollbar +-- Axis
+@enduml

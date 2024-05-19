@@ -1,0 +1,20 @@
+@startuml
+abstract class "NodeWidget`2"<TCanvas,TNode> {
+    # NodeWidget(canvas:TCanvas, node:TNode)
+    + outerPosition : Rect <<get>> <<set>>
+    + edgePosition : Rect <<get>> <<set>>
+    + innerPosition : Rect <<get>> <<set>>
+    + <<override>> clippingPosition : Rect <<get>>
+    # EdgeToOuterPosition(position:Rect) : Rect
+    # OuterToEdgePosition(position:Rect) : Rect
+    # EdgeToInnerPosition(position:Rect) : Rect
+    # InnerToEdgePosition(position:Rect) : Rect
+    # {abstract} shape : NodeShape <<get>>
+    # {abstract} color : NodeColorMix <<get>>
+    # invertForeground : bool = false
+    + <<override>> DrawForeground() : void
+    + <<override>> DrawOverlay() : void
+}
+"GraphElementWidget`2" "<TCanvas,TNode>" <|-- "NodeWidget`2"
+INodeWidget <|-- "NodeWidget`2"
+@enduml

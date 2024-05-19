@@ -1,0 +1,41 @@
+@startuml
+interface IAngleRangeCache {
+    angleRanges : List<AngleRange> <<get>>
+    selectedIndex : int <<get>> <<set>>
+    previewAngle : float <<get>> <<set>>
+    RegisterUndo(name:string) : void
+}
+class AngleRangeController {
+    +  <<event>> selectionChanged : Action 
+    + cache : IAngleRangeCache <<get>> <<set>>
+    + view : IAngleRangeView <<get>> <<set>>
+    + angleOffset : float <<get>> <<set>>
+    + radius : float <<get>> <<set>>
+    + rect : Rect <<get>> <<set>>
+    + snap : bool <<get>> <<set>>
+    + gradientMin : Color <<get>> <<set>>
+    + gradientMid : Color <<get>> <<set>>
+    + gradientMax : Color <<get>> <<set>>
+    + selectedAngleRange : AngleRange <<get>>
+    - hoveredAngleRange : AngleRange <<get>>
+    + OnGUI() : void
+    - DoAngleRanges() : void
+    + RemoveInvalidRanges() : void
+    - HandleSelectAngleRange() : void
+    - HandleCreateRange() : void
+    - HandlePreviewSelector() : void
+    - SetSelectedIndexFromPreviewAngle() : void
+    - SelectIndex(index:int) : void
+    - ClampPreviewAngle(start:float, end:float, prevStart:float, prevEnd:float) : void
+    - HandleRemoveRange() : void
+    + CreateRange() : void
+    - CreateRangeAtAngle(angle:float) : void
+    + SetRange(angleRange:AngleRange, start:float, end:float) : void
+    - GetNewRangeBounds(angle:float, emptyRangeStart:float, emptyRangeEnd:float) : bool
+    - GetAngleRangeAt(angle:float) : AngleRange
+    - FindMinMax(min:float, max:float) : void
+    - ValidateRange(range:AngleRange) : void
+    - ValidateRange(angleRange:AngleRange, prevStart:float, prevEnd:float) : void
+    - ValidateRangeStartEnd(start:float, end:float, prevStart:float, prevEnd:float, otherStart:float, otherEnd:float) : void
+}
+@enduml

@@ -1,0 +1,75 @@
+@startuml
+abstract class AbstractShaderProperty {
+    + {abstract} propertyType : PropertyType <<get>>
+    <<internal>> <<override>> concreteShaderValueType : ConcreteSlotValueType <<get>>
+    - m_Precision : Precision
+    + gpuInstanced : bool <<get>> <<set>>
+    <<internal>> <<virtual>> GetHLSLVariableName(isSubgraphProperty:bool, mode:GenerationMode) : string
+    <<internal>> GetConnectionStateHLSLVariableName() : string
+    <<internal>> <<virtual>> GetDefaultHLSLDeclaration() : HLSLDeclaration
+    <<internal>> <<virtual>> AllowHLSLDeclaration(decl:HLSLDeclaration) : bool
+    <<internal>> overrideHLSLDeclaration : bool = false
+    <<internal>> hlslDeclarationOverride : HLSLDeclaration
+    <<internal>> precision : Precision <<get>> <<set>>
+    - m_ConcretePrecision : ConcretePrecision
+    + concretePrecision : ConcretePrecision <<get>>
+    <<internal>> SetupConcretePrecision(defaultPrecision:ConcretePrecision) : void
+    - m_Hidden : bool = false
+    + hidden : bool <<get>> <<set>>
+    <<internal>> hideTagString : string <<get>>
+    <<internal>> <<virtual>> GetPropertyReferenceNames(result:List<string>) : void
+    <<internal>> <<virtual>> GetPropertyDisplayNames(result:List<string>) : void
+    <<internal>> <<virtual>> GetPropertyBlockString() : string
+    <<internal>> <<virtual>> AppendPropertyBlockStrings(builder:ShaderStringBuilder) : void
+    <<internal>> {abstract} ForeachHLSLProperty(action:Action<HLSLProperty>) : void
+    <<internal>> <<virtual>> GetPropertyAsArgumentStringForVFX(precisionString:string) : string
+    <<internal>> {abstract} GetPropertyAsArgumentString(precisionString:string) : string
+    <<internal>> {abstract} ToConcreteNode() : AbstractMaterialNode
+    <<internal>> {abstract} GetPreviewMaterialProperty() : PreviewProperty
+    + <<virtual>> GetPropertyTypeString() : string
+}
+abstract class "AbstractShaderProperty`1"<T> {
+    - m_Value : T
+    + <<virtual>> value : T <<get>> <<set>>
+}
+class LegacyShaderPropertyData {
+    + m_GPUInstanced : bool = false
+    + {static} UpgradeToHLSLDeclarationOverride(json:string, property:AbstractShaderProperty) : void
+}
+enum HLSLType {
+    _float,
+    _float2,
+    _float3,
+    _float4,
+    _matrix4x4,
+    FirstObjectType,
+    _Texture2D= FirstObjectType,
+    _Texture3D,
+    _TextureCube,
+    _Texture2DArray,
+    _SamplerState,
+    _CUSTOM,
+}
+enum HLSLDeclaration {
+    DoNotDeclare,
+    Global,
+    UnityPerMaterial,
+    HybridPerInstance,
+}
+struct HLSLProperty {
+    + name : string
+    + type : HLSLType
+    + precision : ConcretePrecision
+    + declaration : HLSLDeclaration
+    + customDeclaration : Action<ShaderStringBuilder>
+    + HLSLProperty(type:HLSLType, name:string, declaration:HLSLDeclaration, precision:ConcretePrecision)
+    + ValueEquals(other:HLSLProperty) : bool
+    {static} - kValueTypeStrings : string[,]
+    {static} - kObjectTypeStrings : string[]
+    + IsObjectType() : bool
+    + GetValueTypeString() : string
+    + AppendTo(ssb:ShaderStringBuilder, nameModifier:Func<string, string>) : void
+}
+ShaderInput <|-- AbstractShaderProperty
+AbstractShaderProperty <|-- "AbstractShaderProperty`1"
+@enduml

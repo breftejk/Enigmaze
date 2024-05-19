@@ -1,0 +1,22 @@
+@startuml
+class ReflectedInspector {
+    + ReflectedInspector(metadata:Metadata)
+    + <<override>> Initialize() : void
+    + bindingFlags : BindingFlags <<get>>
+    - _adaptiveWidth : float
+    # <<virtual>> Include(m:MemberInfo) : bool
+    - <<readonly>> inspectedMemberNames : List<string>
+    # inspectedMembers : IEnumerable<MemberMetadata> <<get>>
+    + <<virtual>> ReflectMetadata() : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<virtual>> GetMemberHeight(member:Metadata, width:float) : float
+    # <<virtual>> OnMemberGUI(member:Metadata, memberPosition:Rect) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+class Styles <<static>> {
+    + {static} <<readonly>> spaceBetweenMembers : float
+}
+Inspector <|-- ReflectedInspector
+ReflectedInspector +-- Styles
+@enduml

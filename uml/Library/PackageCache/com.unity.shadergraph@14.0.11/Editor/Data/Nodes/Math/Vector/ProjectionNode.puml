@@ -1,0 +1,8 @@
+@startuml
+class ProjectionNode {
+    + ProjectionNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Projection(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ProjectionNode
+@enduml

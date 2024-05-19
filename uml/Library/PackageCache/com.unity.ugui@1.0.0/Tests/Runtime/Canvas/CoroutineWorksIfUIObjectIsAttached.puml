@@ -1,0 +1,18 @@
+@startuml
+class CoroutineWorksIfUIObjectIsAttached {
+    - m_CanvasMaster : GameObject
+    - m_ImageObject : GameObject
+    + TestSetup() : void
+    + CoroutineWorksOnAttachingUIObject() : IEnumerator
+    + TearDown() : void
+}
+class BugObject {
+    - Awake() : void
+}
+class CoroutineObject {
+    + coroutineCount : int <<get>>
+    + Start() : IEnumerator
+}
+MonoBehaviour <|-- BugObject
+MonoBehaviour <|-- CoroutineObject
+@enduml

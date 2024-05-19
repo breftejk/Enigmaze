@@ -1,0 +1,15 @@
+@startuml
+class "StaticPropertyAccessor`1"<TProperty> {
+    + StaticPropertyAccessor(propertyInfo:PropertyInfo)
+    - <<readonly>> propertyInfo : PropertyInfo
+    - getter : Func<TProperty>
+    - setter : Action<TProperty>
+    - targetType : Type
+    + Compile() : void
+    + GetValue(target:object) : object
+    - GetValueUnsafe(target:object) : object
+    + SetValue(target:object, value:object) : void
+    - SetValueUnsafe(target:object, value:object) : void
+}
+IOptimizedAccessor <|-- "StaticPropertyAccessor`1"
+@enduml

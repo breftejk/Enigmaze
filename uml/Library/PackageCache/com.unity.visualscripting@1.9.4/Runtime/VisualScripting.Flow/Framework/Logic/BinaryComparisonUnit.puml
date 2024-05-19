@@ -1,0 +1,15 @@
+@startuml
+abstract class BinaryComparisonUnit {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + <<virtual>> comparison : ValueOutput <<get>>
+    + numeric : bool <<get>> <<set>> = true
+    # <<virtual>> outputKey : string <<get>>
+    # <<override>> Definition() : void
+    - NumericComparison(flow:Flow) : bool
+    - GenericComparison(flow:Flow) : bool
+    # {abstract} NumericComparison(a:float, b:float) : bool
+    # {abstract} GenericComparison(a:object, b:object) : bool
+}
+Unit <|-- BinaryComparisonUnit
+@enduml

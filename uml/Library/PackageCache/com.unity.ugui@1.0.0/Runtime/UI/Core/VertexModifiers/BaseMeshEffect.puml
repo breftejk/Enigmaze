@@ -1,0 +1,16 @@
+@startuml
+abstract class BaseVertexEffect {
+    + {abstract} ModifyVertices(vertices:List<UIVertex>) : void
+}
+abstract class BaseMeshEffect {
+    - m_Graphic : Graphic
+    # graphic : Graphic <<get>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    + <<virtual>> ModifyMesh(mesh:Mesh) : void
+    + {abstract} ModifyMesh(vh:VertexHelper) : void
+}
+UIBehaviour <|-- BaseMeshEffect
+IMeshModifier <|-- BaseMeshEffect
+@enduml

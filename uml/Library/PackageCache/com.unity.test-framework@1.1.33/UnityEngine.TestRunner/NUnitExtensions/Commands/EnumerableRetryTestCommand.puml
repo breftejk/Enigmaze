@@ -1,0 +1,10 @@
+@startuml
+class EnumerableRetryTestCommand {
+    - retryCount : int
+    + EnumerableRetryTestCommand(commandToReplace:RetryAttribute.RetryCommand)
+    + <<override>> Execute(context:ITestExecutionContext) : TestResult
+    + ExecuteEnumerable(context:ITestExecutionContext) : IEnumerable
+}
+DelegatingTestCommand <|-- EnumerableRetryTestCommand
+IEnumerableTestMethodCommand <|-- EnumerableRetryTestCommand
+@enduml

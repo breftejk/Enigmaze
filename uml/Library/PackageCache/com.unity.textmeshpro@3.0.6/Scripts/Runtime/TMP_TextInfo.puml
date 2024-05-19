@@ -1,0 +1,36 @@
+@startuml
+class TMP_TextInfo {
+    <<internal>> {static} k_InfinityVectorPositive : Vector2
+    <<internal>> {static} k_InfinityVectorNegative : Vector2
+    + textComponent : TMP_Text
+    + characterCount : int
+    + spriteCount : int
+    + spaceCount : int
+    + wordCount : int
+    + linkCount : int
+    + lineCount : int
+    + pageCount : int
+    + materialCount : int
+    + characterInfo : TMP_CharacterInfo[]
+    + wordInfo : TMP_WordInfo[]
+    + linkInfo : TMP_LinkInfo[]
+    + lineInfo : TMP_LineInfo[]
+    + pageInfo : TMP_PageInfo[]
+    + meshInfo : TMP_MeshInfo[]
+    - m_CachedMeshInfo : TMP_MeshInfo[]
+    + TMP_TextInfo()
+    <<internal>> TMP_TextInfo(characterCount:int)
+    + TMP_TextInfo(textComponent:TMP_Text)
+    + Clear() : void
+    <<internal>> ClearAllData() : void
+    + ClearMeshInfo(updateMesh:bool) : void
+    + ClearAllMeshInfo() : void
+    + ResetVertexLayout(isVolumetric:bool) : void
+    + ClearUnusedVertices(materials:MaterialReference[]) : void
+    + ClearLineInfo() : void
+    <<internal>> ClearPageInfo() : void
+    + CopyMeshInfoVertexData() : TMP_MeshInfo[]
+    + {static} Resize(array:T[], size:int) : void
+    + {static} Resize(array:T[], size:int, isBlockAllocated:bool) : void
+}
+@enduml

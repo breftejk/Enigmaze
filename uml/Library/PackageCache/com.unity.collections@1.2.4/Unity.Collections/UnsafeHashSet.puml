@@ -1,0 +1,44 @@
+@startuml
+struct "UnsafeHashSet`1"<T> {
+    <<internal>> m_Data : UnsafeHashMap<T, bool>
+    + UnsafeHashSet(capacity:int, allocator:AllocatorManager.AllocatorHandle)
+    + IsEmpty : bool <<get>>
+    + Count() : int
+    + Capacity : int <<get>> <<set>>
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + Clear() : void
+    + Add(item:T) : bool
+    + Remove(item:T) : bool
+    + Contains(item:T) : bool
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + AsParallelWriter() : ParallelWriter
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator<T>
+    - GetEnumerator() : IEnumerator
+}
+class "UnsafeHashSetDebuggerTypeProxy`1"<T> <<sealed>> {
+    - Data : UnsafeHashSet<T>
+    + UnsafeHashSetDebuggerTypeProxy(data:UnsafeHashSet<T>)
+    + Items : List<T> <<get>>
+}
+struct ParallelWriter {
+    <<internal>> m_Data : UnsafeHashMap<T, bool>.ParallelWriter
+    + Capacity : int <<get>>
+    + Add(item:T) : bool
+}
+struct Enumerator {
+    <<internal>> m_Enumerator : UnsafeHashMapDataEnumerator
+    + Dispose() : void
+    + MoveNext() : bool
+    + Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+}
+INativeDisposable <|-- "UnsafeHashSet`1"
+"IEnumerable`1" "<T>" <|-- "UnsafeHashSet`1"
+"UnsafeHashSet`1" +-- ParallelWriter
+"UnsafeHashSet`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+@enduml

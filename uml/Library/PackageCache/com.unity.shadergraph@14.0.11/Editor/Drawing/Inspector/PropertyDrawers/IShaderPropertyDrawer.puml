@@ -1,0 +1,5 @@
+@startuml
+interface IShaderPropertyDrawer {
+    <<internal>> HandlePropertyField(propertySheet:PropertySheet, preChangeValueCallback:PreChangeValueCallback, postChangeValueCallback:PostChangeValueCallback) : void
+}
+@enduml

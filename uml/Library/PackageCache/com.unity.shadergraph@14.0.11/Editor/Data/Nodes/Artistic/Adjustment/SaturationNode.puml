@@ -1,0 +1,8 @@
+@startuml
+class SaturationNode {
+    + SaturationNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Saturation(In:Vector3, Saturation:Vector1, Out:Vector3) : string
+}
+CodeFunctionNode <|-- SaturationNode
+@enduml

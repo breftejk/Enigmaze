@@ -1,0 +1,7 @@
+@startuml
+class ToolConfig <<static>> {
+    <<internal>> {static} GetUnityPlasticLogConfigFile() : string
+    {static} - GetConfigFilePath(configfile:string) : string
+    <<const>> - LOG_CONFIG_FILE : string = "unityplastic.log.conf"
+}
+@enduml

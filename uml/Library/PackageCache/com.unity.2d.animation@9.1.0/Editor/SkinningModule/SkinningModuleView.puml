@@ -1,0 +1,52 @@
+@startuml
+class SkinningModule <<partial>> {
+    - m_LayoutOverlay : LayoutOverlay
+    - m_PoseToolbar : PoseToolbar
+    - m_BoneToolbar : BoneToolbar
+    - m_MeshToolbar : MeshToolbar
+    - m_WeightToolbar : WeightToolbar
+    - m_RigToolbar : RigToolbar
+    - m_ShortcutContext : InternalEditorBridge.ShortcutContext
+    - {static} GetModuleFromContext(args:ShortcutArguments) : SkinningModule
+    - {static} CollapseToolbar(args:ShortcutArguments) : void
+    - {static} DisablePoseModeKey(args:ShortcutArguments) : void
+    - {static} ToggleCharacterModeKey(args:ShortcutArguments) : void
+    - {static} EditPoseKey(args:ShortcutArguments) : void
+    - {static} EditCharacterPivotKey(args:ShortcutArguments) : void
+    - {static} EditJointsKey(args:ShortcutArguments) : void
+    - {static} CreateBoneKey(args:ShortcutArguments) : void
+    - {static} SplitBoneKey(args:ShortcutArguments) : void
+    - {static} GenerateGeometryKey(args:ShortcutArguments) : void
+    - {static} MeshSelectionKey(args:ShortcutArguments) : void
+    - {static} CreateVertex(args:ShortcutArguments) : void
+    - {static} CreateEdgeKey(args:ShortcutArguments) : void
+    - {static} SplitEdge(args:ShortcutArguments) : void
+    - {static} GenerateWeightsKey(args:ShortcutArguments) : void
+    - {static} WeightSliderKey(args:ShortcutArguments) : void
+    - {static} WeightBrushKey(args:ShortcutArguments) : void
+    - {static} BoneInfluenceKey(args:ShortcutArguments) : void
+    - {static} SpriteInfluenceKey(args:ShortcutArguments) : void
+    - {static} PastePanelKey(args:ShortcutArguments) : void
+    - {static} VisibilityPanelKey(args:ShortcutArguments) : void
+    - AddMainUI(mainView:VisualElement) : void
+    - OnProjectLoaded() : void
+    - DoViewGUI() : void
+    - isFocused() : bool
+    - CreatePoseToolbar() : void
+    - CreateBoneToolbar() : void
+    - CreateMeshToolbar() : void
+    - CreateWeightToolbar() : void
+    - CreateRigToolbar() : void
+    - ActivateEditPoseTool() : void
+    - SetSkeletonTool(toolType:Tools) : void
+    - SetMeshTool(toolType:Tools) : void
+    - SetWeightTool(toolType:Tools) : void
+    - ActivateCopyTool() : void
+    - TogglePasteTool() : void
+    - StorePreviousTool() : void
+    - ActivateTool(tool:BaseTool) : void
+    - UnselectBones() : void
+    - UpdateToggleState() : void
+    - RemoveMainUI(mainView:VisualElement) : void
+}
+@enduml

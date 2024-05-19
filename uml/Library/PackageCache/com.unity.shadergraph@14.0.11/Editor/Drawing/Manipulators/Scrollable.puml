@@ -1,0 +1,10 @@
+@startuml
+class Scrollable {
+    - m_Handler : Action<float>
+    + Scrollable(handler:Action<float>)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - HandleMouseWheelEvent(evt:WheelEvent) : void
+}
+MouseManipulator <|-- Scrollable
+@enduml

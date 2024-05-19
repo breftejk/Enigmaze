@@ -1,0 +1,7 @@
+@startuml
+class HasDependenciesAttribute {
+    + HasDependenciesAttribute(minimalType:Type)
+    + minimalType : Type <<get>>
+}
+Attribute <|-- HasDependenciesAttribute
+@enduml

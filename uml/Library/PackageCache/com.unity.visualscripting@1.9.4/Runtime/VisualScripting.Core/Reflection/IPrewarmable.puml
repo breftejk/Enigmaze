@@ -1,0 +1,5 @@
+@startuml
+interface IPrewarmable {
+    Prewarm() : void
+}
+@enduml

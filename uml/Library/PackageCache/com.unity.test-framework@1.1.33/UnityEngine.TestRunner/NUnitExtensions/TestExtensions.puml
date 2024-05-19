@@ -1,0 +1,21 @@
+@startuml
+class TestExtensions <<static>> {
+    - {static} GetTestCategories(test:ITest) : IEnumerable<string>
+    + {static} HasCategory(test:ITest, categoryFilter:string[]) : bool
+    + {static} GetAllCategoriesFromTest(test:ITest) : List<string>
+    + {static} ParseForNameDuplicates(test:ITest) : void
+    + {static} GetChildIndex(test:ITest) : int
+    + {static} HasChildIndex(test:ITest) : bool
+    {static} - GetAncestorPath(test:ITest) : string
+    + {static} GetUniqueName(test:ITest) : string
+    + {static} GetFullName(test:ITest) : string
+    + {static} GetFullNameWithoutDllPath(test:ITest) : string
+    - {static} IsAssembly(test:ITest) : bool
+    + {static} GetSkipReason(test:ITest) : string
+    + {static} GetParentId(test:ITest) : string
+    + {static} GetParentFullName(test:ITest) : string
+    + {static} GetParentUniqueName(test:ITest) : string
+    <<internal>> {static} GetFullName(testFullName:string, childIndex:int) : string
+    - {static} GetIndexedTestCaseName(fullName:string, index:int) : string
+}
+@enduml

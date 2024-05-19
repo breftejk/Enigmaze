@@ -1,0 +1,33 @@
+@startuml
+class DepthNormalOnlyPass {
+    <<internal>> shaderTagIds : List<ShaderTagId> <<get>> <<set>>
+    - depthHandle : RTHandle <<get>> <<set>>
+    - normalHandle : RTHandle <<get>> <<set>>
+    - renderingLayersHandle : RTHandle <<get>> <<set>>
+    <<internal>> enableRenderingLayers : bool <<get>> <<set>> = false
+    - m_FilteringSettings : FilteringSettings
+    - m_PassData : PassData
+    - {static} <<readonly>> k_DepthNormals : List<ShaderTagId>
+    - {static} <<readonly>> k_ColorAttachment1 : RTHandle[]
+    - {static} <<readonly>> k_ColorAttachment2 : RTHandle[]
+    + DepthNormalOnlyPass(evt:RenderPassEvent, renderQueueRange:RenderQueueRange, layerMask:LayerMask)
+    + {static} GetGraphicsFormat() : GraphicsFormat
+    + Setup(depthHandle:RTHandle, normalHandle:RTHandle) : void
+    + Setup(depthHandle:RTHandle, normalHandle:RTHandle, decalLayerHandle:RTHandle) : void
+    + <<override>> OnCameraSetup(cmd:CommandBuffer, renderingData:RenderingData) : void
+    - {static} ExecutePass(context:ScriptableRenderContext, passData:PassData, renderingData:RenderingData) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + <<override>> OnCameraCleanup(cmd:CommandBuffer) : void
+    <<internal>> Render(renderGraph:RenderGraph, cameraNormalsTexture:TextureHandle, cameraDepthTexture:TextureHandle, renderingData:RenderingData) : void
+}
+class PassData {
+    <<internal>> cameraDepthTexture : TextureHandle
+    <<internal>> cameraNormalsTexture : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> shaderTagIds : List<ShaderTagId>
+    <<internal>> filteringSettings : FilteringSettings
+    <<internal>> enableRenderingLayers : bool
+}
+ScriptableRenderPass <|-- DepthNormalOnlyPass
+DepthNormalOnlyPass +-- PassData
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IDecoratorAttribute {
+    type : Type <<get>>
+}
+@enduml

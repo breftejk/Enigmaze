@@ -1,0 +1,24 @@
+@startuml
+interface IGL {
+    PushMatrix() : void
+    PopMatrix() : void
+    MultMatrix(m:Matrix4x4) : void
+    Begin(mode:int) : void
+    End() : void
+    Color(c:Color) : void
+    Vertex(v:Vector3) : void
+}
+class GLSystem {
+    {static} - m_GLSystem : IGL
+    <<internal>> {static} SetSystem(system:IGL) : void
+    <<internal>> {static} GetSystem() : IGL
+    + PushMatrix() : void
+    + PopMatrix() : void
+    + MultMatrix(m:Matrix4x4) : void
+    + Begin(mode:int) : void
+    + End() : void
+    + Color(c:Color) : void
+    + Vertex(v:Vector3) : void
+}
+IGL <|-- GLSystem
+@enduml

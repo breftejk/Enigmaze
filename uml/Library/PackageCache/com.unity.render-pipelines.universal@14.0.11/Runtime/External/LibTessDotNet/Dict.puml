@@ -1,0 +1,21 @@
+@startuml
+class "Dict`1"<TValue> {
+    - _leq : LessOrEqual
+    - _head : Node
+    + Dict(leq:LessOrEqual)
+    + Insert(key:TValue) : Node
+    + InsertBefore(node:Node, key:TValue) : Node
+    + Find(key:TValue) : Node
+    + Min() : Node
+    + Remove(node:Node) : void
+}
+class Node {
+    <<internal>> _key : TValue
+    <<internal>> _prev : Node
+    <<internal>> _next : Node
+    + Key : TValue <<get>>
+    + Prev : Node <<get>>
+    + Next : Node <<get>>
+}
+"Dict`1" +-- Node
+@enduml

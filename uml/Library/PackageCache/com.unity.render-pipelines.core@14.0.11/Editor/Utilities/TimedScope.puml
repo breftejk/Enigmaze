@@ -1,0 +1,11 @@
+@startuml
+struct TimedScope {
+    {static} <<readonly>> - s_StopWatch : ThreadLocal<Stopwatch>
+    - m_DurationMsPtr : double*
+    - TimedScope(durationMsPtr:double*)
+    - Dispose() : void
+    + {static} <<unsafe>> FromPtr(durationMsPtr:double*) : TimedScope
+    + {static} FromRef(durationMs:double) : TimedScope
+}
+IDisposable <|-- TimedScope
+@enduml

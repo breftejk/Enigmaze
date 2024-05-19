@@ -1,0 +1,7 @@
+@startuml
+class ScriptGraphAsset <<sealed>> {
+    # <<override>> ShowData() : void
+    + <<override>> DefaultGraph() : FlowGraph
+}
+"Macro`1" "<FlowGraph>" <|-- ScriptGraphAsset
+@enduml

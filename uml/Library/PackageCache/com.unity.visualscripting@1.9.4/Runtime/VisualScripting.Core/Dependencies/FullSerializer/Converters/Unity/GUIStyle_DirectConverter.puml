@@ -1,0 +1,11 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    + {static} Register_GUIStyle_DirectConverter : GUIStyle_DirectConverter
+}
+class GUIStyle_DirectConverter {
+    # <<override>> DoSerialize(model:GUIStyle, serialized:Dictionary<string, fsData>) : fsResult
+    # <<override>> DoDeserialize(data:Dictionary<string, fsData>, model:GUIStyle) : fsResult
+    + <<override>> CreateInstance(data:fsData, storageType:Type) : object
+}
+"fsDirectConverter`1" "<GUIStyle>" <|-- GUIStyle_DirectConverter
+@enduml

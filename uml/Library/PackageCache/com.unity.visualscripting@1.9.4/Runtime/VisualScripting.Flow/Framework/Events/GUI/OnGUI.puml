@@ -1,0 +1,6 @@
+@startuml
+class OnGUI <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"GlobalEventUnit`1" "<EmptyEventArgs>" <|-- OnGUI
+@enduml

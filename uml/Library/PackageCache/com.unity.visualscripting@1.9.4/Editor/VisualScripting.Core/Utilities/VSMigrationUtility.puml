@@ -1,0 +1,30 @@
+@startuml
+class VSMigrationUtility {
+    - <<readonly>> plugins : List<Plugin>
+    - <<readonly>> steps : List<MigrationStep>
+    - analyticsData : MigrationAnalytics.Data
+    + VSMigrationUtility()
+    + OnUpdate() : void
+    # Complete() : void
+    - SetPluginVersionsToCurrent() : void
+    - {static} ClearLog() : void
+}
+class MigrationStep {
+    + MigrationStep(plugin:Plugin, migration:PluginMigration)
+    <<internal>> <<readonly>> plugin : Plugin
+    <<internal>> <<readonly>> migration : PluginMigration
+    <<internal>> exception : Exception
+    + state : State <<get>>
+    - GetStateIcon(state:State) : EditorTexture
+    + Run() : void
+    + Reset() : void
+}
+enum State {
+    Idle,
+    Migrating,
+    Success,
+    Failure,
+}
+VSMigrationUtility +-- MigrationStep
+MigrationStep +-- State
+@enduml

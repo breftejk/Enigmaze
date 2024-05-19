@@ -1,0 +1,12 @@
+@startuml
+class Awaitable <<partial>> {
+}
+struct "ThreadSafeObjectPool`1"<T> {
+    - <<readonly>> _objectPool : ObjectPool<T>
+    - _spinLock : ManagedLockWithSingleThreadBias = default
+    + ThreadSafeObjectPool(factory:Func<T>, onDestroy:Action<T>)
+    + Get() : T
+    + Release(element:T) : void
+}
+Awaitable +-- "ThreadSafeObjectPool`1"
+@enduml

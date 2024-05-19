@@ -1,0 +1,13 @@
+@startuml
+interface IClipper {
+    PerformClipping() : void
+}
+interface IClippable {
+    gameObject : GameObject <<get>>
+    RecalculateClipping() : void
+    rectTransform : RectTransform <<get>>
+    Cull(clipRect:Rect, validRect:bool) : void
+    SetClipRect(value:Rect, validRect:bool) : void
+    SetClipSoftness(clipSoftness:Vector2) : void
+}
+@enduml

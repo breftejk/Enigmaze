@@ -1,0 +1,12 @@
+@startuml
+class RuntimeTestRunnerFilter {
+    + assemblyNames : string[]
+    + groupNames : string[]
+    + categoryNames : string[]
+    + testNames : string[]
+    + synchronousOnly : bool = false
+    + BuildNUnitFilter() : ITestFilter
+    {static} - OptimizedGroupFilter(s:string) : FullNameFilter
+    - {static} AddFilters(filters:List<ITestFilter>, values:string[], builder:Func<string, TestFilter>) : void
+}
+@enduml

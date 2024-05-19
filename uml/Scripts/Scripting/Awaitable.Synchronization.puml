@@ -1,0 +1,10 @@
+@startuml
+class Awaitable <<partial>> {
+}
+struct ManagedLockWithSingleThreadBias {
+    <<volatile>> - _taken : int
+    + Acquire() : void
+    + Release() : void
+}
+Awaitable +-- ManagedLockWithSingleThreadBias
+@enduml

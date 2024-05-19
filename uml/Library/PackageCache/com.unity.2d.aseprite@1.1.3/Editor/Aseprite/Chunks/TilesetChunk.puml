@@ -1,0 +1,22 @@
+@startuml
+enum TileSetFlags {
+    IncludesLinkToExternal= 1,
+    IncludesTilesInFile= 2,
+    Misc= 4,
+}
+class TilesetChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + tileSetId : uint <<get>>
+    + tileSetFlags : TileSetFlags <<get>>
+    + noOfTiles : uint <<get>>
+    + width : ushort <<get>>
+    + height : ushort <<get>>
+    + tileSetName : string <<get>>
+    <<readonly>> - m_ColorDepth : ushort
+    <<readonly>> - m_PaletteEntries : ReadOnlyCollection<PaletteEntry>
+    <<readonly>> - m_AlphaPaletteEntry : byte
+    <<internal>> TilesetChunk(chunkSize:uint, colorDepth:ushort, paletteEntries:ReadOnlyCollection<PaletteEntry>, alphaPaletteEntry:byte)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- TilesetChunk
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+class AnimationPlayableAssetInspector {
+    - m_TimelineWindow : TimelineWindow
+    - m_Binding : GameObject
+    - m_OffsetEditMode : TimelineAnimationUtilities.OffsetEditMode
+    - m_EditorClip : EditorClip
+    - m_EditorClips : EditorClip[]
+    - m_PositionProperty : SerializedProperty
+    - m_RotationProperty : SerializedProperty
+    - m_AnimClipProperty : SerializedProperty
+    - m_UseTrackMatchFieldsProperty : SerializedProperty
+    - m_MatchTargetFieldsProperty : SerializedProperty
+    - m_SerializedAnimClip : SerializedObject
+    - m_SerializedAnimClipName : SerializedProperty
+    - m_RemoveStartOffsetProperty : SerializedProperty
+    - m_ApplyFootIK : SerializedProperty
+    - m_Loop : SerializedProperty
+    - m_LastPosition : Vector3
+    - m_LastRotation : Vector3
+    + <<override>> OnInspectorGUI() : void
+    - ShowAnimationClipField() : void
+    - TransformOffsetsMatchFieldsGUI() : void
+    - TransformOffsetsGUI() : void
+    - Reevaluate() : void
+    - SetTimeToClip() : void
+    + OnEnable() : void
+    - OnDestroy() : void
+    - OnSceneGUI(sceneView:SceneView) : void
+    - GetTransform() : Transform
+    - DoManipulators() : void
+    - ShowAnimationClipWarnings() : void
+    - ShouldShowOffsets() : bool
+    - ShowRecordableClipRename() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> RotationText : GUIContent
+    + {static} <<readonly>> AnimClipText : GUIContent
+    + {static} <<readonly>> TransformOffsetTitle : GUIContent
+    + {static} <<readonly>> AnimationClipName : GUIContent
+    + {static} <<readonly>> MatchTargetFieldsTitle : GUIContent
+    + {static} <<readonly>> UseDefaults : GUIContent
+    + {static} <<readonly>> RemoveStartOffset : GUIContent
+    + {static} <<readonly>> ApplyFootIK : GUIContent
+    + {static} <<readonly>> Loop : GUIContent
+}
+Editor <|-- AnimationPlayableAssetInspector
+AnimationPlayableAssetInspector +-- Styles
+@enduml

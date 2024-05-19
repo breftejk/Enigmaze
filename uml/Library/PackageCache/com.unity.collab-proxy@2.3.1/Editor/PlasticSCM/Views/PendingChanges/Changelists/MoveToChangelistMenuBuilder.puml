@@ -1,0 +1,14 @@
+@startuml
+class MoveToChangelistMenuBuilder {
+    <<internal>> MoveToChangelistMenuBuilder(wkInfo:WorkspaceInfo, operations:IChangelistMenuOperations)
+    <<internal>> BuildComponents() : void
+    <<internal>> UpdateMenuItems(menu:GenericMenu, operations:ChangelistMenuOperations, changes:List<ChangeInfo>, involvedChangelists:List<ChangeListInfo>) : void
+    - NewChangelist_Click(changes:List<ChangeInfo>) : void
+    - MoveToChangelist_Click(changes:List<ChangeInfo>, targetChangelist:string) : void
+    {static} - GetSubMenuText(subMenuName:string) : string
+    - mMoveToChangelistMenuItemContent : GUIContent
+    - mNewChangelistMenuItemContent : GUIContent
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    <<readonly>> - mOperations : IChangelistMenuOperations
+}
+@enduml

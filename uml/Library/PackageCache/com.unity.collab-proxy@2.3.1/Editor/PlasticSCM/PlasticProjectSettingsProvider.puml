@@ -1,0 +1,72 @@
+@startuml
+class PlasticProjectSettingsProvider {
+    + PlasticProjectSettingsProvider(path:string, scope:SettingsScope)
+    + {static} CreateSettingsProvider() : SettingsProvider
+    + <<override>> OnActivate(searchContext:string, rootElement:VisualElement) : void
+    + <<override>> OnDeactivate() : void
+    + <<override>> OnGUI(searchContext:string) : void
+    - DoIsEnabledSetting() : void
+    - DoIsEnabledButton() : void
+    - DoPendingChangesSettings() : void
+    - DoGeneralSettings() : void
+    - DoFileChangeSettings() : void
+    - DoFileVisibililySettings() : void
+    - DoFileDetectionSetings() : void
+    - DoFsWatcherMessage(isEnabled:bool) : void
+    - CheckFsWatcher(wkInfo:WorkspaceInfo) : void
+    - SetOptions(options:PendingChangesOptions) : void
+    - GetOptions() : PendingChangesOptions
+    - IsDirty(currentOptions:PendingChangesOptions) : bool
+    {static} - DrawSettingsSection(drawSettings:Action) : void
+    {static} - GetPendingChangesView() : IAutoRefreshView
+    {static} - GetFsWatcherEnabledMessage() : string
+    {static} - GetFsWatcherDisabledMessage() : string
+    {static} - GetFsWatcherEnabledExplanation() : string
+    {static} - GetFsWatcherDisabledExplanation() : string
+    {static} - GetHelpLink() : string
+    {static} - IsFileSystemWatcherEnabled(wkInfo:WorkspaceInfo) : bool
+    {static} - IsEnabled(option:WorkspaceStatusOptions, options:WorkspaceStatusOptions) : bool
+    - mIsPluginEnabled : bool
+    - mWkInfo : WorkspaceInfo
+    - mInitialOptions : PendingChangesOptions
+    - mShowCheckouts : bool
+    - mAutoRefresh : bool
+    - mFSWatcherEnabled : bool
+    - mShowChangedFiles : bool
+    - mCheckFileContent : bool
+    - mUseChangeLists : bool
+    - mShowPrivateFields : bool
+    - mShowIgnoredFiles : bool
+    - mShowHiddenFiles : bool
+    - mShowDeletedFiles : bool
+    - mShowMovedFiles : bool
+    - mMatchBinarySameExtension : bool
+    - mMatchTextSameExtension : bool
+    - mSimilarityPercent : int
+    <<const>> - FS_WATCHER_HELP_URL : string = "https://plasticscm.com/download/help/support"
+    <<const>> - INOTIFY_HELP_URL : string = "https://plasticscm.com/download/help/inotify"
+}
+interface IAutoRefreshView {
+    DisableAutoRefresh() : void
+    EnableAutoRefresh() : void
+    ForceRefresh() : void
+}
+class Styles {
+    <<internal>> {static} ShowCheckouts : GUIContent
+    <<internal>> {static} AutoRefresh : GUIContent
+    <<internal>> {static} ShowChangedFiles : GUIContent
+    <<internal>> {static} CheckFileContent : GUIContent
+    <<internal>> {static} UseChangeLists : GUIContent
+    <<internal>> {static} ShowPrivateFields : GUIContent
+    <<internal>> {static} ShowIgnoredFields : GUIContent
+    <<internal>> {static} ShowHiddenFields : GUIContent
+    <<internal>> {static} ShowDeletedFilesDirs : GUIContent
+    <<internal>> {static} ShowMovedFiles : GUIContent
+    <<internal>> {static} MatchBinarySameExtension : GUIContent
+    <<internal>> {static} MatchTextSameExtension : GUIContent
+    <<internal>> {static} SimilarityPercent : GUIContent
+}
+SettingsProvider <|-- PlasticProjectSettingsProvider
+PlasticProjectSettingsProvider +-- IAutoRefreshView
+PlasticProjectSettingsProvider +-- Styles
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class IKGizmos {
+    - {static} <<readonly>> kTargetHashCode : int
+    - enabledColor : Color
+    - disabledColor : Color
+    - <<const>> kCircleHandleRadius : float = 0.1f
+    - <<const>> kNodeRadius : float = 0.05f
+    - <<const>> kDottedLineLength : float = 5f
+    - <<const>> kFadeStart : float = 0.75f
+    - <<const>> kFadeEnd : float = 1.75f
+    - m_ChainPositionOverrides : Dictionary<IKChain2D, Vector3>
+    + isDragging : bool <<get>>
+    + DoSolversGUI(manager:IKManager2D) : void
+    - DoTargetGUI(solver:Solver2D, chain:IKChain2D) : void
+    - DoIkPoseGUI(solver:Solver2D, chain:IKChain2D) : void
+    - StoreSolverPositionOverrides(solver:Solver2D) : void
+    - SetSolverPositionOverrides() : void
+    - IsTargetTransformSelected(chain:IKChain2D) : bool
+    - DrawSolver(solver:Solver2D, color:Color) : void
+    - DrawChain(chain:IKChain2D, solverColor:Color, solverHasTargets:bool) : void
+    - FadeFromChain(color:Color, chain:IKChain2D) : Color
+    - FadeFromSize(color:Color, size:float, fadeStart:float, fadeEnd:float) : Color
+    - IsVisible(position:Vector3) : bool
+}
+"ScriptableSingleton`1" "<IKGizmos>" <|-- IKGizmos
+@enduml

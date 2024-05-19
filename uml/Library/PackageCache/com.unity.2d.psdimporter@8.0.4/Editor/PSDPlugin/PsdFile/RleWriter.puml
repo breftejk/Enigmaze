@@ -1,0 +1,24 @@
+@startuml
+class RleWriter {
+    - maxPacketLength : int = 128
+    - rleLock : object
+    - stream : Stream
+    - data : byte[]
+    - offset : int
+    - isRepeatPacket : bool
+    - idxPacketStart : int
+    - packetLength : int
+    - runValue : byte
+    - runLength : int
+    + RleWriter(stream:Stream)
+    + Write(data:byte[], offset:int, count:int) : int
+    - ClearPacket() : void
+    - WriteRepeatPacket(length:int) : void
+    - WriteLiteralPacket(length:int) : void
+    - WritePacket() : void
+    - StartPacket(count:int, isRepeatPacket:bool, runLength:int, value:byte) : void
+    - ExtendPacketAndRun(value:byte) : void
+    - ExtendPacketStartNewRun(value:byte) : void
+    - EncodeToStream(ptr:byte[], start:int, end:int) : int
+}
+@enduml

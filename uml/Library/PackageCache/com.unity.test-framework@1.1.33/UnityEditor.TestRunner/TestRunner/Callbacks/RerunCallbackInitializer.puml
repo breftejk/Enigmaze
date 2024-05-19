@@ -1,0 +1,5 @@
+@startuml
+class RerunCallbackInitializer <<static>> {
+    {static} - RerunCallbackInitializer()
+}
+@enduml

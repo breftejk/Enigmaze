@@ -1,0 +1,23 @@
+@startuml
+class LudiqCoreChangelog_1_4_6 {
+    + LudiqCoreChangelog_1_4_6(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqCoreChangelog_1_4_6f2 {
+    + LudiqCoreChangelog_1_4_6f2(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+class LudiqCoreChangelog_1_4_6f3 {
+    + LudiqCoreChangelog_1_4_6f3(plugin:Plugin)
+    + <<override>> version : SemanticVersion <<get>>
+    + <<override>> date : DateTime <<get>>
+    + <<override>> changes : IEnumerable<string> <<get>>
+}
+PluginChangelog <|-- LudiqCoreChangelog_1_4_6
+PluginChangelog <|-- LudiqCoreChangelog_1_4_6f2
+PluginChangelog <|-- LudiqCoreChangelog_1_4_6f3
+@enduml

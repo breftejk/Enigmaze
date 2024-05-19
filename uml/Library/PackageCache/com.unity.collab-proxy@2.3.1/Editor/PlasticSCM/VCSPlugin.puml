@@ -1,0 +1,8 @@
+@startuml
+class VCSPlugin <<static>> {
+    <<internal>> {static} IsEnabled() : bool
+    <<internal>> {static} Disable() : void
+    {static} - GetVersionControl() : string
+    {static} - SetVersionControl(versionControl:string) : void
+}
+@enduml

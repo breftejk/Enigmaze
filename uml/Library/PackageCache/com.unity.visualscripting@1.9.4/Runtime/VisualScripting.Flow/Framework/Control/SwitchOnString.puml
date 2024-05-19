@@ -1,0 +1,7 @@
+@startuml
+class SwitchOnString {
+    + ignoreCase : bool <<get>> <<set>>
+    # <<override>> Matches(a:string, b:string) : bool
+}
+"SwitchUnit`1" "<string>" <|-- SwitchOnString
+@enduml

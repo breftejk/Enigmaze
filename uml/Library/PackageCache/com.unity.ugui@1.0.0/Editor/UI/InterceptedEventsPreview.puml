@@ -1,0 +1,30 @@
+@startuml
+class InterceptedEventsPreview {
+    - m_TargetEvents : Dictionary<GameObject, List<ComponentInterceptedEvents>>
+    - m_InterceptsAnyEvent : bool = false
+    - m_Title : GUIContent
+    - m_Styles : Styles
+    + <<override>> Initialize(targets:UnityEngine.Object[]) : void
+    + <<override>> GetPreviewTitle() : GUIContent
+    + <<override>> HasPreviewGUI() : bool
+    + <<override>> OnPreviewGUI(r:Rect, background:GUIStyle) : void
+    {static} - s_EventSystemInterfaces : List<Type> = null
+    - {static} s_PossibleEvents : List<GUIContent> = null
+    {static} - s_InterfaceEventSystemEvents : Dictionary<Type, List<int>> = null
+    {static} <<readonly>> - s_ComponentEvents2 : Dictionary<Type, ComponentInterceptedEvents>
+    # {static} GetEventsInfo(gameObject:GameObject) : List<ComponentInterceptedEvents>
+    - {static} InitializeEvetnsInterfaceCacheIfNeeded() : void
+}
+class ComponentInterceptedEvents {
+    + componentName : GUIContent
+    + interceptedEvents : int[]
+}
+class Styles {
+    + labelStyle : GUIStyle
+    + componentName : GUIStyle
+    + Styles()
+}
+ObjectPreview <|-- InterceptedEventsPreview
+InterceptedEventsPreview +-- ComponentInterceptedEvents
+InterceptedEventsPreview +-- Styles
+@enduml

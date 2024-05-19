@@ -1,0 +1,20 @@
+@startuml
+abstract class "GameObjectEventUnit`1"<TArgs> {
+    # <<sealed>> <<override>> register : bool <<get>>
+    + {abstract} MessageListenerType : Type <<get>>
+    + <<override>> CreateData() : IGraphElementData
+    + target : ValueInput <<get>>
+    # <<override>> Definition() : void
+    + <<override>> GetHook(reference:GraphReference) : EventHook
+    # <<virtual>> hookName : string <<get>>
+    - UpdateTarget(stack:GraphStack) : void
+    # StartListening(stack:GraphStack, updateTarget:bool) : void
+    + <<override>> StartListening(stack:GraphStack) : void
+}
+class Data <<new>> {
+    + target : GameObject
+}
+"EventUnit`1" "<TArgs>" <|-- "GameObjectEventUnit`1"
+IGameObjectEventUnit <|-- "GameObjectEventUnit`1"
+"GameObjectEventUnit`1" +-- Data
+@enduml

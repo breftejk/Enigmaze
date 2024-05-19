@@ -1,0 +1,17 @@
+@startuml
+class SkeletonSelection {
+    - m_BoneSelection : BoneSelection
+    + Count : int <<get>>
+    + activeElement : BoneCache <<get>> <<set>>
+    + elements : BoneCache[] <<get>> <<set>>
+    + root : BoneCache <<get>>
+    + roots : BoneCache[] <<get>>
+    + BeginSelection() : void
+    + Clear() : void
+    + Contains(element:BoneCache) : bool
+    + EndSelection(select:bool) : void
+    + Select(element:BoneCache, select:bool) : void
+    - ValidateBone(bone:BoneCache) : void
+}
+IBoneSelection <|-- SkeletonSelection
+@enduml

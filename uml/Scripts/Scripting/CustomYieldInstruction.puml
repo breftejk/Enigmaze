@@ -1,0 +1,9 @@
+@startuml
+abstract class CustomYieldInstruction {
+    + {abstract} keepWaiting : bool <<get>>
+    + Current : object <<get>>
+    + MoveNext() : bool
+    + <<virtual>> Reset() : void
+}
+IEnumerator <|-- CustomYieldInstruction
+@enduml

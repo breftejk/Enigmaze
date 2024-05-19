@@ -1,0 +1,63 @@
+@startuml
+struct InputStateBlock {
+    + <<const>> InvalidOffset : uint = 0xffffffff
+    + <<const>> AutomaticOffset : uint = 0xfffffffe
+    + {static} <<readonly>> FormatInvalid : FourCC
+    <<internal>> <<const>> kFormatInvalid : int = 0
+    + {static} <<readonly>> FormatBit : FourCC
+    <<internal>> <<const>> kFormatBit : int
+    + {static} <<readonly>> FormatSBit : FourCC
+    <<internal>> <<const>> kFormatSBit : int
+    + {static} <<readonly>> FormatInt : FourCC
+    <<internal>> <<const>> kFormatInt : int
+    + {static} <<readonly>> FormatUInt : FourCC
+    <<internal>> <<const>> kFormatUInt : int
+    + {static} <<readonly>> FormatShort : FourCC
+    <<internal>> <<const>> kFormatShort : int
+    + {static} <<readonly>> FormatUShort : FourCC
+    <<internal>> <<const>> kFormatUShort : int
+    + {static} <<readonly>> FormatByte : FourCC
+    <<internal>> <<const>> kFormatByte : int
+    + {static} <<readonly>> FormatSByte : FourCC
+    <<internal>> <<const>> kFormatSByte : int
+    + {static} <<readonly>> FormatLong : FourCC
+    <<internal>> <<const>> kFormatLong : int
+    + {static} <<readonly>> FormatULong : FourCC
+    <<internal>> <<const>> kFormatULong : int
+    + {static} <<readonly>> FormatFloat : FourCC
+    <<internal>> <<const>> kFormatFloat : int
+    + {static} <<readonly>> FormatDouble : FourCC
+    <<internal>> <<const>> kFormatDouble : int
+    + {static} <<readonly>> FormatVector2 : FourCC
+    <<internal>> <<const>> kFormatVector2 : int
+    + {static} <<readonly>> FormatVector3 : FourCC
+    <<internal>> <<const>> kFormatVector3 : int
+    + {static} <<readonly>> FormatQuaternion : FourCC
+    <<internal>> <<const>> kFormatQuaternion : int
+    + {static} <<readonly>> FormatVector2Short : FourCC
+    + {static} <<readonly>> FormatVector3Short : FourCC
+    + {static} <<readonly>> FormatVector2Byte : FourCC
+    + {static} <<readonly>> FormatVector3Byte : FourCC
+    + {static} <<readonly>> FormatPose : FourCC
+    <<internal>> <<const>> kFormatPose : int
+    + {static} GetSizeOfPrimitiveFormatInBits(type:FourCC) : int
+    + {static} GetPrimitiveFormatFromType(type:Type) : FourCC
+    + format : FourCC <<get>> <<set>>
+    + byteOffset : uint <<get>> <<set>>
+    <<internal>> m_ByteOffset : uint
+    + bitOffset : uint <<get>> <<set>>
+    + sizeInBits : uint <<get>> <<set>>
+    <<internal>> alignedSizeInBytes : uint <<get>>
+    <<internal>> effectiveByteOffset : uint <<get>>
+    <<internal>> effectiveBitOffset : uint <<get>>
+    + ReadInt(statePtr:void*) : int
+    + WriteInt(statePtr:void*, value:int) : void
+    + ReadFloat(statePtr:void*) : float
+    + WriteFloat(statePtr:void*, value:float) : void
+    <<internal>> FloatToPrimitiveValue(value:float) : PrimitiveValue
+    + ReadDouble(statePtr:void*) : double
+    + WriteDouble(statePtr:void*, value:double) : void
+    + Write(statePtr:void*, value:PrimitiveValue) : void
+    + CopyToFrom(toStatePtr:void*, fromStatePtr:void*) : void
+}
+@enduml

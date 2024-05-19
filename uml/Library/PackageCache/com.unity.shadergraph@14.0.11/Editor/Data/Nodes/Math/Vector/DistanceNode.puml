@@ -1,0 +1,8 @@
+@startuml
+class DistanceNode {
+    + DistanceNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Distance(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:Vector1) : string
+}
+CodeFunctionNode <|-- DistanceNode
+@enduml

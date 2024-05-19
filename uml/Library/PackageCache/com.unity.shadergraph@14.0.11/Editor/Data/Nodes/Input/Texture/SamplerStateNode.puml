@@ -1,0 +1,24 @@
+@startuml
+class SamplerStateNode {
+    - m_filter : TextureSamplerState.FilterMode
+    + filter : TextureSamplerState.FilterMode <<get>> <<set>>
+    - m_wrap : TextureSamplerState.WrapMode
+    + wrap : TextureSamplerState.WrapMode <<get>> <<set>>
+    - m_aniso : TextureSamplerState.Anisotropic
+    + anisotropic : TextureSamplerState.Anisotropic <<get>> <<set>>
+    + SamplerStateNode()
+    + <<override>> hasPreview : bool <<get>>
+    - <<const>> kOutputSlotId : int = 0
+    - <<const>> kOutputSlotName : string = "Out"
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    - GetSamplerStatePropertyName() : string
+    - GetSamplerStateVariableName() : string
+    + <<override>> GetVariableNameForSlot(slotId:int) : string
+    + <<override>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<override>> GetVariableNameForNode() : string
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- SamplerStateNode
+IPropertyFromNode <|-- SamplerStateNode
+@enduml

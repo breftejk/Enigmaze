@@ -1,0 +1,112 @@
+@startuml
+abstract class AbstractMaterialNode {
+    - m_Group : JsonRef<GroupData> = null
+    - m_Name : string
+    - m_DrawState : DrawState
+    - m_HasError : bool
+    - m_IsValid : bool = true
+    - m_IsActive : bool = true
+    - m_WasUsedByGenerator : bool = false
+    - m_Slots : List<JsonData<MaterialSlot>>
+    + owner : GraphData <<get>> <<set>>
+    <<internal>> <<virtual>> ExposeToSearcher : bool <<get>>
+    - m_OnModified : OnNodeModified
+    - m_UnregisterAll : Action
+    + group : GroupData <<get>> <<set>>
+    + RegisterCallback(callback:OnNodeModified) : void
+    + UnregisterCallback(callback:OnNodeModified) : void
+    + Dirty(scope:ModificationScope) : void
+    + name : string <<get>> <<set>>
+    + synonyms : string[]
+    # <<virtual>> documentationPage : string <<get>>
+    + <<virtual>> documentationURL : string <<get>>
+    + <<virtual>> canDeleteNode : bool <<get>>
+    + drawState : DrawState <<get>> <<set>>
+    - rect : Rect <<get>> <<set>>
+    + <<virtual>> canSetPrecision : bool <<get>>
+    + graphPrecision : GraphPrecision <<get>> <<set>>
+    - m_ConcretePrecision : ConcretePrecision
+    + concretePrecision : ConcretePrecision <<get>> <<set>>
+    - m_Precision : Precision
+    + precision : Precision <<get>> <<set>>
+    - m_PreviewExpanded : bool = true
+    + previewExpanded : bool <<get>> <<set>>
+    # m_DismissedVersion : int = 0
+    + dismissedUpdateVersion : int <<get>> <<set>>
+    + <<virtual>> allowedNodeVersions : IEnumerable<int> <<get>>
+    + <<virtual>> hasPreview : bool <<get>>
+    <<internal>> m_PreviewMode : PreviewMode
+    + <<virtual>> previewMode : PreviewMode <<get>>
+    + <<virtual>> allowedInSubGraph : bool <<get>>
+    + <<virtual>> allowedInMainGraph : bool <<get>>
+    + <<virtual>> allowedInLayerGraph : bool <<get>>
+    + <<virtual>> hasError : bool <<get>> <<protected set>>
+    + <<virtual>> isActive : bool <<get>>
+    <<internal>> <<virtual>> wasUsedByGenerator : bool <<get>>
+    <<internal>> SetUsedByGenerator() : void
+    - m_ActiveState : ActiveState
+    + activeState : ActiveState <<get>>
+    + SetOverrideActiveState(overrideState:ActiveState, updateConnections:bool) : void
+    + SetActive(value:bool, updateConnections:bool) : void
+    + <<virtual>> isValid : bool <<get>> <<set>>
+    - m_DefaultVariableName : string
+    - m_NameForDefaultVariableName : string
+    - defaultVariableName : string <<get>>
+    - m_CustomColors : CustomColorData
+    + TryGetColor(provider:string, color:Color) : bool
+    + ResetColor(provider:string) : void
+    + SetColor(provider:string, color:Color) : void
+    # AbstractMaterialNode()
+    + GetInputSlots(foundSlots:List<T>) : void
+    + <<virtual>> GetInputSlots(startingSlot:MaterialSlot, foundSlots:List<T>) : void
+    + GetOutputSlots(foundSlots:List<T>) : void
+    + <<virtual>> GetOutputSlots(startingSlot:MaterialSlot, foundSlots:List<T>) : void
+    + GetSlots(foundSlots:List<T>) : void
+    + <<virtual>> CollectShaderProperties(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + GetSlotValue(inputSlotId:int, generationMode:GenerationMode, concretePrecision:ConcretePrecision) : string
+    + GetSlotValue(inputSlotId:int, generationMode:GenerationMode) : string
+    + GetSlotProperty(inputSlotId:int) : AbstractShaderProperty
+    # <<internal>> <<virtual>> GetOutputForSlot(fromSocketRef:SlotReference, valueType:ConcreteSlotValueType, generationMode:GenerationMode) : string
+    + GetInputNodeFromSlot(inputSlotId:int) : AbstractMaterialNode
+    + {static} ConvertDynamicVectorInputTypeToConcrete(inputTypes:IEnumerable<ConcreteSlotValueType>) : ConcreteSlotValueType
+    + {static} ConvertDynamicMatrixInputTypeToConcrete(inputTypes:IEnumerable<ConcreteSlotValueType>) : ConcreteSlotValueType
+    # <<const>> k_validationErrorMessage : string = "Error found during node validation"
+    + <<virtual>> UpdatePrecision(inputSlots:List<MaterialSlot>) : void
+    + <<virtual>> EvaluateDynamicMaterialSlots(inputSlots:List<MaterialSlot>, outputSlots:List<MaterialSlot>) : void
+    + <<virtual>> Concretize() : void
+    + <<virtual>> ValidateNode() : void
+    + <<virtual>> canCutNode : bool <<get>>
+    + <<virtual>> canCopyNode : bool <<get>>
+    # <<virtual>> CalculateNodeHasError() : void
+    # GetRayTracingError() : string
+    + <<virtual>> CollectPreviewMaterialProperties(properties:List<PreviewProperty>) : void
+    + <<virtual>> GetVariableNameForSlot(slotId:int) : string
+    + GetConnnectionStateVariableNameForSlot(slotId:int) : string
+    + <<virtual>> GetVariableNameForNode() : string
+    + AddSlot(slot:MaterialSlot, attemptToModifyExistingInstance:bool) : MaterialSlot
+    + RemoveSlot(slotId:int) : void
+    # <<virtual>> OnSlotsChanged() : void
+    + RemoveSlotsNameNotMatching(slotIds:IEnumerable<int>, supressWarnings:bool) : void
+    + SetSlotOrder(desiredOrderSlotIds:List<int>) : bool
+    + GetSlotReference(slotId:int) : SlotReference
+    + FindSlot(slotId:int) : T
+    + FindInputSlot(slotId:int) : T
+    + FindOutputSlot(slotId:int) : T
+    + <<virtual>> GetInputsWithNoConnection() : IEnumerable<MaterialSlot>
+    + SetupSlots() : void
+    + <<virtual>> UpdateNodeAfterDeserialization() : void
+    + IsSlotConnected(slotId:int) : bool
+    + <<virtual>> Setup() : void
+    # EnqueSlotsForSerialization() : void
+    + <<virtual>> Dispose() : void
+}
+enum ActiveState {
+    Implicit= 0,
+    ExplicitInactive= 1,
+    ExplicitActive= 2,
+}
+JsonObject <|-- AbstractMaterialNode
+IGroupItem <|-- AbstractMaterialNode
+IRectInterface <|-- AbstractMaterialNode
+AbstractMaterialNode +-- ActiveState
+@enduml

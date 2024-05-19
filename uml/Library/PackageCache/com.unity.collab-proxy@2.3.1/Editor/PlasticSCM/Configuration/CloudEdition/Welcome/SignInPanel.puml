@@ -1,0 +1,27 @@
+@startuml
+class SignInPanel {
+    <<internal>> SignInPanel(parentWindow:CloudEditionWelcomeWindow, restApi:IPlasticWebRestApi, cmConnection:CmConnection)
+    <<internal>> Dispose() : void
+    - SignInWithEmailButton_Clicked() : void
+    - SignUpButton_Clicked() : void
+    <<internal>> SignInWithUnityIdButton_Clicked() : void
+    <<internal>> SignInWithUnityIdButtonAutoLogin() : void
+    - PrivacyPolicyStatementButton_Clicked() : void
+    - BuildComponents() : void
+    - BuildPrivatePolicyArea() : void
+    - BuildSignInEmailArea() : void
+    - BuildSignInUnityIdArea() : void
+    - BuildSignUpArea() : void
+    - InitializeLayoutAndStyles() : void
+    - mSignInWithEmailPanel : SignInWithEmailPanel
+    - mWaitingSignInPanel : WaitingSignInPanel
+    - mSignInWithUnityIdButton : Button
+    - mSignInWithEmailButton : Button
+    - mPrivacyPolicyStatementButton : Button
+    - mSignUpButton : Button
+    <<readonly>> - mParentWindow : CloudEditionWelcomeWindow
+    <<readonly>> - mRestApi : IPlasticWebRestApi
+    <<readonly>> - mCmConnection : CmConnection
+}
+VisualElement <|-- SignInPanel
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+class LayoutElement {
+    - m_IgnoreLayout : bool = false
+    - m_MinWidth : float
+    - m_MinHeight : float
+    - m_PreferredWidth : float
+    - m_PreferredHeight : float
+    - m_FlexibleWidth : float
+    - m_FlexibleHeight : float
+    - m_LayoutPriority : int = 1
+    + <<virtual>> ignoreLayout : bool <<get>> <<set>>
+    + <<virtual>> CalculateLayoutInputHorizontal() : void
+    + <<virtual>> CalculateLayoutInputVertical() : void
+    + <<virtual>> minWidth : float <<get>> <<set>>
+    + <<virtual>> minHeight : float <<get>> <<set>>
+    + <<virtual>> preferredWidth : float <<get>> <<set>>
+    + <<virtual>> preferredHeight : float <<get>> <<set>>
+    + <<virtual>> flexibleWidth : float <<get>> <<set>>
+    + <<virtual>> flexibleHeight : float <<get>> <<set>>
+    + <<virtual>> layoutPriority : int <<get>> <<set>>
+    # LayoutElement()
+    # <<override>> OnEnable() : void
+    # <<override>> OnTransformParentChanged() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnDidApplyAnimationProperties() : void
+    # <<override>> OnBeforeTransformParentChanged() : void
+    # SetDirty() : void
+}
+UIBehaviour <|-- LayoutElement
+ILayoutElement <|-- LayoutElement
+ILayoutIgnorer <|-- LayoutElement
+@enduml

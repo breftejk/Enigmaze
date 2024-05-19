@@ -1,0 +1,12 @@
+@startuml
+class DocsExampleActionsAssetReference {
+    + actions : InputActionAsset
+    - moveAction : InputAction
+    - Awake() : void
+    - Update() : void
+    - OnJump(context:InputAction.CallbackContext) : void
+    - OnEnable() : void
+    - OnDisable() : void
+}
+MonoBehaviour <|-- DocsExampleActionsAssetReference
+@enduml

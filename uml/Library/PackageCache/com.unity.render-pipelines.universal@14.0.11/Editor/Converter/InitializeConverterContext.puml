@@ -1,0 +1,7 @@
+@startuml
+struct InitializeConverterContext {
+    <<internal>> items : List<ConverterItemDescriptor>
+    + isBatchMode : bool <<get>> <<internal set>>
+    <<internal>> AddAssetToConvert(item:ConverterItemDescriptor) : void
+}
+@enduml

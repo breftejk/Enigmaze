@@ -1,0 +1,23 @@
+@startuml
+class Vector4Node {
+    - m_Value : Vector4
+    <<const>> - kInputSlotXName : string = "X"
+    <<const>> - kInputSlotYName : string = "Y"
+    <<const>> - kInputSlotZName : string = "Z"
+    <<const>> - kInputSlotWName : string = "W"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> InputSlotXId : int = 1
+    + <<const>> InputSlotYId : int = 2
+    + <<const>> InputSlotZId : int = 3
+    + <<const>> InputSlotWId : int = 4
+    + Vector4Node()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- Vector4Node
+IGeneratesBodyCode <|-- Vector4Node
+IPropertyFromNode <|-- Vector4Node
+@enduml

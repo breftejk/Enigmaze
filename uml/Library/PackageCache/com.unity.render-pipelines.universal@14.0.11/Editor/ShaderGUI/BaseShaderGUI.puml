@@ -1,0 +1,124 @@
+@startuml
+abstract class BaseShaderGUI {
+    # materialEditor : MaterialEditor <<get>> <<set>>
+    # surfaceTypeProp : MaterialProperty <<get>> <<set>>
+    # blendModeProp : MaterialProperty <<get>> <<set>>
+    # preserveSpecProp : MaterialProperty <<get>> <<set>>
+    # cullingProp : MaterialProperty <<get>> <<set>>
+    # ztestProp : MaterialProperty <<get>> <<set>>
+    # zwriteProp : MaterialProperty <<get>> <<set>>
+    # alphaClipProp : MaterialProperty <<get>> <<set>>
+    # alphaCutoffProp : MaterialProperty <<get>> <<set>>
+    # castShadowsProp : MaterialProperty <<get>> <<set>>
+    # receiveShadowsProp : MaterialProperty <<get>> <<set>>
+    # baseMapProp : MaterialProperty <<get>> <<set>>
+    # baseColorProp : MaterialProperty <<get>> <<set>>
+    # emissionMapProp : MaterialProperty <<get>> <<set>>
+    # emissionColorProp : MaterialProperty <<get>> <<set>>
+    # queueOffsetProp : MaterialProperty <<get>> <<set>>
+    # queueControlProp : MaterialProperty <<get>> <<set>>
+    + m_FirstTimeApply : bool = true
+    <<readonly>> - m_MaterialScopeList : MaterialHeaderScopeList
+    - <<const>> queueOffsetRange : int = 50
+    + <<virtual>> MaterialChanged(material:Material) : void
+    + <<virtual>> FindProperties(properties:MaterialProperty[]) : void
+    + <<override>> OnGUI(materialEditorIn:MaterialEditor, properties:MaterialProperty[]) : void
+    # <<virtual>> materialFilter : uint <<get>>
+    + <<virtual>> OnOpenGUI(material:Material, materialEditor:MaterialEditor) : void
+    + ShaderPropertiesGUI(material:Material) : void
+    <<internal>> DrawShaderGraphProperties(material:Material, properties:IEnumerable<MaterialProperty>) : void
+    <<internal>> {static} DrawFloatToggleProperty(styles:GUIContent, prop:MaterialProperty, indentLevel:int, isDisabled:bool) : void
+    + <<virtual>> DrawSurfaceOptions(material:Material) : void
+    + <<virtual>> DrawSurfaceInputs(material:Material) : void
+    + <<virtual>> DrawAdvancedOptions(material:Material) : void
+    # DrawQueueOffsetField() : void
+    + <<virtual>> FillAdditionalFoldouts(materialScopesList:MaterialHeaderScopeList) : void
+    + <<virtual>> DrawBaseProperties(material:Material) : void
+    - DrawEmissionTextureProperty() : void
+    # <<virtual>> DrawEmissionProperties(material:Material, keyword:bool) : void
+    + {static} DrawNormalArea(materialEditor:MaterialEditor, bumpMap:MaterialProperty, bumpMapScale:MaterialProperty) : void
+    # {static} DrawTileOffset(materialEditor:MaterialEditor, textureProp:MaterialProperty) : void
+    <<internal>> {static} UpdateMaterialSurfaceOptions(material:Material, automaticRenderQueue:bool) : void
+    <<internal>> {static} UpdateMaterialRenderQueueControl(material:Material) : void
+    <<internal>> {static} GetAutomaticQueueControlSetting(material:Material) : bool
+    + {static} SetMaterialKeywords(material:Material, shadingModelFunc:Action<Material>, shaderFunc:Action<Material>) : void
+    <<internal>> {static} SetMaterialSrcDstBlendProperties(material:Material, srcBlend:UnityEngine.Rendering.BlendMode, dstBlend:UnityEngine.Rendering.BlendMode) : void
+    <<internal>> {static} SetMaterialSrcDstBlendProperties(material:Material, srcBlendRGB:UnityEngine.Rendering.BlendMode, dstBlendRGB:UnityEngine.Rendering.BlendMode, srcBlendAlpha:UnityEngine.Rendering.BlendMode, dstBlendAlpha:UnityEngine.Rendering.BlendMode) : void
+    <<internal>> {static} SetMaterialZWriteProperty(material:Material, zwriteEnabled:bool) : void
+    <<internal>> {static} SetupMaterialBlendModeInternal(material:Material, automaticRenderQueue:int) : void
+    + {static} SetupMaterialBlendMode(material:Material) : void
+    + <<override>> AssignNewShaderToMaterial(material:Material, oldShader:Shader, newShader:Shader) : void
+    + {static} TwoFloatSingleLine(title:GUIContent, prop1:MaterialProperty, prop1Label:GUIContent, prop2:MaterialProperty, prop2Label:GUIContent, materialEditor:MaterialEditor, labelWidth:float) : void
+    + DoPopup(label:GUIContent, property:MaterialProperty, options:string[]) : void
+    + {static} TextureColorProps(materialEditor:MaterialEditor, label:GUIContent, textureProp:MaterialProperty, colorProp:MaterialProperty, hdr:bool) : Rect
+    + <<new>> {static} FindProperty(propertyName:string, properties:MaterialProperty[]) : MaterialProperty
+    + <<new>> {static} FindProperty(propertyName:string, properties:MaterialProperty[], propertyIsMandatory:bool) : MaterialProperty
+}
+enum Expandable {
+    SurfaceOptions= 1 << 0,
+    SurfaceInputs= 1 << 1,
+    Advanced= 1 << 2,
+    Details= 1 << 3,
+}
+enum SurfaceType {
+    Opaque,
+    Transparent,
+}
+enum BlendMode {
+    Alpha,
+    Premultiply,
+    Additive,
+    Multiply,
+}
+enum SmoothnessSource {
+    SpecularAlpha,
+    BaseAlpha,
+}
+enum RenderFace {
+    Front= 2,
+    Back= 1,
+    Both= 0,
+}
+enum QueueControl {
+    Auto= 0,
+    UserOverride= 1,
+}
+class Styles {
+    + {static} <<readonly>> surfaceTypeNames : string[]
+    + {static} <<readonly>> blendModeNames : string[]
+    + {static} <<readonly>> renderFaceNames : string[]
+    + {static} <<readonly>> zwriteNames : string[]
+    + {static} <<readonly>> queueControlNames : string[]
+    + {static} <<readonly>> ztestValues : int[]
+    + {static} <<readonly>> ztestNames : string[]
+    + {static} <<readonly>> SurfaceOptions : GUIContent
+    + {static} <<readonly>> SurfaceInputs : GUIContent
+    + {static} <<readonly>> AdvancedLabel : GUIContent
+    + {static} <<readonly>> surfaceType : GUIContent
+    + {static} <<readonly>> blendingMode : GUIContent
+    + {static} <<readonly>> preserveSpecularText : GUIContent
+    + {static} <<readonly>> cullingText : GUIContent
+    + {static} <<readonly>> zwriteText : GUIContent
+    + {static} <<readonly>> ztestText : GUIContent
+    + {static} <<readonly>> alphaClipText : GUIContent
+    + {static} <<readonly>> alphaClipThresholdText : GUIContent
+    + {static} <<readonly>> castShadowText : GUIContent
+    + {static} <<readonly>> receiveShadowText : GUIContent
+    + {static} <<readonly>> baseMap : GUIContent
+    + {static} <<readonly>> emissionMap : GUIContent
+    + {static} <<readonly>> normalMapText : GUIContent
+    + {static} <<readonly>> bumpScaleNotSupported : GUIContent
+    + {static} <<readonly>> fixNormalNow : GUIContent
+    + {static} <<readonly>> queueSlider : GUIContent
+    + {static} <<readonly>> queueControl : GUIContent
+    + {static} <<readonly>> documentationIcon : GUIContent
+}
+ShaderGUI <|-- BaseShaderGUI
+BaseShaderGUI +-- Expandable
+BaseShaderGUI +-- SurfaceType
+BaseShaderGUI +-- BlendMode
+BaseShaderGUI +-- SmoothnessSource
+BaseShaderGUI +-- RenderFace
+BaseShaderGUI +-- QueueControl
+BaseShaderGUI +-- Styles
+@enduml

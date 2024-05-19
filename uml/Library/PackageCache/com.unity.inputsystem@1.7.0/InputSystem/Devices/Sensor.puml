@@ -1,0 +1,132 @@
+@startuml
+struct AccelerometerState {
+    + {static} kFormat : FourCC <<get>>
+    + acceleration : Vector3
+    + format : FourCC <<get>>
+}
+struct GyroscopeState {
+    + {static} kFormat : FourCC <<get>>
+    + angularVelocity : Vector3
+    + format : FourCC <<get>>
+}
+struct GravityState {
+    + {static} kFormat : FourCC <<get>>
+    + gravity : Vector3
+    + format : FourCC <<get>>
+}
+struct AttitudeState {
+    + {static} kFormat : FourCC <<get>>
+    + attitude : Quaternion
+    + format : FourCC <<get>>
+}
+struct LinearAccelerationState {
+    + {static} kFormat : FourCC <<get>>
+    + acceleration : Vector3
+    + format : FourCC <<get>>
+}
+class Sensor {
+    + samplingFrequency : float <<get>> <<set>>
+}
+class Accelerometer {
+    + acceleration : Vector3Control <<get>> <<protected set>>
+    + {static} current : Accelerometer <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class Gyroscope {
+    + angularVelocity : Vector3Control <<get>> <<protected set>>
+    + {static} current : Gyroscope <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class GravitySensor {
+    + gravity : Vector3Control <<get>> <<protected set>>
+    + {static} current : GravitySensor <<get>>
+    # <<override>> FinishSetup() : void
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+}
+class AttitudeSensor {
+    + attitude : QuaternionControl <<get>> <<protected set>>
+    + {static} current : AttitudeSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class LinearAccelerationSensor {
+    + acceleration : Vector3Control <<get>> <<protected set>>
+    + {static} current : LinearAccelerationSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class MagneticFieldSensor {
+    + magneticField : Vector3Control <<get>> <<protected set>>
+    + {static} current : MagneticFieldSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class LightSensor {
+    + lightLevel : AxisControl <<get>> <<protected set>>
+    + {static} current : LightSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class PressureSensor {
+    + atmosphericPressure : AxisControl <<get>> <<protected set>>
+    + {static} current : PressureSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class ProximitySensor {
+    + distance : AxisControl <<get>> <<protected set>>
+    + {static} current : ProximitySensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class HumiditySensor {
+    + relativeHumidity : AxisControl <<get>> <<protected set>>
+    + {static} current : HumiditySensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class AmbientTemperatureSensor {
+    + ambientTemperature : AxisControl <<get>> <<protected set>>
+    + {static} current : AmbientTemperatureSensor <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+class StepCounter {
+    + stepCounter : IntegerControl <<get>> <<protected set>>
+    + {static} current : StepCounter <<get>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+}
+IInputStateTypeInfo <|-- AccelerometerState
+IInputStateTypeInfo <|-- GyroscopeState
+IInputStateTypeInfo <|-- GravityState
+IInputStateTypeInfo <|-- AttitudeState
+IInputStateTypeInfo <|-- LinearAccelerationState
+InputDevice <|-- Sensor
+Sensor <|-- Accelerometer
+Sensor <|-- Gyroscope
+Sensor <|-- GravitySensor
+Sensor <|-- AttitudeSensor
+Sensor <|-- LinearAccelerationSensor
+Sensor <|-- MagneticFieldSensor
+Sensor <|-- LightSensor
+Sensor <|-- PressureSensor
+Sensor <|-- ProximitySensor
+Sensor <|-- HumiditySensor
+Sensor <|-- AmbientTemperatureSensor
+Sensor <|-- StepCounter
+@enduml

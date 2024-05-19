@@ -1,0 +1,5 @@
+@startuml
+class TextContent <<static>> {
+    <<internal>> {static} <<readonly>> noSpriteOrTextureImportWarning : string
+}
+@enduml

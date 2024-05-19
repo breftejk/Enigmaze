@@ -1,0 +1,8 @@
+@startuml
+class PrebuildSetupAttribute {
+    + PrebuildSetupAttribute(targetClass:Type)
+    + PrebuildSetupAttribute(targetClassName:string)
+    <<internal>> TargetClass : Type <<get>>
+}
+Attribute <|-- PrebuildSetupAttribute
+@enduml

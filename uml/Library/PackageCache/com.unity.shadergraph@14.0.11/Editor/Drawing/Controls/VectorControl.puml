@@ -1,0 +1,27 @@
+@startuml
+class MultiFloatControlAttribute {
+    - m_Label : string
+    - m_SubLabel1 : string
+    - m_SubLabel2 : string
+    - m_SubLabel3 : string
+    - m_SubLabel4 : string
+    + MultiFloatControlAttribute(label:string, subLabel1:string, subLabel2:string, subLabel3:string, subLabel4:string)
+    + InstantiateControl(node:AbstractMaterialNode, propertyInfo:PropertyInfo) : VisualElement
+}
+class MultiFloatControlView {
+    + {static} validTypes : Type[]
+    - m_Node : AbstractMaterialNode
+    - m_PropertyInfo : PropertyInfo
+    - m_Value : Vector4
+    - m_UndoGroup : int
+    + MultiFloatControlView(label:string, subLabel1:string, subLabel2:string, subLabel3:string, subLabel4:string, node:AbstractMaterialNode, propertyInfo:PropertyInfo)
+    - AddField(index:int, subLabel:string) : void
+    - ValueToPropertyType(value:Vector4) : object
+    - GetValue() : Vector4
+    - SetValue(value:Vector4) : void
+    - Repaint(evt:MouseEventBase<T>) : void
+}
+Attribute <|-- MultiFloatControlAttribute
+IControlAttribute <|-- MultiFloatControlAttribute
+VisualElement <|-- MultiFloatControlView
+@enduml

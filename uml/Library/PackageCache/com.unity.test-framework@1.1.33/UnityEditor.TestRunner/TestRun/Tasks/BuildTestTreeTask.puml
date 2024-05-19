@@ -1,0 +1,11 @@
+@startuml
+class BuildTestTreeTask {
+    - m_TestPlatform : TestPlatform
+    + BuildTestTreeTask(testPlatform:TestPlatform)
+    <<internal>> m_testAssemblyProvider : IEditorLoadedTestAssemblyProvider
+    <<internal>> m_testAssemblyBuilderFactory : Func<string[], IAsyncTestAssemblyBuilder>
+    <<internal>> m_CallbacksDelegator : ICallbacksDelegator
+    + <<override>> Execute(testJobData:TestJobData) : IEnumerator
+}
+TestTaskBase <|-- BuildTestTreeTask
+@enduml

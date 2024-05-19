@@ -1,0 +1,23 @@
+@startuml
+class TouchControl {
+    + press : TouchPressControl <<get>> <<set>>
+    + displayIndex : IntegerControl <<get>> <<set>>
+    + touchId : IntegerControl <<get>> <<set>>
+    + position : Vector2Control <<get>> <<set>>
+    + delta : DeltaControl <<get>> <<set>>
+    + pressure : AxisControl <<get>> <<set>>
+    + radius : Vector2Control <<get>> <<set>>
+    + phase : TouchPhaseControl <<get>> <<set>>
+    + indirectTouch : ButtonControl <<get>> <<set>>
+    + tap : ButtonControl <<get>> <<set>>
+    + tapCount : IntegerControl <<get>> <<set>>
+    + startTime : DoubleControl <<get>> <<set>>
+    + startPosition : Vector2Control <<get>> <<set>>
+    + isInProgress : bool <<get>>
+    + TouchControl()
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : TouchState
+    + <<override>> <<unsafe>> WriteValueIntoState(value:TouchState, statePtr:void*) : void
+}
+"InputControl`1" "<TouchState>" <|-- TouchControl
+@enduml

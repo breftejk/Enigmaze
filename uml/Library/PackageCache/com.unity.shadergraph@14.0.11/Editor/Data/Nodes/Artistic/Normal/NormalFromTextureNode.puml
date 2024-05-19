@@ -1,0 +1,27 @@
+@startuml
+class NormalFromTextureNode {
+    + <<const>> TextureInputId : int = 0
+    + <<const>> UVInputId : int = 1
+    + <<const>> SamplerInputId : int = 2
+    + <<const>> OffsetInputId : int = 3
+    + <<const>> StrengthInputId : int = 4
+    + <<const>> OutputSlotId : int = 5
+    <<const>> - k_TextureInputName : string = "Texture"
+    <<const>> - k_UVInputName : string = "UV"
+    <<const>> - k_SamplerInputName : string = "Sampler"
+    <<const>> - k_OffsetInputName : string = "Offset"
+    <<const>> - k_StrengthInputName : string = "Strength"
+    <<const>> - k_OutputSlotName : string = "Out"
+    + NormalFromTextureNode()
+    - GetFunctionName() : string
+    + <<override>> hasPreview : bool <<get>>
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + GenerateNodeFunction(registry:FunctionRegistry, generationMode:GenerationMode) : void
+    + RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+AbstractMaterialNode <|-- NormalFromTextureNode
+IGeneratesBodyCode <|-- NormalFromTextureNode
+IGeneratesFunction <|-- NormalFromTextureNode
+IMayRequireMeshUV <|-- NormalFromTextureNode
+@enduml

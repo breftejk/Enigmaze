@@ -1,0 +1,14 @@
+@startuml
+class TestRunnerCallbacks {
+    - Serialize(source:TSource, createAdaptor:Func<TSource, int, TAdaptor>, children:Func<TSource, IEnumerable<TSource>>, container:Func<TAdaptor[], TContainer>) : string
+    - Serialize(testAdaptor:ITestAdaptor) : string
+    - Serialize(testResultAdaptor:ITestResultAdaptor) : string
+    + RunFinished(testResultAdaptor:ITestResultAdaptor) : void
+    + RunStarted(testAdaptor:ITestAdaptor) : void
+    + TestFinished(testResultAdaptor:ITestResultAdaptor) : void
+    + TestStarted(testAdaptor:ITestAdaptor) : void
+    - {static} TestModeName(testMode:TestMode) : string
+    <<internal>> TestListRetrieved(testMode:TestMode, testAdaptor:ITestAdaptor) : void
+}
+ICallbacks <|-- TestRunnerCallbacks
+@enduml

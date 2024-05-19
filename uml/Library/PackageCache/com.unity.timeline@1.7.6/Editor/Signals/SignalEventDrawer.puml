@@ -1,0 +1,9 @@
+@startuml
+class SignalEventDrawer {
+    {static} - FindBoundObject(property:SerializedProperty) : GameObject
+    # <<override>> OnAddEvent(list:ReorderableList) : void
+    # <<override>> DrawEventHeader(headerRect:Rect) : void
+    # <<override>> SetupReorderableList(list:ReorderableList) : void
+}
+UnityEventDrawer <|-- SignalEventDrawer
+@enduml

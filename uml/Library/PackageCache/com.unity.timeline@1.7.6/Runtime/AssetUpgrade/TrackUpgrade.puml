@@ -1,0 +1,24 @@
+@startuml
+class TrackAsset <<partial>> {
+    <<const>> - k_LatestVersion : int
+    - m_Version : int
+    <<internal>> m_AnimClip : AnimationClip
+    # <<virtual>> OnBeforeTrackSerialize() : void
+    # <<virtual>> OnAfterTrackDeserialize() : void
+    <<internal>> <<virtual>> OnUpgradeFromVersion(oldVersion:int) : void
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+    - UpgradeToLatestVersion() : void
+}
+enum Versions {
+    Initial= 0,
+    RotationAsEuler= 1,
+    RootMotionUpgrade= 2,
+    AnimatedTrackProperties= 3,
+}
+class TrackAssetUpgrade <<static>> {
+}
+ISerializationCallbackReceiver <|-- TrackAsset
+TrackAsset +-- Versions
+TrackAsset +-- TrackAssetUpgrade
+@enduml

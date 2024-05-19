@@ -1,0 +1,84 @@
+@startuml
+class PlasticWindow {
+    <<internal>> WorkspaceWindowForTesting : WorkspaceWindow <<get>>
+    <<internal>> ViewSwitcherForTesting : ViewSwitcher <<get>>
+    <<internal>> CmConnectionForTesting : CmConnection <<get>>
+    <<internal>> ShowWelcomeViewForTesting : bool
+    <<internal>> SetupWindowTitle(status:PlasticNotification.Status) : void
+    <<internal>> DisableCollabIfEnabledWhenLoaded() : void
+    - IfVisible() : void
+    - IfVisible() : void
+    - OnWorkspaceCreated(wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    <<internal>> RefreshWorkspaceUI() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    - OnDestroy() : void
+    - OnFocus() : void
+    - OnGUI() : void
+    - Update() : void
+    <<internal>> InitializePlastic() : void
+    - InitializeNewIncomingChanges(wkInfo:WorkspaceInfo, bIsGluonMode:bool, viewSwitcher:ViewSwitcher) : void
+    - InitializeNotificationBarUpdater(wkInfo:WorkspaceInfo, notificationBar:INotificationBar) : void
+    - GetSubscriptionDetails(wkInfo:WorkspaceInfo) : void
+    - OnApplicationActivated() : void
+    - OnApplicationDeactivated() : void
+    - ExecuteFullReload() : void
+    - DoNotConnectedArea() : void
+    - DoExceptionErrorArea() : void
+    <<internal>> GetWelcomeView() : WelcomeView
+    {static} - DoSearchField(viewSwitcher:ViewSwitcher) : void
+    {static} - DoTabToolbar(workspaceInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, isGluonMode:bool, isUGOSubscription:bool, upgradePlanUrl:string) : void
+    {static} - OpenBranchListViewAndSendEvent(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher) : void
+    {static} - ShowBranchesContextMenu(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, isGluonMode:bool) : void
+    {static} - OpenLocksViewAndSendEvent(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher) : void
+    {static} - ShowSettingsContextMenu(showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, wkInfo:WorkspaceInfo, isGluonMode:bool) : void
+    {static} - DoToolbarButtons(wkInfo:WorkspaceInfo, viewSwitcher:ViewSwitcher, showDownloadPlasticExeWindow:LaunchTool.IShowDownloadPlasticExeWindow, processExecutor:LaunchTool.IProcessExecutor, isGluonMode:bool, isUGOSubscription:bool, upgradePlanUrl:string) : void
+    {static} - DrawToolbarButton(icon:Texture, tooltip:string) : bool
+    {static} - DrawToolbarTextButton(text:string) : bool
+    {static} - UpgradePlan(upgradePlanUrl:string) : void
+    {static} - InviteMembersToOrganization(repSpec:RepositorySpec) : void
+    {static} - OpenUnityDashboardInviteUsersUrl(organization:string) : void
+    {static} - ForceCheckout_Clicked(obj:object) : void
+    {static} - DisableVCSIfEnabled(projectPath:string) : void
+    {static} - DisposeNewIncomingChanges(window:PlasticWindow) : void
+    {static} - DisposeNotificationBarUpdater(window:PlasticWindow) : void
+    {static} - RegisterApplicationFocusHandlers(window:PlasticWindow) : void
+    {static} - UnRegisterApplicationFocusHandlers(window:PlasticWindow) : void
+    {static} - IsExitGUIException(ex:Exception) : bool
+    {static} - IsIMGUIPaintException(ex:Exception) : bool
+    {static} - ClosePlasticWindow(window:PlasticWindow) : void
+    {static} - ShowPlasticWindow(window:PlasticWindow) : void
+    {static} - NeedsToDisplayWelcomeView(clientNeedsConfiguration:bool, wkInfo:WorkspaceInfo) : bool
+    {static} - DisableCollabIfEnabled(projectPath:string) : void
+    {static} - InstantiateFrom(window:PlasticWindow) : PlasticWindow
+    <<internal>> GetPendingChangesView() : PlasticProjectSettingsProvider.IAutoRefreshView
+    - mForceToOpen : bool
+    - mWkInfo : WorkspaceInfo
+    - mException : Exception
+    <<internal>> mIncomingChangesNotifier : IIncomingChangesNotifier
+    - mLastUpdateTime : double = 0f
+    - mCooldownAutoRefreshPendingChangesAction : CooldownWindowDelayer
+    <<internal>> mViewSwitcher : ViewSwitcher
+    - mWelcomeView : WelcomeView
+    - mStatusBar : StatusBar
+    - mNotificationBarUpdater : NotificationBarUpdater
+    - mDeveloperNewIncomingChangesUpdater : PlasticGui.WorkspaceWindow.NewIncomingChangesUpdater
+    - mGluonNewIncomingChangesUpdater : GluonNewIncomingChangesUpdater
+    - mWorkspaceWindow : WorkspaceWindow
+    - mIsGluonMode : bool
+    - mDisableCollabIfEnabledWhenLoaded : bool
+    - mIsUGOSubscription : bool
+    - mUpgradePlanUrl : string
+    - mShowDownloadPlasticExeWindow : LaunchTool.IShowDownloadPlasticExeWindow
+    - mProcessExecutor : LaunchTool.IProcessExecutor
+    <<const>> - UGO_CONSUMPTION_URL_KEY : string = "consumptionUrl"
+    <<const>> - UGO_ORDER_SOURCE : string = "UGO"
+    {static} <<readonly>> - mLog : ILog
+}
+class Reload <<static>> {
+    <<internal>> {static} IfWorkspaceConfigChanged(plasticApi:IPlasticAPI, lastWkInfo:WorkspaceInfo, lastIsGluonMode:bool, reloadAction:Action) : void
+    {static} - IsWorkspaceConfigChanged(lastWkInfo:WorkspaceInfo, currentWkInfo:WorkspaceInfo, lastIsGluonMode:bool, currentIsGluonMode:bool) : bool
+}
+EditorWindow <|-- PlasticWindow
+PlasticWindow +-- Reload
+@enduml

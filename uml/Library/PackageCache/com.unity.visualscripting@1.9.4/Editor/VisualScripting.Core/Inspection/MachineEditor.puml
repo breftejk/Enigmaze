@@ -1,0 +1,20 @@
+@startuml
+class MachineEditor {
+    + MachineEditor(metadata:Metadata)
+    - nestMetadata : Metadata <<get>>
+    - graphMetadata : Metadata <<get>>
+    # headerTitleMetadata : Metadata <<get>>
+    # headerSummaryMetadata : Metadata <<get>>
+    # <<virtual>> showHeader : bool <<get>>
+    # <<virtual>> showConfiguration : bool <<get>>
+    # <<sealed>> <<override>> GetHeight(width:float, label:GUIContent) : float
+    # <<sealed>> <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<virtual>> GetHeaderHeight(width:float) : float
+    # <<virtual>> OnHeaderGUI(headerPosition:Rect) : void
+    # <<virtual>> GetNestHeight(width:float) : float
+    # <<virtual>> OnNestGUI(nestPosition:Rect) : void
+    # <<virtual>> GetConfigurationHeight(width:float) : float
+    # <<virtual>> OnConfigurationGUI(position:Rect) : void
+}
+Inspector <|-- MachineEditor
+@enduml

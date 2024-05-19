@@ -1,0 +1,15 @@
+@startuml
+class CreateStruct <<sealed>> {
+    + CreateStruct()
+    + CreateStruct(type:Type)
+    + type : Type <<get>> <<internal set>>
+    + <<override>> canDefine : bool <<get>>
+    + enter : ControlInput <<get>>
+    + exit : ControlOutput <<get>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Enter(flow:Flow) : ControlOutput
+    - Create(flow:Flow) : object
+}
+Unit <|-- CreateStruct
+@enduml

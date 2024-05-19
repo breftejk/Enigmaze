@@ -1,0 +1,37 @@
+@startuml
+struct ClipBackgroundRegion {
+    + position : Rect <<get>>
+    + startTime : double <<get>>
+    + endTime : double <<get>>
+    + ClipBackgroundRegion(_position:Rect, _startTime:double, _endTime:double)
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:ClipBackgroundRegion) : bool
+    + <<override>> GetHashCode() : int
+}
+struct ClipDrawOptions {
+    - m_Icons : IEnumerable<Texture2D>
+    - m_HideClipName : bool
+    + errorText : string <<get>> <<set>>
+    + displayClipName : bool <<get>> <<set>>
+    + hideScaleIndicator : bool <<get>> <<set>>
+    + tooltip : string <<get>> <<set>>
+    + highlightColor : Color <<get>> <<set>>
+    + icons : IEnumerable<Texture2D> <<get>> <<set>>
+    + <<override>> Equals(obj:object) : bool
+    + Equals(other:ClipDrawOptions) : bool
+    + <<override>> GetHashCode() : int
+}
+class ClipEditor {
+    {static} <<readonly>> - k_NoPlayableAssetError : string
+    {static} <<readonly>> - k_ScriptLoadError : string
+    <<internal>> <<readonly>> supportsSubTimelines : bool
+    + ClipEditor()
+    + <<virtual>> GetClipOptions(clip:TimelineClip) : ClipDrawOptions
+    + <<virtual>> DrawBackground(clip:TimelineClip, region:ClipBackgroundRegion) : void
+    + <<virtual>> OnCreate(clip:TimelineClip, track:TrackAsset, clonedFrom:TimelineClip) : void
+    + GetErrorText(clip:TimelineClip) : string
+    + GetDefaultHighlightColor(clip:TimelineClip) : Color
+    + <<virtual>> OnClipChanged(clip:TimelineClip) : void
+    + <<virtual>> GetSubTimelines(clip:TimelineClip, director:PlayableDirector, subTimelines:List<PlayableDirector>) : void
+}
+@enduml

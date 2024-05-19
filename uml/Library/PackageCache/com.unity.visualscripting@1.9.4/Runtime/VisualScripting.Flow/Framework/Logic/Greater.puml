@@ -1,0 +1,8 @@
+@startuml
+class Greater <<sealed>> {
+    + <<override>> comparison : ValueOutput <<get>>
+    # <<override>> NumericComparison(a:float, b:float) : bool
+    # <<override>> GenericComparison(a:object, b:object) : bool
+}
+BinaryComparisonUnit <|-- Greater
+@enduml

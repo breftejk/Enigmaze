@@ -1,0 +1,70 @@
+@startuml
+class DebugUI <<partial>> {
+}
+class Container {
+    <<const>> - k_IDToken : string = "#"
+    <<internal>> hideDisplayName : bool <<get>>
+    + children : ObservableList<Widget> <<get>>
+    + <<override>> panel : Panel <<get>> <<internal set>>
+    + Container()
+    + Container(id:string)
+    + Container(displayName:string, children:ObservableList<Widget>)
+    <<internal>> <<override>> GenerateQueryPath() : void
+    # <<virtual>> OnItemAdded(sender:ObservableList<Widget>, e:ListChangedEventArgs<Widget>) : void
+    # <<virtual>> OnItemRemoved(sender:ObservableList<Widget>, e:ListChangedEventArgs<Widget>) : void
+    + <<override>> GetHashCode() : int
+}
+class Foldout {
+    + isReadOnly : bool <<get>>
+    + opened : bool
+    + isHeader : bool
+    + contextMenuItems : List<ContextMenuItem> = null
+    + columnLabels : string[] <<get>> <<set>> = null
+    + columnTooltips : string[] <<get>> <<set>> = null
+    + Foldout()
+    + Foldout(displayName:string, children:ObservableList<Widget>, columnLabels:string[], columnTooltips:string[])
+    + GetValue() : bool
+    - GetValue() : object
+    + SetValue(value:object) : void
+    + ValidateValue(value:object) : object
+    + SetValue(value:bool) : void
+}
+class HBox {
+    + HBox()
+}
+class VBox {
+    + VBox()
+}
+class Table {
+    + isReadOnly : bool = false
+    + Table()
+    + SetColumnVisibility(index:int, visible:bool) : void
+    + GetColumnVisibility(index:int) : bool
+    - m_Header : bool[] = null
+    + VisibleColumns : bool[] <<get>>
+    # <<override>> OnItemAdded(sender:ObservableList<Widget>, e:ListChangedEventArgs<Widget>) : void
+    # <<override>> OnItemRemoved(sender:ObservableList<Widget>, e:ListChangedEventArgs<Widget>) : void
+}
+struct ContextMenuItem {
+    + displayName : string
+    + action : Action
+}
+class Row {
+    + Row()
+}
+DebugUI +-- Container
+Widget <|-- Container
+IContainer <|-- Container
+DebugUI +-- Foldout
+Container <|-- Foldout
+IValueField <|-- Foldout
+DebugUI +-- HBox
+Container <|-- HBox
+DebugUI +-- VBox
+Container <|-- VBox
+DebugUI +-- Table
+Container <|-- Table
+Foldout +-- ContextMenuItem
+Table +-- Row
+Foldout <|-- Row
+@enduml

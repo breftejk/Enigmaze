@@ -1,0 +1,7 @@
+@startuml
+class TMP_SelectionCaret {
+    + <<override>> Cull(clipRect:Rect, validRect:bool) : void
+    # <<override>> UpdateGeometry() : void
+}
+MaskableGraphic <|-- TMP_SelectionCaret
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class AvatarImages <<static>> {
+    <<internal>> {static} Dispose() : void
+    <<internal>> {static} HasGravatar(email:string) : bool
+    <<internal>> {static} AddGravatar(email:string, image:Texture2D) : void
+    <<internal>> {static} UpdateGravatar(email:string, rawImage:byte[]) : void
+    <<internal>> {static} GetAvatar(email:string) : Texture2D
+    {static} - GetGravatarImage(email:string) : Texture2D
+    {static} - GetTexture(rawImage:byte[]) : Texture2D
+    {static} <<readonly>> - mAvatars : Dictionary<string, Texture2D>
+}
+@enduml

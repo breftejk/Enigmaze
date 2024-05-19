@@ -1,0 +1,31 @@
+@startuml
+class GraphicTests {
+    - m_PrefabRoot : GameObject
+    - m_graphic : ConcreteGraphic
+    - m_canvas : Canvas
+    <<const>> - kPrefabPath : string = "Assets/Resources/GraphicTestsPrefab.prefab"
+    - m_dirtyVert : bool
+    - m_dirtyLayout : bool
+    - m_dirtyMaterial : bool
+    + Setup() : void
+    + TestSetup() : void
+    + TearDown() : void
+    + OneTimeTearDown() : void
+    - ResetDirtyFlags() : void
+    + SettingDirtyOnActiveGraphicCallsCallbacks() : void
+    - ContainsGraphic(array:IList<Graphic>, size:int, element:Graphic) : bool
+    - RefreshGraphicByRaycast() : void
+    - CheckGraphicAddedToGraphicRegistry() : bool
+    - CheckGraphicAddedToRaycastGraphicRegistry() : bool
+    - CheckGraphicRaycastDisableValidity() : void
+    + OnEnableLeavesGraphicInExpectedState() : void
+    + OnEnableTwiceLeavesGraphicInExpectedState() : void
+    + OnDisableLeavesGraphicInExpectedState() : void
+    + OnPopulateMeshWorksAsExpected() : void
+    + OnDidApplyAnimationPropertiesSetsAllDirty() : void
+    + MakingGraphicNonRaycastableRemovesGraphicFromProperLists() : void
+    + OnEnableLeavesNonRaycastGraphicInExpectedState() : void
+    + SettingRaycastTargetOnDisabledGraphicDoesntAddItRaycastList() : void
+}
+IPrebuildSetup <|-- GraphicTests
+@enduml

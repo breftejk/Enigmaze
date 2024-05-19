@@ -1,0 +1,41 @@
+@startuml
+class UniversalSpriteUnlitSubTarget <<sealed>> {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + UniversalSpriteUnlitSubTarget()
+    # <<override>> shaderID : ShaderUtils.ShaderID <<get>>
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+    + TryUpgradeFromMasterNode(masterNode:IMasterNode1, blockMap:Dictionary<BlockFieldDescriptor, int>) : bool
+}
+class SubShaders <<static>> {
+    + {static} SpriteUnlit(target:UniversalTarget) : SubShaderDescriptor
+}
+class SpriteUnlitPasses <<static>> {
+    + {static} Unlit(target:UniversalTarget) : PassDescriptor
+    + {static} Forward : PassDescriptor
+}
+class SpriteUnlitBlockMasks <<static>> {
+    + {static} Fragment : BlockFieldDescriptor[]
+}
+class SpriteUnlitRequiredFields <<static>> {
+    + {static} Unlit : FieldCollection
+}
+class SpriteUnlitKeywords <<static>> {
+    + {static} Unlit : KeywordCollection
+}
+class SpriteUnlitIncludes <<static>> {
+    <<const>> - kSpriteUnlitPass : string = "Packages/com.unity.render-pipelines.universal/Editor/2D/ShaderGraph/Includes/SpriteUnlitPass.hlsl"
+    + {static} Unlit : IncludeCollection
+}
+UniversalSubTarget <|-- UniversalSpriteUnlitSubTarget
+ILegacyTarget <|-- UniversalSpriteUnlitSubTarget
+UniversalSpriteUnlitSubTarget +-- SubShaders
+UniversalSpriteUnlitSubTarget +-- SpriteUnlitPasses
+UniversalSpriteUnlitSubTarget +-- SpriteUnlitBlockMasks
+UniversalSpriteUnlitSubTarget +-- SpriteUnlitRequiredFields
+UniversalSpriteUnlitSubTarget +-- SpriteUnlitKeywords
+UniversalSpriteUnlitSubTarget +-- SpriteUnlitIncludes
+@enduml

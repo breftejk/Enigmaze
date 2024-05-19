@@ -1,0 +1,11 @@
+@startuml
+class SetVariable <<sealed>> {
+    + assign : ControlInput <<get>> <<set>>
+    + input : ValueInput <<get>>
+    + assigned : ControlOutput <<get>> <<set>>
+    + output : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - Assign(flow:Flow) : ControlOutput
+}
+UnifiedVariableUnit <|-- SetVariable
+@enduml

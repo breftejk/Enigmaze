@@ -1,0 +1,12 @@
+@startuml
+class Assignment <<sealed>> {
+    + Assignment(assigner:Member, assigneeType:Type)
+    + assigner : Member <<get>>
+    + assignee : Member <<get>>
+    + requiresAPI : bool <<get>>
+    + cache : bool <<get>>
+    + Run(assigner:object, assignee:object) : void
+    - _Run(assigner:object, assignee:object) : void
+    + {static} Fetch(descriptorType:Type, descriptionType:Type) : IEnumerable<Assignment>
+}
+@enduml

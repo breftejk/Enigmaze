@@ -1,0 +1,70 @@
+@startuml
+class DisplayWindow <<partial>> {
+    - m_Shadow : MultipleSourceToggle
+    - m_DebugView : MultipleSourcePopupField
+    - listDebugMode : List<string>
+    - cameraSynced : bool <<get>>
+    - lastFocusedViewContext : ViewContext <<get>>
+    - targetDebugView : TargetDebugView <<get>> <<set>>
+    - debugView1SidePanel : bool <<get>>
+    - debugView2SidePanel : bool <<get>>
+    - ApplyInFilteredViewsContext(action:Action<ViewContext>) : void
+    - GetInFilteredViewsContext(getter:Func<ViewContext, T>, multipleDifferentValue:bool) : T
+    - ReadValueFromSourcesWithoutNotify(element:K, from:Func<ViewContext, T>) : void
+    - CreateDebug() : void
+    - AddDebugViewSelector() : void
+    - AddDebugShadow() : void
+    - AddDebugViewMode(pos:int) : void
+    - UpdateSideDebugPanelProperties() : void
+}
+class Style <<static>> <<partial>> {
+    <<internal>> <<const>> k_DebugViewLabel : string = "Selected View"
+    <<internal>> <<const>> k_DebugShadowLabel : string = "Display Shadows"
+    <<internal>> <<const>> k_DebugViewMode : string = "View Mode"
+    <<internal>> {static} <<readonly>> k_LockOpen : Texture2D
+    <<internal>> {static} <<readonly>> k_LockClose : Texture2D
+    <<internal>> <<const>> k_DebugToolbarName : string = "debugToolbar"
+}
+class MultipleDifferentValue {
+    + <<new>> {static} <<readonly>> ussClassName : string = "unity-multipledifferentevalue"
+    + MultipleDifferentValue()
+}
+interface IMultipleSource {
+    inMultipleValueState : bool <<get>> <<set>>
+}
+class MultipleSourceToggle {
+    - m_MultipleOverlay : MultipleDifferentValue
+    - m_InMultipleValueState : bool = false
+    + inMultipleValueState : bool <<get>> <<set>>
+    + MultipleSourceToggle()
+    + MultipleSourceToggle(label:string)
+    + <<override>> SetValueWithoutNotify(newValue:bool) : void
+    + <<override>> value : bool <<get>> <<set>>
+}
+class MultipleSourcePopupField {
+    <<internal>> <<readonly>> count : int
+    - m_MultipleOverlay : MultipleDifferentValue
+    - m_InMultipleValueState : bool = false
+    + inMultipleValueState : bool <<get>> <<set>>
+    + MultipleSourcePopupField(label:string, choices:List<string>, defaultIndex:int)
+    + <<override>> SetValueWithoutNotify(newValue:string) : void
+    + <<override>> value : string <<get>> <<set>>
+}
+class UxmlFactory <<new>> {
+}
+class UxmlTraits <<new>> {
+}
+DisplayWindow +-- Style
+DisplayWindow +-- MultipleDifferentValue
+TextElement <|-- MultipleDifferentValue
+DisplayWindow +-- IMultipleSource
+DisplayWindow +-- MultipleSourceToggle
+Toggle <|-- MultipleSourceToggle
+IMultipleSource <|-- MultipleSourceToggle
+DisplayWindow +-- MultipleSourcePopupField
+"PopupField`1" "<string>" <|-- MultipleSourcePopupField
+IMultipleSource <|-- MultipleSourcePopupField
+MultipleDifferentValue +-- UxmlFactory
+"UxmlFactory`2" "<MultipleDifferentValue,UxmlTraits>" <|-- UxmlFactory
+MultipleDifferentValue +-- UxmlTraits
+@enduml

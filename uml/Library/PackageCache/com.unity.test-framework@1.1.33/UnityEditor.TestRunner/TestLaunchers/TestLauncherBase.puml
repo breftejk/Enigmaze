@@ -1,0 +1,10 @@
+@startuml
+abstract class TestLauncherBase {
+    + {abstract} Run() : void
+    # <<virtual>> TestTargetPlatform : RuntimePlatform? <<get>>
+    # ExecutePreBuildSetupMethods(tests:ITest, testRunnerFilter:ITestFilter) : bool
+    + ExecutePostBuildCleanupMethods(tests:ITest, testRunnerFilter:ITestFilter) : void
+    + {static} ExecutePostBuildCleanupMethods(tests:ITest, testRunnerFilter:ITestFilter, testTargetPlatform:RuntimePlatform?) : void
+    - {static} ExecuteMethods(tests:ITest, testRunnerFilter:ITestFilter, attributeFinder:AttributeFinderBase, logString:string, action:Action<T>, testTargetPlatform:RuntimePlatform?) : bool
+}
+@enduml

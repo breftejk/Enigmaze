@@ -1,0 +1,9 @@
+@startuml
+abstract class "OptimizedEditor`1"<TIndividual> {
+    - GetIndividualDrawer(serializedObject:SerializedObject) : TIndividual
+    + <<sealed>> <<override>> OnInspectorGUI() : void
+    {static} - OptimizedEditor()
+    - {static} individualDrawers : Dictionary<int, TIndividual>
+    - {static} ClearCache() : void
+}
+@enduml

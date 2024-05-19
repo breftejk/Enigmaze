@@ -1,0 +1,11 @@
+@startuml
+class UIElementsExtensions <<static>> {
+    <<internal>> {static} LoadLayout(element:VisualElement, className:string) : void
+    <<internal>> {static} LoadStyle(element:VisualElement, className:string) : void
+    <<internal>> {static} FocusOnceLoaded(elem:TextField) : void
+    <<internal>> {static} FocusWorkaround(textField:TextField) : void
+    <<internal>> {static} SetControlImage(element:VisualElement, name:string, imageName:Images.Name) : void
+    <<internal>> {static} SetControlText(element:VisualElement, name:string, fieldName:PlasticLocalization.Name, format:string[]) : void
+    <<internal>> {static} SetControlLabel(element:VisualElement, name:string, fieldName:PlasticLocalization.Name) : void
+}
+@enduml

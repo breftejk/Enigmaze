@@ -1,0 +1,26 @@
+@startuml
+class ParsedAssemblyQualifiedName {
+    + AssemblyDescriptionString : string <<get>>
+    + TypeName : string <<get>>
+    + ShortAssemblyName : string <<get>>
+    + Version : string <<get>>
+    + Culture : string <<get>>
+    + PublicKeyToken : string <<get>>
+    + GenericParameters : List<ParsedAssemblyQualifiedName> <<get>>
+    + GenericParameterCount : int <<get>>
+    + ParsedAssemblyQualifiedName(AssemblyQualifiedName:string)
+    - {static} LookForPairThenRemove(strings:List<string>, Name:string) : string
+    + Replace(oldTypeName:string, newTypeName:string) : void
+    - ToString(includeAssemblyDescription:bool) : string
+    + <<override>> ToString() : string
+}
+class Block {
+    <<internal>> startIndex : int
+    <<internal>> endIndex : int
+    <<internal>> level : int
+    <<internal>> parentBlock : Block
+    <<internal>> <<readonly>> innerBlocks : List<Block>
+    <<internal>> parsedAssemblyQualifiedName : ParsedAssemblyQualifiedName
+}
+ParsedAssemblyQualifiedName +-- Block
+@enduml

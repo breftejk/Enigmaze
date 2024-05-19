@@ -1,0 +1,8 @@
+@startuml
+class AssemblyNameFilter {
+    + AssemblyNameFilter(assemblyName:string)
+    + <<override>> Match(test:ITest) : bool
+    # <<override>> ElementName : string <<get>>
+}
+ValueMatchFilter <|-- AssemblyNameFilter
+@enduml

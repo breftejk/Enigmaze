@@ -1,0 +1,58 @@
+@startuml
+interface ISpriteLibraryEditorWindow {
+    SaveChanges() : void
+    DiscardChanges() : void
+    hasUnsavedChanges : bool <<get>>
+    HandleUnsavedChanges() : void
+    HandleRevertChanges() : void
+}
+class SpriteLibraryEditorWindow {
+    + <<const>> tabHeaderName : string = "EditorTabHeader"
+    + <<const>> editorWindowClassName : string = "sprite-library-editor-window"
+    + <<const>> overrideClassName : string
+    + <<const>> infoLabelClassName : string
+    + <<const>> deleteCommandName : string = "Delete"
+    + <<const>> renameCommandName : string = "Rename"
+    <<const>> - k_WindowTitle : string = "Sprite Library Editor"
+    <<const>> - k_AssetNotSelectedLabelClassName : string
+    - m_TopToolbar : EditorTopToolbar
+    - m_BottomToolbar : EditorBottomToolbar
+    - m_MainWindow : EditorMainWindow
+    - m_Controller : WindowController
+    - m_EditorWindowRoot : VisualElement
+    - m_CreateAssetElement : VisualElement
+    - m_ControllerEvents : ControllerEvents
+    - m_ViewEvents : ViewEvents
+    <<const>> - k_MinWidth : int = 500
+    <<const>> - k_MinHeight : int = 300
+    + {static} OpenWindow() : SpriteLibraryEditorWindow
+    - CreateGUI() : void
+    - OnDestroy() : void
+    - InitializeWindow() : void
+    - PlayModeStateChanged(newState:PlayModeStateChange) : void
+    - HandleEditorPrefs() : void
+    + <<override>> SaveChanges() : void
+    + <<override>> DiscardChanges() : void
+    + HandleUnsavedChanges() : void
+    + HandleRevertChanges() : void
+    - UpdateVisualsAfterChange(isModified:bool) : void
+    - ToggleBetweenMainViewAndEmptyView() : void
+    {static} - RegisterSaveEvent(element:VisualElement, viewEvents:ViewEvents) : void
+    - HandleCreateNewAsset() : void
+    + {static} HandleUnsavedChangesOnApply() : void
+    + {static} TriggerAssetModifiedOnApply() : void
+}
+class Settings <<static>> {
+    <<const>> - k_SplitPaneSizeKey : string
+    <<const>> - k_AutoSaveKey : string
+    <<const>> - k_ViewTypeKey : string
+    <<const>> - k_ViewSizeKey : string
+    + {static} splitPaneSize : float <<get>> <<set>>
+    + {static} autoSave : bool <<get>> <<set>>
+    + {static} viewType : ViewType <<get>> <<set>>
+    + {static} viewSize : float <<get>> <<set>>
+}
+EditorWindow <|-- SpriteLibraryEditorWindow
+ISpriteLibraryEditorWindow <|-- SpriteLibraryEditorWindow
+SpriteLibraryEditorWindow +-- Settings
+@enduml

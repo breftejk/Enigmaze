@@ -1,0 +1,7 @@
+@startuml
+struct GraphContextMenuItem {
+    + action : Action<Vector2> <<get>>
+    + label : string <<get>>
+    + GraphContextMenuItem(action:Action<Vector2>, label:string)
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireBitangent {
+    RequiresBitangent(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+class MayRequireBitangentExtensions <<static>> {
+    + {static} RequiresBitangent(slot:MaterialSlot) : NeededCoordinateSpace
+}
+@enduml

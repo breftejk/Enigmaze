@@ -1,0 +1,59 @@
+@startuml
+class PointerEventData {
+    + pointerEnter : GameObject <<get>> <<set>>
+    - m_PointerPress : GameObject
+    + lastPress : GameObject <<get>>
+    + rawPointerPress : GameObject <<get>> <<set>>
+    + pointerDrag : GameObject <<get>> <<set>>
+    + pointerClick : GameObject <<get>> <<set>>
+    + pointerCurrentRaycast : RaycastResult <<get>> <<set>>
+    + pointerPressRaycast : RaycastResult <<get>> <<set>>
+    + hovered : List<GameObject>
+    + eligibleForClick : bool <<get>> <<set>>
+    + displayIndex : int <<get>> <<set>>
+    + pointerId : int <<get>> <<set>>
+    + position : Vector2 <<get>> <<set>>
+    + delta : Vector2 <<get>> <<set>>
+    + pressPosition : Vector2 <<get>> <<set>>
+    + worldPosition : Vector3 <<get>> <<set>>
+    + worldNormal : Vector3 <<get>> <<set>>
+    + clickTime : float <<get>> <<set>>
+    + clickCount : int <<get>> <<set>>
+    + scrollDelta : Vector2 <<get>> <<set>>
+    + useDragThreshold : bool <<get>> <<set>>
+    + dragging : bool <<get>> <<set>>
+    + button : InputButton <<get>> <<set>>
+    + pressure : float <<get>> <<set>>
+    + tangentialPressure : float <<get>> <<set>>
+    + altitudeAngle : float <<get>> <<set>>
+    + azimuthAngle : float <<get>> <<set>>
+    + twist : float <<get>> <<set>>
+    + tilt : Vector2 <<get>> <<set>>
+    + penStatus : PenStatus <<get>> <<set>>
+    + radius : Vector2 <<get>> <<set>>
+    + radiusVariance : Vector2 <<get>> <<set>>
+    + fullyExited : bool <<get>> <<set>>
+    + reentered : bool <<get>> <<set>>
+    + PointerEventData(eventSystem:EventSystem)
+    + IsPointerMoving() : bool
+    + IsScrolling() : bool
+    + enterEventCamera : Camera <<get>>
+    + pressEventCamera : Camera <<get>>
+    + pointerPress : GameObject <<get>> <<set>>
+    + <<override>> ToString() : string
+}
+enum InputButton {
+    Left= 0,
+    Right= 1,
+    Middle= 2,
+}
+enum FramePressState {
+    Pressed,
+    Released,
+    PressedAndReleased,
+    NotChanged,
+}
+BaseEventData <|-- PointerEventData
+PointerEventData +-- InputButton
+PointerEventData +-- FramePressState
+@enduml

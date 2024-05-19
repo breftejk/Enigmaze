@@ -1,0 +1,11 @@
+@startuml
+class CinemachineComposerEditor {
+    - m_ScreenGuideEditor : CinemachineScreenComposerGuides
+    - m_GameViewEventCatcher : GameViewEventCatcher
+    # <<virtual>> OnEnable() : void
+    # <<virtual>> OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    # <<virtual>> OnGUI() : void
+}
+"BaseEditor`1" "<CinemachineComposer>" <|-- CinemachineComposerEditor
+@enduml

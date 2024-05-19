@@ -1,0 +1,19 @@
+@startuml
+class DefaultAssetCreation <<static>> {
+    <<const>> - k_TilePaletteAssetMenuPriority : int = 4
+    {static} <<internal>> StartNewAssetNameEditingDelegate : Action<int, ProjectWindowCallback.EndNameEditAction, string, Texture2D, string>
+    {static} - MenuItem_AssetsCreate2DTilePaletteRectangular(menuCommand:MenuCommand) : void
+    {static} - MenuItem_AssetsCreate2DTilePaletteHexagonalFlatTop(menuCommand:MenuCommand) : void
+    {static} - MenuItem_AssetsCreate2DTilePaletteHexagonalPointedTop(menuCommand:MenuCommand) : void
+    {static} - MenuItem_AssetsCreate2DTilePaletteIsometric(menuCommand:MenuCommand) : void
+    {static} - CreateAssetObject(defaultAssetName:string, layout:GridLayout.CellLayout, swizzle:GridLayout.CellSwizzle, cellSizing:GridPalette.CellSizing, cellSize:Vector3) : void
+}
+class CreateAssetEndNameEditAction {
+    + layout : GridLayout.CellLayout <<get>> <<set>>
+    + swizzle : GridLayout.CellSwizzle <<get>> <<set>>
+    + cellSize : Vector3 <<get>> <<set>>
+    + cellSizing : GridPalette.CellSizing <<get>> <<set>>
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+DefaultAssetCreation +-- CreateAssetEndNameEditAction
+@enduml

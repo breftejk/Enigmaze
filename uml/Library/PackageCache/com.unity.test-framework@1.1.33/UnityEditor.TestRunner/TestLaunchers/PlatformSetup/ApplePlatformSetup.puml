@@ -1,0 +1,12 @@
+@startuml
+class ApplePlatformSetup {
+    - m_Stripping : bool
+    + ApplePlatformSetup(buildTarget:BuildTarget)
+    + Setup() : void
+    + PostBuildAction() : void
+    + PostSuccessfulBuildAction() : void
+    + PostSuccessfulLaunchAction() : void
+    + CleanUp() : void
+}
+IPlatformSetup <|-- ApplePlatformSetup
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+class ShaderSpliceUtil <<static>> {
+    - {static} channelNames : char[]
+    - {static} whitespace : char[]
+    + {static} GetChannelSwizzle(firstChannel:int, channelCount:int) : string
+    - {static} SkipWhitespace(str:string, start:int, end:int) : int
+}
+class TemplatePreprocessor {
+    - activeFields : ActiveFields
+    - namedFragments : Dictionary<string, string>
+    - templatePaths : string[]
+    - isDebug : bool
+    - includedFiles : HashSet<string>
+    - result : ShaderStringBuilder
+    - assetCollection : AssetCollection
+    + TemplatePreprocessor(activeFields:ActiveFields, namedFragments:Dictionary<string, string>, isDebug:bool, templatePaths:string[], assetCollection:AssetCollection, humanReadable:bool, outShaderCodeResult:ShaderStringBuilder)
+    + GetShaderCode() : ShaderStringBuilder
+    + ProcessTemplateFile(filePath:string) : void
+    + ProcessTemplateLine(line:string, start:int, end:int) : void
+    - ProcessIncludeCommand(includeCommand:Token, lineEnd:int) : void
+    - ProcessSpliceCommand(spliceCommand:Token, lineEnd:int, cur:int) : bool
+    - ProcessPredicate(predicate:Token, endLine:int, cur:int, appendEndln:bool) : bool
+    - {static} IsLetter(c:char) : bool
+    - {static} IsLetterOrDigit(c:char) : bool
+    - ParseIdentifier(code:string, start:int, end:int) : Token
+    - ParseString(line:string, start:int, end:int) : Token
+    - ParseUntil(line:string, start:int, end:int, endChar:char) : Token
+    - Expect(line:string, location:int, expected:char) : bool
+    - Error(error:string, line:string, location:int) : void
+    - AppendSubstring(str:string, start:int, includeStart:bool, end:int, includeEnd:bool) : void
+}
+struct Token {
+    + s : string
+    + start : int
+    + end : int
+    + Token(s:string, start:int, end:int)
+    + {static} Invalid() : Token
+    + IsValid() : bool
+    + Is(other:string) : bool
+    + GetString() : string
+}
+ShaderSpliceUtil +-- TemplatePreprocessor
+TemplatePreprocessor +-- Token
+@enduml

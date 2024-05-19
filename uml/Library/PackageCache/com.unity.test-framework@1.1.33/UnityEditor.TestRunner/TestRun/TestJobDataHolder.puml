@@ -1,0 +1,7 @@
+@startuml
+class TestJobDataHolder {
+    + TestRuns : List<TestJobData>
+    - {static} ResumeRunningJobs() : void
+}
+"ScriptableSingleton`1" "<TestJobDataHolder>" <|-- TestJobDataHolder
+@enduml

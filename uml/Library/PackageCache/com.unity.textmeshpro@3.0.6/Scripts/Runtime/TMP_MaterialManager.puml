@@ -1,0 +1,44 @@
+@startuml
+class TMP_MaterialManager <<static>> {
+    - {static} m_materialList : List<MaskingMaterial>
+    - {static} m_fallbackMaterials : Dictionary<long, FallbackMaterial>
+    - {static} m_fallbackMaterialLookup : Dictionary<int, long>
+    - {static} m_fallbackCleanupList : List<FallbackMaterial>
+    - {static} isFallbackListDirty : bool
+    {static} - TMP_MaterialManager()
+    {static} - OnPreRender() : void
+    + {static} GetStencilMaterial(baseMaterial:Material, stencilID:int) : Material
+    + {static} ReleaseStencilMaterial(stencilMaterial:Material) : void
+    + {static} GetBaseMaterial(stencilMaterial:Material) : Material
+    + {static} SetStencil(material:Material, stencilID:int) : Material
+    + {static} AddMaskingMaterial(baseMaterial:Material, stencilMaterial:Material, stencilID:int) : void
+    + {static} RemoveStencilMaterial(stencilMaterial:Material) : void
+    + {static} ReleaseBaseMaterial(baseMaterial:Material) : void
+    + {static} ClearMaterials() : void
+    + {static} GetStencilID(obj:GameObject) : int
+    + {static} GetMaterialForRendering(graphic:MaskableGraphic, baseMaterial:Material) : Material
+    - {static} FindRootSortOverrideCanvas(start:Transform) : Transform
+    <<internal>> {static} GetFallbackMaterial(fontAsset:TMP_FontAsset, sourceMaterial:Material, atlasIndex:int) : Material
+    + {static} GetFallbackMaterial(sourceMaterial:Material, targetMaterial:Material) : Material
+    + {static} AddFallbackMaterialReference(targetMaterial:Material) : void
+    + {static} RemoveFallbackMaterialReference(targetMaterial:Material) : void
+    + {static} CleanupFallbackMaterials() : void
+    + {static} ReleaseFallbackMaterial(fallbackMaterial:Material) : void
+    + {static} CopyMaterialPresetProperties(source:Material, destination:Material) : void
+}
+class FallbackMaterial {
+    + fallbackID : long
+    + sourceMaterial : Material
+    <<internal>> sourceMaterialCRC : int
+    + fallbackMaterial : Material
+    + count : int
+}
+class MaskingMaterial {
+    + baseMaterial : Material
+    + stencilMaterial : Material
+    + count : int
+    + stencilID : int
+}
+TMP_MaterialManager +-- FallbackMaterial
+TMP_MaterialManager +-- MaskingMaterial
+@enduml

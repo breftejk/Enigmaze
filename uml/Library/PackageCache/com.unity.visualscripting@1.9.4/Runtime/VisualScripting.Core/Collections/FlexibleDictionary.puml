@@ -1,0 +1,5 @@
+@startuml
+class "FlexibleDictionary`2"<TKey,TValue> {
+}
+"Dictionary`2" "<TKey,TValue>" <|-- "FlexibleDictionary`2"
+@enduml

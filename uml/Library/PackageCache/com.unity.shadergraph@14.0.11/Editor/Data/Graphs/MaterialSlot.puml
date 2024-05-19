@@ -1,0 +1,55 @@
+@startuml
+abstract class MaterialSlot {
+    <<const>> - k_NotInit : string = "Not Initialized"
+    - m_Id : int
+    - m_DisplayName : string
+    - m_SlotType : SlotType
+    - m_Hidden : bool
+    - m_ShaderOutputName : string
+    - m_StageCapability : ShaderStageCapability
+    - m_HasError : bool
+    # MaterialSlot()
+    # MaterialSlot(slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, stageCapability:ShaderStageCapability, hidden:bool)
+    <<internal>> SetInternalData(slotType:SlotType, shaderOutputName:string) : void
+    + IsConnectionTestable() : bool
+    + InstantiateCustomControl() : VisualElement
+    + <<virtual>> InstantiateControl() : VisualElement
+    {static} - ConcreteSlotValueTypeAsString(type:ConcreteSlotValueType) : string
+    + <<virtual>> displayName : string <<get>> <<set>>
+    + RawDisplayName() : string
+    + {static} CreateMaterialSlot(type:SlotValueType, slotId:int, displayName:string, shaderOutputName:string, slotType:SlotType, defaultValue:Vector4, shaderStageCapability:ShaderStageCapability, hidden:bool) : MaterialSlot
+    + slotReference : SlotReference <<get>>
+    + owner : AbstractMaterialNode <<get>> <<set>>
+    + hidden : bool <<get>> <<set>>
+    + id : int <<get>>
+    + isInputSlot : bool <<get>>
+    + isOutputSlot : bool <<get>>
+    + slotType : SlotType <<get>>
+    + isConnected : bool <<get>>
+    + {abstract} isDefaultValue : bool <<get>>
+    + {abstract} valueType : SlotValueType <<get>>
+    + {abstract} concreteValueType : ConcreteSlotValueType <<get>>
+    + shaderOutputName : string <<get>>
+    + stageCapability : ShaderStageCapability <<get>> <<set>>
+    + hasError : bool <<get>> <<set>>
+    + IsUsingDefaultValue() : bool
+    + IsCompatibleWith(otherSlot:MaterialSlot) : bool
+    + IsCompatibleStageWith(otherSlot:MaterialSlot) : bool
+    <<internal>> IsCompatibleStageWith(capability:ShaderStageCapability) : bool
+    + GetDefaultValue(generationMode:GenerationMode, concretePrecision:ConcretePrecision) : string
+    + <<virtual>> GetDefaultValue(generationMode:GenerationMode) : string
+    # <<virtual>> ConcreteSlotValueAsVariable() : string
+    + {abstract} AddDefaultProperty(properties:PropertyCollector, generationMode:GenerationMode) : void
+    + <<virtual>> GetPreviewProperties(properties:List<PreviewProperty>, name:string) : void
+    + <<virtual>> AppendHLSLParameterDeclaration(sb:ShaderStringBuilder, paramName:string) : void
+    + {abstract} CopyValuesFrom(foundSlot:MaterialSlot) : void
+    + Equals(other:MaterialSlot) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    + Dispose() : void
+    <<internal>> <<virtual>> bareResource : bool <<get>> <<set>>
+    + <<virtual>> CopyDefaultValue(other:MaterialSlot) : void
+}
+JsonObject <|-- MaterialSlot
+IDisposable <|-- MaterialSlot
+@enduml

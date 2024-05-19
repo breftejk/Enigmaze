@@ -1,0 +1,40 @@
+@startuml
+class DiffTreeViewMenu {
+    <<internal>> DiffTreeViewMenu(operations:IDiffTreeViewMenuOperations, metaMenuOperations:IMetaMenuOperations)
+    <<internal>> Popup() : void
+    <<internal>> ProcessKeyActionIfNeeded(e:Event) : bool
+    - SaveRevisionAsMenuItem_Click() : void
+    - DiffMenuItem_Click() : void
+    - DiffMetaMenuItem_Click() : void
+    - HistoryMenuItem_Click() : void
+    - HistoryMetaMenuItem_Click() : void
+    - RevertMenuItem_Click() : void
+    - UndeleteMenuItem_Click() : void
+    - UndeleteToSpecifiedPathMenuItem_Click() : void
+    - UpdateMenuItems(menu:GenericMenu) : void
+    - GetNoActionMenuItemContent() : GUIContent
+    {static} - GetRevertMenuItemText(isMultipleSelection:bool, selectionHasMeta:bool) : string
+    {static} - GetUndeleteMenuItemText(isMultipleSelection:bool, selectionHasMeta:bool) : string
+    {static} - GetUndeleteToSpecifiedPathMenuItemText(isMultipleSelection:bool, selectionHasMeta:bool) : string
+    - ProcessMenuOperation(operationToExecute:DiffTreeViewMenuOperations) : void
+    {static} - GetMenuOperation(e:Event) : DiffTreeViewMenuOperations
+    - BuildComponents() : void
+    - mNoActionMenuItemContent : GUIContent
+    - mSaveRevisionAsMenuItemContent : GUIContent
+    - mDiffMenuItemContent : GUIContent
+    - mDiffMetaMenuItemContent : GUIContent
+    - mViewHistoryMenuItemContent : GUIContent
+    - mViewHistoryMetaMenuItemContent : GUIContent
+    - mRevertMenuItemContent : GUIContent
+    - mUndeleteMenuItemContent : GUIContent
+    - mUndeleteToSpecifiedPathMenuItemContent : GUIContent
+    <<readonly>> - mOperations : IDiffTreeViewMenuOperations
+    <<readonly>> - mMetaMenuOperations : IMetaMenuOperations
+}
+interface IMetaMenuOperations {
+    SelectionHasMeta() : bool
+    DiffMeta() : void
+    HistoryMeta() : void
+}
+DiffTreeViewMenu +-- IMetaMenuOperations
+@enduml

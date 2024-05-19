@@ -1,0 +1,7 @@
+@startuml
+class OnBecameVisible <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+"GameObjectEventUnit`1" "<EmptyEventArgs>" <|-- OnBecameVisible
+@enduml

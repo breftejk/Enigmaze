@@ -1,0 +1,7 @@
+@startuml
+class UpdateBackupPage {
+    # <<override>> incentive : string <<get>> = "Just in case anything goes wrong during the update process, we strongly suggest you create a backup of your project."
+    # <<override>> OnCloseButtonGUI() : void
+}
+BackupPage <|-- UpdateBackupPage
+@enduml

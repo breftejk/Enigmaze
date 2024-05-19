@@ -1,0 +1,39 @@
+@startuml
+class AspectRatioFitter {
+    - m_AspectMode : AspectMode
+    + aspectMode : AspectMode <<get>> <<set>>
+    - m_AspectRatio : float = 1
+    + aspectRatio : float <<get>> <<set>>
+    - m_Rect : RectTransform
+    - m_DelayedSetDirty : bool = false
+    - m_DoesParentExist : bool = false
+    - rectTransform : RectTransform <<get>>
+    - m_Tracker : DrivenRectTransformTracker
+    # AspectRatioFitter()
+    # <<override>> OnEnable() : void
+    # <<override>> Start() : void
+    # <<override>> OnDisable() : void
+    # <<override>> OnTransformParentChanged() : void
+    # <<virtual>> Update() : void
+    # <<override>> OnRectTransformDimensionsChange() : void
+    - UpdateRect() : void
+    - GetSizeDeltaToProduceSize(size:float, axis:int) : float
+    - GetParentSize() : Vector2
+    + <<virtual>> SetLayoutHorizontal() : void
+    + <<virtual>> SetLayoutVertical() : void
+    # SetDirty() : void
+    + IsComponentValidOnObject() : bool
+    + IsAspectModeValid() : bool
+    - DoesParentExists() : bool
+}
+enum AspectMode {
+    None,
+    WidthControlsHeight,
+    HeightControlsWidth,
+    FitInParent,
+    EnvelopeParent,
+}
+UIBehaviour <|-- AspectRatioFitter
+ILayoutSelfController <|-- AspectRatioFitter
+AspectRatioFitter +-- AspectMode
+@enduml

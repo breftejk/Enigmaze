@@ -1,0 +1,15 @@
+@startuml
+class SimpleController_UsingState {
+    + moveSpeed : float
+    + rotateSpeed : float
+    + projectile : GameObject
+    - m_Rotation : Vector2
+    - m_Firing : bool
+    - m_FireCooldown : float
+    + Update() : void
+    - Move(direction:Vector2) : void
+    - Look(rotate:Vector2) : void
+    - Fire() : void
+}
+MonoBehaviour <|-- SimpleController_UsingState
+@enduml

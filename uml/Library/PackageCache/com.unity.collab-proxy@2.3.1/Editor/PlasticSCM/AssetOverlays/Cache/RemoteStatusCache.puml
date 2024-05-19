@@ -1,0 +1,21 @@
+@startuml
+class RemoteStatusCache {
+    <<internal>> RemoteStatusCache(wkInfo:WorkspaceInfo, isGluonMode:bool, repaintProjectWindow:Action, repaintInspector:Action)
+    <<internal>> GetStatus(fullPath:string) : AssetStatus
+    <<internal>> Clear() : void
+    - AsyncCalculateStatus(cancelToken:CancelToken) : void
+    - mCurrentCancelToken : CancelToken
+    - mStatusByPathCache : Dictionary<string, AssetStatus>
+    <<readonly>> - mRepaintInspector : Action
+    <<readonly>> - mRepaintProjectWindow : Action
+    <<readonly>> - mIsGluonMode : bool
+    <<readonly>> - mWkInfo : WorkspaceInfo
+    {static} - mLock : object
+}
+class BuildStatusByPathCache <<static>> {
+    <<internal>> {static} ForOutOfDateItems(outOfDateItems:OutOfDateItems, wkPath:string) : Dictionary<string, AssetStatus>
+    {static} - GetPathForDiff(wkPath:string, mountPoint:MountPointWithPath, cmSubPath:string) : string
+    {static} - GetPathForConflict(wkPath:string, cmPath:string) : string
+}
+RemoteStatusCache +-- BuildStatusByPathCache
+@enduml

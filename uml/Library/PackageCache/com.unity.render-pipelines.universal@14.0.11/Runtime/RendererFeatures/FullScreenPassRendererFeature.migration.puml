@@ -1,0 +1,17 @@
+@startuml
+class FullScreenPassRendererFeature <<partial>> {
+    - m_Version : Version
+    - UpgradeIfNeeded() : void
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+enum Version {
+    Uninitialised= -1,
+    Initial,
+    AddFetchColorBufferCheckbox,
+    Count,
+    Latest= Count - 1,
+}
+ISerializationCallbackReceiver <|-- FullScreenPassRendererFeature
+FullScreenPassRendererFeature +-- Version
+@enduml

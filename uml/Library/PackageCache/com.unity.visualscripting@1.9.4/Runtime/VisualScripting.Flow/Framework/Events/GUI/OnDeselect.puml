@@ -1,0 +1,7 @@
+@startuml
+class OnDeselect <<sealed>> {
+    + <<override>> MessageListenerType : Type <<get>>
+    # <<override>> hookName : string <<get>>
+}
+GenericGuiEventUnit <|-- OnDeselect
+@enduml

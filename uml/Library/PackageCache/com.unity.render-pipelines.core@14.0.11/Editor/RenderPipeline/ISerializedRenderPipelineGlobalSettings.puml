@@ -1,0 +1,7 @@
+@startuml
+interface ISerializedRenderPipelineGlobalSettings {
+    serializedObject : SerializedObject <<get>>
+    shaderVariantLogLevel : SerializedProperty <<get>>
+    exportShaderVariants : SerializedProperty <<get>>
+}
+@enduml

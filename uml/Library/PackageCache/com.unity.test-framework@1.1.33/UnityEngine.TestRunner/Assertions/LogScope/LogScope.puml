@@ -1,0 +1,34 @@
+@startuml
+class LogScope <<sealed>> {
+    {static} - s_ActiveScopes : List<LogScope>
+    <<readonly>> - m_Lock : object
+    - m_Disposed : bool
+    - m_NeedToProcessLogs : bool
+    + ExpectedLogs : Queue<LogMatch> <<get>> <<set>>
+    + AllLogs : List<LogEvent> <<get>>
+    + FailingLogs : List<LogEvent> <<get>>
+    + IgnoreFailingMessages : bool <<get>> <<set>>
+    + IsNUnitException : bool <<get>>
+    + IsNUnitSuccessException : bool <<get>>
+    + IsNUnitInconclusiveException : bool <<get>>
+    + IsNUnitIgnoreException : bool <<get>>
+    + NUnitExceptionMessage : string <<get>>
+    + {static} Current : LogScope <<get>>
+    + {static} HasCurrentLogScope() : bool
+    + LogScope()
+    - Activate() : void
+    - Deactivate() : void
+    {static} - RegisterScope(logScope:LogScope) : void
+    {static} - UnregisterScope(logScope:LogScope) : void
+    + AddLog(message:string, stacktrace:string, type:LogType) : void
+    {static} - IsNUnitResultStateException(stacktrace:string, logType:LogType) : bool
+    {static} - IsFailingLog(type:LogType) : bool
+    + Dispose() : void
+    - Dispose(disposing:bool) : void
+    + AnyFailingLogs() : bool
+    + EvaluateLogScope(endOfScopeCheck:bool) : void
+    + ProcessExpectedLogs() : void
+    + NoUnexpectedReceived() : void
+}
+ILogScope <|-- LogScope
+@enduml

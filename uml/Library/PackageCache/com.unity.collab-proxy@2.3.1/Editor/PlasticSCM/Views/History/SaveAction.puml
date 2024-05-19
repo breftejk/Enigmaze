@@ -1,0 +1,6 @@
+@startuml
+class SaveAction <<static>> {
+    <<internal>> {static} GetDestinationPath(wkPath:string, path:string, defaultFileName:string) : string
+    {static} - GetDirectoryForSaveAs(wkPath:string, path:string) : string
+}
+@enduml

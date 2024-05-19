@@ -1,0 +1,20 @@
+@startuml
+class fsMetaType {
+    - fsMetaType(config:fsConfig, reflectedType:Type)
+    + ReflectedType : Type
+    - _hasEmittedAotData : bool
+    - _hasDefaultConstructorCache : bool?
+    - _isDefaultConstructorPublic : bool
+    + Properties : fsMetaProperty[] <<get>>
+    + HasDefaultConstructor : bool <<get>>
+    + EmitAotData() : bool
+    + CreateInstance() : object
+    - {static} _configMetaTypes : Dictionary<fsConfig, Dictionary<Type, fsMetaType>>
+    + {static} Get(config:fsConfig, type:Type) : fsMetaType
+    + {static} ClearCache() : void
+    - {static} CollectProperties(config:fsConfig, properties:List<fsMetaProperty>, reflectedType:Type) : void
+    - {static} IsAutoProperty(property:PropertyInfo, members:MemberInfo[]) : bool
+    - {static} CanSerializeProperty(config:fsConfig, property:PropertyInfo, members:MemberInfo[], annotationFreeValue:bool) : bool
+    - {static} CanSerializeField(config:fsConfig, field:FieldInfo, annotationFreeValue:bool) : bool
+}
+@enduml

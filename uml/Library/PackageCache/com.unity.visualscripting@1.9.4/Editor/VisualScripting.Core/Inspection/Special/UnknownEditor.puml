@@ -1,0 +1,9 @@
+@startuml
+class UnknownEditor {
+    + UnknownEditor(metadata:Metadata)
+    - message : string <<get>>
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    # <<override>> GetHeight(width:float, label:GUIContent) : float
+}
+Inspector <|-- UnknownEditor
+@enduml

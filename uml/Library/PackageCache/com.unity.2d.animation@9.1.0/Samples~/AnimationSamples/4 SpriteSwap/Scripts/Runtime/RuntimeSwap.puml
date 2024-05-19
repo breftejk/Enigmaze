@@ -1,0 +1,19 @@
+@startuml
+class RuntimeSwap {
+    - m_SwapGroup : SwapGroup[] = null
+    - m_SpriteLibraryTarget : SpriteLibrary = null
+    + OverrideEntry(i:int) : void
+    + ResetEntry(i:int) : void
+}
+class SwapEntry {
+    + sprite : Sprite = null
+    + category : string = ""
+    + entry : string = ""
+}
+class SwapGroup {
+    + swapEntries : SwapEntry[] = null
+}
+MonoBehaviour <|-- RuntimeSwap
+RuntimeSwap +-- SwapEntry
+RuntimeSwap +-- SwapGroup
+@enduml

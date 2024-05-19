@@ -1,0 +1,7 @@
+@startuml
+class DeprecatedVector2Add <<sealed>> {
+    # <<override>> defaultB : Vector2 <<get>>
+    + <<override>> Operation(a:Vector2, b:Vector2) : Vector2
+}
+"Add`1" "<Vector2>" <|-- DeprecatedVector2Add
+@enduml

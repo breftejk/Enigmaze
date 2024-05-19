@@ -1,0 +1,27 @@
+@startuml
+class Comparison <<sealed>> {
+    + a : ValueInput <<get>>
+    + b : ValueInput <<get>>
+    + numeric : bool <<get>> <<set>> = true
+    + aLessThanB : ValueOutput <<get>>
+    + aLessThanOrEqualToB : ValueOutput <<get>>
+    + aEqualToB : ValueOutput <<get>>
+    + aNotEqualToB : ValueOutput <<get>>
+    + aGreaterThanOrEqualToB : ValueOutput <<get>>
+    + aGreatherThanB : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    - NumericLess(a:float, b:float) : bool
+    - NumericLessOrEqual(a:float, b:float) : bool
+    - NumericEqual(a:float, b:float) : bool
+    - NumericNotEqual(a:float, b:float) : bool
+    - NumericGreaterOrEqual(a:float, b:float) : bool
+    - NumericGreater(a:float, b:float) : bool
+    - GenericLess(a:object, b:object) : bool
+    - GenericLessOrEqual(a:object, b:object) : bool
+    - GenericEqual(a:object, b:object) : bool
+    - GenericNotEqual(a:object, b:object) : bool
+    - GenericGreaterOrEqual(a:object, b:object) : bool
+    - GenericGreater(a:object, b:object) : bool
+}
+Unit <|-- Comparison
+@enduml

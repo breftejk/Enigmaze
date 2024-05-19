@@ -1,0 +1,14 @@
+@startuml
+class CinemachineBlenderSettings <<sealed>> {
+    + m_CustomBlends : CustomBlend[] = null
+    + <<const>> kBlendFromAnyCameraLabel : string = "**ANY CAMERA**"
+    + GetBlendForVirtualCameras(fromCameraName:string, toCameraName:string, defaultBlend:CinemachineBlendDefinition) : CinemachineBlendDefinition
+}
+struct CustomBlend {
+    + m_From : string
+    + m_To : string
+    + m_Blend : CinemachineBlendDefinition
+}
+ScriptableObject <|-- CinemachineBlenderSettings
+CinemachineBlenderSettings +-- CustomBlend
+@enduml

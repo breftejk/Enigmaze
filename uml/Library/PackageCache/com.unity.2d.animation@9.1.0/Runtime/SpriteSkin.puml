@@ -1,0 +1,104 @@
+@startuml
+struct PositionVertex {
+    + position : Vector3
+}
+struct PositionTangentVertex {
+    + position : Vector3
+    + tangent : Vector4
+}
+class SpriteSkin <<sealed>> {
+    - m_RootBone : Transform
+    - m_BoneTransforms : Transform[]
+    - m_Bounds : Bounds
+    - m_AlwaysUpdate : bool = true
+    - m_AutoRebind : bool = false
+    - m_DeformedVertices : NativeByteArray
+    - m_CurrentDeformVerticesLength : int = 0
+    - m_SpriteRenderer : SpriteRenderer
+    - m_CurrentDeformSprite : int = 0
+    - m_ForceSkinning : bool
+    - m_IsValid : bool = false
+    - m_TransformsHash : int = 0
+    - m_TransformId : int
+    - m_BoneTransformId : NativeArray<int>
+    - m_RootBoneTransformId : int
+    - m_SpriteUVs : NativeCustomSlice<Vector2>
+    - m_SpriteVertices : NativeCustomSlice<Vector3>
+    - m_SpriteTangents : NativeCustomSlice<Vector4>
+    - m_SpriteBoneWeights : NativeCustomSlice<BoneWeight>
+    - m_SpriteBindPoses : NativeCustomSlice<Matrix4x4>
+    - m_BoneTransformIdNativeSlice : NativeCustomSlice<int>
+    - m_SpriteHasTangents : bool
+    - m_SpriteVertexStreamSize : int
+    - m_SpriteVertexCount : int
+    - m_SpriteTangentVertexOffset : int
+    - m_DataIndex : int
+    - m_BoneCacheUpdateToDate : bool = false
+    - m_HierarchyCache : Dictionary<int, List<TransformData>>
+    <<internal>> sprite : Sprite <<get>>
+    <<internal>> spriteRenderer : SpriteRenderer <<get>>
+    <<internal>> spriteBoneWeights : NativeCustomSlice<BoneWeight> <<get>>
+    + autoRebind : bool <<get>> <<set>>
+    + boneTransforms : Transform[] <<get>> <<internal set>>
+    + rootBone : Transform <<get>> <<internal set>>
+    <<internal>> bounds : Bounds <<get>> <<set>>
+    + alwaysUpdate : bool <<get>> <<set>>
+    <<internal>> isValid : bool <<get>>
+    - GetSpriteInstanceID() : int
+    <<internal>> Awake() : void
+    - OnEnable() : void
+    - OnEnableBatch() : void
+    - OnResetBatch() : void
+    - OnDisableBatch() : void
+    - OnBoneTransformChanged() : void
+    - OnRootBoneTransformChanged() : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    - OnBeforeSerializeBatch() : void
+    - OnAfterSerializeBatch() : void
+    <<internal>> OnEditorEnable() : void
+    - CacheValidFlag() : void
+    <<internal>> BatchValidate() : bool
+    - Reset() : void
+    - CacheBoneTransformIds(forceUpdate:bool) : void
+    - RemoveTransformFromSpriteSkinComposite() : void
+    <<internal>> GetDeformedVertices(spriteVertexCount:int) : NativeByteArray
+    + HasCurrentDeformedVertices() : bool
+    <<internal>> GetCurrentDeformedVertices() : NativeArray<byte>
+    <<internal>> GetCurrentDeformedVertexPositions() : NativeSlice<PositionVertex>
+    <<internal>> GetCurrentDeformedVertexPositionsAndTangents() : NativeSlice<PositionTangentVertex>
+    + GetDeformedVertexPositionData() : IEnumerable<Vector3>
+    + GetDeformedVertexTangentData() : IEnumerable<Vector4>
+    - OnDisable() : void
+    + OnPreviewUpdate() : void
+    {static} - IsInGUIUpdateLoop() : bool
+    - Deform() : void
+    - CacheCurrentSprite(rebind:bool) : void
+    - UpdateSpriteDeform() : void
+    <<internal>> CopyToSpriteSkinData(data:SpriteSkinData, spriteSkinIndex:int) : void
+    <<internal>> NeedUpdateCompositeCache() : bool
+    - CacheHierarchy() : void
+    {static} - CacheChildren(current:Transform, cache:Dictionary<int, List<TransformData>>) : void
+    {static} - GenerateTransformPath(rootBone:Transform, child:Transform) : string
+    <<internal>> {static} GetSpriteBonesTransforms(spriteSkin:SpriteSkin, outTransform:Transform[]) : bool
+    {static} - GetSpriteBonesTransformFromPath(spriteBones:SpriteBone[], hierarchyCache:Dictionary<int, List<TransformData>>, outNewBoneTransform:Transform[]) : bool
+    {static} - CalculateBoneTransformsPath(index:int, spriteBones:SpriteBone[], paths:string[]) : void
+    <<internal>> DeactivateSkinning() : void
+    <<internal>> ResetSprite() : void
+}
+class Profiling <<static>> {
+    + {static} <<readonly>> cacheCurrentSprite : ProfilerMarker
+    + {static} <<readonly>> cacheHierarchy : ProfilerMarker
+    + {static} <<readonly>> getSpriteBonesTransformFromGuid : ProfilerMarker
+    + {static} <<readonly>> getSpriteBonesTransformFromPath : ProfilerMarker
+}
+struct TransformData {
+    + fullName : string
+    + transform : Transform
+}
+MonoBehaviour <|-- SpriteSkin
+IPreviewable <|-- SpriteSkin
+ISerializationCallbackReceiver <|-- SpriteSkin
+SpriteSkin +-- Profiling
+SpriteSkin +-- TransformData
+@enduml

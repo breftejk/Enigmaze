@@ -1,0 +1,32 @@
+@startuml
+class DefaultStyles {
+    + <<readonly>> pointNormalStyle : GUIStyle
+    + <<readonly>> pointHoveredStyle : GUIStyle
+    + <<readonly>> pointSelectedStyle : GUIStyle
+    + <<readonly>> pointPreviewStyle : GUIStyle
+    + <<readonly>> pointRemovePreviewStyle : GUIStyle
+    + <<readonly>> tangentNormalStyle : GUIStyle
+    + <<readonly>> tangentHoveredStyle : GUIStyle
+    + <<readonly>> selectionRectStyle : GUIStyle
+    + DefaultStyles()
+    - CreateStyle(texture:Texture2D, size:Vector2) : GUIStyle
+}
+class Drawer {
+    - m_GUIState : IGUIState
+    - m_Styles : DefaultStyles
+    # styles : DefaultStyles <<get>>
+    + DrawSelectionRect(rect:Rect) : void
+    + DrawCreatePointPreview(position:Vector3) : void
+    + DrawRemovePointPreview(position:Vector3) : void
+    + DrawPoint(position:Vector3) : void
+    + DrawPointHovered(position:Vector3) : void
+    + DrawPointSelected(position:Vector3) : void
+    + DrawLine(p1:Vector3, p2:Vector3, width:float, color:Color) : void
+    + DrawDottedLine(p1:Vector3, p2:Vector3, width:float, color:Color) : void
+    + DrawBezier(p1:Vector3, p2:Vector3, p3:Vector3, p4:Vector3, width:float, color:Color) : void
+    + DrawTangent(position:Vector3, tangent:Vector3) : void
+    - DrawGUIStyleCap(controlID:int, position:Vector3, rotation:Quaternion, size:float, guiStyle:GUIStyle) : void
+    - GetGUIStyleRect(style:GUIStyle, position:Vector3) : Rect
+}
+IDrawer <|-- Drawer
+@enduml

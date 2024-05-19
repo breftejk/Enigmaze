@@ -1,0 +1,18 @@
+@startuml
+enum RepositoriesListColumn {
+    Name,
+    Server,
+}
+class RepositoriesListHeaderState {
+    <<internal>> {static} GetDefault() : RepositoriesListHeaderState
+    <<internal>> {static} GetColumnNames() : List<string>
+    {static} - GetColumnName(column:RepositoriesListColumn) : string
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    {static} - BuildColumns() : Column[]
+    - RepositoriesListHeaderState(columns:Column[])
+    - mHeaderTitles : string[]
+}
+MultiColumnHeaderState <|-- RepositoriesListHeaderState
+ISerializationCallbackReceiver <|-- RepositoriesListHeaderState
+@enduml

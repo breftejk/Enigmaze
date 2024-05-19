@@ -1,0 +1,16 @@
+@startuml
+class AssetReimporterAnalytic {
+    <<const>> - k_MaxEventsPerHour : int = 100
+    <<const>> - k_MaxNumberOfElements : int = 1000
+    <<const>> - k_VendorKey : string = "unity.srp"
+    + {static} Send(duration:double, numberOfAssets:uint) : void
+}
+class Data {
+    <<internal>> <<const>> k_EventName : string = "uAssetReimporterAnalytic"
+    <<internal>> <<const>> k_Version : int = 2
+    + num_assets : uint
+    + duration : double
+    + asset_type : string
+}
+AssetReimporterAnalytic +-- Data
+@enduml

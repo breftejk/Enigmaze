@@ -1,0 +1,10 @@
+@startuml
+class CircleVertexSelector {
+    + selection : ISelection<int> <<get>> <<set>>
+    + spriteMeshData : BaseSpriteMeshData <<get>> <<set>>
+    + position : Vector2 <<get>> <<set>>
+    + radius : float <<get>> <<set>>
+    + Select() : void
+}
+"ICircleSelector`1" "<int>" <|-- CircleVertexSelector
+@enduml

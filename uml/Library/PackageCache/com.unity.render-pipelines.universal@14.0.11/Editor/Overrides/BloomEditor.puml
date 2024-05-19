@@ -1,0 +1,17 @@
+@startuml
+class BloomEditor <<sealed>> {
+    - m_Threshold : SerializedDataParameter
+    - m_Intensity : SerializedDataParameter
+    - m_Scatter : SerializedDataParameter
+    - m_Clamp : SerializedDataParameter
+    - m_Tint : SerializedDataParameter
+    - m_HighQualityFiltering : SerializedDataParameter
+    - m_Downsample : SerializedDataParameter
+    - m_MaxIterations : SerializedDataParameter
+    - m_DirtTexture : SerializedDataParameter
+    - m_DirtIntensity : SerializedDataParameter
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- BloomEditor
+@enduml

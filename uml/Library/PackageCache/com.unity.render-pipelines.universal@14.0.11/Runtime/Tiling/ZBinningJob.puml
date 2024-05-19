@@ -1,0 +1,22 @@
+@startuml
+struct ZBinningJob {
+    + <<const>> batchSize : int = 128
+    + <<const>> headerLength : int = 2
+    + bins : NativeArray<uint>
+    + minMaxZs : NativeArray<float2>
+    + zBinScale : float
+    + zBinOffset : float
+    + binCount : int
+    + wordsPerTile : int
+    + lightCount : int
+    + reflectionProbeCount : int
+    + batchCount : int
+    + viewCount : int
+    + isOrthographic : bool
+    {static} - EncodeHeader(min:uint, max:uint) : uint
+    {static} - DecodeHeader(zBin:uint) : (uint, uint)
+    + Execute(jobIndex:int) : void
+    - FillZBins(binStart:int, binEnd:int, itemStart:int, itemEnd:int, headerIndex:int, itemOffset:int, binOffset:int) : void
+}
+IJobFor <|-- ZBinningJob
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+class SceneViewOpenTilePaletteOverlay {
+    <<internal>> <<const>> k_OverlayId : string = "Scene View/Open Tile Palette"
+    - <<const>> k_DisplayName : string = "Open Tile Palette"
+    + SceneViewOpenTilePaletteOverlay()
+    + visible : bool <<get>>
+}
+class TilePaletteOpenPalette <<sealed>> {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Open Palette"
+    <<const>> - k_ToolSettingsClass : string = "unity-tool-settings"
+    - {static} k_LabelText : string
+    - {static} k_TooltipText : string
+    - <<const>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.TilePalette.png"
+    + TilePaletteOpenPalette()
+}
+ToolbarOverlay <|-- SceneViewOpenTilePaletteOverlay
+ITransientOverlay <|-- SceneViewOpenTilePaletteOverlay
+EditorToolbarButton <|-- TilePaletteOpenPalette
+@enduml

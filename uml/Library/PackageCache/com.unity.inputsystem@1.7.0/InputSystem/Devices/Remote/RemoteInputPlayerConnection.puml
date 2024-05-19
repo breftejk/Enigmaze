@@ -1,0 +1,39 @@
+@startuml
+class RemoteInputPlayerConnection {
+    + {static} <<readonly>> kNewDeviceMsg : Guid
+    + {static} <<readonly>> kNewLayoutMsg : Guid
+    + {static} <<readonly>> kNewEventsMsg : Guid
+    + {static} <<readonly>> kRemoveDeviceMsg : Guid
+    + {static} <<readonly>> kChangeUsagesMsg : Guid
+    + {static} <<readonly>> kStartSendingMsg : Guid
+    + {static} <<readonly>> kStopSendingMsg : Guid
+    + Bind(connection:IEditorPlayerConnection, isConnected:bool) : void
+    + Subscribe(observer:IObserver<InputRemoting.Message>) : IDisposable
+    - OnConnected(id:int) : void
+    - OnDisconnected(id:int) : void
+    - OnNewDevice(args:MessageEventArgs) : void
+    - OnNewLayout(args:MessageEventArgs) : void
+    - OnNewEvents(args:MessageEventArgs) : void
+    - OnRemoveDevice(args:MessageEventArgs) : void
+    - OnChangeUsages(args:MessageEventArgs) : void
+    - OnStartSending(args:MessageEventArgs) : void
+    - OnStopSending(args:MessageEventArgs) : void
+    - SendToSubscribers(type:InputRemoting.MessageType, args:MessageEventArgs) : void
+    - OnNext(msg:InputRemoting.Message) : void
+    - OnError(error:Exception) : void
+    - OnCompleted() : void
+    - m_Connection : IEditorPlayerConnection
+    - m_Subscribers : Subscriber[]
+    - m_ConnectedIds : int[]
+}
+class Subscriber {
+    + owner : RemoteInputPlayerConnection
+    + observer : IObserver<InputRemoting.Message>
+    + Dispose() : void
+}
+ScriptableObject <|-- RemoteInputPlayerConnection
+"IObserver`1" "<InputRemoting.Message>" <|-- RemoteInputPlayerConnection
+"IObservable`1" "<InputRemoting.Message>" <|-- RemoteInputPlayerConnection
+RemoteInputPlayerConnection +-- Subscriber
+IDisposable <|-- Subscriber
+@enduml

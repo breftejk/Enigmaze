@@ -1,0 +1,9 @@
+@startuml
+class "UnselectTool`1"<T> {
+    - m_Unselector : Unselector<T>
+    + cacheUndo : ICacheUndo <<get>> <<set>>
+    + selection : ISelection<T> <<get>> <<set>>
+    + onUnselect : Action
+    + OnGUI() : void
+}
+@enduml

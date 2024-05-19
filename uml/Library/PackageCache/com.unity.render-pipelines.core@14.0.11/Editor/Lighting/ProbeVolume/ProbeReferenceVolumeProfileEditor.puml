@@ -1,0 +1,32 @@
+@startuml
+class ProbeReferenceVolumeProfileEditor {
+    - m_MinDistanceBetweenProbes : SerializedProperty
+    - m_SimplificationLevels : SerializedProperty
+    - m_MinRendererVolumeSize : SerializedProperty
+    - m_RenderersLayerMask : SerializedProperty
+    - m_FreezePlacement : SerializedProperty
+    - profile : ProbeReferenceVolumeProfile <<get>>
+    - OnEnable() : void
+    <<internal>> <<const>> s_HighestSimplification : int = 5
+    - {static} k_DarkThemeColor : Color
+    - {static} k_LiteThemeColor : Color
+    {static} - GetMarkerColor() : Color
+    <<internal>> {static} DrawSimplificationLevelsMarkers(rect:Rect, minDistanceBetweenProbes:float, lowestSimplification:int, highestSimplification:int, hideStart:int, hideEnd:int) : void
+    {static} - s_SimplificationSliderID : int
+    - SimplificationLevelsSlider() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> maxDistanceBetweenProbes : GUIContent
+    + {static} <<readonly>> minDistanceBetweenProbes : GUIContent
+    + {static} <<readonly>> simplificationLevelsHighWarning : string = "High simplification levels have a big memory overhead, they are not recommended except for testing purposes."
+    + {static} <<readonly>> indexDimensions : GUIContent
+    + {static} <<readonly>> minRendererVolumeSize : GUIContent
+    + {static} <<readonly>> renderersLayerMask : GUIContent
+    + {static} <<readonly>> rendererFilterSettings : GUIContent
+    + {static} <<readonly>> keepSamePlacement : GUIContent
+    + {static} <<readonly>> labelFont : GUIStyle
+}
+Editor <|-- ProbeReferenceVolumeProfileEditor
+ProbeReferenceVolumeProfileEditor +-- Styles
+@enduml

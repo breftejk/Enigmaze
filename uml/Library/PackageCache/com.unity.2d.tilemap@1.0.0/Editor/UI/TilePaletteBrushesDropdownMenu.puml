@@ -1,0 +1,14 @@
+@startuml
+class TilePaletteBrushesDropdownMenu {
+    - <<const>> k_BrushDropdownWidth : float = 150f
+    - m_Dropdown : GridBrushesDropdown
+    + TilePaletteBrushesDropdownMenu()
+    + AddItem(itemName:string, isChecked:bool, action:System.Action) : void
+    + AddItem(itemName:string, isChecked:bool, action:System.Action<object>, data:object) : void
+    + AddDisabledItem(itemName:string, isChecked:bool) : void
+    + AddSeparator(path:string) : void
+    + DropDown(position:Rect, targetElement:VisualElement, anchored:bool) : void
+    - SelectBrush(i:int, o:object) : void
+}
+IGenericMenu <|-- TilePaletteBrushesDropdownMenu
+@enduml

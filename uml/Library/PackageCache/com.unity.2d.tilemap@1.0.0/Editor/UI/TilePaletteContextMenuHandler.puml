@@ -1,0 +1,10 @@
+@startuml
+class TilePaletteContextMenuHandler {
+    - <<readonly>> m_ContextClick : Action
+    + TilePaletteContextMenuHandler(contextClick:Action)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - OnContextClick(evt:ContextClickEvent) : void
+}
+MouseManipulator <|-- TilePaletteContextMenuHandler
+@enduml

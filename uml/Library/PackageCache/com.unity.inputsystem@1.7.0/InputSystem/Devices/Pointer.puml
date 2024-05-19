@@ -1,0 +1,33 @@
+@startuml
+struct PointerState {
+    + {static} kFormat : FourCC <<get>>
+    - pointerId : uint
+    + position : Vector2
+    + delta : Vector2
+    + pressure : float
+    + radius : Vector2
+    + buttons : ushort
+    + displayIndex : ushort
+    + format : FourCC <<get>>
+}
+class Pointer {
+    + position : Vector2Control <<get>> <<protected set>>
+    + delta : DeltaControl <<get>> <<protected set>>
+    + radius : Vector2Control <<get>> <<protected set>>
+    + pressure : AxisControl <<get>> <<protected set>>
+    + press : ButtonControl <<get>> <<protected set>>
+    + displayIndex : IntegerControl <<get>> <<protected set>>
+    + {static} current : Pointer <<get>> <<internal set>>
+    + <<override>> MakeCurrent() : void
+    # <<override>> OnRemoved() : void
+    # <<override>> FinishSetup() : void
+    # OnNextUpdate() : void
+    # <<unsafe>> OnStateEvent(eventPtr:InputEventPtr) : void
+    - OnNextUpdate() : void
+    - OnStateEvent(eventPtr:InputEventPtr) : void
+    - GetStateOffsetForEvent(control:InputControl, eventPtr:InputEventPtr, offset:uint) : bool
+}
+IInputStateTypeInfo <|-- PointerState
+InputDevice <|-- Pointer
+IInputStateCallbackReceiver <|-- Pointer
+@enduml

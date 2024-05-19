@@ -1,0 +1,66 @@
+@startuml
+interface IControl {
+    GetRequirements() : ShaderGraphRequirements
+}
+class PositionControl {
+    + space : CoordinateSpace <<get>>
+    + PositionControl(space:CoordinateSpace)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class NormalControl {
+    + space : CoordinateSpace <<get>>
+    + NormalControl(space:CoordinateSpace)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class TangentControl {
+    + space : CoordinateSpace <<get>>
+    + TangentControl(space:CoordinateSpace)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class ColorControl {
+    + value : Color <<get>>
+    + hdr : bool <<get>>
+    + ColorControl(value:Color, hdr:bool)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class ColorRGBAControl {
+    + value : Color <<get>>
+    + ColorRGBAControl(value:Color)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class FloatControl {
+    + value : float <<get>>
+    + FloatControl(value:float)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class Vector2Control {
+    + value : Vector2 <<get>>
+    + Vector2Control(value:Vector2)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class Vector3Control {
+    + value : Vector3 <<get>>
+    + Vector3Control(value:Vector3)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class Vector4Control {
+    + value : Vector4 <<get>>
+    + Vector4Control(value:Vector4)
+    + GetRequirements() : ShaderGraphRequirements
+}
+class VertexColorControl {
+    + value : Color <<get>>
+    + VertexColorControl(value:Color)
+    + GetRequirements() : ShaderGraphRequirements
+}
+IControl <|-- PositionControl
+IControl <|-- NormalControl
+IControl <|-- TangentControl
+IControl <|-- ColorControl
+IControl <|-- ColorRGBAControl
+IControl <|-- FloatControl
+IControl <|-- Vector2Control
+IControl <|-- Vector3Control
+IControl <|-- Vector4Control
+IControl <|-- VertexColorControl
+@enduml

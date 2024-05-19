@@ -1,0 +1,11 @@
+@startuml
+class GlobalMessageListener <<sealed>> {
+    - OnGUI() : void
+    - OnApplicationFocus(focus:bool) : void
+    - OnApplicationPause(paused:bool) : void
+    - OnApplicationQuit() : void
+    + {static} Require() : void
+}
+MonoBehaviour <|-- GlobalMessageListener
+ISingleton <|-- GlobalMessageListener
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class SplineUtility {
+    + {static} SlopeAngle(start:Vector2, end:Vector2) : float
+    + {static} CalculateTangents(point:Vector3, prevPoint:Vector3, nextPoint:Vector3, forward:Vector3, scale:float, rightTangent:Vector3, leftTangent:Vector3) : void
+    <<internal>> {static} NextIndex(index:int, pointCount:int) : int
+    <<internal>> {static} PreviousIndex(index:int, pointCount:int) : int
+    - {static} Mod(x:int, m:int) : int
+}
+class "SpriteShapeCopyUtility`1"<T> {
+    <<internal>> {static} Copy(dst:NativeSlice<T>, src:T[], length:int) : void
+    <<internal>> {static} Copy(dst:T[], src:NativeSlice<T>, length:int) : void
+}
+@enduml

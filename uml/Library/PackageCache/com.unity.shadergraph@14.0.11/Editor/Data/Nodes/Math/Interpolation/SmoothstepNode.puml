@@ -1,0 +1,8 @@
+@startuml
+class SmoothstepNode {
+    + SmoothstepNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Smoothstep(Edge1:DynamicDimensionVector, Edge2:DynamicDimensionVector, In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- SmoothstepNode
+@enduml

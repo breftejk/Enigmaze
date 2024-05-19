@@ -1,0 +1,10 @@
+@startuml
+interface IRowGUI {
+    asset : TrackAsset <<get>>
+    boundingRect : Rect <<get>>
+    locked : bool <<get>>
+    showMarkers : bool <<get>>
+    muted : bool <<get>>
+    ToWindowSpace(treeViewRect:Rect) : Rect
+}
+@enduml

@@ -1,0 +1,145 @@
+@startuml
+enum AtlasPopulationMode {
+    Static= 0x0,
+    Dynamic= 0x1,
+}
+class TMP_FontAsset {
+    + version : string <<get>> <<internal set>>
+    - m_Version : string
+    <<internal>> m_SourceFontFileGUID : string
+    + sourceFontFile : Font <<get>> <<internal set>>
+    - m_SourceFontFile : Font
+    + atlasPopulationMode : AtlasPopulationMode <<get>> <<set>>
+    - m_AtlasPopulationMode : AtlasPopulationMode
+    + faceInfo : FaceInfo <<get>> <<set>>
+    <<internal>> m_FaceInfo : FaceInfo
+    + glyphTable : List<Glyph> <<get>> <<internal set>>
+    <<internal>> m_GlyphTable : List<Glyph>
+    + glyphLookupTable : Dictionary<uint, Glyph> <<get>>
+    <<internal>> m_GlyphLookupDictionary : Dictionary<uint, Glyph>
+    + characterTable : List<TMP_Character> <<get>> <<internal set>>
+    <<internal>> m_CharacterTable : List<TMP_Character>
+    + characterLookupTable : Dictionary<uint, TMP_Character> <<get>>
+    <<internal>> m_CharacterLookupDictionary : Dictionary<uint, TMP_Character>
+    + atlasTexture : Texture2D <<get>>
+    <<internal>> m_AtlasTexture : Texture2D
+    + atlasTextures : Texture2D[] <<get>> <<set>>
+    <<internal>> m_AtlasTextures : Texture2D[]
+    <<internal>> m_AtlasTextureIndex : int
+    + atlasTextureCount : int <<get>>
+    + isMultiAtlasTexturesEnabled : bool <<get>> <<set>>
+    - m_IsMultiAtlasTexturesEnabled : bool
+    <<internal>> clearDynamicDataOnBuild : bool <<get>> <<set>>
+    - m_ClearDynamicDataOnBuild : bool
+    <<internal>> usedGlyphRects : List<GlyphRect> <<get>> <<set>>
+    - m_UsedGlyphRects : List<GlyphRect>
+    <<internal>> freeGlyphRects : List<GlyphRect> <<get>> <<set>>
+    - m_FreeGlyphRects : List<GlyphRect>
+    + fontInfo : FaceInfo_Legacy <<get>>
+    - m_fontInfo : FaceInfo_Legacy = null
+    + atlas : Texture2D
+    + atlasWidth : int <<get>> <<internal set>>
+    <<internal>> m_AtlasWidth : int
+    + atlasHeight : int <<get>> <<internal set>>
+    <<internal>> m_AtlasHeight : int
+    + atlasPadding : int <<get>> <<internal set>>
+    <<internal>> m_AtlasPadding : int
+    + atlasRenderMode : GlyphRenderMode <<get>> <<internal set>>
+    <<internal>> m_AtlasRenderMode : GlyphRenderMode
+    <<internal>> m_glyphInfoList : List<TMP_Glyph>
+    <<internal>> m_KerningTable : KerningTable
+    + fontFeatureTable : TMP_FontFeatureTable <<get>> <<internal set>>
+    <<internal>> m_FontFeatureTable : TMP_FontFeatureTable
+    - fallbackFontAssets : List<TMP_FontAsset>
+    + fallbackFontAssetTable : List<TMP_FontAsset> <<get>> <<set>>
+    <<internal>> m_FallbackFontAssetTable : List<TMP_FontAsset>
+    + creationSettings : FontAssetCreationSettings <<get>> <<set>>
+    <<internal>> m_CreationSettings : FontAssetCreationSettings
+    + fontWeightTable : TMP_FontWeightPair[] <<get>> <<internal set>>
+    - m_FontWeightTable : TMP_FontWeightPair[]
+    - fontWeights : TMP_FontWeightPair[] = null
+    + normalStyle : float = 0
+    + normalSpacingOffset : float = 0
+    + boldStyle : float = 0.75f
+    + boldSpacing : float = 7f
+    + italicStyle : byte = 35
+    + tabSize : byte = 10
+    <<internal>> IsFontAssetLookupTablesDirty : bool
+    - {static} k_ReadFontAssetDefinitionMarker : ProfilerMarker
+    - {static} k_AddSynthesizedCharactersMarker : ProfilerMarker
+    - {static} k_TryAddCharacterMarker : ProfilerMarker
+    - {static} k_TryAddCharactersMarker : ProfilerMarker
+    - {static} k_UpdateGlyphAdjustmentRecordsMarker : ProfilerMarker
+    - {static} k_ClearFontAssetDataMarker : ProfilerMarker
+    - {static} k_UpdateFontAssetDataMarker : ProfilerMarker
+    + {static} CreateFontAsset(font:Font) : TMP_FontAsset
+    + {static} CreateFontAsset(font:Font, samplingPointSize:int, atlasPadding:int, renderMode:GlyphRenderMode, atlasWidth:int, atlasHeight:int, atlasPopulationMode:AtlasPopulationMode, enableMultiAtlasSupport:bool) : TMP_FontAsset
+    - Awake() : void
+    - {static} s_DefaultMaterialSuffix : string = " Atlas Material"
+    + ReadFontAssetDefinition() : void
+    <<internal>> InitializeDictionaryLookupTables() : void
+    <<internal>> InitializeGlyphLookupDictionary() : void
+    <<internal>> InitializeCharacterLookupDictionary() : void
+    <<internal>> InitializeGlyphPaidAdjustmentRecordsLookupDictionary() : void
+    <<internal>> AddSynthesizedCharactersAndFaceMetrics() : void
+    - AddSynthesizedCharacter(unicode:uint, isFontFaceLoaded:bool, addImmediately:bool) : void
+    <<internal>> FallbackSearchQueryLookup : HashSet<int>
+    <<internal>> AddCharacterToLookupCache(unicode:uint, character:TMP_Character) : void
+    <<internal>> SortCharacterTable() : void
+    <<internal>> SortGlyphTable() : void
+    <<internal>> SortFontFeatureTable() : void
+    <<internal>> SortAllTables() : void
+    - {static} k_SearchedFontAssetLookup : HashSet<int>
+    + HasCharacter(character:int) : bool
+    + HasCharacter(character:char, searchFallbacks:bool, tryAddCharacter:bool) : bool
+    - HasCharacter_Internal(character:uint, searchFallbacks:bool, tryAddCharacter:bool) : bool
+    + HasCharacters(text:string, missingCharacters:List<char>) : bool
+    + HasCharacters(text:string, missingCharacters:uint[], searchFallbacks:bool, tryAddCharacter:bool) : bool
+    + HasCharacters(text:string) : bool
+    + {static} GetCharacters(fontAsset:TMP_FontAsset) : string
+    + {static} GetCharactersArray(fontAsset:TMP_FontAsset) : int[]
+    <<internal>> GetGlyphIndex(unicode:uint) : uint
+    - {static} k_FontAssets_FontFeaturesUpdateQueue : List<TMP_FontAsset>
+    - {static} k_FontAssets_FontFeaturesUpdateQueueLookup : HashSet<int>
+    - {static} k_FontAssets_AtlasTexturesUpdateQueue : List<TMP_FontAsset>
+    - {static} k_FontAssets_AtlasTexturesUpdateQueueLookup : HashSet<int>
+    <<internal>> {static} RegisterFontAssetForFontFeatureUpdate(fontAsset:TMP_FontAsset) : void
+    <<internal>> {static} UpdateFontFeaturesForFontAssetsInQueue() : void
+    <<internal>> {static} RegisterFontAssetForAtlasTextureUpdate(fontAsset:TMP_FontAsset) : void
+    <<internal>> {static} UpdateAtlasTexturesForFontAssetsInQueue() : void
+    - m_GlyphsToRender : List<Glyph>
+    - m_GlyphsRendered : List<Glyph>
+    - m_GlyphIndexList : List<uint>
+    - m_GlyphIndexListNewlyAdded : List<uint>
+    <<internal>> m_GlyphsToAdd : List<uint>
+    <<internal>> m_GlyphsToAddLookup : HashSet<uint>
+    <<internal>> m_CharactersToAdd : List<TMP_Character>
+    <<internal>> m_CharactersToAddLookup : HashSet<uint>
+    <<internal>> s_MissingCharacterList : List<uint>
+    <<internal>> m_MissingUnicodesFromFontFile : HashSet<uint>
+    <<internal>> {static} k_GlyphIndexArray : uint[]
+    + TryAddCharacters(unicodes:uint[], includeFontFeatures:bool) : bool
+    + TryAddCharacters(unicodes:uint[], missingUnicodes:uint[], includeFontFeatures:bool) : bool
+    + TryAddCharacters(characters:string, includeFontFeatures:bool) : bool
+    + TryAddCharacters(characters:string, missingCharacters:string, includeFontFeatures:bool) : bool
+    <<internal>> TryAddCharacterInternal(unicode:uint, character:TMP_Character) : bool
+    <<internal>> TryGetCharacter_and_QueueRenderToTexture(unicode:uint, character:TMP_Character) : bool
+    <<internal>> TryAddGlyphsToAtlasTextures() : void
+    - TryAddGlyphsToNewAtlasTexture() : bool
+    - SetupNewAtlasTexture() : void
+    <<internal>> UpdateAtlasTexture() : void
+    <<internal>> UpdateGlyphAdjustmentRecords() : void
+    <<internal>> UpdateGlyphAdjustmentRecords(glyphIndexes:uint[]) : void
+    <<internal>> UpdateGlyphAdjustmentRecords(glyphIndexes:List<uint>) : void
+    <<internal>> UpdateGlyphAdjustmentRecords(newGlyphIndexes:List<uint>, allGlyphIndexes:List<uint>) : void
+    - CopyListDataToArray(srcList:List<T>, dstArray:T[]) : void
+    + ClearFontAssetData(setAtlasSizeToZero:bool) : void
+    <<internal>> ClearFontAssetDataInternal() : void
+    <<internal>> UpdateFontAssetData() : void
+    <<internal>> ClearFontAssetTables() : void
+    <<internal>> ClearAtlasTextures(setAtlasSizeToZero:bool) : void
+    <<internal>> UpgradeFontAsset() : void
+    - UpgradeGlyphAdjustmentTableToFontFeatureTable() : void
+}
+TMP_Asset <|-- TMP_FontAsset
+@enduml

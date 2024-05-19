@@ -1,0 +1,42 @@
+@startuml
+class MonoBehaviour {
+    + MonoBehaviour()
+    - m_CancellationTokenSource : CancellationTokenSource
+    + destroyCancellationToken : CancellationToken <<get>>
+    - RaiseCancellation() : void
+    + IsInvoking() : bool
+    + CancelInvoke() : void
+    + Invoke(methodName:string, time:float) : void
+    + InvokeRepeating(methodName:string, time:float, repeatRate:float) : void
+    + CancelInvoke(methodName:string) : void
+    + IsInvoking(methodName:string) : bool
+    + StartCoroutine(methodName:string) : Coroutine
+    + StartCoroutine(methodName:string, value:object) : Coroutine
+    + StartCoroutine(routine:IEnumerator) : Coroutine
+    + StartCoroutine_Auto(routine:IEnumerator) : Coroutine
+    + StopCoroutine(routine:IEnumerator) : void
+    + StopCoroutine(routine:Coroutine) : void
+    + <<extern>> StopCoroutine(methodName:string) : void
+    + <<extern>> StopAllCoroutines() : void
+    + <<extern>> useGUILayout : bool <<get>> <<set>>
+    + <<extern>> didStart : bool <<get>>
+    + <<extern>> didAwake : bool <<get>>
+    + <<extern>> runInEditMode : bool <<get>> <<set>>
+    <<internal>> <<extern>> allowPrefabModeInPlayMode : bool <<get>>
+    + {static} print(message:object) : void
+    <<extern>> {static} - ConstructorCheck(self:Object) : void
+    <<extern>> {static} - Internal_CancelInvokeAll(self:MonoBehaviour) : void
+    <<extern>> {static} - Internal_IsInvokingAll(self:MonoBehaviour) : bool
+    <<extern>> {static} - InvokeDelayed(self:MonoBehaviour, methodName:string, time:float, repeatRate:float) : void
+    <<extern>> {static} - CancelInvoke(self:MonoBehaviour, methodName:string) : void
+    <<extern>> {static} - IsInvoking(self:MonoBehaviour, methodName:string) : bool
+    <<extern>> {static} - IsObjectMonoBehaviour(obj:Object) : bool
+    <<extern>> - StartCoroutineManaged(methodName:string, value:object) : Coroutine
+    <<extern>> - StartCoroutineManaged2(enumerator:IEnumerator) : Coroutine
+    <<extern>> - StopCoroutineManaged(routine:Coroutine) : void
+    <<extern>> - StopCoroutineFromEnumeratorManaged(routine:IEnumerator) : void
+    <<extern>> <<internal>> GetScriptClassName() : string
+    <<extern>> - OnCancellationTokenCreated() : void
+}
+Behaviour <|-- MonoBehaviour
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class EnumerableSetUpTearDownCommand {
+    {static} <<readonly>> - m_BeforeActionsCache : Dictionary<Type, List<MethodInfo>>
+    {static} <<readonly>> - m_AfterActionsCache : Dictionary<Type, List<MethodInfo>>
+    + EnumerableSetUpTearDownCommand(innerCommand:TestCommand)
+    # <<override>> MoveAfterEnumerator(enumerator:IEnumerator, test:Test) : bool
+    # <<override>> MoveBeforeEnumerator(enumerator:IEnumerator, test:Test) : bool
+    # <<override>> InvokeBefore(action:MethodInfo, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> InvokeAfter(action:MethodInfo, test:Test, context:UnityTestExecutionContext) : IEnumerator
+    # <<override>> GetState(context:UnityTestExecutionContext) : BeforeAfterTestCommandState
+}
+"BeforeAfterTestCommandBase`1" "<MethodInfo>" <|-- EnumerableSetUpTearDownCommand
+@enduml

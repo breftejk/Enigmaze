@@ -1,0 +1,75 @@
+@startuml
+class TrackedPoseDriver {
+    - m_TrackingType : TrackingType
+    + trackingType : TrackingType <<get>> <<set>>
+    - m_UpdateType : UpdateType
+    + updateType : UpdateType <<get>> <<set>>
+    - m_IgnoreTrackingState : bool
+    + ignoreTrackingState : bool <<get>> <<set>>
+    - m_PositionInput : InputActionProperty
+    + positionInput : InputActionProperty <<get>> <<set>>
+    - m_RotationInput : InputActionProperty
+    + rotationInput : InputActionProperty <<get>> <<set>>
+    - m_TrackingStateInput : InputActionProperty
+    + trackingStateInput : InputActionProperty <<get>> <<set>>
+    - m_CurrentPosition : Vector3
+    - m_CurrentRotation : Quaternion
+    - m_CurrentTrackingState : TrackingStates
+    - m_RotationBound : bool
+    - m_PositionBound : bool
+    - m_TrackingStateBound : bool
+    - m_IsFirstUpdate : bool = true
+    - BindActions() : void
+    - UnbindActions() : void
+    - BindPosition() : void
+    - BindRotation() : void
+    - BindTrackingState() : void
+    - UnbindPosition() : void
+    - UnbindRotation() : void
+    - UnbindTrackingState() : void
+    - OnPositionPerformed(context:InputAction.CallbackContext) : void
+    - OnPositionCanceled(context:InputAction.CallbackContext) : void
+    - OnRotationPerformed(context:InputAction.CallbackContext) : void
+    - OnRotationCanceled(context:InputAction.CallbackContext) : void
+    - OnTrackingStatePerformed(context:InputAction.CallbackContext) : void
+    - OnTrackingStateCanceled(context:InputAction.CallbackContext) : void
+    # Reset() : void
+    # <<virtual>> Awake() : void
+    # OnEnable() : void
+    # OnDisable() : void
+    # <<virtual>> OnDestroy() : void
+    # UpdateCallback() : void
+    - ReadTrackingState() : void
+    # <<virtual>> OnUpdate() : void
+    # <<virtual>> OnBeforeRender() : void
+    # <<virtual>> PerformUpdate() : void
+    # <<virtual>> SetLocalTransform(newPosition:Vector3, newRotation:Quaternion) : void
+    - HasStereoCamera(cameraComponent:Camera) : bool
+    - m_PositionAction : InputAction
+    + positionAction : InputAction <<get>> <<set>>
+    - m_RotationAction : InputAction
+    + rotationAction : InputAction <<get>> <<set>>
+    - OnBeforeSerialize() : void
+    - OnAfterDeserialize() : void
+}
+enum TrackingType {
+    RotationAndPosition,
+    RotationOnly,
+    PositionOnly,
+}
+enum TrackingStates {
+    None,
+    Position= 1 << 0,
+    Rotation= 1 << 1,
+}
+enum UpdateType {
+    UpdateAndBeforeRender,
+    Update,
+    BeforeRender,
+}
+MonoBehaviour <|-- TrackedPoseDriver
+ISerializationCallbackReceiver <|-- TrackedPoseDriver
+TrackedPoseDriver +-- TrackingType
+TrackedPoseDriver +-- TrackingStates
+TrackedPoseDriver +-- UpdateType
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TilePaletteClipboardButton {
+    <<internal>> <<const>> k_ToolbarId : string = "Tile Palette/Clipboard Button"
+    - <<const>> k_IconPath : string = "Packages/com.unity.2d.tilemap/Editor/Icons/Tilemap.TilePalette.png"
+    + TilePaletteClipboardButton()
+    # <<override>> ToggleValue() : void
+}
+EditorToolbarToggle <|-- TilePaletteClipboardButton
+@enduml

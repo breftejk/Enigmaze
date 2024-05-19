@@ -1,0 +1,72 @@
+@startuml
+class SpriteUtilityWindow {
+    # InitStyles() : void
+    # m_Styles : Styles
+    # <<const>> k_BorderMargin : float = 10f
+    # <<const>> k_ScrollbarMargin : float = 16f
+    # <<const>> k_InspectorWindowMargin : float = 8f
+    # <<const>> k_InspectorWidth : float = 330f
+    # <<const>> k_MinZoomPercentage : float = 0.9f
+    # <<const>> k_MaxZoom : float = 50f
+    # <<const>> k_WheelZoomSpeed : float = 0.03f
+    # <<const>> k_MouseZoomSpeed : float = 0.005f
+    # <<const>> k_ToolbarHeight : float = 17f
+    # m_Texture : ITexture2D
+    # m_TextureAlphaOverride : ITexture2D
+    - m_TextureViewRect : Rect
+    # m_TextureRect : Rect
+    # m_ShowAlpha : bool = false
+    # m_MipLevel : float = 0
+    # m_Zoom : float
+    # m_ScrollPosition : Vector2
+    + zoomLevel : float <<get>> <<set>>
+    <<internal>> textureViewRect : Rect <<get>> <<set>>
+    + scrollPosition : Vector2 <<get>> <<set>>
+    + showAlpha : bool <<get>> <<set>>
+    + mipLevel : float <<get>> <<set>>
+    # GetMinZoom() : float
+    # HandleZoom() : void
+    # HandlePanning() : void
+    # maxScrollRect : Rect <<get>>
+    # maxRect : Rect <<get>>
+    # DrawTexturespaceBackground() : void
+    - Log2(x:float) : float
+    # DrawTexture() : void
+    # DrawScreenspaceBackground() : void
+    # HandleScrollbars() : void
+    # SetupHandlesMatrix() : void
+    # DoAlphaZoomToolbarGUI(area:Rect) : Rect
+    # DoTextureGUI() : void
+    # <<virtual>> DoTextureGUIExtras() : void
+    # <<virtual>> DrawGizmos() : void
+    # SetNewTexture(texture:Texture2D) : void
+    # SetAlphaTextureOverride(alphaTexture:Texture2D) : void
+    <<internal>> <<override>> OnResized() : void
+    <<internal>> {static} DrawToolBarWidget(drawRect:Rect, toolbarRect:Rect, drawAction:Action<Rect>) : void
+}
+class Styles {
+    + <<readonly>> dragdot : GUIStyle = "U2D.dragDot"
+    + <<readonly>> dragdotDimmed : GUIStyle = "U2D.dragDotDimmed"
+    + <<readonly>> dragdotactive : GUIStyle = "U2D.dragDotActive"
+    + <<readonly>> createRect : GUIStyle = "U2D.createRect"
+    + <<readonly>> preToolbar : GUIStyle = "preToolbar"
+    + <<readonly>> preButton : GUIStyle = "preButton"
+    + <<readonly>> preLabel : GUIStyle = "preLabel"
+    + <<readonly>> preSlider : GUIStyle = "preSlider"
+    + <<readonly>> preSliderThumb : GUIStyle = "preSliderThumb"
+    + <<readonly>> preBackground : GUIStyle = "preBackground"
+    + <<readonly>> pivotdotactive : GUIStyle = "U2D.pivotDotActive"
+    + <<readonly>> pivotdot : GUIStyle = "U2D.pivotDot"
+    + <<readonly>> dragBorderdot : GUIStyle
+    + <<readonly>> dragBorderDotActive : GUIStyle
+    + <<readonly>> toolbar : GUIStyle
+    + <<readonly>> alphaIcon : GUIContent
+    + <<readonly>> RGBIcon : GUIContent
+    + <<readonly>> notice : GUIStyle
+    + <<readonly>> smallMip : GUIContent
+    + <<readonly>> largeMip : GUIContent
+    + Styles()
+}
+EditorWindow <|-- SpriteUtilityWindow
+SpriteUtilityWindow +-- Styles
+@enduml

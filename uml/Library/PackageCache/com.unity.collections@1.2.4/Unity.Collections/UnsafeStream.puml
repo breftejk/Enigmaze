@@ -1,0 +1,101 @@
+@startuml
+struct UnsafeStreamBlock {
+    <<internal>> Next : UnsafeStreamBlock*
+    <<internal>> <<fixed>> Data : byte
+}
+struct UnsafeStreamRange {
+    <<internal>> Block : UnsafeStreamBlock*
+    <<internal>> OffsetInFirstBlock : int
+    <<internal>> ElementCount : int
+    <<internal>> LastOffset : int
+    <<internal>> NumberOfBlocks : int
+}
+struct UnsafeStreamBlockData {
+    <<internal>> <<const>> AllocationSize : int
+    <<internal>> Allocator : AllocatorManager.AllocatorHandle
+    <<internal>> Blocks : UnsafeStreamBlock**
+    <<internal>> BlockCount : int
+    <<internal>> Free : UnsafeStreamBlock*
+    <<internal>> Ranges : UnsafeStreamRange*
+    <<internal>> RangeCount : int
+    <<internal>> Allocate(oldBlock:UnsafeStreamBlock*, threadIndex:int) : UnsafeStreamBlock*
+}
+struct UnsafeStream {
+    <<internal>> m_Block : UnsafeStreamBlockData*
+    <<internal>> m_Allocator : AllocatorManager.AllocatorHandle
+    + UnsafeStream(bufferCount:int, allocator:AllocatorManager.AllocatorHandle)
+    + {static} ScheduleConstruct(stream:UnsafeStream, bufferCount:NativeList<T>, dependency:JobHandle, allocator:AllocatorManager.AllocatorHandle) : JobHandle
+    + {static} ScheduleConstruct(stream:UnsafeStream, bufferCount:NativeArray<int>, dependency:JobHandle, allocator:AllocatorManager.AllocatorHandle) : JobHandle
+    <<internal>> {static} AllocateBlock(stream:UnsafeStream, allocator:AllocatorManager.AllocatorHandle) : void
+    <<internal>> AllocateForEach(forEachCount:int) : void
+    + IsEmpty() : bool
+    + IsCreated : bool <<get>>
+    + ForEachCount : int <<get>>
+    + AsReader() : Reader
+    + AsWriter() : Writer
+    + Count() : int
+    + ToNativeArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    - Deallocate() : void
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+}
+struct DisposeJob {
+    + Container : UnsafeStream
+    + Execute() : void
+}
+struct ConstructJobList {
+    + Container : UnsafeStream
+    + List : UntypedUnsafeList*
+    + Execute() : void
+}
+struct ConstructJob {
+    + Container : UnsafeStream
+    + Length : NativeArray<int>
+    + Execute() : void
+}
+struct Writer {
+    <<internal>> m_BlockStream : UnsafeStreamBlockData*
+    - m_CurrentBlock : UnsafeStreamBlock*
+    - m_CurrentPtr : byte*
+    - m_CurrentBlockEnd : byte*
+    <<internal>> m_ForeachIndex : int
+    - m_ElementCount : int
+    - m_FirstBlock : UnsafeStreamBlock*
+    - m_FirstOffset : int
+    - m_NumberOfBlocks : int
+    - m_ThreadIndex : int
+    <<internal>> Writer(stream:UnsafeStream)
+    + ForEachCount : int <<get>>
+    + BeginForEachIndex(foreachIndex:int) : void
+    + EndForEachIndex() : void
+    + Write(value:T) : void
+    + Allocate() : ref T
+    + Allocate(size:int) : byte*
+}
+struct Reader {
+    <<internal>> m_BlockStream : UnsafeStreamBlockData*
+    <<internal>> m_CurrentBlock : UnsafeStreamBlock*
+    <<internal>> m_CurrentPtr : byte*
+    <<internal>> m_CurrentBlockEnd : byte*
+    <<internal>> m_RemainingItemCount : int
+    <<internal>> m_LastBlockSize : int
+    <<internal>> Reader(stream:UnsafeStream)
+    + BeginForEachIndex(foreachIndex:int) : int
+    + EndForEachIndex() : void
+    + ForEachCount : int <<get>>
+    + RemainingItemCount : int <<get>>
+    + ReadUnsafePtr(size:int) : byte*
+    + Read() : ref T
+    + Peek() : ref T
+    + Count() : int
+}
+INativeDisposable <|-- UnsafeStream
+UnsafeStream +-- DisposeJob
+IJob <|-- DisposeJob
+UnsafeStream +-- ConstructJobList
+IJob <|-- ConstructJobList
+UnsafeStream +-- ConstructJob
+IJob <|-- ConstructJob
+UnsafeStream +-- Writer
+UnsafeStream +-- Reader
+@enduml

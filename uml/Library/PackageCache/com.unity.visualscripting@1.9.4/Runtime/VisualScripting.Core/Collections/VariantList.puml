@@ -1,0 +1,20 @@
+@startuml
+class "VariantList`2"<TBase,TImplementation> {
+    + VariantList(implementation:IList<TImplementation>)
+    + implementation : IList<TImplementation> <<get>>
+    + Count : int <<get>>
+    + IsReadOnly : bool <<get>>
+    + Add(item:TBase) : void
+    + Clear() : void
+    + Contains(item:TBase) : bool
+    + Remove(item:TBase) : bool
+    + CopyTo(array:TBase[], arrayIndex:int) : void
+    + IndexOf(item:TBase) : int
+    + Insert(index:int, item:TBase) : void
+    + RemoveAt(index:int) : void
+    - GetEnumerator() : IEnumerator
+    - GetEnumerator() : IEnumerator<TBase>
+    + GetEnumerator() : NoAllocEnumerator<TBase>
+}
+"IList`1" "<TBase>" <|-- "VariantList`2"
+@enduml

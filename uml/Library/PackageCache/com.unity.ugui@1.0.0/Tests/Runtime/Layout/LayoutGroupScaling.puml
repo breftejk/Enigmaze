@@ -1,0 +1,13 @@
+@startuml
+class LayoutGroupScaling {
+    - m_PrefabRoot : GameObject
+    - m_CameraGO : GameObject
+    <<const>> - kPrefabPath : string = "Assets/Resources/LayoutGroupScalingPrefab.prefab"
+    + Setup() : void
+    + TestSetup() : void
+    + LayoutGroup_CorrectChildScaling() : IEnumerator
+    + TearDown() : void
+    + OneTimeTearDown() : void
+}
+IPrebuildSetup <|-- LayoutGroupScaling
+@enduml

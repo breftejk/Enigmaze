@@ -1,0 +1,7 @@
+@startuml
+class ChangesetListViewItem {
+    <<internal>> ObjectInfo : object <<get>>
+    <<internal>> ChangesetListViewItem(id:int, objectInfo:object)
+}
+TreeViewItem <|-- ChangesetListViewItem
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class AdvancedRuleOverrideTile {
+    + m_DefaultSprite : Sprite
+    + m_DefaultGameObject : GameObject
+    + m_DefaultColliderType : Tile.ColliderType
+    + m_OverrideTilingRules : List<RuleTile.TilingRuleOutput>
+    + ApplyOverrides(overrides:IList<KeyValuePair<RuleTile.TilingRule, RuleTile.TilingRuleOutput>>) : void
+    + GetOverrides(overrides:List<KeyValuePair<RuleTile.TilingRule, RuleTile.TilingRuleOutput>>, validCount:int) : void
+    + <<override>> Override() : void
+}
+RuleOverrideTile <|-- AdvancedRuleOverrideTile
+@enduml

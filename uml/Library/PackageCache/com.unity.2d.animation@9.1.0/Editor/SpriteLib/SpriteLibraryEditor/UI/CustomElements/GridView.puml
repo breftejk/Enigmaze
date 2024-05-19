@@ -1,0 +1,124 @@
+@startuml
+class GridView {
+    <<const>> - k_ExtraVisibleRows : int = 2
+    <<const>> - k_UssClassName : string = "spritelib-grid-view"
+    <<const>> - k_BorderUssClassName : string
+    <<const>> - k_ItemUssClassName : string
+    <<internal>> <<const>> itemSelectedVariantUssClassName : string
+    <<const>> - k_RowUssClassName : string
+    <<const>> - k_DefaultItemHeight : int = 30
+    {static} - s_ItemHeightProperty : CustomStyleProperty<int>
+    <<internal>> <<readonly>> scrollView : ScrollView
+    <<readonly>> - m_SelectedIds : List<int>
+    <<readonly>> - m_SelectedIndices : List<int>
+    <<readonly>> - m_SelectedItems : List<object>
+    - m_BindItem : Action<VisualElement, int>
+    - m_ColumnCount : int = 1
+    - m_FirstVisibleIndex : int
+    - m_GetItemId : Func<int, int>
+    - m_ItemHeight : int
+    - m_ItemHeightIsInline : bool
+    - m_ItemsSource : IList
+    - m_LastHeight : float
+    - m_MakeItem : Func<VisualElement>
+    - m_RangeSelectionOrigin : int
+    - m_RowPool : List<RecycledRow>
+    - m_ScrollInsertionList : List<RecycledRow>
+    - m_ScrollOffset : float
+    - m_SelectionType : SelectionType
+    - m_TouchDownPosition : Vector3
+    - m_TouchDownTime : long
+    - m_VisibleRowCount : int
+    + GridView()
+    - OnKeyPress(evt:KeyDownEvent) : void
+    + GridView(itemsSource:IList, itemHeight:int, makeItem:Func<VisualElement>, bindItem:Action<VisualElement, int>)
+    + bindItem : Action<VisualElement, int> <<get>> <<set>>
+    + columnCount : int <<get>> <<set>>
+    + <<override>> contentContainer : VisualElement <<get>>
+    + itemHeight : int <<get>> <<set>>
+    + itemWidth : float <<get>>
+    + itemsSource : IList <<get>> <<set>>
+    + makeItem : Func<VisualElement> <<get>> <<set>>
+    + resolvedItemHeight : float <<get>>
+    + resolvedItemWidth : float <<get>>
+    + selectedIndex : int <<get>> <<set>>
+    + selectedIndices : IEnumerable<int> <<get>>
+    + selectedItem : object <<get>>
+    + selectedItems : IEnumerable<object> <<get>>
+    + selectedIds : IEnumerable<int> <<get>>
+    + selectionType : SelectionType <<get>> <<set>>
+    + showBorder : bool <<get>> <<set>>
+    + unbindItem : Action<VisualElement, int> <<get>> <<set>>
+    <<internal>> getItemId : Func<int, int> <<get>> <<set>>
+    <<internal>> rowPool : List<RecycledRow> <<get>>
+    - OnAfterDeserialize() : void
+    - OnBeforeSerialize() : void
+    +  <<event>> onItemsChosen : Action<IEnumerable<object>> 
+    +  <<event>> selectionChanged : Action<IEnumerable<object>> 
+    + AddToSelection(index:int) : void
+    + ClearSelection() : void
+    + Refresh() : void
+    <<internal>> RefreshItem(index:int) : void
+    + RemoveFromSelection(index:int) : void
+    + ScrollToItem(index:int) : void
+    + SetSelection(index:int) : void
+    + SetSelection(indices:IEnumerable<int>) : void
+    + SetSelectionWithoutNotify(indices:IEnumerable<int>) : void
+    <<internal>> AddToSelection(indexes:IList<int>) : void
+    <<internal>> SelectAll() : void
+    <<internal>> SetSelectionInternal(indices:IEnumerable<int>, sendNotification:bool) : void
+    - AddToSelectionWithoutValidation(index:int) : void
+    - ClearSelectionWithoutValidation() : void
+    - CreateDummyItemElement() : VisualElement
+    - DoRangeSelection(rangeSelectionFinalIndex:int) : void
+    - DoSelect(localPosition:Vector2, clickCount:int, actionKey:bool, shiftKey:bool) : void
+    - GetIdFromIndex(index:int) : int
+    - HasValidDataAndBindings() : bool
+    - NotifyOfSelectionChange() : void
+    - OnAttachToPanel(evt:AttachToPanelEvent) : void
+    - OnCustomStyleResolved(e:CustomStyleResolvedEvent) : void
+    - OnDetachFromPanel(evt:DetachFromPanelEvent) : void
+    - OnPointerDown(evt:PointerDownEvent) : void
+    - OnPointerUp(evt:PointerUpEvent) : void
+    - GetIndexByPosition(localPosition:Vector2) : int
+    <<internal>> GetElementAt(index:int) : VisualElement
+    - OnItemsSourceCollectionChanged(sender:object, args:NotifyCollectionChangedEventArgs) : void
+    - OnScroll(offset:float) : void
+    - OnSizeChanged(evt:GeometryChangedEvent) : void
+    - ProcessSingleClick(clickedIndex:int) : void
+    - RemoveFromSelectionWithoutValidation(index:int) : void
+    - ResizeHeight(height:float) : void
+    - Setup(item:VisualElement, newIndex:int) : void
+    - SetupItemElement(item:VisualElement) : void
+}
+class UxmlFactory <<new>> {
+}
+class UxmlTraits <<new>> {
+    <<readonly>> - m_ItemHeight : UxmlIntAttributeDescription
+    <<readonly>> - m_SelectionType : UxmlEnumAttributeDescription<SelectionType>
+    <<readonly>> - m_ShowBorder : UxmlBoolAttributeDescription
+    + <<override>> uxmlChildElementsDescription : IEnumerable<UxmlChildElementDescription> <<get>>
+    + <<override>> Init(ve:VisualElement, bag:IUxmlAttributes, cc:CreationContext) : void
+}
+class RecycledRow {
+    + <<const>> kUndefinedIndex : int
+    + <<readonly>> ids : List<int>
+    + <<readonly>> indices : List<int>
+    + RecycledRow(height:float)
+    + firstIndex : int <<get>>
+    + lastIndex : int <<get>>
+    + ClearSelection() : void
+    + ContainsId(id:int, indexInRow:int) : bool
+    + ContainsIndex(index:int, indexInRow:int) : bool
+    + SetSelected(indexInRow:int, selected:bool) : void
+    {static} - AddElementToClass(element:VisualElement, className:string, includeChildren:bool) : void
+    {static} - RemoveElementFromClass(element:VisualElement, className:string, includeChildren:bool) : void
+}
+BindableElement <|-- GridView
+ISerializationCallbackReceiver <|-- GridView
+GridView +-- UxmlFactory
+"UxmlFactory`2" "<GridView,UxmlTraits>" <|-- UxmlFactory
+GridView +-- UxmlTraits
+GridView +-- RecycledRow
+VisualElement <|-- RecycledRow
+@enduml

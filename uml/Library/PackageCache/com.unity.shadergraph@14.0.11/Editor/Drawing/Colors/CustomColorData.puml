@@ -1,0 +1,18 @@
+@startuml
+class SerializableUserColor {
+    + Key : string
+    + Value : Color
+    + SerializableUserColor(pair:KeyValuePair<string, Color>)
+    + SerializableUserColor()
+}
+class CustomColorData {
+    - m_CustomColors : Dictionary<string, Color>
+    - m_SerializableColors : List<SerializationHelper.JSONSerializedElement>
+    + TryGetColor(provider:string, color:Color) : bool
+    + Set(provider:string, color:Color) : void
+    + Remove(provider:string) : void
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+}
+ISerializationCallbackReceiver <|-- CustomColorData
+@enduml

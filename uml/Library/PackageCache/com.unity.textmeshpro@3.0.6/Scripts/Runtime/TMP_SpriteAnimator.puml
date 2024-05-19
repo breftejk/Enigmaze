@@ -1,0 +1,13 @@
+@startuml
+class TMP_SpriteAnimator {
+    - m_animations : Dictionary<int, bool>
+    - m_TextComponent : TMP_Text
+    - Awake() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    + StopAllAnimations() : void
+    + DoSpriteAnimation(currentCharacter:int, spriteAsset:TMP_SpriteAsset, start:int, end:int, framerate:int) : void
+    - DoSpriteAnimationInternal(currentCharacter:int, spriteAsset:TMP_SpriteAsset, start:int, end:int, framerate:int) : IEnumerator
+}
+MonoBehaviour <|-- TMP_SpriteAnimator
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CrossProductNode {
+    + CrossProductNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_CrossProduct(A:Vector3, B:Vector3, Out:Vector3) : string
+}
+CodeFunctionNode <|-- CrossProductNode
+@enduml

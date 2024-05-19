@@ -1,0 +1,21 @@
+@startuml
+abstract class UniversalSubTarget {
+    {static} <<readonly>> - kSourceCodeGuid : GUID
+    + <<override>> Setup(context:TargetSetupContext) : void
+    # {abstract} shaderID : ShaderID <<get>>
+    # PostProcessSubShader(subShaderDescriptor:SubShaderDescriptor) : SubShaderDescriptor
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<virtual>> identifier : string <<get>>
+    + <<virtual>> GetMetadataObject(graphData:GraphDataReadOnly) : ScriptableObject
+    - lastMaterialNeedsUpdateHash : int = 0
+    # <<virtual>> ComputeMaterialNeedsUpdateHash() : int
+    + <<override>> saveContext : object <<get>>
+}
+class SubShaderUtils <<static>> {
+    <<internal>> {static} AddFloatProperty(collector:PropertyCollector, referenceName:string, defaultValue:float, declarationType:HLSLDeclaration) : void
+    <<internal>> {static} AddToggleProperty(collector:PropertyCollector, referenceName:string, defaultValue:bool, declarationType:HLSLDeclaration) : void
+    <<internal>> {static} PassVariant(source:PassDescriptor, pragmas:PragmaCollection) : PassDescriptor
+}
+"SubTarget`1" "<UniversalTarget>" <|-- UniversalSubTarget
+IHasMetadata <|-- UniversalSubTarget
+@enduml

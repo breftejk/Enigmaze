@@ -1,0 +1,50 @@
+@startuml
+class PaintableSceneViewGrid {
+    - gridTransform : Transform <<get>>
+    - grid : Grid <<get>>
+    - gridBrush : GridBrushBase <<get>>
+    - activeSceneView : SceneView
+    - sceneViewTransformHash : int
+    - brushTarget : GameObject <<get>>
+    + tilemap : Tilemap <<get>>
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    - OnGridSelectionChanged() : void
+    - GetSceneViewPositionRect(sceneView:SceneView) : Rect
+    + OnSceneGUI(sceneView:SceneView) : void
+    - HandleMouseEnterLeave(sceneView:SceneView) : void
+    - OnMouseEnter(sceneView:SceneView) : void
+    - OnMouseLeave() : void
+    - UndoRedoPerformed() : void
+    - RefreshAllTiles() : void
+    # <<override>> RegisterUndo() : void
+    # <<override>> Paint(position:Vector3Int) : void
+    # <<override>> Erase(position:Vector3Int) : void
+    # <<override>> BoxFill(position:BoundsInt) : void
+    # <<override>> BoxErase(position:BoundsInt) : void
+    # <<override>> FloodFill(position:Vector3Int) : void
+    # <<override>> PickBrush(position:BoundsInt, pickStart:Vector3Int) : void
+    # <<override>> Select(position:BoundsInt) : void
+    # <<override>> Move(from:BoundsInt, to:BoundsInt) : void
+    # <<override>> MoveStart(position:BoundsInt) : void
+    # <<override>> MoveEnd(position:BoundsInt) : void
+    # <<override>> CustomTool(isToolHotControl:bool, tool:TilemapEditorTool, position:Vector3Int) : bool
+    # <<override>> OnEditStart() : void
+    # <<override>> OnEditEnd() : void
+    # <<override>> ClearGridSelection() : void
+    + <<override>> isActive : bool <<get>>
+    + <<override>> Repaint() : void
+    # <<override>> ValidateFloodFillPosition(position:Vector3Int) : bool
+    # <<override>> ScreenToGrid(screenPosition:Vector2) : Vector2Int
+    # <<override>> PickingIsDefaultTool() : bool
+    # <<override>> CanPickOutsideEditMode() : bool
+    # <<override>> CellLayout() : GridLayout.CellLayout
+    - LocalToGrid(gridLayout:GridLayout, local:Vector3) : Vector3Int
+    - GetGridForward(gridLayout:GridLayout) : Vector3
+    - GetGridPlane(planeForGrid:Grid) : Plane
+    - GetGridView() : GridLayout
+    - CallOnPaintSceneGUI() : void
+    - CallOnSceneGUI() : void
+}
+PaintableGrid <|-- PaintableSceneViewGrid
+@enduml

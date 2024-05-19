@@ -1,0 +1,6 @@
+@startuml
+class IntInspector {
+    + IntInspector(metadata:Metadata)
+}
+"DiscreteNumberInspector`1" "<int>" <|-- IntInspector
+@enduml

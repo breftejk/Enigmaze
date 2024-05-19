@@ -1,0 +1,6 @@
+@startuml
+class fsConverterRegistrar <<partial>> {
+    {static} - fsConverterRegistrar()
+    + {static} Converters : List<Type>
+}
+@enduml

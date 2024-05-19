@@ -1,0 +1,45 @@
+@startuml
+class ChangesetsListView {
+    <<internal>> Menu : GenericMenu <<get>>
+    <<internal>> ChangesetsListView(headerState:ChangesetsListHeaderState, columnNames:List<string>, menu:ChangesetsViewMenu, sizeChangedAction:Action, selectionChangedAction:Action, doubleClickAction:Action)
+    # <<override>> SelectionChanged(selectedIds:IList<int>) : void
+    + <<override>> GetRows() : IList<TreeViewItem>
+    <<internal>> SetLoadedChangesetId(loadedChangesetId:long) : void
+    # <<override>> BuildRoot() : TreeViewItem
+    # <<override>> BuildRows(rootItem:TreeViewItem) : IList<TreeViewItem>
+    # <<override>> SearchChanged(newSearch:string) : void
+    # <<override>> ContextClickedItem(id:int) : void
+    + <<override>> OnGUI(rect:Rect) : void
+    # <<override>> BeforeRowsGUI() : void
+    # <<override>> RowGUI(args:RowGUIArgs) : void
+    # <<override>> DoubleClickedItem(id:int) : void
+    <<internal>> BuildModel(queryResult:ViewQueryResult, loadedChangesetId:long) : void
+    <<internal>> Refilter() : void
+    <<internal>> Sort() : void
+    <<internal>> GetSelectedRepositories() : List<RepositorySpec>
+    <<internal>> GetSelectedRepObjectInfos() : List<RepObjectInfo>
+    <<internal>> SelectRepObjectInfos(repObjectsToSelect:List<RepObjectInfo>) : void
+    - GetTreeIdForItem(repObjectInfo:RepObjectInfo) : int
+    - DelayedSearchChanged() : void
+    - DelayedSelectionChanged() : void
+    - SortingChanged(multiColumnHeader:MultiColumnHeader) : void
+    {static} - RegenerateRows(listViewItemIds:ListViewItemIds<object>, objectInfos:List<object>, rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ClearRows(rootItem:TreeViewItem, rows:List<TreeViewItem>) : void
+    {static} - ChangesetsListViewItemGUI(queryResult:ViewQueryResult, rowHeight:float, item:ChangesetListViewItem, args:RowGUIArgs, isBoldText:bool, avatarLoadedAction:Action) : void
+    {static} - ChangesetsListViewItemCellGUI(rect:Rect, rowHeight:float, queryResult:ViewQueryResult, item:ChangesetListViewItem, column:ChangesetsListColumn, avatarLoadedAction:Action, isSelected:bool, isFocused:bool, isBoldText:bool) : void
+    {static} - IsSizeChanged(currentRect:Rect, lastRect:Rect) : bool
+    - mLastRect : Rect
+    - mListViewItemIds : ListViewItemIds<object>
+    - mRows : List<TreeViewItem>
+    - mQueryResult : ViewQueryResult
+    - mLoadedChangesetId : long
+    <<readonly>> - mCooldownFilterAction : CooldownWindowDelayer
+    <<readonly>> - mCooldownSelectionAction : CooldownWindowDelayer
+    <<readonly>> - mDoubleClickAction : Action
+    <<readonly>> - mSelectionChangedAction : Action
+    <<readonly>> - mSizeChangedAction : Action
+    <<readonly>> - mMenu : ChangesetsViewMenu
+    <<readonly>> - mColumnNames : List<string>
+}
+TreeView <|-- ChangesetsListView
+@enduml

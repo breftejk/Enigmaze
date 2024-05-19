@@ -1,0 +1,6 @@
+@startuml
+class CloudProjectId <<static>> {
+    <<internal>> {static} HasValue() : bool
+    <<internal>> {static} GetValue() : string
+}
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+interface IGeneratesBodyCode {
+    GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+}
+@enduml

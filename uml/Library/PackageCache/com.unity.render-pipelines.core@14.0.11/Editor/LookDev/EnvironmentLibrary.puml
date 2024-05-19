@@ -1,0 +1,32 @@
+@startuml
+class EnvironmentLibrary {
+    - environments : List<Environment> <<get>> <<set>>
+    + Count : int <<get>>
+    + Add() : Environment
+    + Remove(index:int) : void
+    + Duplicate(fromIndex:int) : Environment
+    + IndexOf(environment:Environment) : int
+}
+class EnvironmentLibraryEditor {
+    - m_Root : VisualElement
+    - m_OpenButton : VisualElement
+    + <<sealed>> <<override>> CreateInspectorGUI() : VisualElement
+    - OnEnable() : void
+    - OnDisable() : void
+    - Update() : void
+    + <<sealed>> <<override>> OnInspectorGUI() : void
+}
+class EnvironmentLibraryCreator {
+    - m_Field : ObjectField = null
+    + SetField(field:ObjectField) : void
+    + <<override>> Cancelled(instanceId:int, pathName:string, resourceFile:string) : void
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+    {static} - Create() : void
+    + {static} CreateAndAssignTo(field:ObjectField) : void
+}
+class EnvironmentLibraryLoader <<static>> {
+    {static} - LoadCallback(onUpdate:Action) : Action<UnityEngine.Object>
+}
+ScriptableObject <|-- EnvironmentLibrary
+Editor <|-- EnvironmentLibraryEditor
+@enduml

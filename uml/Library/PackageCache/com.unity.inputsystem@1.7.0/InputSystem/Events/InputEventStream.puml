@@ -1,0 +1,26 @@
+@startuml
+struct InputEventStream {
+    + isOpen : bool <<get>>
+    + remainingEventCount : int <<get>>
+    + numEventsRetainedInBuffer : int <<get>>
+    + currentEventPtr : InputEvent* <<get>>
+    + numBytesRetainedInBuffer : uint <<get>>
+    + InputEventStream(eventBuffer:InputEventBuffer, maxAppendedEvents:int)
+    + Close(eventBuffer:InputEventBuffer) : void
+    + CleanUpAfterException() : void
+    + Write(eventPtr:InputEvent*) : void
+    + Advance(leaveEventInBuffer:bool) : InputEvent*
+    + Peek() : InputEvent*
+    - m_NativeBuffer : InputEventBuffer
+    - m_CurrentNativeEventReadPtr : InputEvent*
+    - m_CurrentNativeEventWritePtr : InputEvent*
+    - m_RemainingNativeEventCount : int
+    - <<readonly>> m_MaxAppendedEvents : int
+    - m_AppendBuffer : InputEventBuffer
+    - m_CurrentAppendEventReadPtr : InputEvent*
+    - m_CurrentAppendEventWritePtr : InputEvent*
+    - m_RemainingAppendEventCount : int
+    - m_NumEventsRetainedInBuffer : int
+    - m_IsOpen : bool
+}
+@enduml

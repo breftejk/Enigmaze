@@ -1,0 +1,23 @@
+@startuml
+class TimelineMarkerClusterGUI {
+    <<readonly>> - m_MarkerGUIs : List<TimelineMarkerGUI>
+    <<readonly>> - m_ZOrderProvider : IZOrderProvider
+    + topMarker : TimelineMarkerGUI <<get>>
+    - m_ManipulatedMarker : TimelineMarkerGUI
+    + TimelineMarkerClusterGUI(guis:List<TimelineMarkerGUI>, parent:IRowGUI, zOrderProvider:IZOrderProvider, layerZOrder:LayerZOrder)
+    + <<override>> start : double <<get>>
+    + <<override>> end : double <<get>>
+    + <<override>> item : ITimelineItem <<get>>
+    + <<override>> Select() : void
+    + <<override>> Deselect() : void
+    + <<override>> Draw(trackRect:Rect, trackRectChanged:bool, state:WindowState) : void
+    + <<override>> RectToTimeline(trackRect:Rect, state:WindowState) : Rect
+    + CycleTop() : void
+    - OnDragTopMarker() : void
+    - SortMarkers() : void
+    - RegisterRect(state:WindowState) : void
+    + {static} CanCycleMarkers() : bool
+    + {static} CycleMarkers() : void
+}
+TimelineItemGUI <|-- TimelineMarkerClusterGUI
+@enduml

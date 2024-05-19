@@ -1,0 +1,27 @@
+@startuml
+class PlasticConnectionMonitor {
+    <<internal>> IsTryingReconnection : bool <<get>>
+    <<internal>> IsConnected : bool <<get>>
+    <<internal>> CheckConnection() : void
+    <<internal>> SetAsConnected() : void
+    <<internal>> Stop() : void
+    <<internal>> SetRepositorySpecForEventTracking(repSpec:RepositorySpec) : void
+    <<internal>> OnConnectionError(ex:Exception, server:string) : void
+    - OnHostUnreachableException(ex:Exception, plasticServer:PlasticServer) : void
+    - StartMonitoring(server:string) : void
+    - MonitorServerConnection(obj:object) : void
+    - OnConnectionLost(server:string) : void
+    - OnConnectionRestored() : void
+    {static} - HasConnectionToServer(server:string) : bool
+    {static} - TrackConnectionLostEvent(repSpec:RepositorySpec) : void
+    {static} - TrackConnectionRestoredEvent(repSpec:RepositorySpec) : void
+    {static} - GetPlasticWindowIfOpened() : PlasticWindow
+    - mRepSpecForEventTracking : RepositorySpec
+    <<volatile>> - mIsMonitoringServerConnection : bool
+    <<volatile>> - mIsTryingReconnection : bool
+    <<volatile>> - mIsConnected : bool = true
+    - mResetEvent : ManualResetEvent
+    <<const>> - CONNECTION_POLL_TIME_MS : int = 30000
+    {static} <<readonly>> - mLog : ILog
+}
+@enduml

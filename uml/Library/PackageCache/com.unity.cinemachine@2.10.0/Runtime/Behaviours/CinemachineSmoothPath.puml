@@ -1,0 +1,30 @@
+@startuml
+class CinemachineSmoothPath {
+    + m_Looped : bool
+    + m_Waypoints : Waypoint[]
+    + <<override>> MinPos : float <<get>>
+    + <<override>> MaxPos : float <<get>>
+    + <<override>> Looped : bool <<get>>
+    + <<override>> DistanceCacheSampleStepsPerSegment : int <<get>>
+    - OnValidate() : void
+    - Reset() : void
+    + <<override>> InvalidateDistanceCache() : void
+    <<internal>> m_ControlPoints1 : Waypoint[]
+    <<internal>> m_ControlPoints2 : Waypoint[]
+    - m_IsLoopedCache : bool
+    <<internal>> UpdateControlPoints() : void
+    - GetBoundingIndices(pos:float, indexA:int, indexB:int) : float
+    + <<override>> EvaluateLocalPosition(pos:float) : Vector3
+    + <<override>> EvaluateLocalTangent(pos:float) : Vector3
+    + <<override>> EvaluateLocalOrientation(pos:float) : Quaternion
+    {static} - RollAroundForward(angle:float) : Quaternion
+}
+struct Waypoint {
+    + position : Vector3
+    + roll : float
+    <<internal>> AsVector4 : Vector4 <<get>>
+    <<internal>> {static} FromVector4(v:Vector4) : Waypoint
+}
+CinemachinePathBase <|-- CinemachineSmoothPath
+CinemachineSmoothPath +-- Waypoint
+@enduml

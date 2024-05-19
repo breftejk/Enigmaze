@@ -1,0 +1,52 @@
+@startuml
+enum DecalScaleMode {
+    ScaleInvariant,
+    InheritFromHierarchy,
+}
+class DecalProjector {
+    <<internal>> {static}  <<event>> onDecalAdd : DecalProjectorAction 
+    <<internal>> {static}  <<event>> onDecalRemove : DecalProjectorAction 
+    <<internal>> {static}  <<event>> onDecalPropertyChange : DecalProjectorAction 
+    <<internal>> {static}  <<event>> onAllDecalPropertyChange : Action 
+    <<internal>> {static}  <<event>> onDecalMaterialChange : DecalProjectorAction 
+    <<internal>> {static} defaultMaterial : Material <<get>> <<set>>
+    <<internal>> {static} isSupported : bool <<get>>
+    <<internal>> decalEntity : DecalEntity <<get>> <<set>>
+    - m_Material : Material = null
+    + material : Material <<get>> <<set>>
+    - m_DrawDistance : float = 1000.0f
+    + drawDistance : float <<get>> <<set>>
+    - m_FadeScale : float = 0.9f
+    + fadeScale : float <<get>> <<set>>
+    - m_StartAngleFade : float = 180.0f
+    + startAngleFade : float <<get>> <<set>>
+    - m_EndAngleFade : float = 180.0f
+    + endAngleFade : float <<get>> <<set>>
+    - m_UVScale : Vector2
+    + uvScale : Vector2 <<get>> <<set>>
+    - m_UVBias : Vector2
+    + uvBias : Vector2 <<get>> <<set>>
+    - m_DecalLayerMask : uint = 1
+    + renderingLayerMask : uint <<get>> <<set>>
+    - m_ScaleMode : DecalScaleMode
+    + scaleMode : DecalScaleMode <<get>> <<set>>
+    <<internal>> m_Offset : Vector3
+    + pivot : Vector3 <<get>> <<set>>
+    <<internal>> m_Size : Vector3
+    + size : Vector3 <<get>> <<set>>
+    - m_FadeFactor : float = 1.0f
+    + fadeFactor : float <<get>> <<set>>
+    - m_OldMaterial : Material = null
+    <<internal>> effectiveScale : Vector3 <<get>>
+    <<internal>> decalSize : Vector3 <<get>>
+    <<internal>> decalOffset : Vector3 <<get>>
+    <<internal>> uvScaleBias : Vector4 <<get>>
+    - InitMaterial() : void
+    - OnEnable() : void
+    - OnDisable() : void
+    <<internal>> OnValidate() : void
+    + IsValid() : bool
+    <<internal>> {static} UpdateAllDecalProperties() : void
+}
+MonoBehaviour <|-- DecalProjector
+@enduml

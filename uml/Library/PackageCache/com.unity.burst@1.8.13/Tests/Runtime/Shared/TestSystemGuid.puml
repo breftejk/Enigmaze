@@ -1,0 +1,12 @@
+@startuml
+class SystemGuid {
+    + {static} GuidArg(guid:Guid) : int
+    + {static} <<readonly>> StaticReadonlyGuid : Guid
+    + {static} GuidStaticReadonly() : int
+}
+struct SystemGuidProvider {
+    + Value : object <<get>>
+}
+SystemGuid +-- SystemGuidProvider
+IArgumentProvider <|-- SystemGuidProvider
+@enduml

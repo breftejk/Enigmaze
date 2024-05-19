@@ -1,0 +1,118 @@
+@startuml
+class FontWeightDrawer {
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+}
+class TMP_FontAssetEditor {
+    <<internal>> {static} internalSDFMaterial : Material <<get>>
+    {static} - s_InternalSDFMaterial : Material
+    <<internal>> {static} internalBitmapMaterial : Material <<get>>
+    {static} - s_InternalBitmapMaterial : Material
+    - {static} s_UiStateLabel : string[]
+    - m_AtlasResolutionLabels : GUIContent[]
+    - m_AtlasResolutions : int[]
+    - m_CurrentGlyphPage : int = 0
+    - m_CurrentCharacterPage : int = 0
+    - m_CurrentKerningPage : int = 0
+    - m_SelectedGlyphRecord : int
+    - m_SelectedCharacterRecord : int
+    - m_SelectedAdjustmentRecord : int
+    - m_dstGlyphID : string
+    - m_dstUnicode : string
+    - <<const>> k_placeholderUnicodeHex : string = "<i>New Unicode (Hex)</i>"
+    - m_unicodeHexLabel : string
+    - <<const>> k_placeholderGlyphID : string = "<i>New Glyph ID</i>"
+    - m_GlyphIDLabel : string
+    - m_AddGlyphWarning : Warning
+    - m_AddCharacterWarning : Warning
+    - m_DisplayDestructiveChangeWarning : bool
+    - m_AtlasSettings : AtlasSettings
+    - m_MaterialPresetsRequireUpdate : bool
+    - m_GlyphSearchPattern : string
+    - m_GlyphSearchList : List<int>
+    - m_CharacterSearchPattern : string
+    - m_CharacterSearchList : List<int>
+    - m_KerningTableSearchPattern : string
+    - m_KerningTableSearchList : List<int>
+    - m_isSearchDirty : bool
+    - <<const>> k_UndoRedo : string = "UndoRedoPerformed"
+    - m_AtlasPopulationMode_prop : SerializedProperty
+    - font_atlas_prop : SerializedProperty
+    - font_material_prop : SerializedProperty
+    - m_AtlasRenderMode_prop : SerializedProperty
+    - m_SamplingPointSize_prop : SerializedProperty
+    - m_AtlasPadding_prop : SerializedProperty
+    - m_AtlasWidth_prop : SerializedProperty
+    - m_AtlasHeight_prop : SerializedProperty
+    - m_IsMultiAtlasTexturesEnabled_prop : SerializedProperty
+    - m_ClearDynamicDataOnBuild_prop : SerializedProperty
+    - fontWeights_prop : SerializedProperty
+    - m_list : ReorderableList
+    - font_normalStyle_prop : SerializedProperty
+    - font_normalSpacing_prop : SerializedProperty
+    - font_boldStyle_prop : SerializedProperty
+    - font_boldSpacing_prop : SerializedProperty
+    - font_italicStyle_prop : SerializedProperty
+    - font_tabSize_prop : SerializedProperty
+    - m_FaceInfo_prop : SerializedProperty
+    - m_GlyphTable_prop : SerializedProperty
+    - m_CharacterTable_prop : SerializedProperty
+    - m_FontFeatureTable : TMP_FontFeatureTable
+    - m_FontFeatureTable_prop : SerializedProperty
+    - m_GlyphPairAdjustmentRecords_prop : SerializedProperty
+    - m_SerializedPropertyHolder : TMP_SerializedPropertyHolder
+    - m_EmptyGlyphPairAdjustmentRecord_prop : SerializedProperty
+    - m_fontAsset : TMP_FontAsset
+    - m_materialPresets : Material[]
+    - isAssetDirty : bool = false
+    - errorCode : int
+    - timeStamp : System.DateTime
+    + OnEnable() : void
+    + OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - CleanFallbackFontAssetTable() : void
+    - SavedAtlasGenerationSettings() : void
+    - RestoreAtlasGenerationSettings() : void
+    - UpdateFontAssetCreationSettings() : void
+    - UpdateCharacterData(property:SerializedProperty, index:int) : void
+    - UpdateGlyphData(property:SerializedProperty, index:int) : void
+    - DisplayPageNavigation(currentPage:int, arraySize:int, itemsPerPage:int) : void
+    - AddNewGlyph(srcIndex:int, dstGlyphID:int) : bool
+    - RemoveGlyphFromList(index:int) : void
+    - AddNewCharacter(srcIndex:int, dstGlyphID:int) : bool
+    - RemoveCharacterFromList(index:int) : void
+    - DoSelectionCheck(selectionArea:Rect) : bool
+    - GetValueRecord(property:SerializedProperty) : TMP_GlyphValueRecord
+    - RemoveAdjustmentPairFromList(index:int) : void
+    - CopyGlyphSerializedProperty(srcGlyph:SerializedProperty, dstGlyph:SerializedProperty) : void
+    - CopyCharacterSerializedProperty(source:SerializedProperty, target:SerializedProperty) : void
+    - SearchGlyphTable(searchPattern:string, searchResults:List<int>) : void
+    - SearchCharacterTable(searchPattern:string, searchResults:List<int>) : void
+    - SearchKerningTable(searchPattern:string, searchResults:List<int>) : void
+}
+struct UI_PanelState {
+    + {static} faceInfoPanel : bool = true
+    + {static} generationSettingsPanel : bool = true
+    + {static} fontAtlasInfoPanel : bool = true
+    + {static} fontWeightPanel : bool = true
+    + {static} fallbackFontAssetPanel : bool = true
+    + {static} glyphTablePanel : bool = false
+    + {static} characterTablePanel : bool = false
+    + {static} fontFeatureTablePanel : bool = false
+}
+struct AtlasSettings {
+    + glyphRenderMode : GlyphRenderMode
+    + pointSize : int
+    + padding : int
+    + atlasWidth : int
+    + atlasHeight : int
+}
+struct Warning {
+    + isEnabled : bool
+    + expirationTime : double
+}
+PropertyDrawer <|-- FontWeightDrawer
+Editor <|-- TMP_FontAssetEditor
+TMP_FontAssetEditor +-- UI_PanelState
+TMP_FontAssetEditor +-- AtlasSettings
+TMP_FontAssetEditor +-- Warning
+@enduml

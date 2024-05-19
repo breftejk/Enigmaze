@@ -1,0 +1,67 @@
+@startuml
+class "@ExampleActions" <<partial>> {
+    + asset : InputActionAsset <<get>>
+    + @ExampleActions()
+    + Dispose() : void
+    + bindingMask : InputBinding? <<get>> <<set>>
+    + devices : ReadOnlyArray<InputDevice>? <<get>> <<set>>
+    + controlSchemes : ReadOnlyArray<InputControlScheme> <<get>>
+    + Contains(action:InputAction) : bool
+    + GetEnumerator() : IEnumerator<InputAction>
+    - GetEnumerator() : IEnumerator
+    + Enable() : void
+    + Disable() : void
+    + bindings : IEnumerable<InputBinding> <<get>>
+    + FindAction(actionNameOrId:string, throwIfNotFound:bool) : InputAction
+    + FindBinding(bindingMask:InputBinding, action:InputAction) : int
+    - <<readonly>> m_gameplay : InputActionMap
+    - m_GameplayActionsCallbackInterface : IGameplayActions
+    - <<readonly>> m_gameplay_move : InputAction
+    - <<readonly>> m_gameplay_jump : InputAction
+    - <<readonly>> m_gameplay_crouch : InputAction
+    - <<readonly>> m_gameplay_use : InputAction
+    + @gameplay : GameplayActions <<get>>
+    - <<readonly>> m_menus : InputActionMap
+    - m_MenusActionsCallbackInterface : IMenusActions
+    - <<readonly>> m_menus_Newaction : InputAction
+    + @menus : MenusActions <<get>>
+}
+struct GameplayActions {
+    - m_Wrapper : @ExampleActions
+    + GameplayActions(wrapper:@ExampleActions)
+    + @move : InputAction <<get>>
+    + @jump : InputAction <<get>>
+    + @crouch : InputAction <<get>>
+    + @use : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + SetCallbacks(instance:IGameplayActions) : void
+}
+struct MenusActions {
+    - m_Wrapper : @ExampleActions
+    + MenusActions(wrapper:@ExampleActions)
+    + @Newaction : InputAction <<get>>
+    + Get() : InputActionMap
+    + Enable() : void
+    + Disable() : void
+    + enabled : bool <<get>>
+    + SetCallbacks(instance:IMenusActions) : void
+}
+interface IGameplayActions {
+    OnMove(context:InputAction.CallbackContext) : void
+    OnJump(context:InputAction.CallbackContext) : void
+    OnCrouch(context:InputAction.CallbackContext) : void
+    OnUse(context:InputAction.CallbackContext) : void
+}
+interface IMenusActions {
+    OnNewaction(context:InputAction.CallbackContext) : void
+}
+IInputActionCollection2 <|-- "@ExampleActions"
+IDisposable <|-- "@ExampleActions"
+"@ExampleActions" +-- GameplayActions
+"@ExampleActions" +-- MenusActions
+"@ExampleActions" +-- IGameplayActions
+"@ExampleActions" +-- IMenusActions
+@enduml

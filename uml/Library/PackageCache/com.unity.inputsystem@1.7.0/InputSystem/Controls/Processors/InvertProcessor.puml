@@ -1,0 +1,7 @@
+@startuml
+class InvertProcessor {
+    + <<override>> Process(value:float, control:InputControl) : float
+    + <<override>> ToString() : string
+}
+"InputProcessor`1" "<float>" <|-- InvertProcessor
+@enduml

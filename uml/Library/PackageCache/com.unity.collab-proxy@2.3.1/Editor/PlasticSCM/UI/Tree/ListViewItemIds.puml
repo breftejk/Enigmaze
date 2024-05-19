@@ -1,0 +1,10 @@
+@startuml
+class "ListViewItemIds`1"<I> {
+    <<internal>> Clear() : void
+    <<internal>> GetInfoItems() : List<KeyValuePair<I, int>>
+    <<internal>> TryGetInfoItemId(info:I, itemId:int) : bool
+    <<internal>> AddInfoItem(info:I) : int
+    - GetNextItemId() : int
+    - mCacheByInfo : Dictionary<I, int>
+}
+@enduml

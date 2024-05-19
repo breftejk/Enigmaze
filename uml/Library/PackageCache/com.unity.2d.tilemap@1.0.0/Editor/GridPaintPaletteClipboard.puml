@@ -1,0 +1,170 @@
+@startuml
+class GridPaintPaletteClipboard {
+    - {static} s_Instances : List<GridPaintPaletteClipboard>
+    + {static} instances : List<GridPaintPaletteClipboard> <<get>>
+    - disableOnBrushPicked : bool
+    +  <<event>> onBrushPicked : Action 
+    - {static} <<readonly>> paletteSavedOutsideClipboard : string
+    - m_PaletteNeedsSave : bool
+    - <<const>> k_ZoomSpeed : float = 7f
+    - <<const>> k_MinZoom : float = 10f
+    - <<const>> k_MaxZoom : float = 100f
+    - <<const>> k_Padding : float = 0.75f
+    - m_KeyboardPanningID : int
+    - m_MousePanningID : int
+    - m_MouseZoomInitialPosition : Vector2
+    - k_KeyboardPanningSpeed : float = 3.0f
+    - m_KeyboardPanning : Vector3
+    - m_GUIRect : Rect
+    + guiRect : Rect <<get>> <<set>>
+    - m_VisualElement : VisualElement
+    + activeDragAndDrop : bool <<get>>
+    - m_CameraInitializedToBounds : bool
+    + m_CameraPositionSaved : bool
+    + m_CameraPosition : Vector3
+    + m_CameraOrthographicSize : float
+    + m_CameraSwizzleView : GridLayout.CellSwizzle
+    - m_ActivePick : BoundsInt?
+    - m_ActivePivot : Vector3Int
+    - m_HoverData : Dictionary<Vector2Int, TileDragAndDropHoverData>
+    - m_Unlocked : bool
+    - palette : GameObject <<get>>
+    - gridBrush : GridBrushBase <<get>>
+    - m_PreviewUtility : PreviewRenderUtility
+    <<internal>> cameraPosition : Vector3 <<get>> <<set>>
+    <<internal>> cameraSize : float <<get>> <<set>>
+    <<internal>> cameraTransparencySortMode : TransparencySortMode <<get>> <<set>>
+    <<internal>> cameraTransparencySortAxis : Vector3 <<get>> <<set>>
+    - m_PaletteInstance : GameObject
+    <<internal>> paletteInstance : GameObject <<get>>
+    - tilemap : Tilemap <<get>>
+    - grid : Grid <<get>>
+    - prefabGrid : Grid <<get>>
+    - m_GridMesh : Mesh
+    - m_LastGridHash : int
+    - m_GridMaterial : Material
+    - {static} <<readonly>> k_GridColor : Color
+    - {static} <<readonly>> tilePaletteBackgroundColor : PrefColor
+    - m_PaletteUsed : bool
+    - m_PreviousMousePosition : Vector2?
+    - m_DelayedResetPaletteInstance : bool
+    <<internal>> DelayedResetPreviewInstance() : void
+    + activeTile : TileBase <<get>>
+    - bounds : RectInt <<get>>
+    - paddedBounds : Rect <<get>>
+    - paddedBoundsInt : RectInt <<get>>
+    - brushTarget : GameObject <<get>>
+    + unlocked : bool <<get>> <<set>>
+    +  <<event>> unlockedChanged : Action<bool> 
+    + isReceivingDragAndDrop : bool <<get>>
+    + showNewEmptyClipboardInfo : bool <<get>>
+    + isModified : bool <<get>>
+    + attachedVisualElement : VisualElement <<set>>
+    + OnBeforePaletteSelectionChanged() : void
+    - FlushHoverData() : void
+    + OnAfterPaletteSelectionChanged() : void
+    + SetupPreviewCameraOnInit() : void
+    - LoadSavedCameraPosition() : void
+    - GetCameraPositionFromXYZ(xyzPosition:Vector3) : Vector3
+    - GetCameraPosition(xyzPosition:Vector3) : Vector3
+    - ResetPreviewCamera() : void
+    + InitPreviewUtility() : void
+    + ResetPreviewInstance() : void
+    + DestroyPreviewInstance() : void
+    - ResetPreviewGridMesh() : void
+    + FrameEntirePalette() : void
+    - Frame(rect:RectInt) : void
+    - RefreshAllTiles() : void
+    # <<override>> OnEnable() : void
+    # <<override>> OnDisable() : void
+    - DisplayClipboardText(clipboardText:GUIContent, textPosition:Rect) : void
+    + OnClipboardGUI(clipboardPosition:Rect) : void
+    + <<override>> OnGUI() : void
+    - OnViewSizeChanged(oldSize:Rect, newSize:Rect) : void
+    - EditorApplicationQuit() : void
+    - UndoRedoPerformed() : void
+    - PrefabInstanceUpdated(updatedPrefab:GameObject) : void
+    - HandlePanAndZoom() : void
+    - HandleMouseZoom(currentMousePosition:Vector2) : void
+    - HandleKeyboardMousePick() : void
+    - {static} MousePanningEvent() : bool
+    - ClampZoomAndPan() : void
+    - Render() : void
+    - GetGridHash() : int
+    - RenderDragAndDropPreview() : void
+    - RenderGrid() : void
+    - HandleDragAndDrop() : void
+    <<internal>> SetTile(tilemapTarget:Tilemap, position:Vector2Int, tile:TileBase, color:Color, matrix:Matrix4x4) : void
+    # <<override>> Paint(position:Vector3Int) : void
+    # <<override>> Erase(position:Vector3Int) : void
+    # <<override>> BoxFill(position:BoundsInt) : void
+    # <<override>> BoxErase(position:BoundsInt) : void
+    # <<override>> FloodFill(position:Vector3Int) : void
+    # <<override>> PickBrush(position:BoundsInt, pickingStart:Vector3Int) : void
+    # <<override>> Select(position:BoundsInt) : void
+    # <<override>> Move(from:BoundsInt, to:BoundsInt) : void
+    # <<override>> MoveStart(position:BoundsInt) : void
+    # <<override>> MoveEnd(position:BoundsInt) : void
+    # <<override>> CustomTool(isToolHotControl:bool, tool:TilemapEditorTool, position:Vector3Int) : bool
+    # <<override>> IsMouseUpInWindow() : bool
+    + <<override>> Repaint() : void
+    # <<override>> ClearGridSelection() : void
+    + <<override>> isActive : bool <<get>>
+    # <<override>> OnBrushPickStarted() : void
+    # <<override>> OnBrushPickDragged(position:BoundsInt) : void
+    # <<override>> OnBrushPickCancelled() : void
+    - PingTileAsset(rect:RectInt) : void
+    # <<override>> ValidateFloodFillPosition(position:Vector3Int) : bool
+    # <<override>> PickingIsDefaultTool() : bool
+    # <<override>> CanPickOutsideEditMode() : bool
+    # <<override>> CellLayout() : GridLayout.CellLayout
+    # <<override>> ScreenToGrid(screenPosition:Vector2) : Vector2Int
+    - RenderSelectedBrushMarquee() : void
+    - DrawSelectionGizmo(selectionBounds:BoundsInt) : void
+    - HandleMouseEnterLeave() : void
+    - CallOnSceneGUI() : void
+    - CallOnPaintSceneGUI(position:Vector2Int) : void
+    # <<override>> RegisterUndo() : void
+    - OnPaletteChanged() : void
+    + CheckRevertIfChanged(paths:string[]) : void
+    + SavePaletteIfNecessary() : bool
+    - SavePalette() : void
+    + GridToScreen(gridPosition:Vector2) : Vector2
+    + ScreenToLocal(screenPosition:Vector2) : Vector2
+    # LocalToScreen(localPosition:Vector2) : Vector2
+    - LocalToScreenRatio() : float
+    - LocalToScreenRatio(viewHeight:float) : float
+    - {static} TilemapIsEmpty(tilemap:Tilemap) : bool
+    + UnlockAndEdit() : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> emptyProjectInfo : GUIContent
+    + {static} <<readonly>> emptyPaletteInfo : GUIContent
+    + {static} <<readonly>> invalidPaletteInfo : GUIContent
+    + {static} <<readonly>> invalidGridInfo : GUIContent
+}
+class PreviewInstanceScope {
+    - <<readonly>> m_OldFog : bool
+    - <<readonly>> m_DrawGizmos : bool
+    - <<readonly>> m_PaletteTransforms : Transform[]
+    + PreviewInstanceScope(guiRect:Rect, previewRenderUtility:PreviewRenderUtility, paletteInstance:GameObject, drawGizmos:bool)
+    + Dispose() : void
+}
+class AssetProcessor {
+    + <<override>> GetPostprocessOrder() : int
+    - {static} OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromPath:string[]) : void
+}
+class PaletteAssetModificationProcessor {
+    {static} - OnWillCreateAsset(assetName:string) : void
+    {static} - OnWillSaveAssets(paths:string[]) : string[]
+    {static} - SavePalettesIfRequired(paths:string[]) : void
+}
+PaintableGrid <|-- GridPaintPaletteClipboard
+GridPaintPaletteClipboard +-- Styles
+GridPaintPaletteClipboard +-- PreviewInstanceScope
+IDisposable <|-- PreviewInstanceScope
+GridPaintPaletteClipboard +-- AssetProcessor
+AssetPostprocessor <|-- AssetProcessor
+GridPaintPaletteClipboard +-- PaletteAssetModificationProcessor
+AssetModificationProcessor <|-- PaletteAssetModificationProcessor
+@enduml

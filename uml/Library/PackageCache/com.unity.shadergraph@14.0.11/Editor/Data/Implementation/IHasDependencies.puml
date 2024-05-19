@@ -1,0 +1,5 @@
+@startuml
+interface IHasDependencies {
+    GetSourceAssetDependencies(assetCollection:AssetCollection) : void
+}
+@enduml

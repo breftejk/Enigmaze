@@ -1,0 +1,10 @@
+@startuml
+class StringSliceTests {
+    - <<const>> _someText : string = "This is some text we are going to take StringSlice from."
+    - <<const>> _target : string = "StringSlice"
+    - <<readonly>> _ssTarget : StringSlice
+    + StringSliceStringRepresentationTest() : void
+    + StartsWithTest() : void
+    + ContainsTest() : void
+}
+@enduml

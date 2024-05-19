@@ -1,0 +1,16 @@
+@startuml
+class RectMask2DEditor {
+    - m_Padding : SerializedProperty
+    - m_Softness : SerializedProperty
+    - m_PaddingContent : GUIContent
+    - m_LeftContent : GUIContent
+    - m_RightContent : GUIContent
+    - m_TopContent : GUIContent
+    - m_BottomContent : GUIContent
+    {static} - m_ShowOffsets : bool = false
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - OffsetGUI() : void
+}
+Editor <|-- RectMask2DEditor
+@enduml

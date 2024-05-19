@@ -1,0 +1,37 @@
+@startuml
+interface IPixelPerfectCamera {
+    assetsPPU : int <<get>> <<set>>
+    refResolutionX : int <<get>> <<set>>
+    refResolutionY : int <<get>> <<set>>
+    upscaleRT : bool <<get>> <<set>>
+    pixelSnapping : bool <<get>> <<set>>
+    cropFrameX : bool <<get>> <<set>>
+    cropFrameY : bool <<get>> <<set>>
+    stretchFill : bool <<get>> <<set>>
+}
+class PixelPerfectCameraInternal {
+    - m_Component : IPixelPerfectCamera
+    - m_SerializableComponent : PixelPerfectCamera
+    <<internal>> originalOrthoSize : float
+    <<internal>> hasPostProcessLayer : bool
+    <<internal>> cropFrameXAndY : bool = false
+    <<internal>> cropFrameXOrY : bool = false
+    <<internal>> useStretchFill : bool = false
+    <<internal>> zoom : int = 1
+    <<internal>> useOffscreenRT : bool = false
+    <<internal>> offscreenRTWidth : int = 0
+    <<internal>> offscreenRTHeight : int = 0
+    <<internal>> pixelRect : Rect
+    <<internal>> orthoSize : float = 1.0f
+    <<internal>> unitsPerPixel : float = 0.0f
+    <<internal>> cinemachineVCamZoom : int = 1
+    <<internal>> requiresUpscaling : bool = false
+    <<internal>> PixelPerfectCameraInternal(component:IPixelPerfectCamera)
+    + OnBeforeSerialize() : void
+    + OnAfterDeserialize() : void
+    <<internal>> CalculateCameraProperties(screenWidth:int, screenHeight:int) : void
+    <<internal>> CalculateFinalBlitPixelRect(screenWidth:int, screenHeight:int) : Rect
+    <<internal>> CorrectCinemachineOrthoSize(targetOrthoSize:float) : float
+}
+ISerializationCallbackReceiver <|-- PixelPerfectCameraInternal
+@enduml

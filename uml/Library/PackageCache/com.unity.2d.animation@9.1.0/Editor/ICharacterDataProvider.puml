@@ -1,0 +1,39 @@
+@startuml
+interface ICharacterDataProvider {
+    GetCharacterData() : CharacterData
+    SetCharacterData(characterData:CharacterData) : void
+}
+struct CharacterData {
+    + bones : SpriteBone[]
+    + parts : CharacterPart[]
+    + dimension : Vector2Int
+    + characterGroups : CharacterGroup[]
+    + pivot : Vector2
+    + boneReadOnly : bool
+}
+interface ICharacterOrder {
+    order : int <<get>> <<set>>
+}
+struct CharacterGroup {
+    + name : string
+    + parentGroup : int
+    - m_Order : int
+    + order : int <<get>> <<set>>
+}
+struct CharacterPart {
+    + spritePosition : RectInt
+    + spriteId : string
+    + bones : int[]
+    + parentGroup : int
+    - m_Order : int
+    + order : int <<get>> <<set>>
+}
+interface IMainSkeletonDataProvider {
+    GetMainSkeletonData() : MainSkeletonData
+}
+struct MainSkeletonData {
+    + bones : SpriteBone[]
+}
+ICharacterOrder <|-- CharacterGroup
+ICharacterOrder <|-- CharacterPart
+@enduml

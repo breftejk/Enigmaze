@@ -1,0 +1,23 @@
+@startuml
+class TestRunnerStateSerializer {
+    - <<const>> Flags : BindingFlags
+    - m_OriginalHideFlags : HideFlags
+    - m_ShouldRestore : bool
+    - m_TestObjectTypeName : string
+    - m_TestObject : ScriptableObject
+    - m_TestObjectTxt : string
+    - StartTicks : long
+    - StartTimeOA : double
+    - output : string
+    - m_ExpectedLogs : LogMatch[]
+    + ShouldRestore() : bool
+    + SaveContext() : void
+    + RestoreContext() : void
+    + CanRestoreFromScriptableObject(requestedType:Type) : bool
+    + RestoreScriptableObjectInstance() : ScriptableObject
+    + CanRestoreFromJson(requestedType:Type) : bool
+    + RestoreClassFromJson(instance:object) : void
+    - OnPlayModeStateChanged(state:PlayModeStateChange) : void
+}
+IStateSerializer <|-- TestRunnerStateSerializer
+@enduml

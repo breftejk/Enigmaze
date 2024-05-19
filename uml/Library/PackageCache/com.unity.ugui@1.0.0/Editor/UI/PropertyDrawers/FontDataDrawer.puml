@@ -1,0 +1,75 @@
+@startuml
+class FontDataDrawer {
+    - <<const>> kAlignmentButtonWidth : int = 20
+    {static} - s_TextAlignmentHash : int
+    - m_SupportEncoding : SerializedProperty
+    - m_Font : SerializedProperty
+    - m_FontSize : SerializedProperty
+    - m_LineSpacing : SerializedProperty
+    - m_FontStyle : SerializedProperty
+    - m_ResizeTextForBestFit : SerializedProperty
+    - m_ResizeTextMinSize : SerializedProperty
+    - m_ResizeTextMaxSize : SerializedProperty
+    - m_HorizontalOverflow : SerializedProperty
+    - m_VerticalOverflow : SerializedProperty
+    - m_Alignment : SerializedProperty
+    - m_AlignByGeometry : SerializedProperty
+    - m_FontFieldfHeight : float = 0f
+    - m_FontStyleHeight : float = 0f
+    - m_FontSizeHeight : float = 0f
+    - m_LineSpacingHeight : float = 0f
+    - m_EncodingHeight : float = 0f
+    - m_ResizeTextForBestFitHeight : float = 0f
+    - m_ResizeTextMinSizeHeight : float = 0f
+    - m_ResizeTextMaxSizeHeight : float = 0f
+    - m_HorizontalOverflowHeight : float = 0f
+    - m_VerticalOverflowHeight : float = 0f
+    - m_AlignByGeometryHeight : float = 0f
+    # Init(property:SerializedProperty) : void
+    + <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    + <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    - DoTextAligmentControl(position:Rect, alignment:SerializedProperty) : void
+    - {static} DoHorizontalAligmentControl(position:Rect, alignment:SerializedProperty) : void
+    - {static} DoVerticalAligmentControl(position:Rect, alignment:SerializedProperty) : void
+    - {static} EditorToggle(position:Rect, value:bool, content:GUIContent, style:GUIStyle) : bool
+    - {static} GetHorizontalAlignment(ta:TextAnchor) : HorizontalTextAligment
+    - {static} GetVerticalAlignment(ta:TextAnchor) : VerticalTextAligment
+    - {static} SetHorizontalAlignment(alignment:SerializedProperty, horizontalAlignment:HorizontalTextAligment) : void
+    - {static} SetVerticalAlignment(alignment:SerializedProperty, verticalAlignment:VerticalTextAligment) : void
+    - {static} GetAnchor(verticalTextAligment:VerticalTextAligment, horizontalTextAligment:HorizontalTextAligment) : TextAnchor
+}
+class Styles <<static>> {
+    + {static} alignmentButtonLeft : GUIStyle
+    + {static} alignmentButtonMid : GUIStyle
+    + {static} alignmentButtonRight : GUIStyle
+    + {static} m_EncodingContent : GUIContent
+    + {static} m_LeftAlignText : GUIContent
+    + {static} m_CenterAlignText : GUIContent
+    + {static} m_RightAlignText : GUIContent
+    + {static} m_TopAlignText : GUIContent
+    + {static} m_MiddleAlignText : GUIContent
+    + {static} m_BottomAlignText : GUIContent
+    + {static} m_LeftAlignTextActive : GUIContent
+    + {static} m_CenterAlignTextActive : GUIContent
+    + {static} m_RightAlignTextActive : GUIContent
+    + {static} m_TopAlignTextActive : GUIContent
+    + {static} m_MiddleAlignTextActive : GUIContent
+    + {static} m_BottomAlignTextActive : GUIContent
+    {static} - Styles()
+    {static} - FixAlignmentButtonStyles(styles:GUIStyle[]) : void
+}
+enum VerticalTextAligment {
+    Top,
+    Middle,
+    Bottom,
+}
+enum HorizontalTextAligment {
+    Left,
+    Center,
+    Right,
+}
+PropertyDrawer <|-- FontDataDrawer
+FontDataDrawer +-- Styles
+FontDataDrawer +-- VerticalTextAligment
+FontDataDrawer +-- HorizontalTextAligment
+@enduml

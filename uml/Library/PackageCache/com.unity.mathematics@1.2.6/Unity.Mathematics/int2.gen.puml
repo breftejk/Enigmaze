@@ -1,0 +1,78 @@
+@startuml
+struct int2 {
+    + x : int
+    + y : int
+    + {static} <<readonly>> zero : int2
+    + int2(x:int, y:int)
+    + int2(xy:int2)
+    + int2(v:int)
+    + int2(v:bool)
+    + int2(v:bool2)
+    + int2(v:uint)
+    + int2(v:uint2)
+    + int2(v:float)
+    + int2(v:float2)
+    + int2(v:double)
+    + int2(v:double2)
+    + xxxx : int4 <<get>>
+    + xxxy : int4 <<get>>
+    + xxyx : int4 <<get>>
+    + xxyy : int4 <<get>>
+    + xyxx : int4 <<get>>
+    + xyxy : int4 <<get>>
+    + xyyx : int4 <<get>>
+    + xyyy : int4 <<get>>
+    + yxxx : int4 <<get>>
+    + yxxy : int4 <<get>>
+    + yxyx : int4 <<get>>
+    + yxyy : int4 <<get>>
+    + yyxx : int4 <<get>>
+    + yyxy : int4 <<get>>
+    + yyyx : int4 <<get>>
+    + yyyy : int4 <<get>>
+    + xxx : int3 <<get>>
+    + xxy : int3 <<get>>
+    + xyx : int3 <<get>>
+    + xyy : int3 <<get>>
+    + yxx : int3 <<get>>
+    + yxy : int3 <<get>>
+    + yyx : int3 <<get>>
+    + yyy : int3 <<get>>
+    + xx : int2 <<get>>
+    + xy : int2 <<get>> <<set>>
+    + yx : int2 <<get>> <<set>>
+    + yy : int2 <<get>>
+    + Equals(rhs:int2) : bool
+    + <<override>> Equals(o:object) : bool
+    + <<override>> GetHashCode() : int
+    + <<override>> ToString() : string
+    + ToString(format:string, formatProvider:IFormatProvider) : string
+}
+class math <<static>> <<partial>> {
+    + {static} int2(x:int, y:int) : int2
+    + {static} int2(xy:int2) : int2
+    + {static} int2(v:int) : int2
+    + {static} int2(v:bool) : int2
+    + {static} int2(v:bool2) : int2
+    + {static} int2(v:uint) : int2
+    + {static} int2(v:uint2) : int2
+    + {static} int2(v:float) : int2
+    + {static} int2(v:float2) : int2
+    + {static} int2(v:double) : int2
+    + {static} int2(v:double2) : int2
+    + {static} hash(v:int2) : uint
+    + {static} hashwide(v:int2) : uint2
+    + {static} shuffle(left:int2, right:int2, x:ShuffleComponent) : int
+    + {static} shuffle(left:int2, right:int2, x:ShuffleComponent, y:ShuffleComponent) : int2
+    + {static} shuffle(left:int2, right:int2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent) : int3
+    + {static} shuffle(left:int2, right:int2, x:ShuffleComponent, y:ShuffleComponent, z:ShuffleComponent, w:ShuffleComponent) : int4
+    <<internal>> {static} select_shuffle_component(a:int2, b:int2, component:ShuffleComponent) : int
+}
+class DebuggerProxy <<sealed>> {
+    + x : int
+    + y : int
+    + DebuggerProxy(v:int2)
+}
+IFormattable <|-- int2
+int2 +-- DebuggerProxy
+@enduml

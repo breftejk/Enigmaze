@@ -1,0 +1,14 @@
+@startuml
+class TriggerCustomEvent <<sealed>> {
+    - _argumentCount : int
+    + arguments : List<ValueInput> <<get>>
+    + argumentCount : int <<get>> <<set>>
+    + enter : ControlInput <<get>>
+    + name : ValueInput <<get>>
+    + target : ValueInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    - Trigger(flow:Flow) : ControlOutput
+}
+Unit <|-- TriggerCustomEvent
+@enduml

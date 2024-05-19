@@ -1,0 +1,104 @@
+@startuml
+class "UnitWidget`1"<TUnit> {
+    + UnitWidget(canvas:FlowCanvas, unit:TUnit)
+    + <<override>> Dispose() : void
+    + <<override>> subWidgets : IEnumerable<IWidget> <<get>>
+    # unit : TUnit <<get>>
+    - unit : IUnit <<get>>
+    # unitDebugData : IUnitDebugData <<get>>
+    - description : UnitDescription
+    - analysis : UnitAnalysis <<get>>
+    # <<readonly>> ports : List<IUnitPortWidget>
+    # <<readonly>> inputs : List<IUnitPortWidget>
+    # <<readonly>> outputs : List<IUnitPortWidget>
+    - <<readonly>> settingNames : List<string>
+    # settings : IEnumerable<Metadata> <<get>>
+    # <<override>> CacheItemFirstTime() : void
+    # <<virtual>> CacheDefinition() : void
+    # <<override>> CacheDescription() : void
+    # <<override>> CacheMetadata() : void
+    + <<virtual>> GetPortInspector(port:IUnitPort, metadata:Metadata) : Inspector
+    + <<override>> foregroundRequiresInput : bool <<get>>
+    + <<override>> HandleInput() : void
+    # <<readonly>> titleContent : GUIContent
+    # <<readonly>> surtitleContent : GUIContent
+    # <<readonly>> subtitleContent : GUIContent
+    # <<readonly>> settingLabelsContents : Dictionary<Metadata, GUIContent>
+    # <<override>> snapToGrid : bool <<get>>
+    + <<override>> positionDependers : IEnumerable<IWidget> <<get>>
+    # _position : Rect
+    + <<override>> position : Rect <<get>> <<set>>
+    + titlePosition : Rect <<get>>
+    + surtitlePosition : Rect <<get>>
+    + subtitlePosition : Rect <<get>>
+    + iconPosition : Rect <<get>>
+    + iconsPositions : List<Rect> <<get>>
+    + settingsPositions : Dictionary<Metadata, Rect> <<get>>
+    + headerAddonPosition : Rect <<get>>
+    + portsBackgroundPosition : Rect <<get>>
+    + <<override>> CachePosition() : void
+    # <<virtual>> GetHeaderAddonWidth() : float
+    # <<virtual>> GetHeaderAddonHeight(width:float) : float
+    # <<virtual>> baseColor : NodeColorMix <<get>>
+    # <<override>> color : NodeColorMix <<get>>
+    # <<override>> shape : NodeShape <<get>>
+    # <<virtual>> showTitle : bool <<get>>
+    # <<virtual>> showSurtitle : bool <<get>>
+    # <<virtual>> showSubtitle : bool <<get>>
+    # <<virtual>> showIcons : bool <<get>>
+    # <<virtual>> showSettings : bool <<get>>
+    # <<virtual>> showHeaderAddon : bool <<get>>
+    # <<virtual>> showPorts : bool <<get>>
+    # <<override>> dim : bool <<get>>
+    + <<override>> DrawForeground() : void
+    # DrawIcon() : void
+    # DrawTitle() : void
+    # DrawSurtitle() : void
+    # DrawSubtitle() : void
+    # DrawIcons() : void
+    - DrawSettings() : void
+    # DrawSetting(setting:Metadata) : void
+    # <<virtual>> DrawHeaderAddon() : void
+    # DrawPortsBackground() : void
+    + <<override>> canSelect : bool <<get>>
+    + <<override>> canDrag : bool <<get>>
+    + <<override>> ExpandDragGroup(dragGroup:HashSet<IGraphElement>) : void
+    + <<override>> canDelete : bool <<get>>
+    + <<override>> ExpandCopyGroup(copyGroup:HashSet<IGraphElement>) : void
+    # <<override>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    - ReplaceUnit() : void
+}
+class UnitWidgetHelper {
+    <<internal>> {static} ReplaceUnit(unit:IUnit, reference:GraphReference, context:IGraphContext, selection:GraphSelection, eventWrapper:EventWrapper) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> title : GUIStyle
+    + {static} <<readonly>> surtitle : GUIStyle
+    + {static} <<readonly>> subtitle : GUIStyle
+    + {static} <<readonly>> titleInverted : GUIStyle
+    + {static} <<readonly>> surtitleInverted : GUIStyle
+    + {static} <<readonly>> subtitleInverted : GUIStyle
+    + {static} <<readonly>> settingLabel : GUIStyle
+    + {static} <<readonly>> spaceAroundLineIcon : float = 5
+    + {static} <<readonly>> spaceBeforePorts : float = 5
+    + {static} <<readonly>> spaceBetweenInputsAndOutputs : float = 8
+    + {static} <<readonly>> spaceBeforeSettings : float = 2
+    + {static} <<readonly>> spaceBetweenSettings : float = 3
+    + {static} <<readonly>> spaceBetweenPorts : float = 3
+    + {static} <<readonly>> spaceAfterSettings : float = 0
+    + {static} <<readonly>> maxSettingsWidth : float = 150
+    + {static} <<readonly>> portsBackground : GUIStyle
+    + {static} <<readonly>> iconSize : float
+    + {static} <<readonly>> iconsSize : float
+    + {static} <<readonly>> iconsSpacing : float = 3
+    + {static} <<readonly>> iconsPerColumn : int = 2
+    + {static} <<readonly>> spaceAfterIcon : float = 6
+    + {static} <<readonly>> spaceAfterSurtitle : float = 2
+    + {static} <<readonly>> spaceBeforeSubtitle : float = 0
+    + {static} <<readonly>> invokeFadeDuration : float = 0.5f
+}
+"NodeWidget`2" "<FlowCanvas,TUnit>" <|-- "UnitWidget`1"
+IUnitWidget <|-- "UnitWidget`1"
+"UnitWidget`1" +-- Styles
+@enduml

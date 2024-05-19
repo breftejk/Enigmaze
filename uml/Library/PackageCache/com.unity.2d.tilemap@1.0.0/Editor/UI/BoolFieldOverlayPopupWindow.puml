@@ -1,0 +1,15 @@
+@startuml
+abstract class BoolFieldOverlayPopupWindow {
+    - trigger : BaseField<bool>
+    - isLocked : bool
+    - screenRect : Rect
+    - size : Vector2
+    # <<virtual>> OnDisable() : void
+    # ToggleMode(value:bool) : void
+    - InitDropDown() : void
+    + {static} ShowOverlayPopup(trigger:BaseField<bool>, position:Rect, size:Vector2, isLocked:bool) : void
+    + {static} ShowOverlayPopup(trigger:BaseField<bool>, size:Vector2, isLocked:bool) : void
+    + {static} CloseAllWindows() : void
+}
+OverlayPopupWindow <|-- BoolFieldOverlayPopupWindow
+@enduml

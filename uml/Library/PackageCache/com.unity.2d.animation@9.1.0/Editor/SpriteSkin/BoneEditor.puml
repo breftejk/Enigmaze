@@ -1,0 +1,12 @@
+@startuml
+class BoneEditor {
+    - m_GUID : SerializedProperty
+    - OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+class Style <<static>> {
+    + {static} boneId : GUIContent
+}
+Editor <|-- BoneEditor
+BoneEditor +-- Style
+@enduml

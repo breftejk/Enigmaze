@@ -1,0 +1,17 @@
+@startuml
+class XROcclusionMesh {
+    - m_Pass : XRPass
+    - m_CombinedMesh : Mesh
+    - m_Material : Material
+    - m_CombinedMeshHashCode : int
+    {static} <<readonly>> - k_OcclusionMeshProfilingSampler : ProfilingSampler
+    <<internal>> XROcclusionMesh(xrPass:XRPass)
+    <<internal>> SetMaterial(mat:Material) : void
+    <<internal>> hasValidOcclusionMesh : bool <<get>>
+    <<internal>> RenderOcclusionMesh(cmd:CommandBuffer) : void
+    <<internal>> UpdateCombinedMesh() : void
+    - IsOcclusionMeshSupported() : bool
+    - TryGetOcclusionMeshCombinedHashCode(hashCode:int) : bool
+    - CreateOcclusionMeshCombined() : void
+}
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+class InputSettings <<partial>> {
+    + updateMode : UpdateMode <<get>> <<set>>
+    + compensateForScreenOrientation : bool <<get>> <<set>>
+    + filterNoiseOnCurrent : bool <<get>> <<set>>
+    + defaultDeadzoneMin : float <<get>> <<set>>
+    + defaultDeadzoneMax : float <<get>> <<set>>
+    + defaultButtonPressPoint : float <<get>> <<set>>
+    + buttonReleaseThreshold : float <<get>> <<set>>
+    + defaultTapTime : float <<get>> <<set>>
+    + defaultSlowTapTime : float <<get>> <<set>>
+    + defaultHoldTime : float <<get>> <<set>>
+    + tapRadius : float <<get>> <<set>>
+    + multiTapDelayTime : float <<get>> <<set>>
+    + backgroundBehavior : BackgroundBehavior <<get>> <<set>>
+    + editorInputBehaviorInPlayMode : EditorInputBehaviorInPlayMode <<get>> <<set>>
+    + maxEventBytesPerUpdate : int <<get>> <<set>>
+    + maxQueuedEventsPerUpdate : int <<get>> <<set>>
+    + supportedDevices : ReadOnlyArray<string> <<get>> <<set>>
+    + disableRedundantEventsMerging : bool <<get>> <<set>>
+    + shortcutKeysConsumeInput : bool <<get>> <<set>>
+    + SetInternalFeatureFlag(featureName:string, enabled:bool) : void
+    - m_SupportedDevices : string[]
+    - m_UpdateMode : UpdateMode
+    - m_MaxEventBytesPerUpdate : int
+    - m_MaxQueuedEventsPerUpdate : int = 1000
+    - m_CompensateForScreenOrientation : bool = true
+    - m_BackgroundBehavior : BackgroundBehavior
+    - m_EditorInputBehaviorInPlayMode : EditorInputBehaviorInPlayMode
+    - m_DefaultDeadzoneMin : float = 0.125f
+    - m_DefaultDeadzoneMax : float = 0.925f
+    - m_DefaultButtonPressPoint : float = 0.5f
+    - m_ButtonReleaseThreshold : float = 0.75f
+    - m_DefaultTapTime : float = 0.2f
+    - m_DefaultSlowTapTime : float = 0.5f
+    - m_DefaultHoldTime : float = 0.4f
+    - m_TapRadius : float = 5
+    - m_MultiTapDelayTime : float = 0.75f
+    - m_DisableRedundantEventsMerging : bool = false
+    - m_ShortcutKeysConsumeInputs : bool = false
+    <<internal>> m_FeatureFlags : HashSet<string>
+    <<internal>> IsFeatureEnabled(featureName:string) : bool
+    <<internal>> {static} optimizedControlsFeatureEnabled : bool = false
+    <<internal>> {static} readValueCachingFeatureEnabled : bool
+    <<internal>> {static} paranoidReadValueCachingChecksEnabled : bool
+    <<internal>> OnChange() : void
+    <<internal>> <<const>> s_OldUnsupportedFixedAndDynamicUpdateSetting : int = 0
+}
+enum UpdateMode {
+    ProcessEventsInDynamicUpdate= 1,
+    ProcessEventsInFixedUpdate,
+    ProcessEventsManually,
+}
+enum BackgroundBehavior {
+    ResetAndDisableNonBackgroundDevices= 0,
+    ResetAndDisableAllDevices= 1,
+    IgnoreFocus= 2,
+}
+enum EditorInputBehaviorInPlayMode {
+    PointersAndKeyboardsRespectGameViewFocus,
+    AllDevicesRespectGameViewFocus,
+    AllDeviceInputAlwaysGoesToGameView,
+}
+ScriptableObject <|-- InputSettings
+InputSettings +-- UpdateMode
+InputSettings +-- BackgroundBehavior
+InputSettings +-- EditorInputBehaviorInPlayMode
+@enduml

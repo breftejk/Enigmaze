@@ -1,0 +1,13 @@
+@startuml
+class SelectOnEnum <<sealed>> {
+    + branches : Dictionary<object, ValueInput> <<get>>
+    + selector : ValueInput <<get>>
+    + selection : ValueOutput <<get>>
+    + enumType : Type <<get>> <<set>>
+    + <<override>> canDefine : bool <<get>>
+    # <<override>> Definition() : void
+    + Branch(flow:Flow) : object
+}
+Unit <|-- SelectOnEnum
+ISelectUnit <|-- SelectOnEnum
+@enduml

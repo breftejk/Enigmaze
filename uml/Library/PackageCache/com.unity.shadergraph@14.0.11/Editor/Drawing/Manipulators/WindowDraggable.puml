@@ -1,0 +1,19 @@
+@startuml
+class WindowDraggable {
+    - m_Active : bool
+    - m_WindowDockingLayout : WindowDockingLayout
+    - m_LocalMosueOffset : Vector2
+    - m_Handle : VisualElement
+    - m_GraphView : GraphView
+    + OnDragFinished : Action
+    + WindowDraggable(handle:VisualElement, container:VisualElement)
+    # <<override>> RegisterCallbacksOnTarget() : void
+    # <<override>> UnregisterCallbacksFromTarget() : void
+    - OnMouseDown(evt:MouseDownEvent) : void
+    - OnMouseMove(evt:MouseMoveEvent) : void
+    - OnMouseUp(evt:MouseUpEvent) : void
+    - OnGeometryChanged(geometryChangedEvent:GeometryChangedEvent) : void
+    - OnParentGeometryChanged(geometryChangedEvent:GeometryChangedEvent) : void
+}
+MouseManipulator <|-- WindowDraggable
+@enduml

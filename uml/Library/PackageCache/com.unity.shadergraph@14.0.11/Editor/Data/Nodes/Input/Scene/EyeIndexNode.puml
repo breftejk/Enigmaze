@@ -1,0 +1,9 @@
+@startuml
+class EyeIndexNode {
+    + <<override>> hasPreview : bool <<get>>
+    + EyeIndexNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - UnityGetEyeIndex(Out:Vector1) : string
+}
+CodeFunctionNode <|-- EyeIndexNode
+@enduml

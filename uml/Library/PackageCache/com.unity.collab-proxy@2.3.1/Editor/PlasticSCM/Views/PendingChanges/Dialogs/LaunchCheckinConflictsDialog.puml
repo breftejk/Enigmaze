@@ -1,0 +1,7 @@
+@startuml
+class LaunchCheckinConflictsDialog {
+    <<internal>> LaunchCheckinConflictsDialog(window:EditorWindow)
+    - Show(conflicts:IList<CheckinConflict>, dialogTitle:PlasticLocalization.Name, dialogExplanation:PlasticLocalization.Name, okButtonCaption:PlasticLocalization.Name) : Result
+    - mWindow : EditorWindow
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class VariableDeclarations <<sealed>> {
+    + VariableDeclarations()
+    + Kind : VariableKind
+    - collection : VariableDeclarationCollection
+    <<internal>> OnVariableChanged : Action
+    + Set(variable:string, value:object) : void
+    + Get(variable:string) : object
+    + Get(variable:string) : T
+    + Get(variable:string, expectedType:Type) : object
+    + Clear() : void
+    + IsDefined(variable:string) : bool
+    + GetDeclaration(variable:string) : VariableDeclaration
+    + GetEnumerator() : IEnumerator<VariableDeclaration>
+    - GetEnumerator() : IEnumerator
+    - cloner : ICloner <<get>>
+}
+"IEnumerable`1" "<VariableDeclaration>" <|-- VariableDeclarations
+ISpecifiesCloner <|-- VariableDeclarations
+@enduml

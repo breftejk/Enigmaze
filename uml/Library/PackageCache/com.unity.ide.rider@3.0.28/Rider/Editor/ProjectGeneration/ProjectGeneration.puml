@@ -1,0 +1,86 @@
+@startuml
+class ProjectGeneration {
+    - {static} <<readonly>> k_BuiltinSupportedExtensions : Dictionary<string, ScriptingLanguage>
+    - m_ProjectSupportedExtensions : string[]
+    + ProjectDirectory : string <<get>>
+    + ProjectDirectoryWithSlash : string <<get>>
+    - <<readonly>> m_ProjectName : string
+    - <<readonly>> m_AssemblyNameProvider : IAssemblyNameProvider
+    - <<readonly>> m_FileIOProvider : IFileIO
+    - <<readonly>> m_GUIDGenerator : IGUIDGenerator
+    - <<readonly>> m_ProjectGuids : Dictionary<string, string>
+    - <<readonly>> m_NormalisedPaths : Dictionary<string, string>
+    - <<readonly>> m_AssemblyNames : Dictionary<string, string>
+    <<internal>> {static} isRiderProjectGeneration : bool
+    - AssemblyNameProvider : IAssemblyNameProvider <<get>>
+    + ProjectGeneration()
+    + ProjectGeneration(projectDirectory:string)
+    + ProjectGeneration(projectDirectory:string, assemblyNameProvider:IAssemblyNameProvider, fileIoProvider:IFileIO, guidGenerator:IGUIDGenerator)
+    + SyncIfNeeded(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>, checkProjectFiles:bool) : bool
+    - HasFilesBeenModified(affectedFiles:IEnumerable<string>, reimportedFiles:IEnumerable<string>) : bool
+    - {static} ShouldSyncOnReimportedAsset(asset:string) : bool
+    + Sync() : void
+    + HasSolutionBeenGenerated() : bool
+    - SetupSupportedExtensions() : void
+    - ShouldFileBePartOfSolution(file:string) : bool
+    + HasValidExtension(file:string) : bool
+    - IsSupportedExtension(extension:string) : bool
+    - GenerateAndWriteSolutionAndProjects(types:Type[]) : void
+    - {static} AddProjectPart(assemblyName:string, riderAssembly:Assembly, coreReferences:string[], additionalAssets:List<string>) : ProjectPart
+    - GetAdditionalAssets() : Dictionary<string, List<string>>
+    - SyncProject(stringBuilder:StringBuilder, island:ProjectPart, assemblyUsage:AssemblyUsage, types:Type[]) : void
+    - SyncProjectFileIfNotChanged(path:string, newContents:string, types:Type[]) : void
+    - SyncSolutionFileIfNotChanged(path:string, newContents:string, types:Type[]) : void
+    - {static} OnGeneratedCSProjectFiles(types:Type[]) : void
+    + {static} GetAssetPostprocessorTypes() : Type[]
+    - {static} OnPreGeneratingCSProjectFiles(types:Type[]) : bool
+    - {static} OnGeneratedCSProject(path:string, content:string, types:Type[]) : string
+    - {static} OnGeneratedSlnSolution(path:string, content:string, types:Type[]) : string
+    - SyncFileIfNotChanged(path:string, newContents:string) : void
+    - {static} _buffer : char[] = null
+    - HasChanged(path:string, newContents:string) : bool
+    - ProjectText(projectBuilder:StringBuilder, assembly:ProjectPart, assemblyUsage:AssemblyUsage) : string
+    - ProjectFile(projectPart:ProjectPart) : string
+    + SolutionFile() : string
+    - ProjectHeader(stringBuilder:StringBuilder, assembly:ProjectPart, responseFilesData:List<ResponseFileData>) : void
+    - {static} GetGlobalAnalyzerConfigFile(assembly:ProjectPart) : string
+    - {static} GetRoslynAdditionalFiles(assembly:ProjectPart, otherResponseFilesData:ILookup<string, string>) : string[]
+    - GetRoslynAnalyzers(assembly:ProjectPart, otherResponseFilesData:ILookup<string, string>) : string[]
+    - GetRoslynAnalyzerRulesetPaths(assembly:ProjectPart, otherResponseFilesData:ILookup<string, string>) : IEnumerable<string>
+    - {static} AppendWarningAsError(stringBuilder:StringBuilder, args:IEnumerable<string>, argsMinus:IEnumerable<string>, argsPlus:IEnumerable<string>) : void
+    - SyncSolution(stringBuilder:StringBuilder, islands:List<ProjectPart>, types:Type[]) : void
+    - SolutionText(stringBuilder:StringBuilder, islands:List<ProjectPart>) : string
+    - {static} GetOtherArgumentsFromResponseFilesData(responseFilesData:List<ResponseFileData>) : ILookup<string, string>
+    - GetLangVersion(langVersionList:IEnumerable<string>, assembly:ProjectPart) : string
+    + {static} GetNoWarn(codes:List<string>) : IEnumerable<string>
+    - ProjectGuid(name:string) : string
+    - GetNormalisedAssemblyPath(path:string) : string
+    - GetAssemblyNameFromPath(path:string) : string
+}
+class "FilePathTrie`1"<TData> {
+    - {static} <<readonly>> Separators : char[]
+    - <<readonly>> m_Root : TrieNode
+    + Insert(filePath:string, data:TData) : void
+    + FindClosestMatch(filePath:string) : TData
+}
+enum ScriptingLanguage {
+    None,
+    CSharp,
+}
+class AssemblyUsage {
+    - <<readonly>> m_ProjectAssemblies : HashSet<string>
+    - <<readonly>> m_PrecompiledAssemblies : HashSet<string>
+    + AddProjectAssembly(assembly:Assembly) : void
+    + AddPrecompiledAssembly(assembly:Assembly) : void
+    + IsProjectAssembly(assembly:Assembly) : bool
+    + IsPrecompiledAssembly(assembly:Assembly) : bool
+}
+class TrieNode {
+    + Children : Dictionary<string, TrieNode>
+    + Data : TData
+}
+IGenerator <|-- ProjectGeneration
+ProjectGeneration +-- ScriptingLanguage
+ProjectGeneration +-- AssemblyUsage
+"FilePathTrie`1" +-- TrieNode
+@enduml

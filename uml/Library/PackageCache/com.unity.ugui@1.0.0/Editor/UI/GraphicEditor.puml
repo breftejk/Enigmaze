@@ -1,0 +1,29 @@
+@startuml
+class GraphicEditor {
+    # m_Script : SerializedProperty
+    # m_Color : SerializedProperty
+    # m_Material : SerializedProperty
+    # m_RaycastTarget : SerializedProperty
+    # m_RaycastPadding : SerializedProperty
+    # m_Maskable : SerializedProperty
+    - m_CorrectButtonContent : GUIContent
+    # m_ShowNativeSize : AnimBool
+    - m_PaddingContent : GUIContent
+    - m_LeftContent : GUIContent
+    - m_RightContent : GUIContent
+    - m_TopContent : GUIContent
+    - m_BottomContent : GUIContent
+    {static} - m_ShowPadding : bool = false
+    # <<virtual>> OnDisable() : void
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawAnchorsOnSceneView(sceneView:SceneView) : void
+    - DrawRect(rect:Rect, space:Transform, offset:Vector4) : void
+    # SetShowNativeSize(show:bool, instant:bool) : void
+    # NativeSizeButtonGUI() : void
+    # MaskableControlsGUI() : void
+    # AppearanceControlsGUI() : void
+    # RaycastControlsGUI() : void
+}
+Editor <|-- GraphicEditor
+@enduml

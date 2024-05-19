@@ -1,0 +1,28 @@
+@startuml
+struct FrameTimeSample {
+    <<internal>> FramesPerSecond : float
+    <<internal>> FullFrameTime : float
+    <<internal>> MainThreadCPUFrameTime : float
+    <<internal>> MainThreadCPUPresentWaitTime : float
+    <<internal>> RenderThreadCPUFrameTime : float
+    <<internal>> GPUFrameTime : float
+    <<internal>> FrameTimeSample(initValue:float)
+}
+class FrameTimeSampleHistory {
+    + FrameTimeSampleHistory(initialCapacity:int)
+    - m_Samples : List<FrameTimeSample>
+    <<internal>> SampleAverage : FrameTimeSample
+    <<internal>> SampleMin : FrameTimeSample
+    <<internal>> SampleMax : FrameTimeSample
+    <<internal>> Add(sample:FrameTimeSample) : void
+    {static} - s_SampleValueAdd : Func<float, float, float>
+    {static} - s_SampleValueMin : Func<float, float, float>
+    {static} - s_SampleValueMax : Func<float, float, float>
+    {static} - s_SampleValueCountValid : Func<float, float, float>
+    {static} - s_SampleValueEnsureValid : Func<float, float, float>
+    {static} - s_SampleValueDivide : Func<float, float, float>
+    <<internal>> ComputeAggregateValues() : void
+    <<internal>> DiscardOldSamples(sampleHistorySize:int) : void
+    <<internal>> Clear() : void
+}
+@enduml

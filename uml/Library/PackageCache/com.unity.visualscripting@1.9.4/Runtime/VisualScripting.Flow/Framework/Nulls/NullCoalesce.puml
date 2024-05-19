@@ -1,0 +1,10 @@
+@startuml
+class NullCoalesce <<sealed>> {
+    + input : ValueInput <<get>>
+    + fallback : ValueInput <<get>>
+    + result : ValueOutput <<get>>
+    # <<override>> Definition() : void
+    + Coalesce(flow:Flow) : object
+}
+Unit <|-- NullCoalesce
+@enduml

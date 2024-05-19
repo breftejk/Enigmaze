@@ -1,0 +1,5 @@
+@startuml
+interface IGraphDataAction {
+    modifyGraphDataAction : Action<GraphData> <<get>>
+}
+@enduml

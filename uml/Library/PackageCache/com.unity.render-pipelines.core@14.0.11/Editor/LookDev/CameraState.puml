@@ -1,0 +1,30 @@
+@startuml
+interface ICameraUpdater {
+    UpdateCamera(camera:Camera) : void
+}
+class CameraState {
+    - {static} <<readonly>> k_DefaultRotation : Quaternion
+    - <<const>> k_DefaultViewSize : float = 10f
+    - {static} <<readonly>> k_DefaultPivot : Vector3
+    - <<const>> k_DefaultFoV : float = 90f
+    - <<const>> k_NearFactor : float = 0.000005f
+    - <<const>> k_MaxFar : float = 1000
+    + pivot : Vector3 <<get>> <<set>>
+    + rotation : Quaternion <<get>> <<set>>
+    + viewSize : float <<get>> <<set>>
+    + distanceFromPivot : float <<get>>
+    + position : Vector3 <<get>>
+    + fieldOfView : float <<get>>
+    + farClip : float <<get>>
+    + nearClip : float <<get>>
+    + forward : Vector3 <<get>>
+    + up : Vector3 <<get>>
+    + right : Vector3 <<get>>
+    <<internal>> QuickReprojectionWithFixedFOVOnPivotPlane(screen:Rect, screenPoint:Vector2) : Vector3
+    <<internal>> QuickProjectPivotInScreen(screen:Rect) : Vector3
+    + UpdateCamera(camera:Camera) : void
+    + Reset() : void
+    <<internal>> SynchronizeFrom(other:CameraState) : void
+}
+ICameraUpdater <|-- CameraState
+@enduml

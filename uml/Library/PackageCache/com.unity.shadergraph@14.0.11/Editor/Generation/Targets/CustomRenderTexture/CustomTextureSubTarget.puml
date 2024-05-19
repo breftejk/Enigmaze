@@ -1,0 +1,17 @@
+@startuml
+class CustomTextureSubTarget <<sealed>> {
+    <<const>> - kAssetGuid : string = "5b2d4724a38a5485ba5e7dc2f7d86f1a"
+    <<internal>> {static} colorField : FieldDescriptor
+    + CustomTextureSubTarget()
+    + <<override>> IsActive() : bool
+    + <<override>> Setup(context:TargetSetupContext) : void
+    + <<override>> GetFields(context:TargetFieldContext) : void
+    + <<override>> GetActiveBlocks(context:TargetActiveBlockContext) : void
+    + <<override>> GetPropertiesGUI(context:TargetPropertyGUIContext, onChange:Action, registerUndo:Action<String>) : void
+}
+class SubShaders <<static>> {
+    + {static} CustomRenderTexture : SubShaderDescriptor
+}
+"SubTarget`1" "<CustomRenderTextureTarget>" <|-- CustomTextureSubTarget
+CustomTextureSubTarget +-- SubShaders
+@enduml

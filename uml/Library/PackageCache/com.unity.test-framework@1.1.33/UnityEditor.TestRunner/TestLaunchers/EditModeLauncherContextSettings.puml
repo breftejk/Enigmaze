@@ -1,0 +1,10 @@
+@startuml
+class EditModeLauncherContextSettings {
+    - m_RunInBackground : bool
+    + EditModeLauncherContextSettings()
+    + Dispose() : void
+    - SetupProjectParameters() : void
+    - CleanupProjectParameters() : void
+}
+IDisposable <|-- EditModeLauncherContextSettings
+@enduml

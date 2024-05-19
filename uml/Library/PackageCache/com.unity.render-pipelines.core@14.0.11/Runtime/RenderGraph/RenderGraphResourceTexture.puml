@@ -1,0 +1,69 @@
+@startuml
+struct TextureHandle {
+    - {static} s_NullHandle : TextureHandle
+    + {static} nullHandle : TextureHandle <<get>>
+    <<internal>> handle : ResourceHandle
+    <<internal>> TextureHandle(handle:int, shared:bool)
+    + IsValid() : bool
+}
+enum TextureSizeMode {
+    Explicit,
+    Scale,
+    Functor,
+}
+struct TextureDesc {
+    + sizeMode : TextureSizeMode
+    + width : int
+    + height : int
+    + slices : int
+    + scale : Vector2
+    + func : ScaleFunc
+    + depthBufferBits : DepthBits
+    + colorFormat : GraphicsFormat
+    + filterMode : FilterMode
+    + wrapMode : TextureWrapMode
+    + dimension : TextureDimension
+    + enableRandomWrite : bool
+    + useMipMap : bool
+    + autoGenerateMips : bool
+    + isShadowMap : bool
+    + anisoLevel : int
+    + mipMapBias : float
+    + msaaSamples : MSAASamples
+    + bindTextureMS : bool
+    + useDynamicScale : bool
+    + memoryless : RenderTextureMemoryless
+    + vrUsage : VRTextureUsage
+    + name : string
+    + fallBackToBlackTexture : bool
+    + disableFallBackToImportedTexture : bool
+    + clearBuffer : bool
+    + clearColor : Color
+    - InitDefaultValues(dynamicResolution:bool, xrReady:bool) : void
+    + TextureDesc(width:int, height:int, dynamicResolution:bool, xrReady:bool)
+    + TextureDesc(scale:Vector2, dynamicResolution:bool, xrReady:bool)
+    + TextureDesc(func:ScaleFunc, dynamicResolution:bool, xrReady:bool)
+    + TextureDesc(input:TextureDesc)
+    + <<override>> GetHashCode() : int
+}
+class TextureResource {
+    {static} - m_TextureCreationIndex : int
+    + <<override>> GetName() : string
+    + <<override>> CreatePooledGraphicsResource() : void
+    + <<override>> ReleasePooledGraphicsResource(frameIndex:int) : void
+    + <<override>> CreateGraphicsResource(name:string) : void
+    + <<override>> ReleaseGraphicsResource() : void
+    + <<override>> LogCreation(logger:RenderGraphLogger) : void
+    + <<override>> LogRelease(logger:RenderGraphLogger) : void
+}
+class TexturePool {
+    # <<override>> ReleaseInternalResource(res:RTHandle) : void
+    # <<override>> GetResourceName(res:RTHandle) : string
+    # <<override>> GetResourceSize(res:RTHandle) : long
+    <<override>> # GetResourceTypeName() : string
+    <<override>> # GetSortIndex(res:RTHandle) : int
+    <<override>> + PurgeUnusedResources(currentFrameIndex:int) : void
+}
+"RenderGraphResource`2" "<TextureDesc,RTHandle>" <|-- TextureResource
+"RenderGraphResourcePool`1" "<RTHandle>" <|-- TexturePool
+@enduml

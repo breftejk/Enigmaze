@@ -1,0 +1,7 @@
+@startuml
+class SceneWithNestedLayoutElementsLoadScript {
+    + isStartCalled : bool <<get>>
+    # Start() : void
+}
+MonoBehaviour <|-- SceneWithNestedLayoutElementsLoadScript
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class DebugDisplaySettingsUI {
+    - m_DisposablePanels : IEnumerable<IDebugDisplaySettingsPanelDisposable>
+    - m_Settings : IDebugDisplaySettings
+    - Reset() : void
+    + RegisterDebug(settings:IDebugDisplaySettings) : void
+    + UnregisterDebug() : void
+    + GetReset() : Action
+}
+IDebugData <|-- DebugDisplaySettingsUI
+@enduml

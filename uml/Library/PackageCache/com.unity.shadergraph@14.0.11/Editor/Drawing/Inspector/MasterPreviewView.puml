@@ -1,0 +1,36 @@
+@startuml
+class MasterPreviewView {
+    - m_PreviewManager : PreviewManager
+    - m_Graph : GraphData
+    - m_PreviewRenderHandle : PreviewRenderData
+    - m_PreviewTextureView : Image
+    + previewTextureView : Image <<get>>
+    - m_PreviewScrollPosition : Vector2
+    - m_PreviewMeshPicker : ObjectField
+    - m_PreviousMesh : Mesh
+    - m_RecalculateLayout : bool
+    - m_PreviewResizeBorderFrame : ResizeBorderFrame
+    + previewResizeBorderFrame : ResizeBorderFrame <<get>>
+    - m_Preview : VisualElement
+    - m_Title : Label
+    + preview : VisualElement <<get>>
+    - m_DoNotShowPrimitives : List<string>
+    {static} - s_ContextualMenuManipulator : Type
+    {static} - s_ObjectSelector : Type
+    + assetName : string <<get>> <<set>>
+    + MasterPreviewView(previewManager:PreviewManager, graph:GraphData)
+    - CreatePreview(texture:Texture) : Image
+    - BuildContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    - OnPreviewChanged() : void
+    - ChangePrimitiveMesh(primitiveName:string) : void
+    - ChangeMesh(mesh:Mesh) : void
+    - {static} Get() : EditorWindow
+    - OnMeshChanged(obj:Object) : void
+    - ChangeMeshSprite() : void
+    - ChangeMeshCustom() : void
+    - OnGeometryChanged(evt:GeometryChangedEvent) : void
+    - OnScroll(scrollValue:float) : void
+    - OnMouseDragPreviewMesh(deltaMouse:Vector2) : void
+}
+VisualElement <|-- MasterPreviewView
+@enduml

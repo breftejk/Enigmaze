@@ -1,0 +1,21 @@
+@startuml
+struct "RefValueEnumerable`1"<T> {
+    - m_List : List<JsonRef<T>>
+    + RefValueEnumerable(list:List<JsonRef<T>>)
+    + GetEnumerator() : Enumerator
+    - GetEnumerator() : IEnumerator<T>
+    - GetEnumerator() : IEnumerator
+}
+struct Enumerator {
+    - m_Enumerator : List<JsonRef<T>>.Enumerator
+    + Enumerator(enumerator:List<JsonRef<T>>.Enumerator)
+    + MoveNext() : bool
+    - Reset() : void
+    + Current : T <<get>>
+    - Current : object <<get>>
+    + Dispose() : void
+}
+"IEnumerable`1" "<T>" <|-- "RefValueEnumerable`1"
+"RefValueEnumerable`1" +-- Enumerator
+"IEnumerator`1" "<T>" <|-- Enumerator
+@enduml

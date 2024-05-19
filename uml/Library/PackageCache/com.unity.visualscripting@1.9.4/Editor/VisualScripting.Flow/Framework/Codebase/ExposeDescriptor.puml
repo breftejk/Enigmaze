@@ -1,0 +1,11 @@
+@startuml
+class ExposeDescriptor {
+    + ExposeDescriptor(unit:Expose)
+    # <<override>> DefinedTitle() : string
+    # <<override>> DefinedSurtitle() : string
+    # <<override>> DefinedShortTitle() : string
+    # <<override>> DefinedIcon() : EditorTexture
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+"UnitDescriptor`1" "<Expose>" <|-- ExposeDescriptor
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TimelineWindow <<partial>> {
+    + treeView : TimelineTreeViewGUI <<get>>
+    - TracksGUI(clientRect:Rect, state:WindowState, trackState:TimelineModeGUIState) : void
+    - DrawNoSequenceGUI(windowState:WindowState) : void
+    <<internal>> OverlayDrawData : List<OverlayDrawer>
+    - DrawTracksGUI(clientRect:Rect, trackState:TimelineModeGUIState) : void
+}
+@enduml

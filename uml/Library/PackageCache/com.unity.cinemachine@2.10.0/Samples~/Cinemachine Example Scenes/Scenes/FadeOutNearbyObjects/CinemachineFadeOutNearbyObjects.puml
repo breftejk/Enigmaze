@@ -1,0 +1,14 @@
+@startuml
+class CinemachineFadeOutNearbyObjects {
+    + m_LookAtTargetRadius : float = 1
+    + m_MinDistance : float = 0
+    + m_MaxDistance : float = 8
+    + m_SetToCameraToLookAtDistance : bool = false
+    + m_FadeOutMaterial : Material
+    {static} <<readonly>> - k_MaxDistanceID : int
+    {static} <<readonly>> - k_MinDistanceID : int
+    # <<override>> PostPipelineStageCallback(vcam:CinemachineVirtualCameraBase, stage:CinemachineCore.Stage, state:CameraState, deltaTime:float) : void
+    - OnValidate() : void
+}
+CinemachineExtension <|-- CinemachineFadeOutNearbyObjects
+@enduml

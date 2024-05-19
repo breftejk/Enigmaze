@@ -1,0 +1,15 @@
+@startuml
+class AnalyticsUtils <<static>> {
+    <<const>> - k_VendorKey : string = "unity.srp"
+    <<internal>> {static} TryRegisterEvent(eventName:string, version:int, maxEventPerHour:int, maxNumberOfElements:int) : bool
+    <<internal>> {static} SendData(data:T, eventName:string, version:int) : void
+    <<internal>> {static} GetSerializableFields(type:Type, removeObsolete:bool) : IEnumerable<FieldInfo>
+    {static} - AreArraysDifferent(a:IList, b:IList) : bool
+    {static} - DumpValues(list:IList) : string
+    {static} - DumpValues(type:Type, current:object) : Dictionary<string, string>
+    {static} - GetDiffAsDictionary(type:Type, current:object, defaults:object) : Dictionary<string, string>
+    {static} - ToStringArray(diff:Dictionary<string, string>) : string[]
+    + {static} ToNestedColumn(current:T, compareAndSimplifyWithDefault:bool) : string[]
+    + {static} ToNestedColumnWithDefault(current:T, defaultObject:T, compareAndSimplifyWithDefault:bool) : string[]
+}
+@enduml

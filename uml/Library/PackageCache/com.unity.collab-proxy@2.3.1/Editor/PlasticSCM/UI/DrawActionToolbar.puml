@@ -1,0 +1,6 @@
+@startuml
+class DrawActionToolbar <<static>> {
+    <<internal>> {static} Begin(parentWindow:EditorWindow) : void
+    <<internal>> {static} End() : void
+}
+@enduml

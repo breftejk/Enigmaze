@@ -1,0 +1,17 @@
+@startuml
+class MixingCameraBlend {
+    + followTarget : Transform
+    + initialBottomWeight : float = 20f
+    + axisToTrack : AxisEnum
+    - vcam : CinemachineMixingCamera
+    - Start() : void
+    - Update() : void
+}
+enum AxisEnum {
+    X,
+    Z,
+    XZ,
+}
+MonoBehaviour <|-- MixingCameraBlend
+MixingCameraBlend +-- AxisEnum
+@enduml

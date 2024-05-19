@@ -1,0 +1,18 @@
+@startuml
+class Button {
+    - m_OnClick : ButtonClickedEvent
+    # Button()
+    + onClick : ButtonClickedEvent <<get>> <<set>>
+    - Press() : void
+    + <<virtual>> OnPointerClick(eventData:PointerEventData) : void
+    + <<virtual>> OnSubmit(eventData:BaseEventData) : void
+    - OnFinishSubmit() : IEnumerator
+}
+class ButtonClickedEvent {
+}
+Selectable <|-- Button
+IPointerClickHandler <|-- Button
+ISubmitHandler <|-- Button
+Button +-- ButtonClickedEvent
+UnityEvent <|-- ButtonClickedEvent
+@enduml

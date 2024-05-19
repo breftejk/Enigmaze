@@ -1,0 +1,47 @@
+@startuml
+class UICellImportElement {
+    - m_WarningIcon : VisualElement
+    - m_ImportToggle : Toggle
+    - m_CollapseToggle : Toggle
+    - m_CollapseToggleCheckMark : VisualElement
+    + UICellImportElement()
+    - CollapseToggleMouseOut(evt:MouseOutEvent) : void
+    - CollapseToggleMouseEnter(evt:MouseEnterEvent) : void
+    - ShowHideCollapseToggleCheckMark() : void
+    + <<override>> BindPSDNode(index:int, treeView:PSDImporterLayerManagementMultiColumnTreeView) : void
+    - SetToggleActive(t:Toggle, b:bool) : void
+    + Update() : void
+    - ChildrenIsCollapsed(treeViewNode:PSDTreeViewNode) : bool
+    - ToggleImportChange(e:ChangeEvent<bool>) : void
+    <<internal>> {static} SetChildrenNodeImport(treeViewNode:PSDTreeViewNode, value:bool) : void
+    - ToggleCollapseChange(e:ChangeEvent<bool>) : void
+}
+interface ILayerImportColumnField {
+    MakeHeader() : VisualElement
+    MakeCell() : VisualElement
+    UnBindCell(e:VisualElement, node:PSDTreeViewNode) : void
+    BindCell(e:VisualElement, node:PSDTreeViewNode, module:SerializedProperty) : void
+    UpdateCell(e:VisualElement, node:PSDTreeViewNode) : void
+}
+class UILayerImportColumn {
+    - m_ImportHeaderToggle : ImportColumnHeaderToggle
+    - m_ImportColumnFieldsSP : IList<SerializedProperty>
+    - m_ImportColumnFields : ILayerImportColumnField[]
+    - ImportSelectionMenu : Action = null
+    + UILayerImportColumn(treeView:PSDImporterLayerManagementMultiColumnTreeView)
+    + <<virtual>> DestroyCell(e:VisualElement) : void
+    + <<virtual>> UnBindCell(e:VisualElement, index:int) : void
+    + <<virtual>> BindCell(e:VisualElement, index:int) : void
+    - Update() : void
+    - MakeHeader() : VisualElement
+    - ShowContextMenu() : void
+    - HeaderImportToggleChange(b:bool) : void
+    <<internal>> SelectAllVisibleLayers() : void
+    <<internal>> DeselectAllVisibleLayers() : void
+    <<internal>> SelectAllHiddenLayers() : void
+    <<internal>> DeselectAllHiddenLayers() : void
+}
+UICellElement <|-- UICellImportElement
+UIColumn <|-- UILayerImportColumn
+IColumnUpdate <|-- UILayerImportColumn
+@enduml

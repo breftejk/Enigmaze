@@ -1,0 +1,8 @@
+@startuml
+class AsyncOperation <<partial>> {
+    <<internal>> m_Ptr : IntPtr
+    - m_completeCallback : System.Action<AsyncOperation>
+    <<internal>> InvokeCompletionEvent() : void
+}
+YieldInstruction <|-- AsyncOperation
+@enduml

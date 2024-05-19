@@ -1,0 +1,9 @@
+@startuml
+class SaveVariables <<sealed>> {
+    + enter : ControlInput <<get>>
+    + exit : ControlOutput <<get>>
+    # <<override>> Definition() : void
+    - Enter(arg:Flow) : ControlOutput
+}
+Unit <|-- SaveVariables
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+class AotCommentStub {
+    + AotCommentStub(wrapper:string)
+    + <<override>> stubMethodComment : string <<get>>
+    + <<override>> stubMethodName : string <<get>>
+    + <<override>> GetStubStatements() : IEnumerable<CodeStatement>
+}
+class AotPreBuilder {
+    - {static} instance : AotPreBuilder
+    + callbackOrder : int <<get>>
+    - aotStubsPath : string <<get>>
+    + AotPreBuilder()
+    + {static} OnPostProcessBuild(target:BuildTarget, pathToBuiltProject:string) : void
+    + {static} GenerateFromInternalMenu() : void
+    + OnPreprocessBuild(report:BuildReport) : void
+    - GenerateAotStubs() : void
+    - DeleteAotStubs() : void
+    - FindAllDistinctProjectStubs() : IEnumerable<AotStubWriter>
+    - FindAllProjectStubs() : IEnumerable<AotStubWriter>
+    - FindAllSettingsStubs() : IEnumerable<object>
+    - FindAllPluginStubs() : IEnumerable<object>
+    - FindAllAssetStubs() : IEnumerable<object>
+    - FindAllSceneStubs() : IEnumerable<object>
+    - GenerateStubScript(scriptFilePath:string) : void
+    <<internal>> FindAndWriteAotStubs(writer:TextWriter) : void
+    - GenerateCodeAndWriteToStream(stubWriters:IEnumerable<AotStubWriter>, writer:TextWriter) : void
+    - CreateCodeCompileUnitFromStubWriters(stubWriters:IEnumerable<AotStubWriter>) : CodeCompileUnit
+    - GenerateStubCodeFromCompileUnit(unit:CodeCompileUnit, writer:TextWriter) : void
+}
+AotStubWriter <|-- AotCommentStub
+IPreprocessBuildWithReport <|-- AotPreBuilder
+@enduml

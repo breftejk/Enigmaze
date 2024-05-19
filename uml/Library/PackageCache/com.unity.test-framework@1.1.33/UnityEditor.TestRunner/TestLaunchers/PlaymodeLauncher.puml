@@ -1,0 +1,20 @@
+@startuml
+class PlaymodeLauncher {
+    + {static} IsRunning : bool
+    - m_Scene : Scene
+    - m_IsTestSetupPerformed : bool
+    - testFilter : ITestFilter
+    - m_EventHandlers : List<Type>
+    + PlaymodeLauncher(settings:PlaymodeTestsControllerSettings)
+    + <<override>> Run() : void
+    + UpdateCallback() : void
+    # {static} ReopenOriginalScene(runner:PlaymodeTestsController) : void
+    + AddEventHandler() : void
+}
+class BackgroundWatcher {
+    {static} - BackgroundWatcher()
+    - {static} OnPlayModeStateChanged(state:PlayModeStateChange) : void
+}
+RuntimeTestLauncherBase <|-- PlaymodeLauncher
+PlaymodeLauncher +-- BackgroundWatcher
+@enduml

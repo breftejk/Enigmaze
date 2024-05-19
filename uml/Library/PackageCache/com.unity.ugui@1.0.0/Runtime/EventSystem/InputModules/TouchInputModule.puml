@@ -1,0 +1,22 @@
+@startuml
+class TouchInputModule {
+    # TouchInputModule()
+    - m_LastMousePosition : Vector2
+    - m_MousePosition : Vector2
+    - m_InputPointerEvent : PointerEventData
+    - m_ForceModuleActive : bool
+    + allowActivationOnStandalone : bool <<get>> <<set>>
+    + forceModuleActive : bool <<get>> <<set>>
+    + <<override>> UpdateModule() : void
+    + <<override>> IsModuleSupported() : bool
+    + <<override>> ShouldActivateModule() : bool
+    - UseFakeInput() : bool
+    + <<override>> Process() : void
+    - FakeTouches() : void
+    - ProcessTouchEvents() : void
+    # ProcessTouchPress(pointerEvent:PointerEventData, pressed:bool, released:bool) : void
+    + <<override>> DeactivateModule() : void
+    + <<override>> ToString() : string
+}
+PointerInputModule <|-- TouchInputModule
+@enduml

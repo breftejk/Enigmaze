@@ -1,0 +1,31 @@
+@startuml
+struct BiharmonicsJob {
+    + numIterations : int
+    + numSamples : int
+    + supressCommonWarnings : int
+    + weights : NativeArray<BoneWeight>
+    + inputVertices : NativeArray<float2>
+    + inputIndices : NativeArray<int>
+    + inputEdges : NativeArray<int2>
+    + inputControlPoints : NativeArray<float2>
+    + inputBones : NativeArray<int2>
+    + inputPins : NativeArray<int>
+    + Execute() : void
+}
+class BoundedBiharmonicWeightsGenerator {
+    <<internal>> {static} <<readonly>> defaultWeight : BoneWeight
+    <<internal>> {static} <<readonly>> k_NumIterations : int = 100
+    <<internal>> {static} <<readonly>> k_NumSamples : int = 4
+    {static} <<extern>> - Bbw(iterations:int, vertices:IntPtr, vertexCount:int, originalVertexCount:int, indices:IntPtr, indexCount:int, controlPoints:IntPtr, controlPointsCount:int, boneEdges:IntPtr, boneEdgesCount:int, pinIndices:IntPtr, pinIndexCount:int, weights:IntPtr) : int
+    + Calculate(name:string, vertices:float2[], indices:int[], edges:int2[], controlPoints:float2[], bones:int2[], pins:int[]) : BoneWeight[]
+    + CalculateJob(name:string, vertices:float2[], indices:int[], edges:int2[], controlPoints:float2[], bones:int2[], pins:int[], sd:SpriteJobData) : JobHandle
+    {static} - SanitizeEdges(edges:int2[], noOfVertices:int) : int2[]
+    {static} - SampleBones_(points:NativeArray<float2>, edges:NativeArray<int2>, numSamples:int, sampledEdges:NativeArray<float2>) : void
+    {static} - TriangulateSamplers_(samplers:NativeArray<float2>, triVertices:NativeArray<float2>, vtxCount:int, triIndices:NativeArray<int>, idxCount:int) : void
+    {static} - TriangulateInternal_(internalIndices:NativeArray<int>, internalIndexCount:int, triVertices:NativeArray<float2>, triIndices:NativeArray<int>, idxCount:int) : void
+    {static} <<internal>> CalculateInternal_(inputVertices:NativeArray<float2>, inputIndices:NativeArray<int>, inputEdges:NativeArray<int2>, inputControlPoints:NativeArray<float2>, inputBones:NativeArray<int2>, inputPins:NativeArray<int>, numSamples:int, iterations:int, supressWarnings:int, weights:NativeArray<BoneWeight>) : void
+    {static} - CalculateInternal(inputVertices:float2[], inputIndices:int[], inputEdges:int2[], inputControlPoints:float2[], inputBones:int2[], inputPins:int[], numSamples:int, done:bool) : BoneWeight[]
+}
+IJob <|-- BiharmonicsJob
+IWeightsGenerator <|-- BoundedBiharmonicWeightsGenerator
+@enduml

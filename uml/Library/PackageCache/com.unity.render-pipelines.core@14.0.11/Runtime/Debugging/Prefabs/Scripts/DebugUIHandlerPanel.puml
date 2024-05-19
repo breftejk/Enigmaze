@@ -1,0 +1,25 @@
+@startuml
+class DebugUIHandlerPanel {
+    + nameLabel : Text
+    + scrollRect : ScrollRect
+    + viewport : RectTransform
+    + Canvas : DebugUIHandlerCanvas
+    - m_ScrollTransform : RectTransform
+    - m_ContentTransform : RectTransform
+    - m_MaskTransform : RectTransform
+    - m_ScrollTarget : DebugUIHandlerWidget
+    <<internal>> # m_Panel : DebugUI.Panel
+    - OnEnable() : void
+    <<internal>> SetPanel(panel:DebugUI.Panel) : void
+    <<internal>> GetPanel() : DebugUI.Panel
+    + SelectNextItem() : void
+    + SelectPreviousItem() : void
+    + OnScrollbarClicked() : void
+    <<internal>> SetScrollTarget(target:DebugUIHandlerWidget) : void
+    <<internal>> UpdateScroll() : void
+    - GetYPosInScroll(target:RectTransform) : float
+    <<internal>> GetFirstItem() : DebugUIHandlerWidget
+    + ResetDebugManager() : void
+}
+MonoBehaviour <|-- DebugUIHandlerPanel
+@enduml

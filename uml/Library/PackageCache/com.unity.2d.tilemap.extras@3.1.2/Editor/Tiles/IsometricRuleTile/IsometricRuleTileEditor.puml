@@ -1,0 +1,12 @@
+@startuml
+class IsometricRuleTileEditor {
+    - {static} <<readonly>> s_Arrows : int[]
+    + <<override>> GetArrowIndex(position:Vector3Int) : int
+    + <<override>> GetMatrixSize(bounds:BoundsInt) : Vector2
+    + <<override>> RuleMatrixOnGUI(tile:RuleTile, rect:Rect, bounds:BoundsInt, tilingRule:RuleTile.TilingRule) : void
+    + <<override>> ContainsMousePosition(rect:Rect) : bool
+    + <<override>> OnPreviewSettings() : void
+    # <<override>> CreatePreview() : void
+}
+RuleTileEditor <|-- IsometricRuleTileEditor
+@enduml

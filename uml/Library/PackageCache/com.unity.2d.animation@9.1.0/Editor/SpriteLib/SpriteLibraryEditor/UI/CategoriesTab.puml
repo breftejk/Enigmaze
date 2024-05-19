@@ -1,0 +1,56 @@
+@startuml
+class CategoriesTab {
+    - m_ViewEvents : ViewEvents
+    - m_CategoryListsScrollContainer : ScrollView
+    - m_LocalListContainer : VisualElement
+    - m_InheritedListContainer : VisualElement
+    - m_CategoryListsContainer : VisualElement
+    - m_LocalFoldout : Foldout
+    - m_InheritedFoldout : Foldout
+    - m_AddButton : Button
+    - m_InfoLabel : Label
+    - m_LocalListView : RenamableListView
+    - m_InheritedListView : ListView
+    - m_SelectedCategories : List<string>
+    - m_Categories : List<CategoryData>
+    - m_LocalCategoriesData : List<CategoryData>
+    - m_InheritedCategoriesData : List<CategoryData>
+    <<const>> - k_LabelContainerName : string
+    <<const>> - k_ListContainerClassName : string
+    <<const>> - k_ListTextClassName : string
+    <<const>> - k_ListItemClassName : string
+    <<const>> - k_FoldoutHeight : int = 25
+    <<const>> - k_ListItemHeight : int = 20
+    - m_LibrarySelected : bool
+    - m_IsFiltered : bool
+    - CanDragStart() : bool
+    - CanModifyCategories() : bool
+    + BindElements(controllerEvents:ControllerEvents, viewEvents:ViewEvents) : void
+    - SetupLocalList() : void
+    - ReorderCategories(dragPerformEvent:DragPerformEvent) : void
+    - OnBindLocalItem(e:VisualElement, i:int) : void
+    - OnTextFocusOut(evt:FocusOutEvent) : void
+    - OnMakeLocalItem() : VisualElement
+    - SetupInheritedList() : void
+    - OnMakeInheritedItem() : VisualElement
+    - OnBindInheritedItem(e:VisualElement, i:int) : void
+    {static} - OnUnbindItem(e:VisualElement, i:int) : void
+    - SetupUI() : void
+    - OnModifiedCategories(categories:List<CategoryData>, filtered:bool) : void
+    - CreateNewCategory() : void
+    - RenameSelected() : void
+    - DeleteSelected() : void
+    - OnCategoryRenamed(listView:RenamableListView, i:int, newName:string) : void
+    - OnSelectionChanged(selection:IEnumerable<object>) : void
+    - UpdateFoldouts() : void
+    - SetSelection(categories:List<string>) : void
+    - OnLibraryAssetSelected(libraryAsset:SpriteLibraryAsset) : void
+    - PostRefreshUI() : void
+    - ContextualManipulatorAddActions(evt:ContextualMenuPopulateEvent) : void
+}
+class CustomUxmlFactory {
+}
+VisualElement <|-- CategoriesTab
+CategoriesTab +-- CustomUxmlFactory
+"UxmlFactory`2" "<CategoriesTab,UxmlTraits>" <|-- CustomUxmlFactory
+@enduml

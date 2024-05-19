@@ -1,0 +1,67 @@
+@startuml
+class BlackboardGroupInfo {
+    - m_Guid : SerializableGuid
+    <<internal>> guid : Guid <<get>>
+    - m_GroupName : string
+    <<internal>> GroupName : string <<get>> <<set>>
+    - BlackboardGroupInfo()
+}
+class SGBlackboard {
+    - m_ScrollBoundaryTop : VisualElement
+    - m_ScrollBoundaryBottom : VisualElement
+    - m_BottomResizer : VisualElement
+    - m_PathLabelTextField : TextField
+    + m_VariantExceededHelpBox : VisualElement
+    + OnControllerChanged(e:SGControllerChangedEvent) : void
+    + OnControllerEvent(e:SGControllerEvent) : void
+    + SetCurrentVariantUsage(currentVariantCount:int, maxVariantCount:int) : void
+    + controller : BlackboardController <<get>> <<set>>
+    - controller : SGController <<get>>
+    - m_Controller : BlackboardController
+    - m_ViewModel : BlackboardViewModel
+    - ViewModel : BlackboardViewModel <<get>> <<set>>
+    - m_BlackboardCategories : IList<SGBlackboardCategory>
+    - m_ScrollToTop : bool = false
+    - m_ScrollToBottom : bool = false
+    - m_EditPathCancelled : bool = false
+    - m_IsUserDraggingItems : bool = false
+    - m_InsertIndex : int
+    <<const>> - k_DraggedPropertyScrollSpeed : int = 6
+    + <<override>> windowTitle : string <<get>>
+    + <<override>> elementName : string <<get>>
+    + <<override>> styleName : string <<get>>
+    + <<override>> UxmlName : string <<get>>
+    + <<override>> layoutKey : string <<get>>
+    - addItemRequested : Action <<get>> <<set>>
+    <<internal>> hideDragIndicatorAction : Action <<get>> <<set>>
+    - m_AddBlackboardItemMenu : GenericMenu
+    <<internal>> addBlackboardItemMenu : GenericMenu <<get>>
+    - m_DragIndicator : VisualElement
+    + SGBlackboard(viewModel:BlackboardViewModel, controller:BlackboardController)
+    - SetCategoryDragIndicatorVisible(visible:bool) : void
+    + OnDragEnterEvent(evt:DragEnterEvent) : void
+    + OnDragExitedEvent(evt:DragExitedEvent) : void
+    - OnMouseEnterEvent(evt:MouseEnterEvent) : void
+    - HideScrollBoundaryRegions() : void
+    - InsertionIndex(pos:Vector2) : int
+    - OnDragUpdatedEvent(evt:DragUpdatedEvent) : void
+    - OnDragPerformEvent(evt:DragPerformEvent) : void
+    - OnDragLeaveEvent(evt:DragLeaveEvent) : void
+    - scrollViewIndex : int <<get>> <<set>>
+    - ScrollRegionTopEnter(mouseEnterEvent:MouseEnterEvent) : void
+    - ScrollRegionTopLeave(mouseLeaveEvent:MouseLeaveEvent) : void
+    - ScrollRegionBottomEnter(mouseEnterEvent:MouseEnterEvent) : void
+    - ScrollRegionBottomLeave(mouseLeaveEvent:MouseLeaveEvent) : void
+    - OnFieldDragUpdate(dragUpdatedEvent:DragUpdatedEvent) : void
+    - InitializeAddBlackboardItemMenu() : void
+    - ShowAddPropertyMenu() : void
+    - OnMouseUpEvent(evt:MouseUpEvent) : void
+    - OnMouseDownEvent(evt:MouseDownEvent) : void
+    - StartEditingPath() : void
+    - OnPathTextFieldKeyPressed(evt:KeyDownEvent) : void
+    - OnEditPathTextFinished() : void
+    + <<override>> Dispose() : void
+}
+GraphSubWindow <|-- SGBlackboard
+"ISGControlledElement`1" "<BlackboardController>" <|-- SGBlackboard
+@enduml

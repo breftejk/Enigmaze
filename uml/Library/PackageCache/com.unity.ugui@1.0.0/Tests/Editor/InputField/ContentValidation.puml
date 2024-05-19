@@ -1,0 +1,6 @@
+@startuml
+class ContentValidation {
+    + ValueIsValidatedCorrectly(type:ContentType, testValue:string, expected:string) : void
+}
+"TestBehaviourBase`1" "<UnityEngine.UI.InputField>" <|-- ContentValidation
+@enduml

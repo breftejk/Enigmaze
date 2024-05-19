@@ -1,0 +1,13 @@
+@startuml
+class ObjectMetadata <<sealed>> {
+    + ObjectMetadata(@object:object, definedType:Type, parent:Metadata)
+    + ObjectMetadata(name:string, @object:object, definedType:Type, parent:Metadata)
+    + @object : object <<get>>
+    + name : string <<get>>
+    # <<override>> rawValue : object <<get>> <<set>>
+    # <<override>> OnValueTypeChange(previousType:Type) : void
+    # <<override>> SubpathToString() : string
+    + <<override>> GetCustomAttributes(inherit:bool) : Attribute[]
+}
+Metadata <|-- ObjectMetadata
+@enduml

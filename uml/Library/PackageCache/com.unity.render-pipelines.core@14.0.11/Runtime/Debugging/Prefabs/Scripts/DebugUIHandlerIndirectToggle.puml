@@ -1,0 +1,17 @@
+@startuml
+class DebugUIHandlerIndirectToggle {
+    + nameLabel : Text
+    + valueToggle : Toggle
+    + checkmarkImage : Image
+    + getter : Func<int, bool>
+    + setter : Action<int, bool>
+    <<internal>> index : int
+    + Init() : void
+    - OnToggleValueChanged(value:bool) : void
+    + <<override>> OnSelection(fromNext:bool, previous:DebugUIHandlerWidget) : bool
+    + <<override>> OnDeselection() : void
+    + <<override>> OnAction() : void
+    <<internal>> UpdateValueLabel() : void
+}
+DebugUIHandlerWidget <|-- DebugUIHandlerIndirectToggle
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class MultiInputUnitNumericDescriptor {
+    + MultiInputUnitNumericDescriptor(unit:IMultiInputUnit)
+    # <<override>> DefinedPort(port:IUnitPort, description:UnitPortDescription) : void
+}
+class MultiInputUnitNumericOption {
+    + MultiInputUnitNumericOption()
+    + MultiInputUnitNumericOption(unit:IMultiInputUnit)
+    # <<override>> ShowValueInputsInFooter() : bool
+}
+"UnitDescriptor`1" "<IMultiInputUnit>" <|-- MultiInputUnitNumericDescriptor
+"UnitOption`1" "<IMultiInputUnit>" <|-- MultiInputUnitNumericOption
+@enduml

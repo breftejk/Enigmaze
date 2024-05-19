@@ -1,0 +1,28 @@
+@startuml
+struct InputBindingResolver {
+    + totalProcessorCount : int
+    + totalCompositeCount : int
+    + totalInteractionCount : int
+    + totalMapCount : int <<get>>
+    + totalActionCount : int <<get>>
+    + totalBindingCount : int <<get>>
+    + totalControlCount : int <<get>>
+    + maps : InputActionMap[]
+    + controls : InputControl[]
+    + memory : InputActionState.UnmanagedMemory
+    + interactions : IInputInteraction[]
+    + processors : InputProcessor[]
+    + composites : InputBindingComposite[]
+    + bindingMask : InputBinding?
+    - m_IsControlOnlyResolve : bool
+    + Dispose() : void
+    + StartWithPreviousResolve(state:InputActionState, isFullResolve:bool) : void
+    + <<unsafe>> AddActionMap(actionMap:InputActionMap) : void
+    - m_Parameters : List<NameAndParameters>
+    - InstantiateWithParameters(registrations:TypeTable, namesAndParameters:string, array:TType[], count:int, actionMap:InputActionMap, binding:InputBinding) : int
+    - {static} InstantiateBindingComposite(binding:InputBinding, actionMap:InputActionMap) : InputBindingComposite
+    - {static} ApplyParameters(parameters:ReadOnlyArray<NamedValue>, instance:object, actionMap:InputActionMap, binding:InputBinding, objectRegistrationName:string, namesAndParameters:string) : void
+    - {static} AssignCompositePartIndex(composite:object, name:string, currentCompositePartCount:int) : int
+}
+IDisposable <|-- InputBindingResolver
+@enduml

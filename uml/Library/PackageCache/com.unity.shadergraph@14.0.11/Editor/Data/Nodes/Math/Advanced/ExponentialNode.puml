@@ -1,0 +1,15 @@
+@startuml
+enum ExponentialBase {
+    BaseE,
+    Base2,
+}
+class ExponentialNode {
+    + ExponentialNode()
+    - m_ExponentialBase : ExponentialBase
+    + exponentialBase : ExponentialBase <<get>> <<set>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Exponential(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+    {static} - Unity_Exponential2(In:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- ExponentialNode
+@enduml

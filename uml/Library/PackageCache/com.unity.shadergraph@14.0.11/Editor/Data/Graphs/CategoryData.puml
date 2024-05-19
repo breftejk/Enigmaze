@@ -1,0 +1,22 @@
+@startuml
+class CategoryData {
+    - m_Name : string
+    + name : string <<get>> <<set>>
+    + categoryGuid : string <<get>>
+    - m_ChildObjectList : List<JsonRef<ShaderInput>>
+    + Children : RefValueEnumerable<ShaderInput> <<get>>
+    - m_ChildObjectIDSet : HashSet<string>
+    + childCount : int <<get>>
+    + InsertItemIntoCategory(itemToAdd:ShaderInput, insertionIndex:int) : void
+    + RemoveItemFromCategory(itemToRemove:ShaderInput) : void
+    + MoveItemInCategory(itemToMove:ShaderInput, newIndex:int) : void
+    + IsItemInCategory(itemToCheck:ShaderInput) : bool
+    + IsNamedCategory() : bool
+    + <<override>> OnAfterDeserialize() : void
+    + CategoryData()
+    + CategoryData(inName:string, categoryChildren:List<ShaderInput>)
+    + CategoryData(categoryToCopy:CategoryData)
+    + {static} DefaultCategory(categoryChildren:List<ShaderInput>) : CategoryData
+}
+JsonObject <|-- CategoryData
+@enduml

@@ -1,0 +1,73 @@
+@startuml
+abstract class "Widget`2"<TCanvas,TItem> {
+    # context : IGraphContext <<get>>
+    # reference : GraphReference <<get>>
+    # graph : IGraph <<get>>
+    # canvas : TCanvas <<get>>
+    - canvas : ICanvas <<get>>
+    # selection : GraphSelection <<get>>
+    # window : ICanvasWindow <<get>>
+    # mousePosition : Vector2 <<get>>
+    # Widget(canvas:TCanvas, item:TItem)
+    + disposed : bool <<get>>
+    + <<virtual>> Dispose() : void
+    # e : EventWrapper <<get>>
+    + <<override>> ToString() : string
+    + <<virtual>> subWidgets : IEnumerable<IWidget> <<get>>
+    # SubWidgetsChanged() : void
+    # item : TItem <<get>>
+    - item : IGraphItem <<get>>
+    # <<readonly>> hasDescriptor : bool
+    + metadata : Metadata <<get>>
+    - lastFetchedMetadata : Metadata
+    - cachedItemOnce : bool = false
+    + <<virtual>> FetchMetadata() : Metadata
+    # <<virtual>> CacheItemFirstTime() : void
+    + <<virtual>> CacheItem() : void
+    # <<virtual>> CacheMetadata() : void
+    # <<virtual>> CacheDescription() : void
+    + RegisterControl() : void
+    + <<virtual>> BeforeFrame() : void
+    + <<virtual>> HandleCapture() : void
+    + <<virtual>> HandleInput() : void
+    + <<virtual>> HandleRelease() : void
+    + <<virtual>> Update() : void
+    # <<virtual>> snapToGrid : bool <<get>>
+    + isPositionValid : bool <<get>> <<set>>
+    + <<virtual>> positionDependers : IEnumerable<IWidget> <<get>>
+    + <<virtual>> positionDependencies : IEnumerable<IWidget> <<get>>
+    + {abstract} position : Rect <<get>> <<set>>
+    + {abstract} zIndex : float <<get>> <<set>>
+    + Reposition() : void
+    + <<virtual>> CachePositionFirstPass() : void
+    + <<virtual>> CachePosition() : void
+    + BringToFront() : void
+    + SendToBack() : void
+    + <<virtual>> canClip : bool <<get>>
+    + <<virtual>> clippingPosition : Rect <<get>>
+    + <<virtual>> OnViewportChange() : void
+    + isVisible : bool <<get>> <<set>>
+    + <<virtual>> hotArea : Rect <<get>>
+    + isMouseThrough : bool <<get>>
+    + isMouseOver : bool <<get>>
+    # <<virtual>> OnContext() : void
+    # HandleContext() : void
+    # <<virtual>> contextOptions : IEnumerable<DropdownOption> <<get>>
+    # debug : string <<get>> <<set>>
+    + <<virtual>> foregroundRequiresInput : bool <<get>>
+    + <<virtual>> backgroundRequiresInput : bool <<get>>
+    + <<virtual>> overlayRequiresInput : bool <<get>>
+    + <<virtual>> DrawForeground() : void
+    + <<virtual>> DrawBackground() : void
+    + <<virtual>> DrawOverlay() : void
+    - dimAlpha : float = 1
+    - dimTarget : float = 1
+    - dimInitialized : bool = false
+    - <<const>> dimFadeDuration : float = 0.075f
+    # <<virtual>> dim : bool <<get>>
+    # BeginDim() : void
+    # EndDim() : void
+    # UpdateDim() : void
+}
+IWidget <|-- "Widget`2"
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class LateUpdate <<sealed>> {
+    # <<override>> hookName : string <<get>>
+}
+"MachineEventUnit`1" "<EmptyEventArgs>" <|-- LateUpdate
+@enduml

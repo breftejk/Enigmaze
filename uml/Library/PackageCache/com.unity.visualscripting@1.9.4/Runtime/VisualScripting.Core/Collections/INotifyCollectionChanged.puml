@@ -1,0 +1,7 @@
+@startuml
+interface "INotifyCollectionChanged`1"<T> {
+     <<event>> ItemAdded : Action<T> 
+     <<event>> ItemRemoved : Action<T> 
+     <<event>> CollectionChanged : Action 
+}
+@enduml

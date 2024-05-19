@@ -1,0 +1,21 @@
+@startuml
+struct InputActionProperty {
+    + action : InputAction <<get>>
+    + reference : InputActionReference <<get>>
+    <<internal>> serializedAction : InputAction <<get>>
+    <<internal>> serializedReference : InputActionReference <<get>>
+    + InputActionProperty(action:InputAction)
+    + InputActionProperty(reference:InputActionReference)
+    + Equals(other:InputActionProperty) : bool
+    + Equals(other:InputAction) : bool
+    + Equals(other:InputActionReference) : bool
+    + <<override>> Equals(obj:object) : bool
+    + <<override>> GetHashCode() : int
+    - m_UseReference : bool
+    - m_Action : InputAction
+    - m_Reference : InputActionReference
+}
+"IEquatable`1" "<InputActionProperty>" <|-- InputActionProperty
+"IEquatable`1" "<InputAction>" <|-- InputActionProperty
+"IEquatable`1" "<InputActionReference>" <|-- InputActionProperty
+@enduml

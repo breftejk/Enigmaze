@@ -1,0 +1,13 @@
+@startuml
+class Vector2Control {
+    + x : AxisControl <<get>> <<set>>
+    + y : AxisControl <<get>> <<set>>
+    + Vector2Control()
+    # <<override>> FinishSetup() : void
+    + <<override>> <<unsafe>> ReadUnprocessedValueFromState(statePtr:void*) : Vector2
+    + <<override>> <<unsafe>> WriteValueIntoState(value:Vector2, statePtr:void*) : void
+    + <<override>> <<unsafe>> EvaluateMagnitude(statePtr:void*) : float
+    # <<override>> CalculateOptimizedControlDataType() : FourCC
+}
+"InputControl`1" "<Vector2>" <|-- Vector2Control
+@enduml

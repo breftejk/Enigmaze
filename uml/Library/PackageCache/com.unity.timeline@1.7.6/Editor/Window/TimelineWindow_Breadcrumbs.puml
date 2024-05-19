@@ -1,0 +1,11 @@
+@startuml
+class TimelineWindow <<partial>> {
+    - m_BreadCrumbLabels : List<BreadCrumbTitle>
+    {static} - GetTitleMode(sequence:ISequenceState) : TitleMode
+    - DrawBreadcrumbs() : void
+    - NavigateToBreadcrumbIndex(index:int) : void
+    - DrawSequenceSelector() : void
+    - ShowSequenceSelector() : void
+    - OnSequenceSelected(arg:object) : void
+}
+@enduml

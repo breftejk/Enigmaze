@@ -1,0 +1,11 @@
+@startuml
+class SimpleElevator {
+    + minY : float
+    + maxY : float
+    + speed : float
+    + on : bool
+    - m_Direction : float = 1
+    - FixedUpdate() : void
+}
+MonoBehaviour <|-- SimpleElevator
+@enduml

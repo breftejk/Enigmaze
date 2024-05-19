@@ -1,0 +1,25 @@
+@startuml
+class ProjectSettingsProviderView {
+    - <<const>> Path : string = "Project/Visual Scripting"
+    - <<const>> Title : string = "Visual Scripting"
+    - <<const>> TitleGroup : string = "Generate Nodes"
+    - <<readonly>> marginStyle : GUIStyle
+    - _assemblyOptionsSettings : AssemblyOptionsSettings
+    - _typeOptionsSettings : TypeOptionsSettings
+    - _customPropertyProviderSettings : CustomPropertyProviderSettings
+    - _linkerPropertyProviderSettings : LinkerPropertyProviderSettings
+    - _backupSettings : BackupSettings
+    - _scriptReferenceResolverSettings : ScriptReferenceResolverSettings
+    - _vsCoreConfig : BoltCoreConfiguration = null
+    + ProjectSettingsProviderView()
+    - CreateOptionsIfNeeded() : void
+    - EnsureConfig() : void
+    + <<override>> OnGUI(searchContext:string) : void
+}
+class Styles <<static>> {
+    {static} - Styles()
+    + {static} <<readonly>> defaultsButton : GUIStyle
+}
+SettingsProvider <|-- ProjectSettingsProviderView
+ProjectSettingsProviderView +-- Styles
+@enduml

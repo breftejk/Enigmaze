@@ -1,0 +1,6 @@
+@startuml
+class ProbeSubdivisionResult {
+    + cells : List<(Vector3Int position, Bounds bounds, Brick[] bricks)>
+    + scenesPerCells : Dictionary<Vector3Int, HashSet<Scene>>
+}
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+enum ComparisonType {
+    Equal,
+    NotEqual,
+    Less,
+    LessOrEqual,
+    Greater,
+    GreaterOrEqual,
+}
+class ComparisonNode {
+    + ComparisonNode()
+    - m_ComparisonType : ComparisonType
+    + comparisonType : ComparisonType <<get>> <<set>>
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Comparison_Equal(A:Vector1, B:Vector1, Out:Boolean) : string
+    {static} - Unity_Comparison_NotEqual(A:Vector1, B:Vector1, Out:Boolean) : string
+    {static} - Unity_Comparison_Less(A:Vector1, B:Vector1, Out:Boolean) : string
+    {static} - Unity_Comparison_LessOrEqual(A:Vector1, B:Vector1, Out:Boolean) : string
+    {static} - Unity_Comparison_Greater(A:Vector1, B:Vector1, Out:Boolean) : string
+    {static} - Unity_Comparison_GreaterOrEqual(A:Vector1, B:Vector1, Out:Boolean) : string
+}
+CodeFunctionNode <|-- ComparisonNode
+@enduml

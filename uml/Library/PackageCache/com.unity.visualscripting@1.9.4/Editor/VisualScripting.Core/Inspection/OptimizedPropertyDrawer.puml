@@ -1,0 +1,11 @@
+@startuml
+abstract class "OptimizedPropertyDrawer`1"<TIndividual> {
+    + <<sealed>> <<override>> GetPropertyHeight(property:SerializedProperty, label:GUIContent) : float
+    + <<sealed>> <<override>> OnGUI(position:Rect, property:SerializedProperty, label:GUIContent) : void
+    {static} - OptimizedPropertyDrawer()
+    - {static} individualDrawers : Dictionary<int, TIndividual>
+    - {static} ClearCache() : void
+    - {static} GetIndividualDrawer(property:SerializedProperty) : TIndividual
+}
+PropertyDrawer <|-- "OptimizedPropertyDrawer`1"
+@enduml

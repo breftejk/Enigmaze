@@ -1,0 +1,44 @@
+@startuml
+struct ShaderGraphRequirements {
+    - m_RequiresTransforms : List<NeededTransform>
+    - m_RequiresNormal : NeededCoordinateSpace
+    - m_RequiresBitangent : NeededCoordinateSpace
+    - m_RequiresTangent : NeededCoordinateSpace
+    - m_RequiresViewDir : NeededCoordinateSpace
+    - m_RequiresPosition : NeededCoordinateSpace
+    - m_RequiresPositionPredisplacement : NeededCoordinateSpace
+    - m_RequiresScreenPosition : bool
+    - m_RequiresNDCPosition : bool
+    - m_RequiresPixelPosition : bool
+    - m_RequiresVertexColor : bool
+    - m_RequiresFaceSign : bool
+    - m_RequiresMeshUVs : List<UVChannel>
+    - m_RequiresDepthTexture : bool
+    - m_RequiresCameraOpaqueTexture : bool
+    - m_RequiresTime : bool
+    - m_RequiresVertexSkinning : bool
+    - m_RequiresVertexID : bool
+    <<internal>> {static} none : ShaderGraphRequirements <<get>>
+    + requiresTransforms : List<NeededTransform> <<get>> <<internal set>>
+    + requiresNormal : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresBitangent : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresTangent : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresViewDir : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresPosition : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresPositionPredisplacement : NeededCoordinateSpace <<get>> <<internal set>>
+    + requiresScreenPosition : bool <<get>> <<internal set>>
+    + requiresNDCPosition : bool <<get>> <<internal set>>
+    + requiresPixelPosition : bool <<get>> <<internal set>>
+    + requiresVertexColor : bool <<get>> <<internal set>>
+    + requiresFaceSign : bool <<get>> <<internal set>>
+    + requiresMeshUVs : List<UVChannel> <<get>> <<internal set>>
+    + requiresDepthTexture : bool <<get>> <<internal set>>
+    + requiresCameraOpaqueTexture : bool <<get>> <<internal set>>
+    + requiresTime : bool <<get>> <<internal set>>
+    + requiresVertexSkinning : bool <<get>> <<internal set>>
+    + requiresVertexID : bool <<get>> <<internal set>>
+    <<internal>> NeedsTangentSpace() : bool
+    <<internal>> Union(other:ShaderGraphRequirements) : ShaderGraphRequirements
+    <<internal>> {static} FromNodes(nodes:List<T>, stageCapability:ShaderStageCapability, includeIntermediateSpaces:bool) : ShaderGraphRequirements
+}
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+interface ILayoutElement {
+    CalculateLayoutInputHorizontal() : void
+    CalculateLayoutInputVertical() : void
+    minWidth : float <<get>>
+    preferredWidth : float <<get>>
+    flexibleWidth : float <<get>>
+    minHeight : float <<get>>
+    preferredHeight : float <<get>>
+    flexibleHeight : float <<get>>
+    layoutPriority : int <<get>>
+}
+interface ILayoutController {
+    SetLayoutHorizontal() : void
+    SetLayoutVertical() : void
+}
+interface ILayoutGroup {
+}
+interface ILayoutSelfController {
+}
+interface ILayoutIgnorer {
+    ignoreLayout : bool <<get>>
+}
+ILayoutController <|-- ILayoutGroup
+ILayoutController <|-- ILayoutSelfController
+@enduml

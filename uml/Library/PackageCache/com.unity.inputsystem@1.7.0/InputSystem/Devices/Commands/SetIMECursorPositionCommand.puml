@@ -1,0 +1,12 @@
+@startuml
+struct SetIMECursorPositionCommand {
+    + {static} Type : FourCC <<get>>
+    <<internal>> <<const>> kSize : int
+    + baseCommand : InputDeviceCommand
+    + position : Vector2 <<get>>
+    - m_Position : Vector2
+    + typeStatic : FourCC <<get>>
+    + {static} Create(cursorPosition:Vector2) : SetIMECursorPositionCommand
+}
+IInputDeviceCommandInfo <|-- SetIMECursorPositionCommand
+@enduml

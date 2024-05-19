@@ -1,0 +1,13 @@
+@startuml
+class ItemCreationUtility <<static>> {
+    {static} <<internal>> StartNewAssetNameEditingDelegate : Action<int, ProjectWindowCallback.EndNameEditAction, string, Texture2D, string>
+    {static} + CreateGameObject(name:string, menuCommand:MenuCommand, components:Type[]) : GameObject
+    {static} + CreateAssetObjectFromTemplate(sourcePath:string) : T
+    {static} + CreateAssetObject(name:string) : T
+    {static} - StartNewAssetNameEditing(source:string, dest:string, icon:Texture2D, instanceId:int) : void
+}
+class CreateAssetEndNameEditAction {
+    + <<override>> Action(instanceId:int, pathName:string, resourceFile:string) : void
+}
+ItemCreationUtility +-- CreateAssetEndNameEditAction
+@enduml

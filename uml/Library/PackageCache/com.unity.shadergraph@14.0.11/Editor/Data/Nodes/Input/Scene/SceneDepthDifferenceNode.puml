@@ -1,0 +1,19 @@
+@startuml
+class SceneDepthDifferenceNode <<sealed>> {
+    - m_DepthSamplingMode : DepthSamplingMode
+    + depthSamplingMode : DepthSamplingMode <<get>> <<set>>
+    + SceneDepthDifferenceNode()
+    + <<override>> hasPreview : bool <<get>>
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_SceneDepthDifference_Linear01(Out:Vector1, SceneUV:Vector2, PositionWS:Vector2) : string
+    {static} - Unity_SceneDepthDifference_Raw(Out:Vector1, SceneUV:Vector2, PositionWS:Vector3) : string
+    {static} - Unity_SceneDepthDifference_Eye(Out:Vector1, SceneUV:Vector2, PositionWS:Vector3) : string
+    - RequiresDepthTexture(stageCapability:ShaderStageCapability) : bool
+    - RequiresScreenPosition(stageCapability:ShaderStageCapability) : bool
+    - RequiresPosition(stageCapability:ShaderStageCapability) : NeededCoordinateSpace
+}
+CodeFunctionNode <|-- SceneDepthDifferenceNode
+IMayRequireDepthTexture <|-- SceneDepthDifferenceNode
+IMayRequireScreenPosition <|-- SceneDepthDifferenceNode
+IMayRequirePosition <|-- SceneDepthDifferenceNode
+@enduml

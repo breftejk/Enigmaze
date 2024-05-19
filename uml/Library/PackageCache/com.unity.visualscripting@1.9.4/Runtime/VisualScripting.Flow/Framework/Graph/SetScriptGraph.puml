@@ -1,0 +1,7 @@
+@startuml
+class SetScriptGraph <<sealed>> {
+    + containerType : ScriptGraphContainerType <<get>> <<set>>
+    # <<override>> isGameObject : bool <<get>>
+}
+"SetGraph`3" "<FlowGraph,ScriptGraphAsset,ScriptMachine>" <|-- SetScriptGraph
+@enduml

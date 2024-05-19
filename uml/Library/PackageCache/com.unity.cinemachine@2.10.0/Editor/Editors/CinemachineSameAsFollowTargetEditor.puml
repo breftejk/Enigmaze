@@ -1,0 +1,6 @@
+@startuml
+class CinemachineSameAsFollowTargetEditor <<sealed>> {
+    + <<override>> OnInspectorGUI() : void
+}
+"BaseEditor`1" "<CinemachineSameAsFollowTarget>" <|-- CinemachineSameAsFollowTargetEditor
+@enduml

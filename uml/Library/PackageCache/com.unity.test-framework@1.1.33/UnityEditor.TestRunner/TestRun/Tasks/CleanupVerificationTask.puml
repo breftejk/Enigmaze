@@ -1,0 +1,9 @@
+@startuml
+class CleanupVerificationTask {
+    - <<const>> k_Indent : string = "    "
+    <<internal>> logAction : Action<object>
+    + <<override>> Execute(testJobData:TestJobData) : IEnumerator
+    - LogWarningForFilesIfAny(filePaths:string[]) : void
+}
+FileCleanupVerifierTaskBase <|-- CleanupVerificationTask
+@enduml

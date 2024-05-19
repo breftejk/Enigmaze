@@ -1,0 +1,49 @@
+@startuml
+class MaterialModificationProcessor {
+    {static} - OnWillCreateAsset(asset:string) : void
+}
+class MaterialReimporter {
+    {static} - s_NeedToCheckProjSettingExistence : bool = true
+    {static} - ReimportAllMaterials() : void
+    {static} - RegisterUpgraderReimport() : void
+}
+class MaterialPostprocessor {
+    + {static} s_CreatedAssets : List<string>
+    <<internal>> {static} s_ImportedAssetThatNeedSaving : List<string>
+    <<internal>> {static} s_NeedsSavingAssets : bool = false
+    <<internal>> {static} <<readonly>> k_Upgraders : Action<Material, ShaderID>[]
+    {static} <<internal>> SaveAssetsToDisk() : void
+    {static} - OnPostprocessAllAssets(importedAssets:string[], deletedAssets:string[], movedAssets:string[], movedFromAssetPaths:string[]) : void
+    {static} - InitializeLatest(material:Material, id:ShaderID) : void
+    {static} - UpgradeV1(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV2(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV3(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV4(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV5(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV6(material:Material, shaderID:ShaderID) : void
+    {static} - UpgradeV7(material:Material, shaderID:ShaderID) : void
+}
+class LitUpdaterV1 {
+    + {static} UpdateLitDetails(material:Material) : void
+    + LitUpdaterV1(oldShaderName:string)
+}
+class UnlitUpdaterV1 {
+    {static} - bakedLit : Shader
+    + {static} UpgradeToUnlit(material:Material) : void
+    + UnlitUpdaterV1(oldShaderName:string)
+}
+class SimpleLitUpdaterV1 {
+    + SimpleLitUpdaterV1(oldShaderName:string)
+    + {static} UpgradeToSimpleLit(material:Material) : void
+}
+class ParticleUpdaterV1 {
+    + ParticleUpdaterV1(shaderName:string)
+}
+AssetModificationProcessor <|-- MaterialModificationProcessor
+Editor <|-- MaterialReimporter
+AssetPostprocessor <|-- MaterialPostprocessor
+MaterialUpgrader <|-- LitUpdaterV1
+MaterialUpgrader <|-- UnlitUpdaterV1
+MaterialUpgrader <|-- SimpleLitUpdaterV1
+MaterialUpgrader <|-- ParticleUpdaterV1
+@enduml

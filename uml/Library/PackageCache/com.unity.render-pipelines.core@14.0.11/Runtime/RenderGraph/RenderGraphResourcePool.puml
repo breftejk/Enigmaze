@@ -1,0 +1,34 @@
+@startuml
+abstract class IRenderGraphResourcePool {
+    + {abstract} PurgeUnusedResources(currentFrameIndex:int) : void
+    + {abstract} Cleanup() : void
+    + {abstract} CheckFrameAllocation(onException:bool, frameIndex:int) : void
+    + {abstract} LogResources(logger:RenderGraphLogger) : void
+}
+abstract class "RenderGraphResourcePool`1"<Type> {
+    # m_ResourcePool : Dictionary<int, SortedList<int, (Type resource, int frameIndex)>>
+    # m_RemoveList : List<int>
+    - m_FrameAllocatedResources : List<(int, Type)>
+    # {static} s_CurrentFrameIndex : int
+    <<const>> - kStaleResourceLifetime : int = 10
+    # {abstract} ReleaseInternalResource(res:Type) : void
+    # {abstract} GetResourceName(res:Type) : string
+    # {abstract} GetResourceSize(res:Type) : long
+    # {abstract} GetResourceTypeName() : string
+    # {abstract} GetSortIndex(res:Type) : int
+    + ReleaseResource(hash:int, resource:Type, currentFrameIndex:int) : void
+    + TryGetResource(hashCode:int, resource:Type) : bool
+    + <<override>> Cleanup() : void
+    + RegisterFrameAllocation(hash:int, value:Type) : void
+    + UnregisterFrameAllocation(hash:int, value:Type) : void
+    + <<override>> CheckFrameAllocation(onException:bool, frameIndex:int) : void
+    + <<override>> LogResources(logger:RenderGraphLogger) : void
+    {static} # ShouldReleaseResource(lastUsedFrameIndex:int, currentFrameIndex:int) : bool
+}
+struct ResourceLogInfo {
+    + name : string
+    + size : long
+}
+IRenderGraphResourcePool <|-- "RenderGraphResourcePool`1"
+"RenderGraphResourcePool`1" +-- ResourceLogInfo
+@enduml

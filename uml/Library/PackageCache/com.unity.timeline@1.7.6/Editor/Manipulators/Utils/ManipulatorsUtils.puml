@@ -1,0 +1,5 @@
+@startuml
+class ManipulatorsUtils <<static>> {
+    + {static} actionModifier : EventModifiers <<get>>
+}
+@enduml

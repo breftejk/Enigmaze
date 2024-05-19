@@ -1,0 +1,69 @@
+@startuml
+class InputActionTrace <<sealed>> {
+    + buffer : InputEventBuffer <<get>>
+    + count : int <<get>>
+    + InputActionTrace()
+    + InputActionTrace(action:InputAction)
+    + InputActionTrace(actionMap:InputActionMap)
+    + SubscribeToAll() : void
+    + UnsubscribeFromAll() : void
+    + SubscribeTo(action:InputAction) : void
+    + SubscribeTo(actionMap:InputActionMap) : void
+    + UnsubscribeFrom(action:InputAction) : void
+    + UnsubscribeFrom(actionMap:InputActionMap) : void
+    + <<unsafe>> RecordAction(context:InputAction.CallbackContext) : void
+    + Clear() : void
+    + <<override>> ToString() : string
+    + Dispose() : void
+    - DisposeInternal() : void
+    + GetEnumerator() : IEnumerator<ActionEventPtr>
+    - GetEnumerator() : IEnumerator
+    - m_SubscribedToAll : bool
+    - m_OnActionChangeHooked : bool
+    - m_SubscribedActions : InlinedArray<InputAction>
+    - m_SubscribedActionMaps : InlinedArray<InputActionMap>
+    - m_EventBuffer : InputEventBuffer
+    - m_ActionMapStates : InlinedArray<InputActionState>
+    - m_ActionMapStateClones : InlinedArray<InputActionState>
+    - m_CallbackDelegate : Action<InputAction.CallbackContext>
+    - m_ActionChangeDelegate : Action<object, InputActionChange>
+    - HookOnActionChange() : void
+    - UnhookOnActionChange() : void
+    - OnActionChange(actionOrMapOrAsset:object, change:InputActionChange) : void
+    - CloneActionStateBeforeBindingsChange(actionMap:InputActionMap) : void
+}
+struct ActionEventPtr {
+    <<internal>> m_State : InputActionState
+    <<internal>> m_Ptr : ActionEvent*
+    + action : InputAction <<get>>
+    + phase : InputActionPhase <<get>>
+    + control : InputControl <<get>>
+    + interaction : IInputInteraction <<get>>
+    + time : double <<get>>
+    + startTime : double <<get>>
+    + duration : double <<get>>
+    + valueSizeInBytes : int <<get>>
+    + ReadValueAsObject() : object
+    + ReadValue(buffer:void*, bufferSize:int) : void
+    + ReadValue() : TValue
+    + <<override>> ToString() : string
+}
+struct Enumerator {
+    - <<readonly>> m_Trace : InputActionTrace
+    - <<readonly>> m_Buffer : ActionEvent*
+    - <<readonly>> m_EventCount : int
+    - m_CurrentEvent : ActionEvent*
+    - m_CurrentIndex : int
+    + Enumerator(trace:InputActionTrace)
+    + MoveNext() : bool
+    + Reset() : void
+    + Dispose() : void
+    + Current : ActionEventPtr <<get>>
+    - Current : object <<get>>
+}
+"IEnumerable`1" "<InputActionTrace.ActionEventPtr>" <|-- InputActionTrace
+IDisposable <|-- InputActionTrace
+InputActionTrace +-- ActionEventPtr
+InputActionTrace +-- Enumerator
+"IEnumerator`1" "<ActionEventPtr>" <|-- Enumerator
+@enduml

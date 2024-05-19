@@ -1,0 +1,64 @@
+@startuml
+class MaterialNodeView <<sealed>> {
+    - m_PreviewRenderData : PreviewRenderData
+    - m_PreviewImage : Image
+    - m_TitleContainer : VisualElement
+    - m_PreviewContainer : VisualElement
+    - m_PreviewFiller : VisualElement
+    - m_ControlItems : VisualElement
+    - m_ControlsDivider : VisualElement
+    - m_DropdownItems : VisualElement
+    - m_DropdownsDivider : VisualElement
+    - m_UnregisterAll : Action
+    - m_ConnectorListener : IEdgeConnectorListener
+    - m_GraphView : MaterialGraphView
+    + inspectorTitle : string <<get>>
+    + Initialize(inNode:AbstractMaterialNode, previewManager:PreviewManager, connectorListener:IEdgeConnectorListener, graphView:MaterialGraphView) : void
+    + FindPort(slotRef:SlotReference, port:ShaderPort) : bool
+    + AttachMessage(errString:string, severity:ShaderCompilerMessageSeverity) : void
+    + SetActive(state:bool) : void
+    + ClearMessage() : void
+    + UpdateDropdownEntries() : void
+    + colorElement : VisualElement <<get>>
+    {static} <<readonly>> - noColor : StyleColor
+    + SetColor(color:Color) : void
+    + ResetColor() : void
+    + GetColor() : Color
+    - OnSubGraphDoubleClick(evt:MouseDownEvent) : void
+    + gvNode : Node <<get>>
+    + node : AbstractMaterialNode <<get>>
+    + <<override>> expanded : bool <<get>> <<set>>
+    + <<override>> BuildContextualMenu(evt:ContextualMenuPopulateEvent) : void
+    - CopyToClipboard(action:DropdownMenuAction) : void
+    + SanitizeName(name:string) : string
+    + ShowGeneratedCode(action:DropdownMenuAction) : void
+    - ConvertToShader(mode:GenerationMode) : string
+    - SetNodesAsDirty() : void
+    - UpdateNodeViews() : void
+    + GetObjectToInspect() : object
+    + SupplyDataToPropertyDrawer(propertyDrawer:IPropertyDrawer, inspectorUpdateDelegate:Action) : void
+    - SetSelfSelected() : void
+    # <<override>> ToggleCollapse() : void
+    - SetPreviewExpandedStateOnSelection(state:bool) : void
+    + CanToggleNodeExpanded() : bool
+    - UpdatePreviewExpandedState(expanded:bool) : void
+    - UpdateTitle() : void
+    - UpdateShaderPortsForSlots(inputSlots:bool, allSlots:List<MaterialSlot>, slotShaderPorts:ShaderPort[]) : void
+    + OnModified(scope:ModificationScope) : void
+    - AddShaderPortForSlot(slot:MaterialSlot) : ShaderPort
+    - AddSlots(slots:IEnumerable<MaterialSlot>) : void
+    - OnEdgeDisconnected(obj:Port) : void
+    {static} - GetPortInputView(port:ShaderPort, view:PortInputView) : bool
+    + UpdatePortInputTypes() : void
+    - UpdatePortInputView(port:ShaderPort) : void
+    - UpdatePortInputVisibility(portInputView:PortInputView, port:ShaderPort) : void
+    - SetElementVisible(element:VisualElement, isVisible:bool) : void
+    - GetAssociatedBlackboardRow() : SGBlackboardRow
+    - OnMouseHover(evt:EventBase) : void
+    - UpdatePreviewTexture() : void
+    + Dispose() : void
+}
+Node <|-- MaterialNodeView
+IShaderNodeView <|-- MaterialNodeView
+IInspectable <|-- MaterialNodeView
+@enduml

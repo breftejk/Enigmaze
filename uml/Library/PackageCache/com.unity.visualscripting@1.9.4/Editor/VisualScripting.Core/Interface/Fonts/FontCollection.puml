@@ -1,0 +1,7 @@
+@startuml
+class FontCollection {
+    + FontCollection(load:Func<FontVariant, Font>)
+    - <<readonly>> variants : Dictionary<FontVariant, Font>
+    - <<readonly>> load : Func<FontVariant, Font>
+}
+@enduml

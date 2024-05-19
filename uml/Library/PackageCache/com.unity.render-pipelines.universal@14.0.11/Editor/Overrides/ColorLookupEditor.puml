@@ -1,0 +1,9 @@
+@startuml
+class ColorLookupEditor <<sealed>> {
+    - m_Texture : SerializedDataParameter
+    - m_Contribution : SerializedDataParameter
+    + <<override>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+}
+VolumeComponentEditor <|-- ColorLookupEditor
+@enduml

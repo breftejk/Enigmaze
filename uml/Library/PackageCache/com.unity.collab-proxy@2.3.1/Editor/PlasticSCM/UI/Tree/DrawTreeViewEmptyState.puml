@@ -1,0 +1,12 @@
+@startuml
+class DrawTreeViewEmptyState <<static>> {
+    <<internal>> {static} For(rect:Rect, text:string) : void
+    <<internal>> {static} For(rect:Rect, text:string, icon:Texture2D) : void
+    <<internal>> {static} For(rect:Rect, text:string, icon:Texture2D, externalLink:ExternalLink) : void
+    {static} - DrawLabel(content:GUIContent, contentSize:Vector2, offsetX:float, offsetY:float) : void
+    {static} - DrawLabelWithIcon(content:GUIContent, contentSize:Vector2, offsetX:float, offsetY:float, icon:Texture2D) : void
+    {static} - DrawLink(externalLink:ExternalLink, linkContent:GUIContent, linkContentSize:Vector2, offsetX:float, offsetY:float) : void
+    {static} - GetContentSize(content:GUIContent) : Vector2
+    {static} - GetContentSize(content:GUIContent, guiStyle:GUIStyle) : Vector2
+}
+@enduml

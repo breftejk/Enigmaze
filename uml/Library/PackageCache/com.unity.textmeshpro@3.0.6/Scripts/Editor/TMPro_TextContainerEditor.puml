@@ -1,0 +1,16 @@
+@startuml
+class TMPro_TextContainerEditor {
+    - anchorPosition_prop : SerializedProperty
+    - pivot_prop : SerializedProperty
+    - rectangle_prop : SerializedProperty
+    - margins_prop : SerializedProperty
+    - m_textContainer : TextContainer
+    - OnEnable() : void
+    - OnDisable() : void
+    + <<override>> OnInspectorGUI() : void
+    - DrawDimensionProperty(property:SerializedProperty, label:string) : void
+    - DrawMaginProperty(property:SerializedProperty, label:string) : void
+    - GetAnchorPosition(index:int) : Vector2
+}
+Editor <|-- TMPro_TextContainerEditor
+@enduml

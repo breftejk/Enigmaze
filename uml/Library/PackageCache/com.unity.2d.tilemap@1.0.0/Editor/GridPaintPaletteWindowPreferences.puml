@@ -1,0 +1,27 @@
+@startuml
+class GridPaintPaletteWindowPreferences {
+    <<internal>> {static} CreateSettingsProvider() : SettingsProvider
+}
+class GridPaintActiveTargetsPreferences {
+    + {static} <<readonly>> targetSortingModeEditorPref : string = "TilePalette.ActiveTargetsSortingMode"
+    + {static} <<readonly>> targetSortingModeLookup : string = "Active Targets Sorting Mode"
+    + {static} <<readonly>> targetRestoreEditModeSelectionEditorPref : string = "TilePalette.RestoreEditModeSelection"
+    + {static} <<readonly>> targetRestoreEditModeSelectionLookup : string = "Restore Edit Mode Active Target"
+    + {static} <<readonly>> createTileFromPaletteEditorPref : string = "TilePalette.CreateTileFromPalette"
+    + {static} <<readonly>> createTileFromPaletteLookup : string = "Create Tile Method"
+    + {static} <<readonly>> defaultSortingMode : string
+    + {static} <<readonly>> targetSortingModeLabel : GUIContent
+    + {static} <<readonly>> targetRestoreEditModeSelectionLabel : GUIContent
+    + {static} <<readonly>> createTileFromPaletteLabel : GUIContent
+    + {static} restoreEditModeSelection : bool <<get>> <<set>>
+    - {static} s_SortingNames : string[]
+    - {static} s_SortingSelectionIndex : int
+    - {static} s_CreateTileNames : string[]
+    - {static} s_CreateTileIndex : int
+    - {static} CompareMethodName(methodNames:string[], method:MethodInfo) : bool
+    - {static} CompareTypeName(typeFullName:string, type:Type) : bool
+    <<internal>> {static} PreferencesGUI() : void
+    + {static} GetTargetComparer() : IComparer<GameObject>
+    + {static} GetCreateTileFromPaletteUsingPreferences() : MethodInfo
+}
+@enduml

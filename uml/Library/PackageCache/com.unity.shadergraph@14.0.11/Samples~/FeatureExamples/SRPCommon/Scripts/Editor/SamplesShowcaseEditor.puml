@@ -1,0 +1,30 @@
+@startuml
+class SamplesShowcaseEditor {
+    - {static} <<readonly>> UXMLPath : string = "SamplesSelectionUXML"
+    + {static} <<readonly>> supportedExtensions : string[]
+    - currentIndex : SerializedProperty
+    - headlineColor : Color
+    - openColor : Color
+    - highlightColor : Color
+    - codeColor : Color
+    - dropdownField : DropdownField
+    - choices : List<string>
+    - indexSelected : int
+    - requiredSettingsBox : VisualElement
+    - requiredSettingsVE : Dictionary<RequiredSettingBase, VisualElement>
+    - OnEnable() : void
+    - OnDisable() : void
+    + UpdateSamplesInspector() : void
+    + <<override>> CreateInspectorGUI() : VisualElement
+    - LinkOnPointerUp(evt:PointerUpLinkTagEvent) : void
+    - LinkOnPointerOver(evt:PointerOverLinkTagEvent) : void
+    - LinkOnPointerOut(evt:PointerOutLinkTagEvent) : void
+    - UpdateRequiredSettingsDisplay() : void
+    - GoToSample(self:SamplesShowcase, root:VisualElement, index:int, sampleJsonObject:Samples) : void
+    - CreateMarkdown(element:VisualElement, text:string) : string
+    + {static} IsLinkFile(linkID:string) : bool
+    - {static} GetAssetFinalPath(filename:string) : string
+    - {static} Ping(gameObjectName:string) : void
+}
+Editor <|-- SamplesShowcaseEditor
+@enduml

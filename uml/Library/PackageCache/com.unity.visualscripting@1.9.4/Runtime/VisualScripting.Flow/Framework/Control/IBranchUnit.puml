@@ -1,0 +1,6 @@
+@startuml
+interface IBranchUnit {
+    enter : ControlInput <<get>>
+}
+IUnit <|-- IBranchUnit
+@enduml

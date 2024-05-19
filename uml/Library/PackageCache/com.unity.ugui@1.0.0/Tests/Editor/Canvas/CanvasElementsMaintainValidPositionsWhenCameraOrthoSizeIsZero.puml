@@ -1,0 +1,10 @@
+@startuml
+class CanvasElementsMaintainValidPositionsWhenCameraOrthoSizeIsZero {
+    - image : GameObject
+    - canvas : GameObject
+    - camera : GameObject
+    + TestSetup() : void
+    + TearDown() : void
+    + TestCanvasElementsMaintainValidPositionsWhenCameraOrthoSizeIsZero() : IEnumerator
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class FieldCondition {
+    + field : FieldDescriptor <<get>>
+    + condition : bool <<get>>
+    + FieldCondition(field:FieldDescriptor, condition:bool)
+}
+@enduml

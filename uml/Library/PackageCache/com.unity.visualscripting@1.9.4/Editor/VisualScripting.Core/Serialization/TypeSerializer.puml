@@ -1,0 +1,15 @@
+@startuml
+class TypeSerializer <<static>> {
+    {static} - s_GenericTypeExtractionRegex : System.Text.RegularExpressions.Regex
+    {static} - s_MovedFromTypes : Dictionary<string, Type>
+    {static} - movedFromTypes : Dictionary<string, Type> <<get>>
+    {static} - GetFullNameNoNamespace(typeName:string, nameSpace:string) : string
+    {static} - Serialize(t:Type) : string
+    {static} - Deserialize(serializedType:string) : Type
+    {static} - GetTypeFromName(assemblyQualifiedName:string) : Type
+    {static} - ExtractAssemblyQualifiedName(fullTypeName:string, isList:bool) : string
+    + {static} ResolveType(th:SerializableType) : Type
+    + {static} GenerateTypeHandle() : SerializableType
+    + {static} GenerateTypeHandle(t:Type) : SerializableType
+}
+@enduml

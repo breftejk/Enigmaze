@@ -1,0 +1,6 @@
+@startuml
+class NewRendererFeatureDropdownItem <<static>> {
+    {static} <<readonly>> - defaultNewClassName : string = "CustomRenderPassFeature.cs"
+    <<internal>> {static} CreateNewRendererFeature() : void
+}
+@enduml

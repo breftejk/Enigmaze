@@ -1,0 +1,93 @@
+@startuml
+class AdditionalLightsShadowCasterPass <<partial>> {
+    <<readonly>> {static} - c_DefaultShadowParams : Vector4
+    {static} - m_AdditionalLightsWorldToShadow_SSBO : int
+    {static} - m_AdditionalShadowParams_SSBO : int
+    - m_UseStructuredBuffer : bool
+    <<const>> - k_ShadowmapBufferBits : int = 16
+    - m_AdditionalLightsShadowmapID : int
+    <<internal>> m_AdditionalLightsShadowmapHandle : RTHandle
+    - m_CreateEmptyShadowmap : bool
+    - m_EmptyAdditionalLightShadowmapTexture : RTHandle
+    - <<const>> k_EmptyShadowMapDimensions : int = 1
+    - <<const>> k_EmptyShadowMapName : string = "_EmptyAdditionalLightShadowmapTexture"
+    <<internal>> {static} s_EmptyAdditionalLightIndexToShadowParams : Vector4[] = null
+    - m_MaxShadowDistanceSq : float
+    - m_CascadeBorder : float
+    - m_AdditionalLightsShadowSlices : ShadowSliceData[] = null
+    - m_VisibleLightIndexToAdditionalLightIndex : int[] = null
+    - m_AdditionalLightIndexToVisibleLightIndex : int[] = null
+    - m_ShadowSliceToAdditionalLightIndex : List<int>
+    - m_GlobalShadowSliceIndexToPerLightShadowSliceIndex : List<int>
+    - m_AdditionalLightIndexToShadowParams : Vector4[] = null
+    - m_AdditionalLightShadowSliceIndexTo_WorldShadowMatrix : Matrix4x4[] = null
+    - m_ShadowResolutionRequests : List<ShadowResolutionRequest>
+    - m_VisibleLightIndexToCameraSquareDistance : float[] = null
+    - m_SortedShadowResolutionRequests : ShadowResolutionRequest[] = null
+    - m_VisibleLightIndexToSortedShadowResolutionRequestsFirstSliceIndex : int[] = null
+    - m_UnusedAtlasSquareAreas : List<RectInt>
+    - renderTargetWidth : int
+    - renderTargetHeight : int
+    - m_ProfilingSetupSampler : ProfilingSampler
+    + AdditionalLightsShadowCasterPass(evt:RenderPassEvent)
+    + Dispose() : void
+    - GetPunctualLightShadowSlicesCount(lightType:LightType) : int
+    - <<const>> LightTypeIdentifierInShadowParams_Spot : float = 0
+    - <<const>> LightTypeIdentifierInShadowParams_Point : float = 1
+    <<internal>> {static} CalcGuardAngle(frustumAngleInDegrees:float, guardBandSizeInTexels:float, sliceResolutionInTexels:float) : float
+    - <<const>> kMinimumPunctualLightHardShadowResolution : int = 8
+    - <<const>> kMinimumPunctualLightSoftShadowResolution : int = 16
+    - MinimalPunctualLightShadowResolution(softShadow:bool) : int
+    <<internal>> {static} GetPointLightShadowFrustumFovBiasInDegrees(shadowSliceResolution:int, shadowFiltering:bool) : float
+    <<internal>> InsertionSort(array:ShadowResolutionRequest[], startIndex:int, lastIndex:int) : void
+    - EstimateScaleFactorNeededToFitAllShadowsInAtlas(shadowResolutionRequests:ShadowResolutionRequest[], endIndex:int, atlasWidth:int) : int
+    - AtlasLayout(atlasSize:int, totalShadowSlicesCount:int, estimatedScaleFactor:int) : void
+    - m_ShadowRequestsHashes : Dictionary<int, ulong>
+    - ResolutionLog2ForHash(resolution:int) : ulong
+    - ComputeShadowRequestHash(renderingData:RenderingData) : ulong
+    + Setup(renderingData:RenderingData) : bool
+    - SetupForEmptyRendering(renderingData:RenderingData) : bool
+    + <<override>> Configure(cmd:CommandBuffer, cameraTextureDescriptor:RenderTextureDescriptor) : void
+    + <<override>> Execute(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    + GetShadowLightIndexFromLightIndex(visibleLightIndex:int) : int
+    - Clear() : void
+    - SetEmptyAdditionalShadowmapAtlas(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    <<internal>> {static} SetEmptyAdditionalLightShadowParams(cmd:CommandBuffer, lightIndexToShadowParams:Vector4[]) : void
+    - RenderAdditionalShadowmapAtlas(context:ScriptableRenderContext, renderingData:RenderingData) : void
+    - SetupAdditionalLightsShadowReceiverConstants(cmd:CommandBuffer, softShadows:bool) : void
+    - IsValidShadowCastingLight(lightData:LightData, i:int) : bool
+    <<internal>> Render(graph:RenderGraph, renderingData:RenderingData) : TextureHandle
+    - InitPassData(passData:PassData, renderingData:RenderingData, graph:RenderGraph) : void
+}
+class AdditionalShadowsConstantBuffer <<static>> {
+    + {static} _AdditionalLightsWorldToShadow : int
+    + {static} _AdditionalShadowParams : int
+    + {static} _AdditionalShadowOffset0 : int
+    + {static} _AdditionalShadowOffset1 : int
+    + {static} _AdditionalShadowFadeParams : int
+    + {static} _AdditionalShadowmapSize : int
+}
+struct ShadowResolutionRequest {
+    + visibleLightIndex : int
+    + perLightShadowSliceIndex : int
+    + requestedResolution : int
+    + softShadow : bool
+    + pointLightShadow : bool
+    + offsetX : int
+    + offsetY : int
+    + allocatedResolution : int
+    + ShadowResolutionRequest(_visibleLightIndex:int, _perLightShadowSliceIndex:int, _requestedResolution:int, _softShadow:bool, _pointLightShadow:bool)
+}
+class PassData {
+    <<internal>> pass : AdditionalLightsShadowCasterPass
+    <<internal>> graph : RenderGraph
+    <<internal>> shadowmapTexture : TextureHandle
+    <<internal>> renderingData : RenderingData
+    <<internal>> shadowmapID : int
+    <<internal>> emptyShadowmap : bool
+}
+ScriptableRenderPass <|-- AdditionalLightsShadowCasterPass
+AdditionalLightsShadowCasterPass +-- AdditionalShadowsConstantBuffer
+AdditionalLightsShadowCasterPass +-- ShadowResolutionRequest
+AdditionalLightsShadowCasterPass +-- PassData
+@enduml

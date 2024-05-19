@@ -1,0 +1,6 @@
+@startuml
+class ShortInspector {
+    + ShortInspector(metadata:Metadata)
+}
+"DiscreteNumberInspector`1" "<short>" <|-- ShortInspector
+@enduml

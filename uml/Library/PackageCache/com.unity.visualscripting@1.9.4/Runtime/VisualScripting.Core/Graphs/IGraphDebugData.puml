@@ -1,0 +1,7 @@
+@startuml
+interface IGraphDebugData {
+    GetOrCreateElementData(element:IGraphElementWithDebugData) : IGraphElementDebugData
+    GetOrCreateChildGraphData(element:IGraphParentElement) : IGraphDebugData
+    elementsData : IEnumerable<IGraphElementDebugData> <<get>>
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+interface IMayRequireMeshUV {
+    RequiresMeshUV(channel:UVChannel, stageCapability:ShaderStageCapability) : bool
+}
+class MayRequireMeshUVExtensions <<static>> {
+    + {static} RequiresMeshUV(slot:MaterialSlot, channel:UVChannel) : bool
+}
+@enduml

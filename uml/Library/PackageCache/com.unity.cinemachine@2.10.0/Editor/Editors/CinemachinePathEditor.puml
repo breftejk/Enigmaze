@@ -1,0 +1,31 @@
+@startuml
+class CinemachinePathEditor <<sealed>> {
+    + {static} kPreferTangentSelectionKey : string = "CinemachinePathEditor.PreferTangentSelection"
+    + {static} PreferTangentSelection : bool <<get>> <<set>>
+    - mWaypointList : ReorderableList
+    {static} - mWaypointsExpanded : bool
+    - mPreferTangentSelection : bool
+    # <<override>> GetExcludedPropertiesInInspector(excluded:List<string>) : void
+    - OnEnable() : void
+    + HasFrameBounds() : bool
+    + OnGetFrameBounds() : Bounds
+    + <<override>> OnInspectorGUI() : void
+    - SetupWaypointList() : void
+    - DrawWaypointEditor(rect:Rect, index:int) : void
+    - InsertWaypointAtIndex(indexA:int) : void
+    - OnSceneGUI() : void
+    - DrawSelectionHandle(i:int, localToWorld:Matrix4x4) : void
+    - DrawTangentControl(i:int, localToWorld:Matrix4x4, localRotation:Quaternion) : void
+    - DrawPositionControl(i:int, localToWorld:Matrix4x4, localRotation:Quaternion) : void
+    {static} - DrawGizmos(path:CinemachinePath, selectionType:GizmoType) : void
+    {static} - RollAroundForward(angle:float) : Quaternion
+    {static} - s_BezierWeightsCache : Vector4[]
+    {static} - LocalSpaceSamplePath(pathBase:CinemachinePathBase, samplesPerSegment:int, positions:Vector3[], rotations:Quaternion[]) : int
+    {static} - s_PositionsCache : Vector3[]
+    {static} - s_RotationsCache : Quaternion[]
+    {static} - EnsureArraySize(array:ElementType[], requiredSize:int) : ElementType[]
+    + {static} DrawPathGizmo(path:CinemachinePathBase, pathColor:Color, isActive:bool, batchSampler:BatchSamplerDelegate) : void
+    {static} - DefaultBatchSampler(path:CinemachinePathBase, samplesPerSegment:int, positions:Vector3[], rotations:Quaternion[]) : int
+}
+"BaseEditor`1" "<CinemachinePath>" <|-- CinemachinePathEditor
+@enduml

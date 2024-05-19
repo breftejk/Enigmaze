@@ -1,0 +1,8 @@
+@startuml
+class PowerNode {
+    + PowerNode()
+    # <<override>> GetFunctionToConvert() : MethodInfo
+    {static} - Unity_Power(A:DynamicDimensionVector, B:DynamicDimensionVector, Out:DynamicDimensionVector) : string
+}
+CodeFunctionNode <|-- PowerNode
+@enduml

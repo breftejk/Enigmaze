@@ -1,0 +1,10 @@
+@startuml
+class NestedCanvasMaintainsCorrectSize {
+    - m_BridgeComponent : BridgeScriptForRetainingObjects
+    + Setup() : void
+    + TestSetup() : void
+    + NestedCanvasMaintainsCorrectSizeAtGameStart() : void
+    + TearDown() : void
+}
+IPrebuildSetup <|-- NestedCanvasMaintainsCorrectSize
+@enduml

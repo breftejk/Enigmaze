@@ -1,0 +1,12 @@
+@startuml
+class InspectorUtility {
+    + {static} MultiPropertyOnLine(rect:Rect, label:GUIContent, props:SerializedProperty[], subLabels:GUIContent[]) : void
+    + {static} NormalizeCurve(curve:AnimationCurve) : AnimationCurve
+    + {static} NicifyClassName(name:string) : string
+    + {static} AddAssetsFromPackageSubDirectory(type:Type, assets:List<ScriptableObject>, path:string) : void
+    + {static} CreateGameObject(name:string, types:Type[]) : GameObject
+    - {static} m_lastRepaintFrame : int
+    + {static} RepaintGameView(unused:UnityEngine.Object) : void
+    <<internal>> {static} GetVirtualCameraObjectName(property:SerializedProperty) : string
+}
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+class SpeedTree8MaterialUpgrader {
+    - {static} WindQualityString : string[]
+    + {static} DoesMaterialHaveSpeedTreeWindKeyword(material:Material) : bool
+    + {static} IsWindEnabled(material:Material) : bool
+    - {static} HasWindEnabledKeyword(material:Material) : bool
+    - {static} HasWindQualityPropertyEnabled(material:Material) : bool
+    + SpeedTree8MaterialUpgrader(sourceShaderName:string, destShaderName:string, finalizer:MaterialFinalizer)
+    + {static} PostprocessSpeedTree8Materials(speedtree:GameObject, stImporter:SpeedTreeImporter, finalizer:MaterialFinalizer) : void
+    + {static} SpeedTree8MaterialFinalizer(material:Material) : void
+    - {static} UpgradeWindQuality(material:Material, windQuality:int) : void
+    - {static} GetWindQuality(material:Material, windQuality:int) : int
+    - {static} ClearWindKeywords(material:Material) : void
+    - {static} SetWindQuality(material:Material, windQuality:int) : void
+    - {static} GetWindQualityFromKeywords(matKws:string[]) : int
+    - {static} WindIntValid(windInt:int) : bool
+}
+enum WindQuality {
+    None= 0,
+    Fastest,
+    Fast,
+    Better,
+    Best,
+    Palm,
+    Count,
+}
+class Uniforms <<static>> {
+    <<internal>> {static} _WINDQUALITY : int
+    <<internal>> {static} EFFECT_BILLBOARD : int
+    <<internal>> {static} EFFECT_EXTRA_TEX : int
+    <<internal>> {static} _TwoSided : int
+    <<internal>> {static} _WindQuality : int
+}
+MaterialUpgrader <|-- SpeedTree8MaterialUpgrader
+SpeedTree8MaterialUpgrader +-- WindQuality
+SpeedTree8MaterialUpgrader +-- Uniforms
+@enduml

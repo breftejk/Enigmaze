@@ -1,0 +1,11 @@
+@startuml
+class DropdownOptionsListDrawer {
+    + PropertyDrawerDoesNotThrowExceptionWhenObjectIsDisposed() : IEnumerator
+}
+class Fixture {
+    + options : Dropdown.OptionDataList
+}
+WrapperWindowFixture <|-- DropdownOptionsListDrawer
+DropdownOptionsListDrawer +-- Fixture
+MonoBehaviour <|-- Fixture
+@enduml

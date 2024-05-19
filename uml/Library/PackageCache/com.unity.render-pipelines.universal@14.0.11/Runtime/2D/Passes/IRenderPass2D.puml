@@ -1,0 +1,5 @@
+@startuml
+interface IRenderPass2D {
+    rendererData : Renderer2DData <<get>>
+}
+@enduml

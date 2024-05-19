@@ -1,0 +1,10 @@
+@startuml
+class NodeSettingsView {
+    - m_ContentContainer : VisualElement
+    + NodeSettingsView()
+    - OnMouseUp(evt:MouseUpEvent) : void
+    - OnMouseDown(evt:MouseDownEvent) : void
+    + <<override>> contentContainer : VisualElement <<get>>
+}
+VisualElement <|-- NodeSettingsView
+@enduml

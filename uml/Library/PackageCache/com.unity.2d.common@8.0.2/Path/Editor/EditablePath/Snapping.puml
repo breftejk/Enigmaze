@@ -1,0 +1,7 @@
+@startuml
+class Snapping {
+    + Snap(position:Vector3) : Vector3
+    - Snap(value:float, snap:float) : float
+}
+"ISnapping`1" "<Vector3>" <|-- Snapping
+@enduml

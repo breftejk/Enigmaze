@@ -1,0 +1,14 @@
+@startuml
+class AspectRatioFitterEditor {
+    - m_AspectMode : SerializedProperty
+    - m_AspectRatio : SerializedProperty
+    - m_ModeBool : AnimBool
+    - aspectRatioFitter : AspectRatioFitter
+    # <<virtual>> OnEnable() : void
+    + <<override>> OnInspectorGUI() : void
+    # <<virtual>> OnDisable() : void
+    - {static} ShowNoParentWarning() : void
+    - {static} ShowCanvasRenderModeInvalidWarning() : void
+}
+SelfControllerEditor <|-- AspectRatioFitterEditor
+@enduml

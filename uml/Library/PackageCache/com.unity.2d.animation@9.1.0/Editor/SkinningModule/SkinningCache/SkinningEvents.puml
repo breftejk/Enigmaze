@@ -1,0 +1,134 @@
+@startuml
+class SkinningEvents {
+    - m_SelectedSpriteChanged : SpriteEvent
+    - m_SkeletonPreviewPoseChanged : SkeletonEvent
+    - m_SkeletonBindPoseChanged : SkeletonEvent
+    - m_SkeletonTopologyChanged : SkeletonEvent
+    - m_MeshChanged : MeshEvent
+    - m_MeshPreviewChanged : MeshPreviewEvent
+    - m_SkinningModuleModeChanged : SkinningModuleModeEvent
+    - m_BoneSelectionChangedEvent : BoneSelectionEvent
+    - m_BoneNameChangedEvent : BoneEvent
+    - m_BoneDepthChangedEvent : BoneEvent
+    - m_BoneColorChangedEvent : BoneEvent
+    - m_CharacterPartChanged : CharacterPartEvent
+    - m_ToolChanged : ToolChangeEvent
+    - m_RestoreBindPose : RestoreBindPoseEvent
+    - m_CopyEvent : CopyEvent
+    - m_PasteEvent : PasteEvent
+    - m_ShortcutEvent : ShortcutEvent
+    - m_BoneVisibilityEvent : BoneVisibilityEvent
+    - m_MeshPreviewBehaviourChange : MeshPreviewBehaviourChangeEvent
+    - m_PivotChanged : UnityEvent
+    + <<virtual>> selectedSpriteChanged : SpriteEvent <<get>>
+    + <<virtual>> skeletonPreviewPoseChanged : SkeletonEvent <<get>>
+    + <<virtual>> skeletonBindPoseChanged : SkeletonEvent <<get>>
+    + <<virtual>> skeletonTopologyChanged : SkeletonEvent <<get>>
+    + <<virtual>> meshChanged : MeshEvent <<get>>
+    + <<virtual>> meshPreviewChanged : MeshPreviewEvent <<get>>
+    + <<virtual>> skinningModeChanged : SkinningModuleModeEvent <<get>>
+    + <<virtual>> boneSelectionChanged : BoneSelectionEvent <<get>>
+    + <<virtual>> boneNameChanged : BoneEvent <<get>>
+    + <<virtual>> boneDepthChanged : BoneEvent <<get>>
+    + <<virtual>> boneColorChanged : BoneEvent <<get>>
+    + <<virtual>> characterPartChanged : CharacterPartEvent <<get>>
+    + <<virtual>> toolChanged : ToolChangeEvent <<get>>
+    + <<virtual>> restoreBindPose : RestoreBindPoseEvent <<get>>
+    + <<virtual>> copy : CopyEvent <<get>>
+    + <<virtual>> paste : PasteEvent <<get>>
+    + <<virtual>> shortcut : ShortcutEvent <<get>>
+    + <<virtual>> boneVisibility : BoneVisibilityEvent <<get>>
+    + <<virtual>> meshPreviewBehaviourChange : MeshPreviewBehaviourChangeEvent <<get>>
+    + <<virtual>> pivotChange : UnityEvent <<get>>
+}
+class SpriteEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<SpriteCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<SpriteCache>) : void
+}
+class SkeletonEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<SkeletonCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<SkeletonCache>) : void
+}
+class MeshEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<MeshCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<MeshCache>) : void
+}
+class MeshPreviewEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<MeshPreviewCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<MeshPreviewCache>) : void
+}
+class SkinningModuleModeEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<SkinningMode>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<SkinningMode>) : void
+}
+class BoneSelectionEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction) : void
+}
+class BoneEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<BoneCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<BoneCache>) : void
+}
+class CharacterPartEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<CharacterPartCache>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<CharacterPartCache>) : void
+}
+class ToolChangeEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<ITool>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<ITool>) : void
+}
+class RestoreBindPoseEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction) : void
+}
+class CopyEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction) : void
+}
+class PasteEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<bool, bool, bool, bool>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<bool, bool, bool, bool>) : void
+}
+class ShortcutEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<string>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<string>) : void
+}
+class BoneVisibilityEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<string>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<string>) : void
+}
+class MeshPreviewBehaviourChangeEvent {
+    + <<new>> <<virtual>> AddListener(listener:UnityAction<IMeshPreviewBehaviour>) : void
+    + <<new>> <<virtual>> RemoveListener(listener:UnityAction<IMeshPreviewBehaviour>) : void
+}
+SkinningEvents +-- SpriteEvent
+"UnityEvent`1" "<SpriteCache>" <|-- SpriteEvent
+SkinningEvents +-- SkeletonEvent
+"UnityEvent`1" "<SkeletonCache>" <|-- SkeletonEvent
+SkinningEvents +-- MeshEvent
+"UnityEvent`1" "<MeshCache>" <|-- MeshEvent
+SkinningEvents +-- MeshPreviewEvent
+"UnityEvent`1" "<MeshPreviewCache>" <|-- MeshPreviewEvent
+SkinningEvents +-- SkinningModuleModeEvent
+"UnityEvent`1" "<SkinningMode>" <|-- SkinningModuleModeEvent
+SkinningEvents +-- BoneSelectionEvent
+UnityEvent <|-- BoneSelectionEvent
+SkinningEvents +-- BoneEvent
+"UnityEvent`1" "<BoneCache>" <|-- BoneEvent
+SkinningEvents +-- CharacterPartEvent
+"UnityEvent`1" "<CharacterPartCache>" <|-- CharacterPartEvent
+SkinningEvents +-- ToolChangeEvent
+"UnityEvent`1" "<ITool>" <|-- ToolChangeEvent
+SkinningEvents +-- RestoreBindPoseEvent
+UnityEvent <|-- RestoreBindPoseEvent
+SkinningEvents +-- CopyEvent
+UnityEvent <|-- CopyEvent
+SkinningEvents +-- PasteEvent
+"UnityEvent`4" "<bool,bool,bool,bool>" <|-- PasteEvent
+SkinningEvents +-- ShortcutEvent
+"UnityEvent`1" "<string>" <|-- ShortcutEvent
+SkinningEvents +-- BoneVisibilityEvent
+"UnityEvent`1" "<string>" <|-- BoneVisibilityEvent
+SkinningEvents +-- MeshPreviewBehaviourChangeEvent
+"UnityEvent`1" "<IMeshPreviewBehaviour>" <|-- MeshPreviewBehaviourChangeEvent
+@enduml

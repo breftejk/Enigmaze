@@ -1,0 +1,9 @@
+@startuml
+class SpriteLibraryUtility <<static>> {
+    <<internal>> {static} GetStringHash : Func<string, int>
+    <<internal>> {static} Convert32BitTo30BitHash(input:int) : int
+    {static} - Bit30Hash_GetStringHash(value:string) : int
+    {static} - PreserveFirst30Bits(input:int) : int
+    <<internal>> {static} GenerateHash() : long
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class MemberOption <<sealed>> {
+    + MemberOption(member:Member)
+    + MemberOption(member:Member, direction:ActionDirection, expectingBoolean:bool)
+    - {static} MemberNameWithTargetType(member:Member, direction:ActionDirection, expectingBoolean:bool) : string
+    + {static} Haystack(member:Member, direction:ActionDirection, expectingBoolean:bool) : string
+    + {static} SearchResultLabel(member:Member, query:string, direction:ActionDirection, expectingBoolean:bool) : string
+}
+"DocumentedOption`1" "<Member>" <|-- MemberOption
+@enduml

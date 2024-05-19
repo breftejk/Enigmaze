@@ -1,0 +1,14 @@
+@startuml
+class VolumeStack <<sealed>> {
+    <<internal>> <<readonly>> components : Dictionary<Type, VolumeComponent>
+    <<internal>> defaultParameters : (VolumeParameter parameter, VolumeParameter defaultValue)[]
+    <<internal>> requiresReset : bool = true
+    <<internal>> VolumeStack()
+    <<internal>> Clear() : void
+    <<internal>> Reload(componentDefaultStates:List<VolumeComponent>) : void
+    + GetComponent() : T
+    + GetComponent(type:Type) : VolumeComponent
+    + Dispose() : void
+}
+IDisposable <|-- VolumeStack
+@enduml

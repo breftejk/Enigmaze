@@ -1,0 +1,30 @@
+@startuml
+class UniversalRenderPipelineCameraUI <<static>> <<partial>> {
+}
+class Rendering <<partial>> {
+    {static} - s_PostProcessingWarningShown : bool = false
+    {static} <<readonly>> - PostProcessingWarningInit : CED.IDrawer
+    - {static} <<readonly>> PostProcessingWarningDrawer : CED.IDrawer
+    - {static} <<readonly>> PostProcessingAAWarningDrawer : CED.IDrawer
+    - {static} <<readonly>> DisabledPostProcessingAAWarningDrawer : CED.IDrawer
+    - {static} <<readonly>> PostProcessingStopNaNsWarningDrawer : CED.IDrawer
+    - {static} <<readonly>> PostProcessingDitheringWarningDrawer : CED.IDrawer
+    {static} <<readonly>> - BaseCameraRenderTypeDrawer : CED.IDrawer
+    {static} <<readonly>> - OverlayCameraRenderTypeDrawer : CED.IDrawer
+    + {static} <<readonly>> Drawer : CED.IDrawer
+    {static} - Rendering()
+    + {static} <<readonly>> DrawerPreset : CED.IDrawer
+    {static} - DrawerRenderingRenderer(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - IsAnyRendererHasPostProcessingEnabled(p:UniversalRenderPipelineSerializedCamera, rpAsset:UniversalRenderPipelineAsset) : bool
+    {static} - DrawerRenderingAntialiasing(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingClearDepth(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingRenderShadows(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingSMAAQuality(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingTAAQuality(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingRenderPostProcessing(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingPriority(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingDepthTexture(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+    {static} - DrawerRenderingOpaqueTexture(p:UniversalRenderPipelineSerializedCamera, owner:Editor) : void
+}
+UniversalRenderPipelineCameraUI +-- Rendering
+@enduml

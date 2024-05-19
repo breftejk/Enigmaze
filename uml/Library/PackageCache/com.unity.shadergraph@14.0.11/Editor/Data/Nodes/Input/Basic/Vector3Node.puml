@@ -1,0 +1,21 @@
+@startuml
+class Vector3Node {
+    - m_Value : Vector3
+    <<const>> - kInputSlotXName : string = "X"
+    <<const>> - kInputSlotYName : string = "Y"
+    <<const>> - kInputSlotZName : string = "Z"
+    <<const>> - kOutputSlotName : string = "Out"
+    + <<const>> OutputSlotId : int = 0
+    + <<const>> InputSlotXId : int = 1
+    + <<const>> InputSlotYId : int = 2
+    + <<const>> InputSlotZId : int = 3
+    + Vector3Node()
+    + <<sealed>> <<override>> UpdateNodeAfterDeserialization() : void
+    + GenerateNodeCode(sb:ShaderStringBuilder, generationMode:GenerationMode) : void
+    + AsShaderProperty() : AbstractShaderProperty
+    + outputSlotId : int <<get>>
+}
+AbstractMaterialNode <|-- Vector3Node
+IGeneratesBodyCode <|-- Vector3Node
+IPropertyFromNode <|-- Vector3Node
+@enduml

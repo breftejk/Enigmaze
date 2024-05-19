@@ -1,0 +1,76 @@
+@startuml
+struct NativeQueueBlockHeader {
+    + m_NextBlock : NativeQueueBlockHeader*
+    + m_NumItems : int
+}
+struct NativeQueueBlockPoolData {
+    <<internal>> m_FirstBlock : IntPtr
+    <<internal>> m_NumBlocks : int
+    <<internal>> m_MaxBlocks : int
+    <<internal>> <<const>> m_BlockSize : int
+    <<internal>> m_AllocLock : int
+    + AllocateBlock() : NativeQueueBlockHeader*
+    + FreeBlock(block:NativeQueueBlockHeader*) : void
+}
+class NativeQueueBlockPool <<unsafe>> {
+    {static} <<readonly>> - Data : SharedStatic<IntPtr>
+    <<internal>> {static} GetQueueBlockPool() : NativeQueueBlockPoolData*
+    {static} - AppDomainOnDomainUnload() : void
+    {static} - OnDomainUnload(sender:object, e:EventArgs) : void
+}
+struct NativeQueueData {
+    + m_FirstBlock : IntPtr
+    + m_LastBlock : IntPtr
+    + m_MaxItems : int
+    + m_CurrentRead : int
+    + m_CurrentWriteBlockTLS : byte*
+    <<internal>> GetCurrentWriteBlockTLS(threadIndex:int) : NativeQueueBlockHeader*
+    <<internal>> SetCurrentWriteBlockTLS(threadIndex:int, currentWriteBlock:NativeQueueBlockHeader*) : void
+    + {static} AllocateWriteBlockMT(data:NativeQueueData*, pool:NativeQueueBlockPoolData*, threadIndex:int) : NativeQueueBlockHeader*
+    + <<unsafe>> {static} AllocateQueue(label:AllocatorManager.AllocatorHandle, outBuf:NativeQueueData*) : void
+    + <<unsafe>> {static} DeallocateQueue(data:NativeQueueData*, pool:NativeQueueBlockPoolData*, allocation:AllocatorManager.AllocatorHandle) : void
+}
+struct "NativeQueue`1"<T> {
+    - m_Buffer : NativeQueueData*
+    - m_QueuePool : NativeQueueBlockPoolData*
+    - m_AllocatorLabel : AllocatorManager.AllocatorHandle
+    + NativeQueue(allocator:AllocatorManager.AllocatorHandle)
+    + IsEmpty() : bool
+    + Count : int <<get>>
+    <<internal>> {static} PersistentMemoryBlockCount : int <<get>> <<set>>
+    <<internal>> {static} MemoryBlockSize : int <<get>>
+    + Peek() : T
+    + Enqueue(value:T) : void
+    + Dequeue() : T
+    + TryDequeue(item:T) : bool
+    + ToArray(allocator:AllocatorManager.AllocatorHandle) : NativeArray<T>
+    + Clear() : void
+    + IsCreated : bool <<get>>
+    + Dispose() : void
+    + Dispose(inputDeps:JobHandle) : JobHandle
+    + AsParallelWriter() : ParallelWriter
+    - CheckRead() : void
+    - CheckReadNotEmpty() : void
+    - CheckWrite() : void
+    {static} - ThrowEmpty() : void
+}
+struct NativeQueueDispose {
+    <<internal>> m_Buffer : NativeQueueData*
+    <<internal>> m_QueuePool : NativeQueueBlockPoolData*
+    <<internal>> m_AllocatorLabel : AllocatorManager.AllocatorHandle
+    + Dispose() : void
+}
+struct NativeQueueDisposeJob {
+    + Data : NativeQueueDispose
+    + Execute() : void
+}
+struct ParallelWriter {
+    <<internal>> m_Buffer : NativeQueueData*
+    <<internal>> m_QueuePool : NativeQueueBlockPoolData*
+    <<internal>> m_ThreadIndex : int
+    + Enqueue(value:T) : void
+}
+INativeDisposable <|-- "NativeQueue`1"
+IJob <|-- NativeQueueDisposeJob
+"NativeQueue`1" +-- ParallelWriter
+@enduml

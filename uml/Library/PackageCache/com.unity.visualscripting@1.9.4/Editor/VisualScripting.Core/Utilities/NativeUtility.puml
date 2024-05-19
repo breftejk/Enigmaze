@@ -1,0 +1,19 @@
+@startuml
+class NativeUtility <<static>> {
+    - {static} <<extern>> FreeLibrary(handle:IntPtr) : bool
+    - {static} <<extern>> LoadLibrary(name:string) : IntPtr
+    - {static} <<readonly>> usageCount : Dictionary<string, int>
+    - {static} <<readonly>> @lock : object
+    - {static} supported : bool <<get>>
+    + {static} LoadModule(name:string) : void
+    + {static} UnloadModule(name:string) : void
+    + {static} Module(name:string) : ModuleScope
+}
+struct ModuleScope {
+    - <<readonly>> name : string
+    + ModuleScope(name:string)
+    + Dispose() : void
+}
+NativeUtility +-- ModuleScope
+IDisposable <|-- ModuleScope
+@enduml

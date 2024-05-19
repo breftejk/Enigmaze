@@ -1,0 +1,28 @@
+@startuml
+class Sidebar <<sealed>> {
+    + Sidebar(sidebars:Sidebars, anchor:SidebarAnchor)
+    - sidebars : Sidebars <<get>>
+    - anchor : SidebarAnchor <<get>>
+    - e : EventWrapper <<get>>
+    + show : bool <<get>>
+    - isResizing : bool
+    - size : float <<get>> <<set>> = 300
+    - scroll : Vector2
+    + <<readonly>> displayedPanels : List<SidebarPanel>
+    + DrawLayout() : void
+    + Remove() : void
+    - CacheDisplayedPanels() : void
+    + GetWidth() : float
+    - GetHeight(totalHeight:float) : float
+    + OnGUI(position:Rect) : void
+    - HandleResizing(position:Rect) : void
+    + OrderSpinner(position:Rect, panel:SidebarPanel) : void
+}
+class Styles <<static>> {
+    + {static} <<readonly>> background : GUIStyle
+    + {static} <<readonly>> separator : GUIStyle
+    + {static} <<readonly>> resizeGrip : float = 2f
+    {static} - Styles()
+}
+Sidebar +-- Styles
+@enduml

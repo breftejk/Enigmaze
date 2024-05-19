@@ -1,0 +1,16 @@
+@startuml
+enum ColorProfileTypes {
+    NoProfile= 0,
+    sRGB= 1,
+    ICC= 2,
+}
+class ColorProfileChunk {
+    + <<override>> chunkType : ChunkTypes <<get>>
+    + profileType : ColorProfileTypes <<get>>
+    + flags : ushort <<get>>
+    + gamma : float <<get>>
+    <<internal>> ColorProfileChunk(chunkSize:uint)
+    # <<override>> InternalRead(reader:BinaryReader) : void
+}
+BaseChunk <|-- ColorProfileChunk
+@enduml

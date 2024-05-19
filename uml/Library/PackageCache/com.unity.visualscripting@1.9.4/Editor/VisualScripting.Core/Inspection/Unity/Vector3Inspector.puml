@@ -1,0 +1,8 @@
+@startuml
+class Vector3Inspector {
+    + Vector3Inspector(metadata:Metadata)
+    # <<override>> OnGUI(position:Rect, label:GUIContent) : void
+    + <<override>> GetAdaptiveWidth() : float
+}
+VectorInspector <|-- Vector3Inspector
+@enduml
