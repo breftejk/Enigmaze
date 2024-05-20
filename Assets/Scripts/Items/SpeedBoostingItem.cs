@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Characters;
 
-public class BoosterSpeed : MonoBehaviour
+public class SpeedBoostingItem : MonoBehaviour
 {
     public float speedMultiplier = 2.0f; // Mnożnik prędkości
     public float duration = 5.0f; // Czas trwania efektu w sekundach

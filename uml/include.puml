@@ -1,4 +1,24 @@
 @startuml
+class SpriteOrderController {
+    - spriteRenderer : SpriteRenderer
+    + yOffset : float = 0.0f
+    + runOnlyOnce : bool = false
+    - Awake() : void
+    - Start() : void
+    - Update() : void
+    - UpdateSortingOrder() : void
+}
+MonoBehaviour <|-- SpriteOrderController
+class ScoreManager {
+    + {static} Instance : ScoreManager
+    - score : int = 0
+    + scoreText : Text
+    - Awake() : void
+    + AddScore(points:int) : void
+    + ResetScore() : void
+    - UpdateScoreUI() : void
+}
+MonoBehaviour <|-- ScoreManager
 class GameManager {
     + {static} Instance : GameManager
     + Username : string <<get>> = ""
@@ -28,13 +48,13 @@ class HealingItem {
     - OnTriggerEnter2D(other:Collider2D) : void
 }
 MonoBehaviour <|-- HealingItem
-class BoosterSpeed {
+class SpeedBoostingItem {
     + speedMultiplier : float = 2.0f
     + duration : float = 5.0f
     - OnTriggerEnter2D(other:Collider2D) : void
     - ApplySpeedBoost(player:Collider2D) : IEnumerator
 }
-MonoBehaviour <|-- BoosterSpeed
+MonoBehaviour <|-- SpeedBoostingItem
 class Trap {
     + damagePerSecond : float = 5f
     - OnTriggerEnter2D(other:Collider2D) : void
@@ -98,6 +118,7 @@ class Attack {
     - Start() : void
     - OnTriggerEnter2D(collision:Collider2D) : void
     + TriggerAttack() : void
+    - PlayAttackSound() : void
     - PerformAttack() : IEnumerator
     - DamageTarget(target:Collider2D, message:string) : void
 }

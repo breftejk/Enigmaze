@@ -1,0 +1,12 @@
+@startuml
+class SpriteOrderController {
+    - spriteRenderer : SpriteRenderer
+    + yOffset : float = 0.0f
+    + runOnlyOnce : bool = false
+    - Awake() : void
+    - Start() : void
+    - Update() : void
+    - UpdateSortingOrder() : void
+}
+MonoBehaviour <|-- SpriteOrderController
+@enduml

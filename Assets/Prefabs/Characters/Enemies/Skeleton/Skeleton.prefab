@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 4186753424499204692}
   - component: {fileID: 7569640201038620289}
   - component: {fileID: 2586197181645521083}
+  - component: {fileID: 5629633483546017151}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -365,6 +366,20 @@ MonoBehaviour:
   healthSlider: {fileID: 8154698249472767492}
   healthBarUIPrefab: {fileID: 7133852758072526207}
   healthBarOffset: {x: 0, y: 1.5, z: 0}
+--- !u!114 &5629633483546017151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415132089592195297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41136675863d94407b768b836992f65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.05
+  runOnlyOnce: 0
 --- !u!1 &7427048048098096457
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +514,7 @@ GameObject:
   - component: {fileID: 7447063251170898523}
   - component: {fileID: 5789156727000510329}
   m_Layer: 0
-  m_Name: 'SFX '
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

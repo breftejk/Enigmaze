@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace Characters
@@ -35,12 +36,30 @@ namespace Characters
             if (!_isAttacking && _canAttack) StartCoroutine(PerformAttack());
         }
 
+        private void PlayAttackSound()
+        {
+            AudioSource audioSource = GetComponentsInParent<AudioSource>().FirstOrDefault();
+            Debug.Log($"Audio source: {audioSource}");
+            if (audioSource)
+            {
+                audioSource.Play();
+            }
+        }
+
         private IEnumerator PerformAttack()
         {
             _canAttack = false;
             _isAttacking = true;
             swordBoxCollider.enabled = true; // Włącz kolider podczas ataku
             animator.SetBool("IsAttacking", true);
+            try
+            {
+                PlayAttackSound();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error playing attack sound: {e.Message}");
+            }
 
             yield return new WaitForSeconds(attackDuration);
 

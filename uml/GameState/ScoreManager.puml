@@ -1,0 +1,12 @@
+@startuml
+class ScoreManager {
+    + {static} Instance : ScoreManager
+    - score : int = 0
+    + scoreText : Text
+    - Awake() : void
+    + AddScore(points:int) : void
+    + ResetScore() : void
+    - UpdateScoreUI() : void
+}
+MonoBehaviour <|-- ScoreManager
+@enduml

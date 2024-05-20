@@ -10,6 +10,7 @@ class Attack {
     - Start() : void
     - OnTriggerEnter2D(collision:Collider2D) : void
     + TriggerAttack() : void
+    - PlayAttackSound() : void
     - PerformAttack() : IEnumerator
     - DamageTarget(target:Collider2D, message:string) : void
 }

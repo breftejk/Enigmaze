@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Characters
@@ -64,9 +65,17 @@ namespace Characters
             if (animator.GetBool("IsDead")) return; // Jeśli postać już "umarła", nie wykonuj tej metody ponownie.
 
             animator.SetBool("IsDead", true);
-            GetComponent<AIEnemyController>().enabled = false;
-            GetComponentInChildren<Canvas>().enabled = false;
 
+            if (gameObject.tag == "Player")
+            {
+                GetComponent<PlayerInput>().enabled = false;
+            } else if (gameObject.tag == "Enemy")
+            {
+                GetComponent<AIEnemyController>().enabled = false;
+                GetComponentInChildren<Canvas>().enabled = false;
+            }
+            
+            GetComponent<BoxCollider2D>().enabled = false;
 
             foreach (var audioSource in GetComponentsInChildren<AudioSource>())
                 if (audioSource.name == "DeathSound")

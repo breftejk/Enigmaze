@@ -1,9 +1,9 @@
 @startuml
-class BoosterSpeed {
+class SpeedBoostingItem {
     + speedMultiplier : float = 2.0f
     + duration : float = 5.0f
     - OnTriggerEnter2D(other:Collider2D) : void
     - ApplySpeedBoost(player:Collider2D) : IEnumerator
 }
-MonoBehaviour <|-- BoosterSpeed
+MonoBehaviour <|-- SpeedBoostingItem
 @enduml
