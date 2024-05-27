@@ -3,9 +3,18 @@ using UnityEngine.InputSystem;
 
 namespace Characters
 {
+    /// <summary>
+    ///     Kontroler gracza obsługujący ruch gracza i animację.
+    /// </summary>
     public class PlayerController : CharacterBaseController
     {
+        public Attack attackComponent;
         private Vector2 movementInput = Vector2.zero;
+
+        private void Awake()
+        {
+            attackComponent = GetComponentInChildren<Attack>();
+        }
 
         /// <summary>
         ///     Metoda wywoływana co stałą liczbę klatek fizyki.
@@ -14,7 +23,7 @@ namespace Characters
         private void FixedUpdate()
         {
             if (animator.GetBool("IsAttacking")) return;
-            isWalking = false;
+            _isWalking = false;
 
             var success = TryMoving(movementInput);
 
@@ -24,10 +33,24 @@ namespace Characters
                 return;
             }
 
-            isWalking = true;
-            animator.SetBool("IsWalking", isWalking);
+            _isWalking = true;
+            animator.SetBool("IsWalking", _isWalking);
 
-            UpdateAnimation();
+            if (movementInput.x == 0 && movementInput.y != 0)
+            {
+                if (movementInput.y < 0)
+                    animator.SetInteger("Direction", 1);
+                else
+                    animator.SetInteger("Direction", -1);
+            }
+            else
+            {
+                if (movementInput.x < 0)
+                    _spriteRenderer.flipX = true;
+                else if (movementInput.x > 0) _spriteRenderer.flipX = false;
+
+                animator.SetInteger("Direction", 0);
+            }
         }
 
         /// <summary>
@@ -44,25 +67,6 @@ namespace Characters
             if (animator.GetBool("IsAttacking")) return;
             animator.SetBool("IsWalking", false);
             attackComponent.TriggerAttack();
-        }
-
-        private void UpdateAnimation()
-        {
-            if (movementInput.x == 0 && movementInput.y != 0)
-            {
-                if (movementInput.y < 0)
-                    animator.SetInteger("Direction", 1);
-                else
-                    animator.SetInteger("Direction", -1);
-            }
-            else
-            {
-                if (movementInput.x < 0)
-                    spriteRenderer.flipX = true;
-                else if (movementInput.x > 0) spriteRenderer.flipX = false;
-
-                animator.SetInteger("Direction", 0);
-            }
         }
     }
 }

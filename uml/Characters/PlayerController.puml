@@ -1,6 +1,8 @@
 @startuml
 class PlayerController {
+    + attackComponent : Attack
     - movementInput : Vector2
+    - Awake() : void
     - FixedUpdate() : void
     - OnMove(movementValue:InputValue) : void
     + OnFire() : void

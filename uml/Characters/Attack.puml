@@ -15,5 +15,4 @@ class Attack {
     - DamageTarget(target:Collider2D, message:string) : void
 }
 MonoBehaviour <|-- Attack
-IAttack <|-- Attack
 @enduml
