@@ -30,7 +30,14 @@ namespace Characters
         /// <summary>
         ///     Promień wykrywania gracza.
         /// </summary>
-        public float detectionRadius = 2f;
+        public float detectionRadius = 5f;
+
+        public Attack attackComponent;
+
+        private void Awake()
+        {
+            attackComponent = GetComponentInChildren<Attack>();
+        }
 
         /// <summary>
         ///     Metoda wywoływana co stałą liczbę klatek fizyki.
@@ -40,7 +47,7 @@ namespace Characters
         {
             if (animator.GetBool("IsAttacking")) return;
 
-            isWalking = false;
+            _isWalking = false;
 
             if (target == null)
             {
@@ -73,8 +80,8 @@ namespace Characters
                         return;
                     }
 
-                    isWalking = true;
-                    animator.SetBool("IsWalking", isWalking);
+                    _isWalking = true;
+                    animator.SetBool("IsWalking", _isWalking);
 
                     UpdateAnimation(avoidanceDirection);
                 }
@@ -142,7 +149,7 @@ namespace Characters
                 animator.SetInteger("Direction", 0); // Horizontal
             }
 
-            if (direction.x != 0) spriteRenderer.flipX = direction.x < 0;
+            if (direction.x != 0) _spriteRenderer.flipX = direction.x < 0;
         }
     }
 }

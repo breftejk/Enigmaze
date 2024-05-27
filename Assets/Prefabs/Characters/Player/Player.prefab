@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2155112299885038667}
   - component: {fileID: 6025767792367275290}
+  - component: {fileID: 4791468997768955099}
   - component: {fileID: 7872485602484673648}
-  - component: {fileID: 6886646281604040030}
   m_Layer: 0
   m_Name: PlayerSwordBoxCollider
   m_TagString: Player
@@ -79,6 +79,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.28407156, y: 0.27779144}
   m_EdgeRadius: 0
+--- !u!114 &4791468997768955099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263508705421320036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322cc0a04ef4c3aac84cef104353b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  swordBoxCollider: {fileID: 6025767792367275290}
+  attackDamage: 10
+  attackDuration: 0.5
+  attackCooldown: 1
 --- !u!50 &7872485602484673648
 Rigidbody2D:
   serializedVersion: 4
@@ -106,23 +123,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6886646281604040030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263508705421320036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78fda19e07994a44b46ddf5634ec7dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  swordBoxCollider: {fileID: 0}
-  attackDamage: 10
-  attackDuration: 0.1
-  attackCooldown: 3
 --- !u!1 &4185981182207581591
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,14 +134,14 @@ GameObject:
   - component: {fileID: 1787118631516733991}
   - component: {fileID: 4982414700355351955}
   - component: {fileID: 4632553509294789247}
+  - component: {fileID: 3742889847104785857}
   - component: {fileID: 1127413961361367493}
   - component: {fileID: 6237926549372234405}
   - component: {fileID: 4444717297768949703}
+  - component: {fileID: 1627685046247518128}
   - component: {fileID: 6324102686532208152}
   - component: {fileID: 8665068961694718770}
   - component: {fileID: 1215566314215042964}
-  - component: {fileID: 7595971998157049750}
-  - component: {fileID: 5691468942718317813}
   m_Layer: 0
   m_Name: Player
   m_TagString: PlayerSword
@@ -249,6 +249,34 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3742889847104785857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185981182207581591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87bcaa0dfc9f421b9b9ccd887e6a183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 1
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  attackComponent: {fileID: 0}
 --- !u!50 &1127413961361367493
 Rigidbody2D:
   serializedVersion: 4
@@ -342,6 +370,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1627685046247518128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185981182207581591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce62cb63e7854f3fb73ccda2025d449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 0
+  animator: {fileID: 0}
+  healthSlider: {fileID: 8025416949154137603}
+  healthBarUIPrefab: {fileID: 3309110271481232195}
+  healthBarOffset: {x: 0, y: 1.5, z: 0}
 --- !u!114 &6324102686532208152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,52 +514,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7595971998157049750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185981182207581591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44d757cd3de4e11bc5602a9e45341f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 1
-  contactFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  attackComponent: {fileID: 0}
---- !u!114 &5691468942718317813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185981182207581591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc9af1e3a48b4605b25d32efb38bcaf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  animator: {fileID: 0}
-  healthSlider: {fileID: 8025416949154137603}
-  healthBarUIPrefab: {fileID: 3309110271481232195}
-  healthBarOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &9208708032087444615
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,14 +1,11 @@
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // Singleton instance
 
-    public string Username { get; private set; }
-    public int CurrentLevel { get; private set; } = 0;
+    public string Username { get; private set; } = "";
+    public int CurrentLevel { get; private set; } = 1;
 
     private void Awake()
     {
@@ -31,7 +28,8 @@ public class GameManager : MonoBehaviour
         if (!string.IsNullOrEmpty(name))
         {
             Username = name;
-            SaveProgress();
+            PlayerPrefs.SetString("Username", Username);
+            PlayerPrefs.Save();
         }
     }
 
@@ -39,7 +37,8 @@ public class GameManager : MonoBehaviour
     public void IncrementLevel()
     {
         CurrentLevel++;
-        SaveProgress();
+        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
+        PlayerPrefs.Save();
     }
 
     // Metoda do zresetowania postępu
@@ -51,27 +50,10 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadScene(string sceneName = null)
-    {
-        SceneManager.LoadSceneAsync(sceneName ?? $"Level_{CurrentLevel}");
-    }
-
     // Metoda do ładowania postępu
     private void LoadProgress()
     {
         if (PlayerPrefs.HasKey("Username")) Username = PlayerPrefs.GetString("Username");
         if (PlayerPrefs.HasKey("CurrentLevel")) CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
-    }
-    
-    private void SaveProgress()
-    {
-        PlayerPrefs.SetString("Username", Username);
-        PlayerPrefs.SetInt("CurrentLevel", CurrentLevel);
-        PlayerPrefs.Save();
-    }
-    
-    private void OnApplicationQuit()
-    {
-        SaveProgress();
     }
 }

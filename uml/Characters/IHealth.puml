@@ -1,6 +1,0 @@
-@startuml
-interface IHealth {
-    TakeDamage(amount:float) : void
-    Heal(amount:float) : void
-}
-@enduml
