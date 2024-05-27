@@ -140,10 +140,10 @@ GameObject:
   - component: {fileID: 2086488446067435632}
   - component: {fileID: 3202817292781799494}
   - component: {fileID: 8192220598823442961}
-  - component: {fileID: 4186753424499204692}
   - component: {fileID: 7569640201038620289}
-  - component: {fileID: 2586197181645521083}
   - component: {fileID: 5629633483546017151}
+  - component: {fileID: 2354245528976245765}
+  - component: {fileID: 1661187735604930804}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemy
@@ -294,39 +294,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4186753424499204692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415132089592195297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4c10e6bbe8949f187e2aade715bc510, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 0.6
-  contactFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  target: {fileID: 0}
-  stopDistance: 0.1
-  obstacleDetectionDistance: 1
-  sideDetectionAngle: 45
-  detectionRadius: 0.9
-  attackComponent: {fileID: 0}
 --- !u!95 &7569640201038620289
 Animator:
   serializedVersion: 5
@@ -348,24 +315,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2586197181645521083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415132089592195297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ce62cb63e7854f3fb73ccda2025d449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  animator: {fileID: 0}
-  healthSlider: {fileID: 8154698249472767492}
-  healthBarUIPrefab: {fileID: 7133852758072526207}
-  healthBarOffset: {x: 0, y: 1.5, z: 0}
 --- !u!114 &5629633483546017151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +329,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 0.05
   runOnlyOnce: 0
+--- !u!114 &2354245528976245765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415132089592195297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80af9a11b4b647ad8bd7736a7e59d088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 0.7
+  contactFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  target: {fileID: 0}
+  stopDistance: 0.1
+  obstacleDetectionDistance: 1
+  sideDetectionAngle: 45
+  detectionRadius: 5
+  attackComponent: {fileID: 0}
+--- !u!114 &1661187735604930804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415132089592195297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9af1e3a48b4605b25d32efb38bcaf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  animator: {fileID: 0}
+  healthSlider: {fileID: 8154698249472767492}
+  healthBarUIPrefab: {fileID: 7133852758072526207}
+  healthBarOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &7427048048098096457
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,8 +390,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2745550617041749942}
   - component: {fileID: 2129550803063445877}
-  - component: {fileID: 150450972083242790}
   - component: {fileID: 9025901193004129398}
+  - component: {fileID: 1628586927678639361}
   m_Layer: 0
   m_Name: SwordBoxCollider
   m_TagString: EnemySword
@@ -459,23 +459,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.22775841, y: 0.23354383}
   m_EdgeRadius: 0
---- !u!114 &150450972083242790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7427048048098096457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4322cc0a04ef4c3aac84cef104353b36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  swordBoxCollider: {fileID: 0}
-  attackDamage: 10
-  attackDuration: 0.1
-  attackCooldown: 3
 --- !u!50 &9025901193004129398
 Rigidbody2D:
   serializedVersion: 4
@@ -503,6 +486,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1628586927678639361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427048048098096457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fda19e07994a44b46ddf5634ec7dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  swordBoxCollider: {fileID: 0}
+  attackDamage: 10
+  attackDuration: 0.1
+  attackCooldown: 3
 --- !u!1 &7562722762498153776
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,6 +639,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2024251414551849191}
     m_Modifications:
+    - target: {fileID: 1242116858886877495, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242116858886877495, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 77
+      objectReference: {fileID: 0}
     - target: {fileID: 1759676598162956826, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
       propertyPath: target
       value: 
@@ -751,10 +759,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1759676598162956826, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4000083190313519813, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5372203653243674106}
   m_SourcePrefab: {fileID: 100100000, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
 --- !u!224 &4038014607571118472 stripped
 RectTransform:
@@ -766,6 +778,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4000083190313519813, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}
   m_PrefabInstance: {fileID: 6089903805086601146}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5372203653243674106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7133852758072526207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70558c91805d43f6b57108c1910bca5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!114 &8154698249472767492 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2713667147010046398, guid: 94c7431d7bd064be58352922d9ff42f0, type: 3}

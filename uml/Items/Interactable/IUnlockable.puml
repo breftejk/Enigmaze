@@ -1,0 +1,5 @@
+@startuml
+interface IUnlockable {
+    Unlock() : void
+}
+@enduml

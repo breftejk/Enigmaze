@@ -1,0 +1,8 @@
+@startuml
+class Key {
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- Key
+IInteractable <|-- Key
+@enduml

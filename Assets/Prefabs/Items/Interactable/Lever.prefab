@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2324814220693917559}
   - component: {fileID: 7109001015280452070}
   - component: {fileID: 2623187328585648758}
-  - component: {fileID: 61430738608877282}
   - component: {fileID: 4921075552055792198}
+  - component: {fileID: 7666572447986003587}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -132,20 +132,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &61430738608877282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486576744560345337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d94f13b33092431b97e780e7674994b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  doorToOpen: {fileID: 0}
-  leverActiveSprite: {fileID: -1063606993, guid: f4a15e629a8084cbba6a8d2761cdd955, type: 3}
 --- !u!114 &4921075552055792198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,3 +146,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 0.1
   runOnlyOnce: 0
+--- !u!114 &7666572447986003587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486576744560345337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ece633095cf4144add1cfd791304939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorToOpen: {fileID: 0}
+  leverActiveSprite: {fileID: 0}

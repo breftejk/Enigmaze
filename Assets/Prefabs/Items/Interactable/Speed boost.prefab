@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7149723703954608586}
   - component: {fileID: 3429263311633147469}
   - component: {fileID: 4570714405327298414}
-  - component: {fileID: 6987145118651307243}
+  - component: {fileID: 4961479273255416311}
   m_Layer: 0
   m_Name: Speed boost
   m_TagString: Untagged
@@ -146,7 +146,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.106904745, y: 0.087597266}
   m_EdgeRadius: 0
---- !u!114 &6987145118651307243
+--- !u!114 &4961479273255416311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,8 +155,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4104956301730024020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d40aaedd976e4724a217f4d35166177, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e8595bf173b4563aaa56149320ea491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 2
-  duration: 5
+  speedMultiplier: 1.5
+  duration: 3

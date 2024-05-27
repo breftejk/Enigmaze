@@ -1,0 +1,9 @@
+@startuml
+class HealingItem {
+    + healthAmount : int = 20
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- HealingItem
+IInteractable <|-- HealingItem
+@enduml
