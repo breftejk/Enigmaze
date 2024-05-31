@@ -6,14 +6,14 @@ public class Trap : MonoBehaviour
 {
     public float damagePerSecond = 5f; // Obrażenia zadawane co sekundę
 
-    
-private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             StartCoroutine(DamageOverTime(other));
         }
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

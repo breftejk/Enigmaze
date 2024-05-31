@@ -1,0 +1,5 @@
+@startuml
+interface ICharacterController {
+    TryMoving(direction:Vector2) : bool
+}
+@enduml

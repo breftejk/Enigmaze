@@ -1,23 +1,21 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 
 namespace Characters
 {
-    public class Attack : MonoBehaviour
+    public class Attack : MonoBehaviour, IAttack
     {
-        public Animator animator;
-        public BoxCollider2D swordBoxCollider;
+        private Animator animator =>  GetComponentInParent<Animator>();
+        private BoxCollider2D swordBoxCollider => GetComponent<BoxCollider2D>();
         public float attackDamage = 10f;
         public float attackDuration = 0.1f;
         public float attackCooldown = 3f;
-        private bool _canAttack = true;
-        private bool _isAttacking = false;
+        private bool canAttack = true;
+        private bool isAttacking = false;
 
         private void Start()
         {
-            animator = GetComponentInParent<Animator>();
-            swordBoxCollider = GetComponent<BoxCollider2D>();
             swordBoxCollider.enabled = false; // Wyłącz kolider na starcie
         }
 
@@ -33,7 +31,7 @@ namespace Characters
 
         public void TriggerAttack()
         {
-            if (!_isAttacking && _canAttack) StartCoroutine(PerformAttack());
+            if (!isAttacking && canAttack) StartCoroutine(PerformAttack());
         }
 
         private void PlayAttackSound()
@@ -48,8 +46,8 @@ namespace Characters
 
         private IEnumerator PerformAttack()
         {
-            _canAttack = false;
-            _isAttacking = true;
+            canAttack = false;
+            isAttacking = true;
             swordBoxCollider.enabled = true; // Włącz kolider podczas ataku
             animator.SetBool("IsAttacking", true);
             try
@@ -65,11 +63,11 @@ namespace Characters
 
             swordBoxCollider.enabled = false; // Wyłącz kolider po zakończeniu animacji ataku
             animator.SetBool("IsAttacking", false);
-            _isAttacking = false;
+            isAttacking = false;
 
             yield return new WaitForSeconds(attackCooldown);
 
-            _canAttack = true;
+            canAttack = true;
         }
 
         private void DamageTarget(Collider2D target, string message)

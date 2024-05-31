@@ -1,0 +1,5 @@
+@startuml
+interface IInteractable {
+    Interact(interactor:GameObject) : void
+}
+@enduml
