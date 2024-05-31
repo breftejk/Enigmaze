@@ -13,4 +13,5 @@ class Health {
     - RemoveCharacterAfterDelay(delay:float) : IEnumerator
 }
 MonoBehaviour <|-- Health
+IHealth <|-- Health
 @enduml

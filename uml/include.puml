@@ -85,23 +85,24 @@ class Health {
     - RemoveCharacterAfterDelay(delay:float) : IEnumerator
 }
 MonoBehaviour <|-- Health
+IHealth <|-- Health
 class PlayerController {
-    + attackComponent : Attack
     - movementInput : Vector2
-    - Awake() : void
     - FixedUpdate() : void
     - OnMove(movementValue:InputValue) : void
     + OnFire() : void
 }
 CharacterBaseController <|-- PlayerController
+interface IHealth {
+    TakeDamage(amount:float) : void
+    Heal(amount:float) : void
+}
 class AIEnemyController {
     + target : Transform
     + stopDistance : float = 0.1f
     + obstacleDetectionDistance : float = 1f
     + sideDetectionAngle : float = 45f
     + detectionRadius : float = 5f
-    + attackComponent : Attack
-    - Awake() : void
     - FixedUpdate() : void
     - AvoidObstacles(direction:Vector2) : Vector2
     - UpdateAnimation(direction:Vector2) : void
@@ -123,24 +124,91 @@ class Attack {
     - DamageTarget(target:Collider2D, message:string) : void
 }
 MonoBehaviour <|-- Attack
+IAttack <|-- Attack
+interface ICharacterController {
+    TryMoving(direction:Vector2) : bool
+}
 abstract class CharacterBaseController {
     + movementSpeed : float = 1f
+    - # attackComponent : Attack <<get>>
     + contactFilter : ContactFilter2D
-    - # _health : Health
-    - # animator : Animator
+    - # health : IHealth <<get>>
+    - # animator : Animator <<get>>
+    - # isWalking : bool = false
+    - # spriteRenderer : SpriteRenderer <<get>>
+    - rb : Rigidbody2D <<get>>
     - <<readonly>> _collisions : List<RaycastHit2D>
-    - _isAttacking : bool = false
-    - # _isWalking : bool
-    - _rb : Rigidbody2D
-    - # _spriteRenderer : SpriteRenderer
-    - Start() : void
-    - # TryMoving(direction:Vector2) : bool
+    + TryMoving(direction:Vector2) : bool
+    - MoveInDirection(direction:Vector2) : bool
 }
 MonoBehaviour <|-- CharacterBaseController
+interface IAttack {
+    TriggerAttack() : void
+}
 class HealthBarFollow {
     + target : Transform
     + offset : Vector3
     - LateUpdate() : void
 }
 MonoBehaviour <|-- HealthBarFollow
+class Key {
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- Key
+IInteractable <|-- Key
+class Lever {
+    + doorToOpen : Door
+    + leverActiveSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - Awake() : void
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- Lever
+IInteractable <|-- Lever
+interface IInteractable {
+    Interact(interactor:GameObject) : void
+}
+class HealingItem {
+    + healthAmount : int = 20
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- HealingItem
+IInteractable <|-- HealingItem
+class SpeedBoostingItem {
+    + speedMultiplier : float = 2.0f
+    + duration : float = 1.0f
+    - isUsed : bool = false
+    - spriteRenderer : SpriteRenderer
+    - collider : Collider2D
+    - Awake() : void
+    + Interact(interactor:GameObject) : void
+    - ApplySpeedBoost(player:PlayerController) : IEnumerator
+    - OnTriggerEnter2D(other:Collider2D) : void
+}
+MonoBehaviour <|-- SpeedBoostingItem
+IInteractable <|-- SpeedBoostingItem
+interface IUnlockable {
+    Unlock() : void
+}
+class Trap {
+    + damagePerSecond : float = 5f
+    + Interact(interactor:GameObject) : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - OnTriggerExit2D(other:Collider2D) : void
+    - DamageOverTime(health:IHealth) : IEnumerator
+}
+MonoBehaviour <|-- Trap
+IInteractable <|-- Trap
+class Door {
+    + openDoorSprite : Sprite
+    - spriteRenderer : SpriteRenderer
+    - boxCollider : BoxCollider2D
+    - Awake() : void
+    + Unlock() : void
+}
+MonoBehaviour <|-- Door
+IUnlockable <|-- Door
 @enduml

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 namespace Characters
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, IHealth
     {
         public float maxHealth = 100f;
         public float currentHealth;
 
-        public Animator animator;
+        public Animator animator => GetComponent<Animator>();
 
         public Slider healthSlider;
         public GameObject healthBarUIPrefab;
@@ -18,7 +18,6 @@ namespace Characters
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
             currentHealth = maxHealth;
 
             if (healthSlider != null)
