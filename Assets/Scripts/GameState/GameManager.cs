@@ -1,28 +1,18 @@
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // Singleton instance
 
     public string Username { get; private set; }
-    public int CurrentLevel { get; private set; } = 0;
+    public int CurrentLevel { get; private set; } = 1;
 
     private void Awake()
     {
-        // Implementacja wzorca Singleton, aby upewnić się, że istnieje tylko jedna instancja tej klasy
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Zapobiegaj zniszczeniu tego obiektu podczas ładowania scen
-            LoadProgress(); // Załaduj postęp na starcie
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Zapobiegaj zniszczeniu tego obiektu podczas ładowania scen
+        LoadProgress(); // Załaduj postęp na starcie
     }
 
     // Metoda do ustawienia nazwy użytkownika
@@ -40,29 +30,34 @@ public class GameManager : MonoBehaviour
     {
         CurrentLevel++;
         SaveProgress();
+        LoadScene();
     }
 
     // Metoda do zresetowania postępu
     public void ResetProgress()
     {
         Username = "";
-        CurrentLevel = 1;
+        CurrentLevel = 1; // Reset level to 0
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
     }
 
     public void LoadScene(string sceneName = null)
     {
-        SceneManager.LoadSceneAsync(sceneName ?? $"Level_{CurrentLevel}");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene(sceneName ?? $"Level_{CurrentLevel}", LoadSceneMode.Single);
     }
 
     // Metoda do ładowania postępu
     private void LoadProgress()
     {
-        if (PlayerPrefs.HasKey("Username")) Username = PlayerPrefs.GetString("Username");
-        if (PlayerPrefs.HasKey("CurrentLevel")) CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+        if (PlayerPrefs.HasKey("Username"))
+            Username = PlayerPrefs.GetString("Username");
+        if (PlayerPrefs.HasKey("CurrentLevel"))
+            CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
     }
-    
+
     private void SaveProgress()
     {
         PlayerPrefs.SetString("Username", Username);
@@ -70,6 +65,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
     
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     private void OnApplicationQuit()
     {
         SaveProgress();

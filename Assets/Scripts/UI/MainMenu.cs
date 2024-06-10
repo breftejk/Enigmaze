@@ -12,18 +12,31 @@ namespace UI
 
         public TMP_Text usernameText;
         public TMP_Text levelText;
+        public TMP_Text scoreText;
         
-        public void Start()
+        private void Start()
         {
-            if (GameManager.Instance.Username == null || GameManager.Instance.CurrentLevel == 0)
+            if (string.IsNullOrEmpty(GameManager.Instance.Username))
+            {
                 GameManager.Instance.LoadScene("Start_Scene");
-            
+                return;
+            }
+
+            UpdateUI();
+
             resumeButton.onClick.AddListener(ResumeGame);
             resetButton.onClick.AddListener(ResetGame);
-            exitButton.onClick.AddListener(ExitGame);
+            exitButton.onClick.AddListener(GameManager.Instance.ExitGame);
+        }
 
+        private void UpdateUI()
+        {
+            if(usernameText == null || levelText == null)
+                return;
+            
             usernameText.text = GameManager.Instance.Username;
             levelText.text = $"Level: {GameManager.Instance.CurrentLevel}";
+            scoreText.text = $"Score: {ScoreManager.Instance.GetScore()}";
         }
 
         private void ResumeGame()
@@ -34,12 +47,8 @@ namespace UI
         private void ResetGame()
         {
             GameManager.Instance.ResetProgress();
+            ScoreManager.Instance.ResetScore();
             GameManager.Instance.LoadScene("Start_Scene");
-        }
-
-        private void ExitGame()
-        {
-            Application.Quit();
         }
     }
 }

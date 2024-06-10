@@ -7,20 +7,23 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Start_Scene.unity
-    guid: 80610dc51208a48cfb5acab2d94ca56f
+    guid: d0a2b0a1fa2644fab9ae1e9bb997459e
   - enabled: 1
     path: Assets/Scenes/Main_Menu.unity
     guid: 372fc2a9276b141acaaeb290deb6fd83
-  - enabled: 0
-    path: Assets/Scenes/Levels/Level_1.unity
-    guid: a3c8bfc9ab7d642bd8f50f94c7643a09
   - enabled: 1
-    path: Assets/Scenes/Poziom_1.unity
+    path: Assets/Scenes/Level_1.unity
     guid: 86151b1ca62b7be48b3903ed3e246df4
   - enabled: 1
-    path: Assets/Scenes/Poziom_2.unity
+    path: Assets/Scenes/Level_2.unity
     guid: 7a2f2d9d531284f4784c4fb2349992fa
   - enabled: 1
-    path: Assets/Scenes/Poziom_3.unity
-    guid: 5d561e9499cd93945991a37b4a32fcae
+    path: Assets/Scenes/LEvel3.unity
+    guid: 6cfb52a6e39872148b1ca5457098d4ec
+  - enabled: 0
+    path: Assets/Scenes/Level_3.unity
+    guid: 26e00eb373b43284292965205d661f5e
+  - enabled: 1
+    path: Assets/Scenes/Level_4.unity
+    guid: 03d0d8f4b85174011862f992959044f4
   m_configObjects: {}

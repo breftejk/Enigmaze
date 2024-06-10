@@ -16,6 +16,8 @@ namespace Characters
         public GameObject healthBarUIPrefab;
         public Vector3 healthBarOffset = new(0, 1.5f, 0); // Offset to position the health bar above the enemy
 
+        public GameObject deathUI;
+        
         private void Start()
         {
             currentHealth = maxHealth;
@@ -81,13 +83,19 @@ namespace Characters
                     audioSource.Play();
                 else audioSource.mute = true;
 
-            StartCoroutine(RemoveCharacterAfterDelay(6f));
+            StartCoroutine(DeathBehaviourAfterDelay(2f, gameObject));
         }
 
-        private IEnumerator RemoveCharacterAfterDelay(float delay)
+        private IEnumerator DeathBehaviourAfterDelay(float delay, GameObject gameObject)
         {
             yield return new WaitForSeconds(delay);
             Destroy(gameObject);
+            if (gameObject.tag == "Player")
+            {
+                deathUI.SetActive(true);
+                Time.timeScale = 0;
+                AudioListener.pause = true;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Characters
         public float attackCooldown = 3f;
         private bool canAttack = true;
         private bool isAttacking = false;
+        public UI.LevelScore levelScore;
 
         private void Start()
         {
@@ -26,7 +27,10 @@ namespace Characters
             if (gameObject.CompareTag("EnemySword") && collider.CompareTag("Player"))
                 DamageTarget(collision, "Enemy attacking player");
             else if (gameObject.CompareTag("PlayerSword") && collider.CompareTag("Enemy"))
+            {
                 DamageTarget(collision, "Player attacking enemy");
+                levelScore.AddScore(10);
+            }
         }
 
         public void TriggerAttack()

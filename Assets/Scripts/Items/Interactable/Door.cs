@@ -1,3 +1,5 @@
+using Characters;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Items.Interactable
@@ -18,6 +20,24 @@ namespace Items.Interactable
         {
             spriteRenderer.sprite = openDoorSprite;
             boxCollider.enabled = false;
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Interact(other.gameObject);
+            }
+        }
+        
+        public void Interact(GameObject interactor)
+        {
+            var player = interactor.GetComponent<PlayerController>();
+            if (player != null && Variables.Object(player).Get<bool>("HasKey"))
+            {
+                Unlock();
+                Variables.Object(player).Set("HasKey", false);
+            }
         }
     }
 }
