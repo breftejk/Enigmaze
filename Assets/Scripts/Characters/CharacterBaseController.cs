@@ -5,32 +5,34 @@ namespace Characters
 {
     public abstract class CharacterBaseController : MonoBehaviour
     {
-        /// <summary>
-        /// Szybkość poruszania się gracza.
-        /// </summary>
+        // Szybkość poruszania się postaci
         public float movementSpeed = 1f;
+
+        // Filtr kontaktów używany do wykrywania kolizji
+        public ContactFilter2D contactFilter;
         
+        // Komponent ataku
         private protected Attack attackComponent => GetComponentInChildren<Attack>();
 
-        /// <summary>
-        /// Filtr kontaktów używany do wykrywania kolizji.
-        /// </summary>
-        public ContactFilter2D contactFilter;
-
+        // Komponent zdrowia
         private protected IHealth health => GetComponent<IHealth>();
+
+        // Komponent animatora
         private protected Animator animator => GetComponent<Animator>();
+
+        // Flaga określająca, czy postać jest w ruchu
         private protected bool isWalking = false;
+
+        // Komponent SpriteRenderer
         private protected SpriteRenderer spriteRenderer => GetComponent<SpriteRenderer>();
         
+        // Komponent Rigidbody2D
         private Rigidbody2D rb => GetComponent<Rigidbody2D>();
 
+        // Lista przechowująca wyniki kolizji
         private readonly List<RaycastHit2D> _collisions = new();
 
-        /// <summary>
-        /// Próbuje poruszyć gracza w określonym kierunku.
-        /// </summary>
-        /// <param name="direction">Kierunek, w którym ma zostać przesunięty gracz.</param>
-        /// <returns>Prawda, jeśli gracz może zostać przesunięty w danym kierunku; fałsz w przeciwnym razie.</returns>
+        // Próbuje poruszyć postać w określonym kierunku
         public bool TryMoving(Vector2 direction)
         {
             if (direction == Vector2.zero) return false;
@@ -57,11 +59,7 @@ namespace Characters
             return false;
         }
 
-        /// <summary>
-        /// Porusza gracza w określonym kierunku.
-        /// </summary>
-        /// <param name="direction">Kierunek, w którym ma zostać przesunięty gracz.</param>
-        /// <returns>Prawda, jeśli gracz może zostać przesunięty w danym kierunku; fałsz w przeciwnym razie.</returns>
+        // Porusza postać w określonym kierunku
         private bool MoveInDirection(Vector2 direction)
         {
             var count = rb.Cast(direction, contactFilter, _collisions, movementSpeed * Time.fixedDeltaTime);

@@ -4,12 +4,18 @@ namespace Characters
 {
     public class HealthBarFollow : MonoBehaviour
     {
-        public Transform target; // The target (enemy) to follow
-        public Vector3 offset; // Offset from the target's position
+        // Cel (wróg), który pasek zdrowia ma śledzić
+        public Transform target;
 
+        // Przesunięcie od pozycji celu
+        public Vector3 offset;
+
+        // Metoda wywoływana w każdej klatce po zakończeniu aktualizacji wszystkich obiektów
         private void LateUpdate()
         {
-            if (target != null) transform.position = target.position + offset;
+            // Jeśli cel jest ustawiony, aktualizuj pozycję paska zdrowia
+            if (target != null) 
+                transform.position = target.position + offset;
         }
     }
 }

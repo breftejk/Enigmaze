@@ -6,8 +6,10 @@ namespace Items.Interactable
 {
     public class Trap : MonoBehaviour, IInteractable
     {
+        // Ilość obrażeń zadawanych na sekundę
         public float damagePerSecond = 5f;
 
+        // Metoda wywoływana podczas interakcji z pułapką
         public void Interact(GameObject interactor)
         {
             var health = interactor.GetComponent<IHealth>();
@@ -17,6 +19,7 @@ namespace Items.Interactable
             }
         }
 
+        // Metoda wywoływana, gdy inny obiekt 2D wejdzie w kolizję z pułapką
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
@@ -25,6 +28,7 @@ namespace Items.Interactable
             }
         }
 
+        // Metoda wywoływana, gdy inny obiekt 2D wyjdzie z kolizji z pułapką
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
@@ -33,6 +37,7 @@ namespace Items.Interactable
             }
         }
 
+        // Coroutine zadająca obrażenia co sekundę
         private IEnumerator DamageOverTime(IHealth health)
         {
             while (true)

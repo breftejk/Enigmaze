@@ -38630,6 +38630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelScore: {fileID: 543373628}
+  levelNumber: 1
 --- !u!4 &271361222
 Transform:
   m_ObjectHideFlags: 0
@@ -44218,15 +44219,15 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.0012987013
+    y: 0.0023094688
+    width: 1.5233766
+    height: 0.7482679
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 1.6
+  orthographic size: 1.08
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

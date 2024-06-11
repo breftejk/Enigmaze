@@ -7,17 +7,48 @@ namespace Characters
 {
     public class Health : MonoBehaviour, IHealth
     {
+        // Maksymalna ilość zdrowia
         public float maxHealth = 100f;
+
+        // Bieżąca ilość zdrowia
         public float currentHealth;
 
-        public Animator animator => GetComponent<Animator>();
-
+        // Suwak wyświetlający pasek zdrowia
         public Slider healthSlider;
-        public GameObject healthBarUIPrefab;
-        public Vector3 healthBarOffset = new(0, 1.5f, 0); // Offset to position the health bar above the enemy
 
+        // Prefabrykat paska zdrowia
+        public GameObject healthBarUIPrefab;
+
+        // Przesunięcie do umieszczenia paska zdrowia nad wrogiem
+        public Vector3 healthBarOffset = new(0, 1.5f, 0);
+
+        // UI wyświetlane po śmierci
         public GameObject deathUI;
         
+        // Animator do zarządzania animacjami
+        private Animator animator => GetComponent<Animator>();
+
+        // Metoda wywoływana, gdy postać otrzymuje obrażenia
+        public void TakeDamage(float amount)
+        {
+            currentHealth -= amount;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+            if (healthSlider != null) healthSlider.value = currentHealth;
+
+            if (currentHealth <= 0) Die();
+        }
+
+        // Metoda wywoływana, gdy postać zostaje uleczona
+        public void Heal(float amount)
+        {
+            currentHealth += amount;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+            if (healthSlider != null) healthSlider.value = currentHealth;
+        }
+        
+        // Metoda wywoływana na początku działania skryptu
         private void Start()
         {
             currentHealth = maxHealth;
@@ -29,38 +60,21 @@ namespace Characters
             }
             else if (gameObject.CompareTag("Enemy"))
             {
-                // Instantiate health bar above enemy
+                // Tworzenie paska zdrowia nad wrogiem
                 var healthBarUI = Instantiate(healthBarUIPrefab, transform.position + healthBarOffset,
                     Quaternion.identity, transform);
                 healthSlider = healthBarUI.GetComponentInChildren<Slider>();
                 healthSlider.maxValue = maxHealth;
                 healthSlider.value = currentHealth;
 
-                // Set the target for the HealthBarFollow script
+                // Ustawienie celu dla skryptu HealthBarFollow
                 var healthBarFollow = healthBarUI.GetComponent<HealthBarFollow>();
                 healthBarFollow.target = transform;
                 healthBarFollow.offset = healthBarOffset;
             }
         }
 
-        public void TakeDamage(float amount)
-        {
-            currentHealth -= amount;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-            if (healthSlider != null) healthSlider.value = currentHealth;
-
-            if (currentHealth <= 0) Die();
-        }
-
-        public void Heal(float amount)
-        {
-            currentHealth += amount;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-            if (healthSlider != null) healthSlider.value = currentHealth;
-        }
-
+        // Metoda wywoływana, gdy postać umiera
         private void Die()
         {
             if (animator.GetBool("IsDead")) return; // Jeśli postać już "umarła", nie wykonuj tej metody ponownie.
@@ -70,7 +84,8 @@ namespace Characters
             if (gameObject.tag == "Player")
             {
                 GetComponent<PlayerInput>().enabled = false;
-            } else if (gameObject.tag == "Enemy")
+            } 
+            else if (gameObject.tag == "Enemy")
             {
                 GetComponent<AIEnemyController>().enabled = false;
                 GetComponentInChildren<Canvas>().enabled = false;
@@ -81,11 +96,13 @@ namespace Characters
             foreach (var audioSource in GetComponentsInChildren<AudioSource>())
                 if (audioSource.name == "DeathSound")
                     audioSource.Play();
-                else audioSource.mute = true;
+                else 
+                    audioSource.mute = true;
 
             StartCoroutine(DeathBehaviourAfterDelay(2f, gameObject));
         }
 
+        // Coroutine obsługująca zachowanie po śmierci z opóźnieniem
         private IEnumerator DeathBehaviourAfterDelay(float delay, GameObject gameObject)
         {
             yield return new WaitForSeconds(delay);

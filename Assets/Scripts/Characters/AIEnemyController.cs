@@ -2,40 +2,26 @@ using UnityEngine;
 
 namespace Characters
 {
-    /// <summary>
-    ///     Kontroler AI dla wrogów obsługujący ruch, animację oraz unikanie przeszkód.
-    /// </summary>
+    // Kontroler AI dla wrogów obsługujący ruch, animację oraz unikanie przeszkód.
     public class AIEnemyController : CharacterBaseController
     {
-        /// <summary>
-        ///     Cel, do którego AI ma dążyć (gracz).
-        /// </summary>
+        // Cel, do którego AI ma dążyć (gracz)
         public Transform target;
 
-        /// <summary>
-        ///     Minimalna odległość do celu, przy której AI przestanie się poruszać.
-        /// </summary>
+        // Minimalna odległość do celu, przy której AI przestanie się poruszać
         public float stopDistance = 0.1f;
 
-        /// <summary>
-        ///     Odległość wykrywania przeszkód.
-        /// </summary>
+        // Odległość wykrywania przeszkód
         public float obstacleDetectionDistance = 1f;
 
-        /// <summary>
-        ///     Kąt odchylenia do sprawdzenia po bokach.
-        /// </summary>
+        // Kąt odchylenia do sprawdzenia po bokach
         public float sideDetectionAngle = 45f;
 
-        /// <summary>
-        ///     Promień wykrywania gracza.
-        /// </summary>
+        // Promień wykrywania gracza
         public float detectionRadius = 2f;
 
-        /// <summary>
-        ///     Metoda wywoływana co stałą liczbę klatek fizyki.
-        ///     Obsługuje ruch AI, animację, unikanie przeszkód oraz wykrywanie gracza.
-        /// </summary>
+        // Metoda wywoływana co stałą liczbę klatek fizyki.
+        // Obsługuje ruch AI, animację, unikanie przeszkód oraz wykrywanie gracza.
         private void FixedUpdate()
         {
             if (animator.GetBool("IsAttacking")) return;
@@ -92,11 +78,9 @@ namespace Characters
                 audioSource.mute = !animator.GetBool("IsWalking");
         }
 
-        /// <summary>
-        ///     Sprawdza obecność przeszkód w kierunku ruchu i zwraca skorygowany kierunek ruchu, aby ich uniknąć.
-        /// </summary>
-        /// <param name="direction">Pierwotny kierunek ruchu.</param>
-        /// <returns>Skorygowany kierunek ruchu, aby uniknąć przeszkód.</returns>
+        // Sprawdza obecność przeszkód w kierunku ruchu i zwraca skorygowany kierunek ruchu, aby ich uniknąć.
+        // Parametr direction określa pierwotny kierunek ruchu.
+        // Zwraca skorygowany kierunek ruchu, aby uniknąć przeszkód.
         private Vector2 AvoidObstacles(Vector2 direction)
         {
             var hit = Physics2D.Raycast(transform.position, direction, obstacleDetectionDistance,
@@ -124,10 +108,8 @@ namespace Characters
             return direction;
         }
 
-        /// <summary>
-        ///     Aktualizuje animację postaci na podstawie kierunku ruchu.
-        /// </summary>
-        /// <param name="direction">Kierunek ruchu.</param>
+        // Aktualizuje animację postaci na podstawie kierunku ruchu.
+        // Parametr direction określa kierunek ruchu.
         private void UpdateAnimation(Vector2 direction)
         {
             if (direction.y != 0)

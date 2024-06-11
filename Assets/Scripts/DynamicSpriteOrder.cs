@@ -3,35 +3,46 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SpriteOrderController : MonoBehaviour
 {
+    // Referencja do komponentu SpriteRenderer
     private SpriteRenderer spriteRenderer;
-    public float yOffset = 0.0f;  // Customowe przesunięcie w osi Y dla każdego obiektu
-    public bool runOnlyOnce = false;  // Czy aktualizować tylko raz czy ciągle
 
-    void Awake()
+    // Offset do przesunięcia wartości y w obliczeniach sortowania
+    public float yOffset = 0.0f;
+
+    // Flaga określająca, czy sortowanie ma być wykonywane tylko raz
+    public bool runOnlyOnce = false;
+
+    // Metoda wywoływana przy inicjalizacji skryptu
+    private void Awake()
     {
+        // Pobranie komponentu SpriteRenderer przypisanego do tego GameObject
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Start()
+    // Metoda wywoływana na początku działania skryptu
+    private void Start()
     {
+        // Jeżeli flaga runOnlyOnce jest ustawiona, wykonaj sortowanie tylko raz
         if (runOnlyOnce)
         {
             UpdateSortingOrder();
         }
     }
 
-    void Update()
+    // Metoda wywoływana w każdej klatce
+    private void Update()
     {
+        // Jeżeli flaga runOnlyOnce nie jest ustawiona, wykonuj sortowanie w każdej klatce
         if (!runOnlyOnce)
         {
             UpdateSortingOrder();
         }
     }
 
-    void UpdateSortingOrder()
+    // Metoda aktualizująca wartość sortowania SpriteRenderer na podstawie pozycji y
+    private void UpdateSortingOrder()
     {
-        // Obliczamy Order in Layer na podstawie pozycji y z uwzględnieniem przesunięcia yOffset
-        // Dodanie 5000 zapewnia, że wszystkie wartości Order in Layer są dodatnie
+        // Obliczenie wartości sortowania na podstawie pozycji y i offsetu yOffset
         spriteRenderer.sortingOrder = (int)((-(transform.position.y + yOffset) * 100) + 5000);
     }
 }

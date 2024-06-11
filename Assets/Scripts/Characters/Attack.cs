@@ -6,20 +6,34 @@ namespace Characters
 {
     public class Attack : MonoBehaviour, IAttack
     {
-        private Animator animator =>  GetComponentInParent<Animator>();
-        private BoxCollider2D swordBoxCollider => GetComponent<BoxCollider2D>();
+        // Ilość obrażeń zadawanych przez atak
         public float attackDamage = 10f;
-        public float attackDuration = 0.1f;
-        public float attackCooldown = 3f;
-        private bool canAttack = true;
-        private bool isAttacking = false;
-        public UI.LevelScore levelScore;
 
+        // Czas trwania ataku
+        public float attackDuration = 0.1f;
+
+        // Czas odnowienia ataku
+        public float attackCooldown = 3f;
+        
+        // Flaga określająca stan możliwości ataku
+        private bool canAttack = true;
+
+        // Referencja do zarządzania punktacją
+        public UI.LevelScore levelScore;
+        
+        // Właściwość zwracająca komponent animatora
+        private Animator animator => GetComponentInParent<Animator>();
+
+        // Właściwość zwracająca komponent BoxCollider2D
+        private BoxCollider2D swordBoxCollider => GetComponent<BoxCollider2D>();
+
+        // Metoda wywoływana na początku działania skryptu
         private void Start()
         {
             swordBoxCollider.enabled = false; // Wyłącz kolider na starcie
         }
 
+        // Metoda wywoływana, gdy obiekt 2D wejdzie w kolizję z koliderem
         private void OnTriggerEnter2D(Collider2D collision)
         {
             var collider = collision.GetComponent<Collider2D>().gameObject;
@@ -33,11 +47,13 @@ namespace Characters
             }
         }
 
+        // Metoda wywołująca atak
         public void TriggerAttack()
         {
-            if (!isAttacking && canAttack) StartCoroutine(PerformAttack());
+            if (!animator.GetBool("IsAttacking") && canAttack) StartCoroutine(PerformAttack());
         }
 
+        // Metoda odtwarzająca dźwięk ataku
         private void PlayAttackSound()
         {
             AudioSource audioSource = GetComponentsInParent<AudioSource>().FirstOrDefault();
@@ -48,10 +64,10 @@ namespace Characters
             }
         }
 
+        // Coroutine obsługująca logikę ataku
         private IEnumerator PerformAttack()
         {
             canAttack = false;
-            isAttacking = true;
             swordBoxCollider.enabled = true; // Włącz kolider podczas ataku
             animator.SetBool("IsAttacking", true);
             try
@@ -67,13 +83,13 @@ namespace Characters
 
             swordBoxCollider.enabled = false; // Wyłącz kolider po zakończeniu animacji ataku
             animator.SetBool("IsAttacking", false);
-            isAttacking = false;
 
             yield return new WaitForSeconds(attackCooldown);
 
             canAttack = true;
         }
 
+        // Metoda zadająca obrażenia celowi
         private void DamageTarget(Collider2D target, string message)
         {
             var targetHealth = target.GetComponent<Health>();
