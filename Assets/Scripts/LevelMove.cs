@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Level_Move : MonoBehaviour
+public class LevelMove : MonoBehaviour
 {
     // Referencja do poziomu punktacji UI
     public UI.LevelScore levelScore;

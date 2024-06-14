@@ -21,6 +21,7 @@ namespace UI
         // Metoda wywoływana na początku działania skryptu
         private void Start()
         {
+            usernameInput.text = "breftejk";
             // Sprawdzenie, czy nazwa użytkownika jest już ustawiona
             if (!string.IsNullOrEmpty(GameManager.Instance.Username))
             {
